@@ -1,0 +1,50 @@
+{
+  "scripts": {
+    "setup-project": "yarn && altv-pkg release",
+    "build:server": "node --es-module-specifier-resolution=node build/server",
+    "build:client": "node --es-module-specifier-resolution=node build/client",
+    "dev:server": "node --es-module-specifier-resolution=node build/server -dev",
+    "dev:client": "node --es-module-specifier-resolution=node build/client -dev",
+    "before-any": "yarn && node --es-module-specifier-resolution=node build/copy",
+    "dev": "yarn before-any && concurrently \"yarn:dev:*\" \"yarn:tsc\" -c \"magenta.bold,cyan.bold\"",
+    "build": "yarn before-any && concurrently \"yarn:build:*\"",
+    "upd-altv-types": "yarn add @altv/types-shared@latest @altv/types-client@latest @altv/types-server@latest @altv/types-natives@latest",
+    "tsc:server": "cd src/server && npx tsc -w",
+    "tsc:client": "cd src/client && npx tsc -w",
+    "tsc": "concurrently \"yarn:tsc:*\" -c \"magenta.bold,cyan.bold\""
+  },
+  "type": "module",
+  "dependencies": {
+    "@altv/types-client": "^2.4.2",
+    "@altv/types-natives": "^1.4.8",
+    "@altv/types-server": "^2.5.5",
+    "@altv/types-shared": "^1.3.6",
+    "@prisma/client": "^4.8.1",
+    "@sentry/node": "^7.30.0",
+    "@sentry/tracing": "^7.30.0",
+    "altv-esbuild": "^0.4.3",
+    "altv-pkg": "^2.0.8",
+    "altv-rpc": "^0.1.3",
+    "chalk": "^5.2.0",
+    "concurrently": "^7.3.0",
+    "esbuild": "^0.16.16",
+    "inversify": "^6.0.1",
+    "reflect-metadata": "^0.1.13",
+    "typescript": "^4.9.4",
+    "validator": "^13.7.0",
+    "winston": "^3.8.2"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.18",
+    "@types/validator": "^13.7.10",
+    "@typescript-eslint/eslint-plugin": "^5.48.1",
+    "@typescript-eslint/parser": "^5.48.1",
+    "eslint": "^8.32.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-config-xo": "^0.43.1",
+    "eslint-config-xo-typescript": "^0.55.1",
+    "eslint-plugin-import": "^2.27.4",
+    "prettier": "2.8.3",
+    "prisma": "^4.8.1"
+  }
+}

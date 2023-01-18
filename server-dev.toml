@@ -1,0 +1,22 @@
+name = "dev"
+
+modules = [
+  "js-module"
+]
+
+resources = [
+  "main",
+  "altv-discord-auth"
+]
+
+debug = true
+
+announce = false
+host = '127.0.0.1'
+port = 8888
+
+[js-module]
+extra-cli-args = [
+  # resource restart in js module needs more memory
+  "--max-old-space-size=8192"
+]

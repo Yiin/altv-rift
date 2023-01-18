@@ -1,0 +1,96 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider   = "prisma-client-js"
+  engineType = "binary"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String      @id @default(auto()) @map("_id") @db.ObjectId
+  username   String      @unique
+  discordId  String      @unique
+  fresh      Boolean     @default(true)
+  createdAt  DateTime    @default(now())
+  characters Character[]
+}
+
+model Character {
+  id           String     @id @default(auto()) @map("_id") @db.ObjectId
+  user         User       @relation(fields: [userId], references: [id])
+  userId       String     @db.ObjectId
+  name         String     @unique
+  lastPosition Position
+  rot          Float
+  appearance   Appearance
+  health       Float
+  createdAt    DateTime   @default(now())
+}
+
+type Position {
+  x Float
+  y Float
+  z Float
+}
+
+type Appearance {
+  // 0 - Female, 1 - Male
+  sex Int
+
+  // Values range from 0 to 45
+  faceFather Int
+
+  // Values range from 0 to 45
+  faceMother Int
+
+  // Values range from 0 to 45
+  skinFather Int
+
+  // Values range from 0 to 45
+  skinMother Int
+
+  // The mix of the mother and father faces.
+  // Values range from 0.0 to 1.0
+  faceMix Float
+
+  // The mix of the mother and father faces.
+  // Values range from 0.0 to 1.0
+  skinMix Float
+
+  // An array of valid face features changes.
+  // Each position in the array represents a feature change.
+  // Values range from -1.0 to 1.0
+  features Float[]
+
+  // These have to do with blemishes, makeup, lipstick, etc.
+  headOverlays HeadOverlay[]
+
+  // The hair identifier that this character will be using.
+  // Should be a relative id to the dlc hash.
+  hair Int
+
+  // The dlc hash of the hair to use.
+  hairDlc Int
+
+  // The color of the hair.
+  hairColor1 Int
+
+  // The highlight color of the hair.
+  hairColor2 Int
+
+  // Eye Color
+  eyes Int
+}
+
+type HeadOverlay {
+  id      Int
+  value   Int
+  opacity Float?
+  color1  Int?
+  color2  Int?
+}

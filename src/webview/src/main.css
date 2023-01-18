@@ -1,0 +1,59 @@
+@tailwind utilities;
+
+:main {
+  --v-theme-background: transparent !important;
+}
+
+html,
+body {
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+  background-image: url(https://kagi.com/proxy/landscape-sea-hill-morning-coast-horizon-panorama-Grand-Theft-Auto-V-Terrain-mountain-atmospheric-phenomenon-mountainous-landforms-aerial-photography-mountain-range-6000x2513-px-565967.jpg?c=YuR_IGYZWtVQ8cX_0quxG0cOlN4xxa-MlJYioke5kem0oWfZJF3G0TB25cSLrJPHvLKym9B83SRsRk5-_zokTIEXHj7juUX8RK1WPtjSY2Hd9URHhV08pR9sIWv5gemJQNo4QRB19wg_DREx5guxPszGkOAGTBXlR6SNamAqjtGaiBrrQhOg3qNmZrGxjhyS_ykonJjwhIOVgDZYkV305FjrkNbsWwZ6moWS-tIeuy1DVq50knqOfV7Q8ZaUe5pPURYpYIUrTEpgsL0onPP6Xr5tPc1PmMD0ajtBDBP_2P4%3D);
+  background-size: cover;
+}
+
+*:has(::-webkit-scrollbar) {
+  margin-right: -14px;
+}
+
+::-webkit-scrollbar {
+  width: 14px;
+  height: 18px;
+}
+::-webkit-scrollbar-thumb {
+  height: 6px;
+  border: 4px solid rgba(0, 0, 0, 0);
+  background-clip: padding-box;
+  border-radius: 7px;
+  background-color: rgba(0, 0, 0, 0.15);
+  box-shadow: inset -1px -1px 0px rgba(0, 0, 0, 0.05),
+    inset 1px 1px 0px rgba(0, 0, 0, 0.05);
+}
+::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
+  display: none;
+}
+::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+.select-none {
+  user-select: none;
+}
+
+.v-application {
+  background: transparent !important;
+}
+
+.v-card-item__content {
+  overflow: visible;
+}
+
+.v-card--variant-elevated,
+.v-card--variant-flat {
+  background: rgba(0, 0, 0, 0.5) !important;
+}
