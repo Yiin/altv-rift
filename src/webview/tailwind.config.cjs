@@ -12,6 +12,7 @@ module.exports = {
       minWidth: (utils) => utils.theme('spacing'),
       spacing: {
         '22': '5.5rem',
+        '49': '12.25rem',
         '1/5': '20%',
         '2/5': '40%',
         '3/5': '60%',

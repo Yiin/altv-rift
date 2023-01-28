@@ -1,41 +1,65 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref } from "vue";
+import { useEventListener } from "../composables/use-event-listener";
+import Focusable from "./Focusable.vue";
+import { wrap } from "../utils/wrap";
 
 const props = defineProps<{
   options: any[];
   modelValue: any;
-  valueText?: any;
+  valueText?: (value: any) => any;
 }>();
 
 const emit = defineEmits<{
   (e: "update:modelValue", value: any): void;
 }>();
 
+const isFocused = ref(false);
+
+useEventListener(
+  "keydown",
+  ({ key }) => {
+    if (key === "ArrowLeft") {
+      prev();
+    } else if (key === "ArrowRight") {
+      next();
+    }
+  },
+  { isActive: isFocused }
+);
+
 const current = computed(() => props.options.indexOf(props.modelValue));
 
 const prev = () => {
   emit(
     "update:modelValue",
-    props.options[
-      current.value - 1 < 0 ? props.options.length - 1 : current.value - 1
-    ]
+    props.options[wrap(current.value - 1, props.options.length)]
   );
 };
 
 const next = () => {
   emit(
     "update:modelValue",
-    props.options[
-      current.value + 1 > props.options.length - 1 ? 0 : current.value + 1
-    ]
+    props.options[wrap(current.value + 1, props.options.length)]
   );
 };
 </script>
 
 <template>
-  <div class="flex justify-between items-center w-100">
-    <v-btn icon="mdi-chevron-left" size="x-small" @click="prev" />
-    <span class="px-3">{{ props.valueText ?? props.modelValue }}</span>
-    <v-btn icon="mdi-chevron-right" size="x-small" @click="next" />
-  </div>
+  <Focusable v-model="isFocused">
+    <div class="flex justify-center items-center">
+      <v-btn icon="mdi-chevron-left" size="x-small" @click="prev" />
+      <div
+        class="flex justify-center items-center flex-col v-btn min-w-20 text-sm"
+      >
+        <span
+          v-for="(option, index) in options"
+          :class="['px-2', current !== index && 'invisible h-0']"
+        >
+          {{ props.valueText?.(option) ?? option }}
+        </span>
+      </div>
+      <v-btn icon="mdi-chevron-right" size="x-small" @click="next" />
+    </div>
+  </Focusable>
 </template>

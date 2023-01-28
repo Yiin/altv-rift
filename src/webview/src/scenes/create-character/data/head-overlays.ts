@@ -47,34 +47,6 @@ export const headOverlayItemNames = [
   makeList('Classic', 'Natural', 'The Strip', 'The Tree', 'Hairy', 'Grisly', 'Ape', 'Groomed Ape', 'Bikini', 'Lightning Bolt', 'Reverse Lightning', 'Love Heart', 'Chestache', 'Happy Face', 'Skull', 'Snail Trail', 'Slug and Nips', 'Hairy Arms'),
 ];
 
-export const getRandomOverlayItemValue = (overlayId: number) => {
-  return Math.floor(Math.random() * headOverlayNames[overlayId].length);
-};
-
-export const getRandomOverlayItemOpacity = (overlayId: number) => {
-  const multipliers: Record<string, number> = {
-    Blemishes: 0.1,
-    "Facial Hair": 1,
-    Eyebrows: 1,
-    Ageing: 0.5,
-    Makeup: 1,
-    Blush: 0.6,
-    Complexion: 0.6,
-    "Sun Damage": 0.4,
-    Lipstick: 1,
-    "Moles & Freckles": 1,
-    "Chest Hair": 1,
-  };
-  return Math.random() * (multipliers[headOverlayNames[overlayId]] ?? 1);
-};
-
-export const getRandomOverlayItem = (overlayId: number) => {
-  return {
-    value: getRandomOverlayItemValue(overlayId),
-    opacity: getRandomOverlayItemOpacity(overlayId),
-  };
-};
-
 export const hiddenOverlaysForGender = (gender: 0 | 1) => {
   const forMale: number[] = [];
   const forFemale = ["Facial Hair", "Chest Hair"].map(

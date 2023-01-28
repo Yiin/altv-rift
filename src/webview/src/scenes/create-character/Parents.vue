@@ -1,70 +1,17 @@
 <script setup lang="ts">
-import { ref, computed, effect, Teleport } from "vue";
-import colors from "vuetify/lib/util/colors";
-import chroma from "chroma-js";
+import { effect } from "vue";
 import { useCreateCharacter } from "../../store/create-character.store";
-import { asset } from "../../utils/asset";
 import {
-  fathers,
+  parents,
   getRandomFather,
   getRandomMother,
   getRandomResemblance,
-  mothers,
 } from "./data/parents";
 import CreateCharacter from "./CreateCharacter.vue";
+import SlideOption from "../../components/SlideOption.vue";
+import XSelection from "../../components/XSelection.vue";
 
 const createCharacter = useCreateCharacter();
-
-const father = computed(() =>
-  fathers.findIndex(({ id }) => id === createCharacter.faceFather)
-);
-const mother = computed(() =>
-  mothers.findIndex(({ id }) => id === createCharacter.faceMother)
-);
-
-const motherImage = computed(() =>
-  asset(`./assets/parents/parent_female_${mother.value}.png`, import.meta.url)
-);
-const fatherImage = computed(() =>
-  asset(`./assets/parents/parent_male_${father.value}.png`, import.meta.url)
-);
-
-const skinMixColor = computed(() =>
-  chroma
-    .mix(
-      colors.pink.lighten1,
-      colors.indigo.lighten1,
-      createCharacter.skinMix / 100
-    )
-    .hex("rgb")
-);
-
-const faceMixColor = computed(() =>
-  chroma
-    .mix(
-      colors.pink.lighten1,
-      colors.indigo.lighten1,
-      createCharacter.faceMix / 100
-    )
-    .hex("rgb")
-);
-
-const prevFather = () => {
-  createCharacter.faceFather =
-    fathers[father.value ? father.value - 1 : fathers.length - 1].id;
-};
-const nextFather = () => {
-  createCharacter.faceFather =
-    fathers[father.value < fathers.length - 1 ? father.value + 1 : 0].id;
-};
-const prevMother = () => {
-  createCharacter.faceMother =
-    mothers[mother.value ? mother.value - 1 : mothers.length - 1].id;
-};
-const nextMother = () => {
-  createCharacter.faceMother =
-    mothers[mother.value < mothers.length - 1 ? mother.value + 1 : 0].id;
-};
 
 const randomize = () => {
   createCharacter.faceMother = getRandomMother();
@@ -82,78 +29,64 @@ const randomize = () => {
           transition="parent-fade"
           class="-mr-10 flex z-10 parent-image"
           height="150"
-          :src="motherImage"
+          :src="`/assets/parents/parent_${createCharacter.faceMother}.png`"
         />
         <v-img
           class="parent-image"
           transition="parent-fade"
           height="150"
-          :src="fatherImage"
+          :src="`/assets/parents/parent_${createCharacter.faceFather}.png`"
         />
       </div>
       <v-container>
         <v-row align="center">
-          <v-col cols="4"> Mother </v-col>
-          <v-col cols="8" class="flex justify-between items-center w-100">
-            <v-btn icon="mdi-chevron-left" size="x-small" @click="prevMother" />
-            <span class="px-5">{{ mothers[mother].name }}</span>
-            <v-btn
-              icon="mdi-chevron-right"
-              size="x-small"
-              @click="nextMother"
+          <v-col cols="4">
+            <span class="text-xs pb-2 uppercase tracking-wide"> Parent 1 </span>
+          </v-col>
+          <v-col cols="8">
+            <SlideOption
+              v-model="createCharacter.faceMother"
+              :options="Array.from(parents.keys())"
+              :value-text="(value) => parents[value]"
             />
           </v-col>
         </v-row>
         <v-row align="center">
-          <v-col cols="4"> Father </v-col>
-          <v-col cols="8" class="flex justify-between items-center w-100">
-            <v-btn icon="mdi-chevron-left" size="x-small" @click="prevFather" />
-            <span class="px-5">{{ fathers[father].name }}</span>
-            <v-btn
-              icon="mdi-chevron-right"
-              size="x-small"
-              @click="nextFather"
+          <v-col cols="4">
+            <span class="text-xs pb-2 uppercase tracking-wide"> Parent 2 </span>
+          </v-col>
+          <v-col cols="8">
+            <SlideOption
+              v-model="createCharacter.faceFather"
+              :options="Array.from(parents.keys())"
+              :value-text="(value) => parents[value]"
             />
           </v-col>
         </v-row>
         <v-row align="center">
-          <v-col cols="4"> Skin </v-col>
+          <v-col cols="4">
+            <span class="text-xs pb-2 uppercase tracking-wide"> Skin </span>
+          </v-col>
           <v-col cols="8" class="flex justify-between items-center w-100">
-            <v-slider
+            <XSelection
+              :min="0"
+              :max="1"
               v-model="createCharacter.skinMix"
-              :color="skinMixColor"
-              track-color="grey"
-              min="0"
-              max="1"
-              :step="0.01"
-              hide-details
-            >
-              <template v-slot:append>
-                <div class="w-8 text-right">
-                  {{ ~~(createCharacter.skinMix * 100) }}
-                </div>
-              </template>
-            </v-slider>
+              no-padding
+            />
           </v-col>
         </v-row>
         <v-row align="center">
-          <v-col cols="4"> Face </v-col>
+          <v-col cols="4">
+            <span class="text-xs pb-2 uppercase tracking-wide"> Face </span>
+          </v-col>
           <v-col cols="8" class="flex justify-between items-center w-100">
-            <v-slider
+            <XSelection
+              :min="0"
+              :max="1"
               v-model="createCharacter.faceMix"
-              :color="faceMixColor"
-              track-color="grey"
-              min="0"
-              max="1"
-              :step="0.01"
-              hide-details
-            >
-              <template v-slot:append>
-                <div class="w-8 text-right">
-                  {{ ~~(createCharacter.faceMix * 100) }}
-                </div>
-              </template>
-            </v-slider>
+              no-padding
+            />
           </v-col>
         </v-row>
       </v-container>

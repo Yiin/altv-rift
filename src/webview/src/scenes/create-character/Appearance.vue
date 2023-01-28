@@ -1,74 +1,154 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { useCreateCharacter } from "../../store/create-character.store";
 import SlideOption from "../../components/SlideOption.vue";
 import CreateCharacter from "./CreateCharacter.vue";
+import { notRandomizableOverlaysForGender } from "./data/head-overlays";
 import {
-  headOverlayNames,
-  headOverlayItemNames,
-  hiddenOverlaysForGender,
-  notRandomizableOverlaysForGender,
-  getRandomOverlayItemValue,
+  Aspect,
+  aspects,
+  getRandomBeardColor,
+  getRandomBlushColor,
+  getRandomChestHairColor,
+  getRandomEyebrowColor,
+  getRandomHair,
+  getRandomHairColor,
+  getRandomHairHighlightColor,
+  getRandomLipstickColor,
+  getRandomOverlayColor,
   getRandomOverlayItemOpacity,
-} from "./data/head-overlays";
+  getRandomOverlayItemValue,
+} from "./data/aspects";
+import SliderSelection from "../../components/SliderSelection.vue";
+import ColorSelection from "../../components/ColorSelection.vue";
+import { headOverlays, OverlayType } from "./data/overlays";
 
 const createCharacter = useCreateCharacter();
 
-const filteredHeadOverlays = computed(() =>
-  headOverlayNames.reduce((obj, name, index) => {
-    if (hiddenOverlaysForGender(createCharacter.sex).includes(index))
-      return obj;
-    return obj.set(index, name);
-  }, new Map<number, string>())
+// Hair, SkinComplextion, EyeColor, Lipstick, etc.
+const selectedAspect = ref(Aspect.Hair);
+
+// Used to get available options and colors of the selected aspect
+const currentAspect = computed(
+  () => aspects(createCharacter.sex)[selectedAspect.value]!
 );
 
+// Ids of the available options of the selected aspect
+const currentAspectValues = computed(() =>
+  Array.from(currentAspect.value.options.keys())
+);
+
+function getCurrentAspectValueLabel(option: number) {
+  const value = currentAspect.value.options.get(option)!;
+
+  if (typeof value === "string") {
+    return value;
+  }
+  return value.name;
+}
+
 const randomize = () => {
-  [...filteredHeadOverlays.value.keys()]
-    .filter(
-      (overlayIndex) =>
-        !notRandomizableOverlaysForGender(createCharacter.sex).includes(
-          +overlayIndex
-        )
-    )
-    .forEach((overlayIndex) => {
-      createCharacter.opacityOverlays[overlayIndex].value =
-        getRandomOverlayItemValue(overlayIndex);
-      createCharacter.opacityOverlays[overlayIndex].opacity =
-        getRandomOverlayItemOpacity(overlayIndex);
-    });
+  createCharacter.hair = getRandomHair(createCharacter.sex);
+  createCharacter.hairColor1 = getRandomHairColor();
+  createCharacter.hairColor2 = getRandomHairHighlightColor();
+
+  for (const [key, overlay] of createCharacter.headOverlays.entries()) {
+    if (notRandomizableOverlaysForGender(createCharacter.sex).includes(key)) {
+      continue;
+    }
+
+    overlay.value = getRandomOverlayItemValue(key);
+    overlay.opacity = getRandomOverlayItemOpacity(key);
+
+    if (headOverlays.get(key)?.color1) {
+      overlay.color1 = getRandomOverlayColor(key);
+    }
+    if (headOverlays.get(key)?.color2) {
+      overlay.color2 = getRandomOverlayColor(key);
+    }
+  }
 };
 </script>
 
 <template>
   <CreateCharacter title="Appearance">
-    <v-card-item>
-      <v-card>
-        <v-card-text class="flex flex-col gap-4">
-          <transition-group name="list">
-            <div v-for="[id, overlayName] of filteredHeadOverlays" :key="id">
-              <div class="pb-1">{{ overlayName }}</div>
-              <SlideOption
-                :options="[...headOverlayItemNames[id].keys()]"
-                v-model="createCharacter.opacityOverlays[id].value"
-                :value-text="
-                  headOverlayItemNames[id].get(
-                    createCharacter.opacityOverlays[id].value
-                  )
-                "
-              />
-              <v-slider
-                v-model="createCharacter.opacityOverlays[id].opacity"
-                track-color="grey"
-                min="0"
-                max="1"
-                :step="0.01"
-                hide-details
-              />
-            </div>
-          </transition-group>
-        </v-card-text>
-      </v-card>
-    </v-card-item>
+    <SliderSelection
+      :options="Object.keys(aspects(createCharacter.sex))"
+      v-model="selectedAspect"
+    />
+    <v-divider />
+
+    <div class="m-4">
+      <div class="mb-4">
+        <SlideOption
+          v-if="selectedAspect === Aspect.Hair"
+          :options="currentAspectValues"
+          v-model="createCharacter.hair"
+          :value-text="getCurrentAspectValueLabel"
+        />
+        <SlideOption
+          v-else-if="selectedAspect === Aspect.EyeColor"
+          :options="currentAspectValues"
+          v-model="createCharacter.eyes"
+          :value-text="getCurrentAspectValueLabel"
+        />
+        <SlideOption
+          v-else-if="'overlayId' in currentAspect"
+          :options="currentAspectValues"
+          v-model="createCharacter.headOverlays.get(currentAspect.overlayId)!.value"
+          :value-text="getCurrentAspectValueLabel"
+        />
+      </div>
+      <div class="flex flex-col gap-6">
+        <div v-if="'overlayId' in currentAspect">
+          <div class="text-xs uppercase tracking-wide">Opacity</div>
+          <v-slider
+            v-model="createCharacter.headOverlays.get(currentAspect.overlayId)!.opacity"
+            track-color="grey"
+            min="0"
+            max="1"
+            :step="0.01"
+            hide-details
+          />
+        </div>
+        <ColorSelection
+          :key="selectedAspect"
+          v-if="selectedAspect === Aspect.Hair && 'color1' in currentAspect"
+          label="Main color"
+          :options="currentAspect.color1"
+          v-model="createCharacter.hairColor1"
+          use-index-as-value
+        />
+        <ColorSelection
+          :key="selectedAspect"
+          v-if="selectedAspect === Aspect.Hair && 'color2' in currentAspect"
+          label="Highlight color"
+          :options="currentAspect.color2"
+          v-model="createCharacter.hairColor2"
+          use-index-as-value
+        />
+
+        <ColorSelection
+          :key="selectedAspect"
+          v-if="'overlayId' in currentAspect && 'color1' in currentAspect"
+          label="Main color"
+          :options="currentAspect.color1"
+          v-model="createCharacter.headOverlays.get(currentAspect.overlayId)!.color1"
+          use-index-as-value
+        />
+
+        <ColorSelection
+          :key="selectedAspect"
+          v-if="'overlayId' in currentAspect && 'color2' in currentAspect"
+          label="Highlight color"
+          :options="currentAspect.color2"
+          v-model="createCharacter.headOverlays.get(currentAspect.overlayId)!.color2"
+          :value-text="currentAspect.color2[createCharacter.headOverlays.get(currentAspect.overlayId)!.color2!].name"
+          use-index-as-value
+        />
+      </div>
+    </div>
+
     <template #actions>
       <v-list :lines="false" density="comfortable" nav>
         <v-list-item @click="randomize" density="comfortable" nav>
