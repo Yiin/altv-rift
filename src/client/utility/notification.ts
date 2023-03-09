@@ -1,6 +1,6 @@
-import { RPC } from "@shared/constants/rpcs";
-import rpc from "altv-rpc";
+import alt from "alt-client";
 import native from "natives";
+import { Events } from "@shared/constants/events";
 
 const NotificationConst = {
   notification(text: string): void {
@@ -14,4 +14,7 @@ export const Notification = {
   ...NotificationConst,
 };
 
-rpc.on(RPC.Client.PLAYER_EMIT_NOTIFICATION, NotificationConst.notification);
+alt.onServer(
+  Events.Client.PLAYER_EMIT_NOTIFICATION,
+  NotificationConst.notification
+);

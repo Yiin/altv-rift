@@ -37,7 +37,7 @@ export const CharacterPed = {
     id = native.createPed(1, hash, _pos.x, _pos.y, _pos.z, 0, false, false);
 
     return new Promise(async (resolve: Function) => {
-      alt.nextTick(() => {
+      alt.nextTick(async () => {
         if (id === undefined || id < 0) {
           return resolve(-1);
         }
@@ -56,16 +56,7 @@ export const CharacterPed = {
         } else {
           native.setEntityHeading(id, _rot);
         }
-
-        native.setEntityCoordsNoOffset(
-          id,
-          _pos.x,
-          _pos.y,
-          _pos.z,
-          false,
-          false,
-          false
-        );
+        await Character.applyEquipment(CharacterPed.get(), [], isMale);
         return resolve(id);
       });
     });
@@ -87,10 +78,12 @@ export const CharacterPed = {
 
     if (!appearance || (appearance && appearance.sex !== _appearance.sex)) {
       await CharacterPed.destroy();
-      await CharacterPed.create(_appearance.sex === 1, pos, rot);
+      await CharacterPed.create(_appearance.sex === 0, pos, rot);
     }
 
     await Character.applyAppearance(id, _appearance);
+
+    await CharacterPed.setHidden(false);
 
     appearance = _appearance;
     isUpdating = false;

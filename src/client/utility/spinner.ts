@@ -1,8 +1,7 @@
-import { RPC } from "@shared/constants/rpcs";
-import { ISpinner } from "@shared/interfaces/ISpinner";
 import alt from "alt-client";
-import rpc from "altv-rpc";
 import native from "natives";
+import { ISpinner } from "@shared/interfaces/ISpinner";
+import { Events } from "@shared/constants/events";
 
 let timeout: number | undefined;
 
@@ -39,5 +38,5 @@ export const Spinner = {
   },
 };
 
-rpc.on(RPC.Client.PLAYER_EMIT_SPINNER, Spinner.create);
-rpc.on(RPC.Client.PLAYER_EMIT_SPINNER_CLEAR, Spinner.clear);
+alt.onServer(Events.Client.PLAYER_EMIT_SPINNER, Spinner.create);
+alt.onServer(Events.Client.PLAYER_EMIT_SPINNER_CLEAR, Spinner.clear);

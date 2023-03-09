@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, watch, watchEffect } from "vue";
 import { clamp, throttle } from "lodash-es";
-import Focusable from "./Focusable.vue";
-import { useKeyboard } from "../composables/use-keyboard";
-import { useFrame } from "../composables/use-frame";
+import { usePixel } from "@/composables/use-pixel";
 
 const props = withDefaults(
   defineProps<{
@@ -17,13 +15,15 @@ const props = withDefaults(
     max?: number;
   }>(),
   {
-    size: 150,
-    pointerSize: 24,
     modelValue: 0,
     min: -1,
     max: 1,
   }
 );
+const px = usePixel();
+
+const size = computed(() => px(props.size ?? 150));
+const pointerSize = computed(() => px(props.pointerSize ?? 24));
 
 const emit = defineEmits<{
   (e: "update:modelValue", value: number): void;
@@ -31,7 +31,6 @@ const emit = defineEmits<{
 
 const container = ref();
 const x = ref(denormalize(props.modelValue));
-const isFocused = ref(false);
 const isDragging = ref(false);
 
 const bounds = ref({
@@ -50,20 +49,20 @@ watch(
 );
 
 function normalize(value: number) {
-  const full = props.pointerSize;
+  const full = pointerSize.value;
   return clamp(
-    (value / (props.size - full)) * (props.max - props.min) + props.min,
+    (value / (size.value - full)) * (props.max - props.min) + props.min,
     props.min,
     props.max
   );
 }
 
 function denormalize(value: number) {
-  const full = props.pointerSize;
+  const full = pointerSize.value;
   return clamp(
-    ((value - props.min) * (props.size - full)) / (props.max - props.min),
+    ((value - props.min) * (size.value - full)) / (props.max - props.min),
     0,
-    props.size - full
+    size.value - full
   );
 }
 
@@ -97,77 +96,56 @@ function dragstart(e: PointerEvent) {
 }
 
 function trackDragging(e: PointerEvent) {
-  const half = props.pointerSize / 2;
+  const half = pointerSize.value / 2;
 
   x.value =
-    Math.max(half, Math.min(props.size - half, e.clientX - bounds.value.x)) -
+    Math.max(half, Math.min(size.value - half, e.clientX - bounds.value.x)) -
     half;
 }
-
-const keys = useKeyboard();
-
-useFrame(
-  () => {
-    const shift = keys.has("Shift");
-    const ctrl = keys.has("Control");
-
-    const diff = 0.025 * (shift ? 4 : ctrl ? 0.2 : 1);
-
-    if (keys.has("ArrowLeft")) {
-      x.value = denormalize(props.modelValue - diff);
-    }
-    if (keys.has("ArrowRight")) {
-      x.value = denormalize(props.modelValue + diff);
-    }
-  },
-  { isActive: computed(() => isFocused.value && !isDragging.value) }
-);
 </script>
 
 <template>
-  <Focusable v-model="isFocused">
-    <div :class="['flex justify-center items-center', !noPadding && 'p-6']">
-      <v-sheet
-        ref="container"
-        @pointerdown="dragstart"
-        color="grey-darken-4"
-        class="overflow-visible relative border-solid border-1-gray-600 border-1"
-        rounded
-        height="30"
-        width="150"
+  <div :class="['flex justify-center items-center', !noPadding && 'p-6']">
+    <v-sheet
+      ref="container"
+      @pointerdown="dragstart"
+      color="grey-darken-4"
+      class="overflow-visible relative border-solid border-1-gray-600 border-1"
+      rounded
+      height="30"
+      :width="size"
+    >
+      <!-- Vertical lines -->
+      <div
+        v-for="left in ['left-1/5', 'left-2/5', 'left-3/5', 'left-4/5']"
+        :class="[
+          left,
+          'absolute left-1/5 h-full border-solid border-l-gray-600 border-l-1',
+        ]"
+      />
+
+      <!-- Pointer -->
+      <v-icon
+        ref="pointer"
+        :class="[
+          'absolute z-10 top-1/2 -translate-y-1/2 transform',
+          !isDragging && 'transition-transform duration-100 ease-linear',
+        ]"
+        :style="{
+          '--tw-translate-x': `${x}px`,
+        }"
+        icon="mdi-circle"
+      />
+
+      <!-- Labels -->
+      <span
+        class="absolute -translate-x-full -translate-y-1/2 -left-2 top-1/2 text-xs"
+        >{{ props.labelLeft }}</span
       >
-        <!-- Vertical lines -->
-        <div
-          v-for="left in ['left-1/5', 'left-2/5', 'left-3/5', 'left-4/5']"
-          :class="[
-            left,
-            'absolute left-1/5 h-full border-solid border-l-gray-600 border-l-1',
-          ]"
-        />
-
-        <!-- Pointer -->
-        <v-icon
-          ref="pointer"
-          :class="[
-            'absolute z-10 top-1/2 -translate-y-1/2 transform',
-            !isDragging && 'transition-transform duration-100 ease-linear',
-          ]"
-          :style="{
-            '--tw-translate-x': `${x}px`,
-          }"
-          icon="mdi-circle"
-        />
-
-        <!-- Labels -->
-        <span
-          class="absolute -translate-x-full -translate-y-1/2 -left-2 top-1/2 text-xs"
-          >{{ props.labelLeft }}</span
-        >
-        <span
-          class="absolute translate-x-full -translate-y-1/2 -right-2 top-1/2 text-xs"
-          >{{ props.labelRight }}</span
-        >
-      </v-sheet>
-    </div>
-  </Focusable>
+      <span
+        class="absolute translate-x-full -translate-y-1/2 -right-2 top-1/2 text-xs"
+        >{{ props.labelRight }}</span
+      >
+    </v-sheet>
+  </div>
 </template>

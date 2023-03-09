@@ -20,6 +20,11 @@ module.exports = {
         pathGroups: [
           {
             group: 'builtin',
+            pattern: 'alt-shared',
+            position: 'after',
+          },
+          {
+            group: 'builtin',
             pattern: 'alt-server',
             position: 'after',
           },

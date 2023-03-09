@@ -1,8 +1,7 @@
-import { RPC } from "@shared/constants/rpcs";
-import { IErrorScreen } from "@shared/interfaces/IErrorScreen";
 import alt from "alt-client";
-import rpc from "altv-rpc";
 import native from "natives";
+import { Events } from "@shared/constants/events";
+import { IErrorScreen } from "@shared/interfaces/IErrorScreen";
 
 let interval: number | undefined;
 let timeout: number | undefined;
@@ -63,5 +62,5 @@ const ErrorScreen = {
 
 export default ErrorScreen;
 
-rpc.on(RPC.Client.PLAYER_EMIT_ERROR_SCREEN, ErrorScreen.create);
-rpc.on(RPC.Client.PLAYER_EMIT_ERROR_SCREEN_CLEAR, ErrorScreen.clear);
+alt.onServer(Events.Client.PLAYER_EMIT_ERROR_SCREEN, ErrorScreen.create);
+alt.onServer(Events.Client.PLAYER_EMIT_ERROR_SCREEN_CLEAR, ErrorScreen.clear);

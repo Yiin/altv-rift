@@ -7,8 +7,8 @@ const clientHandlers = new Map<
 >();
 
 // call client from browser
-const callClient = async (name: string, ...args: any[]) => {
-  return new Promise((resolve, reject) => {
+const callClient = async <T>(name: string, ...args: any[]) => {
+  return new Promise<T>((resolve, reject) => {
     const payload = createPayload(name, args);
 
     alt.emit("call:client", payload);

@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, watch, watchEffect } from "vue";
 import { clamp, throttle } from "lodash-es";
-import Focusable from "./Focusable.vue";
-import { useFrame } from "../composables/use-frame";
-import { useKeyboard } from "../composables/use-keyboard";
+import { usePixel } from "@/composables/use-pixel";
 
 const props = withDefaults(
   defineProps<{
@@ -24,6 +22,11 @@ const props = withDefaults(
   }
 );
 
+const px = usePixel();
+
+const size = computed(() => px(props.size ?? 150));
+const pointerSize = computed(() => px(props.pointerSize ?? 24));
+
 const emit = defineEmits<{
   (e: "update:x", value: number): void;
   (e: "update:y", value: number): void;
@@ -33,7 +36,6 @@ const container = ref();
 const pointer = ref();
 const x = ref(denormalize(props.x));
 const y = ref(denormalize(props.y));
-const isFocused = ref(false);
 const isDragging = ref(false);
 
 const bounds = ref({
@@ -50,15 +52,15 @@ watch([() => props.x, () => props.y], (xy) => {
 });
 
 function normalize(value: number) {
-  const half = props.pointerSize / 2;
-  const quarter = props.pointerSize / 4;
-  return clamp(((value + quarter) / (props.size - half)) * 2 - 1, -1, 1);
+  const half = pointerSize.value / 2;
+  const quarter = pointerSize.value / 4;
+  return clamp(((value + quarter) / (size.value - half)) * 2 - 1, -1, 1);
 }
 
 function denormalize(value: number) {
-  const half = props.pointerSize / 2;
-  const quarter = props.pointerSize / 4;
-  return ((clamp(value, -1, 1) + 1) * (props.size - half)) / 2 - quarter;
+  const half = pointerSize.value / 2;
+  const quarter = pointerSize.value / 4;
+  return ((clamp(value, -1, 1) + 1) * (size.value - half)) / 2 - quarter;
 }
 
 const updateModelValue = throttle((x, y) => {
@@ -93,110 +95,83 @@ function dragstart(e: PointerEvent) {
 }
 
 function trackDragging(e: PointerEvent) {
-  const half = props.pointerSize / 2;
-  const quarter = props.pointerSize / 4;
+  const half = pointerSize.value / 2;
+  const quarter = pointerSize.value / 4;
 
   x.value =
     Math.max(
       0 + quarter,
-      Math.min(props.size - quarter, e.clientX - bounds.value.x)
+      Math.min(size.value - quarter, e.clientX - bounds.value.x)
     ) - half;
   y.value =
     Math.max(
       0 + quarter,
-      Math.min(props.size - quarter, e.clientY - bounds.value.y)
+      Math.min(size.value - quarter, e.clientY - bounds.value.y)
     ) - half;
 }
-
-const keys = useKeyboard();
-
-useFrame(
-  () => {
-    const shift = keys.has("Shift");
-    const ctrl = keys.has("Control");
-
-    const diff = 0.025 * (shift ? 4 : ctrl ? 0.2 : 1);
-
-    if (keys.has("ArrowLeft")) {
-      x.value = denormalize(props.x - diff);
-    }
-    if (keys.has("ArrowRight")) {
-      x.value = denormalize(props.x + diff);
-    }
-    if (keys.has("ArrowUp")) {
-      y.value = denormalize(props.y - diff);
-    }
-    if (keys.has("ArrowDown")) {
-      y.value = denormalize(props.y + diff);
-    }
-  },
-  { isActive: computed(() => isFocused.value && !isDragging.value) }
-);
 </script>
 
 <template>
-  <Focusable v-model="isFocused">
-    <div class="p-6 flex justify-center items-center">
-      <v-sheet
-        ref="container"
-        @pointerdown="dragstart"
-        color="grey-darken-4"
-        class="overflow-visible relative border-solid border-gray-600 border-1"
-        rounded
-        :height="size"
-        :width="size"
+  <div class="p-6 flex justify-center items-center">
+    <v-sheet
+      ref="container"
+      @pointerdown="dragstart"
+      color="grey-darken-4"
+      class="overflow-visible relative border-solid border-gray-600 border-1"
+      rounded
+      :height="size"
+      :width="size"
+    >
+      <!-- Horizontal lines -->
+      <div
+        v-for="top in ['top-1/5', 'top-2/5', 'top-3/5', 'top-4/5']"
+        :class="[
+          top,
+          'absolute w-full border-solid border-b-gray-600 border-b-1',
+        ]"
+      />
+
+      <!-- Vertical lines -->
+      <div
+        v-for="left in ['left-1/5', 'left-2/5', 'left-3/5', 'left-4/5']"
+        :class="[
+          left,
+          'absolute h-full border-solid border-l-gray-600 border-l-1',
+        ]"
+      />
+
+      <!-- Pointer -->
+      <v-icon
+        ref="pointer"
+        :class="[
+          'absolute z-10 transform',
+          !isDragging && 'transition-transform duration-100 ease-linear',
+        ]"
+        :size="pointerSize"
+        :style="{
+          '--tw-translate-x': `${x}px`,
+          '--tw-translate-y': `${y}px`,
+        }"
+        icon="mdi-circle"
+      />
+
+      <!-- Labels -->
+      <span
+        class="absolute -translate-x-full -translate-y-1/2 -left-2 top-1/2 text-xs"
+        >{{ props.labelLeft }}</span
       >
-        <!-- Horizontal lines -->
-        <div
-          v-for="top in ['top-1/5', 'top-2/5', 'top-3/5', 'top-4/5']"
-          :class="[
-            top,
-            'absolute w-full border-solid border-b-gray-600 border-b-1',
-          ]"
-        />
-
-        <!-- Vertical lines -->
-        <div
-          v-for="left in ['left-1/5', 'left-2/5', 'left-3/5', 'left-4/5']"
-          :class="[
-            left,
-            'absolute h-full border-solid border-l-gray-600 border-l-1',
-          ]"
-        />
-
-        <!-- Pointer -->
-        <v-icon
-          ref="pointer"
-          :class="[
-            'absolute z-10 transform',
-            !isDragging && 'transition-transform duration-100 ease-linear',
-          ]"
-          :size="pointerSize"
-          :style="{
-            '--tw-translate-x': `${x}px`,
-            '--tw-translate-y': `${y}px`,
-          }"
-          icon="mdi-circle"
-        />
-
-        <!-- Labels -->
-        <span
-          class="absolute -translate-x-full -translate-y-1/2 -left-2 top-1/2 text-xs"
-          >{{ props.labelLeft }}</span
-        >
-        <span
-          class="absolute -translate-y-full -translate-x-1/2 left-1/2 -top-2 text-xs"
-          >{{ props.labelTop }}</span
-        >
-        <span
-          class="absolute translate-x-full -translate-y-1/2 -right-2 top-1/2 text-xs"
-          >{{ props.labelRight }}</span
-        >
-        <span
-          class="absolute translate-y-full -translate-x-1/2 left-1/2 -bottom-2 text-xs"
-          >{{ props.labelBottom }}</span
-        >
-      </v-sheet>
-    </div>
-  </Focusable>
+      <span
+        class="absolute -translate-y-full -translate-x-1/2 left-1/2 -top-2 text-xs"
+        >{{ props.labelTop }}</span
+      >
+      <span
+        class="absolute translate-x-full -translate-y-1/2 -right-2 top-1/2 text-xs"
+        >{{ props.labelRight }}</span
+      >
+      <span
+        class="absolute translate-y-full -translate-x-1/2 left-1/2 -bottom-2 text-xs"
+        >{{ props.labelBottom }}</span
+      >
+    </v-sheet>
+  </div>
 </template>

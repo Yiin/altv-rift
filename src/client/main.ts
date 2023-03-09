@@ -1,6 +1,8 @@
-import alt from "alt-client";
-
-import "./scenes/auth";
-import "./scenes/character-creation";
-import "./scenes/character-selection";
-import "./dialogs/storylines";
+import "./events/connection-complete";
+import "./modules/chat";
+import "./modules/dev";
+import "./modules/inventory-manager";
+import "./modules/discord-auth";
+import "./modules/character-creation";
+import "./modules/npc";
+import "./sync";

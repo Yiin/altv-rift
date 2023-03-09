@@ -41,12 +41,12 @@ export const features = {
     },
     {
       name: "Nose profile",
-      x: [3, "Short", "Long"], // Nose Bridge Depth
-      y: [5, "Crooked", "Curved"], // Nose Broken
+      x: [5, "Broken left", "Broken right"], // Nose Broken
+      y: [3, "Crooked", "Curved"], // Nose Bridge Depth
     },
     {
       name: "Nose tip",
-      x: [2, "Broken left", "Broken right"], // Nose Tip Length
+      x: [2, "Long", "Short"], // Nose Tip Length
       y: [4, "Tip up", "Tip down"], // Nose Tip Height
     },
   ],
@@ -58,13 +58,13 @@ export const features = {
     },
     {
       name: "Cheeks",
-      x: [10, "Gaunt", "Puffed"], // Cheek Depth
+      x: [10, "Puffed", "Gaunt"], // Cheek Depth
     },
   ],
   Lips: [
     {
       name: "Lips",
-      x: [12, "Thin", "Fat"], // Lip Thickness
+      x: [12, "Fat", "Thin"], // Lip Thickness
     },
   ],
   Jaw: [

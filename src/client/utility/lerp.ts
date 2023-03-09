@@ -1,8 +1,7 @@
 import alt from "alt-client";
 import native from "natives";
 import { distance, vectorLerp } from "@shared/utility/vector";
-import rpc from "altv-rpc";
-import { RPC } from "@shared/constants/rpcs";
+import { Events } from "@shared/constants/events";
 import { loadModel } from "./model";
 import { sleep } from "./sleep";
 
@@ -46,17 +45,12 @@ const LerpObject = {
   /**
    * Create and move a temporary object.
    */
-  async tempLerp({
-    model,
-    start,
-    end,
-    speed = 0.1,
-  }: {
-    model: string;
-    start: alt.IVector3;
-    end: alt.IVector3;
-    speed: number;
-  }) {
+  async tempLerp(
+    model: string,
+    start: alt.IVector3,
+    end: alt.IVector3,
+    speed: number
+  ) {
     const hash = alt.hash(model);
     await loadModel(hash);
 
@@ -81,4 +75,4 @@ const LerpObject = {
   },
 };
 
-rpc.on(RPC.Client.PLAYER_EMIT_TEMP_OBJECT_LERP, LerpObject.tempLerp);
+alt.onServer(Events.Client.PLAYER_EMIT_TEMP_OBJECT_LERP, LerpObject.tempLerp);

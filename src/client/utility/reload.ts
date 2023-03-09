@@ -1,8 +1,8 @@
-import { RPC } from "@shared/constants/rpcs";
 import alt from "alt-client";
 import native from "natives";
+import { Events } from "@shared/constants/events";
 
-alt.onServer(RPC.Client.PLAYER_RELOAD, handleReload);
+alt.onServer(Events.Client.PLAYER_RELOAD, handleReload);
 
 function handleReload() {
   let attempts = 0;

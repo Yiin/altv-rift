@@ -1,19 +1,32 @@
+import { Player } from "alt-server";
 import { PrismaClient } from "@prisma/client";
 import { container } from "@shared/ioc-container";
-import { Player } from "alt-server";
 
 const prisma = container.get(PrismaClient);
 
+declare module "alt-server" {
+  export interface Player {
+    saveCharacter(this: Player): Promise<void>;
+  }
+}
+
 Player.prototype.saveCharacter = async function () {
-  await prisma.character.upsert({
+  if (!this.store.isLoggedIn || !this.store.character) {
+    return;
+  }
+
+  const { id, name, userId, inventory, ...data } = this.store.character;
+
+  await prisma.character.update({
     where: {
-      id: this.character!.id,
+      id,
     },
-    update: {
-      ...this.character,
-    },
-    create: {
-      ...this.character!,
+    data: {
+      ...data,
+      inventory,
+      lastPosition: this.pos,
+      rot: this.rot.z,
+      health: this.health,
     },
   });
 };

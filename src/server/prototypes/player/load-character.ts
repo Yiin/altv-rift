@@ -1,20 +1,33 @@
+import { Player } from "alt-server";
 import { PrismaClient } from "@prisma/client";
 import { container } from "@shared/ioc-container";
-import { Player } from "alt-server";
+import { Character } from "@shared/interfaces";
 
 const prisma = container.get(PrismaClient);
 
+declare module "alt-server" {
+  export interface Player {
+    loadCharacter(this: Player, characterId: string): Promise<Character | null>;
+  }
+}
+
 Player.prototype.loadCharacter = async function (characterId: string) {
-  const character = await prisma.character.findFirst({
+  if (!this.store.isLoggedIn) {
+    throw new Error("Unauthenticated.");
+  }
+
+  const character = (await prisma.character.findFirst({
     where: {
       id: characterId,
-      userId: this.user!.id,
+      userId: this.store.user!.id,
     },
-  });
+  })) as Character | null;
 
-  if (character) {
-    this.character = character;
+  if (!character) {
+    return null;
   }
+
+  this.store.character = character;
 
   return character;
 };

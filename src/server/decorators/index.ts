@@ -1,5 +1,5 @@
 // @index('./*.ts', f => `export * from "${f.path}";`)
-export * from "./handle-event";
-export * from "./on-rpc";
-export * from "./register-rpc";
+export * from "./client-rpc";
+export * from "./on-client";
+export * from "./on";
 // @endindex

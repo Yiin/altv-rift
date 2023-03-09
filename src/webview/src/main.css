@@ -1,7 +1,7 @@
 @tailwind utilities;
 
 :root {
-  font-size: 1.2vh;
+  font-size: max(10px, 1.2vh);
 }
 
 :main {
@@ -16,8 +16,8 @@ body {
 body {
   margin: 0;
   background: transparent;
-  /* background-image: url(https://kagi.com/proxy/landscape-sea-hill-morning-coast-horizon-panorama-Grand-Theft-Auto-V-Terrain-mountain-atmospheric-phenomenon-mountainous-landforms-aerial-photography-mountain-range-6000x2513-px-565967.jpg?c=YuR_IGYZWtVQ8cX_0quxG0cOlN4xxa-MlJYioke5kem0oWfZJF3G0TB25cSLrJPHvLKym9B83SRsRk5-_zokTIEXHj7juUX8RK1WPtjSY2Hd9URHhV08pR9sIWv5gemJQNo4QRB19wg_DREx5guxPszGkOAGTBXlR6SNamAqjtGaiBrrQhOg3qNmZrGxjhyS_ykonJjwhIOVgDZYkV305FjrkNbsWwZ6moWS-tIeuy1DVq50knqOfV7Q8ZaUe5pPURYpYIUrTEpgsL0onPP6Xr5tPc1PmMD0ajtBDBP_2P4%3D);
-  background-size: cover; */
+  /* background-image: url(https://news-cdn.softpedia.com/images/news2/GTA-5-Gets-New-Gorgeous-4K-Screenshots-on-PC-478043-23.jpg); */
+  background-size: cover;
 }
 
 *:has(::-webkit-scrollbar) {
@@ -46,10 +46,6 @@ body {
   background-color: transparent;
 }
 
-.select-none {
-  user-select: none;
-}
-
 .v-application {
   background: transparent !important;
 }
@@ -58,7 +54,7 @@ body {
   overflow: visible;
 }
 
-.v-card--variant-elevated,
-.v-card--variant-flat {
-  background: rgba(0, 0, 0, 0.5) !important;
+.v-card--transparent {
+  --card-bg-color: rgba(0, 0, 0, 0.5);
+  background: var(--card-bg-color) !important;
 }

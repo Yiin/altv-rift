@@ -1,11 +1,11 @@
-import { RPC } from "@shared/constants/rpcs";
-import rpc from "altv-rpc";
+import alt from "alt-client";
 import native from "natives";
+import { Events } from "@shared/constants/events";
 
-rpc.on(RPC.Client.IPL_LOAD, (name: string) => {
+alt.onServer(Events.Client.IPL_LOAD, (name: string) => {
   native.requestIpl(name);
 });
 
-rpc.on(RPC.Client.IPL_UNLOAD, (name: string) => {
+alt.onServer(Events.Client.IPL_UNLOAD, (name: string) => {
   native.removeIpl(name);
 });

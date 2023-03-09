@@ -15,9 +15,10 @@
     "noErrorTruncation": true,
     "paths": {
       "@/*": ["./src/*"],
-      "@shared/*": ["../shared/*"]
-    },
+      "@shared/*": ["../shared/*"],
+      "@prisma/client": ["../../node_modules/@prisma/client"]
+    }
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "../shared/**/*"],
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "../shared/**/*", "../../node_modules/@prisma/client/**/*.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -44,7 +44,7 @@ export function getPointsInCircle(
   center: alt.IVector2
 ): alt.IVector2[] {
   const slice = (2 * Math.PI) / points;
-  const pointDefs = [];
+  const pointDefs: { x: number; y: number }[] = [];
 
   for (let i = 0; i < points; i++) {
     const sliceAngle = slice * i;

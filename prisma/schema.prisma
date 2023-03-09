@@ -18,6 +18,16 @@ model User {
   fresh      Boolean     @default(true)
   createdAt  DateTime    @default(now())
   characters Character[]
+  interface  Interface?
+}
+
+type Interface {
+  inventory ScreenPosition?
+}
+
+type ScreenPosition {
+  x Float
+  y Float
 }
 
 model Character {
@@ -30,6 +40,57 @@ model Character {
   appearance   Appearance
   health       Float
   createdAt    DateTime   @default(now())
+  inventory    Inventory
+}
+
+type Inventory {
+  items InventoryItem[]
+  size  Int
+}
+
+type InventoryItem {
+  slot Int
+  data ItemData
+}
+
+enum ItemType {
+  WEAPON
+  AMMO
+  CLOTHING
+}
+
+type ItemData {
+  key      String
+  type     ItemType
+  WEAPON   WeaponItem?
+  AMMO     AmmoItem?
+  CLOTHING ClothingItem?
+}
+
+type WeaponItem {
+  customName String?
+  durability Float
+
+  ammo       EquipedAmmo?
+  tints      Int[]        @default([])
+  components Int[]        @default([])
+}
+
+type EquipedAmmo {
+  key  String
+  data AmmoItem
+}
+
+type AmmoItem {
+  amount Int
+}
+
+type ClothingItem {
+  customName String?
+  durability Float
+
+  // Color
+  palette Int
 }
 
 type Position {
@@ -72,7 +133,9 @@ type Appearance {
 
   // The hair identifier that this character will be using.
   // Should be a relative id to the dlc hash.
-  hair Int
+  hair           Int
+  hairCollection String
+  hairOverlay    String
 
   // The dlc hash of the hair to use.
   hairDlc Int

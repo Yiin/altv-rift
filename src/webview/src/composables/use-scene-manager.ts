@@ -1,14 +1,9 @@
-
-import { useRouter } from 'vue-router';
+import { useRouter } from "vue-router";
 
 export const useSceneManager = () => {
-  const router = useRouter()
+  const router = useRouter();
 
-  if ('alt' in window) {
-    alt.on('scene:Change', (newScene: string) => {
-      router.replace(newScene);
-    });
-  } else {
-    router.push('/create-character');
-  }
-}
+  alt.on("scene:Change", (newScene: string) => {
+    router.replace(newScene);
+  });
+};

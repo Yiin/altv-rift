@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import vuetify from "vite-plugin-vuetify";
+import externalGlobals from "rollup-plugin-external-globals";
 import vue from "@vitejs/plugin-vue";
 import path from "path";
 
@@ -20,9 +21,16 @@ export default defineConfig({
     alias: [
       { find: "@", replacement: path.resolve(__dirname, "./src") },
       { find: "@shared", replacement: path.resolve(__dirname, "../shared") },
+      {
+        find: "alt-shared",
+        replacement: "alt",
+      },
     ],
   },
   plugins: [
+    externalGlobals({
+      "alt-shared": "alt",
+    }),
     vue(),
     vuetify({
       autoImport: true,

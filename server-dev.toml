@@ -6,13 +6,13 @@ modules = [
 
 resources = [
   "main",
-  "altv-discord-auth"
+  "qa-tools"
 ]
 
 debug = true
 
 announce = false
-host = '127.0.0.1'
+host = '192.168.68.102'
 port = 8888
 
 [js-module]

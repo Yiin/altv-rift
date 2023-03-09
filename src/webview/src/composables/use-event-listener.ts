@@ -1,8 +1,6 @@
 import { onUnmounted, Ref } from "vue";
 
-interface Options {
-  isActive?: Ref<boolean>;
-}
+type Options = boolean | AddEventListenerOptions | undefined;
 
 export const useEventListener = <K extends keyof WindowEventMap>(
   type: K,
@@ -11,16 +9,14 @@ export const useEventListener = <K extends keyof WindowEventMap>(
 ) => {
   // keydown event handler
   const handler = (event: WindowEventMap[K]) => {
-    if (options?.isActive?.value ?? true) {
-      inputHandler(event);
-    }
+    inputHandler(event);
   };
 
   // add event listener
-  window.addEventListener(type, handler);
+  window.addEventListener(type, handler, options);
 
   // remove event listener on unmount
   onUnmounted(() => {
-    window.removeEventListener(type, handler);
+    window.removeEventListener(type, handler, options);
   });
 };

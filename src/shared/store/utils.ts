@@ -1,0 +1,111 @@
+import alt from "alt-shared";
+import { get, set } from "lodash-es";
+import { Store } from "pinia";
+import { reactive, toRaw, TriggerOpTypes } from "@vue/reactivity";
+import structuredClone from "core-js-pure/actual/structured-clone";
+import { findPath } from "@shared/utility/object";
+
+type StoreUpdatePayload =
+  | {
+      type: TriggerOpTypes.ADD;
+      path: string | undefined;
+      target: object;
+    }
+  | {
+      type: TriggerOpTypes.SET;
+      path: string | undefined;
+      key: any;
+      newValue: any;
+    }
+  | {
+      type: TriggerOpTypes.DELETE;
+      path: string | undefined;
+      key: any;
+    }
+  | {
+      type: TriggerOpTypes.CLEAR;
+      path: string | undefined;
+    };
+
+export function subscribeToStore<T extends Store>(
+  store: T,
+  {
+    onSetState,
+    onUpdateState,
+  }: {
+    onSetState: (state: any) => void;
+    onUpdateState: (payload: StoreUpdatePayload) => void;
+  }
+) {
+  store.$subscribe(
+    (mutation, state) => {
+      if (!mutation.events) {
+        onSetState(toRaw(state));
+        return;
+      }
+      const events = Array.isArray(mutation.events)
+        ? mutation.events
+        : [mutation.events];
+
+      for (const event of events) {
+        const path = findPath(toRaw(state), event.target)?.join(".");
+
+        const { type, target, key, newValue } = event;
+
+        let payload;
+        switch (type) {
+          case "add":
+            payload = { type, path, target };
+            break;
+          case "set":
+            payload = { type, path, key, newValue };
+            break;
+          case "delete":
+            payload = { type, path, key };
+            break;
+          case "clear":
+            payload = { type, path };
+            break;
+        }
+        if (payload) {
+          onUpdateState(payload);
+        }
+      }
+    },
+    { immediate: true, flush: "sync" }
+  );
+}
+
+export function updateStoreState<S extends Store>(
+  store: S,
+  event: { type: string; target: any; key: string; newValue: any; path: string }
+) {
+  const { type, target, key, newValue, path } = event;
+
+  switch (type) {
+    case "add":
+      if (path) {
+        set(store.$state, path, target);
+      }
+      break;
+    case "set":
+      set(store.$state, `${path ? path + "." : ""}${key}`, newValue);
+      break;
+    case "delete":
+      if (path) {
+        if (get(store.$state, path) instanceof Set) {
+          get(store.$state, path)?.delete(key);
+        } else {
+          delete get(store.$state, path)[key];
+        }
+      } else {
+        delete (store.$state as any)[key];
+      }
+      break;
+    case "clear":
+      if (path) {
+        get(store.$state, path)?.clear();
+      }
+      break;
+  }
+}

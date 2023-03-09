@@ -1,5 +1,3 @@
-import { OverlayType } from "../scenes/create-character/data/overlays";
-
 type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
   k: infer I
 ) => void

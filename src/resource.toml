@@ -1,3 +1,6 @@
 type = "js"
 main = "server.js"
 client-main = "client.js"
+client-files = [
+	"client/*"
+]

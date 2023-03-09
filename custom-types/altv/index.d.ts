@@ -1,48 +1,57 @@
 declare module "alt-shared" {
-  export interface ICustomGlobalMeta {
-    numberExample: number;
-    stringExample: string;
-  }
-
-  export interface ICustomPlayerStreamSyncedMeta {
-    numberExample: number;
-    stringExample: string;
-  }
+  export interface ICustomPlayerSyncedMeta {}
 }
 
 declare module "alt-server" {
-  export interface IServerEvent {
-    "discord:AuthDone": (
-      player: import("alt-server").Player,
-      discordInfo: any
-    ) => any;
+  export interface Player {
+    pinia: import("pinia").Pinia;
+    store: ReturnType<
+      typeof import("../../src/shared/store/player.store").usePlayerStore
+    >;
+    hasFullySpawned: boolean;
   }
+
+  // export function on<K extends string, L extends (...args: any[]) => void>(
+  //   eventName: K,
+  //   listener: L
+  // ): void;
 
   export interface ICustomServerEvent {
-    "user:Loaded": (player: import("alt-server").Player) => any;
+    USER_LOADED: (player: import("alt-server").Player) => Promise<void> | void;
   }
 
-  export interface Player {
-    user?: LoadedUser;
-    character?: import("@prisma/client").Character;
-
-    loadUser(user: LoadedUser): Promise<LoadedUser | null>;
-    loadUser(discordId: string): Promise<LoadedUser | null>;
-    createCharacter(
-      characterData: import("@prisma/client").Prisma.CharacterCreateInput
-    ): Promise<import("@prisma/client").Character>;
-    saveCharacter(): Promise<void>;
-    deleteCharacter(characterId: string): Promise<void>;
-    loadCharacter(
-      characterId: string
-    ): Promise<import("@prisma/client").Character | null>;
-    getCharacters(): Promise<import("@prisma/client").Character[]>;
-    updateCharacterAppearance(
-      appearance: import("@prisma/client").Appearance
-    ): void;
+  export interface ICustomColshapeMeta {
+    npcId?: import("../../src/shared/modules/npc/npc").Npc["id"];
   }
+
+  type IClientEventHandler = (
+    player: import("alt-server").Player,
+    ...args: any[]
+  ) => any;
+
+  export type IClientEvent = {
+    [key in keyof typeof import("../../src/shared/constants/events").Events.Server]: IClientEventHandler;
+  };
 }
 
 declare module "alt-client" {
+  export function on<K extends string, L extends (...args: any[]) => void>(
+    eventName: K,
+    listener: L
+  ): void;
+
   export interface ICustomClientEvent {}
+
+  type IServerEventHandler = (...args: any[]) => any;
+
+  export type IServerEvent = {
+    [key in keyof typeof import("../../src/shared/constants/events").Events.Client]: IServerEventHandler;
+  };
+
+  type IWebviewEventHandler = (...args: any[]) => any;
+
+  export interface IWebviewEvent {
+    VIEW_READY: IWebviewEventHandler;
+    PLAY_SOUND: IWebviewEventHandler;
+  }
 }

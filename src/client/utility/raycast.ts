@@ -6,10 +6,10 @@ const Raycast = {
   performRaycast(
     start: alt.IVector3,
     end: alt.IVector3,
-    flags: number,
-    radius: number,
+    flags = 99999,
+    radius: number = 5,
     useShapeTest = false
-  ): [number, boolean, alt.IVector3, alt.IVector3, number] {
+  ) {
     let raycast: number;
 
     // Ignore vehicle if in one.
@@ -27,7 +27,7 @@ const Raycast = {
         end.z,
         flags,
         alt.Player.local.scriptID,
-        7
+        0
       );
     } else {
       raycast = native.startShapeTestCapsule(
@@ -49,7 +49,9 @@ const Raycast = {
       native.setEntityCollision(alt.Player.local.vehicle.scriptID, true, true);
     }
 
-    return native.getShapeTestResult(raycast);
+    const [didComplete, didHit, position, surfaceNormal, entityHit] =
+      native.getShapeTestResult(raycast);
+    return { didComplete, didHit, position, surfaceNormal, entityHit };
   },
 
   /**
@@ -69,8 +71,13 @@ const Raycast = {
       z: start.z + forwardVector.z * 2000,
     };
 
-    const [didComplete, didHit, position, surfaceNormal, entityHit] =
-      Raycast.performRaycast(start, end, flags, radius, useShapeTest);
+    const { didComplete, didHit, position } = Raycast.performRaycast(
+      start,
+      end,
+      flags,
+      radius,
+      useShapeTest
+    );
 
     if (!didComplete || !didHit) {
       return null;
@@ -104,8 +111,13 @@ const Raycast = {
       z: start.z + forwardVector.z * maxDistance,
     };
 
-    const [didComplete, didHit, position, surfaceNormal, entityHit] =
-      Raycast.performRaycast(start, end, flags, radius, useShapeTest);
+    const { didHit, position, entityHit } = Raycast.performRaycast(
+      start,
+      end,
+      flags,
+      radius,
+      useShapeTest
+    );
 
     if (!didHit) {
       return { didComplete: false };
@@ -138,8 +150,13 @@ const Raycast = {
       z: start.z + forwardVector.z * maxDistance,
     };
 
-    const [didComplete, didHit, position, surfaceNormal, entityHit] =
-      Raycast.performRaycast(start, end, flags, radius, useShapeTest);
+    const { didComplete, didHit, position, entityHit } = Raycast.performRaycast(
+      start,
+      end,
+      flags,
+      radius,
+      useShapeTest
+    );
 
     if (!didComplete || !didHit) {
       return { didComplete: false };
@@ -166,8 +183,13 @@ const Raycast = {
       z: start.z + forwardVector.z * 2000,
     };
 
-    const [didComplete, didHit, position, surfaceNormal, entityHit] =
-      Raycast.performRaycast(start, end, flags, radius, useShapeTest);
+    const { didComplete, didHit, position } = Raycast.performRaycast(
+      start,
+      end,
+      flags,
+      radius,
+      useShapeTest
+    );
 
     if (!didComplete || !didHit) {
       return null;

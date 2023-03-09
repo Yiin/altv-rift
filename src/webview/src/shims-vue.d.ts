@@ -56,6 +56,10 @@ declare module "alt" {
   export default alt;
 }
 
+declare module "vue-json-viewer" {
+  export default any;
+}
+
 declare module "vue-drag-resize" {
   import { DefineComponent } from "vue";
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/ban-types

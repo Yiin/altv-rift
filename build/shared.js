@@ -1,5 +1,5 @@
-const dev = process.argv[2] === "-dev"
-console.log("dev:", dev)
+const dev = process.argv[2] === "-dev";
+console.log("dev:", dev);
 
 export const esbuildOptions = {
   bundle: true,
@@ -8,16 +8,15 @@ export const esbuildOptions = {
   logLevel: "info",
   watch: dev,
   sourcemap: dev ? "both" : false,
-  minify: !dev,
+  minify: false,
   keepNames: dev,
-}
+};
 
 export const altvEsbuildOptions = {
-  dev: (dev
+  dev: dev
     ? {
-      enhancedRestartCommand: true,
-    }
-    : false
-  ),
+        enhancedRestartCommand: true,
+      }
+    : false,
   altvEnums: true,
-}
+};

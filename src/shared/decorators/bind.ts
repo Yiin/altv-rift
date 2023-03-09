@@ -1,6 +1,6 @@
-import { container } from "@shared/ioc-container";
-import { logger } from "@shared/logger";
+import alt from "alt-shared";
 import { injectable } from "inversify";
+import { container } from "@shared/ioc-container";
 
 export const bind =
   () =>
@@ -8,8 +8,8 @@ export const bind =
     try {
       const injectableTarget = injectable()(target);
       container.bind(injectableTarget).to(injectableTarget).inSingletonScope();
-      logger.info(`[Module loaded] ${target.name}`);
+      alt.log(`[Module loaded] ${target.name}`);
     } catch (e) {
-      logger.error(`[Module failed to load] ${target.name}`);
+      alt.log(`[Module failed to load] ${target.name}`);
     }
   };

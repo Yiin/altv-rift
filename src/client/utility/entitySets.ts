@@ -1,37 +1,27 @@
-import { RPC } from "@shared/constants/rpcs";
-import rpc from "altv-rpc";
+import alt from "alt-client";
 import native from "natives";
+import { RPC } from "@shared/constants/rpcs";
+import { Events } from "@shared/constants/events";
+import { rpc } from "@/rpc";
 
-rpc.on(
-  RPC.Client.ENTITYSET_ACTIVATE,
-  ({
-    interior,
-    entitySetName,
-  }: {
-    interior: number;
-    entitySetName: string;
-  }) => {
+alt.onServer(
+  Events.Client.ENTITYSET_ACTIVATE,
+  (interior: number, entitySetName: string) => {
     native.activateInteriorEntitySet(interior, entitySetName);
     native.refreshInterior(interior);
   }
 );
 
-rpc.on(
-  RPC.Client.ENTITYSET_DEACTIVATE,
-  ({
-    interior,
-    entitySetName,
-  }: {
-    interior: number;
-    entitySetName: string;
-  }) => {
+alt.onServer(
+  Events.Client.ENTITYSET_DEACTIVATE,
+  (interior: number, entitySetName: string) => {
     native.deactivateInteriorEntitySet(interior, entitySetName);
     native.refreshInterior(interior);
   }
 );
 
-rpc.register(
+rpc.registerServer(
   RPC.Client.ENTITYSET_IS_ACTIVE,
-  ({ interior, entitySetName }: { interior: number; entitySetName: string }) =>
+  (interior: number, entitySetName: string) =>
     native.isInteriorEntitySetActive(interior, entitySetName)
 );

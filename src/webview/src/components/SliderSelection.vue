@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import { clamp } from "lodash";
-import { computed, ref } from "vue";
-import { useFocus } from "../composables/use-focus";
-import { useEventListener } from "../composables/use-event-listener";
-import Focusable from "./Focusable.vue";
+import { computed } from "vue";
 
 const props = defineProps<{
   options: any[];
@@ -14,14 +11,6 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: "update:modelValue", value: any): void;
 }>();
-
-function handleInteraction({ key }: KeyboardEvent) {
-  if (key === "ArrowLeft") {
-    prev();
-  } else if (key === "ArrowRight") {
-    next();
-  }
-}
 
 const selected = computed(() =>
   props.useIndexAsValue
@@ -47,7 +36,7 @@ function next() {
 </script>
 
 <template>
-  <Focusable @keydown="handleInteraction" class="mb-2">
+  <div class="mb-2">
     <div class="flex justify-center items-center gap-4">
       <v-btn
         icon="mdi-chevron-left"
@@ -72,5 +61,5 @@ function next() {
         @click="next"
       />
     </div>
-  </Focusable>
+  </div>
 </template>

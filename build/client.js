@@ -1,6 +1,6 @@
-import esbuild from "esbuild"
-import { altvEsbuild } from "altv-esbuild"
-import { altvEsbuildOptions, esbuildOptions } from "./shared"
+import esbuild from "esbuild";
+import { altvEsbuild } from "altv-esbuild";
+import { altvEsbuildOptions, esbuildOptions } from "./shared";
 
 esbuild.build({
   ...esbuildOptions,
@@ -12,5 +12,15 @@ esbuild.build({
       ...altvEsbuildOptions,
       mode: "client",
     }),
-  ]
-})
+  ],
+  define: {
+    process: JSON.stringify({
+      env: {
+        NODE_ENV: "development",
+      },
+    }),
+  },
+  // banner: {
+  //   js: 'import { createRequire } from "module";const require = createRequire(import.meta.url);',
+  // },
+});

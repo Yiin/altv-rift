@@ -1,0 +1,58 @@
+import alt from "alt-client";
+import native from "natives";
+import { Events } from "@shared/constants/events";
+import { everyTick } from "@/utility/event-helpers";
+import { waitForUserInterface } from "@/utility/user-interface";
+
+alt.on("connectionComplete", handleConnectionComplete);
+alt.setWatermarkPosition(4);
+
+async function handleConnectionComplete() {
+  alt.log("handleConnectionComplete");
+
+  native.destroyAllCams(true);
+  native.renderScriptCams(false, false, 0, false, false, 0);
+
+  alt.setConfigFlag("DISABLE_IDLE_CAMERA", true);
+
+  await waitForUserInterface();
+
+  // Calls the login functionality
+  alt.emitServer(Events.Server.BEGIN_CONNECTION);
+  handleTick();
+}
+
+function handleTick() {
+  native.startAudioScene(`CHARACTER_CHANGE_IN_SKY_SCENE`);
+  native.startAudioScene("FBI_HEIST_H5_MUTE_AMBIENCE_SCENE"); // Used to stop police sound in town
+  native.cancelAllPoliceReports(); // Used to stop default police radio around/In police vehicle
+  native.clearAmbientZoneState(
+    "AZ_COUNTRYSIDE_PRISON_01_ANNOUNCER_GENERAL",
+    false
+  ); // Turn off prison sound
+  native.clearAmbientZoneState(
+    "AZ_COUNTRYSIDE_PRISON_01_ANNOUNCER_WARNING",
+    false
+  ); // Turn off prison sound
+  native.clearAmbientZoneState(
+    "AZ_COUNTRYSIDE_PRISON_01_ANNOUNCER_ALARM",
+    false
+  ); // Turn off prison sound
+  native.setAmbientZoneState("", false, false);
+  native.clearAmbientZoneState("AZ_DISTANT_SASQUATCH", false);
+  native.setAudioFlag("LoadMPData", true);
+  native.setAudioFlag("DisableFlightMusic", true);
+}
+
+alt.on("spawned", () => {
+  native.setPedCanSwitchWeapon(alt.Player.local.scriptID, false);
+});
+
+everyTick(() => {
+  native.hideHudComponentThisFrame(6); // Vehicle Name
+  if (alt.Player.local.vehicle) {
+    native.hideHudComponentThisFrame(7); // Area Name
+  }
+  native.hideHudComponentThisFrame(8); // Vehicle Class
+  native.hideHudComponentThisFrame(9); // Street Name
+});
