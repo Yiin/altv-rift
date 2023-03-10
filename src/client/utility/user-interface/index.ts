@@ -49,6 +49,10 @@ export async function setScene(scene: SCENE) {
 }
 
 export function toggleElement(element: ELEMENT, state: boolean) {
+  if (!webview.url.startsWith(`${url}#/${SCENE.IN_GAME}`)) {
+    return;
+  }
+
   webview.emit(Events.Webview.TOGGLE_ELEMENT, element, state);
 
   if (state) {
