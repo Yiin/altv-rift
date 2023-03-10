@@ -1,0 +1,29 @@
+[server]
+known info:
+• npc state
+• streamed in players
+
+idle actions:
+• walk around
+  req: walking speed, maybe navmesh?
+  action:
+    task:goto
+    if streamed in, sync position with player
+    else update position server-side manually either straight to the point or use navmesh
+• guard
+  req: anim sync
+  action:
+    task:anim guard
+    set heading to outside the base center, preferably to nearby roads
+• animations
+  req: anim sync, investigate possible interactions with nearby items (lean to the wall, sit on chair, work on something)
+  action:
+    task:anim
+    interactions with nearby items likely impossible w/o netowner
+
+special actions:
+• aim at
+• shoot at
+• reposition?
+  req: merge tasks, e.g. goto + aimat = native.taskGoToCoordWhileAimingAtEntity
+• cover
