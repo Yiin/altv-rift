@@ -34,6 +34,7 @@ export async function createLocalPed(
 
   await tick();
 
+  native.setEntityAsMissionEntity(this.ped, true, false); // make sure its not despawned by game engine
   native.stopPedSpeaking(this.ped, true);
   native.setEntityAsMissionEntity(this.ped, true, true);
   native.taskSetBlockingOfNonTemporaryEvents(this.ped, true);
