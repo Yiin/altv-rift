@@ -7,17 +7,34 @@ type ValidationFunction<T = any> = (
 ) => Promise<string | undefined> | string | undefined;
 
 type Validators = Record<string, ValidationFunction[]>;
+type ValidationError = {
+  type: "ValidationError";
+  errors: Record<string, string>;
+};
 
-class ValidationError extends Error {
-  constructor(public errors: Record<string, string>) {
-    super("Validation error");
-  }
+export function makeValidationError(
+  fieldOrErrors: string,
+  message: string
+): ValidationError;
+
+export function makeValidationError(
+  fieldOrErrors: Record<string, string>
+): ValidationError;
+
+export function makeValidationError(
+  fieldOrErrors: string | Record<string, string>,
+  message?: string
+) {
+  return {
+    type: "ValidationError",
+    errors:
+      typeof fieldOrErrors === "string"
+        ? {
+            [fieldOrErrors]: message,
+          }
+        : fieldOrErrors,
+  };
 }
-
-export const makeValidationError = (field: string, message: string) =>
-  new ValidationError({
-    [field]: message,
-  });
 
 export const validate = async (
   values: Record<string, any>,
@@ -37,7 +54,7 @@ export const validate = async (
   }
 
   if (Object.keys(errors).length > 0) {
-    throw new ValidationError(errors);
+    throw makeValidationError(errors);
   }
 };
 

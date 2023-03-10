@@ -129,7 +129,7 @@ alt.onServer(
       webview.destroy();
     }
 
-    webview = new WebView(url, false);
+    webview = new WebView(`${url}#/`, false);
 
     webview.on(Events.Webview.VIEW_READY, () => {
       webview.focus();

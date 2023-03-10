@@ -11,8 +11,12 @@ async function handleConnectionComplete() {
   native.destroyAllCams(true);
   native.renderScriptCams(false, false, 0, false, false, 0);
   native.freezeEntityPosition(alt.Player.local.scriptID, true);
+  native.doScreenFadeOut(0);
+  native.triggerScreenblurFadeIn(0);
 
   alt.setConfigFlag("DISABLE_IDLE_CAMERA", true);
+  alt.setConfigFlag("DISABLE_PED_PROP_KNOCK_OFF", true);
+  alt.setConfigFlag("DISABLE_AUTO_WEAPON_SWAP", true);
 
   await waitForUserInterface();
 
@@ -41,6 +45,7 @@ function handleTick() {
   native.clearAmbientZoneState("AZ_DISTANT_SASQUATCH", false);
   native.setAudioFlag("LoadMPData", true);
   native.setAudioFlag("DisableFlightMusic", true);
+  native.setPedCanSwitchWeapon(alt.Player.local.scriptID, false);
 }
 
 everyTick(() => {

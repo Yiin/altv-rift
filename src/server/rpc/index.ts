@@ -29,7 +29,7 @@ alt.onClient("call:client:response", (_, response) => {
   handlers.delete(response.id);
 
   if (response.error) {
-    handler.reject(response.error);
+    handler.reject(response);
     return;
   }
   handler.resolve(response.result);

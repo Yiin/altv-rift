@@ -33,7 +33,7 @@ alt.onServer("call:server:response", (response) => {
   serverHandlers.delete(response.id);
 
   if (response.error) {
-    handler.reject(response.error);
+    handler.reject(response);
     return;
   }
   handler.resolve(deserialize(response.result));
@@ -95,7 +95,7 @@ getWebview((webview) =>
     browserHandlers.delete(response.id);
 
     if (response.error) {
-      handler.reject(response.error);
+      handler.reject(response);
       return;
     }
     handler.resolve(deserialize(response.result));
@@ -129,10 +129,10 @@ getWebview((webview) =>
         id,
         result,
       });
-    } catch (error) {
+    } catch (error: any) {
       webview.emit("call:client:response", {
         id,
-        error,
+        error: error.error,
       });
     }
   })

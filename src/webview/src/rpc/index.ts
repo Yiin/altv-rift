@@ -24,7 +24,7 @@ alt.on("call:client:response", (response) => {
   clientHandlers.delete(response.id);
 
   if (response.error) {
-    handler.reject(response.error);
+    handler.reject(response);
     return;
   }
   handler.resolve(response.result);

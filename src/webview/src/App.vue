@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { usePlayerStore } from "@shared/store/player.store";
 import { updateStoreState } from "@shared/store/utils";
-import { onMounted, onUnmounted, ref } from "vue";
+import { onMounted } from "vue";
 import { Events } from "../../shared/constants/events";
+import { useAlt } from "./composables/use-alt";
 import { useEventListener } from "./composables/use-event-listener";
 import { useSceneManager } from "./composables/use-scene-manager";
 
 useSceneManager();
-
+const { on } = useAlt();
 const playerStore = usePlayerStore();
 
 useEventListener(
@@ -36,17 +37,12 @@ useEventListener(
   true
 );
 
-function updateState(event: any) {
+on(Events.Webview.UPDATE_STATE, (event: any) => {
   updateStoreState(playerStore, event);
-}
-
-onMounted(() => {
-  alt.on(Events.Webview.UPDATE_STATE, updateState);
-  alt.emit(Events.Webview.VIEW_READY);
 });
 
-onUnmounted(() => {
-  alt.off(Events.Webview.UPDATE_STATE, updateState);
+onMounted(() => {
+  alt.emit(Events.Webview.VIEW_READY);
 });
 </script>
 

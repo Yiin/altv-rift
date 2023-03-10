@@ -1,7 +1,7 @@
 import { Player } from "alt-server";
 import type { ClientOptions, WindowOptions } from "@shared/modules/chat";
-import { MountService, WindowService } from "../services";
 import { container } from "@shared/ioc-container";
+import { MountService, WindowService } from "../services";
 
 /**
  * Updates the specified option for the specified player.

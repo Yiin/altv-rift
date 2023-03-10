@@ -1,9 +1,11 @@
 import { useRouter } from "vue-router";
+import { useAlt } from "./use-alt";
 
 export const useSceneManager = () => {
   const router = useRouter();
+  const { on } = useAlt();
 
-  alt.on("scene:Change", (newScene: string) => {
+  on("scene:Change", (newScene: string) => {
     router.replace(newScene);
   });
 };

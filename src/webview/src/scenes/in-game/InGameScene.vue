@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import { useAlt } from "@/composables/use-alt";
 import { useChatStore } from "@/store/chat.store";
 import { Events } from "@shared/constants/events";
 import { usePlayerStore } from "@shared/store/player.store";
-import { computed, effect, reactive, toRaw } from "vue";
+import { computed, reactive } from "vue";
 import JsonViewer from "vue-json-viewer";
 import ChatBox from "./chat-box/ChatBox.vue";
 import Inventory from "./inventory/Inventory.vue";
@@ -15,15 +16,13 @@ const jsonData = computed(() => ({
   streamedIn: playerStore.sync.npc.streamedIn,
 }));
 
-effect(() => {
-  console.log(playerStore.sync.npc.netOwnerOf instanceof Set);
-});
-
 const visibleElements = reactive(
   new Set(globalThis.altMock ? ["inventory"] : [])
 );
 
-alt.on(Events.Webview.TOGGLE_ELEMENT, (element: string, visible) => {
+const { on } = useAlt();
+
+on(Events.Webview.TOGGLE_ELEMENT, (element: string, visible) => {
   if (visible === null) {
     visible = !visibleElements.has(element);
   }
@@ -32,16 +31,11 @@ alt.on(Events.Webview.TOGGLE_ELEMENT, (element: string, visible) => {
   } else {
     visibleElements.delete(element);
   }
-  switch (element) {
-    case "chat":
-      setFocus(visible);
-      break;
-  }
 });
 </script>
 
 <template>
-  <ChatBox />
+  <ChatBox v-if="visibleElements.has('chat')" />
   <Inventory v-if="visibleElements.has('inventory')" />
 
   <JsonViewer

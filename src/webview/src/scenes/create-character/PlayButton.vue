@@ -8,7 +8,13 @@ const isLoading = ref(false);
 
 async function submit() {
   isLoading.value = true;
-  await createCharacter.submit()
+  try {
+    await createCharacter.submit();
+  } catch (e: any) {
+    if (e.error.type === "ValidationError") {
+      createCharacter.errors = e.error.errors;
+    }
+  }
   isLoading.value = false;
 }
 </script>

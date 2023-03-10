@@ -8,8 +8,6 @@ export const Character = {
    * Apply Appearance Data to a Ped.
    */
   applyAppearance(ped: number, appearance: Appearance) {
-    alt.log("applyAppearance", JSON.stringify(appearance, null, 2));
-
     if (!ped || !native.doesEntityExist(ped)) {
       return;
     }
@@ -41,7 +39,6 @@ export const Character = {
 
     // Head Overlays
     for (const [id, overlay] of Object.entries(appearance.headOverlays)) {
-      alt.log(`Overlay: `, id, JSON.stringify(overlay));
       native.setPedHeadOverlay(ped, +id, overlay.value, overlay.opacity ?? 1);
 
       if (typeof overlay.color1 !== "undefined" && overlay.color1 !== null) {

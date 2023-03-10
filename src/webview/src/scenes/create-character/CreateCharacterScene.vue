@@ -112,7 +112,7 @@ function randomize() {
       <FaceSkin />
       <Appearance />
     </div>
-    <div class="absolute bottom-screen-1/5 left-1/2 -translate-x-1/2">
+    <div class="absolute bottom-screen-1/10 left-1/2 -translate-x-1/2">
       <PlayButton />
     </div>
   </Screen>

@@ -14,13 +14,7 @@ export const clientRpc =
     setImmediate(() => {
       const service = container.get<any>(target.constructor);
       try {
-        rpc.registerClient(eventName, async (...args) => {
-          try {
-            return await service[propertyKey](...args);
-          } catch (e) {
-            throw e;
-          }
-        });
+        rpc.registerClient(eventName, service[propertyKey]);
       } catch (e) {
         captureException(e);
       }

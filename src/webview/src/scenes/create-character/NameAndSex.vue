@@ -4,15 +4,27 @@ import { useCreateCharacter } from "../../store/create-character.store";
 
 const createCharacter = useCreateCharacter();
 
+const nameInputRef = ref<HTMLInputElement>();
 const nameInputWidthRef = ref<HTMLSpanElement>();
 const nameInputWidth = ref(0);
 
 watch(
   () => createCharacter.name,
   () => {
+    delete createCharacter.errors.name;
+
     requestAnimationFrame(() => {
       nameInputWidth.value = nameInputWidthRef.value?.offsetWidth ?? 0;
     });
+  }
+);
+
+watch(
+  () => createCharacter.errors,
+  () => {
+    if (createCharacter.errors.name) {
+      nameInputRef.value?.focus();
+    }
   }
 );
 </script>
@@ -23,6 +35,7 @@ watch(
       <v-card-item>
         <div class="flex flex-col p-4">
           <input
+            ref="nameInputRef"
             type="text"
             v-model="createCharacter.name"
             class="min-w-52 text-4xl rounded-md outline-none"
@@ -37,8 +50,20 @@ watch(
           >
             {{ createCharacter.name }}
           </span>
-          <v-divider class="my-1" />
-          <span class="uppercase text-sm tracking-wider">
+          <v-divider
+            :class="[
+              'my-1',
+              createCharacter.errors.name &&
+                'border-red-500 border-1 opacity-100',
+            ]"
+          />
+          <span
+            v-if="createCharacter.errors.name"
+            class="uppercase text-sm tracking-wider font-bold text-red-500"
+          >
+            {{ createCharacter.errors.name }}
+          </span>
+          <span v-else class="uppercase text-sm tracking-wider">
             Name of your character
           </span>
         </div>

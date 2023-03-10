@@ -10,6 +10,7 @@ import {
 
 export const useCreateCharacter = defineStore("create-character", {
   state: () => ({
+    errors: {} as Record<string, string>,
     name: "",
     sex: 0 as 0 | 1,
     faceFather: 0,

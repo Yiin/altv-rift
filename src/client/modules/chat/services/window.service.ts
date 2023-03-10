@@ -17,18 +17,21 @@ export class WindowService {
   public constructor() {
     getWebview((webView) => {
       this.webView = webView;
-      this.webView.isVisible = false;
     });
   }
 
   public focus() {
     if (!this.webView.isVisible || !this.focusEnabled) return;
-    toggleElement(ELEMENT.CHAT, true);
+    this.webView.emit("vchat:focus", true);
+    this.webView.focus();
+    toggleGameControls(false);
   }
 
   public unfocus() {
     if (!this.webView.isVisible || !this.focusEnabled) return;
-    toggleElement(ELEMENT.CHAT, false);
+    this.webView.emit("vchat:focus", false);
+    this.webView.unfocus();
+    toggleGameControls(true);
   }
 
   public toggleFocus(value: boolean) {
@@ -41,11 +44,11 @@ export class WindowService {
   }
 
   public show() {
-    this.webView.isVisible = true;
+    toggleElement(ELEMENT.CHAT, true);
   }
 
   public hide() {
-    this.webView.isVisible = false;
+    toggleElement(ELEMENT.CHAT, false);
   }
 
   public addMessage(message: string, type: MessageType = MessageType.Default) {

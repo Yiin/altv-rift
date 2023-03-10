@@ -8,7 +8,6 @@ async function getOAuthToken() {
   try {
     const token = await alt.Discord.requestOAuth2Token(DISCORD_CLIENT_ID);
     alt.emitServer(Events.Server.DISCORD_AUTH_DONE, token);
-    native.doScreenFadeOut(1000);
   } catch (e) {
     alt.log("quitGame");
     alt.logError(e);

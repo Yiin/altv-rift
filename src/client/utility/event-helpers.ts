@@ -7,6 +7,7 @@ const intervals: number[] = [];
 const timeouts: number[] = [];
 const ticks: number[] = [];
 let inputFocused = false;
+const registeredKeyDownKeys = new Set();
 
 export function tick() {
   return new Promise((resolve) => {
@@ -71,12 +72,11 @@ export function everyTick(callback: () => void) {
   ticks.push(tick);
 }
 
-const registeredKeyDownKeys = new Set();
-
 export function onKeyDown(key: KeyCode, callback: () => void) {
-  if (registeredKeyDownKeys.has(key)) {
+  if (registeredKeyDownKeys?.has(key)) {
     throw new Error(`KeyDown ${key} is already registered.`);
   }
+  registeredKeyDownKeys?.add(key);
 
   alt.on("keydown", (keyPressed: number) => {
     if (inputFocused) {
@@ -99,4 +99,12 @@ alt.on("disconnect", () => {
     alt.clearInterval(interval);
   });
   intervals.splice(0, intervals.length);
+  timeouts.forEach((timeout) => {
+    alt.clearTimeout(timeout);
+  });
+  timeouts.splice(0, timeouts.length);
+  ticks.forEach((tick) => {
+    alt.clearEveryTick(tick);
+  });
+  ticks.splice(0, ticks.length);
 });

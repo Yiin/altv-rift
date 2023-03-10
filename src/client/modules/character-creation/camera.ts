@@ -30,7 +30,7 @@ export const CharacterCreationCamera = {
       0,
       0
     );
-    // await loadSceneAtCoords(pedPosition);
+    await loadSceneAtCoords(pedPosition);
 
     const fov = 60;
     const startCamPosition = cameraPositionBaseline;
@@ -99,7 +99,6 @@ export const CharacterCreationCamera = {
     );
 
     getWebview().on(Events.Webview.CAMERA_MOVE_START, () => {
-      alt.log("Camera Move Start");
       if (cameraControlInterval) {
         alt.clearEveryTick(cameraControlInterval);
         cameraControlInterval = undefined;
@@ -109,7 +108,6 @@ export const CharacterCreationCamera = {
 
     getWebview().on(Events.Webview.CAMERA_MOVE_END, () => {
       if (cameraControlInterval) {
-        alt.log("Camera Move End");
         alt.clearEveryTick(cameraControlInterval);
         cameraControlInterval = undefined;
       }

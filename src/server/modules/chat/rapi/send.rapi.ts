@@ -1,8 +1,8 @@
 import { Player } from "alt-server";
 import { MessageType } from "@shared/modules/chat";
+import { container } from "@shared/ioc-container";
 import { MountService } from "../services/mount.service";
 import { WindowService } from "../services/window.service";
-import { container } from "@shared/ioc-container";
 import { OptionsService } from "../services";
 import { Chat } from "../chat";
 import { CHAT_PLAYER_NAME_METADATA } from "../consts";
