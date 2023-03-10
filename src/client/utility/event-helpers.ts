@@ -71,7 +71,13 @@ export function everyTick(callback: () => void) {
   ticks.push(tick);
 }
 
+const registeredKeyDownKeys = new Set();
+
 export function onKeyDown(key: KeyCode, callback: () => void) {
+  if (registeredKeyDownKeys.has(key)) {
+    throw new Error(`KeyDown ${key} is already registered.`);
+  }
+
   alt.on("keydown", (keyPressed: number) => {
     if (inputFocused) {
       return;
