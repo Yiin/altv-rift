@@ -34,22 +34,20 @@ export const CharacterPed = {
     const model = isMale ? "mp_m_freemode_01" : "mp_f_freemode_01";
     const hash = alt.hash(model);
     await loadModel(hash);
-    id = native.createPed(1, hash, _pos.x, _pos.y, _pos.z, 0, false, false);
+    id = native.createPed(2, hash, _pos.x, _pos.y, _pos.z, 0, false, false);
 
     return new Promise(async (resolve: Function) => {
       alt.nextTick(async () => {
         if (id === undefined || id < 0) {
           return resolve(-1);
         }
-
-        native.setEntityNoCollisionEntity(id, alt.Player.local.scriptID, false);
+        native.stopPedSpeaking(id, true);
+        native.setEntityAsMissionEntity(id, true, true);
         native.taskSetBlockingOfNonTemporaryEvents(id, true);
         native.setBlockingOfNonTemporaryEvents(id, true);
-        native.setPedFleeAttributes(id, 0, true);
-        native.setPedCombatAttributes(id, 17, true);
-        native.setPedAsEnemy(id, false);
+        // native.freezeEntityPosition(id, true);
         native.setEntityInvincible(id, true);
-        native.freezeEntityPosition(id, true);
+        native.setPedCanRagdoll(id, false);
 
         if (typeof _rot === "object") {
           native.setEntityRotation(id, _rot.x, _rot.y, _rot.z, 1, false);
@@ -124,6 +122,11 @@ export const CharacterPed = {
    * Does not clear previous position or rotation.
    */
   async destroy() {
+    if (id) {
+      native.deletePed(id);
+      native.deleteEntity(id);
+    }
+
     return new Promise((resolve: Function) => {
       let attempts = 0;
       const interval = alt.setInterval(() => {
