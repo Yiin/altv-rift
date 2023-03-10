@@ -100,6 +100,10 @@ export const CharacterCreationCamera = {
 
     getWebview().on(Events.Webview.CAMERA_MOVE_START, () => {
       alt.log("Camera Move Start");
+      if (cameraControlInterval) {
+        alt.clearEveryTick(cameraControlInterval);
+        cameraControlInterval = undefined;
+      }
       cameraControlInterval = alt.everyTick(this.updateCameraMove);
     });
 
