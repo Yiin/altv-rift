@@ -27,3 +27,54 @@ special actions:
 • reposition?
   req: merge tasks, e.g. goto + aimat = native.taskGoToCoordWhileAimingAtEntity
 • cover
+  req: unlikely, unless getting possible cover options from netowner?
+  action:
+    task:goto (run)
+    task:take-cover
+    and hope for the best
+
+we probably need some kind of state flags, e.g.
+  - TAKING_COVER
+  - WALKING
+  - RUNNING
+  - AIMING
+  - SHOOTING
+so we can apply correct natives to match these states
+
+scenarios:
+One option of running multiple tasks at once would be to borrow R* model and use scenarios.
+Netowner would give a scenario to the ped to execute and he would sync the current task
+the ped is running. 
+e.g. npc.setScenario(Scenario)
+
+- FIND_COVER:
+  client:
+    Get closest cover place
+    if found:
+      task:goto (run)
+    if nearby cover:
+      task:take-cover
+- IDLE:
+  client:
+    if currentTask timed out:
+      task:<random-idle-task>
+    if alerted:
+      task:guard
+    if defensive:
+      scenario:WATCHOUT
+    if triggered:
+      scenario:DEFEND
+- WATCHOUT:
+  client:
+    task:aimat + task:reposition to keep distance
+- DEFEND:
+  client:
+    if target getting away:
+      task:shootat + task:reposition to get closer
+    else:
+      task:shootat + task:cover if target getting too close
+  
+if scenario active and npc is streamed out:
+  server:
+    task:goto (walk)
+    scenario:IDLE
