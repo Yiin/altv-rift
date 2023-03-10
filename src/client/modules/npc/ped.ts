@@ -78,6 +78,12 @@ export class StreamedNpc {
     native.setPedPathPreferToAvoidWater(this.ped, true);
     native.setPedPathClimbCostModifier(this.ped, 0);
     native.setPedCanEvasiveDive(this.ped, false);
+    native.setPedDropsWeaponsWhenDead(this.ped, false);
+    native.setPedConfigFlag(
+      this.ped,
+      PED_CONFIG_FLAG.DisableGoToWritheWhenInjured,
+      true
+    );
     native.setPedConfigFlag(this.ped, PED_CONFIG_FLAG.IgnoreBeingOnFire, true);
     native.setPedConfigFlag(
       this.ped,
