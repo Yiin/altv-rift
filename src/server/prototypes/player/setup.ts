@@ -1,11 +1,10 @@
-import alt, { Player } from "alt-server";
-import { createPinia, defineStore, Store, StoreState } from "pinia";
-import { toRaw, TriggerOpTypes } from "vue";
+import { Player } from "alt-server";
+import { createPinia } from "pinia";
 import { Events } from "@shared/constants/events";
-import { findPath } from "@shared/utility/object";
 import { usePlayerStore } from "@shared/store/player.store";
 import { subscribeToStore } from "@shared/store/utils";
 import { Config } from "@/utility/config";
+import { clearMessageHistory } from "@/modules/chat";
 
 declare module "alt-server" {
   export interface Player {
@@ -17,6 +16,8 @@ Player.prototype.setup = function () {
   if (this.store) {
     return;
   }
+
+  clearMessageHistory(this);
 
   this.pinia = createPinia();
   this.store = usePlayerStore(this.pinia);
