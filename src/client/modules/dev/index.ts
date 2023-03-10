@@ -11,7 +11,7 @@ export * from "./teleport-to-waypoint";
 
 let isOpen = false;
 
-onKeyDown(KeyCode.Z, toggleInventory);
-export function toggleInventory() {
+onKeyDown(KeyCode.X, toggleJSON);
+export function toggleJSON() {
   toggleElement(ELEMENT.JSON, (isOpen = !isOpen));
 }
