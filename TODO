@@ -1,13 +1,13 @@
 
 NPC Sync:
   ✔ Stream range & streamed npc owner @done(23-03-03 17:43)
-  ☐ Simulate npc behaviour on server (Idle actions)
+  ☐ Simulate npc behaviour on server (Idle actions) @started(23-03-09 23:24)
   Create npc on server with following parameters:
     ✔ Position @done(23-03-03 17:43)
     ✔ Rotation @done(23-03-03 17:43)
     ✔ Health @done(23-03-03 17:43)
     ✔ Appearance @done(23-03-03 17:43)
-    ☐ Weapon
+    ✔ Weapon @done(23-03-09 23:24)
   Npcs can have following states:
     ✔ Friendly (unkillable, unshootable, static) @done(23-03-03 17:43)
     ✔ Enemy (killable, shootable, dynamic) @done(23-03-03 17:43)
@@ -39,12 +39,12 @@ NPC Sync:
       ✔ Rotation @done(23-03-03 17:43)
       ✔ Health @done(23-03-03 17:43)
       ✔ Appearance @done(23-03-03 17:43)
-      ☐ Weapon
+      ✔ Weapon @done(23-03-09 23:23)
     Dynamic:
       ✔ Walking/running @done(23-03-03 17:43)
       ☐ Reload
       ✔ Ragdoll @done(23-03-08 05:47)
-      ☐ Aim at
+      ☐ Aim at @started(23-03-09 23:23)
       ☐ Shoot At
       ✔ Killed @done(23-03-03 17:43)
       ☐ Sounds?
@@ -52,7 +52,7 @@ NPC Sync:
     ✔ Idle @done(23-03-03 17:44)
     ✔ Walk to @done(23-03-03 17:44)
     ✔ Run to @done(23-03-08 05:47)
-    ☐ Aim at
+    ☐ Aim at @started(23-03-09 23:23)
     ☐ Shoot at
     ☐ Cover?
     ☐ Play animation
