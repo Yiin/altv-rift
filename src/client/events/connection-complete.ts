@@ -8,10 +8,9 @@ alt.on("connectionComplete", handleConnectionComplete);
 alt.setWatermarkPosition(4);
 
 async function handleConnectionComplete() {
-  alt.log("handleConnectionComplete");
-
   native.destroyAllCams(true);
   native.renderScriptCams(false, false, 0, false, false, 0);
+  native.freezeEntityPosition(alt.Player.local.scriptID, true);
 
   alt.setConfigFlag("DISABLE_IDLE_CAMERA", true);
 
@@ -43,10 +42,6 @@ function handleTick() {
   native.setAudioFlag("LoadMPData", true);
   native.setAudioFlag("DisableFlightMusic", true);
 }
-
-alt.on("spawned", () => {
-  native.setPedCanSwitchWeapon(alt.Player.local.scriptID, false);
-});
 
 everyTick(() => {
   native.hideHudComponentThisFrame(6); // Vehicle Name

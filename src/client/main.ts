@@ -1,4 +1,4 @@
-import "./events/connection-complete";
+import "./events";
 import "./modules/chat";
 import "./modules/dev";
 import "./modules/inventory-manager";
