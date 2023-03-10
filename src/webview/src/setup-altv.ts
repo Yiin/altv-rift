@@ -14,28 +14,62 @@ if (!("alt" in globalThis)) {
   const once = globalThis.alt.once;
   const off = globalThis.alt.off;
 
-  const handlers: any[] = [];
+  const handlers: {
+    eventName: string;
+    handler: (...args: any[]) => void;
+    listener: (...args: any[]) => void;
+  }[] = [];
 
-  globalThis.alt.on = function (name: string, cb: (...args: any[]) => void) {
+  globalThis.alt.on = function (
+    eventName: string,
+    listener: (...args: any[]) => void
+  ) {
     function handler(...args: any[]) {
-      cb(...args.map((arg) => deserialize(arg)));
+      listener(...args.map((arg) => deserialize(arg)));
     }
-    handlers.push([cb, handler]);
-    on(name, handler);
+    handlers.push({
+      eventName,
+      handler,
+      listener,
+    });
+    on(eventName, handler);
   };
 
-  globalThis.alt.once = function (name: string, cb: (...args: any[]) => void) {
+  globalThis.alt.once = function (
+    eventName: string,
+    listener: (...args: any[]) => void
+  ) {
     function handler(...args: any[]) {
-      cb(...args.map((arg) => deserialize(arg)));
+      handlers.splice(
+        handlers.findIndex(
+          (item) =>
+            item.eventName === eventName &&
+            item.listener === listener &&
+            item.handler === handler
+        ),
+        1
+      );
+      listener(...args.map((arg) => deserialize(arg)));
     }
-    handlers.push([cb, handler]);
-    once(name, handler);
+    handlers.push({
+      eventName,
+      handler,
+      listener,
+    });
+    once(eventName, handler);
   };
 
-  globalThis.alt.off = function (name: string, cb: (...args: any[]) => void) {
-    const handler = handlers.find(([cb2]) => cb2 === cb)?.[1];
-    if (handler) {
-      off(name, handler);
+  globalThis.alt.off = function (
+    eventName: string,
+    listener: (...args: any[]) => void
+  ) {
+    const index = handlers.findIndex(
+      (item) => item.eventName === eventName && item.listener === listener
+    );
+    if (index > -1) {
+      const { eventName, handler } = handlers[index];
+      handlers.splice(index, 1);
+      off(eventName, handler);
     }
   };
 }
