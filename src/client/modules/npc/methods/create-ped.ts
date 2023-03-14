@@ -30,6 +30,7 @@ export async function createLocalPed(
 
   alt.once("disconnect", () => {
     native.deletePed(this.ped);
+    native.deleteEntity(this.ped);
   });
 
   await tick();

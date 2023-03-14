@@ -20,8 +20,8 @@ import {
 } from "@shared/data/items";
 import { DamageMultiplier } from "@shared/data/damage-multipliers";
 import { taskAimAt, taskGoTo } from "@shared/modules/npc/tasks";
-import { Events } from "@shared/constants/events";
 import { Npc } from "@shared/modules/npc/npc";
+import { ServerEvents } from "@shared/events/server";
 import { rpc } from "@/rpc";
 import { registerCmd } from "../chat";
 import { useNpcStore } from "./npc.store";
@@ -113,44 +113,47 @@ registerCmd("aimat", (player, args) => {
   npc.currentTask = taskAimAt(player.id);
 });
 
-alt.onClient(Events.Server.SYNC_NPC, (player, payload: NpcSyncPayload) => {
-  if (npcStore.netOwners.get(payload.id) !== player.id) {
-    return;
+alt.onClient(
+  ServerEvents.FromClient.SYNC_NPC,
+  (player, payload: NpcSyncPayload) => {
+    if (npcStore.netOwners.get(payload.id) !== player.id) {
+      return;
+    }
+
+    const npc = npcStore.list.get(payload.id);
+
+    if (!npc) {
+      return;
+    }
+
+    const { velocity, rotationVelocity, ...rest } = payload;
+
+    const dataToUpdate: Partial<Npc> = omit(rest, [
+      "id",
+      "type",
+      "modelHash",
+      "totalHealth",
+      "health",
+      "weaponHash",
+      "currentTask",
+    ]);
+
+    if (velocity) {
+      dataToUpdate.velocity = [Date.now() as LastUpdateTimestamp, velocity];
+    }
+
+    if (rotationVelocity) {
+      dataToUpdate.rotationVelocity = [
+        Date.now() as LastUpdateTimestamp,
+        rotationVelocity,
+      ];
+    }
+
+    Object.assign(npc, dataToUpdate);
   }
+);
 
-  const npc = npcStore.list.get(payload.id);
-
-  if (!npc) {
-    return;
-  }
-
-  const { velocity, rotationVelocity, ...rest } = payload;
-
-  const dataToUpdate: Partial<Npc> = omit(rest, [
-    "id",
-    "type",
-    "modelHash",
-    "totalHealth",
-    "health",
-    "weaponHash",
-    "currentTask",
-  ]);
-
-  if (velocity) {
-    dataToUpdate.velocity = [Date.now() as LastUpdateTimestamp, velocity];
-  }
-
-  if (rotationVelocity) {
-    dataToUpdate.rotationVelocity = [
-      Date.now() as LastUpdateTimestamp,
-      rotationVelocity,
-    ];
-  }
-
-  Object.assign(npc, dataToUpdate);
-});
-
-alt.onClient(Events.Server.STOP_NPC_TASK, (player, npcId: NpcID) => {
+alt.onClient(ServerEvents.FromClient.STOP_NPC_TASK, (player, npcId: NpcID) => {
   if (!player.store?.sync.npc.netOwnerOf.has(npcId)) return;
 
   const npc = npcStore.list.get(npcId);

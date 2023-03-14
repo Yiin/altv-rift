@@ -15,7 +15,7 @@ import {
 } from "@shared/data/items";
 import { AmmoItemData, InventoryItem } from "@shared/interfaces";
 import { getItemData } from "@shared/utility/inventory";
-import { Events } from "@shared/constants/events";
+import { ServerEvents } from "@shared/events/server";
 import { rpc } from "@/rpc";
 import { registerCmd } from "../chat";
 
@@ -39,8 +39,7 @@ registerCmd("giveitem", (player, [key, amount]) => {
   }
 });
 
-alt.onClient(Events.Server.REQUEST_ITEM, (player) => {
-  alt.log("Adding item");
+alt.onClient(ServerEvents.FromClient.REQUEST_ITEM, (player) => {
   player.addItem(sample(weapons)!.key, {
     durability: 100,
     components: [],

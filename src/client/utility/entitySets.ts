@@ -1,11 +1,11 @@
 import alt from "alt-client";
 import native from "natives";
 import { RPC } from "@shared/constants/rpcs";
-import { Events } from "@shared/constants/events";
+import { ClientEvents } from "@shared/events/client";
 import { rpc } from "@/rpc";
 
 alt.onServer(
-  Events.Client.ENTITYSET_ACTIVATE,
+  ClientEvents.FromServer.ENTITYSET_ACTIVATE,
   (interior: number, entitySetName: string) => {
     native.activateInteriorEntitySet(interior, entitySetName);
     native.refreshInterior(interior);
@@ -13,7 +13,7 @@ alt.onServer(
 );
 
 alt.onServer(
-  Events.Client.ENTITYSET_DEACTIVATE,
+  ClientEvents.FromServer.ENTITYSET_DEACTIVATE,
   (interior: number, entitySetName: string) => {
     native.deactivateInteriorEntitySet(interior, entitySetName);
     native.refreshInterior(interior);

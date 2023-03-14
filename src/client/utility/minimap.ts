@@ -1,5 +1,5 @@
-import native from "natives";
 import alt from "alt-client";
+import native from "natives";
 
 const Minimap = {
   /**

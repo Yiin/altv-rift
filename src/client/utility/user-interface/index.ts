@@ -2,8 +2,9 @@ import alt from "alt-client";
 import native from "natives";
 import { KeyCode } from "altv-enums";
 import { serialize } from "alpha-serializer";
-import { Events } from "@shared/constants/events";
 import { ELEMENT, SCENE } from "@shared/enums/ui";
+import { WebviewEvents } from "@shared/events/webview";
+import { ClientEvents } from "@shared/events/client";
 import { onKeyDown } from "../event-helpers";
 import { Elements } from "./elements";
 
@@ -53,7 +54,7 @@ export function toggleElement(element: ELEMENT, state: boolean) {
     return;
   }
 
-  webview.emit(Events.Webview.TOGGLE_ELEMENT, element, state);
+  webview.emit(WebviewEvents.FromClient.TOGGLE_ELEMENT, element, state);
 
   if (state) {
     activeElements.add(element);
@@ -115,7 +116,7 @@ onKeyDown(KeyCode.Z, () => {
 });
 
 alt.onServer(
-  Events.Client.SETUP_WEBVIEW,
+  ClientEvents.FromServer.SETUP_WEBVIEW,
   (webviewUrl = `http://resource/client/webview/index.html`) => {
     url = webviewUrl;
 
@@ -131,13 +132,16 @@ alt.onServer(
 
     webview = new WebView(`${url}#/`, false);
 
-    webview.on(Events.Webview.VIEW_READY, () => {
+    webview.on(WebviewEvents.FromClient.VIEW_READY, () => {
       webview.focus();
       resolveReady();
     });
-    webview.on(Events.Webview.PLAY_SOUND, (audioName: string, ref: string) => {
-      native.playSoundFrontend(-1, audioName, ref, true);
-    });
+    webview.on(
+      ClientEvents.FromWebview.PLAY_SOUND,
+      (audioName: string, ref: string) => {
+        native.playSoundFrontend(-1, audioName, ref, true);
+      }
+    );
   }
 );
 alt.on("disconnect", () => {

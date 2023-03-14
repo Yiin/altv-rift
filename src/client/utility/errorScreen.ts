@@ -1,7 +1,7 @@
 import alt from "alt-client";
 import native from "natives";
-import { Events } from "@shared/constants/events";
 import { IErrorScreen } from "@shared/interfaces/IErrorScreen";
+import { ClientEvents } from "@shared/events/client";
 
 let interval: number | undefined;
 let timeout: number | undefined;
@@ -62,5 +62,11 @@ const ErrorScreen = {
 
 export default ErrorScreen;
 
-alt.onServer(Events.Client.PLAYER_EMIT_ERROR_SCREEN, ErrorScreen.create);
-alt.onServer(Events.Client.PLAYER_EMIT_ERROR_SCREEN_CLEAR, ErrorScreen.clear);
+alt.onServer(
+  ClientEvents.FromServer.PLAYER_EMIT_ERROR_SCREEN,
+  ErrorScreen.create
+);
+alt.onServer(
+  ClientEvents.FromServer.PLAYER_EMIT_ERROR_SCREEN_CLEAR,
+  ErrorScreen.clear
+);

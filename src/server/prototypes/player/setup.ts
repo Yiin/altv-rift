@@ -1,8 +1,8 @@
 import { Player } from "alt-server";
 import { createPinia } from "pinia";
-import { Events } from "@shared/constants/events";
 import { usePlayerStore } from "@shared/store/player.store";
 import { subscribeToStore } from "@shared/store/utils";
+import { ClientEvents } from "@shared/events/client";
 import { Config } from "@/utility/config";
 import { clearMessageHistory } from "@/modules/chat";
 
@@ -24,10 +24,10 @@ Player.prototype.setup = function () {
 
   subscribeToStore(this.store, {
     onSetState: (state) => {
-      this.emitRaw(Events.Client.SET_STATE, state);
+      this.emitRaw(ClientEvents.FromServer.SET_STATE, state);
     },
     onUpdateState: (payload) => {
-      this.emitRaw(Events.Client.UPDATE_STATE, payload);
+      this.emitRaw(ClientEvents.FromServer.UPDATE_STATE, payload);
     },
   });
 
@@ -43,8 +43,11 @@ Player.prototype.setup = function () {
 
   // Setup Webview
   if (Config.getVueDebugMode()) {
-    this.emitRaw(Events.Client.SETUP_WEBVIEW, Config.getViteServer(this.name));
+    this.emitRaw(
+      ClientEvents.FromServer.SETUP_WEBVIEW,
+      Config.getViteServer(this.name)
+    );
   } else {
-    this.emitRaw(Events.Client.SETUP_WEBVIEW);
+    this.emitRaw(ClientEvents.FromServer.SETUP_WEBVIEW);
   }
 };

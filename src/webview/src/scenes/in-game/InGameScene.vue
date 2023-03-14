@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useAlt } from "@/composables/use-alt";
 import { useChatStore } from "@/store/chat.store";
-import { Events } from "@shared/constants/events";
 import { usePlayerStore } from "@shared/store/player.store";
 import { computed, reactive } from "vue";
 import JsonViewer from "vue-json-viewer";

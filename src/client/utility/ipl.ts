@@ -1,11 +1,11 @@
 import alt from "alt-client";
 import native from "natives";
-import { Events } from "@shared/constants/events";
+import { ClientEvents } from "@shared/events/client";
 
-alt.onServer(Events.Client.IPL_LOAD, (name: string) => {
+alt.onServer(ClientEvents.FromServer.IPL_LOAD, (name: string) => {
   native.requestIpl(name);
 });
 
-alt.onServer(Events.Client.IPL_UNLOAD, (name: string) => {
+alt.onServer(ClientEvents.FromServer.IPL_UNLOAD, (name: string) => {
   native.removeIpl(name);
 });

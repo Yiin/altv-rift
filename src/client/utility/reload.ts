@@ -1,8 +1,8 @@
 import alt from "alt-client";
 import native from "natives";
-import { Events } from "@shared/constants/events";
+import { ClientEvents } from "@shared/events/client";
 
-alt.onServer(Events.Client.PLAYER_RELOAD, handleReload);
+alt.onServer(ClientEvents.FromServer.PLAYER_RELOAD, handleReload);
 
 function handleReload() {
   let attempts = 0;

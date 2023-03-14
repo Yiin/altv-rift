@@ -1,5 +1,4 @@
 import alt from "alt-client";
-import { Events } from "@shared/constants/events";
 import { getWebview } from "@/utility/user-interface";
 import { everyTick } from "@/utility/event-helpers";
 

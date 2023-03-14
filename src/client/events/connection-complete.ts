@@ -1,6 +1,6 @@
 import alt from "alt-client";
 import native from "natives";
-import { Events } from "@shared/constants/events";
+import { ServerEvents } from "@shared/events/server";
 import { everyTick } from "@/utility/event-helpers";
 import { waitForUserInterface } from "@/utility/user-interface";
 
@@ -21,7 +21,7 @@ async function handleConnectionComplete() {
   await waitForUserInterface();
 
   // Calls the login functionality
-  alt.emitServer(Events.Server.BEGIN_CONNECTION);
+  alt.emitServer(ServerEvents.FromClient.BEGIN_CONNECTION);
   handleTick();
 }
 

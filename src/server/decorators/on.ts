@@ -1,5 +1,6 @@
-import alt, { IServerEvent, type ICustomServerEvent } from "alt-server";
+import alt, { IServerEvent } from "alt-server";
 import { container } from "@shared/ioc-container";
+import { EventFromServer } from "@shared/events/server/from-server";
 import { logger } from "@/logger";
 
 type TypedMethodDecorator<T> = (
@@ -8,7 +9,7 @@ type TypedMethodDecorator<T> = (
   descriptor: TypedPropertyDescriptor<T>
 ) => TypedPropertyDescriptor<T> | void;
 
-type ServerEvent = Asyncify<ICustomServerEvent & IServerEvent>;
+type ServerEvent = Asyncify<EventFromServer & IServerEvent>;
 
 export const on =
   <K extends keyof ServerEvent>(

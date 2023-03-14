@@ -1,7 +1,7 @@
 import alt from "alt-client";
 import native from "natives";
 import { distance, vectorLerp } from "@shared/utility/vector";
-import { Events } from "@shared/constants/events";
+import { ClientEvents } from "@shared/events/client";
 import { loadModel } from "./model";
 import { sleep } from "./sleep";
 
@@ -75,4 +75,7 @@ const LerpObject = {
   },
 };
 
-alt.onServer(Events.Client.PLAYER_EMIT_TEMP_OBJECT_LERP, LerpObject.tempLerp);
+alt.onServer(
+  ClientEvents.FromServer.PLAYER_EMIT_TEMP_OBJECT_LERP,
+  LerpObject.tempLerp
+);

@@ -1,7 +1,7 @@
 import alt from "alt-client";
 import native from "natives";
-import { Events } from "@shared/constants/events";
 import { NpcSyncPayload } from "@shared/modules/npc/types";
+import { ServerEvents } from "@shared/events/server";
 import { isPedUnderVehicle } from "@/utility/user-interface/ped";
 import { StreamedNpc } from "../ped";
 
@@ -64,6 +64,6 @@ export function syncToServer(this: StreamedNpc) {
   }
 
   if (Object.keys(payload).length > 1) {
-    alt.emitServerRaw(Events.Server.SYNC_NPC, payload);
+    alt.emitServerRaw(ServerEvents.FromClient.SYNC_NPC, payload);
   }
 }

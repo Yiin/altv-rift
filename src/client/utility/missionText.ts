@@ -1,6 +1,6 @@
 import alt from "alt-client";
 import native from "natives";
-import { Events } from "@shared/constants/events";
+import { ClientEvents } from "@shared/events/client";
 
 let timeoutId: number | undefined;
 
@@ -27,4 +27,4 @@ export function drawMissionText(text: string, duration?: number) {
   }, duration);
 }
 
-alt.onServer(Events.Client.PLAYER_EMIT_MISSION_TEXT, drawMissionText);
+alt.onServer(ClientEvents.FromServer.PLAYER_EMIT_MISSION_TEXT, drawMissionText);

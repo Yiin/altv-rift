@@ -1,6 +1,6 @@
 import alt from "alt-client";
 import native from "natives";
-import { Events } from "@shared/constants/events";
+import { ServerEvents } from "@shared/events/server";
 import { StreamedNpc } from "../ped";
 
 export function stopRunningTask(this: StreamedNpc) {
@@ -10,7 +10,7 @@ export function stopRunningTask(this: StreamedNpc) {
     this.taskIsRunning = false;
 
     if (this.netOwned) {
-      alt.emitServerRaw(Events.Server.STOP_NPC_TASK, this.npc.id);
+      alt.emitServerRaw(ServerEvents.FromClient.STOP_NPC_TASK, this.npc.id);
     }
   }
 }

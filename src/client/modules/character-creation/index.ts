@@ -1,9 +1,10 @@
 import alt from "alt-client";
 import native from "natives";
 import { bind } from "@shared/decorators";
-import { Events } from "@shared/constants/events";
 import { RPC } from "@shared/constants/rpcs";
 import { SCENE } from "@shared/enums/ui";
+import { ClientEvents } from "@shared/events/client";
+import { ServerEvents } from "@shared/events/server";
 import { CharacterPed } from "@/utility/characterPed";
 import { sleep } from "@/utility/sleep";
 import { Character } from "@/utility/character";
@@ -19,7 +20,7 @@ export default class CharacterCreationScene {
   private pedPosition = new alt.Vector3(1507.9, -1732.3, 78.65);
   private pedRotation = 288;
 
-  @onServer(Events.Client.START_CHARACTER_CREATION_SCENE)
+  @onServer(ClientEvents.FromServer.START_CHARACTER_CREATION_SCENE)
   async start() {
     alt.showCursor(true);
 
@@ -40,7 +41,7 @@ export default class CharacterCreationScene {
     native.disableScreenblurFade();
 
     getWebview().on(
-      Events.Client.UPDATE_CHARACTER_APPEARANCE,
+      ClientEvents.FromWebview.UPDATE_CHARACTER_APPEARANCE,
       CharacterPed.apply
     );
   }
@@ -49,13 +50,13 @@ export default class CharacterCreationScene {
   async createCharacter(data: { name: string; appearance: any }) {
     const characterId = await rpc.callServer(RPC.Server.CREATE_CHARACTER, data);
 
-    await alt.emitServer(Events.Server.START_GAME, characterId);
+    await alt.emitServer(ServerEvents.FromClient.START_GAME, characterId);
 
     this.end();
   }
 
-  @onServer(Events.Client.END_CHARACTER_CREATION_SCENE)
-  @onServer(Events.Client.START_GAME)
+  @onServer(ClientEvents.FromServer.END_CHARACTER_CREATION_SCENE)
+  @onServer(ClientEvents.FromServer.START_GAME)
   end() {
     native.disableScreenblurFade();
     showCursor(false);

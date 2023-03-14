@@ -1,8 +1,9 @@
 import alt, { Player } from "alt-server";
 import { type Appearance } from "@prisma/client";
 import { bind } from "@shared/decorators";
-import { Events } from "@shared/constants/events";
 import { RPC } from "@shared/constants/rpcs";
+import { ClientEvents } from "@shared/events/client";
+import { ServerEvents } from "@shared/events/server";
 import { isRequired, isUnique, validate } from "@/validator";
 import { on, clientRpc } from "@/decorators";
 import { onClient } from "@/decorators/on-client";
@@ -20,7 +21,7 @@ export default class CharacterSelectionModule {
 
     if (charactersCount === 0) {
       alt.log("triggering client (start character creation scene)");
-      player.emitRaw(Events.Client.START_CHARACTER_CREATION_SCENE);
+      player.emitRaw(ClientEvents.FromServer.START_CHARACTER_CREATION_SCENE);
       // Forward player to character creation scene because they have no characters
     } else {
       this.startGame(player, player.store.user.characters[0].id!);
@@ -78,7 +79,7 @@ export default class CharacterSelectionModule {
     }
   }
 
-  @onClient(Events.Server.START_GAME)
+  @onClient(ServerEvents.FromClient.START_GAME)
   async startGame(player: Player, characterId: string) {
     if (!player.store.isLoggedIn) {
       throw new Error("Unauthenticated.");
@@ -101,7 +102,7 @@ export default class CharacterSelectionModule {
     player.health = Math.max(character.health, 200);
     player.dimension = 0;
 
-    player.emit(Events.Client.START_GAME);
+    player.emit(ClientEvents.FromServer.START_GAME);
     player.hasFullySpawned = true;
   }
 }

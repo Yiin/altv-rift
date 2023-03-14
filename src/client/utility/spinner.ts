@@ -1,7 +1,7 @@
 import alt from "alt-client";
 import native from "natives";
 import { ISpinner } from "@shared/interfaces/ISpinner";
-import { Events } from "@shared/constants/events";
+import { ClientEvents } from "@shared/events/client";
 
 let timeout: number | undefined;
 
@@ -38,5 +38,5 @@ export const Spinner = {
   },
 };
 
-alt.onServer(Events.Client.PLAYER_EMIT_SPINNER, Spinner.create);
-alt.onServer(Events.Client.PLAYER_EMIT_SPINNER_CLEAR, Spinner.clear);
+alt.onServer(ClientEvents.FromServer.PLAYER_EMIT_SPINNER, Spinner.create);
+alt.onServer(ClientEvents.FromServer.PLAYER_EMIT_SPINNER_CLEAR, Spinner.clear);

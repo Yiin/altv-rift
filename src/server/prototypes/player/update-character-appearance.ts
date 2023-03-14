@@ -1,6 +1,6 @@
 import alt, { Player } from "alt-server";
 import { type Appearance } from "@prisma/client";
-import { Events } from "@shared/constants/events";
+import { ClientEvents } from "@shared/events/client";
 
 declare module "alt-server" {
   export interface Player {
@@ -83,7 +83,10 @@ Player.prototype.updateCharacterAppearance = function (
   }
 
   if (decorationsToSync.length >= 1) {
-    this.emit(Events.Client.SET_PLAYER_DECORATIONS, decorationsToSync);
+    this.emit(
+      ClientEvents.FromServer.SET_PLAYER_DECORATIONS,
+      decorationsToSync
+    );
   }
 
   // Hair

@@ -19,7 +19,6 @@ import Features from "./Features.vue";
 import Appearance from "./Appearance.vue";
 import FaceShape from "./FaceShape.vue";
 import FaceSkin from "./FaceSkin.vue";
-import { Events } from "@shared/constants/events";
 import { useEventListener } from "@/composables/use-event-listener";
 import PlayButton from "./PlayButton.vue";
 import Screen from "@/components/Screen.vue";

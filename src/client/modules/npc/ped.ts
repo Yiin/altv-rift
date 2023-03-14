@@ -2,9 +2,7 @@ import alt from "alt-client";
 import native from "natives";
 import { LastUpdateTimestamp, Task } from "@shared/modules/npc/types";
 import { Npc } from "@shared/modules/npc/npc";
-import { RPC } from "@shared/constants/rpcs";
 import { everyTickWhile, intervalWhile } from "@/utility/event-helpers";
-import { rpc } from "@/rpc";
 import { npcSyncStore } from "@/store/npc-sync.store";
 import {
   PED_CONFIG_FLAG,
@@ -62,7 +60,9 @@ export class StreamedNpc {
       false,
       false,
       false,
-      true, // prevents ped from dying when driven over
+      // prevents ped from dying when driven over
+      // TODO: check if strill necessary
+      true,
       false,
       false,
       false,

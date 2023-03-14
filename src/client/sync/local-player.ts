@@ -1,9 +1,9 @@
 import alt from "alt-client";
 import native from "natives";
-import { Events } from "@shared/constants/events";
+import { ClientEvents } from "@shared/events/client";
 
 alt.onServer(
-  Events.Client.SET_PLAYER_DECORATIONS,
+  ClientEvents.FromServer.SET_PLAYER_DECORATIONS,
   (decorations: { collection: string; overlay: string }[]) => {
     native.clearPedDecorations(alt.Player.local.scriptID);
 

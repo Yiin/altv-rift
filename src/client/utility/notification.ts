@@ -1,6 +1,6 @@
 import alt from "alt-client";
 import native from "natives";
-import { Events } from "@shared/constants/events";
+import { ClientEvents } from "@shared/events/client";
 
 const NotificationConst = {
   notification(text: string): void {
@@ -15,6 +15,6 @@ export const Notification = {
 };
 
 alt.onServer(
-  Events.Client.PLAYER_EMIT_NOTIFICATION,
+  ClientEvents.FromServer.PLAYER_EMIT_NOTIFICATION,
   NotificationConst.notification
 );

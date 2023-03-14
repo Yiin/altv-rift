@@ -1,6 +1,5 @@
 import alt from "alt-client";
-import { playerStore } from "@/store/player.store";
+import native from "natives";
 
-alt.on("spawned", () => {
-  alt.log(playerStore.$state.character?.inventory, playerStore.$state.avgPing);
-});
+// native.cover
+// native.taskGuardSphereDefensiveArea()

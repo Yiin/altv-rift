@@ -1,4 +1,4 @@
-import alt, { IClientEvent, ICustomClientEvent } from "alt-client";
+import alt, { IClientEvent } from "alt-client";
 import { container } from "@shared/ioc-container";
 
 type MethodDecorator<T> = (
@@ -7,9 +7,9 @@ type MethodDecorator<T> = (
   descriptor: TypedPropertyDescriptor<T>
 ) => TypedPropertyDescriptor<T> | void;
 
-type ClientEvent = ICustomClientEvent & IClientEvent;
+type ClientEvent = IClientEvent;
 
-export const handleEvent =
+export const on =
   <K extends keyof ClientEvent>(
     eventName: K
   ): MethodDecorator<ClientEvent[K]> =>

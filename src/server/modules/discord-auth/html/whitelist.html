@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Authentication Cancelled.</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet/less" type="text/css" href="styles/style.less" />
+</head>
+
+<body>
+    <div id="app">
+        <div class="container">
+            <h2>Oops!</h2>
+            <p>Looks like you're not authorized to join this server.</p>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/3.11.1/less.min.js" type="text/javascript"></script>
+    <script>
+        window.history.replaceState(null, null, window.location.pathname);
+    </script>
+</body>
+
+</html>

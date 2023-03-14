@@ -1,5 +1,6 @@
-import alt, { IServerEvent } from "alt-client";
+import alt from "alt-client";
 import { container } from "@shared/ioc-container";
+import { EventFromServer } from "@shared/events/client/from-server";
 
 type MethodDecorator<T> = (
   target: any,
@@ -7,15 +8,17 @@ type MethodDecorator<T> = (
   descriptor: TypedPropertyDescriptor<T>
 ) => TypedPropertyDescriptor<T> | void;
 
+type ServerEvent = Asyncify<EventFromServer>;
+
 export const onServer =
-  <K extends keyof IServerEvent>(
+  <K extends keyof ServerEvent>(
     eventName: K
-  ): MethodDecorator<IServerEvent[K]> =>
+  ): MethodDecorator<ServerEvent[K]> =>
   (target, propertyKey) => {
     alt.setTimeout(() => {
       try {
         const service = container.get<any>(target.constructor);
-        const handler: IServerEvent[K] = (...args: any[]) => {
+        const handler: ServerEvent[K] = (...args: any[]) => {
           try {
             const ret = service[propertyKey](...args);
             if (typeof ret === "object" && typeof ret.catch === "function") {

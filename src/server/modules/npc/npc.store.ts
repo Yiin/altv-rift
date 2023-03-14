@@ -35,7 +35,7 @@ export const useNpcStore = defineStore("npc", {
       this.list.set(this.lastId, npc);
 
       // Create a colshape that is used to check if a player is in range to sync the npc
-      const streamRangeColShape = new alt.ColshapeCircle(pos.x, pos.y, 10);
+      const streamRangeColShape = new alt.ColshapeCircle(pos.x, pos.y, 100);
       streamRangeColShape.setMeta("npcId", npc.id);
       streamRangeColShape.playersOnly = true;
       this.colShapes.set(this.lastId, markRaw(streamRangeColShape));

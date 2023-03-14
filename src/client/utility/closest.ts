@@ -1,5 +1,4 @@
 import alt from "alt-client";
-import { IVector3 } from "alt-shared";
 import { getClosestOfType } from "../../shared/utility/closest";
 
 /**
@@ -8,7 +7,7 @@ import { getClosestOfType } from "../../shared/utility/closest";
  *
  * If a vehicle is out of the stream range it is unconsidered.
  */
-export function getClosestVehicle(pos: IVector3): alt.Vehicle | undefined {
+export function getClosestVehicle(pos: alt.IVector3): alt.Vehicle | undefined {
   const vehicles = alt.Vehicle.all.filter(
     (p) => p && p.valid && p.pos.x !== 0 && p.pos.y !== 0 && p.pos.z !== 0
   );
@@ -21,7 +20,7 @@ export function getClosestVehicle(pos: IVector3): alt.Vehicle | undefined {
  *
  * If a player is out of the stream range it is unconsidered.
  */
-export function getClosestPlayer(pos: IVector3): alt.Player | undefined {
+export function getClosestPlayer(pos: alt.IVector3): alt.Player | undefined {
   const players = alt.Player.all.filter(
     (p) => p && p.valid && p.pos.x !== 0 && p.pos.y !== 0 && p.pos.z !== 0
   );

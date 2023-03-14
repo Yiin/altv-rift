@@ -37,12 +37,12 @@ useEventListener(
   true
 );
 
-on(Events.Webview.UPDATE_STATE, (event: any) => {
+on(WebviewEvents.FromClient.UPDATE_STATE, (event: any) => {
   updateStoreState(playerStore, event);
 });
 
 onMounted(() => {
-  alt.emit(Events.Webview.VIEW_READY);
+  alt.emit(ClientEvents.FromWebview.VIEW_READY);
 });
 </script>
 

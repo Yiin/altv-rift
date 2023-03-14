@@ -3,9 +3,13 @@ import axios from "axios";
 import { PrismaClient } from "@prisma/client";
 import { inject } from "inversify";
 import { bind } from "@shared/decorators";
-import { Events } from "@shared/constants/events";
+import { ServerEvents } from "@shared/events/server";
+import { ClientEvents } from "@shared/events/client";
 import { on, onClient } from "@/decorators";
 import { ServerEvent } from "@/constants/server-events";
+import { checkForQuestionableActivity } from "@/utility/questionable-activity";
+import { beginManualDiscordAuth } from "./verify";
+import "./webserver";
 
 @bind()
 export class DiscordAuthModule {
@@ -24,26 +28,40 @@ export class DiscordAuthModule {
    * BEGIN_CONNECTION event is fired when the player is ready to
    * receive data from the server.
    */
-  @onClient(Events.Server.BEGIN_CONNECTION)
+  @onClient(ServerEvents.FromClient.BEGIN_CONNECTION)
   onBeginConnection(player: alt.Player) {
-    if (player.store?.isLoggedIn) {
-      player.kick("Questionable activity. (onBeginConnection)");
-      throw new Error("Unauthenticated.");
-    }
+    checkForQuestionableActivity(
+      player,
+      player.store.isLoggedIn,
+      "onBeginConnection"
+    );
 
-    player.emitRaw(Events.Client.DISCORD_BEGIN_AUTH);
+    player.emitRaw(ClientEvents.FromServer.BEGIN_NATIVE_DISCORD_AUTH);
+  }
+
+  @onClient(ServerEvents.FromClient.MANUAL_DISCORD_AUTH)
+  async onManualDiscordAuth(player: alt.Player) {
+    checkForQuestionableActivity(
+      player,
+      player.store.isLoggedIn,
+      "onManualDiscordAuth"
+    );
+
+    beginManualDiscordAuth(player);
   }
 
   /**
    * When the player has finished the discord auth process,
    * we can continue with the rest of the auth process.
    */
-  @onClient(Events.Server.DISCORD_AUTH_DONE)
+  @onClient(ServerEvents.FromClient.DISCORD_AUTH_DONE) // native altv discord auth
+  @on("MANUAL_DISCORD_AUTH_DONE") // webserver based discord auth
   async onDiscordAuthDone(player: alt.Player, token: string) {
-    if (player.store.isLoggedIn) {
-      player.kick("Questionable activity. (onDiscordAuthDone)");
-      return;
-    }
+    checkForQuestionableActivity(
+      player,
+      player.store.isLoggedIn,
+      "onDiscordAuthDone"
+    );
 
     const discordInfo = await this.getDiscordInfo(token);
 

@@ -1,21 +1,11 @@
 import { format } from "date-fns";
-import { rpc } from "@/rpc";
 import DropItemWarning from "@/scenes/in-game/inventory/DropItemWarning.vue";
-import { Events } from "@shared/constants/events";
-import { RPC } from "@shared/constants/rpcs";
 import { InventoryItem } from "@shared/interfaces";
-import {
-  ComponentPublicInstance,
-  ComputedRef,
-  effect,
-  markRaw,
-  Ref,
-  ref,
-  toRaw,
-} from "vue";
+import { ComponentPublicInstance, ComputedRef, Ref, ref, toRaw } from "vue";
 import { useEventListener } from "./use-event-listener";
 import { usePixel } from "./use-pixel";
 import { useWindowSize } from "./use-window-size";
+import { ClientEvents } from "@shared/events/client";
 
 type Dragging = {
   item: InventoryItem;
@@ -159,7 +149,7 @@ export const useItemInteractions = ({
         preparedDragInteraction.value.startPosition.y !== e.clientY
       ) {
         alt.emit(
-          Events.Webview.PLAY_SOUND,
+          ClientEvents.FromWebview.PLAY_SOUND,
           "SELECT",
           "HUD_FRONTEND_DEFAULT_SOUNDSET"
         );

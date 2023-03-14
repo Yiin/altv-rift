@@ -1,6 +1,7 @@
 import alt from "alt-server";
-import { Events } from "@shared/constants/events";
 import { StringBuffer } from "@shared/utility/buffer";
+import { ServerEvents } from "@shared/events/server";
+import { ClientEvents } from "@shared/events/client";
 
 const MAX_TRIES = 1000;
 const pendingScreenshots: {
@@ -21,7 +22,7 @@ export class Screenshot {
    * @memberof AthenaScreenshot
    */
   static async takeScreenshot(player: alt.Player): Promise<string | null> {
-    alt.emitClient(player, Events.Client.SCREENSHOT_CREATE);
+    alt.emitClient(player, ClientEvents.FromServer.SCREENSHOT_CREATE);
 
     return new Promise((resolve: Function) => {
       let tries = 0;
@@ -82,4 +83,7 @@ export class Screenshot {
   }
 }
 
-alt.onClient(Events.Server.SCREENSHOT_POPULATE_DATA, Screenshot.buildData);
+alt.onClient(
+  ServerEvents.FromClient.SCREENSHOT_POPULATE_DATA,
+  Screenshot.buildData
+);

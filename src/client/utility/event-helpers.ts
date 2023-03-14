@@ -1,6 +1,6 @@
 import alt from "alt-client";
 import { KeyCode } from "altv-enums";
-import { Events } from "@shared/constants/events";
+import { ClientEvents } from "@shared/events/client";
 import { getWebview } from "./user-interface";
 
 const intervals: number[] = [];
@@ -89,7 +89,7 @@ export function onKeyDown(key: KeyCode, callback: () => void) {
 }
 
 getWebview((webview) => {
-  webview.on(Events.Client.INPUT_FOCUS, (isFocused: boolean) => {
+  webview.on(ClientEvents.FromWebview.INPUT_FOCUS, (isFocused: boolean) => {
     inputFocused = isFocused;
   });
 });

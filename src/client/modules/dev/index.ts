@@ -6,7 +6,6 @@ import { toggleElement } from "@/utility/user-interface";
 // @index('./*.ts', f => `export * from "${f.path}";`)
 export * from "./debug-text";
 export * from "./request-item";
-export * from "./teleport-to-waypoint";
 // @endindex
 
 let isOpen = false;

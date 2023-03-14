@@ -1,11 +1,9 @@
-import alt from "alt-shared";
 import { get, set } from "lodash-es";
 import { Store } from "pinia";
-import { reactive, toRaw, TriggerOpTypes } from "@vue/reactivity";
-import structuredClone from "core-js-pure/actual/structured-clone";
+import { toRaw, TriggerOpTypes } from "@vue/reactivity";
 import { findPath } from "@shared/utility/object";
 
-type StoreUpdatePayload =
+export type StoreUpdatePayload =
   | {
       type: TriggerOpTypes.ADD;
       path: string | undefined;

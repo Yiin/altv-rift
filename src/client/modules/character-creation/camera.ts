@@ -1,7 +1,7 @@
 import alt from "alt-client";
 import native from "natives";
 import { Bones } from "@shared/enums/bones";
-import { Events } from "@shared/constants/events";
+import { ClientEvents } from "@shared/events/client";
 import { loadSceneAtCoords } from "@/utility/scene";
 import { CharacterPed } from "@/utility/characterPed";
 import { Control, ControlType } from "@/constants/controls";
@@ -98,7 +98,7 @@ export const CharacterCreationCamera = {
       }
     );
 
-    getWebview().on(Events.Webview.CAMERA_MOVE_START, () => {
+    getWebview().on(ClientEvents.FromWebview.CAMERA_MOVE_START, () => {
       if (cameraControlInterval) {
         alt.clearEveryTick(cameraControlInterval);
         cameraControlInterval = undefined;
@@ -106,7 +106,7 @@ export const CharacterCreationCamera = {
       cameraControlInterval = alt.everyTick(this.updateCameraMove);
     });
 
-    getWebview().on(Events.Webview.CAMERA_MOVE_END, () => {
+    getWebview().on(ClientEvents.FromWebview.CAMERA_MOVE_END, () => {
       if (cameraControlInterval) {
         alt.clearEveryTick(cameraControlInterval);
         cameraControlInterval = undefined;
