@@ -1,5 +1,4 @@
 import { defineStore } from "pinia";
-import { RPC } from "../../../shared/constants/rpcs";
 import { rpc } from "../rpc";
 import { featureNames } from "../scenes/create-character/data/features";
 import { blushColors } from "../scenes/create-character/data/aspects";
@@ -7,6 +6,8 @@ import {
   headOverlays,
   OverlayType,
 } from "../scenes/create-character/data/overlays";
+import { ServerCall } from "@shared/calls/server";
+import { Appearance } from ".prisma/client";
 
 export const useCreateCharacter = defineStore("create-character", {
   state: () => ({
@@ -25,30 +26,17 @@ export const useCreateCharacter = defineStore("create-character", {
         map.set(id, {
           id,
           value: min,
-          ...(opacity && { opacity: opacity.min }),
-          ...(color1 && {
-            color1:
-              id === OverlayType.Blush
-                ? [...blushColors.keys()][0]
-                : color1.min,
-          }),
-          ...(color2 && {
-            color2:
-              id === OverlayType.Blush
-                ? [...blushColors.keys()][0]
-                : color2.min,
-          }),
+          opacity: opacity?.min ?? null,
+          color1:
+            id === OverlayType.Blush
+              ? [...blushColors.keys()][0]
+              : color1?.min ?? null,
+          color2:
+            id === OverlayType.Blush
+              ? [...blushColors.keys()][0]
+              : color2?.min ?? null,
         }),
-      new Map<
-        OverlayType,
-        {
-          id: number;
-          value: number;
-          opacity?: number;
-          color1?: number;
-          color2?: number;
-        }
-      >()
+      new Map<OverlayType, Appearance["headOverlays"][number]>()
     ),
     hair: 0,
     hairCollection: "mpbeach_overlays",
@@ -82,7 +70,7 @@ export const useCreateCharacter = defineStore("create-character", {
   },
   actions: {
     submit() {
-      return rpc.callClient(RPC.Client.CREATE_CHARACTER, {
+      return rpc.callServer(ServerCall.FromWebview.CREATE_CHARACTER, {
         name: this.name,
         appearance: this.appearance,
       });

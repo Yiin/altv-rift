@@ -24,10 +24,10 @@ Player.prototype.setup = function () {
 
   subscribeToStore(this.store, {
     onSetState: (state) => {
-      this.emitRaw(ClientEvents.FromServer.SET_STATE, state);
+      this.emitRaw(ClientEvents.FromServer.SET_PLAYER_STATE, state);
     },
     onUpdateState: (payload) => {
-      this.emitRaw(ClientEvents.FromServer.UPDATE_STATE, payload);
+      this.emitRaw(ClientEvents.FromServer.UPDATE_PLAYER_STATE, payload);
     },
   });
 

@@ -9,22 +9,18 @@ import {
   ItemTypeData,
   WeaponItemData,
 } from "@shared/interfaces";
-import { ItemKey, getItemType } from "@shared/data/items";
-import { getItemData } from "@shared/utility/inventory";
+import { ItemKey, getItemType, getItemData } from "@shared/modules/items";
 
 declare module "alt-server" {
   export interface Player {
-    addItem(
-      key: ItemKey,
+    addItem<T extends ItemKey>(
+      key: T,
       data: ItemTypeData[ItemTypeByKey<typeof key>]
     ): InventoryItem | undefined;
   }
 }
 
-Player.prototype.addItem = function (
-  key: ItemKey,
-  data: ItemTypeData[ItemTypeByKey<typeof key>]
-) {
+Player.prototype.addItem = function (key, data) {
   if (!this.store.isLoggedIn) return;
 
   const type = getItemType(key);
@@ -43,8 +39,6 @@ Player.prototype.addItem = function (
   }
 
   const freeSlot = findFreeSlot(this.store.character.inventory);
-
-  console.log("Free slot", freeSlot);
 
   if (freeSlot === -1) return;
 

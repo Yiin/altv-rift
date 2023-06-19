@@ -1,5 +1,5 @@
 import alt from "alt-shared";
-import { LastUpdateTimestamp, NpcID, PedType, Task } from "./types";
+import { LastUpdateTimestamp, NpcID, NpcMeta, PedType, Task } from "./types";
 
 export class Npc {
   weaponHash?: number;
@@ -20,7 +20,8 @@ export class Npc {
     public modelHash: number,
     public position: alt.Vector3,
     public heading: number,
-    public totalHealth: number,
-    public health: number
+    public health: number,
+    public maxHealth: number,
+    public meta: NpcMeta
   ) {}
 }

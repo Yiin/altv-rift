@@ -5,7 +5,7 @@ import {
   WindowOptions,
 } from "@shared/modules/chat";
 import { bind } from "@shared/decorators";
-import { ELEMENT } from "@shared/enums/ui";
+import { ELEMENT } from "@/constants/ui";
 import { getWebview, toggleElement } from "@/utility/user-interface";
 import type { Message } from "../interfaces";
 
@@ -17,6 +17,9 @@ export class WindowService {
   public constructor() {
     getWebview((webView) => {
       this.webView = webView;
+      setTimeout(() => {
+        this.show();
+      }, 1000);
     });
   }
 
@@ -44,10 +47,12 @@ export class WindowService {
   }
 
   public show() {
+    console.log("showing chat");
     toggleElement(ELEMENT.CHAT, true);
   }
 
   public hide() {
+    console.log("hiding chat");
     toggleElement(ELEMENT.CHAT, false);
   }
 

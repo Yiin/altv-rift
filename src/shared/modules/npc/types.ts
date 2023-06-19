@@ -15,7 +15,7 @@ export type NpcID = Brand<number, "NpcID">;
 
 export enum PedType {
   STATIC = 0,
-  MISSION = 1,
+  DYNAMIC = 1,
 }
 
 export type LastUpdateTimestamp = Brand<number, "LastUpdateTimestamp">;
@@ -27,3 +27,26 @@ export type NpcSyncPayload = Pick<Npc, "id"> &
       rotationVelocity: alt.Vector3;
     }
   >;
+
+export enum NpcFlags {
+  None = 0,
+  Quest = 1 << 0,
+  ShopKeeper = 1 << 2,
+  Talkable = 1 << 1,
+}
+
+export type DynamicNpcMeta = {
+  // maxHealth: number;
+};
+
+export type StaticNpcMeta = {
+  name: string;
+};
+
+export type NpcMeta<T = unknown> = (T extends PedType.DYNAMIC
+  ? DynamicNpcMeta & Partial<StaticNpcMeta>
+  : T extends PedType.STATIC
+  ? StaticNpcMeta & Partial<DynamicNpcMeta>
+  : Partial<DynamicNpcMeta & StaticNpcMeta>) & {
+  flags: NpcFlags;
+};

@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { container } from "@shared/ioc-container";
+import { container } from "@shared/dependency-injection";
 
 export const prisma = new PrismaClient();
 

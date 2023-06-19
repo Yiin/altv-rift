@@ -1,4 +1,4 @@
-import { container } from "@shared/ioc-container";
+import { container } from "@shared/dependency-injection";
 import { CommandService } from "../services/command.service";
 import type { CommandHandler } from "../types";
 

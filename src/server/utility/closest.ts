@@ -1,6 +1,6 @@
 import { IVector3 } from "alt-shared";
 import * as alt from "alt-server";
-import { getClosestOfType } from "../../shared/utility/closest";
+import { getClosestOfType } from "@shared/utility/closest";
 
 /**
  * Gets the closest vehicle to a position.

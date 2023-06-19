@@ -1,21 +1,20 @@
 import alt, { Player } from "alt-server";
-import { ItemType } from "@prisma/client";
 import { sample } from "lodash-es";
-import { RPC } from "@shared/constants/rpcs";
+import { ItemType } from "@prisma/client";
+import { AmmoItemData, InventoryItem } from "@shared/interfaces";
+import { ServerEvents } from "@shared/events/server";
 import {
   findItemByKey,
   getItemType,
   getWeaponHash,
   isValidItem,
-  ItemKey,
   ITEMS_REGISTRY,
   WeaponItemInfo,
   WeaponItemKey,
   weapons,
-} from "@shared/data/items";
-import { AmmoItemData, InventoryItem } from "@shared/interfaces";
-import { getItemData } from "@shared/utility/inventory";
-import { ServerEvents } from "@shared/events/server";
+  getItemData,
+} from "@shared/modules/items";
+import { ServerCall } from "@shared/calls/server";
 import { rpc } from "@/rpc";
 import { registerCmd } from "../chat";
 
@@ -77,16 +76,18 @@ export function toEquipedAmmo(ammo?: AmmoItemData) {
     : null;
 }
 
-rpc.registerClient(RPC.Server.EQUIP_ITEM, (player: Player, index: number) => {
-  if (!player.store.isLoggedIn) return;
+rpc.registerClient(ServerCall.FromClient.EQUIP_ITEM, (player, slot) => {
+  if (!player.store.isLoggedIn) {
+    return false;
+  }
 
-  const inventoryItem = player.store.character.inventory.items.find(
-    ({ slot }) => {
-      return slot === index;
-    }
-  );
+  const inventoryItem = player.store.character.inventory.items.find((item) => {
+    return item.slot === slot;
+  });
 
-  if (!inventoryItem) return;
+  if (!inventoryItem) {
+    return false;
+  }
 
   switch (inventoryItem.data.type) {
     case ItemType.WEAPON:
@@ -98,9 +99,11 @@ rpc.registerClient(RPC.Server.EQUIP_ITEM, (player: Player, index: number) => {
       const weaponHash = getWeaponHash(itemKey);
 
       if (!ammo) {
-        console.log('No ammo for weapon "' + itemKey + '"');
+        console.log(
+          'No ammo for weapon "' + itemKey + '". Equiping with unlimited ammo.'
+        );
         player.giveWeapon(weaponHash, -1, true);
-        return;
+        return true;
       }
 
       console.log(
@@ -109,41 +112,47 @@ rpc.registerClient(RPC.Server.EQUIP_ITEM, (player: Player, index: number) => {
       player.giveWeapon(weaponHash, ammo.data.amount, true);
       break;
   }
+  return true;
 });
 
-rpc.registerClient(RPC.Server.DROP_ITEM, (player: Player, index: number) => {
-  if (!player.store.isLoggedIn) return;
+rpc.registerClient(ServerCall.FromClient.DROP_ITEM, (player, slot) => {
+  if (!player.store.isLoggedIn) {
+    return false;
+  }
+  const index = player.store.character.inventory.items.findIndex(
+    (inventoryItem) => {
+      return inventoryItem.slot === slot;
+    }
+  );
 
-  console.log("DROP_ITEM", index);
   player.store.character.inventory.items.splice(index, 1);
   return true;
 });
 
-rpc.registerClient(
-  RPC.Server.MOVE_ITEM,
-  (player: Player, from: number, to: number) => {
-    if (!player.store.isLoggedIn) return;
-
-    const itemInSlotFrom = player.store.character.inventory.items.find(
-      ({ slot }) => {
-        return slot === from;
-      }
-    );
-    const itemInSlotTo = player.store.character.inventory.items.find(
-      ({ slot }) => {
-        return slot === to;
-      }
-    );
-    if (itemInSlotFrom && itemInSlotTo) {
-      [itemInSlotFrom.slot, itemInSlotTo.slot] = [
-        itemInSlotTo.slot,
-        itemInSlotFrom.slot,
-      ];
-    } else if (itemInSlotFrom) {
-      itemInSlotFrom.slot = to;
-    } else if (itemInSlotTo) {
-      itemInSlotTo.slot = from;
-    }
-    return true;
+rpc.registerWebview(ServerCall.FromWebview.MOVE_ITEM, (player, from, to) => {
+  if (!player.store.isLoggedIn) {
+    return false;
   }
-);
+
+  const itemInSlotFrom = player.store.character.inventory.items.find(
+    ({ slot }) => {
+      return slot === from;
+    }
+  );
+  const itemInSlotTo = player.store.character.inventory.items.find(
+    ({ slot }) => {
+      return slot === to;
+    }
+  );
+  if (itemInSlotFrom && itemInSlotTo) {
+    [itemInSlotFrom.slot, itemInSlotTo.slot] = [
+      itemInSlotTo.slot,
+      itemInSlotFrom.slot,
+    ];
+  } else if (itemInSlotFrom) {
+    itemInSlotFrom.slot = to;
+  } else if (itemInSlotTo) {
+    itemInSlotTo.slot = from;
+  }
+  return true;
+});

@@ -11,7 +11,6 @@ import { vClickOutside } from "@/directives/click-outside";
 import Window from "@/components/Window.vue";
 import { useWindowSize } from "@/composables/use-window-size";
 import DropItemWarning from "./DropItemWarning.vue";
-import { getItemIconScale, getItemImage } from "@/utils/items";
 import ContextMenu from "./ContextMenu.vue";
 import ItemInfo from "./ItemInfo.vue";
 import { usePixel } from "@/composables/use-pixel";
@@ -20,10 +19,8 @@ import {
   useItemInteractions,
 } from "@/composables/use-item-interactions";
 import { useInventoryGrid } from "@/composables/use-inventory-grid";
-import { useInventory } from "@/store/use-inventory.store";
+import { useInventory } from "@/store/inventory.store";
 import { InventoryItem } from "@shared/interfaces";
-import { getItemData } from "@shared/utility/inventory";
-import { getItemName, isItemWeapon } from "@shared/data/items";
 import ItemIcon from "./ItemIcon.vue";
 
 const px = usePixel();

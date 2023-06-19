@@ -1,27 +1,26 @@
 import alt from "alt-server";
 import { createPinia } from "pinia";
-import { isReactive, triggerRef, watch } from "vue";
+import { watch } from "vue";
 import "./stream-range";
 import { omit } from "lodash";
-import { RPC } from "@shared/constants/rpcs";
 import {
   LastUpdateTimestamp,
+  NpcFlags,
   NpcID,
   NpcSyncPayload,
   PedType,
 } from "@shared/modules/npc/types";
 import { Bones } from "@shared/enums/bones";
-import { WeaponItem } from "@shared/interfaces";
 import {
-  getWeaponDataByItemKey,
   getWeaponHash,
-  WeaponItemInfo,
+  getWeaponItemByKey,
   WeaponItemKey,
-} from "@shared/data/items";
-import { DamageMultiplier } from "@shared/data/damage-multipliers";
+} from "@shared/modules/items";
+import { DamageMultiplier } from "@shared/modules/combat/damage-multipliers";
 import { taskAimAt, taskGoTo } from "@shared/modules/npc/tasks";
 import { Npc } from "@shared/modules/npc/npc";
 import { ServerEvents } from "@shared/events/server";
+import { ServerCall } from "@shared/calls/server";
 import { rpc } from "@/rpc";
 import { registerCmd } from "../chat";
 import { useNpcStore } from "./npc.store";
@@ -38,34 +37,32 @@ watch(npcStore.$state.list, (list) => {
 });
 
 rpc.registerClient(
-  RPC.Server.APPLY_NPC_DAMAGE,
-  (
-    player,
-    npcId: NpcID,
-    damageData: { bone?: Bones; weapon?: WeaponItemInfo; nativeDamage?: number }
-  ) => {
+  ServerCall.FromClient.APPLY_NPC_DAMAGE,
+  (player, npcId, damageData) => {
     const npc = npcStore.list.get(npcId);
-    if (!npc) return;
+    if (!npc) {
+      return 0;
+    }
 
-    if (npc.health <= 0) return;
+    if (npc.health <= 0) {
+      return 0;
+    }
 
     const { bone, weapon, nativeDamage } = damageData;
+    const weaponData = getWeaponItemByKey(weapon);
     const damage =
-      bone && weapon?.stats.damage
-        ? weapon.stats.damage * DamageMultiplier[bone as Bones]
+      bone && weaponData?.stats.damage
+        ? weaponData.stats.damage * DamageMultiplier[bone as Bones]
         : nativeDamage;
-
-    alt.log(
-      `${bone} && ${weapon?.stats.damage} ? ${weapon?.stats.damage} * ${
-        DamageMultiplier[bone as Bones]
-      } : ${nativeDamage} = ${damage}}`
-    );
 
     npc.health -= damage ?? 0;
 
     if (npc.health <= 0) {
       npc.health = 0;
       npc.currentTask = undefined;
+      setTimeout(() => {
+        npcStore.removeNpc(npcId);
+      }, 5000);
     }
 
     return npc.health;
@@ -75,11 +72,14 @@ rpc.registerClient(
 registerCmd("npc", (player) => {
   alt.log('Creating NPC for player: "' + player.name + '"');
   const npc = npcStore.createNpc(
-    PedType.MISSION,
+    PedType.DYNAMIC,
     alt.hash("cs_nigel"),
     player.pos,
     player.rot.z,
-    1000
+    1000,
+    {
+      flags: NpcFlags.None,
+    }
   );
   alt.log('Created NPC with ID: "' + npc.id + '"');
 });
@@ -132,7 +132,7 @@ alt.onClient(
       "id",
       "type",
       "modelHash",
-      "totalHealth",
+      "maxHealth",
       "health",
       "weaponHash",
       "currentTask",

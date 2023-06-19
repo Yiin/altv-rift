@@ -1,12 +1,15 @@
 import alt from "alt-client";
 import native from "natives";
-import { DamageMultiplier } from "@shared/data/damage-multipliers";
-import { weapons } from "@shared/data/items";
+import { weapons } from "@shared/modules/items";
 import { Bones } from "@shared/enums/bones";
+import { DamageMultiplier } from "@shared/modules/combat/damage-multipliers";
 import { StreamedNpc } from "../ped";
 import { MAX_PED_HEALTH } from "../constants";
 
-export function applyWeaponDamage(streamedNpc: StreamedNpc) {
+export function applyWeaponDamage(streamedNpc: StreamedNpc): null | {
+  damage: number;
+  damageData: DamageData;
+} {
   if (
     native.hasEntityBeenDamagedByEntity(
       streamedNpc.ped,
@@ -19,8 +22,7 @@ export function applyWeaponDamage(streamedNpc: StreamedNpc) {
     );
 
     if (!weapon) {
-      alt.log("No weapon found");
-      return { damage: 0 };
+      return null;
     }
 
     const nativeDamage =
@@ -36,19 +38,20 @@ export function applyWeaponDamage(streamedNpc: StreamedNpc) {
 
     native.applyDamageToPed(
       streamedNpc.ped,
-      (damage / streamedNpc.npc.totalHealth) * MAX_PED_HEALTH -
+      (damage / streamedNpc.npc.maxHealth) * MAX_PED_HEALTH -
         (weapon?.stats.damage || nativeDamage),
       true,
       0
     );
+
     return {
       damageData: {
         bone,
-        weapon,
+        weapon: weapon.key,
         nativeDamage,
       },
       damage,
     };
   }
-  return { damage: 0 };
+  return null;
 }

@@ -44,16 +44,16 @@ NPC Sync:
       ✔ Walking/running @done(23-03-03 17:43)
       ☐ Reload
       ✔ Ragdoll @done(23-03-08 05:47)
-      ☐ Aim at @started(23-03-09 23:23)
-      ☐ Shoot At
+      ✔ Aim at @done(23-03-26 16:48)
+      ✔ Shoot At @done(23-03-26 16:48)
       ✔ Killed @done(23-03-03 17:43)
       ☐ Sounds?
   Actions:
     ✔ Idle @done(23-03-03 17:44)
     ✔ Walk to @done(23-03-03 17:44)
     ✔ Run to @done(23-03-08 05:47)
-    ☐ Aim at @started(23-03-09 23:23)
-    ☐ Shoot at
+    ✔ Aim at @done(23-03-26 16:48)
+    ✔ Shoot at @done(23-03-26 16:48)
     ☐ Cover?
     ☐ Play animation
     ☐ Play sound?

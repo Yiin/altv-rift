@@ -1,10 +1,10 @@
 import alt from "alt-shared";
-import { IErrorScreen, ISpinner } from "@shared/interfaces";
 import { StoreUpdatePayload } from "@shared/store/utils";
+import { Spinner } from "@shared/modules/game/ui/spinner/spinner";
 
 export const FromServer = {
   BEGIN_NATIVE_DISCORD_AUTH: "BEGIN_NATIVE_DISCORD_AUTH",
-  BEGIN_MANUAL_DISCORD_AUTH: "BEGIN_MANUAL_DISCORD_AUTH",
+  REMEMBER_AUTH_TOKEN: "REMEMBER_AUTH_TOKEN",
   START_CHARACTER_CREATION_SCENE: "START_CHARACTER_CREATION_SCENE",
   END_CHARACTER_CREATION_SCENE: "END_CHARACTER_CREATION_SCENE",
   START_CHARACTER_SELECTION_SCENE: "START_CHARACTER_SELECTION_SCENE",
@@ -22,17 +22,15 @@ export const FromServer = {
   PLAYER_EMIT_TEMP_OBJECT_LERP: "PLAYER_EMIT_TEMP_OBJECT_LERP",
   IPL_LOAD: "IPL_LOAD",
   IPL_UNLOAD: "IPL_UNLOAD",
-  PLAYER_EMIT_ERROR_SCREEN: "PLAYER_EMIT_ERROR_SCREEN",
-  PLAYER_EMIT_ERROR_SCREEN_CLEAR: "PLAYER_EMIT_ERROR_SCREEN_CLEAR",
   ENTITYSET_ACTIVATE: "ENTITYSET_ACTIVATE",
   ENTITYSET_DEACTIVATE: "ENTITYSET_DEACTIVATE",
-  SET_STATE: "SET_STATE",
-  UPDATE_STATE: "UPDATE_STATE",
+  SET_PLAYER_STATE: "SET_PLAYER_STATE",
+  UPDATE_PLAYER_STATE: "UPDATE_PLAYER_STATE",
 } as const;
 
 export interface EventFromServer {
   [FromServer.BEGIN_NATIVE_DISCORD_AUTH]: () => void;
-  [FromServer.BEGIN_MANUAL_DISCORD_AUTH]: (url: string) => void;
+  [FromServer.REMEMBER_AUTH_TOKEN]: (token: string) => void;
   [FromServer.START_CHARACTER_CREATION_SCENE]: () => void;
   [FromServer.END_CHARACTER_CREATION_SCENE]: () => void;
   [FromServer.START_CHARACTER_SELECTION_SCENE]: () => void;
@@ -43,7 +41,7 @@ export interface EventFromServer {
   ) => void;
   [FromServer.START_GAME]: () => void;
   [FromServer.SETUP_WEBVIEW]: (url?: string) => void;
-  [FromServer.PLAYER_EMIT_SPINNER]: (data: ISpinner) => void;
+  [FromServer.PLAYER_EMIT_SPINNER]: (data: Spinner) => void;
   [FromServer.PLAYER_EMIT_SPINNER_CLEAR]: () => void;
   [FromServer.SCREENSHOT_CREATE]: () => void;
   [FromServer.PLAYER_RELOAD]: () => void;
@@ -60,8 +58,6 @@ export interface EventFromServer {
   ) => void;
   [FromServer.IPL_LOAD]: (name: string) => void;
   [FromServer.IPL_UNLOAD]: (name: string) => void;
-  [FromServer.PLAYER_EMIT_ERROR_SCREEN]: (screen: IErrorScreen) => void;
-  [FromServer.PLAYER_EMIT_ERROR_SCREEN_CLEAR]: () => void;
   [FromServer.ENTITYSET_ACTIVATE]: (
     interior: number,
     entitySetName: string
@@ -70,8 +66,8 @@ export interface EventFromServer {
     interior: number,
     entitySetName: string
   ) => void;
-  [FromServer.SET_STATE]: (state: any) => void;
-  [FromServer.UPDATE_STATE]: (payload: StoreUpdatePayload) => void;
+  [FromServer.SET_PLAYER_STATE]: (state: any) => void;
+  [FromServer.UPDATE_PLAYER_STATE]: (payload: StoreUpdatePayload) => void;
 }
 
 declare module "alt-client" {

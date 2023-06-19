@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useItemDetails } from "@/composables/use-item-details";
 import { usePixel } from "@/composables/use-pixel";
-import { getItemName } from "@shared/data/items";
+import { getItemName } from "@shared/modules/items";
 import { InventoryItem } from "@shared/interfaces";
 import { computed, ref } from "vue";
 

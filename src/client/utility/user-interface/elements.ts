@@ -1,11 +1,11 @@
-import { ELEMENT } from "@shared/enums/ui";
+import { ELEMENT } from "@/constants/ui";
 
 export const Elements = {
   [ELEMENT.INVENTORY]: {
     hasCursor: true,
   },
   [ELEMENT.CHAT]: {
-    hasCursor: true,
+    hasCursor: false,
   },
   [ELEMENT.JSON]: {
     hasCursor: true,

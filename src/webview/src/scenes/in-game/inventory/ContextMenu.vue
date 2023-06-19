@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import Window from "@/components/Window.vue";
-import { getItemName, isItemWeapon } from "@shared/data/items";
+import { getItemName, isItemWeapon } from "@shared/modules/items";
 import { InventoryItem } from "@shared/interfaces";
 
 const props = defineProps<{

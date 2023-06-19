@@ -1,6 +1,6 @@
 import { Player } from "alt-server";
 import { MessageType } from "@shared/modules/chat";
-import { container } from "@shared/ioc-container";
+import { container } from "@shared/dependency-injection";
 import { MountService } from "../services/mount.service";
 import { WindowService } from "../services/window.service";
 import { OptionsService } from "../services";

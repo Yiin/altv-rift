@@ -1,6 +1,6 @@
 import { Player } from "alt-server";
 import type { CommandSuggestion } from "@shared/modules/chat";
-import { container } from "@shared/ioc-container";
+import { container } from "@shared/dependency-injection";
 import { CommandService } from "../services/command.service";
 import { MountService } from "../services/mount.service";
 

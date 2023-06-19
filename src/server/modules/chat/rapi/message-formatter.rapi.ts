@@ -1,4 +1,4 @@
-import { container } from "@shared/ioc-container";
+import { container } from "@shared/dependency-injection";
 import { Chat } from "../chat";
 import { DEFAULT_MESSAGE_PROCESSOR } from "../consts";
 import type { MessageFormatter } from "../types";

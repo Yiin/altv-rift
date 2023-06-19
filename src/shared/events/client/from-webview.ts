@@ -1,4 +1,5 @@
 export const FromWebview = {
+  VIEW_READY: "VIEW_READY",
   UPDATE_CHARACTER_APPEARANCE: "UPDATE_CHARACTER_APPEARANCE",
   INPUT_FOCUS: "INPUT_FOCUS",
   CAMERA_MOVE_START: "CAMERA_MOVE_START",
@@ -7,6 +8,7 @@ export const FromWebview = {
 } as const;
 
 interface EventFromWebview {
+  [FromWebview.VIEW_READY]: () => void;
   [FromWebview.UPDATE_CHARACTER_APPEARANCE]: (data: string, x: number) => void;
   [FromWebview.INPUT_FOCUS]: (isFocused: boolean) => void;
   [FromWebview.CAMERA_MOVE_START]: () => void;

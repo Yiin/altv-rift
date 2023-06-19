@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useItemDetails } from "@/composables/use-item-details";
-import { getItemName } from "@shared/data/items";
+import { getItemName } from "@shared/modules/items";
 import { InventoryItem } from "@shared/interfaces";
 
 const props = defineProps<{

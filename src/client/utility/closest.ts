@@ -1,5 +1,5 @@
 import alt from "alt-client";
-import { getClosestOfType } from "../../shared/utility/closest";
+import { getClosestOfType } from "@shared/utility/closest";
 
 /**
  * A limited version of getting the closest vehicle.

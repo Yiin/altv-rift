@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import { container } from "@shared/ioc-container";
+import { container } from "@shared/dependency-injection";
 import { Chat } from "./chat";
 
 container.resolve(Chat).start();

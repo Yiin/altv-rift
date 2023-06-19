@@ -2,11 +2,12 @@ import alt from "alt-client";
 import native from "natives";
 import { KeyCode } from "altv-enums";
 import { serialize } from "alpha-serializer";
-import { ELEMENT, SCENE } from "@shared/enums/ui";
 import { WebviewEvents } from "@shared/events/webview";
 import { ClientEvents } from "@shared/events/client";
+import { ELEMENT, SCENE } from "@/constants/ui";
 import { onKeyDown } from "../event-helpers";
 import { Elements } from "./elements";
+import { Scenes } from "./scenes";
 
 class WebView extends alt.WebView {
   constructor(url: string, isOverlay = false) {
@@ -20,19 +21,37 @@ class WebView extends alt.WebView {
 
 let url!: string;
 let webview!: WebView;
+
+/**
+ * There can only be one active scene at a time.
+ */
+let currentScene!: SCENE;
+
+/**
+ * Active elements such as Inventory, Chat, etc. that does not depend on the scene.
+ */
 let activeElements = new Set<ELEMENT>();
+
+/**
+ * The amount of times the cursor has been shown. This is used to determine if the cursor should be hidden.
+ * E.g. if the cursor is shown 3 times, then it should be hidden 3 times before it is actually hidden.
+ */
 let cursorCount = 0;
 
 // Make sure the webview is ready before we do anything with it.
-let resolveReady!: () => void;
+let markWebViewAsReady!: () => void;
 const ready = new Promise<void>((resolve) => {
-  resolveReady = resolve;
+  markWebViewAsReady = resolve;
 });
 
 export async function waitForUserInterface() {
   await ready;
 }
 
+/**
+ * Kind of shitty typing here, but it is what it is.
+ * Don't call getWebview() until the webview is ready or use getWebview((webview) => {...}).
+ */
 export function getWebview(): WebView;
 export function getWebview(cb: (webview: WebView) => void): void;
 export function getWebview(cb?: (webview: WebView) => void): WebView | void {
@@ -46,7 +65,14 @@ export function getWebview(cb?: (webview: WebView) => void): WebView | void {
 }
 
 export async function setScene(scene: SCENE) {
+  currentScene = scene;
   webview.url = `${url}#/${scene}`;
+
+  if (Scenes[scene].hasCursor) {
+    showCursor(true);
+  } else {
+    showCursor(false);
+  }
 }
 
 export function toggleElement(element: ELEMENT, state: boolean) {
@@ -84,7 +110,10 @@ export function showCursor(state: boolean) {
       (element) => Elements[element].hasCursor
     );
 
-    if (!activeElementsSupportingCursor.length) {
+    if (
+      !activeElementsSupportingCursor.length &&
+      !Scenes[currentScene].hasCursor
+    ) {
       clearCursor();
     }
   }
@@ -109,7 +138,10 @@ onKeyDown(KeyCode.Z, () => {
     const activeElementsSupportingCursor = [...activeElements].filter(
       (element) => Elements[element].hasCursor
     );
-    if (activeElementsSupportingCursor.length) {
+    if (
+      activeElementsSupportingCursor.length ||
+      Scenes[currentScene].hasCursor
+    ) {
       showCursor(true);
     }
   }
@@ -132,9 +164,9 @@ alt.onServer(
 
     webview = new WebView(`${url}#/`, false);
 
-    webview.on(WebviewEvents.FromClient.VIEW_READY, () => {
+    webview.on(ClientEvents.FromWebview.VIEW_READY, () => {
       webview.focus();
-      resolveReady();
+      markWebViewAsReady();
     });
     webview.on(
       ClientEvents.FromWebview.PLAY_SOUND,

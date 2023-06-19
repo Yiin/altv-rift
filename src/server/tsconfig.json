@@ -7,5 +7,5 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["./**/*", "../shared/**/*"]
+  "include": ["./**/*", "../shared/**/*", "../client/constants/ui.ts"]
 }

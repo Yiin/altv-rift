@@ -3,7 +3,7 @@ import native from "natives";
 import { Bones } from "@shared/enums/bones";
 import { ClientEvents } from "@shared/events/client";
 import { loadSceneAtCoords } from "@/utility/scene";
-import { CharacterPed } from "@/utility/characterPed";
+import { CharacterPed } from "@/utility/character-ped";
 import { Control, ControlType } from "@/constants/controls";
 import { everyTickWhile } from "@/utility/event-helpers";
 import { getWebview } from "@/utility/user-interface";

@@ -9,11 +9,11 @@ import { applyWeaponDamage } from "./apply-weapon-damage";
 export function processMissionPed(this: StreamedNpc) {
   applyPedResetFlags(this.ped);
 
-  const { damage, damageData } = applyWeaponDamage(this);
+  const weaponDamageData = applyWeaponDamage(this);
 
-  if (damage) {
-    this.npc.health -= damage;
-    this.applyDamage(damageData);
+  if (weaponDamageData) {
+    this.npc.health -= weaponDamageData.damage;
+    this.applyDamage(weaponDamageData.damageData);
 
     // prevent bugs where ped dies when it shouldn't
     if (this.npc.health > 0 && native.isPedDeadOrDying(this.ped, false)) {
@@ -22,7 +22,7 @@ export function processMissionPed(this: StreamedNpc) {
       native.clearPedTasksImmediately(this.ped);
       native.setEntityHealth(
         this.ped,
-        (this.npc.heading / this.npc.totalHealth) * MAX_PED_HEALTH,
+        (this.npc.heading / this.npc.maxHealth) * MAX_PED_HEALTH,
         0
       );
 

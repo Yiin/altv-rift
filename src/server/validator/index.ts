@@ -1,6 +1,6 @@
 import * as validator from "validator";
 import { PrismaClient } from "@prisma/client";
-import { container } from "@shared/ioc-container";
+import { container } from "@shared/dependency-injection";
 
 type ValidationFunction<T = any> = (
   value: T

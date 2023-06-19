@@ -2,13 +2,14 @@
 import { ref } from "vue";
 import { useAlt } from "@/composables/use-alt";
 import Screen from "@/components/Screen.vue";
+import { WebviewEvents } from "@shared/events/webview";
 
 const { on } = useAlt();
 
 const authUrl = ref<string>(window.altMock ? "#auth-url" : "");
 const loading = ref(false);
 
-on(Events.Webview.SETUP_DISCORD_AUTH, (url: string) => {
+on(WebviewEvents.FromClient.SETUP_DISCORD_AUTH, (url: string) => {
   authUrl.value = url;
 });
 

@@ -1,33 +1,26 @@
 import alt from "alt-client";
 import native from "natives";
-import { bind } from "@shared/decorators";
-import { RPC } from "@shared/constants/rpcs";
-import { SCENE } from "@shared/enums/ui";
+import { SCENE } from "@/constants/ui";
 import { ClientEvents } from "@shared/events/client";
-import { ServerEvents } from "@shared/events/server";
-import { CharacterPed } from "@/utility/characterPed";
+import { CharacterPed } from "@/utility/character-ped";
 import { sleep } from "@/utility/sleep";
 import { Character } from "@/utility/character";
-import { onServer } from "@/decorators/on-server";
-import { getGroundPos } from "@/utility/getGroundPos";
-import { webviewRpc } from "@/decorators";
-import { rpc } from "@/rpc";
-import { getWebview, setScene, showCursor } from "@/utility/user-interface";
+import { getGroundPos } from "@/utility/get-ground-pos";
+import { getWebview, setScene } from "@/utility/user-interface";
 import { CharacterCreationCamera } from "./camera";
 
-@bind()
-export default class CharacterCreationScene {
-  private pedPosition = new alt.Vector3(1507.9, -1732.3, 78.65);
-  private pedRotation = 288;
+const pedPosition = new alt.Vector3(1507.9, -1732.3, 78.65);
+const pedRotation = 288;
 
-  @onServer(ClientEvents.FromServer.START_CHARACTER_CREATION_SCENE)
-  async start() {
+alt.onServer(
+  ClientEvents.FromServer.START_CHARACTER_CREATION_SCENE,
+  async () => {
     alt.showCursor(true);
 
     await sleep(1000);
-    const pedPosition = await getGroundPos(this.pedPosition);
+    const groundPosition = await getGroundPos(pedPosition);
 
-    await CharacterPed.create(true, pedPosition, this.pedRotation);
+    await CharacterPed.create(true, groundPosition, pedRotation);
     await sleep(200);
     await CharacterPed.setHidden(true);
     await CharacterCreationCamera.create(CharacterPed.get());
@@ -45,27 +38,21 @@ export default class CharacterCreationScene {
       CharacterPed.apply
     );
   }
+);
 
-  @webviewRpc(RPC.Client.CREATE_CHARACTER)
-  async createCharacter(data: { name: string; appearance: any }) {
-    const characterId = await rpc.callServer(RPC.Server.CREATE_CHARACTER, data);
+alt.onServer(
+  ClientEvents.FromServer.END_CHARACTER_CREATION_SCENE,
+  exitCharacterCreation
+);
+alt.onServer(ClientEvents.FromServer.START_GAME, exitCharacterCreation);
 
-    await alt.emitServer(ServerEvents.FromClient.START_GAME, characterId);
+function exitCharacterCreation() {
+  native.disableScreenblurFade();
+  setScene(SCENE.IN_GAME);
+  CharacterCreationCamera.destroy();
+  CharacterPed.destroy();
+  native.doScreenFadeIn(1000);
+  native.freezeEntityPosition(alt.Player.local.scriptID, false);
 
-    this.end();
-  }
-
-  @onServer(ClientEvents.FromServer.END_CHARACTER_CREATION_SCENE)
-  @onServer(ClientEvents.FromServer.START_GAME)
-  end() {
-    native.disableScreenblurFade();
-    showCursor(false);
-    setScene(SCENE.IN_GAME);
-    CharacterCreationCamera.destroy();
-    CharacterPed.destroy();
-    native.doScreenFadeIn(1000);
-    native.freezeEntityPosition(alt.Player.local.scriptID, false);
-
-    // alt.emit(Events.Client.START_CHARACTER_SELECTION_SCENE);
-  }
+  // alt.emit(Events.Client.START_CHARACTER_SELECTION_SCENE);
 }

@@ -1,6 +1,6 @@
 import { Player } from "alt-server";
 import { PrismaClient } from "@prisma/client";
-import { container } from "@shared/ioc-container";
+import { container } from "@shared/dependency-injection";
 
 const prisma = container.get(PrismaClient);
 

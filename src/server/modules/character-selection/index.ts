@@ -1,41 +1,33 @@
 import alt, { Player } from "alt-server";
-import { type Appearance } from "@prisma/client";
-import { bind } from "@shared/decorators";
-import { RPC } from "@shared/constants/rpcs";
 import { ClientEvents } from "@shared/events/client";
 import { ServerEvents } from "@shared/events/server";
+import { ServerCall } from "@shared/calls/server";
 import { isRequired, isUnique, validate } from "@/validator";
-import { on, clientRpc } from "@/decorators";
-import { onClient } from "@/decorators/on-client";
 import { ServerEvent } from "@/constants/server-events";
+import { rpc } from "@/rpc";
 
-@bind()
-export default class CharacterSelectionModule {
-  @on(ServerEvent.USER_LOADED)
-  async onUserLoaded(player: Player) {
-    if (!player.store.isLoggedIn) {
-      throw new Error("Unauthenticated.");
-    }
-
-    const charactersCount = player.store.user.characters.length;
-
-    if (charactersCount === 0) {
-      alt.log("triggering client (start character creation scene)");
-      player.emitRaw(ClientEvents.FromServer.START_CHARACTER_CREATION_SCENE);
-      // Forward player to character creation scene because they have no characters
-    } else {
-      this.startGame(player, player.store.user.characters[0].id!);
-      // alt.log("triggering client (start character selection scene)");
-      // void player.emitRaw(Events.Client.START_CHARACTER_SELECTION_SCENE);
-      // Start character selection scene
-    }
+alt.on(ServerEvent.USER_LOADED, async (player: Player) => {
+  if (!player.store.isLoggedIn) {
+    return;
   }
 
-  @clientRpc(RPC.Server.CREATE_CHARACTER)
-  async createCharacter(
-    player: Player,
-    data: { name: string; appearance: Appearance }
-  ) {
+  const charactersCount = player.store.user.characters.length;
+
+  if (charactersCount === 0) {
+    alt.log("triggering client (start character creation scene)");
+    player.emitRaw(ClientEvents.FromServer.START_CHARACTER_CREATION_SCENE);
+    // Forward player to character creation scene because they have no characters
+  } else {
+    startGame(player, player.store.user.characters[0].id!);
+    // alt.log("triggering client (start character selection scene)");
+    // void player.emitRaw(Events.Client.START_CHARACTER_SELECTION_SCENE);
+    // Start character selection scene
+  }
+});
+
+rpc.registerWebview(
+  ServerCall.FromWebview.CREATE_CHARACTER,
+  async (player, data) => {
     if (!player.store.isLoggedIn) {
       throw new Error("Unauthenticated.");
     }
@@ -72,37 +64,38 @@ export default class CharacterSelectionModule {
         },
       });
 
-      return character.id;
+      startGame(player, character.id);
+
+      return true;
     } catch (e) {
       alt.logError(e);
       throw e;
     }
   }
+);
 
-  @onClient(ServerEvents.FromClient.START_GAME)
-  async startGame(player: Player, characterId: string) {
-    if (!player.store.isLoggedIn) {
-      throw new Error("Unauthenticated.");
-    }
-
-    const character = await player.loadCharacter(characterId);
-
-    if (!character) {
-      return;
-    }
-
-    player.updateCharacterAppearance(character.appearance);
-
-    player.spawn(
-      character.lastPosition.x,
-      character.lastPosition.y,
-      character.lastPosition.z
-    );
-    player.rot = new alt.Vector3(character.rot);
-    player.health = Math.max(character.health, 200);
-    player.dimension = 0;
-
-    player.emit(ClientEvents.FromServer.START_GAME);
-    player.hasFullySpawned = true;
+async function startGame(player: Player, characterId: string) {
+  if (!player.store.isLoggedIn) {
+    return;
   }
+
+  const character = await player.loadCharacter(characterId);
+
+  if (!character) {
+    return;
+  }
+
+  player.updateCharacterAppearance(character.appearance);
+
+  player.spawn(
+    character.lastPosition.x,
+    character.lastPosition.y,
+    character.lastPosition.z
+  );
+  player.rot = new alt.Vector3(character.rot);
+  player.health = Math.max(character.health, 200);
+  player.dimension = 0;
+
+  player.emit(ClientEvents.FromServer.START_GAME);
+  player.hasFullySpawned = true;
 }

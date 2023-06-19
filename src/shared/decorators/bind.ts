@@ -1,6 +1,6 @@
 import alt from "alt-shared";
 import { injectable } from "inversify";
-import { container } from "@shared/ioc-container";
+import { container } from "@shared/dependency-injection";
 
 export const bind =
   () =>

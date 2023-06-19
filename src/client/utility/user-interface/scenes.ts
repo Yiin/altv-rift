@@ -1,4 +1,4 @@
-import { SCENE } from "@shared/enums/ui";
+import { SCENE } from "@/constants/ui";
 
 export const Scenes = {
   [SCENE.DISCORD_AUTH]: {

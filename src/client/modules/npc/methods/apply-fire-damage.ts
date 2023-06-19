@@ -14,7 +14,7 @@ export function applyFireDamage(npc: StreamedNpc) {
   ) {
     native.applyDamageToPed(
       npc.ped,
-      (30 / npc.npc.totalHealth) * MAX_PED_HEALTH,
+      (30 / npc.npc.maxHealth) * MAX_PED_HEALTH,
       true,
       0
     );

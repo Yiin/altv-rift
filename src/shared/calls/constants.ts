@@ -1,0 +1,12 @@
+export const CALL_CLIENT_FROM_SERVER = "c:cs";
+export const CALL_CLIENT_FROM_SERVER_RESPONSE = "r:cs";
+export const CALL_WEBVIEW_FROM_SERVER = "c:ws";
+export const CALL_WEBVIEW_FROM_SERVER_RESPONSE = "r:ws";
+export const CALL_SERVER_FROM_CLIENT = "c:sc";
+export const CALL_SERVER_FROM_CLIENT_RESPONSE = "r:sc";
+export const CALL_WEBVIEW_FROM_CLIENT = "c:wc";
+export const CALL_WEBVIEW_FROM_CLIENT_RESPONSE = "r:wc";
+export const CALL_SERVER_FROM_WEBVIEW = "c:sw";
+export const CALL_SERVER_FROM_WEBVIEW_RESPONSE = "r:sw";
+export const CALL_CLIENT_FROM_WEBVIEW = "c:cw";
+export const CALL_CLIENT_FROM_WEBVIEW_RESPONSE = "r:cw";

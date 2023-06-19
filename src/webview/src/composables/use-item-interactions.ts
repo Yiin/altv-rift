@@ -250,17 +250,15 @@ export const useItemInteractions = ({
   }
 
   async function completeDropping() {
-    const index = items.value.findIndex(
-      (item) => item.slot === currentInteraction.value?.state.item.slot
-    );
+    const slot = currentInteraction.value?.state.item.slot ?? -1;
 
-    if (index < 0) {
+    if (slot < 0) {
       return;
     }
 
-    const shouldDrop = await dropItem(index);
+    const shouldDrop = await dropItem(slot);
 
-    pushLog(`Dropping item ${index} ${shouldDrop ? "confirmed" : "canceled"}`);
+    pushLog(`Dropping item ${slot} ${shouldDrop ? "confirmed" : "canceled"}`);
     if (shouldDrop) {
       setTimeout(() => {
         if (currentInteraction.value?.type === InteractionType.Dropping) {

@@ -1,8 +1,9 @@
 import "./events";
 import "./modules/chat";
 import "./modules/dev";
-import "./modules/inventory-manager";
 import "./modules/discord-auth";
+import "./modules/inventory-manager";
 import "./modules/character-creation";
 import "./modules/npc";
+import "./modules/world-ui";
 import "./sync";

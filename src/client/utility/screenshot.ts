@@ -1,8 +1,7 @@
 import alt from "alt-client";
-import { RPC } from "@shared/constants/rpcs";
 import { ClientEvents } from "@shared/events/client";
 import { ServerEvents } from "@shared/events/server";
-import { StringBuffer } from "../../shared/utility/buffer";
+import { StringBuffer } from "@shared/utility/buffer";
 
 alt.onServer(ClientEvents.FromServer.SCREENSHOT_CREATE, async () => {
   const result = await alt.takeScreenshot();

@@ -1,15 +1,18 @@
 <script setup lang="ts">
+import { ClientEvents } from "@shared/events/client";
+import { WebviewEvents } from "@shared/events/webview";
 import { usePlayerStore } from "@shared/store/player.store";
 import { updateStoreState } from "@shared/store/utils";
-import { onMounted } from "vue";
-import { Events } from "../../shared/constants/events";
+import { onMounted, ref } from "vue";
 import { useAlt } from "./composables/use-alt";
 import { useEventListener } from "./composables/use-event-listener";
 import { useSceneManager } from "./composables/use-scene-manager";
+import { useClient } from "./store/client.store";
 
 useSceneManager();
 const { on } = useAlt();
 const playerStore = usePlayerStore();
+const clientStore = useClient();
 
 useEventListener(
   "focus",
@@ -18,7 +21,7 @@ useEventListener(
       e.target instanceof HTMLInputElement ||
       e.target instanceof HTMLTextAreaElement
     ) {
-      alt.emit(Events.Client.INPUT_FOCUS, true);
+      alt.emit(ClientEvents.FromWebview.INPUT_FOCUS, true);
     }
   },
   true
@@ -31,14 +34,22 @@ useEventListener(
       e.target instanceof HTMLInputElement ||
       e.target instanceof HTMLTextAreaElement
     ) {
-      alt.emit(Events.Client.INPUT_FOCUS, false);
+      alt.emit(ClientEvents.FromWebview.INPUT_FOCUS, false);
     }
   },
   true
 );
 
-on(WebviewEvents.FromClient.UPDATE_STATE, (event: any) => {
+on(WebviewEvents.FromClient.UPDATE_PLAYER_STATE, (event: any) => {
   updateStoreState(playerStore, event);
+});
+
+on(WebviewEvents.FromClient.SET_CLIENT_STATE, (state: any) => {
+  clientStore.$state = state;
+});
+
+on(WebviewEvents.FromClient.UPDATE_CLIENT_STATE, (event: any) => {
+  updateStoreState(clientStore, event);
 });
 
 onMounted(() => {

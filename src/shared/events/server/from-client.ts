@@ -2,8 +2,6 @@ import { NpcID, NpcSyncPayload } from "@shared/modules/npc/types";
 
 export const FromClient = {
   BEGIN_CONNECTION: "BEGIN_CONNECTION",
-  MANUAL_DISCORD_AUTH: "MANUAL_DISCORD_AUTH",
-  START_GAME: "START_GAME",
   SCREENSHOT_POPULATE_DATA: "SCREENSHOT_POPULATE_DATA",
   DISCORD_AUTH_DONE: "DISCORD_AUTH_DONE",
   REQUEST_ITEM: "REQUEST_ITEM",
@@ -13,13 +11,6 @@ export const FromClient = {
 
 export interface EventFromClient {
   [FromClient.BEGIN_CONNECTION]: (player: import("alt-server").Player) => void;
-  [FromClient.MANUAL_DISCORD_AUTH]: (
-    player: import("alt-server").Player
-  ) => void;
-  [FromClient.START_GAME]: (
-    player: import("alt-server").Player,
-    characterId: string
-  ) => void;
   [FromClient.SCREENSHOT_POPULATE_DATA]: (
     player: import("alt-server").Player,
     payload: {

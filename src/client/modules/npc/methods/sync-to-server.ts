@@ -2,7 +2,7 @@ import alt from "alt-client";
 import native from "natives";
 import { NpcSyncPayload } from "@shared/modules/npc/types";
 import { ServerEvents } from "@shared/events/server";
-import { isPedUnderVehicle } from "@/utility/user-interface/ped";
+import { isPedUnderVehicle } from "@/utility/ped";
 import { StreamedNpc } from "../ped";
 
 /**

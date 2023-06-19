@@ -19,6 +19,6 @@
       "@prisma/client": ["../../node_modules/@prisma/client"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "../shared/**/*", "../../node_modules/@prisma/client/**/*.ts"],
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "../shared/**/*", "../../node_modules/@prisma/client/**/*.ts", "../../custom-types/**/*.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

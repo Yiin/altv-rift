@@ -20,6 +20,7 @@ async function handleConnectionComplete() {
 
   await waitForUserInterface();
 
+  alt.log("Connection Complete");
   // Calls the login functionality
   alt.emitServer(ServerEvents.FromClient.BEGIN_CONNECTION);
   handleTick();

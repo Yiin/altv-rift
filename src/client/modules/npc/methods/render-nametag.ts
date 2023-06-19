@@ -1,7 +1,7 @@
 import alt from "alt-client";
 import native from "natives";
 import { drawBar, drawBarBackground } from "@/utility/drawings";
-import { isPedUnderVehicle } from "@/utility/user-interface/ped";
+import { isPedUnderVehicle } from "@/utility/ped";
 import { StreamedNpc } from "../ped";
 import { COMMON_SCENARIOS } from "../constants/scenarios";
 

@@ -2,7 +2,7 @@ import alt, { loadModel } from "alt-client";
 import native from "natives";
 import { PedType } from "@shared/modules/npc/types";
 import { tick, everyTickWhile, intervalWhile } from "@/utility/event-helpers";
-import { getGroundPos } from "@/utility/getGroundPos";
+import { getGroundPos } from "@/utility/get-ground-pos";
 import { StreamedNpc } from "../ped";
 
 export async function createLocalPed(
@@ -47,7 +47,7 @@ export async function createLocalPed(
     case PedType.STATIC:
       this.setupStaticPed();
       break;
-    case PedType.MISSION:
+    case PedType.DYNAMIC:
       this.setupMissionPed();
       break;
   }

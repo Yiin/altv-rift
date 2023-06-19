@@ -1,6 +1,5 @@
 import { watch } from "vue";
 import { npcSyncStore } from "@/store/npc-sync.store";
-import "./dev";
 
 watch(npcSyncStore, (npcSync) => {
   for (const [id] of npcSync.streamedNpcs) {

@@ -1,7 +1,11 @@
 import { ItemType } from "@prisma/client";
-import { getItemDescription, getItemName, ItemKey } from "@shared/data/items";
 import { ItemData } from "@shared/interfaces";
-import { getItemData } from "@shared/utility/inventory";
+import {
+  getItemData,
+  getItemDescription,
+  getItemName,
+  ItemKey,
+} from "@shared/modules/items";
 import { computed, ComputedRef, ref, Ref, unref } from "vue";
 
 export const useItemDetails = (

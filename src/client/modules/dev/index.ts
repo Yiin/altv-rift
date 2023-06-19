@@ -1,5 +1,5 @@
 import { KeyCode } from "altv-enums";
-import { ELEMENT } from "@shared/enums/ui";
+import { ELEMENT } from "@/constants/ui";
 import { onKeyDown } from "@/utility/event-helpers";
 import { toggleElement } from "@/utility/user-interface";
 

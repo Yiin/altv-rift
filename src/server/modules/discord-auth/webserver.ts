@@ -3,6 +3,8 @@ import alt from "alt-server";
 import axios from "axios";
 import express, { Request, Response } from "express";
 import cors from "cors";
+import { ClientEvents } from "@shared/events/client";
+import { ServerEvents } from "@shared/events/server";
 
 const htmlPath = path.join(__dirname, "html");
 const stylesPath = path.join(__dirname, "html/styles");
@@ -23,8 +25,8 @@ async function handleMainRedirect(req: Request, res: Response) {
   }
 
   const authParams = new URLSearchParams();
-  authParams.append(`client_id`, process.env["CLIENT_ID"]!);
-  authParams.append(`client_secret`, process.env["CLIENT_SECRET"]!);
+  authParams.append(`client_id`, process.env["DISCORD_CLIENT_ID"]!);
+  authParams.append(`client_secret`, process.env["DISCORD_CLIENT_SECRET"]!);
   authParams.append(`grant_type`, `authorization_code`);
   authParams.append(`code`, token);
   authParams.append(`scope`, `identify`);
@@ -56,7 +58,15 @@ async function handleMainRedirect(req: Request, res: Response) {
     return;
   }
 
-  alt.emit("MANUAL_DISCORD_AUTH_DONE", player, request.data.access_token);
+  alt.emit(
+    ServerEvents.FromServer.MANUAL_DISCORD_AUTH_DONE,
+    player,
+    request.data.access_token
+  );
+  player.emitRaw(
+    ClientEvents.FromServer.REMEMBER_AUTH_TOKEN,
+    request.data.access_token
+  );
   res.sendFile(path.join(htmlPath, "/done.html"), (err) => {});
 }
 

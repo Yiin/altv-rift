@@ -1,6 +1,6 @@
 import alt from "alt-client";
 import native from "natives";
-import { SWITCHOUT_TYPES } from "@shared/enums/switchOutTypes";
+import { SWITCHOUT_TYPES } from "@shared/modules/game/ui/switch-out-types";
 import { sleep } from "./sleep";
 
 /**

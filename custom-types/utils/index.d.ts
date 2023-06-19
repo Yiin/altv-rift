@@ -1,10 +1,10 @@
-type Asyncify<T> = {
-  [K in keyof T]: T[K] extends (...args: any[]) => infer R
-    ? R extends void
-      ? (...args: Parameters<T[K]>) => any
-      : T[K]
-    : T[K];
-};
+type Asyncify<T> =
+  | {
+      [K in keyof T]: T[K] extends (...args: infer A) => infer R
+        ? (...args: A) => Promise<R>
+        : T[K];
+    }
+  | T;
 
 type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
   k: infer I
@@ -37,3 +37,10 @@ type Flatten<T, A = UnwrapLiteralType<T>, B = UnionToIntersection<A>> = {
 
 declare const brand: unique symbol;
 type Brand<T, U> = T & { [brand]: U };
+
+type Shift<T extends any[]> = ((...args: T) => any) extends (
+  arg1: any,
+  ...rest: infer R
+) => any
+  ? R
+  : never;

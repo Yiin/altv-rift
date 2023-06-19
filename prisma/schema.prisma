@@ -41,6 +41,7 @@ model Character {
   health       Float
   createdAt    DateTime   @default(now())
   inventory    Inventory
+  questsFacts  String[]
 }
 
 type Inventory {

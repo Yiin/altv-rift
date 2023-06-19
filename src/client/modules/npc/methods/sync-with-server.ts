@@ -1,6 +1,6 @@
 import alt from "alt-client";
 import native from "natives";
-import { isPedUnderVehicle } from "@/utility/user-interface/ped";
+import { isPedUnderVehicle } from "@/utility/ped";
 import { MAX_PED_HEALTH } from "../constants";
 import { StreamedNpc } from "../ped";
 
@@ -17,7 +17,7 @@ export async function syncWithServer(
 
   // Update ped health
   const expectedPedHealth =
-    (this.npc.health / this.npc.totalHealth) * MAX_PED_HEALTH;
+    (this.npc.health / this.npc.maxHealth) * MAX_PED_HEALTH;
 
   if (native.getEntityHealth(this.ped) > expectedPedHealth) {
     const damage = native.getEntityHealth(this.ped) - expectedPedHealth;

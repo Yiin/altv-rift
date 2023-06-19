@@ -6,10 +6,10 @@ import {
   Inventory as PrismaInventory,
   Character as PrismaCharacter,
 } from "@prisma/client";
-import { ITEMS_REGISTRY, WeaponItemKey } from "@shared/data/items";
-import { AmmoItemKey } from "@shared/data/items/ammo";
-import { ClothingItemKey } from "@shared/data/items/clothing";
-import type { ItemType } from "@shared/data/items/item-types";
+import { ITEMS_REGISTRY, WeaponItemKey } from "@shared/modules/items";
+import { AmmoItemKey } from "@shared/modules/items/ammo";
+import { ClothingItemKey } from "@shared/modules/items/clothing";
+import type { ItemType } from "@shared/modules/items/item-type";
 
 // export type EquipedAmmo = Omit<PrismaClient.EquipedAmmo, "ammo"> & {
 //   ammo: AmmoItemData;

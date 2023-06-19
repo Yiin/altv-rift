@@ -2,7 +2,7 @@ import alt from "alt-server";
 import { defineStore } from "pinia";
 import { markRaw } from "vue";
 import { Npc } from "@shared/modules/npc/npc";
-import { PedType } from "@shared/modules/npc/types";
+import { NpcFlags, NpcMeta, PedType } from "@shared/modules/npc/types";
 import { calcScore } from "./utils/calc-score";
 
 export const useNpcStore = defineStore("npc", {
@@ -13,12 +13,13 @@ export const useNpcStore = defineStore("npc", {
     colShapes: new Map<Npc["id"], alt.ColshapeCircle>(),
   }),
   actions: {
-    createNpc(
-      type: PedType,
+    createNpc<T extends PedType>(
+      type: T,
       modelHash: number,
       pos: alt.Vector3,
       rot: number,
-      health: number
+      maxHealth: number,
+      meta: NpcMeta<typeof type>
     ) {
       this.lastId++;
 
@@ -29,8 +30,9 @@ export const useNpcStore = defineStore("npc", {
         modelHash,
         pos,
         rot,
-        health,
-        health
+        maxHealth,
+        maxHealth,
+        meta
       );
       this.list.set(this.lastId, npc);
 
@@ -41,6 +43,28 @@ export const useNpcStore = defineStore("npc", {
       this.colShapes.set(this.lastId, markRaw(streamRangeColShape));
 
       return npc;
+    },
+
+    removeNpc(id: Npc["id"]) {
+      const npc = this.list.get(id);
+      if (!npc) return;
+
+      for (const player of alt.Player.all) {
+        if (!player.store?.isLoggedIn) continue;
+
+        const index = player.store.sync.npc.streamedIn.findIndex(
+          (n) => n.id === npc.id
+        );
+        if (index !== -1) {
+          player.store.sync.npc.streamedIn.splice(index, 1);
+        }
+        if (player.store.sync.npc.netOwnerOf.has(npc.id)) {
+          player.store.sync.npc.netOwnerOf.delete(npc.id);
+        }
+      }
+      this.list.delete(id);
+      this.colShapes.delete(id);
+      this.netOwners.delete(id);
     },
 
     streamIn(npc: Npc, player: alt.Player) {
