@@ -1,4 +1,4 @@
-import native from "natives";
+import game from "natives";
 import { defineStore } from "pinia";
 import { usePlayerStore } from "@shared/store/player.store";
 import { Npc } from "@shared/modules/npc/npc";
@@ -7,7 +7,7 @@ import { pinia } from ".";
 
 const useNpcSyncStore = defineStore("npc", {
   state: () => ({
-    streamedNpcs: new Map<Npc["id"], StreamedNpc>(),
+    streamedInNpcs: new Map<Npc["id"], StreamedNpc>(),
   }),
   getters: {
     streamedIn() {
@@ -20,14 +20,14 @@ const useNpcSyncStore = defineStore("npc", {
   actions: {
     spawn(npc: Npc) {
       const streamedNpc = new StreamedNpc(npc);
-      this.streamedNpcs.set(npc.id, streamedNpc);
+      this.streamedInNpcs.set(npc.id, streamedNpc);
       return streamedNpc;
     },
     despawn(id: Npc["id"]) {
-      const streamedNpc = this.streamedNpcs.get(id);
+      const streamedNpc = this.streamedInNpcs.get(id);
       if (streamedNpc) {
-        native.deletePed(streamedNpc.ped);
-        this.streamedNpcs.delete(id);
+        game.deletePed(streamedNpc.ped);
+        this.streamedInNpcs.delete(id);
       }
     },
   },

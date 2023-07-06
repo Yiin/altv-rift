@@ -1,5 +1,5 @@
 import alt from "alt-client";
-import native from "natives";
+import game from "natives";
 import { getPointsInCircle } from "./math";
 import { loadSceneAtCoords } from "./scene";
 
@@ -99,14 +99,14 @@ const InternalFunctions = {
 
     isUpdating = true;
 
-    native.requestCollisionAtCoord(node.pos.x, node.pos.y, node.pos.z);
-    native.setFocusPosAndVel(node.pos.x, node.pos.y, node.pos.z, 0, 0, 0);
+    game.requestCollisionAtCoord(node.pos.x, node.pos.y, node.pos.z);
+    game.setFocusPosAndVel(node.pos.x, node.pos.y, node.pos.z, 0, 0, 0);
     await loadSceneAtCoords(node.pos);
     let assignCam2to1 = false;
     let camNumber: number;
 
     if (cam1) {
-      cam2 = native.createCamWithParams(
+      cam2 = game.createCamWithParams(
         "DEFAULT_SCRIPTED_CAMERA",
         node.pos.x,
         node.pos.y,
@@ -122,7 +122,7 @@ const InternalFunctions = {
       camNumber = cam2;
       assignCam2to1 = true;
     } else {
-      cam1 = native.createCamWithParams(
+      cam1 = game.createCamWithParams(
         "DEFAULT_SCRIPTED_CAMERA",
         node.pos.x,
         node.pos.y,
@@ -135,22 +135,22 @@ const InternalFunctions = {
         0
       );
 
-      native.setCamActive(cam1, true);
+      game.setCamActive(cam1, true);
       camNumber = cam1;
       assignCam2to1 = false;
       cam2 = undefined;
     }
 
     if (node.rot) {
-      native.setCamRot(camNumber, node.rot.x, node.rot.y, node.rot.z, 2);
+      game.setCamRot(camNumber, node.rot.x, node.rot.y, node.rot.z, 2);
     }
 
     if (node.fov) {
-      native.setCamFov(camNumber, node.fov);
+      game.setCamFov(camNumber, node.fov);
     }
 
     if (node.positionToTrack) {
-      native.pointCamAtCoord(
+      game.pointCamAtCoord(
         camNumber,
         node.positionToTrack.x,
         node.positionToTrack.y,
@@ -160,7 +160,7 @@ const InternalFunctions = {
 
     if (node.entityToTrack) {
       const offset = node.offset ? node.offset : { x: 0, y: 0, z: 0 };
-      native.pointCamAtEntity(
+      game.pointCamAtEntity(
         camNumber,
         node.entityToTrack,
         offset.x,
@@ -173,7 +173,7 @@ const InternalFunctions = {
     if (node.vehicleBone && node.entityToAttachTo) {
       const offset = node.offset ? node.offset : { x: 0, y: 0, z: 0 };
       const rot = node.rot ? node.rot : { x: 0, y: 0, z: 0 };
-      native.attachCamToVehicleBone(
+      game.attachCamToVehicleBone(
         camNumber,
         node.entityToAttachTo,
         node.vehicleBone,
@@ -190,7 +190,7 @@ const InternalFunctions = {
 
     if (node.pedBone && node.entityToAttachTo) {
       const offset = node.offset ? node.offset : { x: 0, y: 0, z: 0 };
-      native.attachCamToPedBone(
+      game.attachCamToPedBone(
         camNumber,
         node.entityToAttachTo,
         node.vehicleBone!,
@@ -203,7 +203,7 @@ const InternalFunctions = {
 
     if (node.entityToAttachTo && !node.pedBone && !node.vehicleBone) {
       const offset = node.offset ? node.offset : { x: 0, y: 0, z: 0 };
-      native.attachCamToEntity(
+      game.attachCamToEntity(
         camNumber,
         node.entityToAttachTo,
         offset.x,
@@ -213,7 +213,7 @@ const InternalFunctions = {
       );
     }
 
-    native.renderScriptCams(
+    game.renderScriptCams(
       true,
       true,
       node.easeTime ? node.easeTime : 0,
@@ -223,7 +223,7 @@ const InternalFunctions = {
     );
 
     if (cam1 && cam2) {
-      native.setCamActiveWithInterp(
+      game.setCamActiveWithInterp(
         cam2,
         cam1,
         node.easeTime ? node.easeTime : 0,
@@ -243,7 +243,7 @@ const InternalFunctions = {
 
           if (assignCam2to1) {
             if (cam1 !== null && cam1 !== undefined) {
-              native.destroyCam(cam1, true);
+              game.destroyCam(cam1, true);
             }
 
             cam1 = cam2;
@@ -262,18 +262,18 @@ const InternalFunctions = {
    */
   async clear() {
     if (cam1) {
-      native.destroyCam(cam1, true);
+      game.destroyCam(cam1, true);
       cam1 = undefined;
     }
 
     if (cam2) {
-      native.destroyCam(cam2, true);
+      game.destroyCam(cam2, true);
       cam2 = undefined;
     }
 
-    native.clearFocus();
-    native.destroyAllCams(true);
-    native.renderScriptCams(false, false, 0, false, false, 0);
+    game.clearFocus();
+    game.destroyAllCams(true);
+    game.renderScriptCams(false, false, 0, false, false, 0);
 
     currentCamIndex = -1;
   },
@@ -316,7 +316,7 @@ export const CinematicCam = {
       node.fov = 90;
     }
 
-    if (node.entityToTrack && !native.doesEntityExist(node.entityToTrack)) {
+    if (node.entityToTrack && !game.doesEntityExist(node.entityToTrack)) {
       throw new Error(
         "Camera Node -> Error: Entity set to tracked does not exist."
       );
@@ -367,7 +367,7 @@ export const CinematicCam = {
 
   demo() {
     alt.setTimeout(() => {
-      native.setEntityCoordsNoOffset(
+      game.setEntityCoordsNoOffset(
         alt.Player.local.scriptID,
         -383.385375976562,
         -120.65264892578125,

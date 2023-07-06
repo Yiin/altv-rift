@@ -31,8 +31,11 @@ watch(npcStore.$state.list, (list) => {
   for (const [id, npc] of list) {
     const colShape = npcStore.colShapes.get(id)!;
 
-    // Update stream range colshape position
-    colShape.pos = npc.position;
+    if (npc.position.distanceTo(new alt.Vector3(0, 0, 0)) > 100) {
+      // Update stream range colshape position
+      colShape.pos = npc.position;
+      console.log("Updated colshape position", colShape.pos);
+    }
   }
 });
 

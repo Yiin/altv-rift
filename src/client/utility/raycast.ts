@@ -1,5 +1,5 @@
 import alt from "alt-client";
-import native from "natives";
+import game from "natives";
 import { getDirectionFromRotation, rotationToDirection } from "./math";
 
 const Raycast = {
@@ -14,11 +14,11 @@ const Raycast = {
 
     // Ignore vehicle if in one.
     if (alt.Player.local.vehicle) {
-      native.setEntityCollision(alt.Player.local.vehicle.scriptID, false, true);
+      game.setEntityCollision(alt.Player.local.vehicle.scriptID, false, true);
     }
 
     if (!useShapeTest) {
-      raycast = native.startExpensiveSynchronousShapeTestLosProbe(
+      raycast = game.startExpensiveSynchronousShapeTestLosProbe(
         start.x,
         start.y,
         start.z,
@@ -30,7 +30,7 @@ const Raycast = {
         0
       );
     } else {
-      raycast = native.startShapeTestCapsule(
+      raycast = game.startShapeTestCapsule(
         start.x,
         start.y,
         start.z,
@@ -46,11 +46,11 @@ const Raycast = {
 
     // Re-Toggle Vehicle
     if (alt.Player.local.vehicle) {
-      native.setEntityCollision(alt.Player.local.vehicle.scriptID, true, true);
+      game.setEntityCollision(alt.Player.local.vehicle.scriptID, true, true);
     }
 
     const [didComplete, didHit, position, surfaceNormal, entityHit] =
-      native.getShapeTestResult(raycast);
+      game.getShapeTestResult(raycast);
     return { didComplete, didHit, position, surfaceNormal, entityHit };
   },
 
@@ -64,7 +64,7 @@ const Raycast = {
     radius: number = 5
   ): alt.IVector3 | null {
     const start = alt.getCamPos();
-    const forwardVector = rotationToDirection(native.getFinalRenderedCamRot(2));
+    const forwardVector = rotationToDirection(game.getFinalRenderedCamRot(2));
     const end = {
       x: start.x + forwardVector.x * 2000,
       y: start.y + forwardVector.y * 2000,
@@ -101,9 +101,9 @@ const Raycast = {
     position?: alt.IVector3;
     entityHit?: number;
   } {
-    const start = native.getFinalRenderedCamCoord();
+    const start = game.getFinalRenderedCamCoord();
     const forwardVector = getDirectionFromRotation(
-      native.getFinalRenderedCamRot(2)
+      game.getFinalRenderedCamRot(2)
     );
     const end = {
       x: start.x + forwardVector.x * maxDistance,
@@ -141,7 +141,7 @@ const Raycast = {
     entityHit?: number;
   } {
     const start = alt.Player.local.pos;
-    const forwardVector = native.getEntityForwardVector(
+    const forwardVector = game.getEntityForwardVector(
       alt.Player.local.scriptID
     );
     const end = {
@@ -174,7 +174,7 @@ const Raycast = {
     radius: number = 5
   ): alt.IVector3 | null {
     const start = alt.Player.local.pos;
-    const forwardVector = native.getEntityForwardVector(
+    const forwardVector = game.getEntityForwardVector(
       alt.Player.local.scriptID
     );
     const end = {
@@ -203,20 +203,20 @@ const Raycast = {
    * Credit: Alexa for quick snippet.
    */
   isFacingWater(): null | alt.IVector3 {
-    const headPosition = native.getPedBoneCoords(
+    const headPosition = game.getPedBoneCoords(
       alt.Player.local.scriptID,
       31086,
       0,
       0,
       0
     );
-    const offsetPosition = native.getOffsetFromEntityInWorldCoords(
+    const offsetPosition = game.getOffsetFromEntityInWorldCoords(
       alt.Player.local.scriptID,
       0,
       50,
       -25
     );
-    const [hit, position] = native.testProbeAgainstWater(
+    const [hit, position] = game.testProbeAgainstWater(
       headPosition.x,
       headPosition.y,
       headPosition.z,

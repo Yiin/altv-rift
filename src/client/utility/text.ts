@@ -1,5 +1,5 @@
 import alt from "alt-client";
-import native from "natives";
+import game from "natives";
 import { Timer } from "./timers";
 
 const temporaryText: any[] = [];
@@ -20,20 +20,20 @@ export function drawText2D(
     scale = 2;
   }
 
-  native.clearDrawOrigin();
-  native.beginTextCommandDisplayText("STRING");
-  native.addTextComponentSubstringPlayerName(text);
-  native.setTextFont(4);
-  native.setTextScale(1, scale);
-  native.setTextColour(color.r, color.g, color.b, color.a);
-  native.setTextOutline();
-  native.setTextDropShadow();
+  game.clearDrawOrigin();
+  game.beginTextCommandDisplayText("STRING");
+  game.addTextComponentSubstringPlayerName(text);
+  game.setTextFont(4);
+  game.setTextScale(1, scale);
+  game.setTextColour(color.r, color.g, color.b, color.a);
+  game.setTextOutline();
+  game.setTextDropShadow();
   if (alignment !== null) {
-    native.setTextWrap(padding, 1 - padding);
-    native.setTextJustification(alignment);
+    game.setTextWrap(padding, 1 - padding);
+    game.setTextJustification(alignment);
   }
 
-  native.endTextCommandDisplayText(pos.x, pos.y, 0);
+  game.endTextCommandDisplayText(pos.x, pos.y, 0);
 }
 
 export function drawRectangle(
@@ -41,7 +41,7 @@ export function drawRectangle(
   size: alt.IVector2,
   color: alt.RGBA
 ) {
-  const [isOnScreen, x, y] = native.getScreenCoordFromWorldCoord(
+  const [isOnScreen, x, y] = game.getScreenCoordFromWorldCoord(
     pos.x,
     pos.y,
     pos.z,
@@ -52,8 +52,8 @@ export function drawRectangle(
     return;
   }
 
-  native.setDrawOrigin(pos.x, pos.y, pos.z, false);
-  native.drawRect(
+  game.setDrawOrigin(pos.x, pos.y, pos.z, false);
+  game.drawRect(
     0,
     0,
     size.x,
@@ -64,7 +64,7 @@ export function drawRectangle(
     color.a,
     false
   );
-  native.clearDrawOrigin();
+  game.clearDrawOrigin();
 }
 
 export function drawRectangle2D(
@@ -72,8 +72,8 @@ export function drawRectangle2D(
   size: alt.IVector2,
   color: alt.RGBA
 ) {
-  native.clearDrawOrigin();
-  native.drawRect(
+  game.clearDrawOrigin();
+  game.drawRect(
     pos.x,
     pos.y,
     size.x,
@@ -99,18 +99,18 @@ export function drawText3D(
     scale = 2;
   }
 
-  native.setDrawOrigin(pos.x, pos.y, pos.z, false); // Used to stabalize text, sprites, etc. in a 3D Space.
-  native.beginTextCommandDisplayText("STRING");
-  native.addTextComponentSubstringPlayerName(text);
-  native.setTextFont(4);
-  native.setTextScale(1, scale);
-  native.setTextWrap(0.0, 1.0);
-  native.setTextColour(color.r, color.g, color.b, color.a);
-  native.setTextOutline();
-  native.setTextDropShadow();
-  native.setTextJustification(0);
-  native.endTextCommandDisplayText(0, 0, 0);
-  native.clearDrawOrigin();
+  game.setDrawOrigin(pos.x, pos.y, pos.z, false); // Used to stabalize text, sprites, etc. in a 3D Space.
+  game.beginTextCommandDisplayText("STRING");
+  game.addTextComponentSubstringPlayerName(text);
+  game.setTextFont(4);
+  game.setTextScale(1, scale);
+  game.setTextWrap(0.0, 1.0);
+  game.setTextColour(color.r, color.g, color.b, color.a);
+  game.setTextOutline();
+  game.setTextDropShadow();
+  game.setTextJustification(0);
+  game.endTextCommandDisplayText(0, 0, 0);
+  game.clearDrawOrigin();
 }
 
 /**

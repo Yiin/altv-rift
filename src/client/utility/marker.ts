@@ -1,5 +1,5 @@
 import alt from "alt-client";
-import native from "natives";
+import game from "natives";
 
 const zeroVector = { x: 0, y: 0, z: 0 };
 
@@ -15,7 +15,7 @@ export function drawMarker(
   faceCamera: boolean = true,
   rotate: boolean = false
 ) {
-  native.drawMarker(
+  game.drawMarker(
     type,
     pos.x,
     pos.y,

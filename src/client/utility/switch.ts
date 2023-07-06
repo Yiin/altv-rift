@@ -1,5 +1,5 @@
 import alt from "alt-client";
-import native from "natives";
+import game from "natives";
 import { SWITCHOUT_TYPES } from "@shared/modules/game/ui/switch-out-types";
 import { sleep } from "./sleep";
 
@@ -10,12 +10,12 @@ export async function switchToMultiSecondpart(
   duration: number,
   switchType: SWITCHOUT_TYPES = SWITCHOUT_TYPES.THREE_STEPS
 ): Promise<boolean> {
-  if (!native.isPlayerSwitchInProgress()) {
-    native.switchToMultiFirstpart(alt.Player.local.scriptID, 0, switchType);
+  if (!game.isPlayerSwitchInProgress()) {
+    game.switchToMultiFirstpart(alt.Player.local.scriptID, 0, switchType);
   }
 
   await sleep(duration);
 
-  native.switchToMultiSecondpart(alt.Player.local.scriptID);
+  game.switchToMultiSecondpart(alt.Player.local.scriptID);
   return true;
 }

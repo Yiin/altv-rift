@@ -1,5 +1,4 @@
 import alt from "alt-server";
-import { NpcID } from "@shared/modules/npc/types";
 import { calcScore } from "./utils/calc-score";
 import { npcStore } from ".";
 

@@ -1,5 +1,5 @@
 import alt from "alt-client";
-import native from "natives";
+import game from "natives";
 import { loadSceneAtCoords } from "./scene";
 import { Timer } from "./timers";
 
@@ -20,13 +20,11 @@ const PedEditCamera = {
   /**
    * Creates a Pedestrian Edit Camera
    */
-  async create(
-    scriptID: number,
-  ): Promise<void> {
-    startPosition = native.getEntityCoords(scriptID, false);
+  async create(scriptID: number): Promise<void> {
+    startPosition = game.getEntityCoords(scriptID, false);
 
     if (!camera) {
-      const forwardVector: alt.Vector3 = native.getEntityForwardVector(
+      const forwardVector: alt.Vector3 = game.getEntityForwardVector(
         isLocalPlayer ? alt.Player.local.scriptID : scriptID
       ) as alt.Vector3;
 
@@ -37,12 +35,12 @@ const PedEditCamera = {
       } as alt.Vector3;
 
       // Set Focus in the Area
-      native.requestCollisionAtCoord(
+      game.requestCollisionAtCoord(
         forwardCameraPosition.x,
         forwardCameraPosition.y,
         forwardCameraPosition.z
       );
-      native.setFocusPosAndVel(
+      game.setFocusPosAndVel(
         forwardCameraPosition.x,
         forwardCameraPosition.y,
         forwardCameraPosition.z,
@@ -55,7 +53,7 @@ const PedEditCamera = {
       fov = 90;
       startCamPosition = forwardCameraPosition;
 
-      camera = native.createCamWithParams(
+      camera = game.createCamWithParams(
         "DEFAULT_SCRIPTED_CAMERA",
         startCamPosition.x,
         startCamPosition.y,
@@ -68,14 +66,14 @@ const PedEditCamera = {
         0
       );
 
-      native.pointCamAtCoord(
+      game.pointCamAtCoord(
         camera,
         startPosition.x,
         startPosition.y,
         startPosition.z
       );
-      native.setCamActive(camera, true);
-      native.renderScriptCams(true, false, 0, true, false, 0);
+      game.setCamActive(camera, true);
+      game.renderScriptCams(true, false, 0, true, false, 0);
     }
 
     cameraControlsInterval = Timer.createInterval(
@@ -95,7 +93,7 @@ const PedEditCamera = {
       return new alt.Vector3(0, 0, 0);
     }
 
-    return native.getOffsetFromEntityInWorldCoords(
+    return game.getOffsetFromEntityInWorldCoords(
       entity,
       offset.x,
       offset.y,
@@ -112,14 +110,14 @@ const PedEditCamera = {
     }
 
     startPosition = PedEditCamera.calculateCamOffset(offset) as alt.Vector3;
-    native.pointCamAtCoord(
+    game.pointCamAtCoord(
       camera,
       startPosition.x,
       startPosition.y,
       startPosition.z
     );
-    native.setCamActive(camera, true);
-    native.renderScriptCams(true, false, 0, true, false, 0);
+    game.setCamActive(camera, true);
+    game.renderScriptCams(true, false, 0, true, false, 0);
   },
 
   /**
@@ -142,13 +140,13 @@ const PedEditCamera = {
     }
 
     if (camera) {
-      native.destroyCam(camera, true);
+      game.destroyCam(camera, true);
       camera = undefined;
     }
 
-    native.clearFocus();
-    native.destroyAllCams(true);
-    native.renderScriptCams(false, false, 0, false, false, 0);
+    game.clearFocus();
+    game.destroyAllCams(true);
+    game.renderScriptCams(false, false, 0, false, false, 0);
 
     zpos = 0;
     fov = 90;
@@ -203,7 +201,7 @@ const PedEditCamera = {
     zpos = queueRef.zpos;
     fov = queueRef.fov;
 
-    const camera2 = native.createCamWithParams(
+    const camera2 = game.createCamWithParams(
       "DEFAULT_SCRIPTED_CAMERA",
       startCamPosition.x,
       startCamPosition.y,
@@ -216,15 +214,15 @@ const PedEditCamera = {
       0
     );
 
-    native.setCamFov(camera2, fov);
-    native.pointCamAtCoord(
+    game.setCamFov(camera2, fov);
+    game.pointCamAtCoord(
       camera2,
       startPosition.x,
       startPosition.y,
       startPosition.z + zpos
     );
-    native.setCamActiveWithInterp(camera2, camera, queueRef.easeTime, 1, 1);
-    native.renderScriptCams(true, true, queueRef.easeTime, true, false, 0);
+    game.setCamActiveWithInterp(camera2, camera, queueRef.easeTime, 1, 1);
+    game.renderScriptCams(true, true, queueRef.easeTime, true, false, 0);
 
     await new Promise((resolve: Function) => {
       alt.setTimeout(() => {
@@ -232,7 +230,7 @@ const PedEditCamera = {
       }, queueRef.easeTime);
     });
 
-    native.destroyCam(camera, true);
+    game.destroyCam(camera, true);
     camera = camera2;
     isQueueReady = true;
   },
@@ -245,18 +243,18 @@ const PedEditCamera = {
   },
 
   handleControls() {
-    native.hideHudAndRadarThisFrame();
-    native.disableAllControlActions(0);
-    native.disableAllControlActions(1);
-    native.disableControlAction(0, 0, true);
-    native.disableControlAction(0, 1, true);
-    native.disableControlAction(0, 2, true);
-    native.disableControlAction(0, 24, true);
-    native.disableControlAction(0, 25, true);
-    native.disableControlAction(0, 32, true); // w
-    native.disableControlAction(0, 33, true); // s
-    native.disableControlAction(0, 34, true); // a
-    native.disableControlAction(0, 35, true); // d
+    game.hideHudAndRadarThisFrame();
+    game.disableAllControlActions(0);
+    game.disableAllControlActions(1);
+    game.disableControlAction(0, 0, true);
+    game.disableControlAction(0, 1, true);
+    game.disableControlAction(0, 2, true);
+    game.disableControlAction(0, 24, true);
+    game.disableControlAction(0, 25, true);
+    game.disableControlAction(0, 32, true); // w
+    game.disableControlAction(0, 33, true); // s
+    game.disableControlAction(0, 34, true); // a
+    game.disableControlAction(0, 35, true); // d
 
     if (!startPosition || !startCamPosition || !camera) {
       return;
@@ -280,17 +278,17 @@ const PedEditCamera = {
       return;
     }
 
-    if (!native.doesEntityExist(entity)) {
+    if (!game.doesEntityExist(entity)) {
       return;
     }
 
-    const [_, width] = native.getActualScreenResolution(0, 0);
+    const [_, width] = game.getActualScreenResolution(0, 0);
     const cursor = alt.getCursorPos();
     const _x = cursor.x;
-    let oldHeading = native.getEntityHeading(entity);
+    let oldHeading = game.getEntityHeading(entity);
 
     // Scroll Up
-    if (native.isDisabledControlPressed(0, 15)) {
+    if (game.isDisabledControlPressed(0, 15)) {
       if (_x < width / 2 + 250 && _x > width / 2 - 250) {
         fov -= 2;
 
@@ -298,14 +296,14 @@ const PedEditCamera = {
           fov = 10;
         }
 
-        native.setCamFov(camera, fov);
-        native.setCamActive(camera, true);
-        native.renderScriptCams(true, false, 0, true, false, 0);
+        game.setCamFov(camera, fov);
+        game.setCamActive(camera, true);
+        game.renderScriptCams(true, false, 0, true, false, 0);
       }
     }
 
     // SCroll Down
-    if (native.isDisabledControlPressed(0, 16)) {
+    if (game.isDisabledControlPressed(0, 16)) {
       if (_x < width / 2 + 250 && _x > width / 2 - 250) {
         fov += 2;
 
@@ -313,88 +311,88 @@ const PedEditCamera = {
           fov = 130;
         }
 
-        native.setCamFov(camera, fov);
-        native.setCamActive(camera, true);
-        native.renderScriptCams(true, false, 0, true, false, 0);
+        game.setCamFov(camera, fov);
+        game.setCamActive(camera, true);
+        game.renderScriptCams(true, false, 0, true, false, 0);
       }
     }
 
-    if (native.isDisabledControlPressed(0, 32)) {
+    if (game.isDisabledControlPressed(0, 32)) {
       zpos += 0.01;
 
       if (zpos > 1.2) {
         zpos = 1.2;
       }
 
-      native.setCamCoord(
+      game.setCamCoord(
         camera,
         startCamPosition.x,
         startCamPosition.y,
         startCamPosition.z + zpos
       );
-      native.pointCamAtCoord(
+      game.pointCamAtCoord(
         camera,
         startPosition.x,
         startPosition.y,
         startPosition.z + zpos
       );
-      native.setCamActive(camera, true);
-      native.renderScriptCams(true, false, 0, true, false, 0);
+      game.setCamActive(camera, true);
+      game.renderScriptCams(true, false, 0, true, false, 0);
     }
 
-    if (native.isDisabledControlPressed(0, 33)) {
+    if (game.isDisabledControlPressed(0, 33)) {
       zpos -= 0.01;
 
       if (zpos < -1.2) {
         zpos = -1.2;
       }
 
-      native.setCamCoord(
+      game.setCamCoord(
         camera,
         startCamPosition.x,
         startCamPosition.y,
         startCamPosition.z + zpos
       );
-      native.pointCamAtCoord(
+      game.pointCamAtCoord(
         camera,
         startPosition.x,
         startPosition.y,
         startPosition.z + zpos
       );
-      native.setCamActive(camera, true);
-      native.renderScriptCams(true, false, 0, true, false, 0);
+      game.setCamActive(camera, true);
+      game.renderScriptCams(true, false, 0, true, false, 0);
     }
 
     // rmb
-    if (native.isDisabledControlPressed(0, 25)) {
+    if (game.isDisabledControlPressed(0, 25)) {
       // Rotate Negative
       if (_x < width / 2) {
         const newHeading = (oldHeading -= 2);
-        native.setEntityHeading(entity, newHeading);
+        game.setEntityHeading(entity, newHeading);
       }
 
       // Rotate Positive
       if (_x > width / 2) {
         const newHeading = (oldHeading += 2);
-        native.setEntityHeading(entity, newHeading);
+        game.setEntityHeading(entity, newHeading);
       }
     }
 
     // d
-    if (native.isDisabledControlPressed(0, 35)) {
+    if (game.isDisabledControlPressed(0, 35)) {
       const newHeading = (oldHeading += 2);
-      native.setEntityHeading(entity, newHeading);
+      game.setEntityHeading(entity, newHeading);
     }
 
     // a
-    if (native.isDisabledControlPressed(0, 34)) {
+    if (game.isDisabledControlPressed(0, 34)) {
       const newHeading = (oldHeading -= 2);
-      native.setEntityHeading(entity, newHeading);
+      game.setEntityHeading(entity, newHeading);
     }
 
     if (Date.now() > timeBetweenAnimChecks) {
       timeBetweenAnimChecks = Date.now() + 1500;
-      if (!native.isEntityPlayingAnim(entity, "nm@hands", "hands_up", 3)) {
+      if (!game.isEntityPlayingAnim(entity, "nm@hands", "hands_up", 3)) {
         alt.emit("animation:Play", {
           dict: "nm@hands",
           name: "hands_up",

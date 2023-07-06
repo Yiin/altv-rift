@@ -1,5 +1,5 @@
 import alt from "alt-client";
-import native from "natives";
+import game from "natives";
 import { ClientEvents } from "@shared/events/client";
 import { ClientCall } from "@shared/calls/client";
 import { rpc } from "@/rpc";
@@ -7,21 +7,21 @@ import { rpc } from "@/rpc";
 alt.onServer(
   ClientEvents.FromServer.ENTITYSET_ACTIVATE,
   (interior: number, entitySetName: string) => {
-    native.activateInteriorEntitySet(interior, entitySetName);
-    native.refreshInterior(interior);
+    game.activateInteriorEntitySet(interior, entitySetName);
+    game.refreshInterior(interior);
   }
 );
 
 alt.onServer(
   ClientEvents.FromServer.ENTITYSET_DEACTIVATE,
   (interior: number, entitySetName: string) => {
-    native.deactivateInteriorEntitySet(interior, entitySetName);
-    native.refreshInterior(interior);
+    game.deactivateInteriorEntitySet(interior, entitySetName);
+    game.refreshInterior(interior);
   }
 );
 
 rpc.registerServer(
   ClientCall.FromServer.ENTITYSET_IS_ACTIVE,
   (interior: number, entitySetName: string) =>
-    native.isInteriorEntitySetActive(interior, entitySetName)
+    game.isInteriorEntitySetActive(interior, entitySetName)
 );

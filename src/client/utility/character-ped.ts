@@ -1,5 +1,5 @@
 import alt from "alt-client";
-import native from "natives";
+import game from "natives";
 import { Appearance } from "@prisma/client";
 import { Character } from "./character";
 import { loadModel } from "./model";
@@ -34,25 +34,25 @@ export const CharacterPed = {
     const model = isMale ? "mp_m_freemode_01" : "mp_f_freemode_01";
     const hash = alt.hash(model);
     await loadModel(hash);
-    id = native.createPed(2, hash, _pos.x, _pos.y, _pos.z, 0, false, false);
+    id = game.createPed(2, hash, _pos.x, _pos.y, _pos.z, 0, false, false);
 
     return new Promise(async (resolve: Function) => {
       alt.nextTick(async () => {
         if (id === undefined || id < 0) {
           return resolve(-1);
         }
-        native.stopPedSpeaking(id, true);
-        native.setEntityAsMissionEntity(id, true, true);
-        native.taskSetBlockingOfNonTemporaryEvents(id, true);
-        native.setBlockingOfNonTemporaryEvents(id, true);
-        // native.freezeEntityPosition(id, true);
-        native.setEntityInvincible(id, true);
-        native.setPedCanRagdoll(id, false);
+        game.stopPedSpeaking(id, true);
+        game.setEntityAsMissionEntity(id, true, true);
+        game.taskSetBlockingOfNonTemporaryEvents(id, true);
+        game.setBlockingOfNonTemporaryEvents(id, true);
+        // game.freezeEntityPosition(id, true);
+        game.setEntityInvincible(id, true);
+        game.setPedCanRagdoll(id, false);
 
         if (typeof _rot === "object") {
-          native.setEntityRotation(id, _rot.x, _rot.y, _rot.z, 1, false);
+          game.setEntityRotation(id, _rot.x, _rot.y, _rot.z, 1, false);
         } else {
-          native.setEntityHeading(id, _rot);
+          game.setEntityHeading(id, _rot);
         }
         await Character.applyEquipment(CharacterPed.get(), [], isMale);
         return resolve(id);
@@ -108,12 +108,12 @@ export const CharacterPed = {
   setHidden(value: boolean) {
     hidden = value;
 
-    if (hidden && id && native.doesEntityExist(id)) {
-      native.setEntityVisible(id, false, false);
+    if (hidden && id && game.doesEntityExist(id)) {
+      game.setEntityVisible(id, false, false);
     }
 
-    if (!hidden && id && native.doesEntityExist(id)) {
-      native.setEntityVisible(id, true, false);
+    if (!hidden && id && game.doesEntityExist(id)) {
+      game.setEntityVisible(id, true, false);
     }
   },
 
@@ -123,8 +123,8 @@ export const CharacterPed = {
    */
   async destroy() {
     if (id) {
-      native.deletePed(id);
-      native.deleteEntity(id);
+      game.deletePed(id);
+      game.deleteEntity(id);
     }
 
     return new Promise((resolve: Function) => {
@@ -135,7 +135,7 @@ export const CharacterPed = {
           return resolve();
         }
 
-        if (!native.doesEntityExist(id)) {
+        if (!game.doesEntityExist(id)) {
           id = undefined;
           alt.clearInterval(interval);
           return resolve();
@@ -147,8 +147,8 @@ export const CharacterPed = {
           return resolve();
         }
 
-        native.deletePed(id);
-        native.deleteEntity(id);
+        game.deletePed(id);
+        game.deleteEntity(id);
         attempts += 1;
       }, 100);
     });

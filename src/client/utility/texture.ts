@@ -1,5 +1,5 @@
 import alt from "alt-client";
-import native from "natives";
+import game from "natives";
 
 const textureData: Record<any, any> = {};
 
@@ -10,16 +10,16 @@ export function drawTexture2D(
   scale: number = 1,
   opacity: number = 255
 ) {
-  if (!native.hasStreamedTextureDictLoaded(dictionary)) {
-    native.requestStreamedTextureDict(dictionary, false);
+  if (!game.hasStreamedTextureDictLoaded(dictionary)) {
+    game.requestStreamedTextureDict(dictionary, false);
     alt.log(`Requested Texture Dictionary: ${dictionary}`);
     return;
   }
 
   const identifier = `${dictionary}${name}`;
   if (!textureData[identifier]) {
-    const [_, width, height] = native.getActualScreenResolution(0, 0);
-    const resolution = native.getTextureResolution(dictionary, name);
+    const [_, width, height] = game.getActualScreenResolution(0, 0);
+    const resolution = game.getTextureResolution(dictionary, name);
     textureData[identifier] = {
       x: resolution.x / width,
       y: resolution.y / height,
@@ -33,7 +33,7 @@ export function drawTexture2D(
 
   const width = texture.x * scale;
   const height = texture.y * scale;
-  native.drawSprite(
+  game.drawSprite(
     dictionary,
     name,
     position.x,
@@ -56,16 +56,16 @@ export function drawTexture(
   position: alt.Vector3,
   scale: number = 1
 ) {
-  if (!native.hasStreamedTextureDictLoaded(dictionary)) {
-    native.requestStreamedTextureDict(dictionary, false);
+  if (!game.hasStreamedTextureDictLoaded(dictionary)) {
+    game.requestStreamedTextureDict(dictionary, false);
     alt.log(`Requested Texture Dictionary: ${dictionary}`);
     return;
   }
 
   const identifier = `${dictionary}${name}`;
   if (!textureData[identifier]) {
-    const [_, width, height] = native.getActualScreenResolution(0, 0);
-    const resolution = native.getTextureResolution(dictionary, name);
+    const [_, width, height] = game.getActualScreenResolution(0, 0);
+    const resolution = game.getTextureResolution(dictionary, name);
     textureData[identifier] = {
       x: resolution.x / width,
       y: resolution.y / height,
@@ -79,7 +79,7 @@ export function drawTexture(
 
   const width = texture.x * scale;
   const height = texture.y * scale;
-  const [visible, x, y] = native.getScreenCoordFromWorldCoord(
+  const [visible, x, y] = game.getScreenCoordFromWorldCoord(
     position.x,
     position.y,
     position.z
@@ -89,8 +89,8 @@ export function drawTexture(
     return;
   }
 
-  native.setDrawOrigin(position.x, position.y, position.z, false);
-  native.drawSprite(
+  game.setDrawOrigin(position.x, position.y, position.z, false);
+  game.drawSprite(
     dictionary,
     name,
     0,
@@ -105,5 +105,5 @@ export function drawTexture(
     false,
     undefined
   );
-  native.clearDrawOrigin();
+  game.clearDrawOrigin();
 }

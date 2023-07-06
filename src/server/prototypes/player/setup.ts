@@ -4,7 +4,7 @@ import { usePlayerStore } from "@shared/store/player.store";
 import { subscribeToStore } from "@shared/store/utils";
 import { ClientEvents } from "@shared/events/client";
 import { Config } from "@/utility/config";
-import { clearMessageHistory } from "@/modules/chat";
+import { clearMessageHistory, show } from "@/modules/chat";
 
 declare module "alt-server" {
   export interface Player {
@@ -18,6 +18,8 @@ Player.prototype.setup = function () {
   }
 
   clearMessageHistory(this);
+
+  show(this);
 
   this.pinia = createPinia();
   this.store = usePlayerStore(this.pinia);

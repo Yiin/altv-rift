@@ -100,9 +100,9 @@ rpc.registerClient(ServerCall.FromClient.EQUIP_ITEM, (player, slot) => {
 
       if (!ammo) {
         console.log(
-          'No ammo for weapon "' + itemKey + '". Equiping with unlimited ammo.'
+          'No ammo for weapon "' + itemKey + '". Equiping with 1000 ammo.'
         );
-        player.giveWeapon(weaponHash, -1, true);
+        player.giveWeapon(weaponHash, 1000, true);
         return true;
       }
 

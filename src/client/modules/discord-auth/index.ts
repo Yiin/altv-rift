@@ -1,10 +1,10 @@
 import alt from "alt-client";
-import native from "natives";
-import { SCENE } from "@/constants/ui";
+import game from "natives";
 import { ClientEvents } from "@shared/events/client";
 import { ServerEvents } from "@shared/events/server";
 import { WebviewEvents } from "@shared/events/webview";
 import { ServerCall } from "@shared/calls/server";
+import { SCENE } from "@/constants/ui";
 import { getWebview, setScene } from "@/utility/user-interface";
 import { rpc } from "@/rpc";
 
@@ -43,7 +43,7 @@ async function beginAuth() {
       webview.emit(WebviewEvents.FromClient.SETUP_DISCORD_AUTH, url);
     });
 
-    native.doScreenFadeIn(1000);
+    game.doScreenFadeIn(1000);
   }
 }
 alt.onServer(ClientEvents.FromServer.BEGIN_NATIVE_DISCORD_AUTH, beginAuth);

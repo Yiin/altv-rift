@@ -1,5 +1,5 @@
 import alt, { loadModel } from "alt-client";
-import native from "natives";
+import game from "natives";
 import { PedType } from "@shared/modules/npc/types";
 import { tick, everyTickWhile, intervalWhile } from "@/utility/event-helpers";
 import { getGroundPos } from "@/utility/get-ground-pos";
@@ -17,7 +17,7 @@ export async function createLocalPed(
 
   const groundPosition = await getGroundPos(this.npc.position);
 
-  this.ped = native.createPed(
+  this.ped = game.createPed(
     2,
     modelHash,
     groundPosition.x,
@@ -29,18 +29,18 @@ export async function createLocalPed(
   );
 
   alt.once("disconnect", () => {
-    native.deletePed(this.ped);
-    native.deleteEntity(this.ped);
+    game.deletePed(this.ped);
+    game.deleteEntity(this.ped);
   });
 
   await tick();
 
-  native.setEntityAsMissionEntity(this.ped, true, false); // make sure its not despawned by game engine
-  native.stopPedSpeaking(this.ped, true);
-  native.setEntityAsMissionEntity(this.ped, true, true);
-  native.taskSetBlockingOfNonTemporaryEvents(this.ped, true);
-  native.setBlockingOfNonTemporaryEvents(this.ped, true);
-  this.lastPedHealth = native.getEntityHealth(this.ped);
+  game.setEntityAsMissionEntity(this.ped, true, false); // make sure its not despawned by game engine
+  game.stopPedSpeaking(this.ped, true);
+  game.setEntityAsMissionEntity(this.ped, true, true);
+  game.taskSetBlockingOfNonTemporaryEvents(this.ped, true);
+  game.setBlockingOfNonTemporaryEvents(this.ped, true);
+  this.lastPedHealth = game.getEntityHealth(this.ped);
   this.lastFireTick = 0;
 
   switch (this.npc.type) {
@@ -55,5 +55,4 @@ export async function createLocalPed(
 
   this.ready = true;
   intervalWhile(() => this.isStreamedIn, this.syncWithServer.bind(this), 1000);
-  everyTickWhile(() => this.isStreamedIn, this.renderNametag.bind(this));
 }

@@ -1,40 +1,20 @@
+import alt from "alt-server";
 import { PrismaClient } from "@prisma/client";
 import { container } from "@shared/dependency-injection";
 
 export const prisma = new PrismaClient();
 
-prisma
-  .$connect()
-  .then(async () => {
-    prisma.character.update({
-      where: {
-        id: "63e9df6fd0b3a3f6f474d37a",
-      },
-      data: {
-        inventory: {
-          set: {
-            items: [
-              {
-                slot: 11,
-                data: {
-                  key: "appistol",
-                  type: "WEAPON",
-                  WEAPON: {
-                    durability: 100,
-                  },
-                },
-              },
-            ],
-            size: 10,
-          },
-        },
-      },
-    });
-  })
-  .catch(async (e) => {
-    console.error(e);
-    await prisma.$disconnect();
-    process.exit(1);
-  });
+let connected = false;
+
+prisma.$connect().then(async () => {
+  connected = true;
+});
+
+prisma.$on("beforeExit", async () => {
+  if (!connected) {
+    console.error("Couldn't connect to the database. `$ npm run mongo`?");
+    alt.stopServer();
+  }
+});
 
 container.bind(PrismaClient).toConstantValue(prisma);

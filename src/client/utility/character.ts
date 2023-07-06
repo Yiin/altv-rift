@@ -1,5 +1,5 @@
 import alt from "alt-client";
-import native from "natives";
+import game from "natives";
 import { Appearance } from "@prisma/client";
 import { ClothingComponent } from "@shared/interfaces/clothing";
 
@@ -8,15 +8,15 @@ export const Character = {
    * Apply Appearance Data to a Ped.
    */
   applyAppearance(ped: number, appearance: Appearance) {
-    if (!ped || !native.doesEntityExist(ped)) {
+    if (!ped || !game.doesEntityExist(ped)) {
       return;
     }
 
-    native.clearPedBloodDamage(ped);
-    native.clearPedDecorations(ped);
+    game.clearPedBloodDamage(ped);
+    game.clearPedDecorations(ped);
 
-    native.setPedHeadBlendData(ped, 0, 0, 0, 0, 0, 0, 0, 0, 0, false);
-    native.setPedHeadBlendData(
+    game.setPedHeadBlendData(ped, 0, 0, 0, 0, 0, 0, 0, 0, 0, false);
+    game.setPedHeadBlendData(
       ped,
       appearance.faceMother,
       appearance.faceFather,
@@ -34,15 +34,15 @@ export const Character = {
     for (let i = 0; i < appearance.features.length; i++) {
       const value = appearance.features[i]!;
 
-      native.setPedMicroMorph(ped, i, value);
+      game.setPedMicroMorph(ped, i, value);
     }
 
     // Head Overlays
     for (const [id, overlay] of Object.entries(appearance.headOverlays)) {
-      native.setPedHeadOverlay(ped, +id, overlay.value, overlay.opacity ?? 1);
+      game.setPedHeadOverlay(ped, +id, overlay.value, overlay.opacity ?? 1);
 
       if (typeof overlay.color1 !== "undefined" && overlay.color1 !== null) {
-        native.setPedHeadOverlayTint(
+        game.setPedHeadOverlayTint(
           ped,
           +id,
           [1, 2, 10].includes(+id) ? 1 : [5, 8].includes(+id) ? 2 : 0,
@@ -57,7 +57,7 @@ export const Character = {
       try {
         const collection = alt.hash(appearance.hairCollection);
         const overlay = alt.hash(appearance.hairOverlay);
-        native.addPedDecorationFromHashes(ped, collection, overlay);
+        game.addPedDecorationFromHashes(ped, collection, overlay);
       } catch {
         alt.log(`Error adding ped decoration. Hair: `, appearance.hair);
       }
@@ -65,16 +65,16 @@ export const Character = {
 
     // Hair
     if (typeof appearance.hairDlc === "undefined" || appearance.hairDlc === 0) {
-      native.setPedComponentVariation(ped, 2, appearance.hair, 0, 0);
+      game.setPedComponentVariation(ped, 2, appearance.hair, 0, 0);
     } else {
       alt.setPedDlcClothes(ped, appearance.hairDlc, 2, appearance.hair, 0, 0);
     }
 
-    native.setPedHairTint(ped, appearance.hairColor1, appearance.hairColor2);
+    game.setPedHairTint(ped, appearance.hairColor1, appearance.hairColor2);
 
     // Eyes
-    native.setHeadBlendEyeColor(ped, appearance.eyes);
-    native.clearAllPedProps(ped);
+    game.setHeadBlendEyeColor(ped, appearance.eyes);
+    game.clearAllPedProps(ped, false);
   },
 
   /**
@@ -82,32 +82,32 @@ export const Character = {
    * Do not use it for anything else.
    */
   applyEquipment(ped: number, components?: ClothingComponent[], isMale = true) {
-    if (!ped || !native.doesEntityExist(ped)) {
+    if (!ped || !game.doesEntityExist(ped)) {
       return;
     }
 
-    // native.clearAllPedProps(ped);
+    // game.clearAllPedProps(ped);
 
     if (isMale) {
-      // native.setPedComponentVariation(ped, 1, 0, 0, 2); // mask
-      // native.setPedComponentVariation(ped, 3, 15, 0, 2); // arms
-      // native.setPedComponentVariation(ped, 4, 61, 0, 2); // pants
-      // native.setPedComponentVariation(ped, 5, 0, 0, 2); // bag
-      // native.setPedComponentVariation(ped, 6, 34, 0, 2); // shoes
-      // native.setPedComponentVariation(ped, 7, 0, 0, 2); // accessories
-      // native.setPedComponentVariation(ped, 8, 15, 0, 2); // undershirt
-      // native.setPedComponentVariation(ped, 9, 0, 0, 2); // body armour
-      // native.setPedComponentVariation(ped, 11, 15, 0, 2); // torso
+      // game.setPedComponentVariation(ped, 1, 0, 0, 2); // mask
+      // game.setPedComponentVariation(ped, 3, 15, 0, 2); // arms
+      // game.setPedComponentVariation(ped, 4, 61, 0, 2); // pants
+      // game.setPedComponentVariation(ped, 5, 0, 0, 2); // bag
+      // game.setPedComponentVariation(ped, 6, 34, 0, 2); // shoes
+      // game.setPedComponentVariation(ped, 7, 0, 0, 2); // accessories
+      // game.setPedComponentVariation(ped, 8, 15, 0, 2); // undershirt
+      // game.setPedComponentVariation(ped, 9, 0, 0, 2); // body armour
+      // game.setPedComponentVariation(ped, 11, 15, 0, 2); // torso
     } else {
-      // native.setPedComponentVariation(ped, 1, 0, 0, 2); // mask
-      native.setPedComponentVariation(ped, 3, 11, 0, 0); // arms
-      // native.setPedComponentVariation(ped, 4, 14, 0, 2); // pants
-      // native.setPedComponentVariation(ped, 5, 0, 0, 2); // bag
-      native.setPedComponentVariation(ped, 6, 4, 0, 0); // shoes
-      // native.setPedComponentVariation(ped, 7, 0, 0, 2); // accessories
-      // native.setPedComponentVariation(ped, 8, 15, 0, 2); // undershirt
-      // native.setPedComponentVariation(ped, 9, 0, 0, 2); // body armour
-      native.setPedComponentVariation(ped, 11, 2, 0, 0); // torso
+      // game.setPedComponentVariation(ped, 1, 0, 0, 2); // mask
+      game.setPedComponentVariation(ped, 3, 11, 0, 0); // arms
+      // game.setPedComponentVariation(ped, 4, 14, 0, 2); // pants
+      // game.setPedComponentVariation(ped, 5, 0, 0, 2); // bag
+      game.setPedComponentVariation(ped, 6, 4, 0, 0); // shoes
+      // game.setPedComponentVariation(ped, 7, 0, 0, 2); // accessories
+      // game.setPedComponentVariation(ped, 8, 15, 0, 2); // undershirt
+      // game.setPedComponentVariation(ped, 9, 0, 0, 2); // body armour
+      game.setPedComponentVariation(ped, 11, 2, 0, 0); // torso
     }
 
     if (!components || !Array.isArray(components)) {
@@ -133,7 +133,7 @@ export const Character = {
 
           if (component.isProp) {
             if (drawable <= -1) {
-              native.clearPedProp(ped, id);
+              game.clearPedProp(ped, id, false);
               continue;
             }
 
@@ -147,13 +147,13 @@ export const Character = {
 
         if (component.isProp) {
           if (drawable <= -1) {
-            native.clearPedProp(ped, id);
+            game.clearPedProp(ped, id, false);
             continue;
           }
 
-          native.setPedPropIndex(ped, id, drawable, texture, true);
+          game.setPedPropIndex(ped, id, drawable, texture, true, false);
         } else {
-          native.setPedComponentVariation(ped, id, drawable, texture, 0);
+          game.setPedComponentVariation(ped, id, drawable, texture, 0);
         }
       }
     }
@@ -162,12 +162,12 @@ export const Character = {
   applyHairOverlay(
     decorations: Array<{ collection: string; overlay: string }>
   ) {
-    native.clearPedDecorations(alt.Player.local.scriptID);
+    game.clearPedDecorations(alt.Player.local.scriptID);
 
     for (let i = 0; i < decorations.length; i++) {
       const collection = alt.hash(decorations[i]!.collection);
       const overlay = alt.hash(decorations[i]!.overlay);
-      native.addPedDecorationFromHashes(
+      game.addPedDecorationFromHashes(
         alt.Player.local.scriptID,
         collection,
         overlay

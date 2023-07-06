@@ -1,5 +1,5 @@
 import alt from "alt-client";
-import native from "natives";
+import game from "natives";
 import { ClientEvents } from "@shared/events/client";
 import { Spinner } from "@shared/modules/game/ui/spinner/spinner";
 
@@ -15,9 +15,9 @@ export function createSpinner(data: Spinner) {
     data.type = 0;
   }
 
-  native.beginTextCommandBusyspinnerOn("STRING");
-  native.addTextComponentSubstringPlayerName(data.text);
-  native.endTextCommandBusyspinnerOn(data.type);
+  game.beginTextCommandBusyspinnerOn("STRING");
+  game.addTextComponentSubstringPlayerName(data.text);
+  game.endTextCommandBusyspinnerOn(data.type);
 
   if (data.duration >= 0) {
     timeout = alt.setTimeout(clearSpinner, data.duration);
@@ -33,7 +33,7 @@ export function clearSpinner() {
     timeout = undefined;
   }
 
-  native.busyspinnerOff();
+  game.busyspinnerOff();
 }
 
 alt.onServer(ClientEvents.FromServer.PLAYER_EMIT_SPINNER, createSpinner);

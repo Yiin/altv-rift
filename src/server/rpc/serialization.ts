@@ -58,8 +58,6 @@ export const deserialize = (value: any): any => {
         return alt.Vehicle.getByID(value.id);
       case "player":
         return alt.Player.getByID(value.id);
-      case "entity":
-        return alt.Entity.getByID(value.id);
       case "vector3":
         return new alt.Vector3(value.x, value.y, value.z);
       case "rgba":

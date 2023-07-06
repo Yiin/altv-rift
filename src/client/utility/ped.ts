@@ -1,19 +1,19 @@
 import alt from "alt-client";
-import native from "natives";
+import game from "natives";
 import { ANIM_DICTS } from "@/modules/npc/constants/anim-dicts";
 import { ANIM_TYPE } from "@/modules/npc/constants/entity";
 import { COMMON_SCENARIOS } from "@/modules/npc/constants/scenarios";
 
 export function isPedUnderVehicle(ped: number): boolean {
-  if (!native.isPedProne(ped) && !native.isPedGettingUp(ped)) {
+  if (!game.isPedProne(ped) && !game.isPedGettingUp(ped)) {
     return false;
   }
 
-  const { x, y, z } = native.getEntityCoords(ped, false);
+  const { x, y, z } = game.getEntityCoords(ped, false);
 
   const closestVehicle = alt.Vehicle.streamedIn.reduce(
     (closest, v) => {
-      const dist = native.getDistanceBetweenCoords(
+      const dist = game.getDistanceBetweenCoords(
         x,
         y,
         z,
@@ -35,22 +35,20 @@ export function isPedUnderVehicle(ped: number): boolean {
   if (!closestVehicle.vehicle) {
     return false;
   }
-  const [, back, front] = native.getModelDimensions(
-    closestVehicle.vehicle.model
-  );
-  const frontPos = native.getOffsetFromEntityInWorldCoords(
+  const [, back, front] = game.getModelDimensions(closestVehicle.vehicle.model);
+  const frontPos = game.getOffsetFromEntityInWorldCoords(
     closestVehicle.vehicle.scriptID,
     front.x,
     front.y,
     0
   );
-  const backPos = native.getOffsetFromEntityInWorldCoords(
+  const backPos = game.getOffsetFromEntityInWorldCoords(
     closestVehicle.vehicle.scriptID,
     back.x,
     back.y,
     0
   );
-  const frontDist = native.getDistanceBetweenCoords(
+  const frontDist = game.getDistanceBetweenCoords(
     x,
     y,
     z,
@@ -59,7 +57,7 @@ export function isPedUnderVehicle(ped: number): boolean {
     frontPos.z,
     true
   );
-  const centerDist = native.getDistanceBetweenCoords(
+  const centerDist = game.getDistanceBetweenCoords(
     x,
     y,
     z,
@@ -68,7 +66,7 @@ export function isPedUnderVehicle(ped: number): boolean {
     closestVehicle.vehicle.pos.z,
     true
   );
-  const backDist = native.getDistanceBetweenCoords(
+  const backDist = game.getDistanceBetweenCoords(
     x,
     y,
     z,
@@ -83,7 +81,7 @@ export function isPedUnderVehicle(ped: number): boolean {
 
 export function getCurrentAnimation(ped: number) {
   const currentScenario = COMMON_SCENARIOS.find(([name]) =>
-    native.isPedUsingScenario(ped, name)
+    game.isPedUsingScenario(ped, name)
   );
 
   if (!currentScenario) {
@@ -97,7 +95,7 @@ export function getCurrentAnimation(ped: number) {
   for (const dict of possibleDicts) {
     for (const anim of dict.Animations) {
       if (
-        native.isEntityPlayingAnim(
+        game.isEntityPlayingAnim(
           ped,
           dict.DictionaryName,
           anim,

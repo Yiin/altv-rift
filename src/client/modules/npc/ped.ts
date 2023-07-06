@@ -1,5 +1,5 @@
 import alt from "alt-client";
-import native from "natives";
+import game from "natives";
 import { LastUpdateTimestamp, Task } from "@shared/modules/npc/types";
 import { Npc } from "@shared/modules/npc/npc";
 import { everyTickWhile, intervalWhile } from "@/utility/event-helpers";
@@ -17,7 +17,6 @@ import {
   createLocalPed,
   processMissionPed,
   isStillRunningTask,
-  renderNametag,
 } from "./methods";
 import { applyDamage } from "./methods/apply-damage";
 import { MAX_PED_HEALTH } from "./constants";
@@ -47,15 +46,15 @@ export class StreamedNpc {
   }
 
   setupStaticPed() {
-    native.freezeEntityPosition(this.ped, true);
-    native.setEntityInvincible(this.ped, true);
-    native.setPedCanRagdoll(this.ped, false);
+    game.freezeEntityPosition(this.ped, true);
+    game.setEntityInvincible(this.ped, true);
+    game.setPedCanRagdoll(this.ped, false);
   }
 
   setupMissionPed() {
-    native.setPedAsEnemy(this.ped, true);
+    game.setPedAsEnemy(this.ped, true);
 
-    native.setEntityProofs(
+    game.setEntityProofs(
       this.ped,
       false,
       false,
@@ -68,42 +67,42 @@ export class StreamedNpc {
       false,
       false
     );
-    native.setPedMaxHealth(this.ped, MAX_PED_HEALTH);
-    native.setEntityHealth(this.ped, MAX_PED_HEALTH, 0);
-    native.setPedSuffersCriticalHits(this.ped, false);
-    native.setPedDiesWhenInjured(this.ped, false);
-    native.setPedPathCanUseClimbovers(this.ped, true);
-    native.setPedPathCanUseLadders(this.ped, true);
-    native.setPedPathAvoidFire(this.ped, true);
-    native.setPedPathPreferToAvoidWater(this.ped, true);
-    native.setPedPathClimbCostModifier(this.ped, 0);
-    native.setPedCanEvasiveDive(this.ped, false);
-    native.setPedDropsWeaponsWhenDead(this.ped, false);
-    native.setPedConfigFlag(
+    game.setPedMaxHealth(this.ped, MAX_PED_HEALTH);
+    game.setEntityHealth(this.ped, MAX_PED_HEALTH, 0);
+    game.setPedSuffersCriticalHits(this.ped, false);
+    game.setPedDiesWhenInjured(this.ped, false);
+    game.setPedPathCanUseClimbovers(this.ped, true);
+    game.setPedPathCanUseLadders(this.ped, true);
+    game.setPedPathAvoidFire(this.ped, true);
+    game.setPedPathPreferToAvoidWater(this.ped, true);
+    game.setPedPathClimbCostModifier(this.ped, 0);
+    game.setPedCanEvasiveDive(this.ped, false);
+    game.setPedDropsWeaponsWhenDead(this.ped, false);
+    game.setPedConfigFlag(
       this.ped,
       PED_CONFIG_FLAG.DisableGoToWritheWhenInjured,
       true
     );
-    native.setPedConfigFlag(this.ped, PED_CONFIG_FLAG.IgnoreBeingOnFire, true);
-    native.setPedConfigFlag(
+    game.setPedConfigFlag(this.ped, PED_CONFIG_FLAG.IgnoreBeingOnFire, true);
+    game.setPedConfigFlag(
       this.ped,
       PED_CONFIG_FLAG.DontActivateRagdollFromExplosions,
       true
     );
-    native.setPedConfigFlag(
+    game.setPedConfigFlag(
       this.ped,
       PED_CONFIG_FLAG.DisableExplosionReactions,
       true
     );
-    native.setIgnoreLowPriorityShockingEvents(this.ped, true);
-    native.setPedCombatAttributes(
+    game.setIgnoreLowPriorityShockingEvents(this.ped, true);
+    game.setPedCombatAttributes(
       this.ped,
       COMBAT_ATTRIBUTE.CA_ALWAYS_FLEE,
       false
     );
-    native.setPedFleeAttributes(this.ped, FLEE_ATTRIBUTE.FA_NEVER_FLEE, true);
+    game.setPedFleeAttributes(this.ped, FLEE_ATTRIBUTE.FA_NEVER_FLEE, true);
 
-    // native.setRagdollBlockingFlags(
+    // game.setRagdollBlockingFlags(
     //   this.ped,
     //   RAGDOLL_BLOCKING_FLAGS.RBF_PED_RAGDOLL_BUMP |
     //     RAGDOLL_BLOCKING_FLAGS.RBF_PLAYER_BUMP |
@@ -112,10 +111,7 @@ export class StreamedNpc {
     //     RAGDOLL_BLOCKING_FLAGS.RBF_MELEE
     // );
 
-    native.setEntityCanOnlyBeDamagedByEntity(
-      this.ped,
-      alt.Player.local.scriptID
-    );
+    game.setEntityCanOnlyBeDamagedByEntity(this.ped, alt.Player.local.scriptID);
 
     everyTickWhile(() => this.isStreamedIn, this.processMissionPed);
 
@@ -134,5 +130,6 @@ export class StreamedNpc {
   stopRunningTask = stopRunningTask.bind(this);
   processMissionPed = processMissionPed.bind(this);
   applyDamage = applyDamage.bind(this);
-  renderNametag = renderNametag.bind(this);
 }
+
+// game.pedHasUseScenarioTask()

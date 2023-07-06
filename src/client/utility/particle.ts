@@ -1,5 +1,5 @@
 import alt from "alt-client";
-import native from "natives";
+import game from "natives";
 
 export const ClientParticles = {
   /**
@@ -19,14 +19,14 @@ export const ClientParticles = {
     }
 
     const interval = alt.setInterval(() => {
-      native.useParticleFxAsset(dict);
-      native.requestPtfxAsset();
+      game.useParticleFxAsset(dict);
+      game.requestPtfxAsset();
 
       if (color) {
-        native.setParticleFxNonLoopedColour(color.r, color.g, color.b);
+        game.setParticleFxNonLoopedColour(color.r, color.g, color.b);
       }
 
-      native.startParticleFxNonLoopedAtCoord(
+      game.startParticleFxNonLoopedAtCoord(
         name,
         pos.x,
         pos.y,
@@ -50,7 +50,7 @@ export const ClientParticles = {
         alt.clearInterval(interval);
 
         if (clearInstantly) {
-          native.removeParticleFxInRange(pos.x, pos.y, pos.z, 5);
+          game.removeParticleFxInRange(pos.x, pos.y, pos.z, 5);
         }
 
         resolve();

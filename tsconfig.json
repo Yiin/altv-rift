@@ -30,6 +30,7 @@
   },
   "exclude": [
     "src/webview",
-    "src/server/modules/questing"
+    "src/server/modules/questing",
+    "**/unused_*"
   ]
 }

@@ -87,6 +87,7 @@ alt.onClient(CALL_SERVER_FROM_CLIENT, async (player, payload) => {
       result,
     });
   } catch (error) {
+    console.log(error);
     player.emitRaw(CALL_SERVER_FROM_CLIENT_RESPONSE, {
       id,
       error,

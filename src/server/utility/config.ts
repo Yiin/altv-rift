@@ -8,7 +8,7 @@ interface IConfig {
 }
 
 const DefaultServerCFGName = "server.toml";
-const DefaultViteServer = "localhost";
+const DefaultViteServer = "192.168.68.102";
 const DefaultVitePort = 5173;
 const DefaultConfigName = "ServerConfig.json";
 let configCache: IConfig;

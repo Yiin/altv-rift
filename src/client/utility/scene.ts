@@ -1,26 +1,26 @@
 import alt from "alt-client";
-import native from "natives";
+import game from "natives";
 import { Timer } from "./timers";
 
 export function loadSceneAtCoords(pos: alt.IVector3): Promise<boolean> {
   let timerHandle: number;
   return new Promise<boolean>((resolve) => {
     // noinspection JSSuspiciousNameCombination
-    native.newLoadSceneStartSphere(
+    game.newLoadSceneStartSphere(
       pos.x,
       pos.y,
-      pos.z ?? native.getApproxHeightForPoint(pos.x, pos.y),
+      pos.z ?? game.getApproxHeightForPoint(pos.x, pos.y),
       2,
       1
     );
 
     timerHandle = Timer.createInterval(
       () => {
-        if (!native.isNewLoadSceneActive()) {
+        if (!game.isNewLoadSceneActive()) {
           return resolve(false);
         }
 
-        if (!native.isNewLoadSceneLoaded()) {
+        if (!game.isNewLoadSceneLoaded()) {
           return;
         }
 
@@ -30,7 +30,7 @@ export function loadSceneAtCoords(pos: alt.IVector3): Promise<boolean> {
       "scene.ts"
     );
   }).finally(() => {
-    native.newLoadSceneStop();
+    game.newLoadSceneStop();
     Timer.clearInterval(timerHandle);
   });
 }

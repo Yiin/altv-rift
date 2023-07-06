@@ -1,5 +1,5 @@
 import alt from "alt-client";
-import native from "natives";
+import game from "natives";
 
 export class Scaleform {
   private id: number;
@@ -9,11 +9,11 @@ export class Scaleform {
   }
 
   hasLoaded(): boolean {
-    return native.hasScaleformMovieLoaded(this.id);
+    return game.hasScaleformMovieLoaded(this.id);
   }
 
   passFunction(functionName: string, ...args: any[]) {
-    native.beginScaleformMovieMethod(this.id, functionName);
+    game.beginScaleformMovieMethod(this.id, functionName);
 
     for (let i = 0; i < args.length; i++) {
       const arg = args[i];
@@ -21,19 +21,19 @@ export class Scaleform {
       switch (typeof arg) {
         case "number": {
           if (Number(arg) === arg && arg % 1 !== 0) {
-            native.scaleformMovieMethodAddParamFloat(arg);
+            game.scaleformMovieMethodAddParamFloat(arg);
           } else {
-            native.scaleformMovieMethodAddParamInt(arg);
+            game.scaleformMovieMethodAddParamInt(arg);
           }
         }
 
         case "string": {
-          native.scaleformMovieMethodAddParamPlayerNameString(arg as string);
+          game.scaleformMovieMethodAddParamPlayerNameString(arg as string);
           break;
         }
 
         case "boolean": {
-          native.scaleformMovieMethodAddParamBool(arg);
+          game.scaleformMovieMethodAddParamBool(arg);
           break;
         }
 
@@ -47,16 +47,16 @@ export class Scaleform {
       }
     }
 
-    return native.endScaleformMovieMethodReturnValue();
+    return game.endScaleformMovieMethodReturnValue();
   }
 
   destroy() {
-    native.setScaleformMovieAsNoLongerNeeded(this.id);
+    game.setScaleformMovieAsNoLongerNeeded(this.id);
     this.id = 0;
   }
 
   render(x: number, y: number, width: number, height: number) {
-    native.drawScaleformMovie(
+    game.drawScaleformMovie(
       this.id,
       x,
       y,
@@ -73,7 +73,7 @@ export class Scaleform {
 
 export function requestScaleForm(scaleformName: string): Promise<Scaleform> {
   return new Promise((resolve: Function) => {
-    const instance = new Scaleform(native.requestScaleformMovie(scaleformName));
+    const instance = new Scaleform(game.requestScaleformMovie(scaleformName));
     const interval = alt.setInterval(() => {
       if (!instance.hasLoaded()) {
         return;

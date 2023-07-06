@@ -1,11 +1,11 @@
 import alt from "alt-client";
-import native from "natives";
+import game from "natives";
 import { ClientEvents } from "@shared/events/client";
 
 alt.onServer(ClientEvents.FromServer.IPL_LOAD, (name: string) => {
-  native.requestIpl(name);
+  game.requestIpl(name);
 });
 
 alt.onServer(ClientEvents.FromServer.IPL_UNLOAD, (name: string) => {
-  native.removeIpl(name);
+  game.removeIpl(name);
 });

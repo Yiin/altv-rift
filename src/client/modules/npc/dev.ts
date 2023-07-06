@@ -1,5 +1,5 @@
 import alt from "alt-client";
-import native from "natives";
+import game from "natives";
 
-// native.cover
-// native.taskGuardSphereDefensiveArea()
+// game.cover
+// game.taskGuardSphereDefensiveArea()

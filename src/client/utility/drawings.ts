@@ -1,4 +1,4 @@
-import native from "natives";
+import game from "natives";
 
 export function drawBar(
   value: number,
@@ -11,7 +11,7 @@ export function drawBar(
   a: number
 ) {
   const healthWidth = value * 0.0005 * scale;
-  native.drawRect(
+  game.drawRect(
     (healthWidth - 100 * 0.0005 * scale) / 2,
     lineHeight + position * lineHeight,
     healthWidth,
@@ -35,7 +35,7 @@ export function drawBarBackground(
   a: number
 ) {
   const width = value * 0.0005 * scale;
-  native.drawRect(
+  game.drawRect(
     0,
     lineHeight + position * lineHeight,
     width + 0.002,
@@ -46,7 +46,7 @@ export function drawBarBackground(
     255,
     false
   );
-  native.drawRect(
+  game.drawRect(
     0,
     lineHeight + position * lineHeight,
     width,

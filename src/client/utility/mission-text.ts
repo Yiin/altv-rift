@@ -1,5 +1,5 @@
 import alt from "alt-client";
-import native from "natives";
+import game from "natives";
 import { ClientEvents } from "@shared/events/client";
 
 let timeoutId: number | undefined;
@@ -13,14 +13,14 @@ export function drawMissionText(text: string, duration?: number) {
     alt.clearTimeout(timeoutId);
   }
 
-  native.clearPrints();
-  native.beginTextCommandPrint("STRING");
-  native.addTextComponentSubstringPlayerName(text);
+  game.clearPrints();
+  game.beginTextCommandPrint("STRING");
+  game.addTextComponentSubstringPlayerName(text);
   if (typeof duration !== "number") {
     duration = text.length * 100;
   }
 
-  native.endTextCommandPrint(duration, true);
+  game.endTextCommandPrint(duration, true);
   timeoutId = alt.setTimeout(() => {
     alt.setWatermarkPosition(4);
     timeoutId = undefined;

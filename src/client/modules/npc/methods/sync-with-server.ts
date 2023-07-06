@@ -1,5 +1,5 @@
 import alt from "alt-client";
-import native from "natives";
+import game from "natives";
 import { isPedUnderVehicle } from "@/utility/ped";
 import { MAX_PED_HEALTH } from "../constants";
 import { StreamedNpc } from "../ped";
@@ -19,19 +19,19 @@ export async function syncWithServer(
   const expectedPedHealth =
     (this.npc.health / this.npc.maxHealth) * MAX_PED_HEALTH;
 
-  if (native.getEntityHealth(this.ped) > expectedPedHealth) {
-    const damage = native.getEntityHealth(this.ped) - expectedPedHealth;
+  if (game.getEntityHealth(this.ped) > expectedPedHealth) {
+    const damage = game.getEntityHealth(this.ped) - expectedPedHealth;
 
-    native.applyDamageToPed(this.ped, damage, true, 0);
+    game.applyDamageToPed(this.ped, damage, true, 0);
   }
 
   if (
-    this.npc.weaponHash !== native.getCurrentPedWeaponEntityIndex(this.ped, 0)
+    this.npc.weaponHash !== game.getCurrentPedWeaponEntityIndex(this.ped, 0)
   ) {
     if (this.npc.weaponHash) {
-      native.giveWeaponToPed(this.ped, this.npc.weaponHash, -1, true, true);
+      game.giveWeaponToPed(this.ped, this.npc.weaponHash, -1, true, true);
     } else {
-      native.removeAllPedWeapons(this.ped, true);
+      game.removeAllPedWeapons(this.ped, true);
     }
   }
 
@@ -41,20 +41,20 @@ export async function syncWithServer(
   }
 
   const doNotApplyPhysics =
-    native.isPedRagdoll(this.ped) || native.isPedRunningRagdollTask(this.ped);
+    game.isPedRagdoll(this.ped) || game.isPedRunningRagdollTask(this.ped);
 
   // Update ped position
-  const { x, y, z } = native.getEntityCoords(this.ped, false);
+  const { x, y, z } = game.getEntityCoords(this.ped, false);
   const { x: x2, y: y2, z: z2 } = this.npc.position;
 
-  if (native.getDistanceBetweenCoords(x, y, z, x2, y2, z2, false) > 0.3) {
-    native.setEntityCoordsNoOffset(this.ped, x2, y2, z2, true, true, true);
+  if (game.getDistanceBetweenCoords(x, y, z, x2, y2, z2, false) > 0.3) {
+    game.setEntityCoordsNoOffset(this.ped, x2, y2, z2, true, true, true);
   }
 
   // Rotation
   if (
     !doNotApplyPhysics &&
-    this.npc.rotation.distanceTo(native.getEntityRotation(this.ped, 2)) > 0.1
+    this.npc.rotation.distanceTo(game.getEntityRotation(this.ped, 2)) > 0.1
   ) {
     alt.log(
       "rotation",
@@ -62,7 +62,7 @@ export async function syncWithServer(
       this.npc.rotation.y,
       this.npc.rotation.z
     );
-    native.setEntityRotation(
+    game.setEntityRotation(
       this.ped,
       this.npc.rotation.x,
       this.npc.rotation.y,
@@ -73,42 +73,42 @@ export async function syncWithServer(
   }
 
   // Update ped heading
-  if (native.getEntityHeading(this.ped) !== this.npc.heading) {
+  if (game.getEntityHeading(this.ped) !== this.npc.heading) {
     if (this.npc.isUnderVehicle) {
       alt.log("is under vehicle");
-      native.setEntityHeading(this.ped, this.npc.heading);
+      game.setEntityHeading(this.ped, this.npc.heading);
     } else if (!doNotApplyPhysics) {
       alt.log("set desired heading");
-      native.setPedDesiredHeading(this.ped, this.npc.heading);
+      game.setPedDesiredHeading(this.ped, this.npc.heading);
     }
   }
 
   // Update ragdoll
   if (this.npc.isUnderVehicle && !isPedUnderVehicle(this.ped)) {
     if (force) {
-      native.setEntityCollision(this.ped, false, true);
-      native.setEntityCoordsNoOffset(this.ped, x2, y2, z2, false, false, false);
-      native.freezeEntityPosition(this.ped, true);
+      game.setEntityCollision(this.ped, false, true);
+      game.setEntityCoordsNoOffset(this.ped, x2, y2, z2, false, false, false);
+      game.freezeEntityPosition(this.ped, true);
 
       await alt.Utils.waitFor(() => !isPedUnderVehicle(this.ped));
 
-      native.setEntityCollision(this.ped, true, true);
-      native.freezeEntityPosition(this.ped, false);
+      game.setEntityCollision(this.ped, true, true);
+      game.freezeEntityPosition(this.ped, false);
     }
-    native.setPedToRagdoll(this.ped, 1000, 0, 0, false, false, false);
+    game.setPedToRagdoll(this.ped, 1000, 0, 0, false, false, false);
   } else {
     if (doNotApplyPhysics) {
       if (!this.npc.isRagdollActive && !this.npc.isRunningRagdollTask) {
         alt.log("clear ped tasks immediately");
-        native.clearPedTasksImmediately(this.ped);
+        game.clearPedTasksImmediately(this.ped);
       }
     } else if (this.npc.isRagdollActive) {
-      native.setPedToRagdoll(this.ped, 0, 0, 0, false, false, false);
+      game.setPedToRagdoll(this.ped, 0, 0, 0, false, false, false);
     } else if (
       this.npc.isRunningRagdollTask &&
-      !native.isPedRunningRagdollTask(this.ped)
+      !game.isPedRunningRagdollTask(this.ped)
     ) {
-      // native.setPedToRagdoll(this.ped, 0, 500, 0, false, false, false);
+      // game.setPedToRagdoll(this.ped, 0, 500, 0, false, false, false);
     }
   }
 
@@ -119,7 +119,7 @@ export async function syncWithServer(
     const adjustedVelocity = velocity.mul(
       0.97 ** ((Date.now() - lastUpdateVelocity) / 5)
     );
-    native.setEntityVelocity(
+    game.setEntityVelocity(
       this.ped,
       adjustedVelocity.x,
       adjustedVelocity.y,
@@ -135,7 +135,7 @@ export async function syncWithServer(
   if (this.lastUpdate.rotationVelocity !== lastUpdateRotationVelocity) {
     if (!doNotApplyPhysics) {
       alt.log("set entity angular velocity");
-      native.setEntityAngularVelocity(
+      game.setEntityAngularVelocity(
         this.ped,
         rotationVelocity.x,
         rotationVelocity.y,

@@ -1,5 +1,5 @@
 import alt from "alt-client";
-import native from "natives";
+import game from "natives";
 import { Bones } from "@shared/enums/bones";
 import { ClientEvents } from "@shared/events/client";
 import { loadSceneAtCoords } from "@/utility/scene";
@@ -18,11 +18,11 @@ let cameraControlInterval: number | undefined;
 
 export const CharacterCreationCamera = {
   async create(scriptID: number) {
-    pedPosition = native.getEntityCoords(scriptID, false);
+    pedPosition = game.getEntityCoords(scriptID, false);
 
     // Set Focus in the Area
-    native.requestCollisionAtCoord(pedPosition.x, pedPosition.y, pedPosition.z);
-    native.setFocusPosAndVel(
+    game.requestCollisionAtCoord(pedPosition.x, pedPosition.y, pedPosition.z);
+    game.setFocusPosAndVel(
       pedPosition.x,
       pedPosition.y,
       pedPosition.z,
@@ -35,7 +35,7 @@ export const CharacterCreationCamera = {
     const fov = 60;
     const startCamPosition = cameraPositionBaseline;
 
-    camera = native.createCamWithParams(
+    camera = game.createCamWithParams(
       "DEFAULT_SCRIPTED_CAMERA",
       startCamPosition.x,
       startCamPosition.y,
@@ -50,28 +50,19 @@ export const CharacterCreationCamera = {
 
     alt.log(`Camera: ${camera}`);
 
-    native.setCamActive(camera, true);
-    native.renderScriptCams(true, false, 0, true, false, 0);
+    game.setCamActive(camera, true);
+    game.renderScriptCams(true, false, 0, true, false, 0);
 
     CharacterCreationCamera.updateCamera();
 
-    const front = native.getOffsetFromEntityInWorldCoords(scriptID, 0, 1.5, 0);
-    const back = native.getOffsetFromEntityInWorldCoords(scriptID, 0, -1.5, 0);
+    const front = game.getOffsetFromEntityInWorldCoords(scriptID, 0, 1.5, 0);
+    const back = game.getOffsetFromEntityInWorldCoords(scriptID, 0, -1.5, 0);
 
     everyTickWhile(
       () => camera !== undefined,
       () => {
-        native.drawLightWithRange(
-          front.x,
-          front.y,
-          front.z,
-          255,
-          234,
-          207,
-          5,
-          2
-        );
-        native.drawLightWithRange(back.x, back.y, back.z, 255, 234, 207, 5, 2);
+        game.drawLightWithRange(front.x, front.y, front.z, 255, 234, 207, 5, 2);
+        game.drawLightWithRange(back.x, back.y, back.z, 255, 234, 207, 5, 2);
       }
     );
 
@@ -79,7 +70,7 @@ export const CharacterCreationCamera = {
       () => camera !== undefined,
       () => {
         if (
-          native.isControlJustPressed(
+          game.isControlJustPressed(
             ControlType.PLAYER_CONTROL,
             Control.INPUT_WEAPON_WHEEL_PREV
           )
@@ -87,7 +78,7 @@ export const CharacterCreationCamera = {
           zoom = Math.max(0.35, zoom - 0.05);
         }
         if (
-          native.isControlJustPressed(
+          game.isControlJustPressed(
             ControlType.PLAYER_CONTROL,
             Control.INPUT_WEAPON_WHEEL_NEXT
           )
@@ -121,48 +112,48 @@ export const CharacterCreationCamera = {
 
     const inputs = {
       InputLookUp: [
-        native.isControlPressed(
+        game.isControlPressed(
           ControlType.PLAYER_CONTROL,
           Control.INPUT_LOOK_UP_ONLY
         ),
         Math.abs(
-          native.getControlValue(
+          game.getControlValue(
             ControlType.PLAYER_CONTROL,
             Control.INPUT_LOOK_UP_ONLY
           ) - 127
         ),
       ],
       InputLookDown: [
-        native.isControlPressed(
+        game.isControlPressed(
           ControlType.PLAYER_CONTROL,
           Control.INPUT_LOOK_DOWN_ONLY
         ),
         Math.abs(
-          native.getControlValue(
+          game.getControlValue(
             ControlType.PLAYER_CONTROL,
             Control.INPUT_LOOK_DOWN_ONLY
           ) - 127
         ),
       ],
       InputLookLeft: [
-        native.isControlPressed(
+        game.isControlPressed(
           ControlType.PLAYER_CONTROL,
           Control.INPUT_LOOK_LEFT_ONLY
         ),
         Math.abs(
-          native.getControlValue(
+          game.getControlValue(
             ControlType.PLAYER_CONTROL,
             Control.INPUT_LOOK_LEFT_ONLY
           ) - 127
         ),
       ],
       InputLookRight: [
-        native.isControlPressed(
+        game.isControlPressed(
           ControlType.PLAYER_CONTROL,
           Control.INPUT_LOOK_RIGHT_ONLY
         ),
         Math.abs(
-          native.getControlValue(
+          game.getControlValue(
             ControlType.PLAYER_CONTROL,
             Control.INPUT_LOOK_RIGHT_ONLY
           ) - 127
@@ -193,8 +184,8 @@ export const CharacterCreationCamera = {
     const y1 = pedPosition.y + Math.sin(cameraHorizontalOffset) * zoom;
     const z = cameraPositionBaseline.z + Math.tan(cameraVerticalOffset);
 
-    native.setCamCoord(camera, x1, y1, z);
-    native.pointCamAtPedBone(
+    game.setCamCoord(camera, x1, y1, z);
+    game.pointCamAtPedBone(
       camera,
       CharacterPed.get(),
       Bones.SKEL_Head,
@@ -211,9 +202,9 @@ export const CharacterCreationCamera = {
       cameraControlInterval = undefined;
     }
 
-    native.clearFocus();
-    native.destroyAllCams(true);
-    native.renderScriptCams(false, false, 0, false, false, 0);
+    game.clearFocus();
+    game.destroyAllCams(true);
+    game.renderScriptCams(false, false, 0, false, false, 0);
 
     cameraHorizontalOffset = 0;
     cameraVerticalOffset = 0;

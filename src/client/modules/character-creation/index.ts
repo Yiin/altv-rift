@@ -1,7 +1,7 @@
 import alt from "alt-client";
-import native from "natives";
-import { SCENE } from "@/constants/ui";
+import game from "natives";
 import { ClientEvents } from "@shared/events/client";
+import { SCENE } from "@/constants/ui";
 import { CharacterPed } from "@/utility/character-ped";
 import { sleep } from "@/utility/sleep";
 import { Character } from "@/utility/character";
@@ -30,8 +30,8 @@ alt.onServer(
 
     setScene(SCENE.CREATE_CHARACTER);
 
-    native.doScreenFadeIn(1000);
-    native.disableScreenblurFade();
+    game.doScreenFadeIn(1000);
+    game.disableScreenblurFade();
 
     getWebview().on(
       ClientEvents.FromWebview.UPDATE_CHARACTER_APPEARANCE,
@@ -47,12 +47,12 @@ alt.onServer(
 alt.onServer(ClientEvents.FromServer.START_GAME, exitCharacterCreation);
 
 function exitCharacterCreation() {
-  native.disableScreenblurFade();
+  game.disableScreenblurFade();
   setScene(SCENE.IN_GAME);
   CharacterCreationCamera.destroy();
   CharacterPed.destroy();
-  native.doScreenFadeIn(1000);
-  native.freezeEntityPosition(alt.Player.local.scriptID, false);
+  game.doScreenFadeIn(1000);
+  game.freezeEntityPosition(alt.Player.local.scriptID, false);
 
   // alt.emit(Events.Client.START_CHARACTER_SELECTION_SCENE);
 }

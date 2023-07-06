@@ -1,5 +1,5 @@
 import alt from "alt-client";
-import native from "natives";
+import game from "natives";
 import { NpcSyncPayload } from "@shared/modules/npc/types";
 import { ServerEvents } from "@shared/events/server";
 import { isPedUnderVehicle } from "@/utility/ped";
@@ -13,11 +13,11 @@ export function syncToServer(this: StreamedNpc) {
     return;
   }
 
-  const position = native.getEntityCoords(this.ped, true);
-  const heading = native.getEntityHeading(this.ped);
-  const rotation = native.getEntityRotation(this.ped, 2);
-  const velocity = native.getEntityVelocity(this.ped);
-  const rotationVelocity = native.getEntityRotationVelocity(this.ped);
+  const position = game.getEntityCoords(this.ped, true);
+  const heading = game.getEntityHeading(this.ped);
+  const rotation = game.getEntityRotation(this.ped, 2);
+  const velocity = game.getEntityVelocity(this.ped);
+  const rotationVelocity = game.getEntityRotationVelocity(this.ped);
   const isUnderVehicle = isPedUnderVehicle(this.ped);
 
   const payload: NpcSyncPayload = {
@@ -28,10 +28,7 @@ export function syncToServer(this: StreamedNpc) {
     payload.position = position;
   }
 
-  if (
-    !native.isPedRagdoll(this.ped) &&
-    !native.isPedRunningRagdollTask(this.ped)
-  ) {
+  if (!game.isPedRagdoll(this.ped) && !game.isPedRunningRagdollTask(this.ped)) {
     if (heading !== this.npc.heading) {
       payload.heading = heading;
     }
@@ -45,14 +42,14 @@ export function syncToServer(this: StreamedNpc) {
     }
   }
 
-  if (this.npc.isRagdollActive !== native.isPedRagdoll(this.ped)) {
-    payload.isRagdollActive = native.isPedRagdoll(this.ped);
+  if (this.npc.isRagdollActive !== game.isPedRagdoll(this.ped)) {
+    payload.isRagdollActive = game.isPedRagdoll(this.ped);
   }
 
   if (
-    this.npc.isRunningRagdollTask !== native.isPedRunningRagdollTask(this.ped)
+    this.npc.isRunningRagdollTask !== game.isPedRunningRagdollTask(this.ped)
   ) {
-    payload.isRunningRagdollTask = native.isPedRunningRagdollTask(this.ped);
+    payload.isRunningRagdollTask = game.isPedRunningRagdollTask(this.ped);
   }
 
   if (velocity.distanceTo(this.npc.velocity[1]) > 0.1) {

@@ -2,6 +2,8 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
+    "jsx": "preserve",
+    "jsxFactory": "createElement",
     "paths": {
       "@shared/*": ["../shared/*"],
       "@/*": ["./*"]

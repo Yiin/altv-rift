@@ -1,4 +1,4 @@
-import native from "natives";
+import game from "natives";
 import { MAX_PED_HEALTH } from "../constants";
 import { StreamedNpc } from "../ped";
 
@@ -9,10 +9,10 @@ let lastFireTick = new Map<PedID, Timestamp>();
 
 export function applyFireDamage(npc: StreamedNpc) {
   if (
-    native.isEntityOnFire(npc.ped) &&
+    game.isEntityOnFire(npc.ped) &&
     (lastFireTick.get(npc.ped) ?? 0) < Date.now() - 100
   ) {
-    native.applyDamageToPed(
+    game.applyDamageToPed(
       npc.ped,
       (30 / npc.npc.maxHealth) * MAX_PED_HEALTH,
       true,

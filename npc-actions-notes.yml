@@ -25,7 +25,7 @@ special actions:
 • aim at
 • shoot at
 • reposition?
-  req: merge tasks, e.g. goto + aimat = native.taskGoToCoordWhileAimingAtEntity
+  req: merge tasks, e.g. goto + aimat = game.taskGoToCoordWhileAimingAtEntity
 • cover
   req: unlikely, unless getting possible cover options from netowner?
   action:

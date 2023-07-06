@@ -1,7 +1,8 @@
 import esbuild from "esbuild";
 import { altvEsbuild } from "altv-esbuild";
-import yamlPlugin from "./plugins/yaml-plugin";
-import { altvEsbuildOptions, esbuildOptions } from "./shared";
+import yamlPlugin from "./plugins/yaml-plugin.js";
+import { altvEsbuildOptions, esbuildOptions } from "./shared.js";
+import { filelocPlugin } from "./plugins/fileloc-plugin.js";
 
 esbuild.build({
   ...esbuildOptions,
@@ -10,6 +11,9 @@ esbuild.build({
   outfile: "resources/main/server.js",
   plugins: [
     yamlPlugin,
+    filelocPlugin({
+      rootDir: "src",
+    }),
     altvEsbuild({
       ...altvEsbuildOptions,
       mode: "server",

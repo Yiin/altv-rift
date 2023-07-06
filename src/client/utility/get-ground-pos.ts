@@ -1,5 +1,5 @@
 import alt from "alt-client";
-import native from "natives";
+import game from "natives";
 import { LOS_FLAGS } from "@/modules/npc/constants/shapetest";
 import Raycast from "./raycast";
 
@@ -37,7 +37,7 @@ export async function getGroundPos(
 
   if (!groundPos) {
     alt.logWarning(
-      "failed to get ground pos for waypoint, trying getGroundZ native..."
+      "failed to get ground pos for waypoint, trying getGroundZ game..."
     );
 
     alt.FocusData.overrideFocus(point);
@@ -45,7 +45,7 @@ export async function getGroundPos(
     let foundZ: number | null = null;
     try {
       await alt.Utils.waitFor(() => {
-        const [found, z] = native.getGroundZAndNormalFor3dCoord(
+        const [found, z] = game.getGroundZAndNormalFor3dCoord(
           point.x,
           point.y,
           9999

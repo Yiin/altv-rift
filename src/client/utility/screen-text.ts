@@ -1,5 +1,5 @@
 import alt from "alt-client";
-import native from "natives";
+import game from "natives";
 import { drawRectangle2D, drawText2D } from "./text";
 
 interface TextProperties {
@@ -32,7 +32,7 @@ export const ScreenText = {
         position = Math.min(maxStringLength, text.length - currentIndex);
       }
 
-      native.addTextComponentSubstringPlayerName(
+      game.addTextComponentSubstringPlayerName(
         text.substring(currentIndex, position)
       );
     }
@@ -42,18 +42,18 @@ export const ScreenText = {
    * Get the float width of text. (0.1 - 1)
    */
   getTextWidth(text: string, font: number, scale: number): number {
-    native.beginTextCommandGetScreenWidthOfDisplayText("CELL_EMAIL_BCON");
+    game.beginTextCommandGetScreenWidthOfDisplayText("CELL_EMAIL_BCON");
     ScreenText.addLongString(text);
-    native.setTextFont(font);
-    native.setTextScale(1, scale);
-    return native.endTextCommandGetScreenWidthOfDisplayText(true);
+    game.setTextFont(font);
+    game.setTextScale(1, scale);
+    return game.endTextCommandGetScreenWidthOfDisplayText(true);
   },
 
   /**
    * Get the height of text based on scale and font.
    */
   getTextHeight(scale: number, font: number): number {
-    return native.getRenderedCharacterHeight(scale, font);
+    return game.getRenderedCharacterHeight(scale, font);
   },
 
   /**

@@ -1,5 +1,5 @@
 import alt from "alt-client";
-import native from "natives";
+import game from "natives";
 
 const Minimap = {
   /**
@@ -107,15 +107,15 @@ const Minimap = {
   },
 
   getSafeZoneSize(): number {
-    return native.getSafeZoneSize();
+    return game.getSafeZoneSize();
   },
 
   getScreenAspectRatio(): number {
-    return native.getAspectRatio(false);
+    return game.getAspectRatio(false);
   },
 
   getScreenResolution(): alt.IVector2 {
-    const [_, x, y] = native.getActualScreenResolution(0, 0);
+    const [_, x, y] = game.getActualScreenResolution(0, 0);
     return { x, y };
   },
 

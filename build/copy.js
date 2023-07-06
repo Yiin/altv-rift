@@ -1,15 +1,34 @@
 import fs from "fs";
+import path from "path";
+import glob from "glob";
 
-const copy = (file, dest) => {
-  fs.copyFile(file, dest, (err) => {
-    if (!err) {
-      console.log("copied", file, "->", dest);
-      return;
+export const copyFile = (source, dest) => {
+  fs.mkdirSync(path.dirname(dest), { recursive: true });
+
+  fs.copyFile(source, dest, (err) => {
+    if (err) {
+      console.error("Failed to copy", source, "err:", err);
+      process.exit(-1);
     }
 
-    console.error("failed to copy", file, "err:", err);
-    process.exit(-1);
+    console.log("Copied", source, "->", dest);
   });
 };
 
-copy("src/resource.toml", "resources/main/resource.toml");
+export const copy = async (globPattern, dest) => {
+  try {
+    const files = await glob(globPattern);
+
+    files.forEach((file) => {
+      const relativePath = path.relative("src", file);
+      const destPath = path.join(dest, relativePath);
+      copyFile(file, destPath);
+    });
+  } catch (err) {
+    console.error("Failed to read", globPattern, "err:", err);
+    process.exit(-1);
+  }
+};
+
+await copy("src/resource.toml", "resources/main");
+await copy("src/**/*.rml", "resources/main");

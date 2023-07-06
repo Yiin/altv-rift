@@ -1,4 +1,4 @@
-import native from "natives";
+import game from "natives";
 import { TaskType } from "@shared/modules/npc/types";
 import { NAVMESH_ROUTE_RESULT } from "../constants/task";
 import { StreamedNpc } from "../ped";
@@ -7,21 +7,21 @@ export function isStillRunningTask(this: StreamedNpc) {
   switch (this.runningTask?.type) {
     case TaskType.GoTo: {
       if (
-        native.isPedWalking(this.ped) ||
-        native.isPedRunning(this.ped) ||
-        native.isPedSprinting(this.ped) ||
-        native.isPedStrafing(this.ped) ||
-        native.isPedJumping(this.ped) ||
-        native.isPedClimbing(this.ped) ||
-        native.getNavmeshRouteResult(this.ped) !==
+        game.isPedWalking(this.ped) ||
+        game.isPedRunning(this.ped) ||
+        game.isPedSprinting(this.ped) ||
+        game.isPedStrafing(this.ped) ||
+        game.isPedJumping(this.ped) ||
+        game.isPedClimbing(this.ped) ||
+        game.getNavmeshRouteResult(this.ped) !==
           NAVMESH_ROUTE_RESULT.NAVMESHROUTE_TASK_NOT_FOUND ||
-        native.getDistanceBetweenCoords(
+        game.getDistanceBetweenCoords(
           this.runningTask.pos.x,
           this.runningTask.pos.y,
           this.runningTask.pos.z,
-          native.getEntityCoords(this.ped, false).x,
-          native.getEntityCoords(this.ped, false).y,
-          native.getEntityCoords(this.ped, false).z,
+          game.getEntityCoords(this.ped, false).x,
+          game.getEntityCoords(this.ped, false).y,
+          game.getEntityCoords(this.ped, false).z,
           true
         ) > 1
       ) {
@@ -31,12 +31,12 @@ export function isStillRunningTask(this: StreamedNpc) {
       }
     }
     case TaskType.AimAt: {
-      if (native.isPlayerFreeAiming(this.ped)) {
+      if (game.isPlayerFreeAiming(this.ped)) {
         return true;
       }
     }
     case TaskType.ShootAt: {
-      if (native.isPedShooting(this.ped)) {
+      if (game.isPedShooting(this.ped)) {
         return true;
       }
     }

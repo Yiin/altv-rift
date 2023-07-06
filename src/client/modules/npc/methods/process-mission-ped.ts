@@ -1,5 +1,5 @@
 import alt from "alt-client";
-import native from "natives";
+import game from "natives";
 import { MAX_PED_HEALTH } from "../constants";
 import { StreamedNpc } from "../ped";
 import { applyFireDamage } from "./apply-fire-damage";
@@ -16,18 +16,18 @@ export function processMissionPed(this: StreamedNpc) {
     this.applyDamage(weaponDamageData.damageData);
 
     // prevent bugs where ped dies when it shouldn't
-    if (this.npc.health > 0 && native.isPedDeadOrDying(this.ped, false)) {
-      native.freezeEntityPosition(this.ped, true);
-      native.resurrectPed(this.ped);
-      native.clearPedTasksImmediately(this.ped);
-      native.setEntityHealth(
+    if (this.npc.health > 0 && game.isPedDeadOrDying(this.ped, false)) {
+      game.freezeEntityPosition(this.ped, true);
+      game.resurrectPed(this.ped);
+      game.clearPedTasksImmediately(this.ped);
+      game.setEntityHealth(
         this.ped,
         (this.npc.heading / this.npc.maxHealth) * MAX_PED_HEALTH,
         0
       );
 
       alt.nextTick(() => {
-        native.freezeEntityPosition(this.ped, false);
+        game.freezeEntityPosition(this.ped, false);
       });
     }
   }
@@ -41,7 +41,7 @@ export function processMissionPed(this: StreamedNpc) {
     }
   }
 
-  this.lastPedHealth = native.getEntityHealth(this.ped);
+  this.lastPedHealth = game.getEntityHealth(this.ped);
 
   if (this.isStillRunningTask() && !this.taskIsRunning) {
     this.taskIsRunning = true;

@@ -1,5 +1,5 @@
 import alt from "alt-client";
-import native from "natives";
+import game from "natives";
 import { TaskType } from "@shared/modules/npc/types";
 import { MOVE_BLEND_RATIO } from "../constants/move-blend-ratio";
 import { NAV_SCRIPT_FLAGS } from "../constants/nav-script-flags";
@@ -16,7 +16,7 @@ export function runCurrentTask(this: StreamedNpc) {
 
   switch (task.type) {
     case TaskType.GoTo: {
-      native.taskFollowNavMeshToCoord(
+      game.taskFollowNavMeshToCoord(
         this.ped,
         task.pos.x,
         task.pos.y,
@@ -35,7 +35,7 @@ export function runCurrentTask(this: StreamedNpc) {
       );
 
       if (target) {
-        native.taskAimGunAtEntity(this.ped, target.scriptID, -1, true);
+        game.taskAimGunAtEntity(this.ped, target.scriptID, -1, true);
       }
       break;
     }
@@ -45,7 +45,7 @@ export function runCurrentTask(this: StreamedNpc) {
       );
 
       if (target) {
-        native.taskShootAtEntity(
+        game.taskShootAtEntity(
           this.ped,
           target.scriptID,
           -1,

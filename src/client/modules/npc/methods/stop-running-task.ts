@@ -1,11 +1,11 @@
 import alt from "alt-client";
-import native from "natives";
+import game from "natives";
 import { ServerEvents } from "@shared/events/server";
 import { StreamedNpc } from "../ped";
 
 export function stopRunningTask(this: StreamedNpc) {
   if (this.runningTask || this.taskIsRunning) {
-    native.clearPedTasksImmediately(this.ped);
+    game.clearPedTasksImmediately(this.ped);
     this.runningTask = undefined;
     this.taskIsRunning = false;
 

@@ -1,12 +1,12 @@
 import alt from "alt-client";
-import native from "natives";
+import game from "natives";
 
 export async function loadModel(hash: number): Promise<boolean> {
   return await new Promise((resolve: Function) => {
-    native.requestModel(hash);
+    game.requestModel(hash);
     let count = 0;
 
-    if (native.hasModelLoaded(hash)) {
+    if (game.hasModelLoaded(hash)) {
       resolve(true);
       return;
     }
@@ -18,7 +18,7 @@ export async function loadModel(hash: number): Promise<boolean> {
         return;
       }
 
-      if (!native.hasModelLoaded(hash)) {
+      if (!game.hasModelLoaded(hash)) {
         count += 1;
         return;
       }

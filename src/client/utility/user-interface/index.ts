@@ -1,5 +1,5 @@
 import alt from "alt-client";
-import native from "natives";
+import game from "natives";
 import { KeyCode } from "altv-enums";
 import { serialize } from "alpha-serializer";
 import { WebviewEvents } from "@shared/events/webview";
@@ -171,7 +171,7 @@ alt.onServer(
     webview.on(
       ClientEvents.FromWebview.PLAY_SOUND,
       (audioName: string, ref: string) => {
-        native.playSoundFrontend(-1, audioName, ref, true);
+        game.playSoundFrontend(-1, audioName, ref, true);
       }
     );
   }
