@@ -2,7 +2,13 @@ import { ServerCall } from "@shared/calls/server";
 import { rpc } from "@/rpc";
 import { StreamedNpc } from "../ped";
 
-export async function applyDamage(this: StreamedNpc, damageData: any) {
+declare module "../ped" {
+  interface StreamedNpc {
+    applyDamage: typeof applyDamage;
+  }
+}
+
+async function applyDamage(this: StreamedNpc, damageData: any) {
   const health = await rpc.callServer(
     ServerCall.FromClient.APPLY_NPC_DAMAGE,
     this.npc.id,
@@ -10,3 +16,5 @@ export async function applyDamage(this: StreamedNpc, damageData: any) {
   );
   this.npc.health = health;
 }
+
+StreamedNpc.prototype.applyDamage = applyDamage;

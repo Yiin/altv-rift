@@ -1,5 +1,5 @@
 import alt, { Player } from "alt-server";
-import { Npc } from "@shared/modules/npc/npc";
+import { Npc } from "@shared/modules/streamed-npc/npc";
 
 type DialogEntry = {
   from: string;

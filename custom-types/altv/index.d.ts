@@ -10,17 +10,13 @@ declare module "alt-server" {
     >;
     hasFullySpawned: boolean;
   }
-
-  export interface ICustomColshapeMeta {
-    npcId?: import("../../src/shared/modules/npc/npc").Npc["id"];
-  }
 }
 
 declare module "alt-client" {
-  export function on<K extends string, L extends (...args: any[]) => void>(
-    eventName: K,
-    listener: L
-  ): void;
+  // export function on<K extends string, L extends (...args: any[]) => void>(
+  //   eventName: K,
+  //   listener: L
+  // ): void;
 
   type IWebviewEventHandler = (...args: any[]) => any;
 

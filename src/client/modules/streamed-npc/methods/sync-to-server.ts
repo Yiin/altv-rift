@@ -1,14 +1,20 @@
 import alt from "alt-client";
 import game from "natives";
-import { NpcSyncPayload } from "@shared/modules/npc/types";
+import { NpcSyncPayload } from "@shared/modules/streamed-npc/types";
 import { ServerEvents } from "@shared/events/server";
 import { isPedUnderVehicle } from "@/utility/ped";
 import { StreamedNpc } from "../ped";
 
+declare module "../ped" {
+  interface StreamedNpc {
+    syncToServer: typeof syncToServer;
+  }
+}
+
 /**
  * Syncs local ped with server
  */
-export function syncToServer(this: StreamedNpc) {
+function syncToServer(this: StreamedNpc) {
   if (!this.netOwned || !this.ready) {
     return;
   }
@@ -26,6 +32,19 @@ export function syncToServer(this: StreamedNpc) {
 
   if (position.distanceTo(this.npc.position) !== 0) {
     payload.position = position;
+
+    // If game ped got too far, teleport it back to last known position
+    if (position.distanceTo(this.npc.position) > 10) {
+      game.setEntityCoordsNoOffset(
+        this.ped,
+        this.npc.position.x,
+        this.npc.position.y,
+        this.npc.position.z,
+        true,
+        true,
+        true
+      );
+    }
   }
 
   if (!game.isPedRagdoll(this.ped) && !game.isPedRunningRagdollTask(this.ped)) {
@@ -64,3 +83,5 @@ export function syncToServer(this: StreamedNpc) {
     alt.emitServerRaw(ServerEvents.FromClient.SYNC_NPC, payload);
   }
 }
+
+StreamedNpc.prototype.syncToServer = syncToServer;

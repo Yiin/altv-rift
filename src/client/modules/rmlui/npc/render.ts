@@ -1,15 +1,13 @@
 import alt from "alt-client";
 import game from "natives";
-import { NpcID } from "@shared/modules/npc/types";
 import { Bones } from "@shared/enums/bones";
-import { npcSyncStore } from "@/store/npc-sync.store";
-import { StreamedNpc } from "@/modules/npc/ped";
 import { container, elements, registeredElements } from "./elements";
 
 declare module "alt-client" {
   interface RmlElement {
-    npcId: NpcID;
+    ped: alt.Ped;
     shown: boolean;
+    key: string;
   }
 }
 
@@ -17,7 +15,7 @@ alt.RmlElement.prototype.shown = false;
 
 alt.everyTick(() => {
   // Create elements for all streamed in npcs
-  npcSyncStore.streamedInNpcs.forEach(createElement);
+  alt.Ped.streamedIn.forEach(createElement);
 
   // Now check if there are elements in the store that are not visible anymore
   elements.forEach(removeOrphanedElement);
@@ -26,21 +24,17 @@ alt.everyTick(() => {
   elements.forEach(renderElement);
 });
 
-function createElement(streamedInNpc: StreamedNpc, npcId: NpcID) {
-  const elementsMap = elements.has(npcId)
-    ? elements.get(npcId)!
+function createElement(ped: alt.Ped) {
+  const elementsMap = elements.has(ped)
+    ? elements.get(ped)!
     : new Map<string, alt.RmlElement>();
 
   for (const registeredElement of registeredElements) {
-    if (!streamedInNpc.ped) {
-      return;
-    }
-
     if (elementsMap.has(registeredElement.key)) {
       continue;
     }
 
-    const element = registeredElement.create(streamedInNpc);
+    const element = registeredElement.create(ped);
 
     if (!element) {
       return;
@@ -48,73 +42,64 @@ function createElement(streamedInNpc: StreamedNpc, npcId: NpcID) {
 
     container.appendChild(element);
     elementsMap.set(registeredElement.key, element);
-    console.log(`Created ${registeredElement.key} for npc ${npcId}`);
   }
 
-  if (!elements.has(npcId)) {
-    elements.set(npcId, elementsMap);
+  if (!elements.has(ped)) {
+    elements.set(ped, elementsMap);
   }
 }
 
 function removeOrphanedElement(
   elementsMap: Map<string, alt.RmlElement>,
-  npcId: NpcID
+  ped: alt.Ped
 ) {
-  if (
-    !npcSyncStore.streamedInNpcs.has(npcId) ||
-    !npcSyncStore.streamedInNpcs.get(npcId)?.ped
-  ) {
+  if (!alt.Ped.streamedIn.includes(ped)) {
     elementsMap.forEach((element) => {
       container.removeChild(element);
-      elements.delete(npcId);
+      elements.delete(ped);
       element.destroy();
     });
   }
 }
 
-function renderElement(elementsMap: Map<string, alt.RmlElement>, npcId: NpcID) {
-  const streamedInNpc = npcSyncStore.streamedInNpcs.get(npcId);
-  if (streamedInNpc && streamedInNpc.ped) {
-    const ped = streamedInNpc.ped;
+function renderElement(elementsMap: Map<string, alt.RmlElement>, ped: alt.Ped) {
+  // Get their position
+  const pedPos = game.getPedBoneCoords(ped.scriptID, Bones.SKEL_Head, 0, 0, 0);
+  const camPos = alt.getCamPos();
+  const camDistToPed = camPos.distanceTo(pedPos);
 
-    // Get their position
-    const pedPos = game.getPedBoneCoords(ped, Bones.SKEL_Head, 0, 0, 0);
-    const camPos = alt.getCamPos();
-    const camDistToPed = camPos.distanceTo(pedPos);
+  // Check if they're on the screen and optionally if line of sight check is enabled if there's nothing between us
+  if (
+    !game.isSphereVisible(pedPos.x, pedPos.y, pedPos.z, 0.0099999998) ||
+    !game.hasEntityClearLosToEntity(alt.Player.local, ped, 17)
+  ) {
+    elementsMap.forEach(markElementAsHidden);
+    return;
+  }
 
-    // Check if they're on the screen and optionally if line of sight check is enabled if there's nothing between us
-    if (
-      !game.isSphereVisible(pedPos.x, pedPos.y, pedPos.z, 0.0099999998) ||
-      !game.hasEntityClearLosToEntity(alt.Player.local, ped, 17)
-    ) {
-      elementsMap.forEach(markElementAsHidden);
-      return;
+  for (const registeredElement of registeredElements) {
+    const element = elementsMap.get(registeredElement.key);
+
+    if (!element) {
+      // should not be happening
+      console.log(`${registeredElement.key} not found`);
+      continue;
     }
 
-    for (const registeredElement of registeredElements) {
-      const element = elementsMap.get(registeredElement.key);
-
-      if (!element) {
-        // should not be happening
-        console.log(`${registeredElement.key} not found`);
-        continue;
-      }
-
-      if (camDistToPed > registeredElement.renderDistance) {
-        markElementAsHidden(element);
-        continue;
-      }
-      markElementAsVisible(element);
-
-      const scale = calculateNpcElementScale(camDistToPed);
-
-      registeredElement.update(element, {
-        pedPos,
-        camPos,
-        camDistToPed,
-        scale,
-      });
+    if (camDistToPed > registeredElement.renderDistance) {
+      markElementAsHidden(element);
+      continue;
     }
+    markElementAsVisible(element);
+
+    const scale = calculateNpcElementScale(camDistToPed);
+
+    registeredElement.update(element, {
+      pedPos,
+      camPos,
+      camDistToPed,
+      scale,
+    });
   }
 }
 

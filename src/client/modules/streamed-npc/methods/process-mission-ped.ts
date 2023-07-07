@@ -2,14 +2,17 @@ import alt from "alt-client";
 import game from "natives";
 import { MAX_PED_HEALTH } from "../constants";
 import { StreamedNpc } from "../ped";
-import { applyFireDamage } from "./apply-fire-damage";
-import { applyPedResetFlags } from "./apply-ped-reset-flags";
-import { applyWeaponDamage } from "./apply-weapon-damage";
 
-export function processMissionPed(this: StreamedNpc) {
-  applyPedResetFlags(this.ped);
+declare module "../ped" {
+  interface StreamedNpc {
+    processMissionPed: typeof processMissionPed;
+  }
+}
 
-  const weaponDamageData = applyWeaponDamage(this);
+function processMissionPed(this: StreamedNpc) {
+  this.applyPedResetFlags();
+
+  const weaponDamageData = this.applyWeaponDamage();
 
   if (weaponDamageData) {
     this.npc.health -= weaponDamageData.damage;
@@ -33,7 +36,7 @@ export function processMissionPed(this: StreamedNpc) {
   }
 
   if (this.netOwned) {
-    const damage = applyFireDamage(this);
+    const damage = this.applyFireDamage();
 
     if (damage) {
       this.npc.health -= damage;
@@ -62,3 +65,5 @@ export function processMissionPed(this: StreamedNpc) {
     return;
   }
 }
+
+StreamedNpc.prototype.processMissionPed = processMissionPed;

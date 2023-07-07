@@ -1,11 +1,17 @@
 import alt, { loadModel } from "alt-client";
 import game from "natives";
-import { PedType } from "@shared/modules/npc/types";
-import { tick, everyTickWhile, intervalWhile } from "@/utility/event-helpers";
+import { PedType } from "@shared/modules/streamed-npc/types";
+import { tick, intervalWhile } from "@/utility/event-helpers";
 import { getGroundPos } from "@/utility/get-ground-pos";
 import { StreamedNpc } from "../ped";
 
-export async function createLocalPed(
+declare module "../ped" {
+  interface StreamedNpc {
+    createLocalPed: typeof createLocalPed;
+  }
+}
+
+async function createLocalPed(
   this: StreamedNpc,
   modelNameOrHash: string | number
 ) {
@@ -56,3 +62,5 @@ export async function createLocalPed(
   this.ready = true;
   intervalWhile(() => this.isStreamedIn, this.syncWithServer.bind(this), 1000);
 }
+
+StreamedNpc.prototype.createLocalPed = createLocalPed;

@@ -10,5 +10,5 @@
     }
   },
   "include": ["./**/*", "../shared/**/*"],
-  "exclude": ["./webview/**/*"]
+  "exclude": ["../webview/**/*", "./modules/streamed-npc/**/*"]
 }

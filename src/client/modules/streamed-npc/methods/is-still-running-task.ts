@@ -1,9 +1,15 @@
 import game from "natives";
-import { TaskType } from "@shared/modules/npc/types";
-import { NAVMESH_ROUTE_RESULT } from "../constants/task";
+import { TaskType } from "@shared/modules/streamed-npc/types";
+import { NAVMESH_ROUTE_RESULT } from "../../npc/constants/task";
 import { StreamedNpc } from "../ped";
 
-export function isStillRunningTask(this: StreamedNpc) {
+declare module "../ped" {
+  interface StreamedNpc {
+    isStillRunningTask: typeof isStillRunningTask;
+  }
+}
+
+function isStillRunningTask(this: StreamedNpc) {
   switch (this.runningTask?.type) {
     case TaskType.GoTo: {
       if (
@@ -44,3 +50,5 @@ export function isStillRunningTask(this: StreamedNpc) {
 
   return false;
 }
+
+StreamedNpc.prototype.isStillRunningTask = isStillRunningTask;

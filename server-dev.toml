@@ -1,4 +1,4 @@
-name = "dev"
+name = "yolo"
 
 modules = ["js-module"]
 

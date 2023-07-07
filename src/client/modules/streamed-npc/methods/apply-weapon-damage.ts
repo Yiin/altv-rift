@@ -6,39 +6,40 @@ import { DamageMultiplier } from "@shared/modules/combat/damage-multipliers";
 import { StreamedNpc } from "../ped";
 import { MAX_PED_HEALTH } from "../constants";
 
-export function applyWeaponDamage(streamedNpc: StreamedNpc): null | {
+declare module "../ped" {
+  interface StreamedNpc {
+    applyWeaponDamage: typeof applyWeaponDamage;
+  }
+}
+
+function applyWeaponDamage(this: StreamedNpc): null | {
   damage: number;
   damageData: DamageData;
 } {
   if (
-    game.hasEntityBeenDamagedByEntity(
-      streamedNpc.ped,
-      alt.Player.local.scriptID,
-      true
-    )
+    game.hasEntityBeenDamagedByEntity(this.ped, alt.Player.local.scriptID, true)
   ) {
     const weapon = Object.values(weapons).find(({ hash }) =>
-      game.hasPedBeenDamagedByWeapon(streamedNpc.ped, hash, 0)
+      game.hasPedBeenDamagedByWeapon(this.ped, hash, 0)
     );
 
     if (!weapon) {
       return null;
     }
 
-    const nativeDamage =
-      streamedNpc.lastPedHealth - game.getEntityHealth(streamedNpc.ped);
+    const nativeDamage = this.lastPedHealth - game.getEntityHealth(this.ped);
 
-    game.clearEntityLastDamageEntity(streamedNpc.ped);
+    game.clearEntityLastDamageEntity(this.ped);
 
-    const bone = game.getPedLastDamageBone(streamedNpc.ped)[1];
+    const bone = game.getPedLastDamageBone(this.ped)[1];
     const damage =
       bone && weapon?.stats.damage
         ? weapon.stats.damage * DamageMultiplier[bone as Bones]
         : nativeDamage;
 
     game.applyDamageToPed(
-      streamedNpc.ped,
-      (damage / streamedNpc.npc.maxHealth) * MAX_PED_HEALTH -
+      this.ped,
+      (damage / this.npc.maxHealth) * MAX_PED_HEALTH -
         (weapon?.stats.damage || nativeDamage),
       true,
       0
@@ -55,3 +56,5 @@ export function applyWeaponDamage(streamedNpc: StreamedNpc): null | {
   }
   return null;
 }
+
+StreamedNpc.prototype.applyWeaponDamage = applyWeaponDamage;

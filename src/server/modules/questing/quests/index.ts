@@ -1,4 +1,3 @@
-import "./0_Tutorial";
 import { Q0_TutorialFacts } from "./0_Tutorial";
 
 export const QuestFacts = {

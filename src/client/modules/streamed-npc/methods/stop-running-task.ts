@@ -3,7 +3,13 @@ import game from "natives";
 import { ServerEvents } from "@shared/events/server";
 import { StreamedNpc } from "../ped";
 
-export function stopRunningTask(this: StreamedNpc) {
+declare module "../ped" {
+  interface StreamedNpc {
+    stopRunningTask: typeof stopRunningTask;
+  }
+}
+
+function stopRunningTask(this: StreamedNpc) {
   if (this.runningTask || this.taskIsRunning) {
     game.clearPedTasksImmediately(this.ped);
     this.runningTask = undefined;
@@ -14,3 +20,5 @@ export function stopRunningTask(this: StreamedNpc) {
     }
   }
 }
+
+StreamedNpc.prototype.stopRunningTask = stopRunningTask;

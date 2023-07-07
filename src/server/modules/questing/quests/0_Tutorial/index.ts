@@ -69,8 +69,7 @@
  */
 
 import alt, { Player } from "alt-server";
-import { NpcFlags, NpcID, PedType } from "@shared/modules/npc/types";
-import { npcStore } from "@/modules/npc";
+import { NpcFlags, PedType } from "@shared/modules/npc/constants";
 import dialogue from "./dialogue.yaml";
 
 const QUEST_KEY = "0_tutorial";
@@ -82,8 +81,27 @@ export const Q0_TutorialFacts = {
   FINISHED: `${QUEST_KEY}_finished`,
 } as const;
 
-const characters = {
-  sam: npcStore.createNpc(
+function createNpc(
+  type: PedType,
+  model: number,
+  pos: alt.Vector3,
+  heading: number,
+  data: any
+) {
+  const npc = new alt.Ped(model, pos, new alt.Vector3(heading));
+
+  npc.frozen = true;
+  npc.collision = false;
+
+  npc.setStreamSyncedMeta("PedType", type);
+  npc.setStreamSyncedMeta("Name", data.name);
+  npc.setStreamSyncedMeta("Flags", data.flags);
+
+  return npc;
+}
+
+export const characters = {
+  sam: createNpc(
     PedType.STATIC,
     alt.hash("a_m_m_golfer_01"),
     new alt.Vector3({
@@ -92,13 +110,12 @@ const characters = {
       z: 31.996417999267578,
     }),
     0,
-    100,
     {
       name: "Sam",
-      flags: NpcFlags.Quest | NpcFlags.Talkable,
+      flags: NpcFlags.Quest,
     }
   ),
-  jane: npcStore.createNpc(
+  jane: createNpc(
     PedType.STATIC,
     alt.hash("a_f_m_bevhills_01"),
     new alt.Vector3({
@@ -107,13 +124,12 @@ const characters = {
       z: 31.996417999267578,
     }),
     0,
-    100,
     {
       name: "Jane",
-      flags: NpcFlags.Quest | NpcFlags.Talkable,
+      flags: NpcFlags.Quest,
     }
   ),
-  tom: npcStore.createNpc(
+  tom: createNpc(
     PedType.STATIC,
     alt.hash("a_m_m_bevhills_01"),
     new alt.Vector3({
@@ -122,18 +138,17 @@ const characters = {
       z: 31.996417999267578,
     }),
     0,
-    100,
     {
       name: "Tom",
-      flags: NpcFlags.Quest | NpcFlags.Talkable,
+      flags: NpcFlags.Quest,
     }
   ),
 };
 
-type DialogRequest = { npcId: NpcID; index: number; option?: number };
+// type DialogRequest = { npcId: NpcID; index: number; option?: number };
 
-type DialogResponse =
-  | { from: NpcID; message: string }
-  | { message: string | string[] };
+// type DialogResponse =
+//   | { from: NpcID; message: string }
+//   | { message: string | string[] };
 
-createDialog(QUEST_KEY, dialogue, characters);
+// createDialog(QUEST_KEY, dialogue, characters);

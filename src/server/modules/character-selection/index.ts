@@ -1,6 +1,5 @@
 import alt, { Player } from "alt-server";
 import { ClientEvents } from "@shared/events/client";
-import { ServerEvents } from "@shared/events/server";
 import { ServerCall } from "@shared/calls/server";
 import { isRequired, isUnique, validate } from "@/validator";
 import { ServerEvent } from "@/constants/server-events";
@@ -86,6 +85,10 @@ async function startGame(player: Player, characterId: string) {
   }
 
   player.updateCharacterAppearance(character.appearance);
+
+  console.log(
+    `Spawning the player at ${JSON.stringify(character.lastPosition)}`
+  );
 
   player.spawn(
     character.lastPosition.x,

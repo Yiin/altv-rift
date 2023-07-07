@@ -4,13 +4,16 @@ import { isPedUnderVehicle } from "@/utility/ped";
 import { MAX_PED_HEALTH } from "../constants";
 import { StreamedNpc } from "../ped";
 
+declare module "../ped" {
+  interface StreamedNpc {
+    syncWithServer: typeof syncWithServer;
+  }
+}
+
 /**
  * Updates local ped with data from the server
  */
-export async function syncWithServer(
-  this: StreamedNpc,
-  { force = false } = {}
-) {
+async function syncWithServer(this: StreamedNpc, { force = false } = {}) {
   if (!this.ped) {
     return;
   }
@@ -56,12 +59,6 @@ export async function syncWithServer(
     !doNotApplyPhysics &&
     this.npc.rotation.distanceTo(game.getEntityRotation(this.ped, 2)) > 0.1
   ) {
-    alt.log(
-      "rotation",
-      this.npc.rotation.x,
-      this.npc.rotation.y,
-      this.npc.rotation.z
-    );
     game.setEntityRotation(
       this.ped,
       this.npc.rotation.x,
@@ -75,10 +72,8 @@ export async function syncWithServer(
   // Update ped heading
   if (game.getEntityHeading(this.ped) !== this.npc.heading) {
     if (this.npc.isUnderVehicle) {
-      alt.log("is under vehicle");
       game.setEntityHeading(this.ped, this.npc.heading);
     } else if (!doNotApplyPhysics) {
-      alt.log("set desired heading");
       game.setPedDesiredHeading(this.ped, this.npc.heading);
     }
   }
@@ -99,7 +94,6 @@ export async function syncWithServer(
   } else {
     if (doNotApplyPhysics) {
       if (!this.npc.isRagdollActive && !this.npc.isRunningRagdollTask) {
-        alt.log("clear ped tasks immediately");
         game.clearPedTasksImmediately(this.ped);
       }
     } else if (this.npc.isRagdollActive) {
@@ -134,7 +128,6 @@ export async function syncWithServer(
 
   if (this.lastUpdate.rotationVelocity !== lastUpdateRotationVelocity) {
     if (!doNotApplyPhysics) {
-      alt.log("set entity angular velocity");
       game.setEntityAngularVelocity(
         this.ped,
         rotationVelocity.x,
@@ -145,3 +138,5 @@ export async function syncWithServer(
     this.lastUpdate.rotationVelocity = lastUpdateRotationVelocity;
   }
 }
+
+StreamedNpc.prototype.syncWithServer = syncWithServer;

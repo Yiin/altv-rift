@@ -1,24 +1,15 @@
 import alt from "alt-client";
 import game from "natives";
-import { LastUpdateTimestamp, Task } from "@shared/modules/npc/types";
-import { Npc } from "@shared/modules/npc/npc";
+import { LastUpdateTimestamp, Task } from "@shared/modules/streamed-npc/types";
+import { Npc } from "@shared/modules/streamed-npc/npc";
 import { everyTickWhile, intervalWhile } from "@/utility/event-helpers";
 import { npcSyncStore } from "@/store/npc-sync.store";
 import {
   PED_CONFIG_FLAG,
   COMBAT_ATTRIBUTE,
   FLEE_ATTRIBUTE,
-} from "./constants/ped-flags";
-import {
-  syncToServer,
-  syncWithServer,
-  runCurrentTask,
-  stopRunningTask,
-  createLocalPed,
-  processMissionPed,
-  isStillRunningTask,
-} from "./methods";
-import { applyDamage } from "./methods/apply-damage";
+} from "../npc/constants/ped-flags";
+import "./methods";
 import { MAX_PED_HEALTH } from "./constants";
 
 export class StreamedNpc {
@@ -121,15 +112,6 @@ export class StreamedNpc {
       30
     );
   }
-
-  createLocalPed = createLocalPed.bind(this);
-  syncToServer = syncToServer.bind(this);
-  syncWithServer = syncWithServer.bind(this);
-  runCurrentTask = runCurrentTask.bind(this);
-  isStillRunningTask = isStillRunningTask.bind(this);
-  stopRunningTask = stopRunningTask.bind(this);
-  processMissionPed = processMissionPed.bind(this);
-  applyDamage = applyDamage.bind(this);
 }
 
 // game.pedHasUseScenarioTask()

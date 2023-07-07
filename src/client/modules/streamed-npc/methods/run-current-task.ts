@@ -1,11 +1,17 @@
 import alt from "alt-client";
 import game from "natives";
-import { TaskType } from "@shared/modules/npc/types";
-import { MOVE_BLEND_RATIO } from "../constants/move-blend-ratio";
-import { NAV_SCRIPT_FLAGS } from "../constants/nav-script-flags";
+import { TaskType } from "@shared/modules/streamed-npc/types";
+import { MOVE_BLEND_RATIO } from "../../npc/constants/move-blend-ratio";
+import { NAV_SCRIPT_FLAGS } from "../../npc/constants/nav-script-flags";
 import { StreamedNpc } from "../ped";
 
-export function runCurrentTask(this: StreamedNpc) {
+declare module "../ped" {
+  interface StreamedNpc {
+    runCurrentTask: typeof runCurrentTask;
+  }
+}
+
+function runCurrentTask(this: StreamedNpc) {
   const task = this.npc.currentTask;
 
   if (!task) {
@@ -55,3 +61,5 @@ export function runCurrentTask(this: StreamedNpc) {
     }
   }
 }
+
+StreamedNpc.prototype.runCurrentTask = runCurrentTask;
