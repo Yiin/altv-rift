@@ -115,11 +115,6 @@ const islandIpls = [
   "h4_mph4_airstrip_interior_0_airstrip_hanger",
 ];
 
-alt.on("connectionComplete", () => {
-  const blip = new alt.PointBlip(5943.5679611650485, -6272.114833599767, 2);
-  blip.alpha = 0;
-});
-
 const islandCenter = new alt.Vector3(4840.571, -5174.425, 2.0);
 let nearIsland = false;
 

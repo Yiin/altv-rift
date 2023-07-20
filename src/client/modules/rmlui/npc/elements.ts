@@ -1,19 +1,35 @@
 import alt from "alt-client";
 import { join } from "@shared/utility/path";
+import { ParsedElement } from "../renderer/types";
+import { createRenderer } from "../renderer/rml-renderer";
 
-interface ElementRegistration {
+export enum AnchorType {
+  Ped,
+  Player,
+  Vehicle,
+}
+
+type AnchorProps = {
+  [AnchorType.Ped]: {
+    ped: alt.Ped;
+  };
+  [AnchorType.Player]: {
+    player: alt.Player;
+  };
+  [AnchorType.Vehicle]: {
+    vehicle: alt.Vehicle;
+  };
+};
+
+export interface ElementRegistration<T extends AnchorType> {
   key: string;
   renderDistance: number;
-  create(streamedInNpc: alt.Ped): alt.RmlElement | undefined;
-  update(
-    element: alt.RmlElement,
-    info: {
-      pedPos: alt.Vector3;
-      camPos: alt.Vector3;
-      camDistToPed: number;
+  anchorType: T;
+  render(
+    props: AnchorProps[T] & {
       scale: number;
     }
-  ): void;
+  ): ParsedElement;
 }
 
 alt.RmlElement.prototype.shown = false;
@@ -24,8 +40,15 @@ export const container = document.getElementByID("container")!;
 // We use a map to simplify the mapping of entity and RmlElement
 export const elements: Map<alt.Ped, Map<string, alt.RmlElement>> = new Map();
 
-export const registeredElements: ElementRegistration[] = [];
+export const renderer = createRenderer(document);
 
-export const registerElement = (registration: ElementRegistration) => {
-  registeredElements.push(registration);
+export const registeredElements = new Map<
+  string,
+  ElementRegistration<AnchorType>
+>();
+
+export const registerElement = <T extends AnchorType>(
+  registration: ElementRegistration<T>
+) => {
+  registeredElements.set(registration.key, registration);
 };

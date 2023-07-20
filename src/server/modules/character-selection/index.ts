@@ -86,10 +86,6 @@ async function startGame(player: Player, characterId: string) {
 
   player.updateCharacterAppearance(character.appearance);
 
-  console.log(
-    `Spawning the player at ${JSON.stringify(character.lastPosition)}`
-  );
-
   player.spawn(
     character.lastPosition.x,
     character.lastPosition.y,

@@ -1,1 +1,1 @@
-altv-server.exe --config server-dev.toml
+altv-server.exe --config server-dev.toml --convert-config-format

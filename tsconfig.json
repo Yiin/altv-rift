@@ -20,6 +20,7 @@
     "noEmit": true,
     "preserveWatchOutput": false,
     "pretty": true,
+    "skipLibCheck": true,
     "typeRoots": [
       "./node_modules/@altv",
       "./node_modules/@types",

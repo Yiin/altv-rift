@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vite preview",
     "build": "vite build",
-    "dev": "vite",
+    "dev": "vite --host 192.168.68.102",
     "preview": "vite preview"
   },
   "dependencies": {

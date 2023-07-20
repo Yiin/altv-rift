@@ -36,7 +36,7 @@ Player.prototype.setup = function () {
   const pings: number[] = [];
 
   this.addInterval(() => {
-    if (pings.length > 10) {
+    while (pings.length > 10) {
       pings.shift();
     }
     pings.push(this.ping);

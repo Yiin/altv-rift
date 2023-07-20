@@ -1,47 +1,119 @@
 import alt from "alt-client";
 import game from "natives";
-import { Bones } from "@shared/enums/bones";
-import { container, elements, registeredElements } from "./elements";
+import FixedReverseHeap from "mnemonist/fixed-reverse-heap";
+import {
+  container,
+  document,
+  elements,
+  registeredElements,
+  renderer,
+} from "./elements";
 
 declare module "alt-client" {
   interface RmlElement {
-    ped: alt.Ped;
+    entity: alt.Ped;
     shown: boolean;
     key: string;
   }
+
+  interface Ped {
+    frameData: {
+      distance: number;
+      zIndex: number;
+      isVisible: boolean;
+    };
+  }
 }
+
+const MAX_RENDERED_ELEMENTS = 20;
+
+const visibleElementsHeap = new FixedReverseHeap<alt.RmlElement>(
+  Array,
+  (a, b) => b.zIndex - a.zIndex,
+  MAX_RENDERED_ELEMENTS
+);
+
+const notRenderedElements = new Set<alt.RmlElement>();
+
+setInterval(() => {
+  alt.log(`Elements: ${elements.size}`);
+  alt.log(`Visible: ${visibleElementsHeap.size}`);
+  alt.log(`Not rendered: ${notRenderedElements.size}`);
+}, 5000);
 
 alt.RmlElement.prototype.shown = false;
 
 alt.everyTick(() => {
+  visibleElementsHeap.clear();
+  notRenderedElements.clear();
+
   // Create elements for all streamed in npcs
-  alt.Ped.streamedIn.forEach(createElement);
+  alt.Ped.streamedIn.forEach(prepare);
 
   // Now check if there are elements in the store that are not visible anymore
   elements.forEach(removeOrphanedElement);
 
   // Update the positions of elements that are still visible
-  elements.forEach(renderElement);
+  (visibleElementsHeap.consume() as alt.RmlElement[]).forEach(renderElement);
+
+  // Hide elements that are not shown because of the limit
+  notRenderedElements.forEach(markElementAsHidden);
 });
 
-function createElement(ped: alt.Ped) {
+function prepare(ped: alt.Ped) {
+  preparePedForTheFrame(ped);
+  preparePedElements(ped);
+}
+
+function preparePedForTheFrame(ped: alt.Ped) {
+  const camPos = alt.getCamPos();
+  const camDistToPed = camPos.distanceTo(ped.pos);
+  const zIndex = ~~(1000000 - camDistToPed * 10000);
+
+  const isVisible =
+    game.isSphereVisible(ped.pos.x, ped.pos.y, ped.pos.z, 0.01) &&
+    game.hasEntityClearLosToEntity(alt.Player.local, ped, 17);
+
+  if (!ped.frameData) {
+    ped.frameData = {
+      distance: camDistToPed,
+      zIndex,
+      isVisible,
+    };
+  } else {
+    ped.frameData.distance = camDistToPed;
+    ped.frameData.zIndex = zIndex;
+    ped.frameData.isVisible = isVisible;
+  }
+}
+
+function preparePedElements(ped: alt.Ped) {
   const elementsMap = elements.has(ped)
     ? elements.get(ped)!
     : new Map<string, alt.RmlElement>();
 
-  for (const registeredElement of registeredElements) {
-    if (elementsMap.has(registeredElement.key)) {
-      continue;
+  for (const [key, registeredElement] of registeredElements) {
+    if (!elementsMap.has(key)) {
+      const node = document.createElement("div");
+
+      node.addClass("hide");
+      node.style["z-index"] = ped.frameData.zIndex.toString();
+      node.key = key;
+      node.entity = ped;
+
+      container.appendChild(node);
+      elementsMap.set(key, node);
     }
+    const node = elementsMap.get(key)!;
 
-    const element = registeredElement.create(ped);
+    notRenderedElements.add(node);
 
-    if (!element) {
-      return;
+    if (
+      ped.frameData.isVisible &&
+      ped.frameData.distance <= registeredElement.renderDistance
+    ) {
+      visibleElementsHeap.push(node);
     }
-
-    container.appendChild(element);
-    elementsMap.set(registeredElement.key, element);
   }
 
   if (!elements.has(ped)) {
@@ -55,98 +127,52 @@ function removeOrphanedElement(
 ) {
   if (!alt.Ped.streamedIn.includes(ped)) {
     elementsMap.forEach((element) => {
+      notRenderedElements.delete(element);
       container.removeChild(element);
-      elements.delete(ped);
       element.destroy();
     });
+    elements.delete(ped);
   }
 }
 
-function renderElement(elementsMap: Map<string, alt.RmlElement>, ped: alt.Ped) {
-  // Get their position
-  const pedPos = game.getPedBoneCoords(ped.scriptID, Bones.SKEL_Head, 0, 0, 0);
-  const camPos = alt.getCamPos();
-  const camDistToPed = camPos.distanceTo(pedPos);
+function renderElement(node: alt.RmlElement) {
+  const registeredElement = registeredElements.get(node.key);
 
-  // Check if they're on the screen and optionally if line of sight check is enabled if there's nothing between us
-  if (
-    !game.isSphereVisible(pedPos.x, pedPos.y, pedPos.z, 0.0099999998) ||
-    !game.hasEntityClearLosToEntity(alt.Player.local, ped, 17)
-  ) {
-    elementsMap.forEach(markElementAsHidden);
+  if (!registeredElement) {
+    alt.log("Registered element not found");
     return;
   }
 
-  for (const registeredElement of registeredElements) {
-    const element = elementsMap.get(registeredElement.key);
+  const ped = node.entity;
 
-    if (!element) {
-      // should not be happening
-      console.log(`${registeredElement.key} not found`);
-      continue;
-    }
+  markElementAsVisible(node);
 
-    if (camDistToPed > registeredElement.renderDistance) {
-      markElementAsHidden(element);
-      continue;
-    }
-    markElementAsVisible(element);
+  const scale = calculateNpcElementScale(ped.frameData.distance);
 
-    const scale = calculateNpcElementScale(camDistToPed);
+  const element = registeredElement.render({
+    ped,
+    scale,
+  });
 
-    registeredElement.update(element, {
-      pedPos,
-      camPos,
-      camDistToPed,
-      scale,
-    });
-  }
+  renderer.render(element, node);
+
+  notRenderedElements.delete(node);
 }
 
 function calculateNpcElementScale(camDistToPed: number) {
-  const fov = game.getGameplayCamFov(); // Field of view of the camera in degrees
   const { x: screenX, y: screenY } = alt.getScreenResolution();
   const aspectRatio = screenX / screenY; // Aspect ratio of the screen
   const screenDiagonal = Math.sqrt(screenX ** 2 + screenY ** 2);
   const scale = screenDiagonal / 2600;
-  let { x: pitch, y: roll, z: yaw } = game.getGameplayCamRot(0);
-
-  // Convert the FOV to radians and calculate the scale factor
-  const fovRad = fov * (Math.PI / 180);
-
-  // Calculate the perspective projection factor (not rly but good enough)
-  const perspectiveProjectionFactor = 2 * Math.tan(fovRad / 2);
 
   // Calculate the inverse distance factor
   const inverseDistanceFactor = 1 / (Math.min(camDistToPed, 15) + 0.00001);
 
   // Now the scaleFactor combines both the inverse distance and the perspective projection
-  const scaleFactor = perspectiveProjectionFactor * inverseDistanceFactor * 3;
-
-  // Get the center of the screen
-  const centerX = screenX / 2;
-  const centerY = screenY / 2;
-
-  // Calculate the distance from the center of the screen to the entity
-  const sx = screenX - centerX;
-  const sy = screenY - centerY;
-  const distToCenter = Math.sqrt(sx * sx + sy * sy);
-
-  // Add a distortion factor to the scale factor
-  // This is a simple linear distortion that increases with distance from the center
-  const distortionFactor = 1 + distToCenter / Math.max(centerX, centerY);
-
-  // Apply camera's orientation (assumed to be Euler angles) into account
-  pitch = pitch % 360;
-  yaw = yaw % 360;
-  roll = roll % 360;
-
-  if (pitch > 180) pitch -= 360;
-  if (yaw > 180) yaw -= 360;
-  if (roll > 180) roll -= 360;
+  const scaleFactor = inverseDistanceFactor * 3;
 
   // Calculate the scale of of font size
-  return Math.min(1, scaleFactor * aspectRatio * distortionFactor) * scale;
+  return Math.min(1, scaleFactor * aspectRatio) * scale;
 }
 
 function markElementAsVisible(element: alt.RmlElement) {

@@ -3,7 +3,7 @@ import "./modules/chat";
 import "./modules/dev";
 import "./modules/world";
 import "./modules/discord-auth";
-import "./modules/inventory-manager";
+import "./modules/inventory";
 import "./modules/character-creation";
 import "./modules/npc";
 import "./modules/rmlui";

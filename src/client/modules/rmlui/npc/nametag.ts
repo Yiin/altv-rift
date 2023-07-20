@@ -1,46 +1,47 @@
 import alt from "alt-client";
-import { document, registerElement } from "./elements";
-
-alt.RmlElement.prototype.shown = false;
+import game from "natives";
+import { Bones } from "@shared/enums/bones";
+import { div } from "../renderer/nodes";
+import { AnchorType, registerElement } from "./elements";
 
 registerElement({
   key: "nametag",
   renderDistance: 25,
-  create(ped) {
-    const nametagWrapper = document.createElement("div");
-    nametagWrapper.ped = ped;
-    nametagWrapper.addClass("nametag-wrapper");
-    nametagWrapper.addClass("hide");
+  anchorType: AnchorType.Ped,
+  render({ ped, scale }) {
+    const nametag = (ped.getStreamSyncedMeta("Name") as string) ?? `?`;
 
-    const nametag = document.createElement("span");
-    nametag.addClass("nametag");
-
-    alt.setTimeout(() => {
-      if (!nametag.valid) {
-        return;
-      }
-
-      nametag.innerRML =
-        (ped.getStreamSyncedMeta("Name") as string) ??
-        `Unknown person ${ped.id}`;
-    }, 1000);
-
-    nametagWrapper.appendChild(nametag);
-
-    return nametagWrapper;
-  },
-  update(element, { pedPos, camDistToPed, scale }) {
+    const headPos = game.getPedBoneCoords(
+      ped.scriptID,
+      Bones.SKEL_Head,
+      0,
+      0,
+      0
+    );
     const { x: screenX, y: screenY } = alt.worldToScreen(
-      pedPos.x,
-      pedPos.y,
-      pedPos.z + Math.min((camDistToPed / 4) * 0.5 + 0.2, 0.5)
+      headPos.x,
+      headPos.y,
+      headPos.z + Math.min((ped.frameData.distance / 4) * 0.5 + 0.2, 0.5)
     );
 
-    element.style[
-      "transform"
-    ] = `translate(-50%, -50%) translate(${screenX}px, ${screenY}px)`;
-
-    const [nametag] = element.getElementsByClassName("nametag")!;
-    nametag.style["transform"] = `scale(${scale})`;
+    return div(
+      ".nametag-wrapper",
+      {
+        style: {
+          transform: `translate(-50%, -50%) translate(${screenX}px, ${screenY}px)`,
+        },
+      },
+      [
+        div(
+          ".nametag",
+          {
+            style: {
+              transform: `scale(${scale})`,
+            },
+          },
+          [nametag]
+        ),
+      ]
+    );
   },
 });

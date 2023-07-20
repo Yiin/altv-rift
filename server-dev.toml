@@ -2,7 +2,7 @@ name = "yolo"
 
 modules = ["js-module"]
 
-resources = ["main", "qa-tools", "assets"]
+resources = ["main", "qa-tools", "ocnetrongt18"]
 
 debug = true
 

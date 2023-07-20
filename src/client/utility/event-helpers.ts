@@ -56,9 +56,10 @@ export function waitUntil(condition: () => boolean, timeoutMS = 10000) {
       if (!condition()) {
         return;
       }
-
-      alt.clearTimeout(timeout);
-      alt.clearEveryTick(tick);
+      try {
+        alt.clearTimeout(timeout);
+        alt.clearEveryTick(tick);
+      } catch {}
       ticks.splice(ticks.indexOf(tick), 1);
       resolve();
     });
@@ -94,17 +95,24 @@ getWebview((webview) => {
   });
 });
 
-alt.on("disconnect", () => {
-  intervals.forEach((interval) => {
-    alt.clearInterval(interval);
-  });
-  intervals.splice(0, intervals.length);
-  timeouts.forEach((timeout) => {
-    alt.clearTimeout(timeout);
-  });
-  timeouts.splice(0, timeouts.length);
-  ticks.forEach((tick) => {
-    alt.clearEveryTick(tick);
-  });
-  ticks.splice(0, ticks.length);
-});
+// alt.on("disconnect", () => {
+//   for (const interval of intervals) {
+//     try {
+//       alt.clearInterval(interval);
+//     } catch {}
+//   }
+//   for (const timeout of timeouts) {
+//     try {
+//       alt.clearTimeout(timeout);
+//     } catch {}
+//   }
+//   for (const tick of ticks) {
+//     try {
+//       alt.clearEveryTick(tick);
+//     } catch {}
+//   }
+
+//   intervals.splice(0, intervals.length);
+//   timeouts.splice(0, timeouts.length);
+//   ticks.splice(0, ticks.length);
+// });

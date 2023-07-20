@@ -33,6 +33,7 @@ esbuild
     // After esbuild finishes, copy .rml files
     copy("src/client/**/*.rml", "resources/main/");
     copy("src/client/**/*.ttf", "resources/main/");
+    copy("src/client/**/*.png", "resources/main/");
 
     // Watch .rml files for changes
     const watcher = chokidar.watch("src/client/**/*.rml");

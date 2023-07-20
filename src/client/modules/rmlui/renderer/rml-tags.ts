@@ -1,0 +1,25 @@
+import { createSelector } from "./rml-renderer";
+
+export const div = createSelector("div");
+export const span = createSelector("span");
+export const table = createSelector("table");
+export const button = createSelector("button");
+export const rml = createSelector("rml");
+export const head = createSelector("head");
+export const title = createSelector("title");
+export const link = createSelector("link");
+export const style = createSelector("style");
+export const body = createSelector("body");
+export const br = createSelector("br");
+export const handle = createSelector("handle");
+export const img = createSelector("img");
+export const form = createSelector("form");
+export const input = createSelector("input");
+export const textarea = createSelector("textarea");
+export const select = createSelector("select");
+export const option = createSelector("option");
+export const label = createSelector("label");
+export const tabset = createSelector("tabset");
+export const tab = createSelector("tab");
+export const panel = createSelector("panel");
+export const progress = createSelector("progress");
