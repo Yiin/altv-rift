@@ -5,10 +5,11 @@
   "scripts": {
     "serve": "vite preview",
     "build": "vite build",
-    "dev": "vite --host 192.168.68.102",
+    "dev": "vite --host 192.168.68.104",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@iconify/vue": "^4.1.1",
     "@mdi/font": "^7.1.96",
     "alpha-serializer": "^0.5.6",
     "chroma-js": "^2.4.2",
@@ -45,8 +46,8 @@
     "tailwindcss": "^3.2.4",
     "typescript": "4.8.3",
     "vite": "^4.0.0",
-    "volar-service-vetur": "latest",
     "vite-plugin-vuetify": "^1.0.0-alpha.12",
+    "volar-service-vetur": "latest",
     "vue-cli-plugin-vuetify": "~2.5.8",
     "vue-tsc": "^1.0.11"
   },

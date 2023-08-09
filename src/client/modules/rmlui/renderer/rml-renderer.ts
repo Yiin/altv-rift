@@ -50,7 +50,6 @@ function renderParsedNode(
   if (parsedElementIsText) {
     if (rmlNode.tagName !== "#text") {
       // Replace element with text node
-      alt.log("Replace element with text node");
       const ref = createTextNode(document, parsedElement.text);
       parent.replaceChild(ref, rmlNode);
       rmlNode.destroy();
@@ -58,7 +57,6 @@ function renderParsedNode(
     } else {
       // Update text node
       if (rmlNode.getMeta("text") !== parsedElement.text) {
-        alt.log("Update text node");
         const ref = createTextNode(document, parsedElement.text);
         rmlNode.parent?.replaceChild(ref, rmlNode);
         rmlNode.destroy();
@@ -67,7 +65,6 @@ function renderParsedNode(
     }
     return;
   } else if (tagNamesDoNotMatch) {
-    alt.log("Tag names do not match");
     // Replace element with new element
     const ref = document.createElement(parsedElement.tagName);
 
@@ -84,7 +81,6 @@ function renderParsedNode(
   const parsedChildren = parsedElement.children;
 
   if (currentChildren.length !== parsedChildren.length) {
-    alt.log("Children length does not match");
     // If the number of children has changed, we need to re-render the whole thing
     currentChildren = [];
 
@@ -100,44 +96,26 @@ function renderParsedNode(
   }
 }
 
+interface ElementProps {
+  className?: string | any[];
+  [key: string]: any;
+}
+
 function parseElement(
   tagName: string,
-  selector: string,
-  props: Record<string, any>,
+  props: ElementProps,
   children: (string | ParsedElement)[]
 ): ParsedElement {
-  const classNames: string[] = [];
+  const classNames: string[] =
+    typeof props.className === "string"
+      ? [props.className]
+      : Array.isArray(props.className)
+      ? props.className.filter(Boolean)
+      : [];
 
-  if (selector) {
-    let start = 0;
-    let i = 0;
-    while (i < selector.length) {
-      if (selector[i] === "." || selector[i] === "#") {
-        if (i > start) {
-          const value = selector.slice(start + 1, i);
-          if (selector[start] === ".") {
-            classNames.push(value);
-          } else {
-            props.id = value;
-          }
-        }
-        start = i;
-      }
-      i++;
-    }
-    if (i > start) {
-      const value = selector.slice(start + 1, i);
-      if (selector[start] === ".") {
-        classNames.push(value);
-      } else if (selector[start] === "#") {
-        props.id = value;
-      }
-    }
-  }
+  delete props.className;
 
-  // Split attributes data into individual attributes
-
-  const type = tagName || "div"; // if no tag name is provided, default to "div"
+  const type = tagName || "div";
 
   const parsedElement: ParsedElement = {
     tagName: type,
@@ -167,30 +145,18 @@ function parseElement(
 }
 
 export function createSelector(type: string) {
-  return (
-    ...args:
-      | [string, Record<string, any>, any[]]
-      | [string]
-      | [string, Record<string, any>]
-      | [string, any[]]
-      | [Record<string, any>, any[]]
-      | [Record<string, any>]
-      | [any[]]
-  ) => {
-    let selector = "",
-      props = {},
+  return (...args: [ElementProps, any[]] | [ElementProps] | [any[]]) => {
+    let props = {},
       children = [];
     for (let i = 0; i < args.length; i++) {
       let arg = args[i];
       if (Array.isArray(arg)) {
-        children = arg;
+        children = arg.filter(Boolean);
       } else if (typeof arg === "object") {
         props = arg;
-      } else {
-        selector = arg;
       }
     }
-    return parseElement(type, selector, props, children);
+    return parseElement(type, props, children);
   };
 }
 

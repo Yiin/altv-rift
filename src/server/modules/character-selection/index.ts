@@ -58,7 +58,7 @@ rpc.registerWebview(
         inventory: {
           set: {
             items: [],
-            size: 10,
+            size: 25,
           },
         },
       });

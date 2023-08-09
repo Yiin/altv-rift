@@ -1,129 +1,88 @@
-// import alt from "alt-client";
-// import game from "natives";
-// import { Bones } from "@shared/enums/bones";
-// import { NpcFlags } from "@shared/modules/npc/constants";
-// import { document, registerElement } from "./elements";
+import alt from "alt-client";
+import game from "natives";
+import { watch } from "vue";
+import { Bones } from "@shared/enums/bones";
+import { playerStore } from "@/store/player.store";
+import { stopConversation } from "@/modules/questing/dialogue";
+import { registerElement } from "../renderer/element-registry";
+import { div, span } from "../renderer/rml-tags";
+import { Icon } from "../components/icon/icon";
+import { AnchorType } from "../renderer/anchors";
+import { useMenu } from "../renderer/hooks/use-menu";
 
-// const rml = (...args: any) => {
-//   // impl
-// };
+let shouldUpdateContext = true;
 
-// function icon(name: string) {
-//   const iconEl = document.createElement("img");
-//   iconEl.addClass("icon");
-//   iconEl.setAttribute("src", `icons/icon-${name}.png`);
+watch(
+  () => playerStore.character?.questFacts,
+  () => {
+    shouldUpdateContext = true;
+  }
+);
 
-//   return iconEl;
-// }
+registerElement({
+  key: "interaction",
+  renderDistance: 3,
+  anchorType: AnchorType.Ped,
+  focusable: true,
+  context: {
+    updateContext({ entity: ped }) {
+      const interactions = ped.interactions?.value ?? [];
 
-// registerElement({
-//   key: "interaction",
-//   renderDistance: 7,
-//   render({ ped, scale }: any) {
-//     const flags = (ped.getStreamSyncedMeta("Flags") as NpcFlags) ?? 0;
+      const menu = useMenu(interactions, {
+        onSelect(interaction) {
+          interaction.onSelect();
+        },
+        onLeave() {
+          stopConversation();
+        },
+      });
 
-//     const lowerBodyPos = game.getPedBoneCoords(
-//       ped.scriptID,
-//       Bones.SKEL_Pelvis,
-//       0,
-//       0,
-//       0
-//     );
-//     const { x: screenX, y: screenY } = alt.worldToScreen(
-//       lowerBodyPos.x,
-//       lowerBodyPos.y,
-//       lowerBodyPos.z
-//     );
+      return { menu };
+    },
+  },
+  render({ entity: ped, scale }, { menu }) {
+    if (!menu.interactions.length) {
+      return null;
+    }
 
-//     return rml`
-//       <div
-//         class="interaction-wrapper"
-//         style="transform: translate(-50%, -50%) translate(${screenX}px, ${screenY}px)"
-//       >
-//         <div
-//           class="interaction-content"
-//           style="transform: scale(${scale})"
-//         >
-//           ${
-//             flags & NpcFlags.Quest &&
-//             rml`
-//               <div class="interaction">
-//                 ${icon("quest")}
-//                 <span class="label">Start quest</span>
-//               </div>
-//             `
-//           }
-//           ${
-//             flags & NpcFlags.Talkable &&
-//             rml`
-//               <div class="interaction">
-//                 ${icon("dialog")}
-//                 <span class="label">Talk</span>
-//               </div>
-//             `
-//           }
-//           ${
-//             flags & NpcFlags.Shop &&
-//             rml`
-//               <div class="interaction">
-//                 ${icon("shop")}
-//                 <span class="label">Shop</span>
-//               </div>
-//             `
-//           }
-//         </div>
-//       </div>
-//     `;
-//     // const wrapper = document.createElement("div");
-//     // wrapper.ped = ped;
-//     // wrapper.addClass("interaction-wrapper");
+    const lowerBodyPos = game.getPedBoneCoords(ped.scriptID, Bones.SKEL_Pelvis, 0, 0, 0.2);
+    const { x: screenX, y: screenY } = alt.worldToScreen(
+      lowerBodyPos.x,
+      lowerBodyPos.y,
+      lowerBodyPos.z
+    );
 
-//     // const content = document.createElement("div");
-//     // content.addClass("interaction-content");
-
-//     // const flags = (ped.getStreamSyncedMeta("Flags") as NpcFlags) ?? 0;
-
-//     // if (flags & NpcFlags.Quest) {
-//     //   content.appendChild(
-//     //     div({}, [icon("quest"), span({ class: "label" }, "Talk")])
-//     //   );
-//     // } else if (flags & NpcFlags.Talkable) {
-//     //   content.appendChild(icon("dialog"));
-//     // }
-
-//     // if (flags & NpcFlags.Shop) {
-//     //   content.appendChild(icon("shop"));
-//     // }
-
-//     // const label = document.createElement("span");
-//     // label.addClass("label");
-//     // label.innerRML = `Talk`;
-
-//     // content.appendChild(label);
-
-//     // wrapper.appendChild(content);
-
-//     // return wrapper;
-//   },
-//   update(element, { ped, scale }) {
-//     const lowerBodyPos = game.getPedBoneCoords(
-//       ped.scriptID,
-//       Bones.SKEL_Pelvis,
-//       0,
-//       0,
-//       0
-//     );
-//     const { x: screenX, y: screenY } = alt.worldToScreen(
-//       lowerBodyPos.x,
-//       lowerBodyPos.y,
-//       lowerBodyPos.z
-//     );
-
-//     element.style[
-//       "transform"
-//     ] = `translate(-50%, -50%) translate(${screenX}px, ${screenY}px)`;
-
-//     const [content] = element.getElementsByClassName("interaction-content")!;
-//     content.style["transform"] = `scale(${scale})`;
-//   },
-// });
+    return div(
+      {
+        className: "interaction-wrapper",
+        style: {
+          transform: `translate(-50%, -50%) translate(${screenX}px, ${screenY}px)`,
+          opacity: menu.isActive ? 1 : 0.5,
+        },
+      },
+      [
+        div(
+          {
+            className: "interaction-content",
+            style: {
+              transform: `scale(${scale})`,
+            },
+          },
+          menu.interactions.map((interaction, index) =>
+            div([
+              div(
+                {
+                  className: [
+                    "interaction",
+                    menu.currentIndex() === index && "interaction--selected",
+                  ],
+                },
+                [Icon(interaction.icon), span({ className: "label" }, [interaction.label])]
+              ),
+            ])
+          )
+        ),
+      ]
+    );
+  },
+});

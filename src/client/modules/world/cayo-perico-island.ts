@@ -113,6 +113,16 @@ const islandIpls = [
   "h4_mph4_terrain_05_grass_0",
   "h4_mph4_terrain_06_grass_0",
   "h4_mph4_airstrip_interior_0_airstrip_hanger",
+  "h4_islandx_placement_01",
+  "h4_islandx_placement_02",
+  "h4_islandx_placement_03",
+  "h4_islandx_placement_04",
+  "h4_islandx_placement_05",
+  "h4_islandx_placement_06",
+  "h4_islandx_placement_07",
+  "h4_islandx_placement_08",
+  "h4_islandx_placement_09",
+  "h4_islandx_placement_10",
 ];
 
 const islandCenter = new alt.Vector3(4840.571, -5174.425, 2.0);
@@ -138,16 +148,8 @@ alt.on("entityEnterColshape", (colshape: Colshape, entity: Entity) => {
   game.setIslandEnabled("HeistIsland", true);
   game.setScenarioGroupEnabled("Heist_Island_Peds", true);
   game.setAudioFlag("PlayerOnDLCHeist4Island", true);
-  game.setAmbientZoneListStatePersistent(
-    "AZL_DLC_Hei4_Island_Zones",
-    true,
-    true
-  );
-  game.setAmbientZoneListStatePersistent(
-    "AZL_DLC_Hei4_Island_Disabled_Zones",
-    false,
-    true
-  );
+  game.setAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Zones", true, true);
+  game.setAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Disabled_Zones", false, true);
 
   for (const ipl of islandIpls) {
     game.requestIpl(ipl);
@@ -167,16 +169,8 @@ alt.on("entityLeaveColshape", (colshape: Colshape, entity: Entity) => {
   game.setIslandEnabled("HeistIsland", false);
   game.setScenarioGroupEnabled("Heist_Island_Peds", false);
   game.setAudioFlag("PlayerOnDLCHeist4Island", false);
-  game.setAmbientZoneListStatePersistent(
-    "AZL_DLC_Hei4_Island_Zones",
-    false,
-    false
-  );
-  game.setAmbientZoneListStatePersistent(
-    "AZL_DLC_Hei4_Island_Disabled_Zones",
-    false,
-    false
-  );
+  game.setAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Zones", false, false);
+  game.setAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Disabled_Zones", false, false);
 
   for (const ipl of islandIpls) {
     game.removeIpl(ipl);
@@ -186,12 +180,6 @@ alt.on("entityLeaveColshape", (colshape: Colshape, entity: Entity) => {
 alt.everyTick(() => {
   if (nearIsland) {
     game.setRadarAsExteriorThisFrame();
-    game.setRadarAsInteriorThisFrame(
-      alt.hash("h4_fake_islandx"),
-      4700.0,
-      -5145.0,
-      0,
-      0
-    );
+    game.setRadarAsInteriorThisFrame(alt.hash("h4_fake_islandx"), 4700.0, -5145.0, 0, 0);
   }
 });

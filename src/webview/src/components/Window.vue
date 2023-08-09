@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { effect, onMounted, ref } from "vue";
 import { vClickOutside } from "../directives/click-outside";
 import { useWindows } from "../store/windows.store";
 import DragResize from "./DragResize.vue";
@@ -36,8 +36,15 @@ const props = withDefaults(
     isActive: true,
     isDraggable: true,
     wrapper: false,
+    w: (props) => {
+      return props.minw ?? 200;
+    },
   }
 );
+
+effect(() => {
+  // console.log(props.w);
+});
 
 const windows = useWindows();
 

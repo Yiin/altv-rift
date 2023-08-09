@@ -7,7 +7,6 @@ import { pinia } from ".";
 
 const useClient = defineStore("client", {
   state: getDefaultClientStoreState,
-  actions: {},
 });
 
 export const clientStore = useClient(pinia);

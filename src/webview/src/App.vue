@@ -49,6 +49,7 @@ on(WebviewEvents.FromClient.SET_CLIENT_STATE, (state: any) => {
 });
 
 on(WebviewEvents.FromClient.UPDATE_CLIENT_STATE, (event: any) => {
+  /// @ts-expect-error clientStore state is marked as read-only, but only in types
   updateStoreState(clientStore, event);
 });
 

@@ -31,7 +31,6 @@
   },
   "exclude": [
     "src/webview",
-    "src/server/modules/questing",
     "src/**/streamed-npc",
     "**/unused_*"
   ]

@@ -1,15 +1,23 @@
+import { InventoryItem } from "@shared/interfaces";
+
 export const FromServer = {
-  USER_LOADED: "USER_LOADED",
   MANUAL_DISCORD_AUTH_DONE: "MANUAL_DISCORD_AUTH_DONE",
+  USE_ITEM: "USE_ITEM",
+  EQUIP_ITEM: "EQUIP_ITEM",
 } as const;
 
 export interface EventFromServer {
-  [FromServer.USER_LOADED]: (
-    player: import("alt-server").Player
-  ) => Promise<void> | void;
   [FromServer.MANUAL_DISCORD_AUTH_DONE]: (
     player: import("alt-server").Player,
     token: string
+  ) => Promise<void> | void;
+  [FromServer.USE_ITEM]: (
+    player: import("alt-server").Player,
+    item: InventoryItem
+  ) => Promise<void> | void;
+  [FromServer.EQUIP_ITEM]: (
+    player: import("alt-server").Player,
+    item: InventoryItem
   ) => Promise<void> | void;
 }
 

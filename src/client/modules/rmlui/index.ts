@@ -1,6 +1,6 @@
-// @index('./*', f => `export * from "${f.path}";`)
+// @index(['./**/index.ts', /\/_/g], f => `export * from "${f.path.replace('/index', '')}";`)
 export * from "./fonts";
-export * from "./menu3d";
 export * from "./npc";
-// export * from "./test";
+export * from "./renderer";
+export * from "./tree";
 // @endindex

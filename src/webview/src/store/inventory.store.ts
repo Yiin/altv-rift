@@ -61,13 +61,20 @@ export const useInventory = defineStore("inventory", {
     },
   },
   actions: {
+    useItem(slot: number) {
+      return rpc.callClient(ClientCall.FromWebview.USE_ITEM, slot);
+    },
     equipItem(slot: number) {
       return rpc.callClient(ClientCall.FromWebview.EQUIP_ITEM, slot);
     },
     dropItem(slot: number) {
       return rpc.callClient(ClientCall.FromWebview.DROP_ITEM, slot);
     },
-    async moveItem(from: number, to: number, local = false) {
+    async moveItem(
+      from: number,
+      to: number,
+      local: boolean | undefined = false
+    ) {
       const itemInSlotFrom = this.items.find(({ slot }) => {
         return slot === from;
       });

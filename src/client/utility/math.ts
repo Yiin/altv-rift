@@ -9,9 +9,7 @@ export function getCrossProduct(v1: alt.Vector3, v2: alt.Vector3): alt.Vector3 {
 }
 
 export function getNormalizedVector(vector: alt.Vector3): alt.Vector3 {
-  const mag = Math.sqrt(
-    vector.x * vector.x + vector.y * vector.y + vector.z * vector.z
-  );
+  const mag = Math.sqrt(vector.x * vector.x + vector.y * vector.y + vector.z * vector.z);
   return new alt.Vector3(vector.x / mag, vector.y / mag, vector.z / mag);
 }
 
@@ -60,4 +58,43 @@ export function getAverage(data: number[]): number {
   const sum = data.reduce((a, b) => a + b);
 
   return sum / data.length;
+}
+
+export function getHeadingInDegrees(pointA: alt.IVector2, pointB: alt.IVector2) {
+  const { x, y } = pointA;
+
+  const dx = pointB.x - x;
+  const dy = pointB.y - y;
+
+  const angle = Math.atan2(dy, dx);
+
+  const degrees = ((angle * 180) / Math.PI + 360) % 360;
+  return degrees - 90;
+}
+
+/**
+ * fromPoint ----------X<-offset-> toPoint
+ * Finds position of X
+ */
+export function getPointNextToPointRelativeToPoint(
+  fromPoint: alt.IVector2,
+  toPoint: alt.IVector2,
+  offset: number
+) {
+  // Calculate the difference in x and y between the player and the tree
+  const dx = toPoint.x - fromPoint.x;
+  const dy = toPoint.y - fromPoint.y;
+
+  // Calculate the length of this difference vector
+  const length = Math.sqrt(dx * dx + dy * dy);
+
+  // Normalize the difference vector (make its length 1)
+  const nx = dx / length;
+  const ny = dy / length;
+
+  // Calculate the target position
+  const targetX = toPoint.x - nx * offset;
+  const targetY = toPoint.y - ny * offset;
+
+  return new alt.Vector2(targetX, targetY);
 }

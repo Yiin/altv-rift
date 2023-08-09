@@ -1,6 +1,4 @@
-// elements to render for npcs
+// @index(['./*.ts', /\/_/g], f => `import "./${f.name}";`)
+import "./interaction";
 import "./nametag";
-// import "./interaction";
-
-// should always be last
-import "./render";
+// @endindex

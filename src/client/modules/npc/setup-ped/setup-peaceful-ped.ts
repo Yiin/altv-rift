@@ -24,15 +24,6 @@ export function setupPeacefulPed(ped: alt.Ped) {
   everyTickWhile(
     () => ped.valid,
     () => {
-      // if (
-      //   game.isPlayerFreeAimingAtEntity(alt.Player.local.scriptID, ped.scriptID)
-      // ) {
-      //   game.disablePlayerFiring(alt.Player.local.scriptID, true);
-      //   game.disableAimCamThisUpdate();
-      // }
-      // Keep them clean
-      // game.clearPedBloodDamage(ped.scriptID);
-
       game.setPedResetFlag(
         alt.Player.local.scriptID,
         PED_RESET_FLAG.PreventLockonToFriendlyPlayers,

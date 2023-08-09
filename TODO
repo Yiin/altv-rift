@@ -1,7 +1,20 @@
+Questing:
+  ✔ NPC interaction menu @done(23-08-03 05:47)
+  ✔ Quest progress tracking (with quest facts) @done(23-08-03 05:47)
+  ☐ Quest list menu @started(23-08-03 05:48)
+  ☐ Multiple concurrent quests
+  ☐ Quest rewards
+  ☐ Quest failure states
+  Main quests:
+    ☐ Tutorial quest
+      ☐ Heal yourself
+      ☐ Get some food for others
+      ☐ Talk to townsfolk and pick a task
+      ☐ Make a deal with ferry captain to transport goods
 
 NPC Sync:
   ✔ Stream range & streamed npc owner @done(23-03-03 17:43)
-  ☐ Simulate npc behaviour on server (Idle actions) @started(23-03-09 23:24)
+  ✘ Simulate npc behaviour on server (Idle actions) @started(23-03-09 23:24) @cancelled(23-08-03 05:48) @wasted(20w6d5h24m31s)
   Create npc on server with following parameters:
     ✔ Position @done(23-03-03 17:43)
     ✔ Rotation @done(23-03-03 17:43)
@@ -20,19 +33,6 @@ NPC Sync:
     ✔ Net owners: List of npcs that have net owners (Map<NpcId, PlayerId>) @done(23-03-03 17:43)
     ✔ Player.sync.npcs.streamedIn: List of npcs that are streamed in for player (Array<new NPC>) @done(23-03-03 17:43)
     ✔ Player.sync.npcs.netOwnerOf: List of npcs that player is net owner of (Array<NpcId>) @done(23-03-03 17:43)
-  
-  When player enters npc stream range, he gets a command to become
-  net owner of the npc. When player leaves npc stream range, ownership
-  is transfered to one of the closest players with lowest ping. If
-  there are no players in stream range, ownership is transfered to
-  server.
-  When player becomes owner of npc, he reports npc state to server
-  and server directs npc behavior to all players in stream range.
-  When players in stream range attack npc, they report the damage
-  to the server and server reports the damage to all players in
-  stream range.
-  A continuous check is made by the npc net owner to sync npc state
-  with server because of possible desyncs on other players.
   States:
     Static:
       ✔ Position @done(23-03-03 17:43)
@@ -42,20 +42,21 @@ NPC Sync:
       ✔ Weapon @done(23-03-09 23:23)
     Dynamic:
       ✔ Walking/running @done(23-03-03 17:43)
-      ☐ Reload
+      ✘ Reload @cancelled(23-08-03 05:48)
       ✔ Ragdoll @done(23-03-08 05:47)
       ✔ Aim at @done(23-03-26 16:48)
       ✔ Shoot At @done(23-03-26 16:48)
       ✔ Killed @done(23-03-03 17:43)
-      ☐ Sounds?
+      ✘ Sounds? @cancelled(23-08-03 05:48)
   Actions:
     ✔ Idle @done(23-03-03 17:44)
     ✔ Walk to @done(23-03-03 17:44)
     ✔ Run to @done(23-03-08 05:47)
     ✔ Aim at @done(23-03-26 16:48)
     ✔ Shoot at @done(23-03-26 16:48)
-    ☐ Cover?
-    ☐ Play animation
-    ☐ Play sound?
+    ✘ Cover? @cancelled(23-08-03 05:48)
+    ✘ Play animation @cancelled(23-08-03 05:48)
+    ✘ Play sound? @cancelled(23-08-03 05:48)
 
-
+Reset flags:
+    ExtraLongWeaponRange

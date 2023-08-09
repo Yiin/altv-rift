@@ -1,24 +1,17 @@
 <script setup lang="ts">
 import { useAlt } from "@/composables/use-alt";
 import { WebviewEvents } from "@shared/events/webview";
-import { usePlayerStore } from "@shared/store/player.store";
-import { computed, reactive } from "vue";
-import JsonViewer from "vue-json-viewer";
+import { reactive } from "vue";
 import ChatBox from "./chat-box/ChatBox.vue";
 import Inventory from "./inventory/Inventory.vue";
-
-const playerStore = usePlayerStore();
-
-const jsonData = computed(() => ({
-  netOwnerOf: [...playerStore.sync.npc.netOwnerOf],
-  streamedIn: playerStore.sync.npc.streamedIn,
-}));
-
-const visibleElements = reactive(
-  new Set(globalThis.altMock ? ["inventory"] : [])
-);
+import Conversation from "./conversation/Conversation.vue";
+import QuestMenu from "./quest-menu/QuestMenu.vue";
 
 const { on } = useAlt();
+
+const visibleElements = reactive(
+  new Set(globalThis.altMock ? ["quest-menu"] : [])
+);
 
 on(WebviewEvents.FromClient.TOGGLE_ELEMENT, (element: string, visible) => {
   if (visible === null) {
@@ -29,18 +22,12 @@ on(WebviewEvents.FromClient.TOGGLE_ELEMENT, (element: string, visible) => {
   } else {
     visibleElements.delete(element);
   }
-  console.log(JSON.stringify([...visibleElements.values()]));
 });
 </script>
 
 <template>
   <ChatBox v-if="visibleElements.has('chat')" />
   <Inventory v-if="visibleElements.has('inventory')" />
-
-  <JsonViewer
-    v-if="visibleElements.has('json')"
-    :value="jsonData"
-    :expand-depth="5"
-    boxed
-  />
+  <QuestMenu v-if="visibleElements.has('quest-menu')" />
+  <Conversation />
 </template>

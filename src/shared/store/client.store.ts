@@ -5,6 +5,35 @@
  * @ref src/webview/src/store/client.store.ts
  */
 
-interface State {}
+import { ConversationOption } from "@shared/interfaces/conversation";
 
-export const getDefaultClientStoreState = (): State => ({});
+export type CurrentConversation = {
+  with: string;
+  pages: string[];
+  topic?: string;
+  currentPage: number;
+  finalOptions?: ConversationOption[];
+  options: ConversationOption[];
+  selectedOption: number;
+};
+
+export interface QuestRegistration {
+  name: string;
+  summary: string;
+  tasks: {
+    visibleFact?: string;
+    completedFact: string;
+    title: string;
+    summary: string;
+  }[];
+}
+
+interface ClientState {
+  conversation: CurrentConversation | null;
+  quests: Map<string, QuestRegistration>;
+}
+
+export const getDefaultClientStoreState = (): ClientState => ({
+  conversation: null,
+  quests: new Map(),
+});

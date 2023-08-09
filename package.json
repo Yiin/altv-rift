@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "setup-project": "npm i && altv-pkg dev",
+    "setup-project": "npm i && altv-pkg rc",
     "build:server": "node --es-module-specifier-resolution=node build/server",
     "build:client": "node --es-module-specifier-resolution=node build/client",
     "dev:server": "node --es-module-specifier-resolution=node build/server -dev",
@@ -14,15 +14,16 @@
     "tsc": "concurrently \"npm:tsc:*\" -c \"magenta.bold,cyan.bold\"",
     "devall": "npm run before-any && concurrently \"npm:dev\" \"./server-dev.bat\" -c \"magenta.bold,cyan.bold\"",
     "mongo": "docker-compose up -d",
-    "prisma:generate": "prisma generate"
+    "prisma:generate": "prisma generate",
+    "server": "npm run setup-project && npm run mongo && server-dev.bat"
   },
   "type": "module",
   "dependencies": {
-    "@altv/types-client": "^2.7.6",
+    "@altv/types-client": "^2.8.7",
     "@altv/types-natives": "^1.5.4",
-    "@altv/types-server": "^2.8.1",
-    "@altv/types-shared": "^1.5.2",
-    "@prisma/client": "^4.10.1",
+    "@altv/types-server": "^2.9.0",
+    "@altv/types-shared": "^1.5.8",
+    "@prisma/client": "^5.1.1",
     "@sentry/node": "^7.30.0",
     "@sentry/tracing": "^7.30.0",
     "@vue/reactivity": "^3.2.47",
@@ -49,6 +50,7 @@
     "express": "^4.18.2",
     "glob": "^9.3.2",
     "inversify": "^6.0.1",
+    "js-quadtree": "^3.3.6",
     "js-yaml": "^4.1.0",
     "jsdom": "^22.1.0",
     "lodash": "^4.17.21",
@@ -83,9 +85,11 @@
     "eslint-config-xo-typescript": "^0.55.1",
     "eslint-plugin-import": "^2.27.4",
     "fs-extra": "^11.1.1",
+    "node-ipc": "^11.1.0",
     "prettier": "2.8.3",
-    "prisma": "^4.10.1",
+    "prisma": "^5.1.1",
     "prisma-import": "^1.0.4",
-    "ts-node": "^10.9.1"
+    "ts-node": "^10.9.1",
+    "xml-js": "^1.6.11"
   }
 }

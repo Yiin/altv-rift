@@ -8,7 +8,7 @@ interface IConfig {
 }
 
 const DefaultServerCFGName = "server.toml";
-const DefaultViteServer = "192.168.68.102";
+const DefaultViteServer = "192.168.68.104";
 const DefaultVitePort = 5173;
 const DefaultConfigName = "ServerConfig.json";
 let configCache: IConfig;
@@ -71,10 +71,7 @@ export const Config = {
 
     return configCache.USE_DEV_MODE;
   },
-  getViteServer(name?: string): string {
-    if (name === "Cher") {
-      return `http://192.168.68.102:${DefaultVitePort}/client/webview/`;
-    }
+  getViteServer(): string {
     return `http://${DefaultViteServer}:${DefaultVitePort}/client/webview/`;
   },
   getVueDebugMode(): boolean {

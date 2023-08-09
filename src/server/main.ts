@@ -14,5 +14,5 @@ import "./modules/chat";
 import "./modules/discord-auth";
 import "./modules/character-selection";
 import "./modules/inventory";
-// import "./modules/streamed-npc";
+import "./modules/npcs";
 import "./modules/questing";

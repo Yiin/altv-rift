@@ -48,11 +48,11 @@ type Selecting = {
 
 type UseItemInteractionsArgs = {
   items: Ref<InventoryItem[]> | ComputedRef<InventoryItem[]>;
-  itemSlotRefs: Ref<HTMLElement[]>;
+  itemSlotRefs: Ref<any[]>; // Should be Ref<HTMLElement[]> but then typescript chokes
   dropItemWarningRef: Ref<
     ComponentPublicInstance<typeof DropItemWarning> | undefined
   >;
-  moveItem: (from: number, to: number) => Promise<boolean>;
+  moveItem: (from: number, to: number, local?: boolean) => Promise<boolean>;
   dropItem: (index: number) => Promise<boolean>;
 };
 

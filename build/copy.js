@@ -10,8 +10,6 @@ export const copyFile = (source, dest) => {
       console.error("Failed to copy", source, "err:", err);
       process.exit(-1);
     }
-
-    console.log("Copied", source, "->", dest);
   });
 };
 
@@ -29,6 +27,3 @@ export const copy = async (globPattern, dest) => {
     process.exit(-1);
   }
 };
-
-await copy("src/resource.toml", "resources/main");
-await copy("src/**/*.rml", "resources/main");

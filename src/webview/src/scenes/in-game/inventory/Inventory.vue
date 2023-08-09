@@ -1,12 +1,5 @@
 <script setup lang="ts">
-import {
-  ComponentPublicInstance,
-  computed,
-  effect,
-  ref,
-  toRaw,
-  unref,
-} from "vue";
+import { ComponentPublicInstance, computed, ref, toRaw } from "vue";
 import { vClickOutside } from "@/directives/click-outside";
 import Window from "@/components/Window.vue";
 import { useWindowSize } from "@/composables/use-window-size";
@@ -22,12 +15,13 @@ import { useInventoryGrid } from "@/composables/use-inventory-grid";
 import { useInventory } from "@/store/inventory.store";
 import { InventoryItem } from "@shared/interfaces";
 import ItemIcon from "./ItemIcon.vue";
+import { isItemEquipable, isItemUsable } from "@shared/modules/items";
 
 const px = usePixel();
 const windowSize = useWindowSize();
 const inventoryGrid = useInventoryGrid();
 
-const itemSlotRefs = ref<HTMLDivElement[]>([]);
+const itemSlotRefs = ref<HTMLElement[]>([]);
 const dropItemWarningRef =
   ref<ComponentPublicInstance<typeof DropItemWarning>>();
 
@@ -54,8 +48,20 @@ const {
   dropItem: inventory.dropItem,
 });
 
+function useItem(item: InventoryItem) {
+  inventory.useItem(item.slot);
+}
+
 function equipItem(item: InventoryItem) {
   inventory.equipItem(item.slot);
+}
+
+function useOrEquipItem(item: InventoryItem) {
+  if (isItemUsable(item.data.key)) {
+    useItem(item);
+  } else if (isItemEquipable(item.data.key)) {
+    equipItem(item);
+  }
 }
 
 const altMock = window.altMock;
@@ -73,7 +79,7 @@ const altMock = window.altMock;
   >
     <v-sheet class="w-full h-full bg-gray-800/95 px-4 py-2">
       <span class="uppercase text-sm tracking-wider text-white">
-        Inventory {{ currentInteraction?.type }}
+        Inventory
       </span>
       <div @mousedown.stop @touchstart.stop class="relative">
         <div class="flex flex-wrap gap-2 mt-4 mb-4">
@@ -101,7 +107,7 @@ const altMock = window.altMock;
           :item="item"
           :selected="toRaw(selectedItem?.item) === item"
           @mousedown="handleMouseDown"
-          @dblclick="equipItem(item)"
+          @dblclick="useOrEquipItem(item)"
           @contextmenu.prevent="openActionMenu(item, $event)"
         />
       </div>
@@ -114,6 +120,7 @@ const altMock = window.altMock;
   >
     <ContextMenu
       v-bind="currentInteraction.state"
+      @use="useItem"
       @equip="equipItem"
       @drop="dropFromMenu"
       @close="closeActionMenu"

@@ -1,5 +1,8 @@
 declare module "alt-shared" {
-  export interface ICustomPlayerSyncedMeta {}
+  export interface ICustomPedStreamSyncedMeta {
+    key?: import("../../src/shared/modules/npc/list").Npc;
+    name?: string;
+  }
 }
 
 declare module "alt-server" {
@@ -13,15 +16,78 @@ declare module "alt-server" {
 }
 
 declare module "alt-client" {
-  // export function on<K extends string, L extends (...args: any[]) => void>(
-  //   eventName: K,
-  //   listener: L
-  // ): void;
+  import * as shared from "alt-shared";
 
   type IWebviewEventHandler = (...args: any[]) => any;
 
   export interface IWebviewEvent {
     VIEW_READY: IWebviewEventHandler;
     PLAY_SOUND: IWebviewEventHandler;
+  }
+
+  export interface ICustomPedMeta extends ICustomEntityMeta {}
+
+  export interface Ped {
+    // normal meta
+
+    setMeta<K extends string>(
+      key: K,
+      value: shared.InterfaceValueByKey<ICustomPedMeta, K>
+    ): void;
+    setMeta<K extends shared.ExtractStringKeys<ICustomPedMeta>>(
+      key: K,
+      value: ICustomPedMeta[K]
+    ): void;
+
+    deleteMeta(key: string): void;
+    deleteMeta<K extends shared.ExtractStringKeys<ICustomPedMeta>>(
+      key: K
+    ): void;
+
+    getMeta<K extends string>(key: Exclude<K, keyof ICustomPedMeta>): unknown;
+    getMeta<K extends shared.ExtractStringKeys<ICustomPedMeta>>(
+      key: K
+    ): ICustomPedMeta[K] | undefined;
+
+    hasMeta(key: string): boolean;
+    hasMeta<K extends shared.ExtractStringKeys<ICustomPedMeta>>(
+      key: K
+    ): boolean;
+
+    // synced meta
+
+    getSyncedMeta<K extends string>(
+      key: Exclude<K, keyof shared.ICustomPedSyncedMeta>
+    ): unknown;
+    getSyncedMeta<
+      K extends shared.ExtractStringKeys<shared.ICustomPedSyncedMeta>
+    >(
+      key: K
+    ): shared.ICustomPedSyncedMeta[K] | undefined;
+
+    hasSyncedMeta(key: string): boolean;
+    hasSyncedMeta<
+      K extends shared.ExtractStringKeys<shared.ICustomPedSyncedMeta>
+    >(
+      key: K
+    ): boolean;
+
+    // stream synced meta
+
+    getStreamSyncedMeta<K extends string>(
+      key: Exclude<K, keyof shared.ICustomPedStreamSyncedMeta>
+    ): unknown;
+    getStreamSyncedMeta<
+      K extends shared.ExtractStringKeys<shared.ICustomPedStreamSyncedMeta>
+    >(
+      key: K
+    ): shared.ICustomPedStreamSyncedMeta[K] | undefined;
+
+    hasStreamSyncedMeta(key: string): boolean;
+    hasStreamSyncedMeta<
+      K extends shared.ExtractStringKeys<shared.ICustomPedStreamSyncedMeta>
+    >(
+      key: K
+    ): boolean;
   }
 }

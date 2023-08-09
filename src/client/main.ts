@@ -6,5 +6,7 @@ import "./modules/discord-auth";
 import "./modules/inventory";
 import "./modules/character-creation";
 import "./modules/npc";
+import "./modules/questing";
 import "./modules/rmlui";
+import "./modules/woodcutting";
 import "./sync";

@@ -1,3 +1,4 @@
+import alt from "alt-client";
 import { AnchorEntityMap, AnchorType } from "./anchors";
 
 declare module "alt-client" {
@@ -11,19 +12,28 @@ declare module "alt-client" {
 export type AnchorEntity = AnchorEntityMap[keyof AnchorEntityMap];
 
 export interface FrameData {
-  distance: number;
+  screen: alt.Vector3;
   zIndex: number;
   isVisible: boolean;
 }
 
-export interface ElementRegistration<T extends AnchorType> {
+export interface ElementRegistration<T extends AnchorType, X> {
   key: string;
   renderDistance: number;
   anchorType: T;
-  render(props: {
-    entity: AnchorEntityMap[T];
-    scale: number;
-  }): ParsedElement | null;
+  focusable?: boolean;
+  context?: {
+    shouldUpdateContext?(props: { entity: AnchorEntityMap[T] }): boolean;
+    updateContext(props: { entity: AnchorEntityMap[T] }): X;
+  };
+  render(
+    props: {
+      entity: AnchorEntityMap[T];
+      scale: number;
+      distance: number;
+    } & FrameData,
+    context: X
+  ): ParsedElement | null;
 }
 
 export interface ParsedNode {

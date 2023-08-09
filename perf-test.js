@@ -5,6 +5,8 @@ class MockElement {
     this.childNodes = [];
     this.attributes = {};
     this.style = {};
+    this.events = [];
+    this.meta = {};
   }
 
   get firstChild() {
@@ -37,6 +39,10 @@ class MockElement {
     delete this.attributes[name];
   }
 
+  getAttributes() {
+    return this.attributes;
+  }
+
   addClass(name) {
     this.classList.add(name);
   }
@@ -44,15 +50,65 @@ class MockElement {
   removeClass(name) {
     this.classList.delete(name);
   }
+
+  getClassList() {
+    return Array.from(this.classList);
+  }
+
+  getEventListeners(eventName) {
+    return this.events
+      .filter((event) => event[0] === eventName)
+      .map((event) => event[1]);
+  }
+
+  off(eventName, callback) {
+    this.events = this.events.filter(
+      (event) => event[0] !== eventName || event[1] !== callback
+    );
+  }
+
+  on(eventName, callback) {
+    this.events.push([eventName, callback]);
+  }
+
+  destroy() {
+    this.events = [];
+    this.childNodes = [];
+  }
+
+  setMeta(name, value) {
+    this.meta[name] = value;
+  }
 }
 
-const mockDocument = {
+class MockTextElement extends MockElement {
+  data;
+
+  constructor(text) {
+    super("#text");
+    this.data = text;
+  }
+}
+
+const documentElements = new Map();
+
+export const document = {
   createElement(tagName) {
     return new MockElement(tagName);
   },
 
   createTextNode(text) {
-    return { tagName: "#text", data: text };
+    return new MockTextElement(text);
+  },
+
+  getElementByID(id) {
+    if (documentElements.has(id)) {
+      return documentElements.get(id);
+    }
+
+    const element = new MockElement();
+    documentElements.set(id, element);
+    return element;
   },
 };
 
@@ -285,5 +341,5 @@ for (let i = 0; i < 100_000_000; ++i) {
       ),
     ]
   );
-  // renderer.render(element, root);
+  renderer.render(element, root);
 }

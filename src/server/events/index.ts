@@ -1,4 +1,4 @@
 // @index('./*.ts', f => `export * from "${f.path}";`)
-export * from "./playerDeath";
-export * from "./playerDisconnect";
+export * from "./player-death";
+export * from "./player-disconnect";
 // @endindex

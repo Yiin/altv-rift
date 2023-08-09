@@ -1,8 +1,13 @@
 <script setup lang="ts">
-import { computed } from "vue";
 import Window from "@/components/Window.vue";
-import { getItemName, isItemWeapon } from "@shared/modules/items";
+import {
+  getItemName,
+  isItemEquipable,
+  isItemUsable,
+} from "@shared/modules/items";
 import { InventoryItem } from "@shared/interfaces";
+import { computed } from "vue";
+import { usePixel } from "@/composables/use-pixel";
 
 const props = defineProps<{
   item: InventoryItem;
@@ -17,8 +22,10 @@ const emit = defineEmits<{
   (e: "drop", item: InventoryItem): void;
 }>();
 
-const isUsable = computed(() => false);
-const isEquipable = computed(() => isItemWeapon(props.item.data.key));
+const px = usePixel();
+
+const isUsable = computed(() => isItemUsable(props.item.data.key));
+const isEquipable = computed(() => isItemEquipable(props.item.data.key));
 
 function executeAction(action: () => void) {
   action();
@@ -28,30 +35,38 @@ function executeAction(action: () => void) {
 
 <template>
   <Window wrapper>
-    <v-list :min-width="200" :style="{ translate: `${x}px ${y}px` }">
-      <v-list-subheader>
+    <div
+      class="min-w-49 text-white bg-black"
+      :style="{ translate: `${x}px ${y}px` }"
+    >
+      <div class="font-bold py-4 px-6">
         {{ getItemName(item.data.key) }}
-      </v-list-subheader>
-      <v-list-item
+      </div>
+      <div
+        class="py-4 px-6 cursor-pointer flex align-center gap-2 hover:bg-slate-900"
         v-if="isUsable"
-        title="Use"
-        prepend-icon="mdi-cursor-default-click-outline"
-        value="use"
         @click="() => executeAction(() => emit('use', item))"
-      />
-      <v-list-item
+      >
+        <v-icon icon="mdi-cursor-default-click-outline" />
+        <div>Use</div>
+      </div>
+      <div
+        class="py-4 px-6 cursor-pointer flex align-center gap-2 hover:bg-slate-900"
         v-if="isEquipable"
         title="Equip"
         prepend-icon="mdi-sword-cross"
-        value="equip"
         @click="() => executeAction(() => emit('equip', item))"
-      />
-      <v-list-item
-        title="Drop"
-        prepend-icon="mdi-drop"
-        value="drop"
+      >
+        <v-icon icon="mdi-sword-cross" />
+        <div>Equip</div>
+      </div>
+      <div
+        class="py-4 px-6 cursor-pointer flex align-center gap-2 hover:bg-slate-900"
         @click="() => executeAction(() => emit('drop', item))"
-      />
-    </v-list>
+      >
+        <v-icon icon="mdi-drop" />
+        <div>Drop</div>
+      </div>
+    </div>
   </Window>
 </template>

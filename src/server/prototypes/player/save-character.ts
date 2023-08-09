@@ -15,7 +15,7 @@ Player.prototype.saveCharacter = async function () {
     return;
   }
 
-  const { id, name, userId, inventory, ...data } = this.store.character;
+  const { id, name, userId, ...data } = this.store.character;
 
   await prisma.character.update({
     where: {
@@ -23,8 +23,11 @@ Player.prototype.saveCharacter = async function () {
     },
     data: {
       ...data,
-      inventory,
-      lastPosition: this.pos,
+      lastPosition: {
+        x: this.pos.x,
+        y: this.pos.y,
+        z: this.pos.z,
+      },
       rot: this.rot.z,
       health: this.health,
     },

@@ -17,6 +17,7 @@ import {
 import { ServerCall } from "@shared/calls/server";
 import { rpc } from "@/rpc";
 import { registerCmd } from "../chat";
+import "./items";
 
 registerCmd("giveitem", (player, [key, amount]) => {
   if (!isValidItem(key)) {
@@ -76,6 +77,24 @@ export function toEquipedAmmo(ammo?: AmmoItemData) {
     : null;
 }
 
+rpc.registerClient(ServerCall.FromClient.USE_ITEM, (player, slot) => {
+  if (!player.store.isLoggedIn) {
+    return false;
+  }
+
+  const inventoryItem = player.store.character.inventory.items.find((item) => {
+    return item.slot === slot;
+  });
+
+  if (!inventoryItem) {
+    return false;
+  }
+
+  alt.emit(ServerEvents.FromServer.USE_ITEM, player, inventoryItem);
+
+  return true;
+});
+
 rpc.registerClient(ServerCall.FromClient.EQUIP_ITEM, (player, slot) => {
   if (!player.store.isLoggedIn) {
     return false;
@@ -112,6 +131,9 @@ rpc.registerClient(ServerCall.FromClient.EQUIP_ITEM, (player, slot) => {
       player.giveWeapon(weaponHash, ammo.data.amount, true);
       break;
   }
+
+  alt.emit(ServerEvents.FromServer.EQUIP_ITEM, player, inventoryItem);
+
   return true;
 });
 

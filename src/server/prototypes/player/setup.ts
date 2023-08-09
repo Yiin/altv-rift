@@ -45,10 +45,7 @@ Player.prototype.setup = function () {
 
   // Setup Webview
   if (Config.getVueDebugMode()) {
-    this.emitRaw(
-      ClientEvents.FromServer.SETUP_WEBVIEW,
-      Config.getViteServer(this.name)
-    );
+    this.emitRaw(ClientEvents.FromServer.SETUP_WEBVIEW, Config.getViteServer());
   } else {
     this.emitRaw(ClientEvents.FromServer.SETUP_WEBVIEW);
   }

@@ -248,6 +248,7 @@ export enum PED_RESET_FLAG {
   DisableSeeThroughChecksWhenTargeting = 112, // Any targeting LoS checks will fail if any materials with 'see through' materials found.
   PuttingOnHelmet = 113, // When set, the ped is putting on a helmet. DONT SET THIS only query it
   PanicInVehicle = 120, // When set, the ped will play panic animations if in a vehicle
+  DisableMelee = 122,
   CannotBeTargetedByAI = 124, // When set, this ped cannot be added to the targeting list of AI peds, will be removed if already in the list and is thought of as not able to be attacked
   ForceInjuryAfterStunned = 126, // Forces this ped to the injured state after being stunned
   BlockWeaponFire = 128, // Prevent the ped from shooting a weapon

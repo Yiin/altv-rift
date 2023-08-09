@@ -41,7 +41,7 @@ model Character {
   health       Float
   createdAt    DateTime   @default(now())
   inventory    Inventory
-  questsFacts  String[]
+  questFacts   String[]
 }
 
 type Inventory {
@@ -58,14 +58,16 @@ enum ItemType {
   WEAPON
   AMMO
   CLOTHING
+  CONSUMABLE
 }
 
 type ItemData {
-  key      String
-  type     ItemType
-  WEAPON   WeaponItem?
-  AMMO     AmmoItem?
-  CLOTHING ClothingItem?
+  key        String
+  type       ItemType
+  WEAPON     WeaponItem?
+  AMMO       AmmoItem?
+  CLOTHING   ClothingItem?
+  CONSUMABLE ConsumableItem?
 }
 
 type WeaponItem {
@@ -92,6 +94,10 @@ type ClothingItem {
 
   // Color
   palette Int
+}
+
+type ConsumableItem {
+  amount Int
 }
 
 type Position {

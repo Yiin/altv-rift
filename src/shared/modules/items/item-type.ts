@@ -1,11 +1,10 @@
-function makeEnum<T extends { [index: string]: U }, U extends string>(x: T) {
-  return x;
-}
+import { MakeEnum, makeEnum } from "../../utility/make-enum";
 
 export const ItemType = makeEnum({
   WEAPON: "WEAPON",
   AMMO: "AMMO",
   CLOTHING: "CLOTHING",
+  CONSUMABLE: "CONSUMABLE",
 });
 
-export type ItemType = (typeof ItemType)[keyof typeof ItemType];
+export type ItemType = MakeEnum<typeof ItemType>;

@@ -1,25 +1,31 @@
-import {
-  ItemData,
-  AmmoItem,
-  ClothingItem,
-  WeaponItem,
-} from "@shared/interfaces";
+import { ItemData, AmmoItem, ClothingItem, WeaponItem } from "../../interfaces";
 import { ammo, AmmoItemKey } from "./ammo";
 import { clothing, ClothingItemKey } from "./clothing";
+import {
+  ConsumableItemKey,
+  consumables,
+  isItemConsumable,
+} from "./consumables";
 import { ItemType } from "./item-type";
-import { getWeaponData, WeaponItemKey, weapons } from "./weapons";
+import { getWeaponData, isItemWeapon, WeaponItemKey, weapons } from "./weapons";
 export * from "./weapons";
 
 export const ITEMS_REGISTRY = {
   ...weapons,
   ...ammo,
   ...clothing,
+  ...consumables,
 } as const;
 
-export type ItemKey = WeaponItemKey | AmmoItemKey | ClothingItemKey;
+export type ItemKey =
+  | WeaponItemKey
+  | AmmoItemKey
+  | ClothingItemKey
+  | ConsumableItemKey;
 export type WeaponItemInfo = (typeof ITEMS_REGISTRY)[WeaponItemKey];
 export type AmmoItemInfo = (typeof ITEMS_REGISTRY)[AmmoItemKey];
 export type ClothingItemInfo = (typeof ITEMS_REGISTRY)[ClothingItemKey];
+export type ConsumableItemInfo = (typeof ITEMS_REGISTRY)[ConsumableItemKey];
 export type ItemInfo = (typeof ITEMS_REGISTRY)[ItemKey];
 
 export type ItemTypeByKey = {
@@ -28,10 +34,20 @@ export type ItemTypeByKey = {
   [K in AmmoItemKey]: typeof ItemType.AMMO;
 } & {
   [K in ClothingItemKey]: typeof ItemType.CLOTHING;
+} & {
+  [K in ConsumableItemKey]: typeof ItemType.CONSUMABLE;
 };
 
 export function isValidItem(key: string): key is ItemKey {
   return key in ITEMS_REGISTRY;
+}
+
+export function isItemUsable(key: ItemKey) {
+  return isItemConsumable(key);
+}
+
+export function isItemEquipable(key: ItemKey) {
+  return isItemWeapon(key);
 }
 
 export function findItemByKey<K extends ItemKey>(
@@ -50,10 +66,8 @@ export function getItemName(key: ItemKey) {
   switch (item.itemType) {
     case ItemType.WEAPON:
       return getWeaponData(item.hash)?.Name;
-    case ItemType.AMMO:
-      return item.name;
     default:
-      return "Unknown Item";
+      return item.name ?? "Unknown Item";
   }
 }
 
@@ -65,7 +79,7 @@ export function getItemData<T extends ItemData>(data: T) {
   return data[data.type] as T[typeof data.type];
 }
 
-export const itemDataDefaults = {
+export const ITEM_DATA_DEFAULTS = {
   [ItemType.WEAPON]: {
     durability: 100,
     customName: null,

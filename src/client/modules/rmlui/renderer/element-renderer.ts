@@ -3,17 +3,25 @@ import { join } from "@shared/utility/path";
 import { createRenderer } from "./rml-renderer";
 import { notRenderedElements } from "./frame-state";
 import { registeredElements } from "./element-registry";
+import { frameDataMap } from "./element-updater";
+import { getContext, updateContext } from "./internals/context";
+import { setCurrentNode } from "./internals/current-node";
 
+// Some defaults
 alt.RmlElement.prototype.shown = false;
 
-export const document = new alt.RmlDocument(
-  join(__relativedirname, "../screen.rml")
-);
-// We're storing the container for further usage, e.g. adding and removing elements
+// Main document
+export const document = new alt.RmlDocument(join(__relativedirname, "../screen.rml"));
+
+// Container we render to
 export const container = document.getElementByID("container")!;
 
+// Global renderer
 export const renderer = createRenderer(document);
 
+/**
+ * Tries to render the element
+ */
 export function renderElement(node: alt.RmlElement) {
   const registeredElement = registeredElements.get(node.key);
 
@@ -22,27 +30,36 @@ export function renderElement(node: alt.RmlElement) {
     return;
   }
 
-  const entity = node.entity;
+  setCurrentNode(node);
 
   markElementAsVisible(node);
 
-  const scale = calculateNpcElementScale(entity.frameData.distance);
+  const entity = node.entity;
+  const distance = alt.getCamPos().distanceTo(entity.pos);
+  const scale = calculateElementScale(distance);
+  const frameData = frameDataMap.get(entity)!;
 
-  const element = registeredElement.render({
-    entity,
-    scale,
-  });
+  updateContext(node, registeredElement);
+
+  const element = registeredElement.render(
+    {
+      entity,
+      scale,
+      distance,
+      ...frameData,
+    },
+    getContext(node)
+  );
 
   if (!element) {
     return;
   }
-
   renderer.render(element, node);
 
   notRenderedElements.delete(node);
 }
 
-export function calculateNpcElementScale(camDistToPed: number) {
+export function calculateElementScale(camDistToPed: number) {
   const { x: screenX, y: screenY } = alt.getScreenResolution();
   const aspectRatio = screenX / screenY; // Aspect ratio of the screen
   const screenDiagonal = Math.sqrt(screenX ** 2 + screenY ** 2);

@@ -1,8 +1,8 @@
 import { Player } from "alt-server";
-import { ItemType } from "@prisma/client";
 import {
   AmmoItemData,
   ClothingItemData,
+  ConsumableItemData,
   Inventory,
   InventoryItem,
   ItemTypeByKey,
@@ -10,6 +10,7 @@ import {
   WeaponItemData,
 } from "@shared/interfaces";
 import { ItemKey, getItemType, getItemData } from "@shared/modules/items";
+import { ItemType } from "@shared/modules/items/item-type";
 
 declare module "alt-server" {
   export interface Player {
@@ -61,6 +62,11 @@ Player.prototype.addItem = function (key, data) {
         type,
         CLOTHING: data,
       } as ClothingItemData,
+      [ItemType.CONSUMABLE]: {
+        key,
+        type,
+        CONSUMABLE: data,
+      } as ConsumableItemData,
     }[type],
   };
 
