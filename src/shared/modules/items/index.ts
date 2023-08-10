@@ -1,12 +1,9 @@
 import { ItemData, AmmoItem, ClothingItem, WeaponItem } from "../../interfaces";
 import { ammo, AmmoItemKey } from "./ammo";
 import { clothing, ClothingItemKey } from "./clothing";
-import {
-  ConsumableItemKey,
-  consumables,
-  isItemConsumable,
-} from "./consumables";
+import { ConsumableItemKey, consumables, isItemConsumable } from "./consumables";
 import { ItemType } from "./item-type";
+import { MaterialItemKey, materials } from "./materials";
 import { getWeaponData, isItemWeapon, WeaponItemKey, weapons } from "./weapons";
 export * from "./weapons";
 
@@ -15,17 +12,20 @@ export const ITEMS_REGISTRY = {
   ...ammo,
   ...clothing,
   ...consumables,
+  ...materials,
 } as const;
 
 export type ItemKey =
   | WeaponItemKey
   | AmmoItemKey
   | ClothingItemKey
-  | ConsumableItemKey;
+  | ConsumableItemKey
+  | MaterialItemKey;
 export type WeaponItemInfo = (typeof ITEMS_REGISTRY)[WeaponItemKey];
 export type AmmoItemInfo = (typeof ITEMS_REGISTRY)[AmmoItemKey];
 export type ClothingItemInfo = (typeof ITEMS_REGISTRY)[ClothingItemKey];
 export type ConsumableItemInfo = (typeof ITEMS_REGISTRY)[ConsumableItemKey];
+export type MaterialItemInfo = (typeof ITEMS_REGISTRY)[MaterialItemKey];
 export type ItemInfo = (typeof ITEMS_REGISTRY)[ItemKey];
 
 export type ItemTypeByKey = {
@@ -36,6 +36,8 @@ export type ItemTypeByKey = {
   [K in ClothingItemKey]: typeof ItemType.CLOTHING;
 } & {
   [K in ConsumableItemKey]: typeof ItemType.CONSUMABLE;
+} & {
+  [K in MaterialItemKey]: typeof ItemType.MATERIAL;
 };
 
 export function isValidItem(key: string): key is ItemKey {
@@ -50,9 +52,7 @@ export function isItemEquipable(key: ItemKey) {
   return isItemWeapon(key);
 }
 
-export function findItemByKey<K extends ItemKey>(
-  key: K
-): (typeof ITEMS_REGISTRY)[K] {
+export function findItemByKey<K extends ItemKey>(key: K): (typeof ITEMS_REGISTRY)[K] {
   return ITEMS_REGISTRY[key];
 }
 

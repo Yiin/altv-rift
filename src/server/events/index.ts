@@ -1,4 +1,4 @@
-// @index('./*.ts', f => `export * from "${f.path}";`)
-export * from "./player-death";
-export * from "./player-disconnect";
+// @index('./*.ts', f => `import "${f.path}";`)
+import "./player-death";
+import "./player-disconnect";
 // @endindex

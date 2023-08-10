@@ -3,6 +3,7 @@ import {
   AmmoItem as PrismaAmmoItem,
   ClothingItem as PrismaClothingItem,
   ConsumableItem as PrismaConsumableItem,
+  MaterialItem as PrismaMaterialItem,
   InventoryItem as PrismaInventoryItem,
   Inventory as PrismaInventory,
   Character as PrismaCharacter,
@@ -32,6 +33,7 @@ export type WeaponItem = OptionalNullable<PrismaWeaponItem>;
 export type AmmoItem = OptionalNullable<PrismaAmmoItem>;
 export type ClothingItem = OptionalNullable<PrismaClothingItem>;
 export type ConsumableItem = OptionalNullable<PrismaConsumableItem>;
+export type MaterialItem = OptionalNullable<PrismaMaterialItem>;
 
 export type WeaponItemData = {
   type: typeof ItemType.WEAPON;
@@ -40,6 +42,7 @@ export type WeaponItemData = {
   [ItemType.AMMO]?: null;
   [ItemType.CLOTHING]?: null;
   [ItemType.CONSUMABLE]?: null;
+  [ItemType.MATERIAL]?: null;
 };
 
 export type AmmoItemData = {
@@ -49,6 +52,7 @@ export type AmmoItemData = {
   [ItemType.AMMO]: AmmoItem;
   [ItemType.CLOTHING]?: null;
   [ItemType.CONSUMABLE]?: null;
+  [ItemType.MATERIAL]?: null;
 };
 
 export type ClothingItemData = {
@@ -58,6 +62,7 @@ export type ClothingItemData = {
   [ItemType.AMMO]?: null;
   [ItemType.CLOTHING]: ClothingItem;
   [ItemType.CONSUMABLE]?: null;
+  [ItemType.MATERIAL]?: null;
 };
 
 export type ConsumableItemData = {
@@ -65,15 +70,27 @@ export type ConsumableItemData = {
   key: ConsumableItemKey;
   [ItemType.WEAPON]?: null;
   [ItemType.AMMO]?: null;
-  [ItemType.CLOTHING]: null;
-  [ItemType.CONSUMABLE]?: ConsumableItem;
+  [ItemType.CLOTHING]?: null;
+  [ItemType.CONSUMABLE]: ConsumableItem;
+  [ItemType.MATERIAL]?: null;
+};
+
+export type MaterialItemData = {
+  type: typeof ItemType.MATERIAL;
+  key: MaterialItemKey;
+  [ItemType.WEAPON]?: null;
+  [ItemType.AMMO]?: null;
+  [ItemType.CLOTHING]?: null;
+  [ItemType.CONSUMABLE]?: null;
+  [ItemType.MATERIAL]: MaterialItem;
 };
 
 export type ItemData =
   | WeaponItemData
   | AmmoItemData
   | ClothingItemData
-  | ConsumableItemData;
+  | ConsumableItemData
+  | MaterialItemData;
 
 export type InventoryItem<T = ItemData> = Omit<PrismaInventoryItem, "data"> & {
   data: T;
@@ -92,10 +109,10 @@ export type ItemTypeData = {
   [ItemType.AMMO]: AmmoItem;
   [ItemType.CLOTHING]: ClothingItem;
   [ItemType.CONSUMABLE]: ConsumableItem;
+  [ItemType.MATERIAL]: MaterialItem;
 };
 
 export type ItemTypeByKey<K extends keyof typeof ITEMS_REGISTRY> =
   (typeof ITEMS_REGISTRY)[K]["itemType"];
 
-export type ItemDataByKey<K extends keyof typeof ITEMS_REGISTRY> =
-  ItemTypeData[ItemTypeByKey<K>];
+export type ItemDataByKey<K extends keyof typeof ITEMS_REGISTRY> = ItemTypeData[ItemTypeByKey<K>];

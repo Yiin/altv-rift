@@ -1,20 +1,28 @@
 import alt from "alt-client";
 import game from "natives";
+import { ServerCall } from "@shared/calls/server";
 import { Control, ControlType } from "@/constants/controls";
 import { getPointNextToPointRelativeToPoint, getHeadingInDegrees } from "@/utility/math";
 import { everyTickWhile } from "@/utility/event-helpers";
+import { rpc } from "@/rpc";
 import { LOS_FLAGS } from "../npc/constants/shapetest";
-import { getNearbyTrees, TreeData } from "./trees/nearby-trees";
 import { MaterialHash } from "./material-hash";
 
 let inAction = false;
 let unfreezeAt = 0;
-let closest: [number, TreeData] | null = null;
+let closest: [number, alt.VirtualEntity] | null = null;
+let currentTree: alt.VirtualEntity;
 const player = alt.Player.local;
+
+export function getNearbyTrees() {
+  return alt.VirtualEntity.streamedIn.filter(
+    (entity) => entity.getStreamSyncedMeta("entityType") === "tree"
+  );
+}
 
 // Function to calculate and update the closest tree
 const updateClosestTree = () => {
-  closest = getNearbyTrees().reduce<[number, TreeData] | null>((closest, tree) => {
+  closest = getNearbyTrees().reduce<[number, alt.VirtualEntity] | null>((closest, tree) => {
     const distance = player.pos.distanceTo(tree.pos);
     if (distance > 5) return closest;
     return !closest || distance < closest[0] ? [distance, tree] : closest;
@@ -31,7 +39,7 @@ const raycastTreeEdge = (
 
   const { x, y } = getPointNextToPointRelativeToPoint(player.pos, treePos, -1);
 
-  const targetPos = new alt.Vector3({ x, y, z: treePos.z + 1.8 });
+  const targetPos = new alt.Vector3({ x, y, z: treePos.z });
 
   // Calculate the direction from the player to the tree
   const direction = targetPos.sub(playerPos).normalize();
@@ -47,7 +55,7 @@ const raycastTreeEdge = (
   // Loop to perform 5 raycasts
   for (let i = -2; i <= 2; i++) {
     const offsetVector = perpendicular.mul(offset * i);
-    const startPos = playerPos.add(0, 0, 0.8).add(offsetVector);
+    const startPos = playerPos.add(0, 0, 0.7).add(offsetVector);
     const endPos = targetPos.add(offsetVector);
 
     // Perform the raycast
@@ -65,24 +73,6 @@ const raycastTreeEdge = (
     const [_didComplete, didHit, position, surfaceNormal, materialHash, _entityHit] =
       game.getShapeTestResultIncludingMaterial(hitTest);
 
-    const endAt = Date.now() + 5000;
-    everyTickWhile(
-      () => Date.now() < endAt,
-      () =>
-        game.drawLine(
-          startPos.x,
-          startPos.y,
-          startPos.z,
-          endPos.x,
-          endPos.y,
-          endPos.z,
-          255,
-          50,
-          50,
-          255
-        )
-    );
-
     // If hit, calculate the distance and update the closest hit if necessary
     if (didHit && materialHash === MaterialHash.TreeBark) {
       const distance = playerPos.distanceTo(position);
@@ -98,28 +88,6 @@ const raycastTreeEdge = (
     }
   }
 
-  if (closestHit) {
-    const endAt = Date.now() + 5000;
-    everyTickWhile(
-      () => Date.now() < endAt,
-      () => {
-        game.drawLine(
-          asd.startPos.x,
-          asd.startPos.y,
-          asd.startPos.z,
-          closestHit!.x,
-          closestHit!.y,
-          closestHit!.z,
-          50,
-          255,
-          50,
-          255
-        );
-        game.drawMarkerSphere(closestHit!.x, closestHit!.y, closestHit!.z, 0.1, 255, 0, 0, 255);
-      }
-    );
-  }
-
   return closestHit;
 };
 
@@ -127,11 +95,10 @@ const raycastTreeEdge = (
 const handleChoppingAction = async (ped: number) => {
   if (!closest) return;
 
-  const [, tree] = closest;
-  const treeHitPos = raycastTreeEdge(player.pos, tree.pos, 0.2);
+  [, currentTree] = closest;
+  const treeHitPos = raycastTreeEdge(player.pos, currentTree.pos, 0.2);
 
   if (!treeHitPos) {
-    alt.log("No tree found.");
     return;
   }
 
@@ -141,7 +108,7 @@ const handleChoppingAction = async (ped: number) => {
 
   await alignToTree(ped, requiredHeading);
 
-  const distance = player.pos.add(0, 0, 0.8).distanceTo(treeHitPos);
+  const distance = player.pos.add(0, 0, 0.7).distanceTo(treeHitPos);
 
   if (distance > 1.3) {
     alt.log("too far", distance);
@@ -201,34 +168,51 @@ const performChopAnimation = async (ped: number) => {
 
   game.useParticleFxAsset("core");
   const { x, y, z } = player.pos.add(game.getEntityForwardVector(ped)).mul(1.0);
+
   const effect = game.startParticleFxLoopedAtCoord(
     "bul_wood_splinter",
     x,
     y,
     z,
-    0.0,
-    0.0,
-    0.0,
-    2.0,
+    0.0, // rx
+    0.0, // ry
+    0.0, // rz
+    2.0, // scale
     false,
     false,
     false,
     false
   );
+  const logs = await rpc.callServer(ServerCall.FromClient.TREE_HIT, currentTree.remoteId);
+
+  if (logs) {
+    game.playSoundFromCoord(
+      -1,
+      "Object_Dropped_Remote",
+      x,
+      y,
+      z,
+      "GTAO_FM_Events_Soundset",
+      false,
+      0,
+      false
+    );
+  }
+
   await alt.Utils.wait(1000);
   game.stopParticleFxLooped(effect, false);
 };
 
 // Function to load necessary assets
 const loadAssets = async () => {
-  console.time("Loading assets");
   if (!game.hasNamedPtfxAssetLoaded("core")) {
     game.requestNamedPtfxAsset("core");
     await alt.Utils.waitFor(() => game.hasNamedPtfxAssetLoaded("core"));
   }
-  game.requestAnimDict("melee@hatchet@streamed_core");
-  await alt.Utils.waitFor(() => game.hasAnimDictLoaded("melee@hatchet@streamed_core"));
-  console.timeEnd("Loading assets");
+  if (!game.hasAnimDictLoaded("melee@hatchet@streamed_core")) {
+    game.requestAnimDict("melee@hatchet@streamed_core");
+    await alt.Utils.waitFor(() => game.hasAnimDictLoaded("melee@hatchet@streamed_core"));
+  }
 };
 
 // Interval to update closest tree
@@ -239,21 +223,6 @@ alt.everyTick(async () => {
   const ped = player.scriptID;
 
   const trees = getNearbyTrees();
-
-  for (const tree of trees) {
-    game.drawLine(
-      player.pos.x,
-      player.pos.y,
-      player.pos.z,
-      tree.pos.x,
-      tree.pos.y,
-      tree.pos.z + 1,
-      255,
-      255,
-      255,
-      255
-    );
-  }
 
   if (unfreezeAt && unfreezeAt < Date.now()) {
     game.freezeEntityPosition(ped, false);

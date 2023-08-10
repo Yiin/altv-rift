@@ -17,6 +17,7 @@ import {
 import { ServerCall } from "@shared/calls/server";
 import { rpc } from "@/rpc";
 import { registerCmd } from "../chat";
+import "./character-data";
 import "./items";
 
 registerCmd("giveitem", (player, [key, amount]) => {
@@ -56,10 +57,7 @@ export function findAmmo(player: Player, weapon: WeaponItemInfo) {
       if (data.type === ItemType.AMMO) {
         const item = ITEMS_REGISTRY[data.key];
       }
-      return (
-        data.type === ItemType.AMMO &&
-        findItemByKey(data.key).group === weapon.group
-      );
+      return data.type === ItemType.AMMO && findItemByKey(data.key).group === weapon.group;
     }
   );
 
@@ -111,23 +109,18 @@ rpc.registerClient(ServerCall.FromClient.EQUIP_ITEM, (player, slot) => {
   switch (inventoryItem.data.type) {
     case ItemType.WEAPON:
       const baseAmmo = findAmmo(player, findItemByKey(inventoryItem.data.key));
-      const ammo =
-        getItemData(inventoryItem.data)?.ammo ?? toEquipedAmmo(baseAmmo);
+      const ammo = getItemData(inventoryItem.data)?.ammo ?? toEquipedAmmo(baseAmmo);
 
       const itemKey = inventoryItem.data.key as WeaponItemKey;
       const weaponHash = getWeaponHash(itemKey);
 
       if (!ammo) {
-        console.log(
-          'No ammo for weapon "' + itemKey + '". Equiping with 1000 ammo.'
-        );
+        console.log('No ammo for weapon "' + itemKey + '". Equiping with 1000 ammo.');
         player.giveWeapon(weaponHash, 1000, true);
         return true;
       }
 
-      console.log(
-        'Equiping weapon "' + itemKey + '" with ammo "' + ammo.key + '"'
-      );
+      console.log('Equiping weapon "' + itemKey + '" with ammo "' + ammo.key + '"');
       player.giveWeapon(weaponHash, ammo.data.amount, true);
       break;
   }
@@ -141,11 +134,9 @@ rpc.registerClient(ServerCall.FromClient.DROP_ITEM, (player, slot) => {
   if (!player.store.isLoggedIn) {
     return false;
   }
-  const index = player.store.character.inventory.items.findIndex(
-    (inventoryItem) => {
-      return inventoryItem.slot === slot;
-    }
-  );
+  const index = player.store.character.inventory.items.findIndex((inventoryItem) => {
+    return inventoryItem.slot === slot;
+  });
 
   player.store.character.inventory.items.splice(index, 1);
   return true;
@@ -156,21 +147,14 @@ rpc.registerWebview(ServerCall.FromWebview.MOVE_ITEM, (player, from, to) => {
     return false;
   }
 
-  const itemInSlotFrom = player.store.character.inventory.items.find(
-    ({ slot }) => {
-      return slot === from;
-    }
-  );
-  const itemInSlotTo = player.store.character.inventory.items.find(
-    ({ slot }) => {
-      return slot === to;
-    }
-  );
+  const itemInSlotFrom = player.store.character.inventory.items.find(({ slot }) => {
+    return slot === from;
+  });
+  const itemInSlotTo = player.store.character.inventory.items.find(({ slot }) => {
+    return slot === to;
+  });
   if (itemInSlotFrom && itemInSlotTo) {
-    [itemInSlotFrom.slot, itemInSlotTo.slot] = [
-      itemInSlotTo.slot,
-      itemInSlotFrom.slot,
-    ];
+    [itemInSlotFrom.slot, itemInSlotTo.slot] = [itemInSlotTo.slot, itemInSlotFrom.slot];
   } else if (itemInSlotFrom) {
     itemInSlotFrom.slot = to;
   } else if (itemInSlotTo) {

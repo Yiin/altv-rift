@@ -1,10 +1,6 @@
 <script setup lang="ts">
 import Window from "@/components/Window.vue";
-import {
-  getItemName,
-  isItemEquipable,
-  isItemUsable,
-} from "@shared/modules/items";
+import { getItemName, isItemEquipable, isItemUsable } from "@shared/modules/items";
 import { InventoryItem } from "@shared/interfaces";
 import { computed } from "vue";
 import { usePixel } from "@/composables/use-pixel";
@@ -35,37 +31,34 @@ function executeAction(action: () => void) {
 
 <template>
   <Window wrapper>
-    <div
-      class="min-w-49 text-white bg-black"
-      :style="{ translate: `${x}px ${y}px` }"
-    >
+    <div class="min-w-49 text-white bg-[#0b0d14]" :style="{ translate: `${x}px ${y}px` }">
       <div class="font-bold py-4 px-6">
         {{ getItemName(item.data.key) }}
       </div>
       <div
-        class="py-4 px-6 cursor-pointer flex align-center gap-2 hover:bg-slate-900"
+        class="py-4 px-6 cursor-pointer flex items-center gap-2 hover:bg-slate-900"
         v-if="isUsable"
         @click="() => executeAction(() => emit('use', item))"
       >
         <v-icon icon="mdi-cursor-default-click-outline" />
-        <div>Use</div>
+        <div class="-mt-1">Use</div>
       </div>
       <div
-        class="py-4 px-6 cursor-pointer flex align-center gap-2 hover:bg-slate-900"
+        class="py-4 px-6 cursor-pointer flex items-center gap-2 hover:bg-slate-900"
         v-if="isEquipable"
         title="Equip"
         prepend-icon="mdi-sword-cross"
         @click="() => executeAction(() => emit('equip', item))"
       >
         <v-icon icon="mdi-sword-cross" />
-        <div>Equip</div>
+        <div class="-mt-1">Equip</div>
       </div>
       <div
-        class="py-4 px-6 cursor-pointer flex align-center gap-2 hover:bg-slate-900"
+        class="py-4 px-6 cursor-pointer flex items-center gap-2 hover:bg-slate-900"
         @click="() => executeAction(() => emit('drop', item))"
       >
         <v-icon icon="mdi-drop" />
-        <div>Drop</div>
+        <div class="-mt-1">Drop</div>
       </div>
     </div>
   </Window>

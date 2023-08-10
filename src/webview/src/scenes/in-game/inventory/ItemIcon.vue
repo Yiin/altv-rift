@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import { useInventoryGrid } from "@/composables/use-inventory-grid";
 import { useItemDetails } from "@/composables/use-item-details";
-import {
-  InteractionType,
-  ItemInteraction,
-} from "@/composables/use-item-interactions";
+import { InteractionType, ItemInteraction } from "@/composables/use-item-interactions";
 import { getItemIconScale, getItemImage } from "@/utils/items";
 import { InventoryItem } from "@shared/interfaces";
 import { computed, ref } from "vue";
+import LogIcon from "./dynamic-icons/LogIcon.vue";
 
 const props = defineProps<{
   item: InventoryItem;
@@ -51,22 +49,18 @@ fetch(getItemImage(item.value.data)).then((result) => {
             transform: `translate(${
               currentInteraction.state.currentPosition.x -
               currentInteraction.state.startPosition.x +
-              inventoryGrid.getSlotPositionInGrid(
-                currentInteraction.state.item.slot
-              ).x
+              inventoryGrid.getSlotPositionInGrid(currentInteraction.state.item.slot).x
             }px, ${
               currentInteraction.state.currentPosition.y -
               currentInteraction.state.startPosition.y +
-              inventoryGrid.getSlotPositionInGrid(
-                currentInteraction.state.item.slot
-              ).y
+              inventoryGrid.getSlotPositionInGrid(currentInteraction.state.item.slot).y
             }px)`,
             zIndex: Number.MAX_SAFE_INTEGER,
           }
         : {
-            transform: `translate(${
-              inventoryGrid.getSlotPositionInGrid(item.slot).x
-            }px, ${inventoryGrid.getSlotPositionInGrid(item.slot).y}px)`,
+            transform: `translate(${inventoryGrid.getSlotPositionInGrid(item.slot).x}px, ${
+              inventoryGrid.getSlotPositionInGrid(item.slot).y
+            }px)`,
           },
       {
         backgroundImage: `url(${getItemImage(item.data)})`,
@@ -75,8 +69,14 @@ fetch(getItemImage(item.value.data)).then((result) => {
       },
     ]"
   >
-    <div v-if="noImage" class="text-center text-sm tracking-wider font-bold">
-      {{ itemDetails.customName ?? itemDetails.name }}
+    <template v-if="noImage">
+      <LogIcon v-if="item.data.key.endsWith(`_logs`)" :item-key="item.data.key" />
+      <div v-else class="text-center text-sm tracking-wider font-bold">
+        {{ itemDetails.customName ?? itemDetails.name }}
+      </div>
+    </template>
+    <div v-if="itemDetails.data && `amount` in itemDetails.data" class="absolute bottom-1 right-1">
+      {{ itemDetails.data.amount }}
     </div>
   </div>
 </template>

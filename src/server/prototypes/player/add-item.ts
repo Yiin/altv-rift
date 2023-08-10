@@ -1,16 +1,12 @@
 import { Player } from "alt-server";
 import {
-  AmmoItemData,
-  ClothingItemData,
-  ConsumableItemData,
   Inventory,
   InventoryItem,
+  ItemData,
   ItemTypeByKey,
   ItemTypeData,
-  WeaponItemData,
 } from "@shared/interfaces";
 import { ItemKey, getItemType, getItemData } from "@shared/modules/items";
-import { ItemType } from "@shared/modules/items/item-type";
 
 declare module "alt-server" {
   export interface Player {
@@ -46,28 +42,10 @@ Player.prototype.addItem = function (key, data) {
   const inventoryItem = {
     slot: freeSlot,
     data: {
-      // because typescript
-      [ItemType.WEAPON]: {
-        key,
-        type,
-        WEAPON: data,
-      } as WeaponItemData,
-      [ItemType.AMMO]: {
-        key,
-        type,
-        AMMO: data,
-      } as AmmoItemData,
-      [ItemType.CLOTHING]: {
-        key,
-        type,
-        CLOTHING: data,
-      } as ClothingItemData,
-      [ItemType.CONSUMABLE]: {
-        key,
-        type,
-        CONSUMABLE: data,
-      } as ConsumableItemData,
-    }[type],
+      key,
+      type,
+      [type]: data,
+    } as any as ItemData,
   };
 
   this.store.character.inventory.items.push(inventoryItem);

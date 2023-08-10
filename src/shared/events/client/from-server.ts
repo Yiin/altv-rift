@@ -26,6 +26,8 @@ export const FromServer = {
   ENTITYSET_DEACTIVATE: "ENTITYSET_DEACTIVATE",
   SET_PLAYER_STATE: "SET_PLAYER_STATE",
   UPDATE_PLAYER_STATE: "UPDATE_PLAYER_STATE",
+  SET_SERVER_STATE: "SET_SERVER_STATE",
+  UPDATE_SERVER_STATE: "UPDATE_SERVER_STATE",
 } as const;
 
 export interface EventFromServer {
@@ -46,10 +48,7 @@ export interface EventFromServer {
   [FromServer.SCREENSHOT_CREATE]: () => void;
   [FromServer.PLAYER_RELOAD]: () => void;
   [FromServer.PLAYER_EMIT_NOTIFICATION]: (text: string) => void;
-  [FromServer.PLAYER_EMIT_MISSION_TEXT]: (
-    text: string,
-    duration?: number
-  ) => void;
+  [FromServer.PLAYER_EMIT_MISSION_TEXT]: (text: string, duration?: number) => void;
   [FromServer.PLAYER_EMIT_TEMP_OBJECT_LERP]: (
     model: string,
     start: alt.IVector3,
@@ -58,16 +57,12 @@ export interface EventFromServer {
   ) => void;
   [FromServer.IPL_LOAD]: (name: string) => void;
   [FromServer.IPL_UNLOAD]: (name: string) => void;
-  [FromServer.ENTITYSET_ACTIVATE]: (
-    interior: number,
-    entitySetName: string
-  ) => void;
-  [FromServer.ENTITYSET_DEACTIVATE]: (
-    interior: number,
-    entitySetName: string
-  ) => void;
+  [FromServer.ENTITYSET_ACTIVATE]: (interior: number, entitySetName: string) => void;
+  [FromServer.ENTITYSET_DEACTIVATE]: (interior: number, entitySetName: string) => void;
   [FromServer.SET_PLAYER_STATE]: (state: any) => void;
   [FromServer.UPDATE_PLAYER_STATE]: (payload: StoreUpdatePayload) => void;
+  [FromServer.SET_SERVER_STATE]: (state: any) => void;
+  [FromServer.UPDATE_SERVER_STATE]: (payload: StoreUpdatePayload) => void;
 }
 
 declare module "alt-client" {

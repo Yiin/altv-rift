@@ -1,21 +1,14 @@
 import { computed, ComputedRef, ref, Ref, unref } from "vue";
 import { ItemType } from "@prisma/client";
 import { ItemData } from "@shared/interfaces";
-import {
-  getItemData,
-  getItemDescription,
-  getItemName,
-  isItemWeapon,
-  ItemKey,
-} from "@shared/modules/items";
-import { isItemConsumable } from "@shared/modules/items/consumables";
+import { getItemData, getItemDescription, getItemName, ItemKey } from "@shared/modules/items";
 
-export const useItemDetails = (
-  itemRef: ItemData | Ref<ItemData> | ComputedRef<ItemData>
-) => {
+export const useItemDetails = (itemRef: ItemData | Ref<ItemData> | ComputedRef<ItemData>) => {
   const item = ref(itemRef);
 
   const name = computed(() => getItemName(item.value.key));
+  const data = computed(() => getItemData(item.value));
+
   const customName = computed(() => {
     const data = getItemData(item.value);
 
@@ -58,6 +51,7 @@ export const useItemDetails = (
     image: unref(image),
     imageScale: unref(imageScale),
     equipedAmmo: unref(equipedAmmo),
+    data: unref(data),
   }));
 
   return details;

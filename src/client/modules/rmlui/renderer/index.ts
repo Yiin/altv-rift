@@ -1,5 +1,5 @@
 import alt from "alt-client";
-import { getNearbyTrees } from "@/modules/woodcutting/trees/nearby-trees";
+import { getNearbyTrees } from "@/modules/woodcutting";
 import { renderElement, markElementAsHidden } from "./element-renderer";
 import { prepareFrameForEntity } from "./element-updater";
 import { visibleElementsHeap, notRenderedElements } from "./frame-state";
@@ -14,7 +14,7 @@ alt.everyTick(() => {
   resetFocusedEntity();
 
   // AnchorType.Ped
-  // alt.Ped.streamedIn.forEach(prepareFrameForEntity);
+  alt.Ped.streamedIn.forEach(prepareFrameForEntity);
 
   // AnchorType.Tree
   getNearbyTrees().forEach(prepareFrameForEntity);

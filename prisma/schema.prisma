@@ -42,6 +42,15 @@ model Character {
   createdAt    DateTime   @default(now())
   inventory    Inventory
   questFacts   String[]
+  skills       Skills
+}
+
+type Skills {
+  woodcutting Skill
+}
+
+type Skill {
+  experience Int @default(0)
 }
 
 type Inventory {
@@ -59,6 +68,7 @@ enum ItemType {
   AMMO
   CLOTHING
   CONSUMABLE
+  MATERIAL
 }
 
 type ItemData {
@@ -68,6 +78,7 @@ type ItemData {
   AMMO       AmmoItem?
   CLOTHING   ClothingItem?
   CONSUMABLE ConsumableItem?
+  MATERIAL   MaterialItem?
 }
 
 type WeaponItem {
@@ -97,6 +108,10 @@ type ClothingItem {
 }
 
 type ConsumableItem {
+  amount Int
+}
+
+type MaterialItem {
   amount Int
 }
 

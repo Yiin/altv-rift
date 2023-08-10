@@ -12,7 +12,8 @@ import "./events";
 // modules
 import "./modules/chat";
 import "./modules/discord-auth";
-import "./modules/character-selection";
+import "./modules/character";
 import "./modules/inventory";
 import "./modules/npcs";
 import "./modules/questing";
+import "./modules/skills";

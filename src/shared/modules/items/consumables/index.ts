@@ -1,4 +1,5 @@
 import { ItemKey } from "..";
+import { ItemFlags } from "../item-flags";
 import { ItemType } from "../item-type";
 
 export const consumables = {
@@ -8,6 +9,7 @@ export const consumables = {
     name: "Basic Survival Medkit",
     description:
       "A compact bundle of medical essentials. This no-frills kit holds just enough to patch up small injuries and stave off infection. It may not seem like much, but in this desperate landscape, it could spell the difference between life and death.",
+    flags: ItemFlags.IsUsable,
   },
 } as const;
 

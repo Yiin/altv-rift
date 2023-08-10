@@ -1,5 +1,4 @@
 import alt from "alt-client";
-import { TreeData } from "@/modules/woodcutting/trees/nearby-trees";
 
 export enum AnchorType {
   Ped,
@@ -10,5 +9,5 @@ export enum AnchorType {
 export type AnchorEntityMap = {
   [AnchorType.Ped]: alt.Ped;
   [AnchorType.Player]: alt.Player;
-  [AnchorType.Tree]: TreeData;
+  [AnchorType.Tree]: alt.VirtualEntity;
 };

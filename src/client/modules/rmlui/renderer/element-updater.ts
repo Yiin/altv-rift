@@ -11,7 +11,7 @@ import { AnchorType } from "./anchors";
 export const frameDataMap = new Map<AnchorEntity, FrameData>();
 
 alt.on("gameEntityDestroy", (entity) => {
-  removeOrphanedElements(entity as AnchorEntity);
+  removeOrphanedElement(entity as AnchorEntity);
 });
 
 let screenRes = alt.getScreenResolution().div(
@@ -31,15 +31,21 @@ export function getAnchorType(entity: AnchorEntity) {
     if (entity instanceof alt.Player) {
       return AnchorType.Player;
     }
-    throw new Error("Unknown entity type");
+    if (entity instanceof alt.VirtualEntity) {
+      if (entity.getStreamSyncedMeta("entityType") === "tree") {
+        return AnchorType.Tree;
+      }
+    }
   }
-  return AnchorType.Tree;
+  throw new Error("Unknown anchor type");
 }
 
 export function prepareFrameForEntity(entity: AnchorEntity) {
   const isVisible =
     alt.isPointOnScreen(entity.pos) &&
-    ("valid" in entity ? game.hasEntityClearLosToEntity(alt.Player.local, entity, 17) : true);
+    (entity instanceof alt.VirtualEntity
+      ? true
+      : game.hasEntityClearLosToEntity(alt.Player.local, entity, 17));
 
   if (isVisible) {
     const screenPosition = alt.worldToScreen(entity.pos);
@@ -111,7 +117,33 @@ export function prepareEntityElements(entity: AnchorEntity) {
   }
 }
 
-function removeOrphanedElements(entity: AnchorEntity) {
+function removeOrphanedElements() {
+  for (const entity of elements.keys()) {
+    const type = getAnchorType(entity);
+
+    switch (type) {
+      case AnchorType.Ped:
+        if (!alt.Ped.streamedIn.includes(entity as alt.Ped)) {
+          removeOrphanedElement(entity);
+        }
+        break;
+      case AnchorType.Player:
+        if (!alt.Player.all.includes(entity as alt.Player)) {
+          removeOrphanedElement(entity);
+        }
+        break;
+      case AnchorType.Tree:
+        if (!alt.VirtualEntity.all.includes(entity as alt.VirtualEntity)) {
+          removeOrphanedElement(entity);
+        }
+        break;
+    }
+  }
+}
+
+alt.setInterval(removeOrphanedElements, 1000);
+
+function removeOrphanedElement(entity: AnchorEntity) {
   if (!elements.has(entity)) {
     return;
   }

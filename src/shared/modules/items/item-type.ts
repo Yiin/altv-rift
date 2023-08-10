@@ -5,6 +5,7 @@ export const ItemType = makeEnum({
   AMMO: "AMMO",
   CLOTHING: "CLOTHING",
   CONSUMABLE: "CONSUMABLE",
+  MATERIAL: "MATERIAL",
 });
 
 export type ItemType = MakeEnum<typeof ItemType>;
