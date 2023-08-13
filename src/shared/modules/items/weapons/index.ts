@@ -15,7 +15,124 @@ export enum WeaponGroup {
   UTILITY = "Utility",
 }
 
-export const weapons = {
+export const Weapon = {
+  ADVANCEDRIFLE: "advancedrifle",
+  APPISTOL: "appistol",
+  ASSAULTRIFLE: "assaultrifle",
+  ASSAULTRIFLEMK2: "assaultriflemk2",
+  ASSAULTSHOTGUN: "assaultshotgun",
+  ASSAULTSMG: "assaultsmg",
+  AUTOSHOTGUN: "autoshotgun",
+  BALL: "ball",
+  BAT: "bat",
+  BATTLEAXE: "battleaxe",
+  BOTTLE: "bottle",
+  BULLPUPRIFLE: "bullpuprifle",
+  BULLPUPRIFLEMK2: "bullpupriflemk2",
+  BULLPUPSHOTGUN: "bullpupshotgun",
+  BZGAS: "bzgas",
+  CARBINERIFLE: "carbinerifle",
+  CARBINERIFLEMK2: "carbineriflemk2",
+  CERAMICPISTOL: "ceramicpistol",
+  COMBATMG: "combatmg",
+  COMBATMGMK2: "combatmgmk2",
+  COMBATPDW: "combatpdw",
+  COMBATPISTOL: "combatpistol",
+  COMPACTLAUNCHER: "compactlauncher",
+  COMPACTRIFLE: "compactrifle",
+  CROWBAR: "crowbar",
+  DAGGER: "dagger",
+  DBSHOTGUN: "dbshotgun",
+  DOUBLEACTION: "doubleaction",
+  FIREEXTINGUISHER: "fireextinguisher",
+  FIREWORK: "firework",
+  FLARE: "flare",
+  FLAREGUN: "flaregun",
+  FLASHLIGHT: "flashlight",
+  GOLFCLUB: "golfclub",
+  GRENADE: "grenade",
+  GRENADELAUNCHER: "grenadelauncher",
+  SMOKELAUNCHER: "smokelauncher",
+  GUSENBERG: "gusenberg",
+  HAMMER: "hammer",
+  HATCHET: "hatchet",
+  HAZARDCAN: "hazardcan",
+  HEAVYPISTOL: "heavypistol",
+  HEAVYSHOTGUN: "heavyshotgun",
+  HEAVYSNIPER: "heavysniper",
+  HEAVYSNIPERMK2: "heavysnipermk2",
+  HOMINGLAUNCHER: "hominglauncher",
+  KNIFE: "knife",
+  KNUCKLE: "knuckle",
+  MACHETE: "machete",
+  MACHINEPISTOL: "machinepistol",
+  MARKSMANPISTOL: "marksmanpistol",
+  MARKSMANRIFLE: "marksmanrifle",
+  MARKSMANRIFLEMK2: "marksmanriflemk2",
+  MG: "mg",
+  MICROSMG: "microsmg",
+  MINIGUN: "minigun",
+  MINISMG: "minismg",
+  MOLOTOV: "molotov",
+  MUSKET: "musket",
+  NAVYREVOLVER: "navyrevolver",
+  NIGHTSTICK: "nightstick",
+  JERRYCAN: "jerrycan",
+  PIPEBOMB: "pipebomb",
+  PIPEWRENCH: "pipewrench",
+  PISTOL: "pistol",
+  PISTOL50: "pistol50",
+  PISTOLMK2: "pistolmk2",
+  POOLCUE: "poolcue",
+  PROXMINE: "proxmine",
+  PUMPSHOTGUN: "pumpshotgun",
+  PUMPSHOTGUNMK2: "pumpshotgunmk2",
+  RAILGUN: "railgun",
+  RAYCARBINE: "raycarbine",
+  RAYMINIGUN: "rayminigun",
+  RAYPISTOL: "raypistol",
+  REVOLVER: "revolver",
+  REVOLVERMK2: "revolvermk2",
+  RPG: "rpg",
+  SAWNOFFSHOTGUN: "sawnoffshotgun",
+  SMG: "smg",
+  SMGMK2: "smgmk2",
+  SMOKEGRENADE: "smokegrenade",
+  SNIPERRIFLE: "sniperrifle",
+  SNOWBALL: "snowball",
+  SNSPISTOL: "snspistol",
+  SNSPISTOLMK2: "snspistolmk2",
+  SPECIALCARBINE: "specialcarbine",
+  SPECIALCARBINEMK2: "specialcarbinemk2",
+  STICKYBOMB: "stickybomb",
+  STONEHATCHET: "stonehatchet",
+  STUNGUN: "stungun",
+  SWITCHBLADE: "switchblade",
+  UNARMED: "unarmed",
+  VINTAGEPISTOL: "vintagepistol",
+} as const;
+
+export type WeaponItemKey = typeof Weapon[keyof typeof Weapon];
+
+export type WeaponItemInfo = {
+  key: string;
+  itemType: typeof ItemType.WEAPON;
+  hash: number;
+  name: string;
+  description: string;
+  flags: ItemFlags;
+  group: WeaponGroup;
+  price: number;
+  stats: {
+    damage: number;
+    rate: number;
+    accuracy?: number;
+    range: number;
+    overall: number;
+  }
+}
+
+export const weapons: Record<WeaponItemKey, WeaponItemInfo> = {
   advancedrifle: {
     key: "advancedrifle",
     itemType: ItemType.WEAPON,
@@ -1605,9 +1722,8 @@ export const weapons = {
       overall: 29.2,
     },
   },
-} as const;
+};
 
-export type WeaponItemKey = keyof typeof weapons;
 export type WeaponHash = keyof typeof WEAPON_DATA;
 
 export function getWeaponItemByKey<T extends WeaponItemKey>(key: T) {
