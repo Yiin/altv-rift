@@ -28,6 +28,7 @@ const props = withDefaults(
     y?: number;
     dragHandle?: string;
     dragCancel?: string;
+    sticks?: ("tl"|"tm"|"tr"|"mr"|"br"|"bm"|"bl"|"ml")[];
     axis?: "x" | "y" | "both" | "none";
     contentClass?: string;
     style?: any;
@@ -36,6 +37,7 @@ const props = withDefaults(
     isActive: true,
     isDraggable: true,
     wrapper: false,
+    sticks: () => ["tl", "tm", "tr", "mr", "br", "bm", "bl", "ml"],
     w: (props) => {
       return props.minw ?? 200;
     },
@@ -67,11 +69,11 @@ function blur() {
     v-if="!wrapper"
     @mousedown="focus"
     v-click-outside="blur"
-    :isResizeable="isFocused"
-    :sticks="isFocused ? undefined : []"
     :z="z"
     class="outline-none"
     v-bind="props"
+    :isResizeable="isFocused"
+    :sticks="isFocused ? sticks : []"
   >
     <slot></slot>
   </DragResize>

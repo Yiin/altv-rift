@@ -6,6 +6,7 @@ export const Introduction = {
     GOT_INTRODUCTION: `${Key}_got_introduction`,
     USED_MEDKIT: `${Key}_used_medkit`,
     GOT_DIRECTIONS: `${Key}_got_directions`,
+    DIEGO_INTRO: `${Key}_diego_intro`,
     PICKED_FISHING: `${Key}_picked_fishing`,
     COMPLETED_FISHING: `${Key}_completed_fishing`,
     PICKED_MINING: `${Key}_picked_mining`,

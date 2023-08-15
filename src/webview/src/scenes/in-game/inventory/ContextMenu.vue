@@ -20,46 +20,57 @@ const emit = defineEmits<{
 
 const px = usePixel();
 
+const itemName = computed(() => getItemName(props.item.data.key));
 const isUsable = computed(() => isItemUsable(props.item.data.key));
 const isEquipable = computed(() => isItemEquipable(props.item.data.key));
 
-function executeAction(action: () => void) {
-  action();
+function executeAction(action: 'use' | 'equip' | 'drop') {
+  // @ts-expect-error typescript is paranoid when typechecking function calls
+  emit(action, props.item);
   emit("close");
 }
+
+const actions = computed(() => [
+  {
+    name: "Use",
+    icon: "mdi-cursor-default-click-outline",
+    enabled: isUsable.value,
+    select: () => executeAction("use")
+  },
+  {
+    name: "Equip",
+    icon: "mdi-sword-cross",
+    enabled: isEquipable.value,
+    select: () => executeAction("equip")
+  },
+  {
+    name: "Drop",
+    icon: "mdi-place-item",
+    select: () => executeAction("drop")
+  }
+]);
 </script>
 
 <template>
   <Window wrapper>
-    <div class="min-w-49 text-white bg-[#0b0d14]" :style="{ translate: `${x}px ${y}px` }">
-      <div class="font-bold py-4 px-6">
-        {{ getItemName(item.data.key) }}
-      </div>
-      <div
-        class="py-4 px-6 cursor-pointer flex items-center gap-2 hover:bg-slate-900"
-        v-if="isUsable"
-        @click="() => executeAction(() => emit('use', item))"
-      >
-        <v-icon icon="mdi-cursor-default-click-outline" />
-        <div class="-mt-1">Use</div>
-      </div>
-      <div
-        class="py-4 px-6 cursor-pointer flex items-center gap-2 hover:bg-slate-900"
-        v-if="isEquipable"
-        title="Equip"
-        prepend-icon="mdi-sword-cross"
-        @click="() => executeAction(() => emit('equip', item))"
-      >
-        <v-icon icon="mdi-sword-cross" />
-        <div class="-mt-1">Equip</div>
-      </div>
-      <div
-        class="py-4 px-6 cursor-pointer flex items-center gap-2 hover:bg-slate-900"
-        @click="() => executeAction(() => emit('drop', item))"
-      >
-        <v-icon icon="mdi-drop" />
-        <div class="-mt-1">Drop</div>
-      </div>
-    </div>
+
+    <ul class="flex flex-col space-y-2">
+      <li>
+        <strong class="block text-xs font-medium uppercase text-gray-400">
+          {{ itemName }}
+        </strong>
+        <ul class="space-y-1">
+          <template v-for="action in actions">
+            <li v-if="'enabled' in action === false || action.enabled" @click="action.select">
+              <div
+                class="flex items-center gap-2 rounded-lg bg-gray-100 px-4 py-2 text-gray-700 dark:bg-gray-800 dark:text-gray-200">
+                <v-icon :icon="action.icon" />
+                <span class="text-sm font-medium"> {{ action.name }} </span>
+              </div>
+            </li>
+          </template>
+        </ul>
+      </li>
+    </ul>
   </Window>
 </template>

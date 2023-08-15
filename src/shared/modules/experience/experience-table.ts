@@ -25,7 +25,7 @@ export const EXPERIENCE_TABLE = [
 
 export function getLevel(xp: number) {
   for (let i = 0; i < EXPERIENCE_TABLE.length; i++) {
-    if (EXPERIENCE_TABLE[i] > xp) return i + 1;
+    if (EXPERIENCE_TABLE[i] > xp) return i;
   }
   return EXPERIENCE_TABLE.length + 1;
 }
@@ -33,4 +33,18 @@ export function getLevel(xp: number) {
 export function getMissingExperience(xp: number) {
   const level = getLevel(xp) - 1;
   return EXPERIENCE_TABLE[level] - xp;
+}
+
+export function getLevelProgress(xp: number) {
+  const level = getLevel(xp) - 1;
+  const start = EXPERIENCE_TABLE[level];
+  const next = EXPERIENCE_TABLE[level + 1];
+
+  if (!next) {
+    return 100;
+  }
+
+  console.log({ xp, level, start, next })
+
+  return (xp - start) / (next - start) * 100;
 }

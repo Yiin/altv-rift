@@ -984,16 +984,6 @@ export default {
   position: absolute;
   box-sizing: border-box;
 }
-.vdr.active:before {
-  content: "";
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  box-sizing: border-box;
-  outline: 1px dashed #d6d6d6;
-}
 .vdr-stick {
   box-sizing: border-box;
   position: absolute;

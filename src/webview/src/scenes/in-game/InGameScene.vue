@@ -6,11 +6,13 @@ import ChatBox from "./chat-box/ChatBox.vue";
 import Inventory from "./inventory/Inventory.vue";
 import Conversation from "./conversation/Conversation.vue";
 import QuestMenu from "./quest-menu/QuestMenu.vue";
+import SkillMenu from "./skill-menu/SkillMenu.vue";
+import Notifications from "./notifications/Notifications.vue";
 
 const { on } = useAlt();
 
 const visibleElements = reactive(
-  new Set(globalThis.altMock ? ["quest-menu"] : [])
+  new Set(globalThis.altMock ? ["asd"] : [])
 );
 
 on(WebviewEvents.FromClient.TOGGLE_ELEMENT, (element: string, visible) => {
@@ -29,5 +31,7 @@ on(WebviewEvents.FromClient.TOGGLE_ELEMENT, (element: string, visible) => {
   <ChatBox v-if="visibleElements.has('chat')" />
   <Inventory v-if="visibleElements.has('inventory')" />
   <QuestMenu v-if="visibleElements.has('quest-menu')" />
+  <SkillMenu v-if="visibleElements.has('skill-menu')" />
   <Conversation />
+  <Notifications />
 </template>

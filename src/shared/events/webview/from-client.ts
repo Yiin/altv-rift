@@ -1,3 +1,4 @@
+import { NotificationType } from "@shared/interfaces/notification";
 import { StoreUpdatePayload } from "@shared/store/utils";
 
 export const FromClient = {
@@ -7,6 +8,7 @@ export const FromClient = {
   UPDATE_PLAYER_STATE: "UPDATE_PLAYER_STATE",
   SET_CLIENT_STATE: "SET_CLIENT_STATE",
   UPDATE_CLIENT_STATE: "UPDATE_CLIENT_STATE",
+  SHOW_NOTIFICATION: "SHOW_NOTIFICATION"
 } as const;
 
 interface EventFromClient {
@@ -16,6 +18,7 @@ interface EventFromClient {
   [FromClient.UPDATE_PLAYER_STATE]: (data: StoreUpdatePayload) => void;
   [FromClient.SET_CLIENT_STATE]: (data: StoreUpdatePayload) => void;
   [FromClient.UPDATE_CLIENT_STATE]: (data: StoreUpdatePayload) => void;
+  [FromClient.SHOW_NOTIFICATION]: (type: NotificationType, title: string, text: string) => void;
 }
 
 declare global {
