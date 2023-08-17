@@ -12,7 +12,7 @@ import Notifications from "./notifications/Notifications.vue";
 const { on } = useAlt();
 
 const visibleElements = reactive(
-  new Set(globalThis.altMock ? ["asd"] : [])
+  new Set(globalThis.altMock ? ["quest-menu"] : [])
 );
 
 on(WebviewEvents.FromClient.TOGGLE_ELEMENT, (element: string, visible) => {

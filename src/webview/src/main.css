@@ -15,7 +15,7 @@ body {
 
 body {
   margin: 0;
-  background: transparent;
+  background: #111;
   /* background-image: url(https://news-cdn.softpedia.com/images/news2/GTA-5-Gets-New-Gorgeous-4K-Screenshots-on-PC-478043-23.jpg); */
   background-size: cover;
 }

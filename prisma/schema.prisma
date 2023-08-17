@@ -22,12 +22,28 @@ model User {
 }
 
 type Interface {
-  inventory ScreenPosition?
+  inventory  InventoryInterface?
+  questMenu  QuestMenuInterface?
+  skillsMenu SkillsMenuInterface?
+}
+
+type InventoryInterface {
+  screen ScreenPosition
+}
+
+type QuestMenuInterface {
+  screen ScreenPosition
+}
+
+type SkillsMenuInterface {
+  screen ScreenPosition
 }
 
 type ScreenPosition {
-  x Float
-  y Float
+  x Int
+  y Int
+  w Int
+  h Int
 }
 
 model Character {

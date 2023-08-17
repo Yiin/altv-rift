@@ -1,8 +1,9 @@
-import { Appearance } from "@prisma/client";
+import { Appearance, ScreenPosition } from "@prisma/client";
 
 export const FromWebview = {
   CREATE_CHARACTER: "CREATE_CHARACTER",
   MOVE_ITEM: "MOVE_ITEM",
+  MOVE_WINDOW: "MOVE_WINDOW",
 } as const;
 
 export interface CallFromWebview {
@@ -18,4 +19,9 @@ export interface CallFromWebview {
     fromSlot: number,
     toSlot: number
   ) => boolean;
+  [FromWebview.MOVE_WINDOW]: (
+    player: import("alt-server").Player,
+    name: string,
+    screen: ScreenPosition,
+  ) => void;
 }

@@ -26,11 +26,9 @@ alt.on(WebviewEvents.FromClient.SHOW_NOTIFICATION, showNotification);
 </script>
 
 <template>
-    <Screen>
-        <transition-group name="notification" tag="div" class="absolute right-6 top-6">
-            <NotificationMessage v-for="notification in notifications" v-bind="notification" />
-        </transition-group>
-    </Screen>
+    <transition-group name="notification" tag="div" class="absolute right-6 top-6">
+        <NotificationMessage v-for="notification in notifications" v-bind="notification" />
+    </transition-group>
 </template>
 
 <style>

@@ -11,13 +11,23 @@ const client = useClient();
 
 const questFacts = computed(() => client.questFacts);
 
+function toggleSingle(e: Event) {
+    if (e.currentTarget instanceof HTMLDetailsElement && !e.currentTarget.open) {
+        document.querySelectorAll('[class*="group/task"]').forEach(node => {
+            if (node instanceof HTMLDetailsElement && node !== e.currentTarget && node.open) {
+                node.open = false;
+            }
+        });
+    }
+}
+
 </script>
 
 <template>
     <details :class="[
         'group/task border-s-4 px-6 py-3 [&_summary::-webkit-details-marker]:hidden',
         questFacts.includes(task.completedFact) ? 'border-green-500' : 'border-orange-500'
-    ]">
+    ]" @click="toggleSingle">
         <summary class="flex cursor-pointer items-center justify-between gap-1.5 text-white">
             <h2 class="text-lg font-medium">
                 {{ task.title }}

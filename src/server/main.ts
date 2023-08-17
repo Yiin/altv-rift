@@ -17,3 +17,4 @@ import "./modules/inventory";
 import "./modules/npcs";
 import "./modules/questing";
 import "./modules/skills";
+import "./modules/user-interface";
