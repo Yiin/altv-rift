@@ -24,7 +24,7 @@ alt.on("windowResolutionChange", () => {
 });
 
 export function getAnchorType(entity: AnchorEntity) {
-  if ("valid" in entity) {
+  if ("valid" in entity && entity.valid) {
     if (entity instanceof alt.Ped) {
       return AnchorType.Ped;
     }
@@ -41,6 +41,11 @@ export function getAnchorType(entity: AnchorEntity) {
 }
 
 export function prepareFrameForEntity(entity: AnchorEntity) {
+  if (!entity.valid) {
+    removeOrphanedElement(entity);
+    return;
+  }
+
   const isVisible =
     alt.isPointOnScreen(entity.pos) &&
     (entity instanceof alt.VirtualEntity

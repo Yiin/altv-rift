@@ -148,23 +148,13 @@ const performChopAnimation = async (ped: number) => {
   game.freezeEntityPosition(ped, true);
   unfreezeAt = Date.now() + 1000;
 
-  game.taskPlayAnim(
-    ped,
-    "melee@hatchet@streamed_core",
-    "plyr_front_takedown",
-    4.0,
-    4.0,
-    1000,
-    0,
-    0,
-    false,
-    false,
-    false
-  );
+  const delay = await rpc.callServer(ServerCall.FromClient.BEGIN_TREE_HIT, currentTree.remoteId);
+
+  alt.Utils.wait(delay).then(() => {
+    inAction = false;
+  });
 
   await alt.Utils.wait(500);
-
-  inAction = false;
 
   game.useParticleFxAsset("core");
   const { x, y, z } = player.pos.add(game.getEntityForwardVector(ped)).mul(1.0);

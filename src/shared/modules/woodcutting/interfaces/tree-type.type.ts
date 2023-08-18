@@ -1,3 +1,3 @@
-import { TreeTypes } from "../trees/tree-types";
+import { TreeTypes } from "../tree-types";
 
 export type TreeType = keyof typeof TreeTypes;

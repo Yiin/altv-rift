@@ -6,6 +6,7 @@ export const FromClient = {
   TRY_CACHED_TOKEN: "TRY_CACHED_TOKEN",
   GET_ENTITY_ACTIONS: "GET_ENTITY_ACTIONS",
   START_CONVERSATION: "START_CONVERSATION",
+  BEGIN_TREE_HIT: "BEGIN_TREE_HIT",
   TREE_HIT: "TREE_HIT",
 } as const;
 
@@ -26,6 +27,10 @@ export interface CallFromClient {
     type: "quest";
     pages: string[];
   };
+  [FromClient.BEGIN_TREE_HIT]: (
+    player: import("alt-server").Player,
+    virtualTreeId: number
+  ) => number;
   [FromClient.TREE_HIT]: (
     player: import("alt-server").Player,
     virtualTreeId: number

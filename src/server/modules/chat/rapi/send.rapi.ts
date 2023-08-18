@@ -10,7 +10,7 @@ import { CHAT_PLAYER_NAME_METADATA } from "../consts";
 /**
  * Sends a message to the player.
  */
-export function send(
+export function sendChatMessage(
   player: Player,
   message: string,
   type: MessageType = MessageType.Default
@@ -18,25 +18,18 @@ export function send(
   const useChatFormattingInAPI = container
     .resolve(OptionsService)
     .getOption("useChatFormattingInAPI");
-  if (useChatFormattingInAPI)
-    message = container.resolve(Chat).processMessage(message);
+  if (useChatFormattingInAPI) message = container.resolve(Chat).processMessage(message);
 
   container
     .resolve(MountService)
-    .waitForMount(
-      player,
-      container.resolve(WindowService).send(player, message, type)
-    );
+    .waitForMount(player, container.resolve(WindowService).send(player, message, type));
 }
 
 /**
  * Sends a message to all players.
  */
-export function broadcast(
-  message: string,
-  type: MessageType = MessageType.Default
-) {
-  Player.all.forEach((player) => send(player, message, type));
+export function broadcast(message: string, type: MessageType = MessageType.Default) {
+  Player.all.forEach((player) => sendChatMessage(player, message, type));
 }
 
 /**

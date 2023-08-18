@@ -8,31 +8,25 @@ const props = defineProps<{
 const color = computed(
   () =>
     ({
-      large_beech_logs: "#6d643b",
-      black_mangrove_logs_large: "#282923",
-      black_mangrove_logs_medium: "#353a36",
-      frangipani_logs_large: "#efa094",
-      palm_fan_logs: "#9b804b",
-      umbrella_logs_medium: "#96897f",
-      umbrella_logs_small: "#96897f",
-      joshua_tree_logs: "#8a6c49",
-      medium_palm_logs: "#9b804b",
-      small_palm_logs: "#9b804b",
-      russian_olive_logs_winter: "#bcbcaa",
-      dead_pine_logs: "#c3956c",
-      birch_logs: "#dbc09e",
-      cedar_logs: "#a35c34",
-      small_cedar_logs: "#a35c34",
-      english_oak_logs: "#ac8646",
-      eucalyptus_logs: "#648249",
-      jacada_logs: "#76492f",
-      ficus_logs: "#ae856d",
-      maple_logs: "#c1673e",
-      mesquite_logs: "#6e4a3c",
-      oak_logs: "#ac8646",
-      pine_logs: "#c3956c",
-      wild_red_cedar_logs: "#bb5134",
-      dead_wild_red_cedar_logs: "#bb5134",
+      hawthorn_logs: "#A79F94",
+      beech_logs: "#807C66",
+      black_mangrove_logs: "#3B3C36",
+      frangipani_logs: "#FCD5CE",
+      palm_fan_logs: "#B5A397",
+      umbrella_logs: "#CBB3A7",
+      joshua_tree_logs: "#726250",
+      palm_logs: "#60624F",
+      royal_palm_logs: "#967352",
+      russian_olive_logs: "#748075",
+      birch_logs: "#D2D4D9",
+      cedar_logs: "#94424F",
+      eucalyptus_logs: "#748C7D",
+      jacada_logs: "#905E26",
+      ficus_logs: "#B69E79",
+      maple_logs: "#D45B3B",
+      mesquite_logs: "#5F4E4B",
+      oak_logs: "#AB7343",
+      pine_logs: "#7D9D72",
     }[props.itemKey])
 );
 </script>
@@ -49,5 +43,15 @@ const color = computed(
         stroke-width="7"
       ></path>
     </g>
+    <!-- Color name: -->
+    <text
+      x="0"
+      y="0"
+      class="fill-current text-black text-xs font-bold"
+      transform="translate(0,0)"
+      style="text-anchor: middle"
+    >
+      {{ itemKey }}
+    </text>
   </svg>
 </template>

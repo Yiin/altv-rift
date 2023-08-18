@@ -1,6 +1,6 @@
 import alt from "alt-client";
-import { getTreeLevel, getTreeName } from "@shared/modules/woodcutting";
 import { getLevel } from "@shared/modules/experience/experience-table";
+import { getTreeLevel, getTreeName } from "@shared/modules/woodcutting";
 import { playerStore } from "@/store/player.store";
 import { br, div } from "../renderer/rml-tags";
 import { AnchorType } from "../renderer/anchors";
