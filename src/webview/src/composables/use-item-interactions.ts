@@ -3,7 +3,7 @@ import DropItemWarning from "@/scenes/in-game/inventory/DropItemWarning.vue";
 import { InventoryItem } from "@shared/interfaces";
 import { ComponentPublicInstance, ComputedRef, Ref, ref, toRaw } from "vue";
 import { useEventListener } from "./use-event-listener";
-import { usePixel } from "./use-pixel";
+import { px } from "./use-pixel";
 import { useWindowSize } from "./use-window-size";
 import { ClientEvents } from "@shared/events/client";
 
@@ -65,21 +65,21 @@ export enum InteractionType {
 
 export type ItemInteraction =
   | {
-      type: InteractionType.Dragging;
-      state: Dragging;
-    }
+    type: InteractionType.Dragging;
+    state: Dragging;
+  }
   | {
-      type: InteractionType.Dropping;
-      state: Dropping;
-    }
+    type: InteractionType.Dropping;
+    state: Dropping;
+  }
   | {
-      type: InteractionType.Hovering;
-      state: Hovering;
-    }
+    type: InteractionType.Hovering;
+    state: Hovering;
+  }
   | {
-      type: InteractionType.ActionMenu;
-      state: ItemActionMenu;
-    };
+    type: InteractionType.ActionMenu;
+    state: ItemActionMenu;
+  };
 
 export const useItemInteractions = ({
   items,
@@ -89,7 +89,6 @@ export const useItemInteractions = ({
   dropItem,
 }: UseItemInteractionsArgs) => {
   const windowSize = useWindowSize();
-  const px = usePixel();
 
   const currentInteraction = ref<ItemInteraction>();
   const preparedDragInteraction = ref<Dragging>();
@@ -174,7 +173,7 @@ export const useItemInteractions = ({
       case undefined:
         const slot = getItemSlot(e);
 
-        const itemInSlot = items.value.find((item) => item.slot === slot)!;
+        const itemInSlot = items.value.find((item) => item.slot === slot);
 
         if (!itemInSlot) {
           currentInteraction.value = undefined;

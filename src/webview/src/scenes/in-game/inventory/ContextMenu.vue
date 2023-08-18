@@ -3,7 +3,7 @@ import Window from "@/components/Window.vue";
 import { getItemName, isItemEquipable, isItemUsable } from "@shared/modules/items";
 import { InventoryItem } from "@shared/interfaces";
 import { computed } from "vue";
-import { usePixel } from "@/composables/use-pixel";
+import { px } from "@/composables/use-pixel";
 
 const props = defineProps<{
   item: InventoryItem;
@@ -17,8 +17,6 @@ const emit = defineEmits<{
   (e: "equip", item: InventoryItem): void;
   (e: "drop", item: InventoryItem): void;
 }>();
-
-const px = usePixel();
 
 const itemName = computed(() => getItemName(props.item.data.key));
 const isUsable = computed(() => isItemUsable(props.item.data.key));
@@ -52,19 +50,17 @@ const actions = computed(() => [
 </script>
 
 <template>
-  <Window wrapper>
-
-    <ul class="flex flex-col space-y-2">
+  <Window v-bind="{ x, y }" :is-active="false">
+    <ul class="flex flex-col space-y-2 bg-gray-800 rounded-lg overflow-hidden shadow-lg">
       <li>
-        <strong class="block text-xs font-medium uppercase text-gray-400">
+        <strong class="py-3 px-4 block text-sm font-medium uppercase text-gray-400">
           {{ itemName }}
         </strong>
         <ul class="space-y-1">
           <template v-for="action in actions">
             <li v-if="'enabled' in action === false || action.enabled" @click="action.select">
-              <div
-                class="flex items-center gap-2 rounded-lg bg-gray-100 px-4 py-2 text-gray-700 dark:bg-gray-800 dark:text-gray-200">
-                <v-icon :icon="action.icon" />
+              <div class="flex items-center gap-4 px-4 py-3 bg-gray-800 text-gray-200 hover:bg-gray-700 cursor-pointer">
+                <v-icon :icon="action.icon" class="w-4 h-4" />
                 <span class="text-sm font-medium"> {{ action.name }} </span>
               </div>
             </li>

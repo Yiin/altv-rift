@@ -1,8 +1,6 @@
-import { usePixel } from "./use-pixel";
+import { px } from "./use-pixel";
 
 export const useInventoryGrid = () => {
-  const px = usePixel();
-
   function getSlotPositionInGrid(slot: number) {
     const col = slot % 5;
     const row = Math.floor(slot / 5);

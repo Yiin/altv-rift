@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, watch, watchEffect } from "vue";
 import { clamp, throttle } from "lodash-es";
-import { usePixel } from "@/composables/use-pixel";
+import { px } from "@/composables/use-pixel";
 
 const props = withDefaults(
   defineProps<{
@@ -21,8 +21,6 @@ const props = withDefaults(
     pointerSize: 24,
   }
 );
-
-const px = usePixel();
 
 const size = computed(() => px(props.size ?? 150));
 const pointerSize = computed(() => px(props.pointerSize ?? 24));
@@ -113,65 +111,34 @@ function trackDragging(e: PointerEvent) {
 
 <template>
   <div class="p-6 flex justify-center items-center">
-    <v-sheet
-      ref="container"
-      @pointerdown="dragstart"
-      color="grey-darken-4"
-      class="overflow-visible relative border-solid border-gray-600 border-1"
-      rounded
-      :height="size"
-      :width="size"
-    >
+    <v-sheet ref="container" @pointerdown="dragstart" color="grey-darken-4"
+      class="overflow-visible relative border-solid border-gray-600 border-1" rounded :height="size" :width="size">
       <!-- Horizontal lines -->
-      <div
-        v-for="top in ['top-1/5', 'top-2/5', 'top-3/5', 'top-4/5']"
-        :class="[
-          top,
-          'absolute w-full border-solid border-b-gray-600 border-b-1',
-        ]"
-      />
+      <div v-for="top in ['top-1/5', 'top-2/5', 'top-3/5', 'top-4/5']" :class="[
+        top,
+        'absolute w-full border-solid border-b-gray-600 border-b-1',
+      ]" />
 
       <!-- Vertical lines -->
-      <div
-        v-for="left in ['left-1/5', 'left-2/5', 'left-3/5', 'left-4/5']"
-        :class="[
-          left,
-          'absolute h-full border-solid border-l-gray-600 border-l-1',
-        ]"
-      />
+      <div v-for="left in ['left-1/5', 'left-2/5', 'left-3/5', 'left-4/5']" :class="[
+        left,
+        'absolute h-full border-solid border-l-gray-600 border-l-1',
+      ]" />
 
       <!-- Pointer -->
-      <v-icon
-        ref="pointer"
-        :class="[
-          'absolute z-10 transform',
-          !isDragging && 'transition-transform duration-100 ease-linear',
-        ]"
-        :size="pointerSize"
-        :style="{
-          '--tw-translate-x': `${x}px`,
-          '--tw-translate-y': `${y}px`,
-        }"
-        icon="mdi-circle"
-      />
+      <v-icon ref="pointer" :class="[
+        'absolute z-10 transform',
+        !isDragging && 'transition-transform duration-100 ease-linear',
+      ]" :size="pointerSize" :style="{
+  '--tw-translate-x': `${x}px`,
+  '--tw-translate-y': `${y}px`,
+}" icon="mdi-circle" />
 
       <!-- Labels -->
-      <span
-        class="absolute -translate-x-full -translate-y-1/2 -left-2 top-1/2 text-xs"
-        >{{ props.labelLeft }}</span
-      >
-      <span
-        class="absolute -translate-y-full -translate-x-1/2 left-1/2 -top-2 text-xs"
-        >{{ props.labelTop }}</span
-      >
-      <span
-        class="absolute translate-x-full -translate-y-1/2 -right-2 top-1/2 text-xs"
-        >{{ props.labelRight }}</span
-      >
-      <span
-        class="absolute translate-y-full -translate-x-1/2 left-1/2 -bottom-2 text-xs"
-        >{{ props.labelBottom }}</span
-      >
+      <span class="absolute -translate-x-full -translate-y-1/2 -left-2 top-1/2 text-xs">{{ props.labelLeft }}</span>
+      <span class="absolute -translate-y-full -translate-x-1/2 left-1/2 -top-2 text-xs">{{ props.labelTop }}</span>
+      <span class="absolute translate-x-full -translate-y-1/2 -right-2 top-1/2 text-xs">{{ props.labelRight }}</span>
+      <span class="absolute translate-y-full -translate-x-1/2 left-1/2 -bottom-2 text-xs">{{ props.labelBottom }}</span>
     </v-sheet>
   </div>
 </template>
