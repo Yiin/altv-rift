@@ -1,8 +1,22 @@
+import { ItemType } from "@prisma/client";
 import { ItemKey } from "..";
 import { ItemFlags } from "../item-flags";
-import { ItemType } from "../item-type";
 
-export const consumables = {
+export const Consumable = {
+  SIMPLE_MEDKIT: "simple_medkit",
+} as const;
+
+export type ConsumableItemKey = (typeof Consumable)[keyof typeof Consumable];
+
+export type ConsumableItemInfo = {
+  key: ConsumableItemKey;
+  itemType: typeof ItemType.CONSUMABLE;
+  name: string;
+  description: string;
+  flags: ItemFlags;
+};
+
+export const consumables: Record<ConsumableItemKey, ConsumableItemInfo> = {
   simple_medkit: {
     key: "simple_medkit",
     itemType: ItemType.CONSUMABLE,
@@ -11,9 +25,7 @@ export const consumables = {
       "A compact bundle of medical essentials. This no-frills kit holds just enough to patch up small injuries and stave off infection. It may not seem like much, but in this desperate landscape, it could spell the difference between life and death.",
     flags: ItemFlags.IsUsable,
   },
-} as const;
-
-export type ConsumableItemKey = keyof typeof consumables;
+};
 
 export function isItemConsumable(key: ItemKey): key is ConsumableItemKey {
   return key in consumables;

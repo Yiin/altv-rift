@@ -15,7 +15,7 @@ body {
 
 body {
   margin: 0;
-  background: #111;
+  /* background: #111; */
   /* background-image: url(https://news-cdn.softpedia.com/images/news2/GTA-5-Gets-New-Gorgeous-4K-Screenshots-on-PC-478043-23.jpg); */
   background-size: cover;
 }
@@ -35,8 +35,7 @@ body {
   background-clip: padding-box;
   border-radius: 7px;
   background-color: rgba(0, 0, 0, 0.15);
-  box-shadow: inset -1px -1px 0px rgba(0, 0, 0, 0.05),
-    inset 1px 1px 0px rgba(0, 0, 0, 0.05);
+  box-shadow: inset -1px -1px 0px rgba(0, 0, 0, 0.05), inset 1px 1px 0px rgba(0, 0, 0, 0.05);
 }
 
 ::-webkit-scrollbar-button {
@@ -63,6 +62,6 @@ body {
 }
 
 .text-shadow {
-  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
-    1px 1px 0 #000, 0px 2px 0 #000, 1px 2px 0 #000, 2px 2px 0 #000;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000, 0px 2px 0 #000,
+    1px 2px 0 #000, 2px 2px 0 #000;
 }

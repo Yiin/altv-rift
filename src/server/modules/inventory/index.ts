@@ -1,84 +1,31 @@
-import alt, { Player } from "alt-server";
-import { sample } from "lodash-es";
-import { ItemType } from "@prisma/client";
-import { AmmoItemData, InventoryItem } from "@shared/interfaces";
+import alt from "alt-server";
 import { ServerEvents } from "@shared/events/server";
-import {
-  findItemByKey,
-  getItemType,
-  getWeaponHash,
-  isValidItem,
-  ITEMS_REGISTRY,
-  WeaponItemInfo,
-  WeaponItemKey,
-  weapons,
-  getItemData,
-} from "@shared/modules/items";
+import { isValidItem, getItemData, createItem } from "@shared/modules/items";
 import { ServerCall } from "@shared/calls/server";
 import { rpc } from "@/rpc";
+import { needsToBeInGame } from "@/rpc/checks";
 import { registerCmd } from "../chat";
 import "./character-data";
 import "./items";
 
-registerCmd("giveitem", (player, [key, amount]) => {
+registerCmd("additem", (player, [key, amount]) => {
+  needsToBeInGame(player);
+
   if (!isValidItem(key)) {
     return;
   }
 
-  const type = getItemType(key);
+  const item = createItem(key, amount ? { amount: +amount } : undefined);
 
-  switch (type) {
-    case ItemType.WEAPON:
-      player.addItem(key, {
-        durability: 100,
-      });
-      break;
-    case ItemType.AMMO:
-      player.addItem(key, {
-        amount: +amount ?? 100,
-      });
+  if (!item) {
+    return;
   }
+
+  player.addItem(item);
 });
-
-alt.onClient(ServerEvents.FromClient.REQUEST_ITEM, (player) => {
-  player.addItem(sample(weapons)!.key, {
-    durability: 100,
-    components: [],
-    tints: [],
-  });
-});
-
-export function findAmmo(player: Player, weapon: WeaponItemInfo) {
-  if (!player.store.isLoggedIn) return;
-
-  const ammo = player.store.character.inventory.items.find(
-    (inventoryItem): inventoryItem is InventoryItem<AmmoItemData> => {
-      const data = inventoryItem.data;
-      if (data.type === ItemType.AMMO) {
-        const item = ITEMS_REGISTRY[data.key];
-      }
-      return data.type === ItemType.AMMO && findItemByKey(data.key).group === weapon.group;
-    }
-  );
-
-  return ammo?.data;
-}
-
-export function toEquipedAmmo(ammo?: AmmoItemData) {
-  return ammo
-    ? {
-        key: ammo.key,
-        data: {
-          amount: getItemData(ammo)!.amount,
-        },
-      }
-    : null;
-}
 
 rpc.registerClient(ServerCall.FromClient.USE_ITEM, (player, slot) => {
-  if (!player.store.isLoggedIn) {
-    return false;
-  }
+  needsToBeInGame(player);
 
   const inventoryItem = player.store.character.inventory.items.find((item) => {
     return item.slot === slot;
@@ -94,46 +41,28 @@ rpc.registerClient(ServerCall.FromClient.USE_ITEM, (player, slot) => {
 });
 
 rpc.registerClient(ServerCall.FromClient.EQUIP_ITEM, (player, slot) => {
-  if (!player.store.isLoggedIn) {
-    return false;
-  }
+  needsToBeInGame(player);
 
-  const inventoryItem = player.store.character.inventory.items.find((item) => {
-    return item.slot === slot;
-  });
+  const inventoryItem = player.getInventoryItemInSlot(slot);
 
   if (!inventoryItem) {
     return false;
   }
 
-  switch (inventoryItem.data.type) {
-    case ItemType.WEAPON:
-      const baseAmmo = findAmmo(player, findItemByKey(inventoryItem.data.key));
-      const ammo = getItemData(inventoryItem.data)?.ammo ?? toEquipedAmmo(baseAmmo);
+  return player.equipItem(inventoryItem);
+});
 
-      const itemKey = inventoryItem.data.key as WeaponItemKey;
-      const weaponHash = getWeaponHash(itemKey);
+rpc.registerClient(ServerCall.FromClient.UNEQUIP_ITEM, (player, equipmentSlot) => {
+  needsToBeInGame(player);
 
-      if (!ammo) {
-        console.log('No ammo for weapon "' + itemKey + '". Equiping with 1000 ammo.');
-        player.giveWeapon(weaponHash, 1000, true);
-        return true;
-      }
-
-      console.log('Equiping weapon "' + itemKey + '" with ammo "' + ammo.key + '"');
-      player.giveWeapon(weaponHash, ammo.data.amount, true);
-      break;
-  }
-
-  alt.emit(ServerEvents.FromServer.EQUIP_ITEM, player, inventoryItem);
+  player.unequipItem(equipmentSlot);
 
   return true;
 });
 
 rpc.registerClient(ServerCall.FromClient.DROP_ITEM, (player, slot) => {
-  if (!player.store.isLoggedIn) {
-    return false;
-  }
+  needsToBeInGame(player);
+
   const index = player.store.character.inventory.items.findIndex((inventoryItem) => {
     return inventoryItem.slot === slot;
   });
@@ -143,9 +72,7 @@ rpc.registerClient(ServerCall.FromClient.DROP_ITEM, (player, slot) => {
 });
 
 rpc.registerWebview(ServerCall.FromWebview.MOVE_ITEM, (player, from, to) => {
-  if (!player.store.isLoggedIn) {
-    return false;
-  }
+  needsToBeInGame(player);
 
   const itemInSlotFrom = player.store.character.inventory.items.find(({ slot }) => {
     return slot === from;

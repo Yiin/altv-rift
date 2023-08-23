@@ -18,6 +18,11 @@ rpc.registerWebview(ClientCall.FromWebview.EQUIP_ITEM, (slot) => {
   return rpc.callServer(ServerCall.FromClient.EQUIP_ITEM, slot);
 });
 
+rpc.registerWebview(ClientCall.FromWebview.UNEQUIP_ITEM, (slot) => {
+  console.log("client: unequip item", slot);
+  return rpc.callServer(ServerCall.FromClient.UNEQUIP_ITEM, slot);
+});
+
 rpc.registerWebview(ClientCall.FromWebview.DROP_ITEM, (slot) => {
   return rpc.callServer(ServerCall.FromClient.DROP_ITEM, slot);
 });

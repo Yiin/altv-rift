@@ -2,7 +2,6 @@ export const FromClient = {
   BEGIN_CONNECTION: "BEGIN_CONNECTION",
   SCREENSHOT_POPULATE_DATA: "SCREENSHOT_POPULATE_DATA",
   DISCORD_AUTH_DONE: "DISCORD_AUTH_DONE",
-  REQUEST_ITEM: "REQUEST_ITEM",
   NOTIFY: "NOTIFY",
 } as const;
 
@@ -16,15 +15,8 @@ export interface EventFromClient {
       totalLength: number;
     }
   ) => void;
-  [FromClient.DISCORD_AUTH_DONE]: (
-    player: import("alt-server").Player,
-    token: string
-  ) => void;
-  [FromClient.REQUEST_ITEM]: (player: import("alt-server").Player) => void;
-  [FromClient.NOTIFY]: (
-    player: import("alt-server").Player,
-    notification: string
-  ) => void;
+  [FromClient.DISCORD_AUTH_DONE]: (player: import("alt-server").Player, token: string) => void;
+  [FromClient.NOTIFY]: (player: import("alt-server").Player, notification: string) => void;
 }
 
 declare module "alt-server" {

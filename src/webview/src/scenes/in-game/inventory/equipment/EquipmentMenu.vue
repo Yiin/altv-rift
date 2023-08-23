@@ -1,8 +1,20 @@
 <script setup lang="ts">
+import { useInventory } from "@/store/inventory.store";
+import { computed } from "vue";
+import EquipmentSlot from "./EquipmentSlot.vue";
 
+const inventory = useInventory();
 </script>
 
 <template>
+  <div
+    @mousedown.stop
+    @touchstart.stop
+    class="relative bg-right bg-contain h-132.5"
+    :style="{
+      backgroundImage: `url(./assets/inventory/WomanSilhouetteOutline.png)`,
+    }"
+  >
     <EquipmentSlot name="mask" />
     <EquipmentSlot name="glasses" />
     <EquipmentSlot name="headwear" />
@@ -10,14 +22,15 @@
     <EquipmentSlot name="top" />
     <EquipmentSlot name="shirt" />
     <EquipmentSlot name="armor" />
-    <EquipmentSlot name="accessories1" />
+    <EquipmentSlot name="neckwear" />
     <EquipmentSlot name="weapon" />
     <EquipmentSlot name="ammo" />
     <EquipmentSlot name="gloves" />
-    <EquipmentSlot name="watch" />
+    <EquipmentSlot name="lefthand" />
     <EquipmentSlot name="pants" />
-    <EquipmentSlot name="accessories2" />
+    <EquipmentSlot name="righthand" />
     <EquipmentSlot name="backpack" />
     <EquipmentSlot name="shoes" />
     <EquipmentSlot name="phone" />
+  </div>
 </template>

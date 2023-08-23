@@ -1,13 +1,18 @@
-// @index('./*.ts', f => `import "${f.path}";`)
+// @index('./**/*.ts', f => `import "${f.path}";`)
 import "./add-interval";
-import "./add-item";
-import "./create-character";
-import "./delete-character";
-import "./get-characters";
-import "./load-character";
+import "./characters/create-character";
+import "./characters/delete-character";
+import "./characters/get-characters";
+import "./characters/load-character";
+import "./characters/save-character";
+import "./characters/update-character-appearance";
+import "./inventory/add-item";
+import "./inventory/equip-item";
+import "./inventory/foo";
+import "./inventory/get-inventory-item-in-slot";
+import "./inventory/remove-item";
+import "./inventory/unequip-item";
+import "./inventory/weapons/find-base-ammo-for-weapon";
 import "./load-user";
-import "./remove-item";
-import "./save-character";
 import "./setup";
-import "./update-character-appearance";
 // @endindex

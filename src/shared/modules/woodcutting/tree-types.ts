@@ -1,3 +1,5 @@
+import * as trees from "./trees";
+
 export const TreeTypes = {
   h4_prop_tree_beech_lrg_if_01: {
     key: "h4_prop_tree_beech_lrg_if_01",
@@ -41,6 +43,46 @@ export const TreeTypes = {
   },
   prop_joshua_tree_01a: {
     key: "prop_joshua_tree_01a",
+    name: "Joshua Tree",
+    logs: "joshua_tree_logs",
+  },
+  prop_joshua_tree_01b: {
+    key: "prop_joshua_tree_01b",
+    name: "Joshua Tree",
+    logs: "joshua_tree_logs",
+  },
+  prop_joshua_tree_01c: {
+    key: "prop_joshua_tree_01c",
+    name: "Joshua Tree",
+    logs: "joshua_tree_logs",
+  },
+  prop_joshua_tree_01d: {
+    key: "prop_joshua_tree_01d",
+    name: "Joshua Tree",
+    logs: "joshua_tree_logs",
+  },
+  prop_joshua_tree_01e: {
+    key: "prop_joshua_tree_01e",
+    name: "Joshua Tree",
+    logs: "joshua_tree_logs",
+  },
+  prop_joshua_tree_02a: {
+    key: "prop_joshua_tree_02a",
+    name: "Joshua Tree",
+    logs: "joshua_tree_logs",
+  },
+  prop_joshua_tree_02b: {
+    key: "prop_joshua_tree_02b",
+    name: "Joshua Tree",
+    logs: "joshua_tree_logs",
+  },
+  prop_joshua_tree_02c: {
+    key: "prop_joshua_tree_02c",
+    name: "Joshua Tree",
+    logs: "joshua_tree_logs",
+  },
+  prop_joshua_tree_02d: {
+    key: "prop_joshua_tree_02d",
     name: "Joshua Tree",
     logs: "joshua_tree_logs",
   },

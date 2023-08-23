@@ -57,6 +57,7 @@ model Character {
   health       Float
   createdAt    DateTime   @default(now())
   inventory    Inventory
+  equipment    Equipment
   questFacts   String[]
   skills       Skills
 }
@@ -79,8 +80,30 @@ type InventoryItem {
   data ItemData
 }
 
+type Equipment {
+  mask      ItemData?
+  glasses   ItemData?
+  headwear  ItemData?
+  earrings  ItemData?
+  top       ItemData?
+  shirt     ItemData?
+  armor     ItemData?
+  neckwear  ItemData?
+  weapon    ItemData?
+  ammo      ItemData?
+  gloves    ItemData?
+  lefthand  ItemData?
+  pants     ItemData?
+  righthand ItemData?
+  backpack  ItemData?
+  shoes     ItemData?
+  phone     ItemData?
+}
+
 enum ItemType {
-  WEAPON
+  FIREARM_WEAPON
+  THROWABLE_WEAPON
+  MELEE_WEAPON
   AMMO
   CLOTHING
   CONSUMABLE
@@ -88,22 +111,36 @@ enum ItemType {
 }
 
 type ItemData {
-  key        String
-  type       ItemType
-  WEAPON     WeaponItem?
-  AMMO       AmmoItem?
-  CLOTHING   ClothingItem?
-  CONSUMABLE ConsumableItem?
-  MATERIAL   MaterialItem?
+  key              String
+  type             ItemType
+  FIREARM_WEAPON   FirearmWeaponItem?
+  THROWABLE_WEAPON ThrowableWeaponItem?
+  MELEE_WEAPON     MeleeWeaponItem?
+  AMMO             AmmoItem?
+  CLOTHING         ClothingItem?
+  CONSUMABLE       ConsumableItem?
+  MATERIAL         MaterialItem?
 }
 
-type WeaponItem {
+type FirearmWeaponItem {
   customName String?
   durability Float
 
   ammo       EquipedAmmo?
-  tints      Int[]        @default([])
+  tint       Int          @default(0)
   components Int[]        @default([])
+}
+
+type ThrowableWeaponItem {
+  amount Int
+}
+
+type MeleeWeaponItem {
+  customName String?
+  durability Float
+
+  tint       Int   @default(0)
+  components Int[] @default([])
 }
 
 type EquipedAmmo {
@@ -120,7 +157,7 @@ type ClothingItem {
   durability Float
 
   // Color
-  palette Int
+  texture Int
 }
 
 type ConsumableItem {

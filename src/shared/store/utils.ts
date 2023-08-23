@@ -41,9 +41,7 @@ export function subscribeToStore<T extends Store>(
         onSetState(toRaw(state));
         return;
       }
-      const events = Array.isArray(mutation.events)
-        ? mutation.events
-        : [mutation.events];
+      const events = Array.isArray(mutation.events) ? mutation.events : [mutation.events];
 
       for (const event of events) {
         const path = findPath(toRaw(state), event.target)?.join(".");

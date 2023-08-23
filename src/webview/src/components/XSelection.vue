@@ -97,33 +97,47 @@ function dragstart(e: PointerEvent) {
 function trackDragging(e: PointerEvent) {
   const half = pointerSize.value / 2;
 
-  x.value =
-    Math.max(half, Math.min(size.value - half, e.clientX - bounds.value.x)) -
-    half;
+  x.value = Math.max(half, Math.min(size.value - half, e.clientX - bounds.value.x)) - half;
 }
 </script>
 
 <template>
   <div :class="['flex justify-center items-center', !noPadding && 'p-6']">
-    <v-sheet ref="container" @pointerdown="dragstart" color="grey-darken-4"
-      class="overflow-visible relative border-solid border-1-gray-600 border-1" rounded height="30" :width="size">
+    <v-sheet
+      ref="container"
+      @pointerdown="dragstart"
+      color="grey-darken-4"
+      class="overflow-visible relative border-solid border-1-gray-600 border-1"
+      rounded
+      height="30"
+      :width="size"
+    >
       <!-- Vertical lines -->
-      <div v-for="left in ['left-1/5', 'left-2/5', 'left-3/5', 'left-4/5']" :class="[
-        left,
-        'absolute left-1/5 h-full border-solid border-l-gray-600 border-l-1',
-      ]" />
+      <div
+        v-for="left in ['left-1/5', 'left-2/5', 'left-3/5', 'left-4/5']"
+        :class="[left, 'absolute left-1/5 h-full border-solid border-l-gray-600 border-l-1']"
+      />
 
       <!-- Pointer -->
-      <v-icon ref="pointer" :class="[
-        'absolute z-10 top-1/2 -translate-y-1/2 transform',
-        !isDragging && 'transition-transform duration-100 ease-linear',
-      ]" :style="{
-  '--tw-translate-x': `${x}px`,
-}" icon="mdi-circle" />
+      <v-icon
+        ref="pointer"
+        :class="[
+          'absolute z-10 top-1/2 -translate-y-1/2 transform',
+          !isDragging && 'transition-transform duration-100 ease-linear',
+        ]"
+        :style="{
+          '--tw-translate-x': `${x}px`,
+        }"
+        icon="mdi-circle"
+      />
 
       <!-- Labels -->
-      <span class="absolute -translate-x-full -translate-y-1/2 -left-2 top-1/2 text-xs">{{ props.labelLeft }}</span>
-      <span class="absolute translate-x-full -translate-y-1/2 -right-2 top-1/2 text-xs">{{ props.labelRight }}</span>
+      <span class="absolute -translate-x-full -translate-y-1/2 -left-2 top-1/2 text-xs">
+        {{ props.labelLeft }}
+      </span>
+      <span class="absolute translate-x-full -translate-y-1/2 -right-2 top-1/2 text-xs">
+        {{ props.labelRight }}
+      </span>
     </v-sheet>
   </div>
 </template>

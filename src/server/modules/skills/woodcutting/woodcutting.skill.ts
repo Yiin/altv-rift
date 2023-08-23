@@ -154,7 +154,7 @@ rpc.registerClient(ServerCall.FromClient.TREE_HIT, (player, virtualTreeId) => {
 });
 
 function isPlayerNearTree(player: alt.Player, virtualTree: alt.VirtualEntity) {
-  return player.pos.distanceTo(virtualTree.pos) < 3;
+  return player.pos.distanceTo(virtualTree.pos) < 5;
 }
 
 function canPlayerHitTheTree(player: alt.Player, virtualTree: alt.VirtualEntity) {

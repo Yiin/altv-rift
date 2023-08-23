@@ -2,7 +2,7 @@ name = "yolo"
 
 modules = ["js-module"]
 
-resources = ["main", "qa-tools", "ocnetrongt18"]
+resources = ["main", "qa-tools", "player-scaleform"]
 
 debug = true
 

@@ -1,6 +1,6 @@
 import { Player } from "alt-server";
 import { createPinia } from "pinia";
-import { minutesToMilliseconds, secondsToMilliseconds } from "date-fns";
+import { minutesToMilliseconds } from "date-fns";
 import { usePlayerStore } from "@shared/store/player.store";
 import { subscribeToStore } from "@shared/store/utils";
 import { ClientEvents } from "@shared/events/client";
@@ -25,6 +25,7 @@ Player.prototype.setup = function () {
 
   show(this);
 
+  // Player state
   this.pinia = createPinia();
   this.store = usePlayerStore(this.pinia);
 
@@ -37,24 +38,25 @@ Player.prototype.setup = function () {
     },
   });
 
+  // Server state
   subscribeToStore(serverStore, {
     onSetState: (state) => {
-      this.emitRaw(ClientEvents.FromServer.SET_PLAYER_STATE, state);
+      this.emitRaw(ClientEvents.FromServer.SET_SERVER_STATE, state);
     },
     onUpdateState: (payload) => {
-      this.emitRaw(ClientEvents.FromServer.UPDATE_PLAYER_STATE, payload);
+      this.emitRaw(ClientEvents.FromServer.UPDATE_SERVER_STATE, payload);
     },
   });
 
   // Track avg ping
-  const pings: number[] = [];
-  this.addInterval(() => {
-    while (pings.length > 10) {
-      pings.shift();
-    }
-    pings.push(this.ping);
-    this.store.avgPing = pings.reduce((a, b) => a + b) / pings.length;
-  }, secondsToMilliseconds(1));
+  // const pings: number[] = [];
+  // this.addInterval(() => {
+  //   while (pings.length > 10) {
+  //     pings.shift();
+  //   }
+  //   pings.push(this.ping);
+  //   this.store.avgPing = pings.reduce((a, b) => a + b) / pings.length;
+  // }, secondsToMilliseconds(1));
 
   // Periodically save character
   this.addInterval(() => {

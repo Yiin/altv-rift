@@ -1,30 +1,29 @@
 <script setup lang="ts">
 import { useItemDetails } from "@/composables/use-item-details";
 import { getItemName } from "@shared/modules/items";
-import { InventoryItem } from "@shared/interfaces";
+import { Dropping, useInventory } from "@/store/inventory.store";
 
-const props = defineProps<{
-  item: InventoryItem;
-}>();
+const props = defineProps<Dropping>();
 
-const emit = defineEmits<{
-  (e: "drop"): void;
-  (e: "keep"): void;
-}>();
-
+const inventory = useInventory();
 const details = useItemDetails(props.item.data);
 </script>
 
 <template>
-  <v-card class="mx-auto" max-width="368" theme="light">
+  <v-card
+    ref="inventory.dropItemWarningRef"
+    class="absolute mx-auto z-max"
+    max-width="368"
+    theme="light"
+    :style="{
+      left: `${position.x}px`,
+      top: `${position.y}px`,
+    }"
+    v-click-outside="inventory.cancelDropping"
+  >
     <v-card-item title="Drop item">
       <template v-slot:subtitle>
-        <v-icon
-          icon="mdi-alert"
-          size="18"
-          color="error"
-          class="me-1 pb-1"
-        ></v-icon>
+        <v-icon icon="mdi-alert" size="18" color="error" class="me-1 pb-1"></v-icon>
 
         The item will be destroyed
       </template>
@@ -37,12 +36,6 @@ const details = useItemDetails(props.item.data);
           width="10rem"
           :src="details.image"
           :style="{
-            filter:
-              false &&
-              `drop-shadow(1px 1px 0 var(--color-yellow-500))
-                  drop-shadow(-1px -1px 0 var(--color-yellow-500))
-                  drop-shadow(-1px 1px 0 var(--color-yellow-500))
-                  drop-shadow(1px -1px 0 var(--color-yellow-500))`,
             transform: `scale(${details.imageScale})`,
           }"
         />
@@ -56,16 +49,11 @@ const details = useItemDetails(props.item.data);
         </v-list-item-subtitle>
       </v-list-item>
 
-      <v-list-item
-        v-if="details.equipedAmmo"
-        density="compact"
-        prepend-icon="mdi-ammunition"
-      >
+      <v-list-item v-if="details.equipedAmmo" density="compact" prepend-icon="mdi-ammunition">
         <v-list-item-subtitle class="flex items-end gap-1">
-          <span class="font-bold">{{
-            getItemName(details.equipedAmmo.key)
-          }}</span>
-          <v-icon icon="mdi-close" size="12" />{{ details.equipedAmmo.amount }}
+          <span class="font-bold">{{ getItemName(details.equipedAmmo.key) }}</span>
+          <v-icon icon="mdi-close" size="12" />
+          {{ details.equipedAmmo.amount }}
         </v-list-item-subtitle>
       </v-list-item>
     </div>
@@ -73,8 +61,8 @@ const details = useItemDetails(props.item.data);
     <v-divider></v-divider>
 
     <v-card-actions class="justify-between">
-      <v-btn @click="emit('keep')"> Keep </v-btn>
-      <v-btn color="error" @click="emit('drop')"> Destroy </v-btn>
+      <v-btn @click="inventory.cancelDropping">Keep</v-btn>
+      <v-btn color="error" @click="inventory.completeDropping">Destroy</v-btn>
     </v-card-actions>
   </v-card>
 </template>

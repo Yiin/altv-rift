@@ -1,14 +1,38 @@
-import { ItemType } from "../item-type";
+import { ItemType } from "@prisma/client";
+import { AmmoItem } from "@shared/interfaces";
 import { WeaponGroup } from "../weapons";
+import { getItemData } from "../registry";
 
-export const ammo = {
+export const Ammo = {
+  HANDGUN_AMMO: "handgunammo",
+  SHOTGUN_AMMO: "shotgunshells",
+  SNIPER_RIFLE_AMMO: "riflerounds",
+  ASSAULT_RIFLE_AMMO: "assaultrifleammo",
+  MACHINE_GUN_AMMO: "machinegunammo",
+  HEAVY_AMMO: "heavyammo",
+  EXPLOSIVE_SHOTGUN_AMMO: "explosiveshells",
+  EXPLOSIVE_ASSAULT_RIFLE_AMMO: "explosiveassaultrifleammo",
+} as const;
+
+export type AmmoItemKey = (typeof Ammo)[keyof typeof Ammo];
+
+export type AmmoItemInfo = {
+  key: AmmoItemKey;
+  itemType: typeof ItemType.AMMO;
+  name: string;
+  description: string;
+  group: WeaponGroup;
+  damagemultiplier: number;
+};
+
+export const ammo: Record<AmmoItemKey, AmmoItemInfo> = {
   handgunammo: {
     key: "handgunammo",
     itemType: ItemType.AMMO,
     name: "Handgun ammo",
     description: "Ammo for handguns",
     group: WeaponGroup.HANDGUN,
-    damagemultipler: 1,
+    damagemultiplier: 1,
   },
   shotgunshells: {
     key: "shotgunshells",
@@ -16,7 +40,7 @@ export const ammo = {
     name: "Shotgun shells",
     description: "Ammo for shotguns",
     group: WeaponGroup.SHOTGUN,
-    damagemultipler: 1,
+    damagemultiplier: 1,
   },
   riflerounds: {
     key: "riflerounds",
@@ -24,7 +48,7 @@ export const ammo = {
     name: "Rifle rounds",
     description: "Ammo for sniper rifles",
     group: WeaponGroup.SNIPER_RIFLE,
-    damagemultipler: 1,
+    damagemultiplier: 1,
   },
   assaultrifleammo: {
     key: "assaultrifleammo",
@@ -32,7 +56,7 @@ export const ammo = {
     name: "Assault rifle ammo",
     description: "Ammo for assault rifles",
     group: WeaponGroup.ASSAULT_RIFLE,
-    damagemultipler: 1,
+    damagemultiplier: 1,
   },
   machinegunammo: {
     key: "machinegunammo",
@@ -40,7 +64,7 @@ export const ammo = {
     name: "Machine gun ammo",
     description: "Ammo for machine guns",
     group: WeaponGroup.MACHINE_GUN,
-    damagemultipler: 1,
+    damagemultiplier: 1,
   },
   heavyammo: {
     key: "heavyammo",
@@ -48,16 +72,15 @@ export const ammo = {
     name: "Heavy ammo",
     description: "Ammo for heavy weapons",
     group: WeaponGroup.HEAVY,
-    damagemultipler: 1,
+    damagemultiplier: 1,
   },
   explosiveshells: {
-    key: "explosiveammo",
+    key: "explosiveshells",
     group: WeaponGroup.SHOTGUN,
     itemType: ItemType.AMMO,
-    description:
-      "Unleash a fiery blast with every shot using these explosive shotgun shells",
+    description: "Unleash a fiery blast with every shot using these explosive shotgun shells",
     name: "Explosive shells",
-    damagemultipler: 2,
+    damagemultiplier: 2,
   },
   explosiveassaultrifleammo: {
     key: "explosiveassaultrifleammo",
@@ -68,6 +91,19 @@ export const ammo = {
     name: "Explosive assault rifle ammo",
     damagemultiplier: 2,
   },
-} as const;
+};
 
-export type AmmoItemKey = keyof typeof ammo;
+export function getAmmoKeyForWeaponGroup(group: WeaponGroup) {
+  return (Object.keys(ammo) as AmmoItemKey[]).find((key) => ammo[key].group === group)!;
+}
+
+export function toEquipedAmmo(ammo?: AmmoItem) {
+  return ammo
+    ? {
+        key: ammo.key,
+        data: {
+          amount: getItemData(ammo)!.amount,
+        },
+      }
+    : null;
+}

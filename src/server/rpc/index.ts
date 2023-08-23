@@ -11,16 +11,10 @@ import {
 } from "@shared/calls/constants";
 import { ServerCall } from "@shared/calls/server";
 import { CallFromClient } from "@shared/calls/server/from-client";
-import {
-  CallFromWebview,
-  FromWebview,
-} from "@shared/calls/server/from-webview";
+import { CallFromWebview, FromWebview } from "@shared/calls/server/from-webview";
 import { createPayload } from "@shared/utility/create-payload";
 
-const clientProcedures = new Map<
-  string,
-  (player: alt.Player, ...args: any[]) => any
->();
+const clientProcedures = new Map<string, (player: alt.Player, ...args: any[]) => any>();
 const clientHandlers = new Map<
   string,
   { resolve: (result: any) => void; reject: (err: any) => void }
@@ -76,9 +70,7 @@ alt.onClient(CALL_SERVER_FROM_CLIENT, async (player, payload) => {
 
   try {
     if (!callback) {
-      throw new Error(
-        `CALL_SERVER_FROM_CLIENT: Procedure ${name} does not exist`
-      );
+      throw new Error(`CALL_SERVER_FROM_CLIENT: Procedure ${name} does not exist`);
     }
 
     const result = await callback(player, ...args);
@@ -140,9 +132,7 @@ alt.onClient(CALL_SERVER_FROM_WEBVIEW, async (player, payload) => {
 
   try {
     if (!callback) {
-      throw new Error(
-        `CALL_SERVER_FROM_WEBVIEW: Procedure ${name} does not exist`
-      );
+      throw new Error(`CALL_SERVER_FROM_WEBVIEW: Procedure ${name} does not exist`);
     }
 
     const result = await callback(player, ...args);
