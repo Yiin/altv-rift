@@ -13,8 +13,6 @@ declare module "alt-server" {
 alt.Player.prototype.equipItem = function (itemToEquip) {
   const equipmentSlot = getItemEquipmentSlot(itemToEquip);
 
-  console.log(`equiping: ${itemToEquip.data.key}, slot: ${equipmentSlot}`);
-
   if (equipmentSlot) {
     // remove item we want to equip from inventory
     this.removeItemFromSlot(itemToEquip.slot);
@@ -27,5 +25,5 @@ alt.Player.prototype.equipItem = function (itemToEquip) {
     this.store.character.equipment[equipmentSlot] = itemToEquip.data;
   }
 
-  alt.emit(ServerEvents.FromServer.EQUIP_ITEM, this, itemToEquip);
+  alt.emit(ServerEvents.FromServer.EQUIP_ITEM, this, itemToEquip.data);
 };

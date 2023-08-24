@@ -5,12 +5,12 @@ import { getItemInfoByKey, getItemData } from "@shared/modules/items";
 import { isInGame } from "@/utility/assertions";
 
 alt.on(ServerEvents.FromServer.EQUIP_ITEM, (player, item) => {
-  if (item.data.type !== ItemType.THROWABLE_WEAPON) {
+  if (item.type !== ItemType.THROWABLE_WEAPON) {
     return;
   }
 
-  const itemInfo = getItemInfoByKey(item.data.key);
-  const itemData = getItemData(item.data);
+  const itemInfo = getItemInfoByKey(item.key);
+  const itemData = getItemData(item);
   player.giveWeapon(itemInfo.hash, itemData.amount, true);
 });
 

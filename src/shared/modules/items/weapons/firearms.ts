@@ -1,5 +1,5 @@
 import { ItemType } from "@prisma/client";
-import { FirearmWeaponItem, InventoryItem } from "@shared/interfaces";
+import { FirearmWeaponItem, Item } from "@shared/interfaces";
 import { ItemFlags } from "../item-flags";
 import { getWeaponData } from "../weapons";
 import { ItemKey } from "../types";
@@ -1257,12 +1257,10 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
 };
 
-export function isItemFirearmWeapon(key: ItemKey): key is FirearmWeaponItemKey {
+export function isItemKeyFirearmWeapon(key: ItemKey): key is FirearmWeaponItemKey {
   return key in firearmWeapons;
 }
 
-export function isInventoryItemFirearmWeapon(
-  item: InventoryItem
-): item is InventoryItem<FirearmWeaponItem> {
-  return isItemFirearmWeapon(item.data.key);
+export function isItemFirearmWeapon(item: Item): item is FirearmWeaponItem {
+  return isItemKeyFirearmWeapon(item.key);
 }

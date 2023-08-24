@@ -11,7 +11,7 @@ import {
 import { AmmoItem, InventoryItem } from "@shared/interfaces";
 
 alt.on(ServerEvents.FromServer.EQUIP_ITEM, (player, item) => {
-  if (item.data.type !== ItemType.AMMO) {
+  if (item.type !== ItemType.AMMO) {
     return;
   }
 
@@ -25,13 +25,23 @@ alt.on(ServerEvents.FromServer.EQUIP_ITEM, (player, item) => {
     return;
   }
 
-  if (getWeaponAmmoGroup(equipedWeapon.key) !== getItemInfoByKey(item.data.key).group) {
+  if (getWeaponAmmoGroup(equipedWeapon.key) !== getItemInfoByKey(item.key).group) {
     return;
   }
 
   const weaponData = getItemData(equipedWeapon);
 
-  player.loadAmmoIntoWeapon(item as InventoryItem<AmmoItem>, equipedWeapon);
+  const inventoryItem = player.store.character.inventory.items.find(
+    (inventoryItem): inventoryItem is InventoryItem<AmmoItem> => {
+      return inventoryItem.data === item;
+    }
+  );
+
+  if (!inventoryItem) {
+    return;
+  }
+
+  player.loadAmmoIntoWeapon(inventoryItem, equipedWeapon);
 
   player.setWeaponAmmo(getWeaponHash(equipedWeapon.key), weaponData.ammo?.data.amount ?? 0);
 });

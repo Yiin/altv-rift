@@ -1,9 +1,9 @@
-import { InventoryItem } from "@shared/interfaces";
+import { InventoryItem, Item } from "@shared/interfaces";
 
 export const FromServer = {
   MANUAL_DISCORD_AUTH_DONE: "MANUAL_DISCORD_AUTH_DONE",
   USE_ITEM: "USE_ITEM",
-  EQUIP_ITEM: "EQUIP_ITEM",
+  EQUIP_ITEM: "EQUIP_ITEM", // Handles equipment effects, not player equipment state
   UNEQUIP_ITEM: "UNEQUIP_ITEM",
 } as const;
 
@@ -18,7 +18,7 @@ export interface EventFromServer {
   ) => Promise<void> | void;
   [FromServer.EQUIP_ITEM]: (
     player: import("../../../server/utility/assertions").InGamePlayer,
-    item: InventoryItem
+    item: Item
   ) => Promise<void> | void;
   [FromServer.UNEQUIP_ITEM]: (
     player: import("../../../server/utility/assertions").InGamePlayer,
@@ -27,6 +27,11 @@ export interface EventFromServer {
 }
 
 declare module "alt-server" {
+  export function emit<T extends keyof typeof FromServer>(
+    eventName: T,
+    ...args: Parameters<EventFromServer[T]>
+  ): void;
+
   export function on<T extends keyof typeof FromServer>(
     eventName: T,
     listener: EventFromServer[T]

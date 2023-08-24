@@ -4,6 +4,7 @@ import { ServerCall } from "@shared/calls/server";
 import { isRequired, isUnique, validate } from "@/validator";
 import { ServerEvent } from "@/constants/server-events";
 import { rpc } from "@/rpc";
+import { isInGame } from "@/utility/assertions";
 import { getDefaultCharacterData } from "./character-data";
 
 alt.on(ServerEvent.USER_LOADED, async (player: Player) => {

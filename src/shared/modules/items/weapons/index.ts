@@ -1,6 +1,6 @@
 import { ItemKey } from "../types";
 import WEAPON_DATA from "./weapons-data.json";
-import { firearmWeapons, isItemFirearmWeapon } from "./firearms";
+import { firearmWeapons, isItemKeyFirearmWeapon } from "./firearms";
 import { throwableWeapons } from "./throwable";
 import { meleeWeapons } from "./melee";
 
@@ -43,7 +43,7 @@ export function getWeaponGroup(key: WeaponItemKey) {
   return weapons[key].group;
 }
 export function getWeaponAmmoGroup(key: WeaponItemKey) {
-  if (!isItemFirearmWeapon(key)) {
+  if (!isItemKeyFirearmWeapon(key)) {
     return null;
   }
   return weapons[key].ammoGroup;

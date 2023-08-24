@@ -4,10 +4,10 @@ import { ServerEvents } from "@shared/events/server";
 import { getItemInfoByKey } from "@shared/modules/items";
 
 alt.on(ServerEvents.FromServer.EQUIP_ITEM, (player, item) => {
-  if (item.data.type !== ItemType.MELEE_WEAPON) {
+  if (item.type !== ItemType.MELEE_WEAPON) {
     return;
   }
 
-  const itemInfo = getItemInfoByKey(item.data.key);
+  const itemInfo = getItemInfoByKey(item.key);
   player.giveWeapon(itemInfo.hash, 1, true);
 });

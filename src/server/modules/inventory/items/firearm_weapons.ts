@@ -8,16 +8,16 @@ import {
   createItem,
   getAmmoKeyForAmmoGroup,
 } from "@shared/modules/items";
-import { isInventoryItemFirearmWeapon } from "@shared/modules/items/weapons/firearms";
+import { isItemFirearmWeapon } from "@shared/modules/items/weapons/firearms";
 import { isInGame } from "@/utility/assertions";
 
 alt.on(ServerEvents.FromServer.EQUIP_ITEM, (player, item) => {
-  if (!isInventoryItemFirearmWeapon(item)) {
+  if (!isItemFirearmWeapon(item)) {
     return;
   }
 
-  const itemInfo = getItemInfoByKey(item.data.key);
-  const itemData = getItemData(item.data);
+  const itemInfo = getItemInfoByKey(item.key);
+  const itemData = getItemData(item);
 
   const ammo = (() => {
     if (itemData.ammo) {

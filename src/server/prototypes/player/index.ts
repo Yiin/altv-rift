@@ -6,6 +6,7 @@ import "./characters/get-characters";
 import "./characters/load-character";
 import "./characters/save-character";
 import "./characters/update-character-appearance";
+import "./equipment/apply-equipment";
 import "./inventory/add-item";
 import "./inventory/equip-item";
 import "./inventory/get-inventory-item-in-slot";
