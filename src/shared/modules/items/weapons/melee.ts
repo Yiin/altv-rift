@@ -1,6 +1,7 @@
 import { ItemType } from "@prisma/client";
 import { ItemFlags } from "../item-flags";
-import { getWeaponData, WeaponGroup } from ".";
+import { WeaponGroup } from "./weapon-groups";
+import { getWeaponData } from ".";
 
 export const MeleeWeapon = {
   BAT: "bat",

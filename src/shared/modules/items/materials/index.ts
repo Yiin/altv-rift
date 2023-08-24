@@ -1,4 +1,4 @@
-import { ItemKey } from "..";
+import { ItemKey } from "../types";
 import { treeLogs } from "./tree-logs";
 
 export type MaterialItemKey = keyof typeof materials;

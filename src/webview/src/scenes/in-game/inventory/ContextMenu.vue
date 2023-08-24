@@ -1,8 +1,16 @@
 <script setup lang="ts">
 import Window from "@/components/Window.vue";
-import { getItemName, isItemEquipable, isItemUsable } from "@shared/modules/items";
+import {
+  CombineType,
+  getCombineType,
+  getItemData,
+  getItemName,
+  isItemEquipable,
+  isItemUsable,
+} from "@shared/modules/items";
 import { computed } from "vue";
 import { InteractionType, ItemActionMenu, useInventory } from "@/store/inventory.store";
+import { ItemType } from "@prisma/client";
 
 const props = defineProps<ItemActionMenu>();
 
@@ -12,8 +20,27 @@ const visible = computed(() => inventory.currentInteraction.type === Interaction
 const itemName = computed(() => getItemName(props.item.data.key));
 const isUsable = computed(() => isItemUsable(props.item.data.key));
 const isEquipable = computed(() => isItemEquipable(props.item.data.key));
+const hasAmmo = computed(
+  () => !!(props.item.data.type === ItemType.FIREARM_WEAPON && getItemData(props.item.data).ammo)
+);
+const canLoadAmmo = computed(() => {
+  if (!inventory.selectedItem) {
+    return false;
+  }
+  const target = props.item.data.key;
+  const source = inventory.selectedItem.data.key;
 
-function executeAction(action: "use" | "equip" | "drop") {
+  const [combineType, reverse] = getCombineType(target, source);
+
+  switch (combineType) {
+    case CombineType.EquipAmmo:
+      return true;
+  }
+
+  return false;
+});
+
+function executeAction(action: "use" | "equip" | "drop" | "unload-ammo" | "load-ammo") {
   switch (action) {
     case "use":
       inventory.useItem(props.item.slot);
@@ -23,6 +50,14 @@ function executeAction(action: "use" | "equip" | "drop") {
       break;
     case "drop":
       inventory.dropFromMenu(props.item);
+      break;
+    case "load-ammo":
+      if (inventory.selectedItem) {
+        inventory.loadAmmo(props.item.slot, inventory.selectedItem.slot);
+      }
+      break;
+    case "unload-ammo":
+      inventory.unloadAmmo(props.item.slot);
       break;
   }
   inventory.closeActionMenu();
@@ -42,6 +77,18 @@ const actions = computed(() => [
     select: () => executeAction("equip"),
   },
   {
+    name: "Load ammo",
+    icon: "mdi-ammunition",
+    enabled: canLoadAmmo.value,
+    select: () => executeAction("load-ammo"),
+  },
+  {
+    name: "Unload ammo",
+    icon: "mdi-ammunition",
+    enabled: hasAmmo.value,
+    select: () => executeAction("unload-ammo"),
+  },
+  {
     name: "Drop",
     icon: "mdi-place-item",
     select: () => executeAction("drop"),
@@ -54,6 +101,7 @@ const actions = computed(() => [
     v-if="visible"
     :key="ts"
     class="absolute flex justify-start"
+    @click.stop
     v-click-outside="inventory.closeActionMenu"
   >
     <Window v-bind="{ x, y }" :is-active="false">
@@ -66,7 +114,7 @@ const actions = computed(() => [
             <template v-for="action in actions">
               <li
                 v-if="'enabled' in action === false || action.enabled"
-                @click="action.select"
+                @mousedown="action.select"
                 class="border-t border-t-gray-700"
               >
                 <div

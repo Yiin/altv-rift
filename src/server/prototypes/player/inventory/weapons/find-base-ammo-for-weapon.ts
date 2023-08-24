@@ -2,7 +2,7 @@ import alt from "alt-server";
 import { ItemType } from "@prisma/client";
 import { getItemInfoByKey, WeaponItemInfo } from "@shared/modules/items";
 import { AmmoItem, InventoryItem } from "@shared/interfaces";
-import { InGamePlayer } from "@/rpc/checks";
+import { InGamePlayer } from "@/utility/assertions";
 
 declare module "alt-server" {
   export interface Player {
@@ -11,11 +11,15 @@ declare module "alt-server" {
 }
 
 alt.Player.prototype.findBaseAmmoForWeapon = function (weapon: WeaponItemInfo) {
+  if (weapon.itemType !== ItemType.FIREARM_WEAPON) {
+    return;
+  }
+
   const ammo = this.store.character.inventory.items.find(
     (inventoryItem): inventoryItem is InventoryItem<AmmoItem> => {
       return (
         inventoryItem.data.type === ItemType.AMMO &&
-        getItemInfoByKey(inventoryItem.data.key).group === weapon.group
+        getItemInfoByKey(inventoryItem.data.key).group === weapon.ammoGroup
       );
     }
   );

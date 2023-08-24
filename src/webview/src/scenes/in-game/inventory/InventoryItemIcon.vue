@@ -14,8 +14,6 @@ const inventoryGrid = useInventoryGrid();
 
 const item = computed(() => props.item);
 
-const selected = computed(() => inventory.selectedItem?.slot === item.value.slot);
-
 const isDraggingOrDropping = computed(() =>
   [InteractionType.Dragging, InteractionType.Dropping].includes(inventory.currentInteraction.type)
 );
@@ -64,13 +62,6 @@ const draggingStyle = computed(() => {
     :item="item.data"
     :class="{ 'transition-all duration-75': !isDraggingOrDropping }"
     v-show="shouldShow"
-    :style="[
-      draggingStyle,
-      selected
-        ? {
-            filter: 'brightness(1.2)',
-          }
-        : {},
-    ]"
+    :style="[draggingStyle]"
   />
 </template>

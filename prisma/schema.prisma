@@ -90,7 +90,6 @@ type Equipment {
   armor     ItemData?
   neckwear  ItemData?
   weapon    ItemData?
-  ammo      ItemData?
   gloves    ItemData?
   lefthand  ItemData?
   pants     ItemData?

@@ -1,7 +1,7 @@
 import alt from "alt-server";
 import { InventoryItem } from "@shared/interfaces";
 import { ItemKey, getItemData, isStackable } from "@shared/modules/items";
-import { InGamePlayer } from "@/rpc/checks";
+import { InGamePlayer } from "@/utility/assertions";
 
 declare module "alt-server" {
   export interface Player {
@@ -11,7 +11,7 @@ declare module "alt-server" {
   }
 }
 
-alt.Player.prototype.removeItem = function (item, amount = 1) {
+alt.Player.prototype.removeItem = function (item, amount = 0) {
   if (!item) {
     return false;
   }
@@ -22,19 +22,26 @@ alt.Player.prototype.removeItem = function (item, amount = 1) {
     return false;
   }
 
-  if (!isStackable(itemData) || itemData.amount <= 0) {
+  if (!isStackable(itemData) || itemData.amount <= 0 || amount <= 0) {
     this.store.character.inventory.items.splice(
       this.store.character.inventory.items.indexOf(item),
       1
     );
-  } else {
-    itemData.amount -= amount ?? 1;
+  } else if (isStackable(itemData)) {
+    itemData.amount -= amount;
+
+    if (itemData.amount <= 0) {
+      this.store.character.inventory.items.splice(
+        this.store.character.inventory.items.indexOf(item),
+        1
+      );
+    }
   }
 
   return true;
 };
 
-alt.Player.prototype.removeItemByKey = function (key, amount?: number) {
+alt.Player.prototype.removeItemByKey = function (key, amount = 0) {
   const item = this.store.character?.inventory.items.find((item) => {
     return item.data.key === key;
   });
@@ -42,7 +49,7 @@ alt.Player.prototype.removeItemByKey = function (key, amount?: number) {
   return this.removeItem(item, amount);
 };
 
-alt.Player.prototype.removeItemFromSlot = function (slot, amount?: number) {
+alt.Player.prototype.removeItemFromSlot = function (slot, amount = 0) {
   if (!this.store.isLoggedIn) {
     return false;
   }

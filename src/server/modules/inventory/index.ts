@@ -1,9 +1,9 @@
 import alt from "alt-server";
 import { ServerEvents } from "@shared/events/server";
-import { isValidItem, getItemData, createItem } from "@shared/modules/items";
+import { isValidItem, createItem } from "@shared/modules/items";
 import { ServerCall } from "@shared/calls/server";
 import { rpc } from "@/rpc";
-import { needsToBeInGame } from "@/rpc/checks";
+import { needsToBeInGame } from "@/utility/assertions";
 import { registerCmd } from "../chat";
 import "./character-data";
 import "./items";
@@ -24,7 +24,7 @@ registerCmd("additem", (player, [key, amount]) => {
   player.addItem(item);
 });
 
-rpc.registerClient(ServerCall.FromClient.USE_ITEM, (player, slot) => {
+rpc.registerWebview(ServerCall.FromWebview.USE_ITEM, (player, slot) => {
   needsToBeInGame(player);
 
   const inventoryItem = player.store.character.inventory.items.find((item) => {
@@ -40,7 +40,7 @@ rpc.registerClient(ServerCall.FromClient.USE_ITEM, (player, slot) => {
   return true;
 });
 
-rpc.registerClient(ServerCall.FromClient.EQUIP_ITEM, (player, slot) => {
+rpc.registerWebview(ServerCall.FromWebview.EQUIP_ITEM, (player, slot) => {
   needsToBeInGame(player);
 
   const inventoryItem = player.getInventoryItemInSlot(slot);
@@ -49,10 +49,11 @@ rpc.registerClient(ServerCall.FromClient.EQUIP_ITEM, (player, slot) => {
     return false;
   }
 
-  return player.equipItem(inventoryItem);
+  player.equipItem(inventoryItem);
+  return true;
 });
 
-rpc.registerClient(ServerCall.FromClient.UNEQUIP_ITEM, (player, equipmentSlot) => {
+rpc.registerWebview(ServerCall.FromWebview.UNEQUIP_ITEM, (player, equipmentSlot) => {
   needsToBeInGame(player);
 
   player.unequipItem(equipmentSlot);
@@ -60,7 +61,23 @@ rpc.registerClient(ServerCall.FromClient.UNEQUIP_ITEM, (player, equipmentSlot) =
   return true;
 });
 
-rpc.registerClient(ServerCall.FromClient.DROP_ITEM, (player, slot) => {
+rpc.registerWebview(ServerCall.FromWebview.LOAD_AMMO, (player, slotA, slotB) => {
+  needsToBeInGame(player);
+
+  player.loadAmmo(slotA, slotB);
+
+  return true;
+});
+
+rpc.registerWebview(ServerCall.FromWebview.UNLOAD_AMMO, (player, slot) => {
+  needsToBeInGame(player);
+
+  player.unloadAmmo(slot);
+
+  return true;
+});
+
+rpc.registerWebview(ServerCall.FromWebview.DROP_ITEM, (player, slot) => {
   needsToBeInGame(player);
 
   const index = player.store.character.inventory.items.findIndex((inventoryItem) => {

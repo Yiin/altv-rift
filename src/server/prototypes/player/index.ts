@@ -8,11 +8,13 @@ import "./characters/save-character";
 import "./characters/update-character-appearance";
 import "./inventory/add-item";
 import "./inventory/equip-item";
-import "./inventory/foo";
 import "./inventory/get-inventory-item-in-slot";
 import "./inventory/remove-item";
 import "./inventory/unequip-item";
 import "./inventory/weapons/find-base-ammo-for-weapon";
+import "./inventory/weapons/load-ammo-into-weapon";
+import "./inventory/weapons/load-ammo";
+import "./inventory/weapons/unload-ammo";
 import "./load-user";
 import "./setup";
 // @endindex

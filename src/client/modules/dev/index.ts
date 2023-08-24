@@ -1,8 +1,6 @@
-// @index('./*.ts', f => `export * from "${f.path}";`)
-export * from "./debug-text";
-// @endindex
+import alt from "alt-client";
+import { ServerEvents } from "@shared/events/server";
 
-// onKeyDown(KeyCode.X, toggleJSON);
-// export function toggleJSON() {
-//   toggleElement(ELEMENT.JSON, (isOpen = !isOpen));
-// }
+alt.on("playerWeaponShoot", () => {
+  alt.emitServerRaw(ServerEvents.FromClient.WEAPON_SHOOT);
+});

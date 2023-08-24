@@ -1,4 +1,4 @@
-import { Equipment, InventoryItem } from "@shared/interfaces";
+import { InventoryItem } from "@shared/interfaces";
 
 export const FromServer = {
   MANUAL_DISCORD_AUTH_DONE: "MANUAL_DISCORD_AUTH_DONE",
@@ -13,16 +13,16 @@ export interface EventFromServer {
     token: string
   ) => Promise<void> | void;
   [FromServer.USE_ITEM]: (
-    player: import("alt-server").Player,
+    player: import("../../../server/utility/assertions").InGamePlayer,
     item: InventoryItem
   ) => Promise<void> | void;
   [FromServer.EQUIP_ITEM]: (
-    player: import("alt-server").Player,
+    player: import("../../../server/utility/assertions").InGamePlayer,
     item: InventoryItem
   ) => Promise<void> | void;
   [FromServer.UNEQUIP_ITEM]: (
-    player: import("alt-server").Player,
-    equipmentSlot: keyof Equipment
+    player: import("../../../server/utility/assertions").InGamePlayer,
+    equipmentSlot: import("../../interfaces").EquipmentSlot
   ) => Promise<void> | void;
 }
 

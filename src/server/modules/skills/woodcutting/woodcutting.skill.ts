@@ -5,11 +5,11 @@ import * as trees from "@shared/modules/woodcutting/trees";
 import IGNORED_TREES from "@shared/modules/woodcutting/trees-to-ignore.json";
 import { getLevel } from "@shared/modules/experience/experience-table";
 import { getTreeLevel, getTreeLogs, getTreeLogXp } from "@shared/modules/woodcutting/functions";
-import { TreeType } from "@shared/modules/woodcutting/interfaces";
 import { MessageType } from "@shared/modules/chat";
+import { createItem } from "@shared/modules/items";
 import { rpc } from "@/rpc";
-import { Chat } from "@/modules/chat/chat";
 import { sendChatMessage } from "@/modules/chat";
+import { needsToBeInGame } from "@/utility/assertions";
 
 const virtualTreeGroup = new VirtualEntityGroup(30);
 const virtualTreeById: Map<number, VirtualEntity> = new Map();
@@ -46,9 +46,7 @@ for (const [type, list] of Object.entries(trees)) {
 }
 
 rpc.registerClient(ServerCall.FromClient.BEGIN_TREE_HIT, (player, virtualTreeId) => {
-  if (!player.store.isLoggedIn) {
-    return 0;
-  }
+  needsToBeInGame(player);
 
   playerHittingTree.set(player, virtualTreeId);
 
@@ -73,9 +71,7 @@ rpc.registerClient(ServerCall.FromClient.BEGIN_TREE_HIT, (player, virtualTreeId)
 });
 
 rpc.registerClient(ServerCall.FromClient.TREE_HIT, (player, virtualTreeId) => {
-  if (!player.store.isLoggedIn) {
-    return 0;
-  }
+  needsToBeInGame(player);
 
   const virtualTree = virtualTreeById.get(virtualTreeId);
 
@@ -147,7 +143,7 @@ rpc.registerClient(ServerCall.FromClient.TREE_HIT, (player, virtualTreeId) => {
         MessageType.Success
       );
     }
-    player.addItem(getTreeLogs(treeType), { amount: logs }); //
+    player.addItem(createItem(getTreeLogs(treeType), { amount: logs })); //
   }
 
   return logs;

@@ -1,5 +1,5 @@
 import { ItemType } from "@prisma/client";
-import { ItemKey } from "..";
+import { ItemKey } from "../types";
 
 export const TreeLogs = {
   HAWTHORN_LOGS: "hawthorn_logs",

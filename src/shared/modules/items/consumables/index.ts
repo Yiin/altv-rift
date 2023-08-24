@@ -1,5 +1,5 @@
 import { ItemType } from "@prisma/client";
-import { ItemKey } from "..";
+import { ItemKey } from "../types";
 import { ItemFlags } from "../item-flags";
 
 export const Consumable = {

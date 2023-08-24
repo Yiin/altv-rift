@@ -1,10 +1,4 @@
-import { Equipment } from "@shared/interfaces";
-
 export const FromClient = {
-  USE_ITEM: "USE_ITEM",
-  EQUIP_ITEM: "EQUIP_ITEM",
-  UNEQUIP_ITEM: "UNEQUIP_ITEM",
-  DROP_ITEM: "DROP_ITEM",
   GET_DISCORD_AUTH_URL: "GET_DISCORD_AUTH_URL",
   TRY_CACHED_TOKEN: "TRY_CACHED_TOKEN",
   GET_ENTITY_ACTIONS: "GET_ENTITY_ACTIONS",
@@ -16,10 +10,6 @@ export const FromClient = {
 export interface CallFromClient<
   P extends import("alt-server").Player = import("alt-server").Player
 > {
-  [FromClient.USE_ITEM]: (player: P, slot: number) => boolean;
-  [FromClient.EQUIP_ITEM]: (player: P, slot: number) => boolean;
-  [FromClient.UNEQUIP_ITEM]: (player: P, equipmentSlot: keyof Equipment) => boolean;
-  [FromClient.DROP_ITEM]: (player: P, slot: number) => boolean;
   [FromClient.GET_DISCORD_AUTH_URL]: (player: P) => string;
   [FromClient.TRY_CACHED_TOKEN]: (player: P, token: string) => boolean;
   [FromClient.GET_ENTITY_ACTIONS]: (

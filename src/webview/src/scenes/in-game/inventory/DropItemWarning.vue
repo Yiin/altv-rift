@@ -2,11 +2,14 @@
 import { useItemDetails } from "@/composables/use-item-details";
 import { getItemName } from "@shared/modules/items";
 import { Dropping, useInventory } from "@/store/inventory.store";
+import { computed } from "vue";
 
 const props = defineProps<Dropping>();
 
+const item = computed(() => props.item.data);
+
 const inventory = useInventory();
-const details = useItemDetails(props.item.data);
+const details = useItemDetails(item);
 </script>
 
 <template>

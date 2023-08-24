@@ -11,7 +11,7 @@ declare module "alt-server" {
 }
 
 Player.prototype.saveCharacter = async function () {
-  if (!this.store.isLoggedIn || !this.store.character) {
+  if (!this.store.isLoggedIn) {
     return;
   }
 

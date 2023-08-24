@@ -12,7 +12,6 @@ export default defineConfig({
     emptyOutDir: true,
   },
   server: {
-    base: "/",
     fs: {
       strict: false,
     },

@@ -1,5 +1,8 @@
 import * as Prisma from "@prisma/client";
-import { ItemKey, ITEMS_REGISTRY, WeaponItemKey } from "@shared/modules/items";
+import { ItemKey, ITEMS_REGISTRY } from "@shared/modules/items";
+import { FirearmWeaponItemKey } from "@shared/modules/items/weapons/firearms";
+import { ThrowableWeaponItemKey } from "@shared/modules/items/weapons/throwable";
+import { MeleeWeaponItemKey } from "@shared/modules/items/weapons/melee";
 import { AmmoItemKey } from "@shared/modules/items/ammo";
 import { ClothingItemKey } from "@shared/modules/items/clothing";
 import { ConsumableItemKey } from "@shared/modules/items/consumables";
@@ -20,6 +23,7 @@ export type EquipedAmmo = Override<
   Prisma.EquipedAmmo,
   {
     key: AmmoItemKey;
+    data: AmmoItemData;
   }
 >;
 export type FirearmWeaponItemData = OptionalNullable<
@@ -38,20 +42,20 @@ export type ConsumableItemData = OptionalNullable<Prisma.ConsumableItem>;
 export type MaterialItemData = OptionalNullable<Prisma.MaterialItem>;
 
 type DefaultItem = {
-  [Prisma.ItemType.FIREARM_WEAPON]: never;
-  [Prisma.ItemType.THROWABLE_WEAPON]: never;
-  [Prisma.ItemType.MELEE_WEAPON]: never;
-  [Prisma.ItemType.AMMO]: never;
-  [Prisma.ItemType.CLOTHING]: never;
-  [Prisma.ItemType.CONSUMABLE]: never;
-  [Prisma.ItemType.MATERIAL]: never;
+  [Prisma.ItemType.FIREARM_WEAPON]?: never;
+  [Prisma.ItemType.THROWABLE_WEAPON]?: never;
+  [Prisma.ItemType.MELEE_WEAPON]?: never;
+  [Prisma.ItemType.AMMO]?: never;
+  [Prisma.ItemType.CLOTHING]?: never;
+  [Prisma.ItemType.CONSUMABLE]?: never;
+  [Prisma.ItemType.MATERIAL]?: never;
 };
 
 export type FirearmWeaponItem = Override<
   DefaultItem,
   {
     type: typeof Prisma.ItemType.FIREARM_WEAPON;
-    key: WeaponItemKey;
+    key: FirearmWeaponItemKey;
     [Prisma.ItemType.FIREARM_WEAPON]: FirearmWeaponItemData;
   }
 >;
@@ -60,7 +64,7 @@ export type ThrowableWeaponItem = Override<
   DefaultItem,
   {
     type: typeof Prisma.ItemType.THROWABLE_WEAPON;
-    key: WeaponItemKey;
+    key: ThrowableWeaponItemKey;
     [Prisma.ItemType.THROWABLE_WEAPON]: ThrowableWeaponItemData;
   }
 >;
@@ -69,7 +73,7 @@ export type MeleeWeaponItem = Override<
   DefaultItem,
   {
     type: typeof Prisma.ItemType.MELEE_WEAPON;
-    key: WeaponItemKey;
+    key: MeleeWeaponItemKey;
     [Prisma.ItemType.MELEE_WEAPON]?: MeleeWeaponItemData;
   }
 >;
@@ -128,7 +132,7 @@ export type ItemData =
   | ConsumableItemData
   | MaterialItemData;
 
-export type InventoryItem<T extends Item = Item> = Override<
+export type InventoryItem<T = Item> = Override<
   Prisma.InventoryItem,
   {
     data: T;
@@ -143,7 +147,22 @@ export type Inventory = Override<
 >;
 
 export type Equipment = {
-  [key in keyof Prisma.Equipment]?: Item | null;
+  mask?: ClothingItem | null;
+  glasses?: ClothingItem | null;
+  headwear?: ClothingItem | null;
+  earrings?: ClothingItem | null;
+  top?: ClothingItem | null;
+  shirt?: ClothingItem | null;
+  armor?: ClothingItem | null;
+  neckwear?: ClothingItem | null;
+  weapon?: FirearmWeaponItem | ThrowableWeaponItem | MeleeWeaponItem | null;
+  gloves?: ClothingItem | null;
+  lefthand?: ClothingItem | null;
+  pants?: ClothingItem | null;
+  righthand?: ClothingItem | null;
+  backpack?: Item | null;
+  shoes?: ClothingItem | null;
+  phone?: Item | null;
 };
 
 export type Character = Override<

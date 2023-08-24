@@ -1,20 +1,8 @@
-import { ItemKey } from "..";
+import { ItemKey } from "../types";
 import WEAPON_DATA from "./weapons-data.json";
-import { firearmWeapons } from "./firearms";
+import { firearmWeapons, isItemFirearmWeapon } from "./firearms";
 import { throwableWeapons } from "./throwable";
 import { meleeWeapons } from "./melee";
-
-export enum WeaponGroup {
-  ASSAULT_RIFLE = "Assault Rifle",
-  HANDGUN = "Handgun",
-  MACHINE_GUN = "Machine Gun",
-  SHOTGUN = "Shotgun",
-  SNIPER_RIFLE = "Sniper Rifle",
-  THROWABLE = "Throwable",
-  MELEE = "Melee",
-  HEAVY = "Heavy",
-  UTILITY = "Utility",
-}
 
 export type WeaponItemKey = keyof typeof weapons;
 export type WeaponItemInfo = (typeof weapons)[WeaponItemKey];
@@ -48,7 +36,17 @@ export function getWeaponTints(key: WeaponItemKey) {
 }
 
 export function getWeaponHash(key: WeaponItemKey) {
-  return weapons[key]?.hash;
+  return weapons[key].hash;
+}
+
+export function getWeaponGroup(key: WeaponItemKey) {
+  return weapons[key].group;
+}
+export function getWeaponAmmoGroup(key: WeaponItemKey) {
+  if (!isItemFirearmWeapon(key)) {
+    return null;
+  }
+  return weapons[key].ammoGroup;
 }
 
 export function isItemWeapon(key: ItemKey): key is WeaponItemKey {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeUpdate } from "vue";
+import { computed, onBeforeUpdate, onUnmounted } from "vue";
 import Window from "@/components/Window.vue";
 import { useWindowSize } from "@/composables/use-window-size";
 import DropItemWarning from "./DropItemWarning.vue";
@@ -12,7 +12,6 @@ import { useEventListener } from "@/composables/use-event-listener";
 import EquipmentMenu from "./equipment/EquipmentMenu.vue";
 
 const windowSize = useWindowSize();
-
 const inventory = useInventory();
 
 const width = computed(() => px(90) * 5 - px(10));
@@ -30,6 +29,10 @@ function setInventorySlotRef(ref: InstanceType<typeof InventorySlot> | null) {
 
 onBeforeUpdate(() => {
   inventory.inventoryItemRefs = [];
+});
+
+onUnmounted(() => {
+  inventory.$reset();
 });
 </script>
 
@@ -76,8 +79,13 @@ onBeforeUpdate(() => {
 </template>
 
 <style>
-.item-slot {
+.item-slot:not(.item-slot--selected) {
   background-image: url(./assets/inventory/ItemSlotBackground.png);
+  background-size: cover;
+}
+
+.item-slot--selected {
+  background-image: url(./assets/inventory/ItemSlotBackgroundSelected.png);
   background-size: cover;
 }
 </style>

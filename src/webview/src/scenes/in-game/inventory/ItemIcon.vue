@@ -1,24 +1,24 @@
 <script setup lang="ts">
 import { useItemDetails } from "@/composables/use-item-details";
 import { getItemIconScale, getItemImage } from "@/utils/items";
-import { ItemData } from "@shared/interfaces";
-import { computed, ComputedRef, ref, watch } from "vue";
+import { Item } from "@shared/interfaces";
+import { TreeLogItemKey } from "@shared/modules/items/materials/tree-logs";
+import { computed, ref, watch } from "vue";
 import LogIcon from "./dynamic-icons/LogIcon.vue";
 
 const props = defineProps<{
-  item: ItemData;
+  item: Item;
 }>();
 
-const itemData = computed(() => props.item);
+const item = computed(() => props.item);
 
-const itemDetails = useItemDetails(itemData.value);
+const itemDetails = useItemDetails(item);
 const noImage = ref(false);
 
 watch(
-  () => itemData,
+  () => item,
   () => {
-    fetch(getItemImage(itemData.value)).then((result) => {
-      console.log(result.status);
+    fetch(getItemImage(item.value)).then((result) => {
       if (result.status === 404) {
         noImage.value = true;
       }
@@ -38,7 +38,7 @@ watch(
     }"
   >
     <template v-if="noImage">
-      <LogIcon v-if="item.key.endsWith(`_logs`)" :item-key="item.key" />
+      <LogIcon v-if="item.key.endsWith(`_logs`)" :item-key="(item.key as TreeLogItemKey)" />
       <div v-else class="text-center text-sm tracking-wider font-bold">
         {{ itemDetails.customName ?? itemDetails.name }}
       </div>

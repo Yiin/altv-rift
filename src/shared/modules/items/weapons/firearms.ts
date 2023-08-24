@@ -1,6 +1,9 @@
 import { ItemType } from "@prisma/client";
+import { FirearmWeaponItem, InventoryItem } from "@shared/interfaces";
 import { ItemFlags } from "../item-flags";
-import { WeaponGroup, getWeaponData } from ".";
+import { getWeaponData } from "../weapons";
+import { ItemKey } from "../types";
+import { AmmoGroup, WeaponGroup } from "./weapon-groups";
 
 export const FirearmWeapon = {
   ADVANCEDRIFLE: "advancedrifle",
@@ -27,7 +30,6 @@ export const FirearmWeapon = {
   FIREEXTINGUISHER: "fireextinguisher",
   FIREWORK: "firework",
   FLAREGUN: "flaregun",
-  GRENADE: "grenade",
   GRENADELAUNCHER: "grenadelauncher",
   SMOKELAUNCHER: "smokelauncher",
   GUSENBERG: "gusenberg",
@@ -46,11 +48,9 @@ export const FirearmWeapon = {
   MINISMG: "minismg",
   MUSKET: "musket",
   NAVYREVOLVER: "navyrevolver",
-  PIPEBOMB: "pipebomb",
   PISTOL: "pistol",
   PISTOL50: "pistol50",
   PISTOLMK2: "pistolmk2",
-  PROXMINE: "proxmine",
   PUMPSHOTGUN: "pumpshotgun",
   PUMPSHOTGUNMK2: "pumpshotgunmk2",
   RAILGUN: "railgun",
@@ -82,6 +82,7 @@ export type FirearmWeaponItemInfo = {
   description: string;
   flags: ItemFlags;
   group: WeaponGroup;
+  ammoGroup: AmmoGroup;
   price: number;
   stats: {
     damage: number;
@@ -101,6 +102,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(2937143193).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.ASSAULT_RIFLE,
+    ammoGroup: AmmoGroup.ASSAULT_RIFLE,
     price: 14250,
     stats: {
       damage: 24,
@@ -118,6 +120,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(584646201).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HANDGUN,
+    ammoGroup: AmmoGroup.HANDGUN,
     price: 5000,
     stats: {
       damage: 26,
@@ -135,6 +138,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(3220176749).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.ASSAULT_RIFLE,
+    ammoGroup: AmmoGroup.ASSAULT_RIFLE,
     price: 8550,
     stats: {
       damage: 30,
@@ -152,6 +156,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(961495388).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.ASSAULT_RIFLE,
+    ammoGroup: AmmoGroup.ASSAULT_RIFLE,
     price: 98750,
     stats: {
       damage: 33,
@@ -169,6 +174,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(3800352039).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.SHOTGUN,
+    ammoGroup: AmmoGroup.SHOTGUN,
     price: 10000,
     stats: {
       damage: 77,
@@ -186,6 +192,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(4024951519).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.MACHINE_GUN,
+    ammoGroup: AmmoGroup.MACHINE_GUN,
     price: 12550,
     stats: {
       damage: 23,
@@ -203,6 +210,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(317205821).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.SHOTGUN,
+    ammoGroup: AmmoGroup.SHOTGUN,
     price: 10000,
     stats: {
       damage: 77,
@@ -220,6 +228,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(2132975508).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.ASSAULT_RIFLE,
+    ammoGroup: AmmoGroup.ASSAULT_RIFLE,
     price: 14500,
     stats: {
       damage: 32,
@@ -237,6 +246,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(2228681469).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.ASSAULT_RIFLE,
+    ammoGroup: AmmoGroup.ASSAULT_RIFLE,
     price: 14500,
     stats: {
       damage: 35,
@@ -254,6 +264,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(2640438543).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.SHOTGUN,
+    ammoGroup: AmmoGroup.SHOTGUN,
     price: 8000,
     stats: {
       damage: 67,
@@ -271,6 +282,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(2210333304).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.ASSAULT_RIFLE,
+    ammoGroup: AmmoGroup.ASSAULT_RIFLE,
     price: 13000,
     stats: {
       damage: 32,
@@ -288,6 +300,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(4208062921).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.ASSAULT_RIFLE,
+    ammoGroup: AmmoGroup.ASSAULT_RIFLE,
     price: 107500,
     stats: {
       damage: 36,
@@ -305,6 +318,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(727643628).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HANDGUN,
+    ammoGroup: AmmoGroup.HANDGUN,
     price: 20000,
     stats: {
       damage: 32,
@@ -322,6 +336,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(2144741730).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.MACHINE_GUN,
+    ammoGroup: AmmoGroup.MACHINE_GUN,
     price: 14800,
     stats: {
       damage: 55,
@@ -339,6 +354,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(3686625920).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.MACHINE_GUN,
+    ammoGroup: AmmoGroup.MACHINE_GUN,
     price: 119000,
     stats: {
       damage: 57,
@@ -356,6 +372,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(171789620).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.MACHINE_GUN,
+    ammoGroup: AmmoGroup.MACHINE_GUN,
     price: 11750,
     stats: {
       damage: 25,
@@ -373,6 +390,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(1593441988).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HANDGUN,
+    ammoGroup: AmmoGroup.HANDGUN,
     price: 3200,
     stats: {
       damage: 27,
@@ -390,6 +408,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(125959754).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HEAVY,
+    ammoGroup: AmmoGroup.GRENADE_LAUNCHER,
     price: 45000,
     stats: {
       damage: 95,
@@ -407,6 +426,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(1649403952).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.ASSAULT_RIFLE,
+    ammoGroup: AmmoGroup.ASSAULT_RIFLE,
     price: 14650,
     stats: {
       damage: 36,
@@ -424,6 +444,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(4019527611).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.SHOTGUN,
+    ammoGroup: AmmoGroup.SHOTGUN,
     price: 15450,
     stats: {
       damage: 98,
@@ -441,6 +462,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(2548703416).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HANDGUN,
+    ammoGroup: AmmoGroup.HANDGUN,
     price: 75000,
     stats: {
       damage: 70,
@@ -458,6 +480,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(101631238).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.UTILITY,
+    ammoGroup: AmmoGroup.FIRE_EXTINGUISHER,
     price: 200,
     stats: {
       damage: 0,
@@ -475,6 +498,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(2138347493).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HEAVY,
+    ammoGroup: AmmoGroup.FIREWORK,
     price: 65000,
     stats: {
       damage: 45,
@@ -492,6 +516,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(1198879012).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HANDGUN,
+    ammoGroup: AmmoGroup.HANDGUN,
     price: 3750,
     stats: {
       damage: 20,
@@ -499,23 +524,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
       accuracy: 30,
       range: 10,
       overall: 16,
-    },
-  },
-  grenade: {
-    key: "grenade",
-    itemType: ItemType.FIREARM_WEAPON,
-    hash: 2481070269,
-    name: getWeaponData(2481070269).Name,
-    description: getWeaponData(2481070269).Description,
-    flags: ItemFlags.IsEquippable,
-    group: WeaponGroup.HEAVY,
-    price: 2500,
-    stats: {
-      damage: 95,
-      rate: 20,
-      accuracy: 10,
-      range: 15,
-      overall: 35,
     },
   },
   grenadelauncher: {
@@ -526,6 +534,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(2726580491).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HEAVY,
+    ammoGroup: AmmoGroup.GRENADE_LAUNCHER,
     price: 32400,
     stats: {
       damage: 95,
@@ -543,6 +552,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(1305664598).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.UTILITY,
+    ammoGroup: AmmoGroup.SMOKE_GRANADES,
     price: 4200,
     stats: {
       damage: 20,
@@ -560,6 +570,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(1627465347).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.MACHINE_GUN,
+    ammoGroup: AmmoGroup.MACHINE_GUN,
     price: 14600,
     stats: {
       damage: 34,
@@ -577,6 +588,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(3523564046).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HANDGUN,
+    ammoGroup: AmmoGroup.HANDGUN,
     price: 3750,
     stats: {
       damage: 40,
@@ -594,6 +606,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(984333226).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.SHOTGUN,
+    ammoGroup: AmmoGroup.SHOTGUN,
     price: 13550,
     stats: {
       damage: 85,
@@ -611,6 +624,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(205991906).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.SNIPER_RIFLE,
+    ammoGroup: AmmoGroup.SNIPER_RIFLE,
     price: 38150,
     stats: {
       damage: 98,
@@ -628,6 +642,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(177293209).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.SNIPER_RIFLE,
+    ammoGroup: AmmoGroup.SNIPER_RIFLE,
     price: 165375,
     stats: {
       damage: 98,
@@ -645,6 +660,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(1672152130).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HEAVY,
+    ammoGroup: AmmoGroup.ROCKET_LAUNCHER,
     price: 165000,
     stats: {
       damage: 95,
@@ -662,6 +678,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(3675956304).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.MACHINE_GUN,
+    ammoGroup: AmmoGroup.HANDGUN,
     price: 6250,
     stats: {
       damage: 28,
@@ -679,6 +696,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(3696079510).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HANDGUN,
+    ammoGroup: AmmoGroup.HANDGUN,
     price: 4350,
     stats: {
       damage: 80,
@@ -696,6 +714,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(3342088282).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.SNIPER_RIFLE,
+    ammoGroup: AmmoGroup.SNIPER_RIFLE,
     price: 15750,
     stats: {
       damage: 70,
@@ -713,6 +732,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(1785463520).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.SNIPER_RIFLE,
+    ammoGroup: AmmoGroup.SNIPER_RIFLE,
     price: 149000,
     stats: {
       damage: 70,
@@ -730,6 +750,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(2634544996).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.MACHINE_GUN,
+    ammoGroup: AmmoGroup.MACHINE_GUN,
     price: 13500,
     stats: {
       damage: 50,
@@ -747,6 +768,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(324215364).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.MACHINE_GUN,
+    ammoGroup: AmmoGroup.MACHINE_GUN,
     price: 3750,
     stats: {
       damage: 21,
@@ -764,6 +786,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(1119849093).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HEAVY,
+    ammoGroup: AmmoGroup.HEAVY,
     price: 470000,
     stats: {
       damage: 30,
@@ -781,6 +804,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(3173288789).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.MACHINE_GUN,
+    ammoGroup: AmmoGroup.MACHINE_GUN,
     price: 8900,
     stats: {
       damage: 22,
@@ -798,6 +822,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(2828843422).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.SHOTGUN,
+    ammoGroup: AmmoGroup.SHOTGUN,
     price: 21400,
     stats: {
       damage: 97,
@@ -815,6 +840,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(2441047180).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HANDGUN,
+    ammoGroup: AmmoGroup.HANDGUN,
     price: 55000,
     stats: {
       damage: 70,
@@ -833,23 +859,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   //   type: WeaponType.UTILITY,
   //   price: 250,
   // },
-  pipebomb: {
-    key: "pipebomb",
-    itemType: ItemType.FIREARM_WEAPON,
-    hash: 3125143736,
-    name: getWeaponData(3125143736).Name,
-    description: getWeaponData(3125143736).Description,
-    flags: ItemFlags.IsEquippable,
-    group: WeaponGroup.HEAVY,
-    price: 50000,
-    stats: {
-      damage: 85,
-      rate: 10,
-      accuracy: 35,
-      range: 15,
-      overall: 36.25,
-    },
-  },
   pistol: {
     key: "pistol",
     itemType: ItemType.FIREARM_WEAPON,
@@ -858,6 +867,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(453432689).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HANDGUN,
+    ammoGroup: AmmoGroup.HANDGUN,
     price: 2500,
     stats: {
       damage: 26,
@@ -875,6 +885,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(2578377531).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HANDGUN,
+    ammoGroup: AmmoGroup.HANDGUN,
     price: 3900,
     stats: {
       damage: 51,
@@ -892,6 +903,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(3219281620).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HANDGUN,
+    ammoGroup: AmmoGroup.HANDGUN,
     price: 73750,
     stats: {
       damage: 38,
@@ -899,23 +911,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
       accuracy: 40,
       range: 25,
       overall: 30.6,
-    },
-  },
-  proxmine: {
-    key: "proxmine",
-    itemType: ItemType.FIREARM_WEAPON,
-    hash: 2874559379,
-    name: getWeaponData(2874559379).Name,
-    description: getWeaponData(2874559379).Description,
-    flags: ItemFlags.IsEquippable,
-    group: WeaponGroup.HEAVY,
-    price: 1000,
-    stats: {
-      damage: 90,
-      rate: 10,
-      accuracy: 30,
-      range: 20,
-      overall: 37.5,
     },
   },
   pumpshotgun: {
@@ -926,6 +921,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(487013001).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.SHOTGUN,
+    ammoGroup: AmmoGroup.SHOTGUN,
     price: 3500,
     stats: {
       damage: 67,
@@ -943,6 +939,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(1432025498).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.SHOTGUN,
+    ammoGroup: AmmoGroup.SHOTGUN,
     price: 82500,
     stats: {
       damage: 67,
@@ -960,6 +957,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(1834241177).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HEAVY,
+    ammoGroup: AmmoGroup.PLASMA_RAYS,
     price: 250000,
     stats: {
       damage: 90,
@@ -977,6 +975,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(1198256469).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.MACHINE_GUN,
+    ammoGroup: AmmoGroup.PLASMA_RAYS,
     price: 449000,
     stats: {
       damage: 55,
@@ -994,6 +993,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(3056410471).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HEAVY,
+    ammoGroup: AmmoGroup.PLASMA_RAYS,
     price: 449000,
     stats: {
       damage: 30,
@@ -1011,6 +1011,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(2939590305).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HANDGUN,
+    ammoGroup: AmmoGroup.HANDGUN,
     price: 399000,
     stats: {
       damage: 80,
@@ -1028,6 +1029,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(3249783761).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HANDGUN,
+    ammoGroup: AmmoGroup.HANDGUN,
     price: 5900,
     stats: {
       damage: 70,
@@ -1045,6 +1047,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(3415619887).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HANDGUN,
+    ammoGroup: AmmoGroup.HANDGUN,
     price: 99000,
     stats: {
       damage: 75,
@@ -1062,6 +1065,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(2982836145).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HEAVY,
+    ammoGroup: AmmoGroup.ROCKET_LAUNCHER,
     price: 26250,
     stats: {
       damage: 100,
@@ -1079,6 +1083,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(2017895192).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.SHOTGUN,
+    ammoGroup: AmmoGroup.SHOTGUN,
     price: 30000,
     stats: {
       damage: 96,
@@ -1096,6 +1101,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(736523883).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.MACHINE_GUN,
+    ammoGroup: AmmoGroup.MACHINE_GUN,
     price: 7500,
     stats: {
       damage: 22,
@@ -1113,6 +1119,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(2024373456).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.MACHINE_GUN,
+    ammoGroup: AmmoGroup.MACHINE_GUN,
     price: 85500,
     stats: {
       damage: 22,
@@ -1130,6 +1137,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(100416529).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.SNIPER_RIFLE,
+    ammoGroup: AmmoGroup.SNIPER_RIFLE,
     price: 20000,
     stats: {
       damage: 96,
@@ -1147,6 +1155,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(3218215474).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HANDGUN,
+    ammoGroup: AmmoGroup.HANDGUN,
     price: 2750,
     stats: {
       damage: 30,
@@ -1164,6 +1173,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(2285322324).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HANDGUN,
+    ammoGroup: AmmoGroup.HANDGUN,
     price: 79575,
     stats: {
       damage: 30,
@@ -1181,6 +1191,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(3231910285).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.ASSAULT_RIFLE,
+    ammoGroup: AmmoGroup.ASSAULT_RIFLE,
     price: 14750,
     stats: {
       damage: 34,
@@ -1198,6 +1209,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(2526821735).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.ASSAULT_RIFLE,
+    ammoGroup: AmmoGroup.ASSAULT_RIFLE,
     price: 135000,
     stats: {
       damage: 34,
@@ -1215,6 +1227,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(911657153).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HANDGUN,
+    ammoGroup: AmmoGroup.HANDGUN,
     price: 100,
     stats: {
       damage: 1,
@@ -1232,6 +1245,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(137902532).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HANDGUN,
+    ammoGroup: AmmoGroup.HANDGUN,
     price: 3450,
     stats: {
       damage: 35,
@@ -1242,3 +1256,13 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     },
   },
 };
+
+export function isItemFirearmWeapon(key: ItemKey): key is FirearmWeaponItemKey {
+  return key in firearmWeapons;
+}
+
+export function isInventoryItemFirearmWeapon(
+  item: InventoryItem
+): item is InventoryItem<FirearmWeaponItem> {
+  return isItemFirearmWeapon(item.data.key);
+}

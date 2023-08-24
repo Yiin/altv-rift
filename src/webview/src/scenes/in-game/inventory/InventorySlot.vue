@@ -24,6 +24,8 @@ const dragging = computed(
     inventory.currentInteraction.state.item.slot === props.slot
 );
 
+const selected = computed(() => inventory.selectedItem?.slot === props.slot);
+
 const hoveringOver = computed(() => {
   const interaction = inventory.currentInteraction;
 
@@ -76,7 +78,10 @@ defineExpose({
     ref="nodeRef"
     :key="slot"
     class="absolute top-0 left-0 w-20 h-20 bg-gray-800/80 item-slot text-white transform"
-    :class="{ 'drop-shadow-[2px_4px_6px_black] scale-105': hoveringOver || (item && !dragging) }"
+    :class="{
+      'drop-shadow-[2px_4px_6px_black] scale-105': hoveringOver || (item && !dragging),
+      'item-slot--selected': selected,
+    }"
     :style="{
       '--tw-translate-x': `${pos.x}px`,
       '--tw-translate-y': `${pos.y}px`,

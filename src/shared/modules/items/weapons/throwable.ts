@@ -1,8 +1,10 @@
 import { ItemType } from "@prisma/client";
 import { ItemFlags } from "../item-flags";
-import { getWeaponData, WeaponGroup } from ".";
+import { WeaponGroup } from "./weapon-groups";
+import { getWeaponData } from ".";
 
 export const ThrowableWeapon = {
+  GRENADE: "grenade",
   STICKYBOMB: "stickybomb",
   SNOWBALL: "snowball",
   SMOKEGRENADE: "smokegrenade",
@@ -12,6 +14,8 @@ export const ThrowableWeapon = {
   BALL: "ball",
   BZGAS: "bzgas",
   FLARE: "flare",
+  PROXMINE: "proxmine",
+  PIPEBOMB: "pipebomb",
 } as const;
 
 export type ThrowableWeaponItemKey = (typeof ThrowableWeapon)[keyof typeof ThrowableWeapon];
@@ -35,6 +39,57 @@ export type ThrowableWeaponItemInfo = {
 };
 
 export const throwableWeapons: Record<ThrowableWeaponItemKey, ThrowableWeaponItemInfo> = {
+  pipebomb: {
+    key: "pipebomb",
+    itemType: ItemType.THROWABLE_WEAPON,
+    hash: 3125143736,
+    name: getWeaponData(3125143736).Name,
+    description: getWeaponData(3125143736).Description,
+    flags: ItemFlags.IsEquippable,
+    group: WeaponGroup.THROWABLE,
+    price: 50000,
+    stats: {
+      damage: 85,
+      rate: 10,
+      accuracy: 35,
+      range: 15,
+      overall: 36.25,
+    },
+  },
+  proxmine: {
+    key: "proxmine",
+    itemType: ItemType.THROWABLE_WEAPON,
+    hash: 2874559379,
+    name: getWeaponData(2874559379).Name,
+    description: getWeaponData(2874559379).Description,
+    flags: ItemFlags.IsEquippable,
+    group: WeaponGroup.THROWABLE,
+    price: 1000,
+    stats: {
+      damage: 90,
+      rate: 10,
+      accuracy: 30,
+      range: 20,
+      overall: 37.5,
+    },
+  },
+  grenade: {
+    key: "grenade",
+    itemType: ItemType.THROWABLE_WEAPON,
+    hash: 2481070269,
+    name: getWeaponData(2481070269).Name,
+    description: getWeaponData(2481070269).Description,
+    flags: ItemFlags.IsEquippable,
+    group: WeaponGroup.THROWABLE,
+    price: 2500,
+    stats: {
+      damage: 95,
+      rate: 20,
+      accuracy: 10,
+      range: 15,
+      overall: 35,
+    },
+  },
   stickybomb: {
     key: "stickybomb",
     itemType: ItemType.THROWABLE_WEAPON,

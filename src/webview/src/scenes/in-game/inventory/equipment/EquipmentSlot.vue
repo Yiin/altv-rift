@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useInventory } from "@/store/inventory.store";
-import { InventoryItem } from "@shared/interfaces";
-import { isItemEquipable, isItemUsable } from "@shared/modules/items";
 import ItemIcon from "../ItemIcon.vue";
 import { px } from "@/composables/use-pixel";
 import { usePlayerStore } from "@shared/store/player.store";
+import { ItemType } from "@prisma/client";
+import { AmmoItem } from "@shared/interfaces";
 
 const equipmentSlots = {
   headwear: {
@@ -121,7 +121,22 @@ const props = defineProps<{
 const player = usePlayerStore();
 const inventory = useInventory();
 
-const item = computed(() => player.character?.equipment[props.name] ?? null);
+const item = computed(() => {
+  if (props.name === "ammo") {
+    const equipedAmmo = player.character?.equipment.weapon?.FIREARM_WEAPON?.ammo;
+
+    if (equipedAmmo) {
+      const ammoItem = {
+        type: ItemType.AMMO,
+        key: equipedAmmo.key,
+        [ItemType.AMMO]: equipedAmmo.data,
+      } as AmmoItem;
+      return ammoItem;
+    }
+    return null;
+  }
+  return player.character?.equipment[props.name] ?? null;
+});
 const slot = computed(() => equipmentSlots[props.name]);
 
 function unequipItem() {

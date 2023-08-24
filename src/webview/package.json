@@ -44,7 +44,7 @@
     "rollup-plugin-external-globals": "^0.7.1",
     "sass": "^1.57.1",
     "tailwindcss": "^3.2.4",
-    "typescript": "4.8.3",
+    "typescript": "5.1.6",
     "vite": "^4.0.0",
     "vite-plugin-vuetify": "^1.0.0-alpha.12",
     "volar-service-vetur": "latest",

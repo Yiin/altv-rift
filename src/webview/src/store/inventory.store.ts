@@ -1,13 +1,14 @@
 import { defineStore } from "pinia";
 import { usePlayerStore } from "@shared/store/player.store";
 import { rpc } from "@/rpc";
-import { Equipment, InventoryItem } from "@shared/interfaces";
+import { EquipmentSlot, InventoryItem } from "@shared/interfaces";
 import { ClientCall } from "@shared/calls/client";
 import { ServerCall } from "@shared/calls/server";
-import { ComponentPublicInstance, ComputedRef, reactive, Ref, ref, shallowRef, toRaw } from "vue";
+import { ComponentPublicInstance, reactive, toRaw } from "vue";
 import DropItemWarning from "@/scenes/in-game/inventory/DropItemWarning.vue";
 import { px } from "@/composables/use-pixel";
 import { ClientEvents } from "@shared/events/client";
+import { CombineType, getCombineType } from "@shared/modules/items";
 
 const MOCK_ITEMS = reactive([
   {
@@ -141,19 +142,25 @@ export const useInventory = defineStore("inventory", {
   },
   actions: {
     useItem(slot: number) {
-      return rpc.callClient(ClientCall.FromWebview.USE_ITEM, slot);
+      return rpc.callServer(ServerCall.FromWebview.USE_ITEM, slot);
     },
     equipItem(slot: number) {
-      return rpc.callClient(ClientCall.FromWebview.EQUIP_ITEM, slot);
+      return rpc.callServer(ServerCall.FromWebview.EQUIP_ITEM, slot);
     },
-    unequipItem(equipmentSlot: keyof Equipment) {
-      return rpc.callClient(ClientCall.FromWebview.UNEQUIP_ITEM, equipmentSlot);
+    unequipItem(equipmentSlot: EquipmentSlot) {
+      return rpc.callServer(ServerCall.FromWebview.UNEQUIP_ITEM, equipmentSlot);
     },
     dropItem(slot: number) {
       if (window.altMock) {
         return Promise.resolve(true);
       }
-      return rpc.callClient(ClientCall.FromWebview.DROP_ITEM, slot);
+      return rpc.callServer(ServerCall.FromWebview.DROP_ITEM, slot);
+    },
+    loadAmmo(slotA: number, slotB: number) {
+      return rpc.callServer(ServerCall.FromWebview.LOAD_AMMO, slotA, slotB);
+    },
+    unloadAmmo(slot: number) {
+      return rpc.callServer(ServerCall.FromWebview.UNLOAD_AMMO, slot);
     },
     async moveItem(from: number, to: number, local: boolean = false) {
       const itemInSlotFrom = this.items.find(({ slot }) => {
@@ -300,6 +307,11 @@ export const useInventory = defineStore("inventory", {
       }
     },
     handleClick(e: MouseEvent) {
+      if (this.currentInteraction.type === InteractionType.ContextMenu) {
+        this.selectedItem = undefined;
+        return;
+      }
+
       const slot = this.getItemSlot(e);
       const itemInSlot = this.items.find((item) => item.slot === slot);
 
@@ -308,6 +320,27 @@ export const useInventory = defineStore("inventory", {
           this.selectedItem = undefined;
         }
         return;
+      }
+
+      if (itemInSlot.slot === this.selectedItem?.slot) {
+        this.selectedItem = undefined;
+        return;
+      }
+
+      if (this.selectedItem) {
+        const target = itemInSlot;
+        const source = this.selectedItem;
+
+        const [combineType, reverse] = getCombineType(target.data.key, source.data.key);
+
+        switch (combineType) {
+          case CombineType.EquipAmmo:
+            this.selectedItem = undefined;
+
+            const [ammo, weapon] = reverse ? [target, source] : [source, target];
+            this.loadAmmo(ammo.slot, weapon.slot);
+            return;
+        }
       }
 
       if (this.currentInteraction.type === InteractionType.Dragging || this.draggingItemThisFrame) {
@@ -321,10 +354,6 @@ export const useInventory = defineStore("inventory", {
         this.currentInteraction = IDLE;
       }
 
-      if (this.selectedItem && toRaw(this.selectedItem) === itemInSlot) {
-        this.selectedItem = undefined;
-        return;
-      }
       this.selectedItem = itemInSlot;
     },
     async completeDropping() {
@@ -384,6 +413,7 @@ export const useInventory = defineStore("inventory", {
     closeActionMenu() {
       if (this.currentInteraction.type === InteractionType.ContextMenu) {
         this.currentInteraction = IDLE;
+        this.selectedItem = undefined;
       }
     },
     getItemSlot(e: MouseEvent | PointerEvent) {

@@ -2,7 +2,7 @@ import { Player } from "alt-server";
 import { toRaw } from "vue";
 import { Inventory, InventoryItem, Item } from "@shared/interfaces";
 import { getItemData, isStackable } from "@shared/modules/items";
-import { InGamePlayer } from "@/rpc/checks";
+import { InGamePlayer } from "@/utility/assertions";
 
 declare module "alt-server" {
   export interface Player {

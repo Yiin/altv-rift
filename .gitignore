@@ -12,3 +12,4 @@ resources/main/*
 /server-prod.toml
 /crashdumps
 .env
+/.server-crashes-cache

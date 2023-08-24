@@ -2,70 +2,75 @@
 import { computed, ref } from "vue";
 import { useItemDetails } from "@/composables/use-item-details";
 import { px } from "@/composables/use-pixel";
-import { getItemName } from "@shared/modules/items";
-import { Hovering } from "@/store/inventory.store";
+import { CombineType, getCombineType, getItemName } from "@shared/modules/items";
+import { Hovering, useInventory } from "@/store/inventory.store";
 
 const props = defineProps<Hovering>();
 
+const inventory = useInventory();
+
 const data = computed(() => props.item.data);
-const noImage = ref(false);
 
 const details = useItemDetails(data);
+
+const combination = computed(() => {
+  if (!inventory.selectedItem) {
+    return null;
+  }
+  const target = data.value.key;
+  const source = inventory.selectedItem.data.key;
+
+  const [combineType, reverse] = getCombineType(target, source);
+
+  switch (combineType) {
+    case CombineType.EquipAmmo:
+      const [ammo, weapon] = reverse ? [target, source] : [source, target];
+      return `Click to load ${getItemName(weapon)} with ${getItemName(ammo)}`;
+  }
+
+  return null;
+});
 </script>
 
 <template>
-  <v-card
-    class="mx-auto v-card--transparent absolute pointer-events-none select-none z-max"
-    :max-width="px(300)"
+  <div
+    class="mx-auto absolute pointer-events-none select-none z-max w-72 bg-gray-950/80 text-white p-4"
     theme="light"
     :style="{
       left: `${position.x}px`,
       top: `${position.y}px`,
     }"
   >
-    <v-card-item :title="details.customName ?? details.name">
-      <template v-slot:subtitle>
-        <span class="whitespace-normal">
-          {{ details.description }}
-        </span>
-      </template>
-    </v-card-item>
+    <div v-if="combination" class="text-yellow-500 font-bold mb-2">
+      {{ combination }}
+    </div>
+    <div>
+      <div class="text-lg font-bold mb-2">{{ details.customName ?? details.name }}</div>
+      <div class="text-sm">
+        {{ details.description }}
+      </div>
+    </div>
 
-    <v-card-text class="py-0">
-      <div class="flex items-center justify-center">
-        <v-img
-          v-if="!noImage"
-          :transition="false"
-          class="drop-shadow-md flex-grow-0 my-5"
-          width="10rem"
-          :src="details.image"
-          :style="{
-            transform: `scale(${details.imageScale})`,
-          }"
-          @error="noImage = true"
-        />
-        <div v-else class="text-sm tracking-wider font-bold">
+    <div class="d-flex py-3 justify-space-between">
+      <div v-if="details.customName">
+        <v-icon icon="mdi-rename-outline" />
+        <div class="font-bold">
           {{ details.name }}
         </div>
       </div>
-    </v-card-text>
 
-    <div class="d-flex py-3 justify-space-between">
-      <v-list-item v-if="details.customName" density="compact" prepend-icon="mdi-rename-outline">
-        <v-list-item-subtitle class="font-bold">
-          {{ details.name }}
-        </v-list-item-subtitle>
-      </v-list-item>
-
-      <v-list-item v-if="details.equipedAmmo" density="compact" prepend-icon="mdi-ammunition">
-        <v-list-item-subtitle class="flex items-end gap-1">
-          <span class="font-bold">
+      <div v-if="details.equipedAmmo" class="flex items-center gap-1">
+        <v-icon icon="mdi-ammunition" />
+        <div class="flex items-end gap-1">
+          <div class="font-bold">
             {{ getItemName(details.equipedAmmo.key) }}
-          </span>
-          <v-icon icon="mdi-close" size="12" />
-          {{ details.equipedAmmo.amount }}
-        </v-list-item-subtitle>
-      </v-list-item>
+          </div>
+          <div>
+            <v-icon icon="mdi-close" size="12" />
+          </div>
+          <div class="font-bold text-yellow-500">{{ details.equipedAmmo.amount }}</div>
+        </div>
+      </div>
     </div>
-  </v-card>
+  </div>
 </template>

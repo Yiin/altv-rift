@@ -3,3 +3,5 @@ export * from "./consumables";
 export * from "./materials";
 export * from "./weapons";
 export * from "./registry";
+export * from "./lib";
+export * from "./types";

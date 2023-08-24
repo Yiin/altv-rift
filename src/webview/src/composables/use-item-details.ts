@@ -1,9 +1,9 @@
 import { computed, ComputedRef, ref, Ref, unref } from "vue";
 import { ItemType } from "@prisma/client";
-import { ItemData } from "@shared/interfaces";
+import { Item } from "@shared/interfaces";
 import { getItemData, getItemDescription, getItemName, ItemKey } from "@shared/modules/items";
 
-export const useItemDetails = (itemRef: ItemData | Ref<ItemData> | ComputedRef<ItemData>) => {
+export const useItemDetails = (itemRef: Item | Ref<Item> | ComputedRef<Item>) => {
   const item = ref(itemRef);
 
   const name = computed(() => getItemName(item.value.key));
@@ -29,7 +29,7 @@ export const useItemDetails = (itemRef: ItemData | Ref<ItemData> | ComputedRef<I
   );
 
   const equipedAmmo = computed(() => {
-    if (item.value.type === ItemType.WEAPON) {
+    if (item.value.type === ItemType.FIREARM_WEAPON) {
       const weapon = getItemData(item.value);
       if (!weapon) {
         return;
@@ -42,6 +42,7 @@ export const useItemDetails = (itemRef: ItemData | Ref<ItemData> | ComputedRef<I
         amount: weapon.ammo.data.amount,
       };
     }
+    return;
   });
 
   const details = computed(() => ({

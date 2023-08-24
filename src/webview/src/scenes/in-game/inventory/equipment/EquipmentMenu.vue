@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { useInventory } from "@/store/inventory.store";
-import { computed } from "vue";
+import { usePlayerStore } from "@shared/store/player.store";
 import EquipmentSlot from "./EquipmentSlot.vue";
+import { computed } from "vue";
 
-const inventory = useInventory();
+const player = usePlayerStore();
+
+const gender = computed(() => player.character?.appearance.sex);
 </script>
 
 <template>
@@ -12,7 +14,9 @@ const inventory = useInventory();
     @touchstart.stop
     class="relative bg-right bg-contain h-132.5"
     :style="{
-      backgroundImage: `url(./assets/inventory/WomanSilhouetteOutline.png)`,
+      backgroundImage: gender
+        ? `url(./assets/inventory/ManSilhouetteOutline.png)`
+        : `url(./assets/inventory/WomanSilhouetteOutline.png)`,
     }"
   >
     <EquipmentSlot name="mask" />
