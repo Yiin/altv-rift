@@ -4,14 +4,10 @@ import { ClientEvents } from "@shared/events/client";
 
 alt.onServer(ClientEvents.FromServer.PLAYER_RELOAD, handleReload);
 
-function handleReload() {
+export function handleReload() {
   let attempts = 0;
   const interval = alt.setInterval(() => {
-    const [_unk, _hash] = game.getCurrentPedWeapon(
-      alt.Player.local.scriptID,
-      null,
-      false
-    );
+    const [_unk, _hash] = game.getCurrentPedWeapon(alt.Player.local.scriptID, null, false);
     if (alt.Player.local.vehicle) {
       alt.clearInterval(interval);
       game.setAmmoInClip(alt.Player.local.scriptID, _hash, 9999);

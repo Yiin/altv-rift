@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { useInventoryGrid } from "@/composables/use-inventory-grid";
-import { InteractionType, useInventory } from "@/store/inventory.store";
+import { InteractionType, SlottedItem, useInventory } from "@/store/inventory.store";
 import InventoryItemIcon from "./InventoryItemIcon.vue";
 import { isItemUsable, isItemEquipable } from "@shared/modules/items";
 import { px } from "@/composables/use-pixel";
+import { InventorySource } from "@shared/interfaces";
 
 const props = defineProps<{
   slot: number;
@@ -16,23 +17,36 @@ const inventory = useInventory();
 const nodeRef = ref<HTMLDivElement>();
 
 const pos = computed(() => inventoryGrid.getSlotPositionInGrid(props.slot));
-const item = computed(() => inventory.items.find((item) => item.slot === props.slot));
+const item = computed(() =>
+  inventory.items.find(
+    (item): item is SlottedItem<InventorySource> =>
+      item.source.type === "inventory" && item.source.inventorySlot === props.slot
+  )
+);
 
 const dragging = computed(
   () =>
     inventory.currentInteraction.type === InteractionType.Dragging &&
-    inventory.currentInteraction.state.item.slot === props.slot
+    inventory.currentInteraction.state.item.source.type === "inventory" &&
+    inventory.currentInteraction.state.item.source.inventorySlot === props.slot
 );
 
-const selected = computed(() => inventory.selectedItem?.slot === props.slot);
+const selected = computed(
+  () =>
+    inventory.selectedItem?.source.type === "inventory" &&
+    inventory.selectedItem.source.inventorySlot === props.slot
+);
 
 const hoveringOver = computed(() => {
   const interaction = inventory.currentInteraction;
 
-  if (interaction.type === InteractionType.Dragging) {
-    const startingSlot = interaction.state.item.slot;
-    const startingSlotPos = inventoryGrid.getSlotPositionInGrid(startingSlot);
-    const startingSlotScreenPos = inventory.getItemSlotScreenPosition(startingSlot);
+  if (
+    interaction.type === InteractionType.Dragging &&
+    interaction.state.item.source.type === "inventory"
+  ) {
+    const { source } = interaction.state.item;
+    const startingSlotPos = inventoryGrid.getSlotPositionInGrid(source.inventorySlot);
+    const startingSlotScreenPos = inventory.getItemSourceScreenPosition(source);
     const x =
       interaction.state.currentPosition.x -
       interaction.state.startPosition.x +
@@ -61,15 +75,16 @@ function useOrEquipItem() {
   if (!item.value) {
     return;
   }
-  if (isItemUsable(item.value.data.key)) {
-    inventory.useItem(item.value.slot);
-  } else if (isItemEquipable(item.value.data.key)) {
-    inventory.equipItem(item.value.slot);
+  if (isItemUsable(item.value.item.key)) {
+    inventory.useItem(item.value.source);
+  } else if (isItemEquipable(item.value.item.key)) {
+    inventory.equipItem(item.value.source);
   }
 }
 
 defineExpose({
   node: nodeRef,
+  slot: props.slot,
 });
 </script>
 
@@ -92,6 +107,6 @@ defineExpose({
     :item="item"
     @mousedown="inventory.handleMouseDown"
     @dblclick="useOrEquipItem"
-    @contextmenu.prevent="(e) => inventory.openActionMenu(item, e)"
+    @contextmenu.prevent="(e) => item && inventory.openContextMenu(item, e)"
   />
 </template>

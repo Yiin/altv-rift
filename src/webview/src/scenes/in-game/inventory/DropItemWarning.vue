@@ -56,7 +56,7 @@ const details = useItemDetails(item);
         <v-list-item-subtitle class="flex items-end gap-1">
           <span class="font-bold">{{ getItemName(details.equipedAmmo.key) }}</span>
           <v-icon icon="mdi-close" size="12" />
-          {{ details.equipedAmmo.amount }}
+          {{ details.equipedAmmo.clip }} / {{ details.equipedAmmo.rest }}
         </v-list-item-subtitle>
       </v-list-item>
     </div>

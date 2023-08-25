@@ -39,7 +39,8 @@ export const useItemDetails = (itemRef: Item | Ref<Item> | ComputedRef<Item>) =>
       }
       return {
         key: weapon.ammo.key as ItemKey,
-        amount: weapon.ammo.data.amount,
+        clip: weapon.ammo.clip.amount,
+        rest: weapon.ammo.rest.amount,
       };
     }
     return;

@@ -77,6 +77,12 @@ rpc.registerWebview(ServerCall.FromWebview.UNLOAD_AMMO, (player, slot) => {
   return true;
 });
 
+rpc.registerClient(ServerCall.FromClient.RELOAD_WEAPON, (player) => {
+  needsToBeInGame(player);
+
+  return player.reloadWeapon();
+});
+
 rpc.registerWebview(ServerCall.FromWebview.DROP_ITEM, (player, slot) => {
   needsToBeInGame(player);
 

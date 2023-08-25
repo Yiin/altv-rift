@@ -15,11 +15,7 @@ export function tick() {
   });
 }
 
-export function intervalWhile(
-  condition: () => boolean,
-  callback: () => void,
-  intervalTime = 0
-) {
+export function intervalWhile(condition: () => boolean, callback: () => void, intervalTime = 0) {
   const interval = alt.setInterval(() => {
     if (!condition()) {
       alt.clearInterval(interval);
@@ -32,17 +28,26 @@ export function intervalWhile(
   intervals.push(interval);
 }
 
-export function everyTickWhile(condition: () => boolean, callback: () => void) {
+export function everyTickWhile(condition: () => boolean, callback: () => void, onEnd?: () => void) {
   const tick = alt.everyTick(() => {
     if (!condition()) {
       alt.clearEveryTick(tick);
       ticks.splice(ticks.indexOf(tick), 1);
+      onEnd?.();
       return;
     }
 
     callback();
   });
   ticks.push(tick);
+}
+
+export function waitNextTick() {
+  return new Promise<void>((resolve) => {
+    alt.nextTick(() => {
+      resolve();
+    });
+  });
 }
 
 export function waitUntil(condition: () => boolean, timeoutMS = 10000) {

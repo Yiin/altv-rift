@@ -1,4 +1,4 @@
-import * as Prisma from "@prisma/client";
+import * as Prisma from "@prisma/client/edge";
 import { ItemKey, ITEMS_REGISTRY } from "@shared/modules/items";
 import { FirearmWeaponItemKey } from "@shared/modules/items/weapons/firearms";
 import { ThrowableWeaponItemKey } from "@shared/modules/items/weapons/throwable";
@@ -23,7 +23,8 @@ export type EquipedAmmo = Override<
   Prisma.EquipedAmmo,
   {
     key: AmmoItemKey;
-    data: AmmoItemData;
+    clip: AmmoItemData;
+    rest: AmmoItemData;
   }
 >;
 export type FirearmWeaponItemData = OptionalNullable<

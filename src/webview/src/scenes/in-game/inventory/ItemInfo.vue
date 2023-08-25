@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed } from "vue";
 import { useItemDetails } from "@/composables/use-item-details";
-import { px } from "@/composables/use-pixel";
 import { CombineType, getCombineType, getItemName } from "@shared/modules/items";
 import { Hovering, useInventory } from "@/store/inventory.store";
 
@@ -9,16 +8,16 @@ const props = defineProps<Hovering>();
 
 const inventory = useInventory();
 
-const data = computed(() => props.item.data);
+const item = computed(() => props.item.item);
 
-const details = useItemDetails(data);
+const details = useItemDetails(item);
 
 const combination = computed(() => {
   if (!inventory.selectedItem) {
     return null;
   }
-  const target = data.value.key;
-  const source = inventory.selectedItem.data.key;
+  const target = item.value.key;
+  const source = inventory.selectedItem.item.key;
 
   const [combineType, reverse] = getCombineType(target, source);
 
@@ -68,7 +67,9 @@ const combination = computed(() => {
           <div>
             <v-icon icon="mdi-close" size="12" />
           </div>
-          <div class="font-bold text-yellow-500">{{ details.equipedAmmo.amount }}</div>
+          <div class="font-bold text-yellow-500">
+            {{ details.equipedAmmo.clip }} / {{ details.equipedAmmo.rest }}
+          </div>
         </div>
       </div>
     </div>

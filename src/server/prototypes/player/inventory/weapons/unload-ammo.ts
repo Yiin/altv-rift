@@ -28,7 +28,13 @@ alt.Player.prototype.unloadAmmo = function (slot) {
 
   const ammo = itemData.ammo;
 
-  if (this.addItem(createItem(ammo.key, ammo.data))) {
+  if (this.addItem(createItem(ammo.key, ammo.clip))) {
+    itemData.ammo.clip.amount = 0;
+  }
+  if (this.addItem(createItem(ammo.key, ammo.rest))) {
+    itemData.ammo.rest.amount = 0;
+  }
+  if (!itemData.ammo.clip.amount && !itemData.ammo.rest.amount) {
     itemData.ammo = null;
   }
 };

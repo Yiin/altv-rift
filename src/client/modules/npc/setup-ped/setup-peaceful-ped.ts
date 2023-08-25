@@ -29,26 +29,10 @@ export function setupPeacefulPed(ped: alt.Ped) {
         PED_RESET_FLAG.PreventLockonToFriendlyPlayers,
         true
       );
-      game.setPedResetFlag(
-        ped.scriptID,
-        PED_RESET_FLAG.PreventLockonToFriendlyPlayers,
-        true
-      );
-      game.setPedResetFlag(
-        ped.scriptID,
-        PED_RESET_FLAG.BlockFallTaskFromExplosionDamage,
-        true
-      );
-      game.setPedResetFlag(
-        ped.scriptID,
-        PED_RESET_FLAG.BlockWeaponReactionsUnlessDead,
-        true
-      );
-      game.setPedResetFlag(
-        ped.scriptID,
-        PED_RESET_FLAG.DisablePotentialBlastReactions,
-        true
-      );
+      game.setPedResetFlag(ped.scriptID, PED_RESET_FLAG.PreventLockonToFriendlyPlayers, true);
+      game.setPedResetFlag(ped.scriptID, PED_RESET_FLAG.BlockFallTaskFromExplosionDamage, true);
+      game.setPedResetFlag(ped.scriptID, PED_RESET_FLAG.BlockWeaponReactionsUnlessDead, true);
+      game.setPedResetFlag(ped.scriptID, PED_RESET_FLAG.DisablePotentialBlastReactions, true);
     }
   );
 }

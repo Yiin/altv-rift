@@ -1,4 +1,4 @@
-import { ItemType } from "@prisma/client";
+import { ItemType } from "@prisma/client/edge";
 import { makeEnum } from "@shared/utility/make-enum";
 import { ItemKey } from "../types";
 import { getItemInfoByKey } from "../registry";

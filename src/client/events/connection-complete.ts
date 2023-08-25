@@ -32,20 +32,15 @@ function handleTick() {
   game.startAudioScene(`CHARACTER_CHANGE_IN_SKY_SCENE`);
   game.startAudioScene("FBI_HEIST_H5_MUTE_AMBIENCE_SCENE"); // Used to stop police sound in town
   game.cancelAllPoliceReports(); // Used to stop default police radio around/In police vehicle
-  game.clearAmbientZoneState(
-    "AZ_COUNTRYSIDE_PRISON_01_ANNOUNCER_GENERAL",
-    false
-  ); // Turn off prison sound
-  game.clearAmbientZoneState(
-    "AZ_COUNTRYSIDE_PRISON_01_ANNOUNCER_WARNING",
-    false
-  ); // Turn off prison sound
+  game.clearAmbientZoneState("AZ_COUNTRYSIDE_PRISON_01_ANNOUNCER_GENERAL", false); // Turn off prison sound
+  game.clearAmbientZoneState("AZ_COUNTRYSIDE_PRISON_01_ANNOUNCER_WARNING", false); // Turn off prison sound
   game.clearAmbientZoneState("AZ_COUNTRYSIDE_PRISON_01_ANNOUNCER_ALARM", false); // Turn off prison sound
   game.setAmbientZoneState("", false, false);
   game.clearAmbientZoneState("AZ_DISTANT_SASQUATCH", false);
   game.setAudioFlag("LoadMPData", true);
   game.setAudioFlag("DisableFlightMusic", true);
   game.setPedCanSwitchWeapon(alt.Player.local.scriptID, false);
+  alt.setConfigFlag("DISABLE_AUTO_WEAPON_SWAP", true);
 }
 
 everyTick(() => {

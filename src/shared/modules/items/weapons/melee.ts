@@ -1,4 +1,4 @@
-import { ItemType } from "@prisma/client";
+import { ItemType } from "@prisma/client/edge";
 import { ItemFlags } from "../item-flags";
 import { WeaponGroup } from "./weapon-groups";
 import { getWeaponData } from ".";

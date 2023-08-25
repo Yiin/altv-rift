@@ -18,7 +18,8 @@ export interface EventFromServer {
   ) => Promise<void> | void;
   [FromServer.EQUIP_ITEM]: (
     player: import("../../../server/utility/assertions").InGamePlayer,
-    item: Item
+    item: Item,
+    inventorySlot?: number
   ) => Promise<void> | void;
   [FromServer.UNEQUIP_ITEM]: (
     player: import("../../../server/utility/assertions").InGamePlayer,

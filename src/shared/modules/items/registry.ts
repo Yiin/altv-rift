@@ -1,4 +1,4 @@
-import { ItemType } from "@prisma/client";
+import { ItemType } from "@prisma/client/edge";
 import { InventoryItem } from "@shared/interfaces";
 import { ammo } from "./ammo";
 import { clothing } from "./clothing";

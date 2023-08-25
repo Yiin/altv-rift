@@ -1,4 +1,4 @@
-import { ItemType } from "@prisma/client";
+import { ItemType } from "@prisma/client/edge";
 import { Equipment } from "@shared/interfaces";
 
 export const Clothing = {

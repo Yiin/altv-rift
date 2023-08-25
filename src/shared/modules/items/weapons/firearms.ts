@@ -1,4 +1,4 @@
-import { ItemType } from "@prisma/client";
+import { ItemType } from "@prisma/client/edge";
 import { FirearmWeaponItem, Item } from "@shared/interfaces";
 import { ItemFlags } from "../item-flags";
 import { getWeaponData } from "../weapons";
@@ -83,6 +83,7 @@ export type FirearmWeaponItemInfo = {
   flags: ItemFlags;
   group: WeaponGroup;
   ammoGroup: AmmoGroup;
+  clipSize: number;
   price: number;
   stats: {
     damage: number;
@@ -103,6 +104,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.ASSAULT_RIFLE,
     ammoGroup: AmmoGroup.ASSAULT_RIFLE,
+    clipSize: 30,
     price: 14250,
     stats: {
       damage: 24,
@@ -121,6 +123,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HANDGUN,
     ammoGroup: AmmoGroup.HANDGUN,
+    clipSize: 18,
     price: 5000,
     stats: {
       damage: 26,
@@ -139,6 +142,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.ASSAULT_RIFLE,
     ammoGroup: AmmoGroup.ASSAULT_RIFLE,
+    clipSize: 30,
     price: 8550,
     stats: {
       damage: 30,
@@ -157,6 +161,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.ASSAULT_RIFLE,
     ammoGroup: AmmoGroup.ASSAULT_RIFLE,
+    clipSize: 30,
     price: 98750,
     stats: {
       damage: 33,
@@ -175,6 +180,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.SHOTGUN,
     ammoGroup: AmmoGroup.SHOTGUN,
+    clipSize: 8,
     price: 10000,
     stats: {
       damage: 77,
@@ -193,6 +199,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.MACHINE_GUN,
     ammoGroup: AmmoGroup.MACHINE_GUN,
+    clipSize: 30,
     price: 12550,
     stats: {
       damage: 23,
@@ -211,6 +218,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.SHOTGUN,
     ammoGroup: AmmoGroup.SHOTGUN,
+    clipSize: 10,
     price: 10000,
     stats: {
       damage: 77,
@@ -229,6 +237,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.ASSAULT_RIFLE,
     ammoGroup: AmmoGroup.ASSAULT_RIFLE,
+    clipSize: 30,
     price: 14500,
     stats: {
       damage: 32,
@@ -247,6 +256,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.ASSAULT_RIFLE,
     ammoGroup: AmmoGroup.ASSAULT_RIFLE,
+    clipSize: 30,
     price: 14500,
     stats: {
       damage: 35,
@@ -265,6 +275,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.SHOTGUN,
     ammoGroup: AmmoGroup.SHOTGUN,
+    clipSize: 14,
     price: 8000,
     stats: {
       damage: 67,
@@ -283,6 +294,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.ASSAULT_RIFLE,
     ammoGroup: AmmoGroup.ASSAULT_RIFLE,
+    clipSize: 30,
     price: 13000,
     stats: {
       damage: 32,
@@ -301,6 +313,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.ASSAULT_RIFLE,
     ammoGroup: AmmoGroup.ASSAULT_RIFLE,
+    clipSize: 30,
     price: 107500,
     stats: {
       damage: 36,
@@ -319,6 +332,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HANDGUN,
     ammoGroup: AmmoGroup.HANDGUN,
+    clipSize: 12,
     price: 20000,
     stats: {
       damage: 32,
@@ -337,6 +351,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.MACHINE_GUN,
     ammoGroup: AmmoGroup.MACHINE_GUN,
+    clipSize: 100,
     price: 14800,
     stats: {
       damage: 55,
@@ -355,6 +370,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.MACHINE_GUN,
     ammoGroup: AmmoGroup.MACHINE_GUN,
+    clipSize: 100,
     price: 119000,
     stats: {
       damage: 57,
@@ -373,6 +389,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.MACHINE_GUN,
     ammoGroup: AmmoGroup.MACHINE_GUN,
+    clipSize: 30,
     price: 11750,
     stats: {
       damage: 25,
@@ -391,6 +408,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HANDGUN,
     ammoGroup: AmmoGroup.HANDGUN,
+    clipSize: 12,
     price: 3200,
     stats: {
       damage: 27,
@@ -409,6 +427,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HEAVY,
     ammoGroup: AmmoGroup.GRENADE_LAUNCHER,
+    clipSize: 1,
     price: 45000,
     stats: {
       damage: 95,
@@ -427,6 +446,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.ASSAULT_RIFLE,
     ammoGroup: AmmoGroup.ASSAULT_RIFLE,
+    clipSize: 30,
     price: 14650,
     stats: {
       damage: 36,
@@ -445,6 +465,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.SHOTGUN,
     ammoGroup: AmmoGroup.SHOTGUN,
+    clipSize: 2,
     price: 15450,
     stats: {
       damage: 98,
@@ -463,6 +484,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HANDGUN,
     ammoGroup: AmmoGroup.HANDGUN,
+    clipSize: 6,
     price: 75000,
     stats: {
       damage: 70,
@@ -481,6 +503,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.UTILITY,
     ammoGroup: AmmoGroup.FIRE_EXTINGUISHER,
+    clipSize: 2000,
     price: 200,
     stats: {
       damage: 0,
@@ -499,6 +522,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HEAVY,
     ammoGroup: AmmoGroup.FIREWORK,
+    clipSize: 1,
     price: 65000,
     stats: {
       damage: 45,
@@ -517,6 +541,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HANDGUN,
     ammoGroup: AmmoGroup.HANDGUN,
+    clipSize: 1,
     price: 3750,
     stats: {
       damage: 20,
@@ -535,6 +560,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HEAVY,
     ammoGroup: AmmoGroup.GRENADE_LAUNCHER,
+    clipSize: 10,
     price: 32400,
     stats: {
       damage: 95,
@@ -553,6 +579,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.UTILITY,
     ammoGroup: AmmoGroup.SMOKE_GRANADES,
+    clipSize: 10,
     price: 4200,
     stats: {
       damage: 20,
@@ -571,6 +598,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.MACHINE_GUN,
     ammoGroup: AmmoGroup.MACHINE_GUN,
+    clipSize: 30,
     price: 14600,
     stats: {
       damage: 34,
@@ -589,6 +617,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HANDGUN,
     ammoGroup: AmmoGroup.HANDGUN,
+    clipSize: 18,
     price: 3750,
     stats: {
       damage: 40,
@@ -607,6 +636,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.SHOTGUN,
     ammoGroup: AmmoGroup.SHOTGUN,
+    clipSize: 6,
     price: 13550,
     stats: {
       damage: 85,
@@ -625,6 +655,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.SNIPER_RIFLE,
     ammoGroup: AmmoGroup.SNIPER_RIFLE,
+    clipSize: 6,
     price: 38150,
     stats: {
       damage: 98,
@@ -643,6 +674,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.SNIPER_RIFLE,
     ammoGroup: AmmoGroup.SNIPER_RIFLE,
+    clipSize: 6,
     price: 165375,
     stats: {
       damage: 98,
@@ -661,6 +693,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HEAVY,
     ammoGroup: AmmoGroup.ROCKET_LAUNCHER,
+    clipSize: 1,
     price: 165000,
     stats: {
       damage: 95,
@@ -679,6 +712,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.MACHINE_GUN,
     ammoGroup: AmmoGroup.HANDGUN,
+    clipSize: 12,
     price: 6250,
     stats: {
       damage: 28,
@@ -697,6 +731,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HANDGUN,
     ammoGroup: AmmoGroup.HANDGUN,
+    clipSize: 1,
     price: 4350,
     stats: {
       damage: 80,
@@ -715,6 +750,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.SNIPER_RIFLE,
     ammoGroup: AmmoGroup.SNIPER_RIFLE,
+    clipSize: 8,
     price: 15750,
     stats: {
       damage: 70,
@@ -733,6 +769,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.SNIPER_RIFLE,
     ammoGroup: AmmoGroup.SNIPER_RIFLE,
+    clipSize: 8,
     price: 149000,
     stats: {
       damage: 70,
@@ -751,6 +788,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.MACHINE_GUN,
     ammoGroup: AmmoGroup.MACHINE_GUN,
+    clipSize: 54,
     price: 13500,
     stats: {
       damage: 50,
@@ -769,6 +807,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.MACHINE_GUN,
     ammoGroup: AmmoGroup.MACHINE_GUN,
+    clipSize: 16,
     price: 3750,
     stats: {
       damage: 21,
@@ -787,6 +826,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HEAVY,
     ammoGroup: AmmoGroup.HEAVY,
+    clipSize: 15000,
     price: 470000,
     stats: {
       damage: 30,
@@ -805,6 +845,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.MACHINE_GUN,
     ammoGroup: AmmoGroup.MACHINE_GUN,
+    clipSize: 20,
     price: 8900,
     stats: {
       damage: 22,
@@ -823,6 +864,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.SHOTGUN,
     ammoGroup: AmmoGroup.SHOTGUN,
+    clipSize: 1,
     price: 21400,
     stats: {
       damage: 97,
@@ -841,6 +883,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HANDGUN,
     ammoGroup: AmmoGroup.HANDGUN,
+    clipSize: 6,
     price: 55000,
     stats: {
       damage: 70,
@@ -868,6 +911,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HANDGUN,
     ammoGroup: AmmoGroup.HANDGUN,
+    clipSize: 12,
     price: 2500,
     stats: {
       damage: 26,
@@ -886,6 +930,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HANDGUN,
     ammoGroup: AmmoGroup.HANDGUN,
+    clipSize: 9,
     price: 3900,
     stats: {
       damage: 51,
@@ -904,6 +949,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HANDGUN,
     ammoGroup: AmmoGroup.HANDGUN,
+    clipSize: 12,
     price: 73750,
     stats: {
       damage: 38,
@@ -922,6 +968,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.SHOTGUN,
     ammoGroup: AmmoGroup.SHOTGUN,
+    clipSize: 8,
     price: 3500,
     stats: {
       damage: 67,
@@ -940,6 +987,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.SHOTGUN,
     ammoGroup: AmmoGroup.SHOTGUN,
+    clipSize: 8,
     price: 82500,
     stats: {
       damage: 67,
@@ -958,6 +1006,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HEAVY,
     ammoGroup: AmmoGroup.PLASMA_RAYS,
+    clipSize: 1,
     price: 250000,
     stats: {
       damage: 90,
@@ -976,6 +1025,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.MACHINE_GUN,
     ammoGroup: AmmoGroup.PLASMA_RAYS,
+    clipSize: 9999,
     price: 449000,
     stats: {
       damage: 55,
@@ -994,6 +1044,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HEAVY,
     ammoGroup: AmmoGroup.PLASMA_RAYS,
+    clipSize: 15000,
     price: 449000,
     stats: {
       damage: 30,
@@ -1012,6 +1063,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HANDGUN,
     ammoGroup: AmmoGroup.HANDGUN,
+    clipSize: 1,
     price: 399000,
     stats: {
       damage: 80,
@@ -1030,6 +1082,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HANDGUN,
     ammoGroup: AmmoGroup.HANDGUN,
+    clipSize: 6,
     price: 5900,
     stats: {
       damage: 70,
@@ -1048,6 +1101,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HANDGUN,
     ammoGroup: AmmoGroup.HANDGUN,
+    clipSize: 6,
     price: 99000,
     stats: {
       damage: 75,
@@ -1066,6 +1120,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HEAVY,
     ammoGroup: AmmoGroup.ROCKET_LAUNCHER,
+    clipSize: 1,
     price: 26250,
     stats: {
       damage: 100,
@@ -1084,6 +1139,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.SHOTGUN,
     ammoGroup: AmmoGroup.SHOTGUN,
+    clipSize: 8,
     price: 30000,
     stats: {
       damage: 96,
@@ -1102,6 +1158,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.MACHINE_GUN,
     ammoGroup: AmmoGroup.MACHINE_GUN,
+    clipSize: 30,
     price: 7500,
     stats: {
       damage: 22,
@@ -1120,6 +1177,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.MACHINE_GUN,
     ammoGroup: AmmoGroup.MACHINE_GUN,
+    clipSize: 30,
     price: 85500,
     stats: {
       damage: 22,
@@ -1138,6 +1196,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.SNIPER_RIFLE,
     ammoGroup: AmmoGroup.SNIPER_RIFLE,
+    clipSize: 10,
     price: 20000,
     stats: {
       damage: 96,
@@ -1156,6 +1215,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HANDGUN,
     ammoGroup: AmmoGroup.HANDGUN,
+    clipSize: 6,
     price: 2750,
     stats: {
       damage: 30,
@@ -1174,6 +1234,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HANDGUN,
     ammoGroup: AmmoGroup.HANDGUN,
+    clipSize: 6,
     price: 79575,
     stats: {
       damage: 30,
@@ -1192,6 +1253,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.ASSAULT_RIFLE,
     ammoGroup: AmmoGroup.ASSAULT_RIFLE,
+    clipSize: 30,
     price: 14750,
     stats: {
       damage: 34,
@@ -1210,6 +1272,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.ASSAULT_RIFLE,
     ammoGroup: AmmoGroup.ASSAULT_RIFLE,
+    clipSize: 30,
     price: 135000,
     stats: {
       damage: 34,
@@ -1228,6 +1291,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HANDGUN,
     ammoGroup: AmmoGroup.HANDGUN,
+    clipSize: 1, // 2104529083
     price: 100,
     stats: {
       damage: 1,
@@ -1246,6 +1310,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HANDGUN,
     ammoGroup: AmmoGroup.HANDGUN,
+    clipSize: 7,
     price: 3450,
     stats: {
       damage: 35,

@@ -16,19 +16,30 @@ const props = defineProps<ItemActionMenu>();
 
 const inventory = useInventory();
 
+const item = computed(() => props.item.item);
+const itemSource = computed(() => props.item.source);
+
 const visible = computed(() => inventory.currentInteraction.type === InteractionType.ContextMenu);
-const itemName = computed(() => getItemName(props.item.data.key));
-const isUsable = computed(() => isItemUsable(props.item.data.key));
-const isEquipable = computed(() => isItemEquipable(props.item.data.key));
+const itemName = computed(() => getItemName(item.value.key));
+const isUsable = computed(
+  () => itemSource.value.type === "inventory" && isItemUsable(item.value.key)
+);
+const isEquipable = computed(
+  () => itemSource.value.type === "inventory" && isItemEquipable(item.value.key)
+);
 const hasAmmo = computed(
-  () => !!(props.item.data.type === ItemType.FIREARM_WEAPON && getItemData(props.item.data).ammo)
+  () => !!(item.value.type === ItemType.FIREARM_WEAPON && getItemData(item.value).ammo)
 );
 const canLoadAmmo = computed(() => {
+  if (itemSource.value.type !== "inventory") {
+    return false;
+  }
+
   if (!inventory.selectedItem) {
     return false;
   }
-  const target = props.item.data.key;
-  const source = inventory.selectedItem.data.key;
+  const target = item.value.key;
+  const source = inventory.selectedItem.item.key;
 
   const [combineType, reverse] = getCombineType(target, source);
 
@@ -41,26 +52,29 @@ const canLoadAmmo = computed(() => {
 });
 
 function executeAction(action: "use" | "equip" | "drop" | "unload-ammo" | "load-ammo") {
+  inventory.closeActionMenu();
+
+  const source = itemSource.value;
+
   switch (action) {
     case "use":
-      inventory.useItem(props.item.slot);
+      inventory.useItem(source);
       break;
     case "equip":
-      inventory.equipItem(props.item.slot);
+      inventory.equipItem(source);
       break;
     case "drop":
       inventory.dropFromMenu(props.item);
       break;
     case "load-ammo":
       if (inventory.selectedItem) {
-        inventory.loadAmmo(props.item.slot, inventory.selectedItem.slot);
+        inventory.loadAmmo(source, inventory.selectedItem.source);
       }
       break;
     case "unload-ammo":
-      inventory.unloadAmmo(props.item.slot);
+      inventory.unloadAmmo(source);
       break;
   }
-  inventory.closeActionMenu();
 }
 
 const actions = computed(() => [

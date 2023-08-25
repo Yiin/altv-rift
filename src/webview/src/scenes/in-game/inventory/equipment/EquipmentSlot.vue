@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { computed } from "vue";
-import { useInventory } from "@/store/inventory.store";
+import { computed, ref } from "vue";
+import { SlottedItem, useInventory } from "@/store/inventory.store";
 import ItemIcon from "../ItemIcon.vue";
 import { px } from "@/composables/use-pixel";
 import { usePlayerStore } from "@shared/store/player.store";
 import { ItemType } from "@prisma/client";
-import { AmmoItem } from "@shared/interfaces";
+import { AmmoItem, EquipmentSource } from "@shared/interfaces";
 
 const equipmentSlots = {
   headwear: {
@@ -118,30 +118,44 @@ const props = defineProps<{
   name: EquipmentSlotName;
 }>();
 
-const player = usePlayerStore();
 const inventory = useInventory();
 
 const item = computed(() => {
   if (props.name === "ammo") {
-    const equipedAmmo = player.character?.equipment.weapon?.FIREARM_WEAPON?.ammo;
+    const equipedAmmo = inventory.equipment.weapon?.item?.FIREARM_WEAPON?.ammo;
 
     if (equipedAmmo) {
-      const ammoItem = {
-        type: ItemType.AMMO,
-        key: equipedAmmo.key,
-        [ItemType.AMMO]: equipedAmmo.data,
-      } as AmmoItem;
-      return ammoItem;
+      // Construct a fake slotted item that represents the ammo in the weapon
+      return {
+        item: {
+          type: ItemType.AMMO,
+          key: equipedAmmo.key,
+          [ItemType.AMMO]: {
+            amount: equipedAmmo.clip.amount + equipedAmmo.rest.amount,
+          },
+        },
+        source: {
+          type: "equipment",
+          equipmentSlot: "ammo",
+        },
+      } as SlottedItem<EquipmentSource, AmmoItem>;
     }
     return null;
   }
-  return player.character?.equipment[props.name] ?? null;
+  return inventory.equipment[props.name] ?? null;
 });
 const slot = computed(() => equipmentSlots[props.name]);
 
 function unequipItem() {
   inventory.unequipItem(props.name);
 }
+
+const nodeRef = ref<HTMLDivElement>();
+
+defineExpose({
+  node: nodeRef,
+  equipmentSlot: props.name,
+});
 </script>
 
 <template>
@@ -167,9 +181,9 @@ function unequipItem() {
   </div>
   <ItemIcon
     v-if="item"
-    :item="item"
+    :item="item.item"
     :style="{ transform: `translate(${slot.x}px, ${slot.y}px)` }"
     @dblclick="unequipItem"
-    @contextmenu.prevent="(e) => inventory.openActionMenu(item, e)"
+    @contextmenu.prevent="(e) => item && inventory.openContextMenu(item, e)"
   />
 </template>

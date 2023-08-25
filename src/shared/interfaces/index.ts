@@ -3,5 +3,6 @@ export * from "./clothing";
 export * from "./conversation";
 export * from "./equipment";
 export * from "./notification";
+export * from "./item-source";
 export * from "./prisma-overrides.d";
 // @endindex

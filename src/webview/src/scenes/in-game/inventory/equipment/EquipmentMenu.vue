@@ -2,8 +2,10 @@
 import { usePlayerStore } from "@shared/store/player.store";
 import EquipmentSlot from "./EquipmentSlot.vue";
 import { computed } from "vue";
+import { useInventorySlots } from "@/composables/use-inventory-slots";
 
 const player = usePlayerStore();
+const inventorySlots = useInventorySlots("equipment");
 
 const gender = computed(() => player.character?.appearance.sex);
 </script>
@@ -19,22 +21,28 @@ const gender = computed(() => player.character?.appearance.sex);
         : `url(./assets/inventory/WomanSilhouetteOutline.png)`,
     }"
   >
-    <EquipmentSlot name="mask" />
-    <EquipmentSlot name="glasses" />
-    <EquipmentSlot name="headwear" />
-    <EquipmentSlot name="earrings" />
-    <EquipmentSlot name="top" />
-    <EquipmentSlot name="shirt" />
-    <EquipmentSlot name="armor" />
-    <EquipmentSlot name="neckwear" />
-    <EquipmentSlot name="weapon" />
-    <EquipmentSlot name="ammo" />
-    <EquipmentSlot name="gloves" />
-    <EquipmentSlot name="lefthand" />
-    <EquipmentSlot name="pants" />
-    <EquipmentSlot name="righthand" />
-    <EquipmentSlot name="backpack" />
-    <EquipmentSlot name="shoes" />
-    <EquipmentSlot name="phone" />
+    <EquipmentSlot
+      v-for="slot in ([
+              'headwear',
+              'glasses',
+              'headwear',
+              'earrings',
+              'top',
+              'shirt',
+              'armor',
+              'neckwear',
+              'weapon',
+              'ammo',
+              'gloves',
+              'lefthand',
+              'pants',
+              'righthand',
+              'backpack',
+              'shoes',
+              'phone',
+            ] as const)"
+      :name="slot"
+      :ref="(inventorySlots.setSlotRef as any)"
+    />
   </div>
 </template>

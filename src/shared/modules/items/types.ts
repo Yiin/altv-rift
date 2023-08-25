@@ -1,4 +1,4 @@
-import { ItemType } from "@prisma/client";
+import { ItemType } from "@prisma/client/edge";
 import { AmmoItemKey } from "./ammo";
 import { ClothingItemKey } from "./clothing";
 import { ConsumableItemKey } from "./consumables";

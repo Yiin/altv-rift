@@ -25,5 +25,5 @@ alt.Player.prototype.equipItem = function (itemToEquip) {
     this.store.character.equipment[equipmentSlot] = itemToEquip.data;
   }
 
-  alt.emit(ServerEvents.FromServer.EQUIP_ITEM, this, itemToEquip.data);
+  alt.emit(ServerEvents.FromServer.EQUIP_ITEM, this, itemToEquip.data, itemToEquip.slot);
 };

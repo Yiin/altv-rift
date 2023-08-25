@@ -1,4 +1,4 @@
-import { ItemType } from "@prisma/client";
+import { ItemType } from "@prisma/client/edge";
 import { ItemKey } from "../types";
 import { ItemFlags } from "../item-flags";
 

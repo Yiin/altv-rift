@@ -1,9 +1,13 @@
-import { Player } from "alt-server";
+import alt from "alt-server";
 import { createPinia } from "pinia";
 import { minutesToMilliseconds } from "date-fns";
+import { watch } from "vue";
 import { usePlayerStore } from "@shared/store/player.store";
 import { subscribeToStore } from "@shared/store/utils";
 import { ClientEvents } from "@shared/events/client";
+import { getItemData, getItemInfoByKey, getWeaponHash } from "@shared/modules/items";
+import { ServerEvents } from "@shared/events/server";
+import { isItemFirearmWeapon } from "@shared/modules/items/weapons/firearms";
 import { Config } from "@/utility/config";
 import { clearMessageHistory, show } from "@/modules/chat";
 import { serverStore } from "@/store/server.store";
@@ -16,7 +20,7 @@ declare module "alt-server" {
   }
 }
 
-Player.prototype.setup = function () {
+alt.Player.prototype.setup = function () {
   if (this.store) {
     return;
   }

@@ -144,7 +144,8 @@ type MeleeWeaponItem {
 
 type EquipedAmmo {
   key  String
-  data AmmoItem
+  clip AmmoItem
+  rest AmmoItem
 }
 
 type AmmoItem {

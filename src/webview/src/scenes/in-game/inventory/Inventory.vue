@@ -10,6 +10,9 @@ import { InteractionType, useInventory } from "@/store/inventory.store";
 import { px } from "@/composables/use-pixel";
 import { useEventListener } from "@/composables/use-event-listener";
 import EquipmentMenu from "./equipment/EquipmentMenu.vue";
+import { useInventorySlots } from "@/composables/use-inventory-slots";
+
+const inventorySlots = useInventorySlots("inventory");
 
 const windowSize = useWindowSize();
 const inventory = useInventory();
@@ -20,16 +23,6 @@ const height = computed(() => ~~(inventory.size / 5) * px(90) - px(10));
 useEventListener("mousemove", inventory.handleMouseMove);
 useEventListener("mouseup", inventory.handleMouseUp);
 useEventListener("click", inventory.handleClick, true);
-
-function setInventorySlotRef(ref: InstanceType<typeof InventorySlot> | null) {
-  if (ref?.node) {
-    inventory.inventoryItemRefs.push(ref.node);
-  }
-}
-
-onBeforeUpdate(() => {
-  inventory.inventoryItemRefs = [];
-});
 
 onUnmounted(() => {
   inventory.$reset();
@@ -58,7 +51,7 @@ onUnmounted(() => {
           v-for="i in inventory.size"
           :key="i"
           :slot="i - 1"
-          :ref="(setInventorySlotRef as any)"
+          :ref="(inventorySlots.setSlotRef as any)"
         />
       </div>
     </div>
@@ -73,7 +66,7 @@ onUnmounted(() => {
   />
   <ItemInfo
     v-if="inventory.currentInteraction.type === InteractionType.Hovering"
-    :key="inventory.currentInteraction.state.item.slot"
+    :key="JSON.stringify(inventory.currentInteraction.state.item.source)"
     v-bind="inventory.currentInteraction.state"
   />
 </template>

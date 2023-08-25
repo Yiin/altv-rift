@@ -1,5 +1,6 @@
 import alt from "alt-server";
 import { ItemType } from "@prisma/client";
+import { toRaw } from "vue";
 import { ServerEvents } from "@shared/events/server";
 import {
   createItem,
@@ -9,8 +10,9 @@ import {
   getWeaponHash,
 } from "@shared/modules/items";
 import { AmmoItem, InventoryItem } from "@shared/interfaces";
+import { isInGame } from "@/utility/assertions";
 
-alt.on(ServerEvents.FromServer.EQUIP_ITEM, (player, item) => {
+alt.on(ServerEvents.FromServer.EQUIP_ITEM, (player, item, inventorySlot) => {
   if (item.type !== ItemType.AMMO) {
     return;
   }
@@ -29,11 +31,13 @@ alt.on(ServerEvents.FromServer.EQUIP_ITEM, (player, item) => {
     return;
   }
 
-  const weaponData = getItemData(equipedWeapon);
+  if (typeof inventorySlot === "undefined") {
+    return;
+  }
 
   const inventoryItem = player.store.character.inventory.items.find(
     (inventoryItem): inventoryItem is InventoryItem<AmmoItem> => {
-      return inventoryItem.data === item;
+      return inventoryItem.slot === inventorySlot;
     }
   );
 
@@ -42,8 +46,6 @@ alt.on(ServerEvents.FromServer.EQUIP_ITEM, (player, item) => {
   }
 
   player.loadAmmoIntoWeapon(inventoryItem, equipedWeapon);
-
-  player.setWeaponAmmo(getWeaponHash(equipedWeapon.key), weaponData.ammo?.data.amount ?? 0);
 });
 
 alt.on(ServerEvents.FromServer.UNEQUIP_ITEM, (player, equipmentSlot) => {
@@ -67,16 +69,12 @@ alt.on(ServerEvents.FromServer.UNEQUIP_ITEM, (player, equipmentSlot) => {
     return;
   }
 
-  const weaponHash = getWeaponHash(equipedWeapon.key);
-
   const ammo = weaponData.ammo;
 
   // Unequip ammo
   weaponData.ammo = null;
 
   // Add ammo to inventory
-  player.addItem(createItem(ammo.key, ammo.data));
-
-  // Set weapon ammo to 0
-  player.setWeaponAmmo(weaponHash, 0);
+  player.addItem(createItem(ammo.key, ammo.clip));
+  player.addItem(createItem(ammo.key, ammo.rest));
 });

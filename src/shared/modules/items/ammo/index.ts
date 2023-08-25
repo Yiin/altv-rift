@@ -1,4 +1,4 @@
-import { ItemType } from "@prisma/client";
+import { ItemType } from "@prisma/client/edge";
 import { AmmoItem, EquipedAmmo } from "@shared/interfaces";
 import { AmmoGroup } from "../weapons/weapon-groups";
 import { getItemData } from "../lib/get-item-data";
@@ -156,11 +156,26 @@ export function getAmmoKeyForAmmoGroup(group: AmmoGroup) {
   return (Object.keys(ammo) as AmmoItemKey[]).find((key) => ammo[key].group === group)!;
 }
 
-export function toEquipedAmmo(ammo: AmmoItem): EquipedAmmo {
+export function toEquipedAmmo(
+  ammo: AmmoItem,
+  clipSize: number,
+  currentEquipedAmmo?: EquipedAmmo
+): EquipedAmmo {
+  const total =
+    getItemData(ammo).amount +
+    (currentEquipedAmmo?.clip.amount ?? 0) +
+    (currentEquipedAmmo?.rest.amount ?? 0);
+
+  const clip = Math.min(total, clipSize);
+  const rest = total - clip;
+
   return {
     key: ammo.key,
-    data: {
-      amount: getItemData(ammo).amount,
+    clip: {
+      amount: clip,
+    },
+    rest: {
+      amount: rest,
     },
   };
 }
