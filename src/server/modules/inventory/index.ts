@@ -24,32 +24,18 @@ registerCmd("additem", (player, [key, amount]) => {
   player.addItem(item);
 });
 
-rpc.registerWebview(ServerCall.FromWebview.USE_ITEM, (player, slot) => {
+rpc.registerWebview(ServerCall.FromWebview.USE_ITEM, (player, itemSource) => {
   needsToBeInGame(player);
 
-  const inventoryItem = player.store.character.inventory.items.find((item) => {
-    return item.slot === slot;
-  });
-
-  if (!inventoryItem) {
-    return false;
-  }
-
-  alt.emit(ServerEvents.FromServer.USE_ITEM, player, inventoryItem);
+  alt.emit(ServerEvents.FromServer.USE_ITEM, player, itemSource);
 
   return true;
 });
 
-rpc.registerWebview(ServerCall.FromWebview.EQUIP_ITEM, (player, slot) => {
+rpc.registerWebview(ServerCall.FromWebview.EQUIP_ITEM, (player, itemSource) => {
   needsToBeInGame(player);
 
-  const inventoryItem = player.getInventoryItemInSlot(slot);
-
-  if (!inventoryItem) {
-    return false;
-  }
-
-  player.equipItem(inventoryItem);
+  player.equipItem(itemSource);
   return true;
 });
 
@@ -61,18 +47,18 @@ rpc.registerWebview(ServerCall.FromWebview.UNEQUIP_ITEM, (player, equipmentSlot)
   return true;
 });
 
-rpc.registerWebview(ServerCall.FromWebview.LOAD_AMMO, (player, slotA, slotB) => {
+rpc.registerWebview(ServerCall.FromWebview.LOAD_AMMO, (player, sourceA, sourceB) => {
   needsToBeInGame(player);
 
-  player.loadAmmo(slotA, slotB);
+  player.loadAmmo(sourceA, sourceB);
 
   return true;
 });
 
-rpc.registerWebview(ServerCall.FromWebview.UNLOAD_AMMO, (player, slot) => {
+rpc.registerWebview(ServerCall.FromWebview.UNLOAD_AMMO, (player, itemSource) => {
   needsToBeInGame(player);
 
-  player.unloadAmmo(slot);
+  player.unloadAmmo(itemSource);
 
   return true;
 });
@@ -83,14 +69,10 @@ rpc.registerClient(ServerCall.FromClient.RELOAD_WEAPON, (player) => {
   return player.reloadWeapon();
 });
 
-rpc.registerWebview(ServerCall.FromWebview.DROP_ITEM, (player, slot) => {
+rpc.registerWebview(ServerCall.FromWebview.DROP_ITEM, (player, itemSource) => {
   needsToBeInGame(player);
 
-  const index = player.store.character.inventory.items.findIndex((inventoryItem) => {
-    return inventoryItem.slot === slot;
-  });
-
-  player.store.character.inventory.items.splice(index, 1);
+  alt.emit(ServerEvents.FromServer.DROP_ITEM, itemSource);
   return true;
 });
 

@@ -11,10 +11,10 @@ import { MaterialItemKey } from "@shared/modules/items/materials";
 type Override<A, B> = Omit<A, keyof B> & B;
 type NullableKeys<T> = {
   [K in keyof T]: UnionToIntersection<T[K]> extends null
-    ? K
-    : UnionToIntersection<T[K]> extends Array<any>
-    ? K
-    : never;
+  ? K
+  : UnionToIntersection<T[K]> extends Array<any>
+  ? K
+  : never;
 }[keyof T];
 type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
 type OptionalNullable<T> = Optional<T, NullableKeys<T>>;
@@ -161,9 +161,9 @@ export type Equipment = {
   lefthand?: ClothingItem | null;
   pants?: ClothingItem | null;
   righthand?: ClothingItem | null;
-  backpack?: Item | null;
+  backpack?: null;
   shoes?: ClothingItem | null;
-  phone?: Item | null;
+  phone?: null;
 };
 
 export type Character = Override<
