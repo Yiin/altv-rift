@@ -26,7 +26,7 @@ alt.on(ServerEvents.FromServer.USE_ITEM, (player, item) => {
   const questFacts = player.store.character.questFacts;
 
   if (
-    item.data.key === Consumable.SIMPLE_MEDKIT &&
+    item.key === Consumable.SIMPLE_MEDKIT &&
     questFacts.includes(Quests.Introduction.Facts.GOT_INTRODUCTION) &&
     !questFacts.includes(Quests.Introduction.Facts.USED_MEDKIT)
   ) {

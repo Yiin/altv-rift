@@ -6,7 +6,7 @@ import { computed } from "vue";
 
 const props = defineProps<Dropping>();
 
-const item = computed(() => props.item.data);
+const item = computed(() => props.item.item);
 
 const inventory = useInventory();
 const details = useItemDetails(item);

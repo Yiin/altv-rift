@@ -1,4 +1,4 @@
-import { ItemSource, EquipmentSlot } from "@shared/interfaces";
+import { LocalItemSource, EquipmentSlot, Item } from "@shared/interfaces";
 
 export const FromServer = {
   MANUAL_DISCORD_AUTH_DONE: "MANUAL_DISCORD_AUTH_DONE",
@@ -15,11 +15,11 @@ export interface EventFromServer {
   ) => Promise<void> | void;
   [FromServer.USE_ITEM]: (
     player: import("../../../server/utility/assertions").InGamePlayer,
-    itemSource: ItemSource
+    item: Item
   ) => Promise<void> | void;
   [FromServer.EQUIP_ITEM]: (
     player: import("../../../server/utility/assertions").InGamePlayer,
-    itemSource: ItemSource,
+    item: Item
   ) => Promise<void> | void;
   [FromServer.UNEQUIP_ITEM]: (
     player: import("../../../server/utility/assertions").InGamePlayer,
@@ -27,7 +27,7 @@ export interface EventFromServer {
   ) => Promise<void> | void;
   [FromServer.DROP_ITEM]: (
     player: import("../../../server/utility/assertions").InGamePlayer,
-    itemSource: ItemSource
+    item: Item
   ) => Promise<void> | void;
 }
 

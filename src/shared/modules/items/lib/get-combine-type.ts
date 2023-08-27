@@ -3,7 +3,7 @@ import { makeEnum } from "@shared/utility/make-enum";
 import { ItemKey } from "../types";
 import { getItemInfoByKey } from "../registry";
 import { isItemWeapon } from "../weapons";
-import { isItemAmmo } from "../ammo";
+import { isItemKeyAmmo } from "../ammo";
 
 export const CombineType = makeEnum({
   None: "None",
@@ -11,7 +11,7 @@ export const CombineType = makeEnum({
 });
 
 export function getCombineType(target: ItemKey, source: ItemKey, reverse = false) {
-  if (isItemWeapon(target) && isItemAmmo(source)) {
+  if (isItemWeapon(target) && isItemKeyAmmo(source)) {
     const weaponInfo = getItemInfoByKey(target);
 
     if (weaponInfo.itemType !== ItemType.FIREARM_WEAPON) {

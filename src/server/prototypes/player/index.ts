@@ -13,10 +13,7 @@ import "./inventory/get-inventory-item-in-slot";
 import "./inventory/remove-item";
 import "./inventory/unequip-item";
 import "./inventory/weapons/find-base-ammo-for-weapon";
-import "./inventory/weapons/load-ammo-into-weapon";
-import "./inventory/weapons/load-ammo";
 import "./inventory/weapons/reload-weapon";
-import "./inventory/weapons/unload-ammo";
 import "./load-user";
 import "./setup";
 // @endindex

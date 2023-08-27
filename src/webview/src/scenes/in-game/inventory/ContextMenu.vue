@@ -30,26 +30,34 @@ const isEquipable = computed(
 const hasAmmo = computed(
   () => !!(item.value.type === ItemType.FIREARM_WEAPON && getItemData(item.value).ammo)
 );
-const canLoadAmmo = computed(() => {
+
+const combine = computed(() => {
   if (itemSource.value.type !== "inventory") {
-    return false;
+    return {
+      type: CombineType.None,
+      reverse: false,
+    };
   }
 
   if (!inventory.selectedItem) {
-    return false;
+    return {
+      type: CombineType.None,
+      reverse: false,
+    };
   }
+
   const target = item.value.key;
   const source = inventory.selectedItem.item.key;
 
-  const [combineType, reverse] = getCombineType(target, source);
+  const [type, reverse] = getCombineType(target, source);
 
-  switch (combineType) {
-    case CombineType.EquipAmmo:
-      return true;
-  }
-
-  return false;
+  return {
+    type,
+    reverse,
+  };
 });
+
+const canLoadAmmo = computed(() => combine.value.type === CombineType.EquipAmmo);
 
 function executeAction(action: "use" | "equip" | "drop" | "unload-ammo" | "load-ammo") {
   inventory.closeActionMenu();
@@ -68,7 +76,11 @@ function executeAction(action: "use" | "equip" | "drop" | "unload-ammo" | "load-
       break;
     case "load-ammo":
       if (inventory.selectedItem) {
-        inventory.loadAmmo(source, inventory.selectedItem.source);
+        if (combine.value.reverse) {
+          inventory.loadAmmo(inventory.selectedItem.source, source);
+        } else {
+          inventory.loadAmmo(source, inventory.selectedItem.source);
+        }
       }
       break;
     case "unload-ammo":

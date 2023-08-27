@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { useInventoryGrid } from "@/composables/use-inventory-grid";
-import { InventoryItem, InventorySource } from "@shared/interfaces";
+import { LocalInventoryItemSource } from "@shared/interfaces";
 import { computed } from "vue";
 import { InteractionType, SlottedItem, isSameSource, useInventory } from "@/store/inventory.store";
 import ItemIcon from "./ItemIcon.vue";
 
 const props = defineProps<{
-  item: SlottedItem<InventorySource>;
+  item: SlottedItem<LocalInventoryItemSource>;
 }>();
 
 const inventory = useInventory();

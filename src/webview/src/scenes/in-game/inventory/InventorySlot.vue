@@ -5,7 +5,7 @@ import { InteractionType, SlottedItem, useInventory } from "@/store/inventory.st
 import InventoryItemIcon from "./InventoryItemIcon.vue";
 import { isItemUsable, isItemEquipable } from "@shared/modules/items";
 import { px } from "@/composables/use-pixel";
-import { InventorySource } from "@shared/interfaces";
+import { LocalInventoryItemSource } from "@shared/interfaces";
 
 const props = defineProps<{
   slot: number;
@@ -19,7 +19,7 @@ const nodeRef = ref<HTMLDivElement>();
 const pos = computed(() => inventoryGrid.getSlotPositionInGrid(props.slot));
 const item = computed(() =>
   inventory.items.find(
-    (item): item is SlottedItem<InventorySource> =>
+    (item): item is SlottedItem<LocalInventoryItemSource> =>
       item.source.type === "inventory" && item.source.inventorySlot === props.slot
   )
 );

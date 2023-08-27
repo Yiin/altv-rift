@@ -37,6 +37,6 @@ export interface CallFromWebview<
   [FromWebview.EQUIP_ITEM]: (player: P, source: ItemSource) => boolean;
   [FromWebview.UNEQUIP_ITEM]: (player: P, equipmentSlot: EquipmentSlot) => boolean;
   [FromWebview.DROP_ITEM]: (player: P, source: ItemSource) => boolean;
-  [FromWebview.LOAD_AMMO]: (player: P, sourceA: ItemSource, sourceB: ItemSource) => boolean;
+  [FromWebview.LOAD_AMMO]: (player: P, weaponSource: ItemSource, ammoSource: ItemSource) => boolean;
   [FromWebview.UNLOAD_AMMO]: (player: P, source: ItemSource) => boolean;
 }

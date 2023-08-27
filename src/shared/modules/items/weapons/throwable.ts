@@ -1,4 +1,5 @@
 import { ItemType } from "@prisma/client/edge";
+import { Item, ThrowableWeaponItem } from "@shared/interfaces";
 import { ItemFlags } from "../item-flags";
 import { WeaponGroup } from "./weapon-groups";
 import { getWeaponData } from ".";
@@ -244,3 +245,11 @@ export const throwableWeapons: Record<ThrowableWeaponItemKey, ThrowableWeaponIte
     },
   },
 };
+
+export function isItemKeyThrowableWeapon(key: string): key is ThrowableWeaponItemKey {
+  return key in throwableWeapons;
+}
+
+export function isItemThrowableWeapon(item: Item): item is ThrowableWeaponItem {
+  return isItemKeyThrowableWeapon(item.key);
+}

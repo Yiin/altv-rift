@@ -1,4 +1,5 @@
 import { ItemType } from "@prisma/client/edge";
+import { Item, MeleeWeaponItem } from "@shared/interfaces";
 import { ItemFlags } from "../item-flags";
 import { WeaponGroup } from "./weapon-groups";
 import { getWeaponData } from ".";
@@ -333,3 +334,11 @@ export const meleeWeapons: Record<MeleeWeaponItemKey, MeleeItemInfo> = {
     },
   },
 };
+
+export function isItemKeyMeleeWeapon(key: string): key is MeleeWeaponItemKey {
+  return key in meleeWeapons;
+}
+
+export function isItemMeleeWeapon(item: Item): item is MeleeWeaponItem {
+  return isItemKeyMeleeWeapon(item.key);
+}

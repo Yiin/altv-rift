@@ -2,6 +2,7 @@
 import { useInventory } from "@/store/inventory.store";
 import { ItemType } from "@prisma/client";
 import { getItemData, getItemName, getItemInfoByKey } from "@shared/modules/items";
+import { isItemFirearmWeapon } from "@shared/modules/items/weapons/firearms";
 import { computed } from "vue";
 
 const inventory = useInventory();
@@ -12,18 +13,21 @@ const weapon = computed(() => {
   if (!weapon) {
     return null;
   }
-  if (weapon.type !== ItemType.FIREARM_WEAPON) {
+
+  const weaponItem = weapon.item;
+
+  if (!isItemFirearmWeapon(weaponItem)) {
     return null;
   }
 
-  const name = getItemName(weapon.key);
-  const weaponInfo = getItemInfoByKey(weapon.key);
+  const name = getItemName(weaponItem.key);
+  const weaponInfo = getItemInfoByKey(weaponItem.key);
 
   return {
     name,
     clipSize: weaponInfo.clipSize ?? 0,
-    clip: getItemData(weapon).ammo?.clip.amount ?? 0,
-    rest: getItemData(weapon).ammo?.rest.amount ?? 0,
+    clip: getItemData(weaponItem).ammo?.clip.amount ?? 0,
+    rest: getItemData(weaponItem).ammo?.rest.amount ?? 0,
   };
 });
 </script>

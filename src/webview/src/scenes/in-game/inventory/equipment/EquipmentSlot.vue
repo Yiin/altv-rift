@@ -3,9 +3,8 @@ import { computed, ref } from "vue";
 import { SlottedItem, useInventory } from "@/store/inventory.store";
 import ItemIcon from "../ItemIcon.vue";
 import { px } from "@/composables/use-pixel";
-import { usePlayerStore } from "@shared/store/player.store";
 import { ItemType } from "@prisma/client";
-import { AmmoItem, EquipmentSource } from "@shared/interfaces";
+import { AmmoItem, LocalEquipmentItemSource } from "@shared/interfaces";
 
 const equipmentSlots = {
   headwear: {
@@ -138,7 +137,7 @@ const item = computed(() => {
           type: "equipment",
           equipmentSlot: "ammo",
         },
-      } as SlottedItem<EquipmentSource, AmmoItem>;
+      } as SlottedItem<LocalEquipmentItemSource, AmmoItem>;
     }
     return null;
   }

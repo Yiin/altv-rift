@@ -1,5 +1,5 @@
 import { ItemType } from "@prisma/client/edge";
-import { AmmoItem, EquipedAmmo } from "@shared/interfaces";
+import { AmmoItem, EquipedAmmo, Item } from "@shared/interfaces";
 import { AmmoGroup } from "../weapons/weapon-groups";
 import { getItemData } from "../lib/get-item-data";
 import { ItemKey } from "../types";
@@ -148,8 +148,12 @@ export const ammo: Record<AmmoItemKey, AmmoItemInfo> = {
   },
 };
 
-export function isItemAmmo(key: ItemKey): key is AmmoItemKey {
+export function isItemKeyAmmo(key: ItemKey): key is AmmoItemKey {
   return key in ammo;
+}
+
+export function isItemAmmo(item: Item): item is AmmoItem {
+  return isItemKeyAmmo(item.key);
 }
 
 export function getAmmoKeyForAmmoGroup(group: AmmoGroup) {

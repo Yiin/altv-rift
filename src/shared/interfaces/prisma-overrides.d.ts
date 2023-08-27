@@ -11,10 +11,10 @@ import { MaterialItemKey } from "@shared/modules/items/materials";
 type Override<A, B> = Omit<A, keyof B> & B;
 type NullableKeys<T> = {
   [K in keyof T]: UnionToIntersection<T[K]> extends null
-  ? K
-  : UnionToIntersection<T[K]> extends Array<any>
-  ? K
-  : never;
+    ? K
+    : UnionToIntersection<T[K]> extends Array<any>
+    ? K
+    : never;
 }[keyof T];
 type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
 type OptionalNullable<T> = Optional<T, NullableKeys<T>>;
@@ -136,7 +136,7 @@ export type ItemData =
 export type InventoryItem<T = Item> = Override<
   Prisma.InventoryItem,
   {
-    data: T;
+    item: T;
   }
 >;
 

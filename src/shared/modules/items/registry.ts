@@ -1,5 +1,5 @@
 import { ItemType } from "@prisma/client/edge";
-import { InventoryItem } from "@shared/interfaces";
+import { InventoryItem, Item } from "@shared/interfaces";
 import { ammo } from "./ammo";
 import { clothing } from "./clothing";
 import { consumables } from "./consumables";
@@ -51,14 +51,16 @@ export function getItemDescription(key: ItemKey) {
   return getItemInfoByKey(key).description;
 }
 
-export function getItemEquipmentSlot(inventoryItem: InventoryItem) {
-  switch (inventoryItem.data.type) {
+export function getItemEquipmentSlot(item: Item) {
+  switch (item.type) {
+    case ItemType.AMMO:
+      return "ammo";
     case ItemType.FIREARM_WEAPON:
     case ItemType.THROWABLE_WEAPON:
     case ItemType.MELEE_WEAPON:
       return "weapon";
     case ItemType.CLOTHING:
-      const itemInfo = getItemInfoByKey(inventoryItem.data.key);
+      const itemInfo = getItemInfoByKey(item.key);
       return itemInfo.equipmentSlot;
   }
   return;

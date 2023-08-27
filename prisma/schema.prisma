@@ -54,7 +54,8 @@ model Character {
   lastPosition Position
   rot          Float
   appearance   Appearance
-  health       Float
+  health       Float      @default(100)
+  maxHealth    Float      @default(100)
   createdAt    DateTime   @default(now())
   inventory    Inventory
   equipment    Equipment
@@ -77,7 +78,7 @@ type Inventory {
 
 type InventoryItem {
   slot Int
-  data ItemData
+  item ItemData
 }
 
 type Equipment {

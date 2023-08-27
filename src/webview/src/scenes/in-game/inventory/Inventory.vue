@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeUpdate, onUnmounted } from "vue";
+import { computed, onUnmounted } from "vue";
 import Window from "@/components/Window.vue";
 import { useWindowSize } from "@/composables/use-window-size";
 import DropItemWarning from "./DropItemWarning.vue";
