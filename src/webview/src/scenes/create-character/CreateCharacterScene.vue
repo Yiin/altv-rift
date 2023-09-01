@@ -22,23 +22,18 @@ import FaceSkin from "./FaceSkin.vue";
 import { useEventListener } from "@/composables/use-event-listener";
 import PlayButton from "./PlayButton.vue";
 import Screen from "@/components/Screen.vue";
+import { ClientEvents } from "@shared/events/client";
 
 const createCharacter = useCreateCharacter();
 
 const screenRef = ref<InstanceType<typeof Screen> | null>(null);
 
 watch(createCharacter, () => {
-  alt.emit(
-    Events.Client.UPDATE_CHARACTER_APPEARANCE,
-    createCharacter.appearance
-  );
+  alt.emit(ClientEvents.FromWebview.UPDATE_CHARACTER_APPEARANCE, createCharacter.appearance);
 });
 
 onMounted(() => {
-  alt.emit(
-    Events.Client.UPDATE_CHARACTER_APPEARANCE,
-    createCharacter.appearance
-  );
+  alt.emit(ClientEvents.FromWebview.UPDATE_CHARACTER_APPEARANCE, createCharacter.appearance);
 });
 
 useEventListener("pointerdown", (e) => {
@@ -46,12 +41,12 @@ useEventListener("pointerdown", (e) => {
     e.target instanceof HTMLElement &&
     (e.target.classList.contains("v-main") || "screen" in e.target.dataset)
   ) {
-    alt.emit(Events.Webview.CAMERA_MOVE_START);
+    alt.emit(ClientEvents.FromWebview.CAMERA_MOVE_START);
   }
 });
 
 useEventListener("pointerup", (e) => {
-  alt.emit(Events.Webview.CAMERA_MOVE_END);
+  alt.emit(ClientEvents.FromWebview.CAMERA_MOVE_END);
 });
 
 function randomize() {
@@ -67,9 +62,9 @@ function randomize() {
   }
 
   createCharacter.hair = getRandomHair(createCharacter.sex);
-  createCharacter.hairCollection = aspects(
-    createCharacter.sex
-  ).Hair.options.get(createCharacter.hair)!.collection;
+  createCharacter.hairCollection = aspects(createCharacter.sex).Hair.options.get(
+    createCharacter.hair
+  )!.collection;
   createCharacter.hairOverlay = aspects(createCharacter.sex).Hair.options.get(
     createCharacter.hair
   )!.overlay;
@@ -99,15 +94,11 @@ function randomize() {
     <NameAndSex
       class="absolute top-screen-1/10 left-1/2 -translate-x-1/2 flex flex-col justify-center items-center gap-6"
     />
-    <div
-      class="absolute top-screen-1/10 left-screen-1/10 w-96 flex flex-col gap-8"
-    >
+    <div class="absolute top-screen-1/10 left-screen-1/10 w-96 flex flex-col gap-8">
       <FaceShape />
       <Features />
     </div>
-    <div
-      class="absolute top-screen-1/10 right-screen-1/10 w-96 flex flex-col gap-8"
-    >
+    <div class="absolute top-screen-1/10 right-screen-1/10 w-96 flex flex-col gap-8">
       <FaceSkin />
       <Appearance />
     </div>

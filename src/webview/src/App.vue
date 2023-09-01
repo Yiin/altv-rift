@@ -1,26 +1,17 @@
 <script setup lang="ts">
 import { ClientEvents } from "@shared/events/client";
-import { WebviewEvents } from "@shared/events/webview";
-import { usePlayerStore } from "@shared/store/player.store";
-import { updateStoreState } from "@shared/store/utils";
-import { onMounted, ref } from "vue";
-import { useAlt } from "./composables/use-alt";
+import { onMounted } from "vue";
 import { useEventListener } from "./composables/use-event-listener";
 import { useSceneManager } from "./composables/use-scene-manager";
-import { useClient } from "./store/client.store";
+import { useSyncedStores } from "./composables/use-synced-stores";
 
 useSceneManager();
-const { on } = useAlt();
-const playerStore = usePlayerStore();
-const clientStore = useClient();
+useSyncedStores();
 
 useEventListener(
   "focus",
   (e) => {
-    if (
-      e.target instanceof HTMLInputElement ||
-      e.target instanceof HTMLTextAreaElement
-    ) {
+    if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
       alt.emit(ClientEvents.FromWebview.INPUT_FOCUS, true);
     }
   },
@@ -30,28 +21,12 @@ useEventListener(
 useEventListener(
   "blur",
   (e) => {
-    if (
-      e.target instanceof HTMLInputElement ||
-      e.target instanceof HTMLTextAreaElement
-    ) {
+    if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
       alt.emit(ClientEvents.FromWebview.INPUT_FOCUS, false);
     }
   },
   true
 );
-
-on(WebviewEvents.FromClient.UPDATE_PLAYER_STATE, (event: any) => {
-  updateStoreState(playerStore, event);
-});
-
-on(WebviewEvents.FromClient.SET_CLIENT_STATE, (state: any) => {
-  clientStore.$state = state;
-});
-
-on(WebviewEvents.FromClient.UPDATE_CLIENT_STATE, (event: any) => {
-  /// @ts-expect-error clientStore state is marked as read-only, but only in types
-  updateStoreState(clientStore, event);
-});
 
 onMounted(() => {
   alt.emit(ClientEvents.FromWebview.VIEW_READY);

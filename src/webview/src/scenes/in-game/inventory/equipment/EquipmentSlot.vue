@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { SlottedItem, useInventory } from "@/store/inventory.store";
+import { InteractionType, SlottedItem, useInventory } from "@/store/inventory.store";
 import ItemIcon from "../ItemIcon.vue";
 import { px } from "@/composables/use-pixel";
 import { ItemType } from "@prisma/client";
 import { AmmoItem, LocalEquipmentItemSource } from "@shared/interfaces";
+import { getItemEquipmentSlot } from "@shared/modules/items";
 
 const equipmentSlots = {
   headwear: {
@@ -145,15 +146,45 @@ const item = computed(() => {
 });
 const slot = computed(() => equipmentSlots[props.name]);
 
+const draggingOver = computed(() => {
+  const interaction = inventory.currentInteraction;
+
+  if (interaction.type === InteractionType.Dragging) {
+    const currentCursorPos = interaction.state.currentPosition;
+
+    const nodeRect = nodeRef.value?.getBoundingClientRect();
+
+    if (!nodeRect) {
+      return false;
+    }
+
+    if (getItemEquipmentSlot(interaction.state.item.item) !== props.name) {
+      return false;
+    }
+
+    return (
+      currentCursorPos.x >= nodeRect.left &&
+      currentCursorPos.x <= nodeRect.right &&
+      currentCursorPos.y >= nodeRect.top &&
+      currentCursorPos.y <= nodeRect.bottom
+    );
+  }
+
+  return false;
+});
+
 function unequipItem() {
   inventory.unequipItem(props.name);
 }
 
 const nodeRef = ref<HTMLDivElement>();
 
-defineExpose({
+inventory.registerItemSlot({
+  source: {
+    type: "equipment",
+    equipmentSlot: props.name,
+  },
   node: nodeRef,
-  equipmentSlot: props.name,
 });
 </script>
 
@@ -161,7 +192,7 @@ defineExpose({
   <div
     ref="nodeRef"
     class="absolute top-0 left-0 w-20 h-20 bg-gray-800/80 item-slot text-white"
-    :class="[item && 'drop-shadow-[2px_4px_6px_black]']"
+    :class="[(draggingOver || item) && 'drop-shadow-[2px_4px_6px_black]']"
     :style="{
       transform: `translate(${slot.x}px, ${slot.y}px)`,
     }"

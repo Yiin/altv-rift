@@ -1,5 +1,4 @@
 import { defineStore } from "pinia";
-import { usePlayerStore } from "@shared/store/player.store";
 import { rpc } from "@/rpc";
 import {
   Equipment,
@@ -12,23 +11,23 @@ import {
   ItemSource,
 } from "@shared/interfaces";
 import { ServerCall } from "@shared/calls/server";
-import { ComponentPublicInstance, reactive, toRaw } from "vue";
+import { ComponentPublicInstance, Ref, markRaw, reactive, toRaw } from "vue";
 import DropItemWarning from "@/scenes/in-game/inventory/DropItemWarning.vue";
 import { px } from "@/composables/use-pixel";
 import { ClientEvents } from "@shared/events/client";
-import { CombineType, getCombineType } from "@shared/modules/items";
+import { CombineType, createItem, getCombineType } from "@shared/modules/items";
+import { ItemType } from "@prisma/client/edge";
+import { useCharacter } from "./synced/character.store";
+import { useGameState } from "./synced/game-state.store";
 
 const MOCK_ITEMS = reactive([
   {
     slot: 0,
     item: {
       key: "snowball",
-      type: "WEAPON",
-      WEAPON: {
-        durability: 100,
-        ammo: null,
-        components: [],
-        tints: [],
+      type: "THROWABLE_WEAPON",
+      THROWABLE_WEAPON: {
+        amount: 50,
       },
     },
   },
@@ -36,12 +35,12 @@ const MOCK_ITEMS = reactive([
     slot: 1,
     item: {
       key: "appistol",
-      type: "WEAPON",
-      WEAPON: {
+      type: "FIREARM_WEAPON",
+      FIREARM_WEAPON: {
         durability: 100,
         ammo: null,
         components: [],
-        tints: [],
+        tint: 0,
       },
     },
   },
@@ -52,6 +51,16 @@ const MOCK_ITEMS = reactive([
       type: "AMMO",
       AMMO: {
         amount: 100,
+      },
+    },
+  },
+  {
+    slot: 3,
+    item: {
+      key: "assaultrifleammo",
+      type: "AMMO",
+      AMMO: {
+        amount: 256,
       },
     },
   },
@@ -121,19 +130,6 @@ export type ItemInteraction =
       state: ItemActionMenu;
     };
 
-export type ItemSlotRef = {
-  node: HTMLElement;
-  source: LocalItemSource;
-};
-
-interface State {
-  itemSlotRefs: ItemSlotRef[];
-  dropItemWarningRef?: ComponentPublicInstance<typeof DropItemWarning>;
-  currentInteraction: ItemInteraction;
-  selectedItem?: SlottedItem;
-  draggingItemThisFrame: boolean;
-}
-
 const IDLE = { type: InteractionType.None } as const;
 
 export type SlottedItem<S = LocalItemSource, T = Item> = {
@@ -159,25 +155,42 @@ export function isSameSource(a: LocalItemSource, b: LocalItemSource) {
   );
 }
 
+type ItemSlot = { source: LocalItemSource; node: { value: HTMLElement | undefined } };
+
+interface State {
+  itemSlots: ItemSlot[];
+  dropItemWarningRef?: ComponentPublicInstance<typeof DropItemWarning>;
+  currentInteraction: ItemInteraction;
+  selectedItem?: SlottedItem;
+  draggingItemThisFrame: boolean;
+}
+
 export const useInventory = defineStore("inventory", {
   state: (): State => ({
-    itemSlotRefs: [],
+    itemSlots: [],
     dropItemWarningRef: undefined,
     currentInteraction: IDLE,
     draggingItemThisFrame: false,
     selectedItem: undefined,
   }),
   getters: {
-    playerId: () => {
-      return usePlayerStore().character?.id!;
+    character: () => {
+      return useCharacter();
     },
-    size: () => {
-      return usePlayerStore().character?.inventory.size ?? 30;
+    playerId(): string {
+      return this.character.id;
     },
-    items() {
-      const items: SlottedItem[] = [];
+    size(): number {
+      return this.character.inventory.size ?? 30;
+    },
+    items(): SlottedItem[] {
+      const items: SlottedItem[] = reactive([]);
 
-      const inventoryItems = usePlayerStore().character?.inventory.items.filter(Boolean);
+      if (!useGameState().isInGame) {
+        return items;
+      }
+
+      const inventoryItems = this.character.inventory.items.filter(Boolean);
       for (const inventoryItem of inventoryItems ?? MOCK_ITEMS) {
         items.push({
           item: inventoryItem.item,
@@ -188,7 +201,7 @@ export const useInventory = defineStore("inventory", {
         });
       }
 
-      const equipmentItems = Object.entries(usePlayerStore().character?.equipment ?? {}).filter(
+      const equipmentItems = Object.entries(this.character.equipment ?? {}).filter(
         ([, item]) => !!item
       ) as [EquipmentSlot, Item][];
       for (const [equipmentSlot, item] of equipmentItems) {
@@ -246,6 +259,9 @@ export const useInventory = defineStore("inventory", {
     },
   },
   actions: {
+    registerItemSlot(slot: ItemSlot) {
+      this.itemSlots.push(markRaw(slot));
+    },
     toCharacterItemSource(source: LocalItemSource): ItemSource {
       return {
         ...source,
@@ -310,13 +326,17 @@ export const useInventory = defineStore("inventory", {
         return;
       }
 
-      const source = this.getItemSource(e);
+      const source = this.getItemSource(e.clientX, e.clientY);
 
       if (!source) {
         return;
       }
 
-      const item = this.items.find((item) => isSameSource(item.source, source))!;
+      const item = this.items.find((item) => isSameSource(item.source, source));
+
+      if (!item) {
+        return;
+      }
 
       this.currentInteraction = {
         type: InteractionType.Dragging,
@@ -352,9 +372,39 @@ export const useInventory = defineStore("inventory", {
           return;
         case InteractionType.Hovering:
         case InteractionType.None:
-          const source = this.getItemSource(e);
+          const source = this.getItemSource(e.clientX, e.clientY);
 
-          const itemInSlot = this.items.find((item) => item.source === source);
+          if (!source) {
+            return;
+          }
+
+          if (this.currentInteraction.type === InteractionType.Hovering) {
+            if (isSameSource(this.currentInteraction.state.item.source, source)) {
+              this.currentInteraction.state.position = { x: e.clientX, y: e.clientY };
+              return;
+            }
+          }
+
+          const itemInSlot =
+            source.type === "equipment" && source.equipmentSlot === "ammo"
+              ? (() => {
+                  const ammo = this.items.find((item) =>
+                    isSameSource(item.source, {
+                      type: "equipment",
+                      equipmentSlot: "weapon",
+                    })
+                  )?.item.FIREARM_WEAPON?.ammo;
+
+                  return (
+                    ammo && {
+                      source,
+                      item: createItem(ammo.key, {
+                        amount: ammo.clip.amount + ammo.rest.amount,
+                      }),
+                    }
+                  );
+                })()
+              : this.items.find((item) => isSameSource(item.source, source));
 
           if (!itemInSlot) {
             this.currentInteraction = IDLE;
@@ -377,7 +427,7 @@ export const useInventory = defineStore("inventory", {
           return;
         }
 
-        const source = this.getItemSource(e);
+        const source = this.getItemSource(e.clientX, e.clientY);
 
         // If the item is dropped outside of the inventory
         if (!source) {
@@ -429,7 +479,7 @@ export const useInventory = defineStore("inventory", {
         return;
       }
 
-      const source = this.getItemSource(e);
+      const source = this.getItemSource(e.clientX, e.clientY);
 
       if (!source) {
         return;
@@ -459,8 +509,9 @@ export const useInventory = defineStore("inventory", {
           case CombineType.EquipAmmo:
             this.selectedItem = undefined;
 
-            const [weapon, ammo] = reverse ? [source, target] : [target, source];
-            this.loadAmmo(ammo.source, weapon.source);
+            const [weapon, ammo] =
+              source.item.type === ItemType.AMMO ? [target, source] : [source, target];
+            this.loadAmmo(weapon.source, ammo.source);
             return;
         }
       }
@@ -534,14 +585,12 @@ export const useInventory = defineStore("inventory", {
         this.selectedItem = undefined;
       }
     },
-    getItemSource(e: MouseEvent | PointerEvent) {
-      const x = e.clientX;
-      const y = e.clientY;
-
-      const result = this.itemSlotRefs
-        .map((ref) => [ref.source, ref.node.getBoundingClientRect()] as const)
+    getItemSource(x: number, y: number) {
+      const result = this.itemSlots
+        .map((slot) => [slot.source, slot.node.value?.getBoundingClientRect()] as const)
         .find(([, rect]) => {
           return (
+            rect &&
             x > rect.left - px(5) &&
             x <= rect.right + px(5) &&
             y > rect.top - px(5) &&
@@ -555,10 +604,13 @@ export const useInventory = defineStore("inventory", {
 
       return result[0];
     },
+    getItemSourceNode(source: LocalItemSource) {
+      return this.itemSlots.find((slot) => isSameSource(slot.source, source))?.node.value;
+    },
     getItemSourceScreenPosition(source: LocalItemSource) {
-      const rect = this.itemSlotRefs
-        .find((ref) => isSameSource(ref.source, source))
-        ?.node.getBoundingClientRect();
+      const rect = this.itemSlots
+        .find((slot) => isSameSource(slot.source, source))
+        ?.node.value?.getBoundingClientRect();
 
       if (!rect) {
         return { x: 0, y: 0 };

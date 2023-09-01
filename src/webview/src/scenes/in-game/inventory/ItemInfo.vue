@@ -60,15 +60,16 @@ const combination = computed(() => {
 
       <div v-if="details.equipedAmmo" class="flex items-center gap-1">
         <v-icon icon="mdi-ammunition" />
-        <div class="flex items-end gap-1">
+        <div>
           <div class="font-bold">
             {{ getItemName(details.equipedAmmo.key) }}
           </div>
-          <div>
+          <div class="flex items-baseline gap-1">
             <v-icon icon="mdi-close" size="12" />
-          </div>
-          <div class="font-bold text-yellow-500">
-            {{ details.equipedAmmo.clip }} / {{ details.equipedAmmo.rest }}
+            <div class="font-bold text-yellow-500">
+              {{ details.equipedAmmo.clip }}
+              <span class="text-xs">/ {{ details.equipedAmmo.rest }}</span>
+            </div>
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Screen from "@/components/Screen.vue";
-import { useClient } from "@/store/client.store";
+import { useClient } from "@/store/synced/client.store";
 import { computed } from "vue";
 
 const client = useClient();
@@ -9,14 +9,11 @@ const conversation = computed(() => client.conversation);
 </script>
 
 <template>
-  <Screen v-if="conversation" class="flex items-end justify-center">
+  <div v-if="conversation" class="w-full h-full flex items-end justify-center">
     <div class="p-24 text-white text-shadow">
       <div class="flex items-center gap-4">
         <h1 class="text-2xl font-bold">{{ conversation.with }}</h1>
-        <h2
-          v-if="conversation.topic"
-          class="text-xl px-2 py-0.5 bg-gray-900 rounded"
-        >
+        <h2 v-if="conversation.topic" class="text-xl px-2 py-0.5 bg-gray-900 rounded">
           {{ conversation.topic }}
         </h2>
       </div>
@@ -54,5 +51,5 @@ const conversation = computed(() => client.conversation);
         </div>
       </div>
     </div>
-  </Screen>
+  </div>
 </template>

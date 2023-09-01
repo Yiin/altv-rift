@@ -21,10 +21,12 @@ watch(
     fetch(getItemImage(item.value)).then((result) => {
       if (result.status === 404) {
         noImage.value = true;
+      } else {
+        noImage.value = false;
       }
     });
   },
-  { immediate: true }
+  { immediate: true, deep: true }
 );
 </script>
 

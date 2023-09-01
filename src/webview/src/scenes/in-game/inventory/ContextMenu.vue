@@ -27,6 +27,7 @@ const isUsable = computed(
 const isEquipable = computed(
   () => itemSource.value.type === "inventory" && isItemEquipable(item.value.key)
 );
+const isUnequipable = computed(() => itemSource.value.type === "equipment");
 const hasAmmo = computed(
   () => !!(item.value.type === ItemType.FIREARM_WEAPON && getItemData(item.value).ammo)
 );
@@ -59,7 +60,7 @@ const combine = computed(() => {
 
 const canLoadAmmo = computed(() => combine.value.type === CombineType.EquipAmmo);
 
-function executeAction(action: "use" | "equip" | "drop" | "unload-ammo" | "load-ammo") {
+function executeAction(action: string) {
   inventory.closeActionMenu();
 
   const source = itemSource.value;
@@ -70,6 +71,11 @@ function executeAction(action: "use" | "equip" | "drop" | "unload-ammo" | "load-
       break;
     case "equip":
       inventory.equipItem(source);
+      break;
+    case "unequip":
+      if (source.type === "equipment") {
+        inventory.unequipItem(source.equipmentSlot);
+      }
       break;
     case "drop":
       inventory.dropFromMenu(props.item);
@@ -101,6 +107,12 @@ const actions = computed(() => [
     icon: "mdi-sword-cross",
     enabled: isEquipable.value,
     select: () => executeAction("equip"),
+  },
+  {
+    name: "Unequip",
+    icon: "mdi-sword-cross",
+    enabled: isUnequipable.value,
+    select: () => executeAction("unequip"),
   },
   {
     name: "Load ammo",

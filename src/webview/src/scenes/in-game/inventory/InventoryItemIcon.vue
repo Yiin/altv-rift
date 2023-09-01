@@ -4,6 +4,7 @@ import { LocalInventoryItemSource } from "@shared/interfaces";
 import { computed } from "vue";
 import { InteractionType, SlottedItem, isSameSource, useInventory } from "@/store/inventory.store";
 import ItemIcon from "./ItemIcon.vue";
+import { px } from "@/composables/use-pixel";
 
 const props = defineProps<{
   item: SlottedItem<LocalInventoryItemSource>;
@@ -46,13 +47,13 @@ const draggingStyle = computed(() => {
 
     // We're currently dragging this item
     return {
-      transform: `translate(${x}px, ${y}px)`,
+      transform: `translate(${x + px(4)}px, ${y + px(4)}px)`,
       zIndex: Number.MAX_SAFE_INTEGER,
     };
   } else {
     // Item is chilling in its slot
     return {
-      transform: `translate(${slotPositionInGrid.x}px, ${slotPositionInGrid.y}px)`,
+      transform: `translate(${slotPositionInGrid.x + px(4)}px, ${slotPositionInGrid.y + px(4)}px)`,
       zIndex: 10,
     };
   }

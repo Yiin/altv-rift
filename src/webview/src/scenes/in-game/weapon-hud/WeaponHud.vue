@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useInventory } from "@/store/inventory.store";
-import { ItemType } from "@prisma/client";
 import { getItemData, getItemName, getItemInfoByKey } from "@shared/modules/items";
 import { isItemFirearmWeapon } from "@shared/modules/items/weapons/firearms";
 import { computed } from "vue";
@@ -38,7 +37,10 @@ const weapon = computed(() => {
       <span class="ml-2">{{ weapon.name }}</span>
     </div>
     <div class="flex items-center">
-      <span>{{ weapon.clip }} (max: {{ weapon.clipSize }}) / {{ weapon.rest }}</span>
+      <span>
+        {{ weapon.clip }}
+        <template v-if="weapon.clipSize">(max: {{ weapon.clipSize }}) / {{ weapon.rest }}</template>
+      </span>
     </div>
   </div>
 </template>

@@ -28,14 +28,10 @@ const selectedAspect = ref(Aspect.Hair);
 const selectedTab = ref(0);
 
 // Used to get available options and colors of the selected aspect
-const currentAspect = computed(
-  () => aspects(createCharacter.sex)[selectedAspect.value]!
-);
+const currentAspect = computed(() => aspects(createCharacter.sex)[selectedAspect.value]!);
 
 // Ids of the available options of the selected aspect
-const currentAspectValues = computed(() =>
-  Array.from(currentAspect.value.options.keys())
-);
+const currentAspectValues = computed(() => Array.from(currentAspect.value.options.keys()));
 
 const selectedAspectTabs = computed(() => {
   return [
@@ -55,10 +51,7 @@ watch(
   () => createCharacter.sex,
   (sex) => {
     while (!aspects(sex).Hair.options.has(createCharacter.hair)) {
-      createCharacter.hair = wrap(
-        createCharacter.hair - 1,
-        aspects(sex).Hair.options.size
-      );
+      createCharacter.hair = wrap(createCharacter.hair - 1, aspects(sex).Hair.options.size);
     }
   }
 );
@@ -74,9 +67,9 @@ function getCurrentAspectValueLabel(option: number): string {
 
 const randomize = () => {
   createCharacter.hair = getRandomHair(createCharacter.sex);
-  createCharacter.hairCollection = aspects(
-    createCharacter.sex
-  ).Hair.options.get(createCharacter.hair)!.collection;
+  createCharacter.hairCollection = aspects(createCharacter.sex).Hair.options.get(
+    createCharacter.hair
+  )!.collection;
   createCharacter.hairOverlay = aspects(createCharacter.sex).Hair.options.get(
     createCharacter.hair
   )!.overlay;
@@ -104,9 +97,7 @@ const randomize = () => {
 <template>
   <v-card class="v-card--transparent">
     <v-card-item>
-      <div
-        class="text-sm font-bold pb-4 uppercase tracking-wide flex justify-between items-center"
-      >
+      <div class="text-sm font-bold pb-4 uppercase tracking-wide flex justify-between items-center">
         Appearance
         <v-btn
           @click="randomize"
@@ -148,7 +139,7 @@ const randomize = () => {
           <div v-if="currentAspect && 'overlayId' in currentAspect">
             <div class="text-xs uppercase tracking-wide">Opacity</div>
             <v-slider
-              v-model="createCharacter.headOverlays.get(currentAspect.overlayId)!.opacity"
+              v-model="(createCharacter.headOverlays.get(currentAspect.overlayId)!.opacity as number)"
               track-color="grey"
               color="white"
               min="0"
@@ -169,22 +160,14 @@ const randomize = () => {
             <v-window-item v-for="(tab, index) in selectedAspectTabs">
               <ColorSelection
                 key="color1"
-                v-if="
-                  selectedAspect === Aspect.Hair &&
-                  'color1' in currentAspect &&
-                  index === 0
-                "
+                v-if="selectedAspect === Aspect.Hair && 'color1' in currentAspect && index === 0"
                 :options="currentAspect.color1"
                 v-model="createCharacter.hairColor1"
                 use-index-as-value
               />
               <ColorSelection
                 key="color2"
-                v-if="
-                  selectedAspect === Aspect.Hair &&
-                  'color2' in currentAspect &&
-                  index === 1
-                "
+                v-if="selectedAspect === Aspect.Hair && 'color2' in currentAspect && index === 1"
                 :options="currentAspect.color2"
                 v-model="createCharacter.hairColor2"
                 use-index-as-value

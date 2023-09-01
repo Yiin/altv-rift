@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { useInventoryGrid } from "@/composables/use-inventory-grid";
-import { InteractionType, SlottedItem, useInventory } from "@/store/inventory.store";
+import { InteractionType, SlottedItem, isSameSource, useInventory } from "@/store/inventory.store";
 import InventoryItemIcon from "./InventoryItemIcon.vue";
-import { isItemUsable, isItemEquipable } from "@shared/modules/items";
-import { px } from "@/composables/use-pixel";
+import { isItemUsable, isItemEquipable, getCombineType, CombineType } from "@shared/modules/items";
 import { LocalInventoryItemSource } from "@shared/interfaces";
 
 const props = defineProps<{
@@ -37,38 +36,75 @@ const selected = computed(
     inventory.selectedItem.source.inventorySlot === props.slot
 );
 
-const hoveringOver = computed(() => {
+const draggingOver = computed(() => {
   const interaction = inventory.currentInteraction;
 
-  if (
-    interaction.type === InteractionType.Dragging &&
-    interaction.state.item.source.type === "inventory"
-  ) {
-    const { source } = interaction.state.item;
-    const startingSlotPos = inventoryGrid.getSlotPositionInGrid(source.inventorySlot);
-    const startingSlotScreenPos = inventory.getItemSourceScreenPosition(source);
-    const x =
-      interaction.state.currentPosition.x -
-      interaction.state.startPosition.x +
-      startingSlotPos.x +
-      (interaction.state.startPosition.x - startingSlotScreenPos.x);
-    const y =
-      interaction.state.currentPosition.y -
-      interaction.state.startPosition.y +
-      startingSlotPos.y +
-      (interaction.state.startPosition.y - startingSlotScreenPos.y);
+  if (interaction.type === InteractionType.Dragging) {
+    const currentCursorPos = interaction.state.currentPosition;
 
-    const isHoveringOver =
-      inventory.currentInteraction.type === InteractionType.Dragging &&
-      x > pos.value.x - px(5) &&
-      x <= pos.value.x + px(85) &&
-      y > pos.value.y - px(5) &&
-      y <= pos.value.y + px(85);
+    const nodeRect = nodeRef.value?.getBoundingClientRect();
 
-    return isHoveringOver;
+    if (!nodeRect) {
+      return false;
+    }
+
+    return (
+      currentCursorPos.x >= nodeRect.left &&
+      currentCursorPos.x <= nodeRect.right &&
+      currentCursorPos.y >= nodeRect.top &&
+      currentCursorPos.y <= nodeRect.bottom
+    );
   }
 
   return false;
+});
+
+const hoveredItem = computed(() => {
+  const interaction = inventory.currentInteraction;
+
+  const hoveredItem =
+    inventory.selectedItem ??
+    (interaction.type === InteractionType.Hovering || interaction.type === InteractionType.Dragging
+      ? interaction.state.item
+      : null);
+
+  return hoveredItem;
+});
+
+const combinableWithHoveredItem = computed(() => {
+  if (!item.value) {
+    return false;
+  }
+
+  if (!hoveredItem.value) {
+    return false;
+  }
+
+  if (isSameSource(hoveredItem.value.source, { type: "inventory", inventorySlot: props.slot })) {
+    return false;
+  }
+
+  const [combineType, reverse] = getCombineType(item.value.item.key, hoveredItem.value.item.key);
+
+  return combineType !== CombineType.None;
+});
+
+const combinableWithOtherItems = computed(() => {
+  if (!item.value) {
+    return false;
+  }
+
+  if (!hoveredItem.value) {
+    return false;
+  }
+
+  if (!isSameSource(hoveredItem.value.source, { type: "inventory", inventorySlot: props.slot })) {
+    return false;
+  }
+
+  return inventory.items.some(
+    ({ item: { key } }) => getCombineType(key, item.value!.item.key)[0] !== CombineType.None
+  );
 });
 
 function useOrEquipItem() {
@@ -82,9 +118,12 @@ function useOrEquipItem() {
   }
 }
 
-defineExpose({
+inventory.registerItemSlot({
+  source: {
+    type: "inventory",
+    inventorySlot: props.slot,
+  },
   node: nodeRef,
-  slot: props.slot,
 });
 </script>
 
@@ -92,16 +131,22 @@ defineExpose({
   <div
     ref="nodeRef"
     :key="slot"
-    class="absolute top-0 left-0 w-20 h-20 bg-gray-800/80 item-slot text-white transform"
-    :class="{
-      'drop-shadow-[2px_4px_6px_black] scale-105': hoveringOver || (item && !dragging),
-      'item-slot--selected': selected,
-    }"
+    class="absolute top-0 left-0 p-1 pr-[0.3125rem] transform"
     :style="{
       '--tw-translate-x': `${pos.x}px`,
       '--tw-translate-y': `${pos.y}px`,
     }"
-  />
+  >
+    <div
+      class="w-20 h-20 bg-gray-800/80 item-slot text-white"
+      :class="{
+        'drop-shadow-[2px_4px_6px_black] scale-105': draggingOver || (item && !dragging),
+        'drop-shadow-[2px_4px_6px_gold]': combinableWithHoveredItem,
+        'drop-shadow-[2px_4px_6px_silver]': combinableWithOtherItems,
+        'item-slot--selected': selected,
+      }"
+    ></div>
+  </div>
   <InventoryItemIcon
     v-if="item"
     :item="item"

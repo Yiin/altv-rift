@@ -1,13 +1,11 @@
 <script setup lang="ts">
-import { usePlayerStore } from "@shared/store/player.store";
+import { useCharacter } from "@/store/synced/character.store";
 import EquipmentSlot from "./EquipmentSlot.vue";
 import { computed } from "vue";
-import { useInventorySlots } from "@/composables/use-inventory-slots";
 
-const player = usePlayerStore();
-const inventorySlots = useInventorySlots("equipment");
+const character = useCharacter();
 
-const gender = computed(() => player.character?.appearance.sex);
+const gender = computed(() => character.appearance.sex);
 </script>
 
 <template>
@@ -24,6 +22,7 @@ const gender = computed(() => player.character?.appearance.sex);
     <EquipmentSlot
       v-for="slot in ([
               'headwear',
+              'mask',
               'glasses',
               'headwear',
               'earrings',
@@ -42,7 +41,6 @@ const gender = computed(() => player.character?.appearance.sex);
               'phone',
             ] as const)"
       :name="slot"
-      :ref="(inventorySlots.setSlotRef as any)"
     />
   </div>
 </template>

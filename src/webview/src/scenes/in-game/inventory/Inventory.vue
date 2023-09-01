@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onUnmounted } from "vue";
+import { computed, onUnmounted, watch } from "vue";
 import Window from "@/components/Window.vue";
 import { useWindowSize } from "@/composables/use-window-size";
 import DropItemWarning from "./DropItemWarning.vue";
@@ -10,9 +10,6 @@ import { InteractionType, useInventory } from "@/store/inventory.store";
 import { px } from "@/composables/use-pixel";
 import { useEventListener } from "@/composables/use-event-listener";
 import EquipmentMenu from "./equipment/EquipmentMenu.vue";
-import { useInventorySlots } from "@/composables/use-inventory-slots";
-
-const inventorySlots = useInventorySlots("inventory");
 
 const windowSize = useWindowSize();
 const inventory = useInventory();
@@ -23,6 +20,8 @@ const height = computed(() => ~~(inventory.size / 5) * px(90) - px(10));
 useEventListener("mousemove", inventory.handleMouseMove);
 useEventListener("mouseup", inventory.handleMouseUp);
 useEventListener("click", inventory.handleClick, true);
+
+(window as any).inventory = inventory;
 
 onUnmounted(() => {
   inventory.$reset();
@@ -47,12 +46,7 @@ onUnmounted(() => {
         class="relative"
         :style="{ width: `${width}px`, height: `${height}px` }"
       >
-        <InventorySlot
-          v-for="i in inventory.size"
-          :key="i"
-          :slot="i - 1"
-          :ref="(inventorySlots.setSlotRef as any)"
-        />
+        <InventorySlot v-for="i in inventory.size" :key="i" :slot="i - 1" />
       </div>
     </div>
   </Window>
