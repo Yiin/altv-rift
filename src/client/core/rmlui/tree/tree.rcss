@@ -1,0 +1,15 @@
+/**
+ * Nametags
+ */
+.tree-wrapper {
+  position: absolute;
+  text-align: center;
+}
+
+.tree {
+  font-effect: outline(2px black);
+  font-style: normal;
+  font-size: 20pt;
+  color: #ffffffff;
+  transform-origin: center center;
+}

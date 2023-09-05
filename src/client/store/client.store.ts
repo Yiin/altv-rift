@@ -2,24 +2,20 @@ import { defineStore } from "pinia";
 import { getDefaultClientStoreState } from "@shared/store/client.store";
 import { subscribeToStore } from "@shared/store/utils";
 import { WebviewEvents } from "@shared/events/webview";
-import { getWebview } from "@/utility/user-interface";
+import { getWebview } from "@/user-interface/webview";
 import { pinia } from ".";
 
 const useClient = defineStore("client", {
   state: getDefaultClientStoreState,
 });
 
-export const clientStore = useClient(pinia);
+export const clientState = useClient(pinia);
 
-subscribeToStore(clientStore, {
+subscribeToStore(clientState, {
   onSetState: (state) => {
-    getWebview((webView) =>
-      webView.emit(WebviewEvents.FromClient.SET_CLIENT_STATE, state)
-    );
+    getWebview((webView) => webView.emit(WebviewEvents.FromClient.SET_CLIENT_STATE, state));
   },
   onUpdateState: (payload) => {
-    getWebview((webView) =>
-      webView.emit(WebviewEvents.FromClient.UPDATE_CLIENT_STATE, payload)
-    );
+    getWebview((webView) => webView.emit(WebviewEvents.FromClient.UPDATE_CLIENT_STATE, payload));
   },
 });

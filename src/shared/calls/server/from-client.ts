@@ -6,6 +6,8 @@ export const FromClient = {
   BEGIN_TREE_HIT: "BEGIN_TREE_HIT",
   TREE_HIT: "TREE_HIT",
   RELOAD_WEAPON: "RELOAD_WEAPON",
+  START_FISHING: "START_FISHING",
+  STOP_FISHING: "STOP_FISHING",
 } as const;
 
 export interface CallFromClient<
@@ -30,4 +32,6 @@ export interface CallFromClient<
     virtualTreeId: number
   ) => import("@shared/modules/woodcutting/interfaces").TreeHitResult;
   [FromClient.RELOAD_WEAPON]: (player: P) => boolean;
+  [FromClient.START_FISHING]: (player: P) => void;
+  [FromClient.STOP_FISHING]: (player: P) => void;
 }

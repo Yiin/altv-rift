@@ -1,26 +1,16 @@
 import alt from "alt-server";
-import {
-  AmmoItem,
-  FirearmWeaponItem,
-  Inventory,
-  InventoryItemSource,
-  Item,
-  ItemSource,
-} from "@shared/interfaces";
-import {
-  createItem,
-  getItemData,
-  getItemInfoByKey,
-  isItemAmmo,
-  isStackable,
-  toEquipedAmmo,
-} from "@shared/modules/items";
-import { isItemFirearmWeapon } from "@shared/modules/items/weapons/firearms";
-import { InGamePlayer } from "@/utility/assertions";
-import { findItem, findSourceInventory } from "./hooks";
+import { toRaw } from "vue";
+import { isEqual } from "lodash";
+import { Inventory, InventoryItemSource, Item } from "@shared/interfaces";
+import { createItem, getItemData, isStackable } from "@shared/modules/items";
+import { findSourceInventory } from "./hooks";
 
 export function getInventoryItemInSlot(inventory: Inventory, slot: number) {
   return inventory.items.find((item) => item.slot === slot);
+}
+
+export function getInventoryItem(inventory: Inventory, item: Item) {
+  return inventory.items.find((inventoryItem) => isEqual(inventoryItem.item, item));
 }
 
 export function getInventoryItemByKey(inventory: Inventory, key: string) {
@@ -34,10 +24,20 @@ export function removeItem(source: InventoryItemSource, amount = 0): Item | null
     return null;
   }
 
-  return removeItemFromInventory(inventory, source.inventorySlot, amount);
+  return removeItemFromInventorySlot(inventory, source.inventorySlot, amount);
 }
 
-export function removeItemFromInventory(
+export function removeItemFromInventory(inventory: Inventory, item: Item, amount = 0): Item | null {
+  const inventoryItem = getInventoryItem(inventory, item);
+
+  if (!inventoryItem) {
+    return null;
+  }
+
+  return removeItemFromInventorySlot(inventory, inventoryItem.slot, amount);
+}
+
+export function removeItemFromInventorySlot(
   inventory: Inventory,
   slot: number,
   amount = 0
@@ -57,10 +57,12 @@ export function removeItemFromInventory(
   }
 
   if (!isStackable(itemData) || itemData.amount - amount <= 0 || amount <= 0) {
+    console.log("removing item");
     inventory.items.splice(
       inventory.items.findIndex((item) => item.slot === slot),
       1
     );
+    console.log("item removed");
     return item;
   }
 
@@ -73,7 +75,7 @@ export function dropItemOnTheGround(item: Item, position: alt.IVector3) {
   //
 }
 
-export function addItemToInventory(inventory: Inventory, item: Item) {
+export function addItemToInventory(inventory: Inventory, item: Item, slot?: number) {
   const itemData = getItemData(item);
 
   if (isStackable(itemData)) {
@@ -86,22 +88,22 @@ export function addItemToInventory(inventory: Inventory, item: Item) {
         existingItemData.amount += itemData.amount;
         return true;
       }
-    }
-  } else {
-    const emptySlot = findFreeInventorySlot(inventory);
-
-    if (emptySlot === -1) {
+      // unreachable
       return false;
     }
-
-    inventory.items.push({
-      slot: emptySlot,
-      item,
-    });
-    return true;
   }
 
-  return false;
+  const emptySlot = findFreeInventorySlot(inventory, slot);
+
+  if (emptySlot === -1) {
+    return false;
+  }
+
+  inventory.items.push({
+    slot: emptySlot,
+    item: toRaw(item),
+  });
+  return true;
 }
 
 export function swapItems(from: InventoryItemSource, to: InventoryItemSource) {
@@ -115,14 +117,24 @@ export function swapItems(from: InventoryItemSource, to: InventoryItemSource) {
   const fromItem = getInventoryItemInSlot(fromInventory, from.inventorySlot);
   const toItem = getInventoryItemInSlot(toInventory, to.inventorySlot);
 
-  if (!fromItem || !toItem) {
-    return false;
-  }
-
-  if (fromInventory === toInventory) {
-    [fromItem.slot, toItem.slot] = [toItem.slot, fromItem.slot];
-  } else {
-    [fromItem.item, toItem.item] = [toItem.item, fromItem.item];
+  if (fromItem && toItem) {
+    if (fromInventory === toInventory) {
+      [fromItem.slot, toItem.slot] = [toItem.slot, fromItem.slot];
+    } else {
+      [fromItem.item, toItem.item] = [toItem.item, fromItem.item];
+    }
+  } else if (fromItem) {
+    if (fromInventory === toInventory) {
+      fromItem.slot = to.inventorySlot;
+    } else {
+      addItemToInventory(toInventory, fromItem.item, to.inventorySlot);
+    }
+  } else if (toItem) {
+    if (fromInventory === toInventory) {
+      toItem.slot = from.inventorySlot;
+    } else {
+      addItemToInventory(fromInventory, toItem.item, from.inventorySlot);
+    }
   }
 
   return true;
@@ -132,10 +144,16 @@ export function isInventoryFull(inventory: Inventory) {
   return inventory.items.length >= inventory.size;
 }
 
-function findFreeInventorySlot(inventory: Inventory) {
-  for (let i = 0; i < inventory.size; i++) {
-    if (!inventory.items.some((item) => item.slot === i)) {
-      return i;
+function findFreeInventorySlot(inventory: Inventory, slot?: number) {
+  if (slot) {
+    if (!inventory.items.some((item) => item.slot === slot)) {
+      return slot;
+    }
+  } else {
+    for (let i = 0; i < inventory.size; i++) {
+      if (!inventory.items.some((item) => item.slot === i)) {
+        return i;
+      }
     }
   }
   return -1;

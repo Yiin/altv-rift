@@ -10,10 +10,12 @@ import "./equipment/apply-equipment";
 import "./inventory/add-item";
 import "./inventory/equip-item";
 import "./inventory/get-inventory-item-in-slot";
+import "./inventory/has-item";
 import "./inventory/remove-item";
 import "./inventory/unequip-item";
 import "./inventory/weapons/find-base-ammo-for-weapon";
 import "./inventory/weapons/reload-weapon";
 import "./load-user";
+import "./setup-pinia";
 import "./setup";
 // @endindex

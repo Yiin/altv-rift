@@ -170,7 +170,7 @@ export function toEquipedAmmo(
     (currentEquipedAmmo?.clip.amount ?? 0) +
     (currentEquipedAmmo?.rest.amount ?? 0);
 
-  const clip = Math.min(total, clipSize);
+  const clip = Math.min(total, clipSize || Number.MAX_SAFE_INTEGER);
   const rest = total - clip;
 
   return {

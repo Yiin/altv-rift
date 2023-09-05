@@ -2,10 +2,12 @@ import alt from "alt-server";
 import { ServerEvents } from "@shared/events/server";
 import { Quests } from "@shared/modules/quests";
 import { Consumable, createItem } from "@shared/modules/items";
-import { needsToBeInGame } from "@/utility/assertions";
+import { isInGame } from "@/utility/assertions";
 
 alt.onClient(ServerEvents.FromClient.NOTIFY, (player, questFact) => {
-  needsToBeInGame(player);
+  if (!isInGame(player)) {
+    return;
+  }
 
   switch (questFact) {
     case Quests.Introduction.Facts.GOT_INTRODUCTION:
@@ -19,11 +21,11 @@ alt.onClient(ServerEvents.FromClient.NOTIFY, (player, questFact) => {
 });
 
 alt.on(ServerEvents.FromServer.USE_ITEM, (player, item) => {
-  if (!player.store.isLoggedIn || !player.store.character) {
+  if (!isInGame(player)) {
     return;
   }
 
-  const questFacts = player.store.character.questFacts;
+  const questFacts = player.character.questFacts;
 
   if (
     item.key === Consumable.SIMPLE_MEDKIT &&

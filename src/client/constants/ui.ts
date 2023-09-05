@@ -7,5 +7,8 @@ export enum SCENE {
 export enum ELEMENT {
   INVENTORY = "inventory",
   CHAT = "chat",
-  JSON = "json",
+  ACTION_MENU = "action-menu",
+  QUEST_MENU = "quest-menu",
+  SKILL_MENU = "skill-menu",
+  TARGET_ACTION = "target-action",
 }

@@ -1,16 +1,19 @@
 <script setup lang="ts">
 import { useClient } from "@/store/synced/client.store";
-import { useGameState } from "@/store/synced/game-state.store";
 import { ClientFlags } from "@shared/store/client.store";
-import { PlayerFlags } from "@shared/store/game-state.store";
+import FishingIcon from "@/components/icons/FishingIcon.vue";
 
-const gameState = useGameState();
 const client = useClient();
 </script>
 
 <template>
-  <div>
-    <div v-if="gameState.flags.has(PlayerFlags.InFishingArea)">In fishing area</div>
-    <div v-if="client.flags.has(ClientFlags.CanFish)">Can fish!</div>
+  <div class="absolute right-24 top-[30%]">
+    <div
+      v-if="client.flags.has(ClientFlags.CanFish)"
+      class="flex flex-col justify-center items-center"
+    >
+      <FishingIcon class="w-16 h-16" />
+      <div class="crisp-shadow text-white tracking-wider -mt-2">Fishing area</div>
+    </div>
   </div>
 </template>

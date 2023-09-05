@@ -8,12 +8,12 @@ findSourceInventory.hook((source) => {
   }
 
   const player = alt.Player.all.find(
-    (player): player is InGamePlayer => player.store.character?.id === source.sourceId
+    (player): player is InGamePlayer => player.character?.id === source.sourceId
   );
 
   if (!player) {
     return null;
   }
 
-  return player.store.character.inventory;
+  return player.character.inventory;
 });

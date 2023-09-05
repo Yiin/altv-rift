@@ -1,7 +1,7 @@
 import alt from "alt-client";
 import { computed, ComputedRef } from "vue";
 import { NpcInteraction } from "@shared/modules/npc/interactions";
-import { IconName } from "../rmlui/components/icon/icon";
+import { IconName } from "@/core/rmlui/components/icon/icon";
 import { getNpcInteractions } from "./register-npc-interactions";
 
 declare module "alt-client" {
@@ -38,9 +38,7 @@ alt.on("gameEntityCreate", (entity) => {
 
   if (interactionRegistrations) {
     entity.interactions = computed(() =>
-      interactionRegistrations
-        .map((registration) => registration(entity))
-        .flat()
+      interactionRegistrations.map((registration) => registration(entity)).flat()
     );
   }
 });

@@ -1,4 +1,5 @@
 export * from "./ammo";
+export * from "./clothing";
 export * from "./consumables";
 export * from "./materials";
 export * from "./weapons";

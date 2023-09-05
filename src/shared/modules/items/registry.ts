@@ -1,11 +1,12 @@
 import { ItemType } from "@prisma/client/edge";
-import { InventoryItem, Item } from "@shared/interfaces";
+import { Item } from "@shared/interfaces";
 import { ammo } from "./ammo";
 import { clothing } from "./clothing";
 import { consumables } from "./consumables";
 import { materials } from "./materials";
 import { getWeaponData, weapons } from "./weapons";
 import { ItemKey } from "./types";
+import { basics } from "./basic";
 
 export const ITEMS_REGISTRY = {
   ...weapons,
@@ -13,6 +14,7 @@ export const ITEMS_REGISTRY = {
   ...clothing,
   ...consumables,
   ...materials,
+  ...basics,
 } as const;
 
 export type ItemInfo = (typeof ITEMS_REGISTRY)[ItemKey];

@@ -1,12 +1,8 @@
 import { toggleGameControls, WebView } from "alt-client";
-import {
-  CommandSuggestion,
-  MessageType,
-  WindowOptions,
-} from "@shared/modules/chat";
+import { CommandSuggestion, MessageType, WindowOptions } from "@shared/modules/chat";
 import { bind } from "@shared/decorators";
 import { ELEMENT } from "@/constants/ui";
-import { getWebview, toggleElement } from "@/utility/user-interface";
+import { getWebview, toggleElement } from "@/user-interface/webview";
 import type { Message } from "../interfaces";
 
 @bind()
@@ -47,12 +43,10 @@ export class WindowService {
   }
 
   public show() {
-    console.log("showing chat");
     toggleElement(ELEMENT.CHAT, true);
   }
 
   public hide() {
-    console.log("hiding chat");
     toggleElement(ELEMENT.CHAT, false);
   }
 
@@ -68,9 +62,7 @@ export class WindowService {
     this.webView.emit("vchat:clearMessages");
   }
 
-  public addSuggestion(
-    suggestion: CommandSuggestion | Array<CommandSuggestion>
-  ) {
+  public addSuggestion(suggestion: CommandSuggestion | Array<CommandSuggestion>) {
     this.webView.emit("vchat:addSuggestion", suggestion);
   }
 
@@ -78,10 +70,7 @@ export class WindowService {
     this.webView.emit("vchat:removeSuggestions");
   }
 
-  public syncSettings(
-    options: WindowOptions,
-    commandSuggestions: Array<CommandSuggestion>
-  ) {
+  public syncSettings(options: WindowOptions, commandSuggestions: Array<CommandSuggestion>) {
     this.webView.emit("vchat:syncSettings", options, commandSuggestions);
   }
 

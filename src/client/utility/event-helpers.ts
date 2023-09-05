@@ -1,7 +1,7 @@
 import alt from "alt-client";
 import { KeyCode } from "altv-enums";
 import { ClientEvents } from "@shared/events/client";
-import { getWebview } from "./user-interface";
+import { getWebview } from "../user-interface/webview";
 
 const intervals: number[] = [];
 const timeouts: number[] = [];
@@ -28,14 +28,20 @@ export function intervalWhile(condition: () => boolean, callback: () => void, in
   intervals.push(interval);
 }
 
-export function everyTickWhile(condition: () => boolean, callback: () => void, onEnd?: () => void) {
+export function everyTickWhile(
+  condition: () => boolean,
+  callback: () => void,
+  onEnd?: () => void,
+  options: { skipFirstCheck?: boolean } = {}
+) {
   const tick = alt.everyTick(() => {
-    if (!condition()) {
+    if (!options.skipFirstCheck && !condition()) {
       alt.clearEveryTick(tick);
       ticks.splice(ticks.indexOf(tick), 1);
       onEnd?.();
       return;
     }
+    options.skipFirstCheck = false;
 
     callback();
   });

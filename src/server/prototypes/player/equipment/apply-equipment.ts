@@ -10,18 +10,14 @@ declare module "alt-server" {
 }
 
 alt.Player.prototype.applyEquipment = function () {
-  console.log("[EQUIPMENT] Applying Equipment");
-
-  for (const equipmentSlot in this.store.character.equipment) {
+  for (const equipmentSlot in this.character.equipment) {
     const slot = equipmentSlot as keyof Equipment;
-    const item = this.store.character.equipment[slot];
+    const item = this.character.equipment[slot];
 
     if (!item) {
-      console.log(`[EQUIPMENT] No item in slot ${slot}`);
       continue;
     }
 
-    console.log(`[EQUIPMENT] Equipping ${item.key} to ${slot}`);
     alt.emit(ServerEvents.FromServer.EQUIP_ITEM, this, item);
   }
 };

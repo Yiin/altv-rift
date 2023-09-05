@@ -1,4 +1,6 @@
-import { LocalItemSource, EquipmentSlot, Item } from "@shared/interfaces";
+import alt from "alt-server";
+import { EquipmentSlot, Item } from "@shared/interfaces";
+import { InGamePlayer } from "../../../server/utility/assertions";
 
 export const FromServer = {
   MANUAL_DISCORD_AUTH_DONE: "MANUAL_DISCORD_AUTH_DONE",
@@ -10,25 +12,16 @@ export const FromServer = {
 
 export interface EventFromServer {
   [FromServer.MANUAL_DISCORD_AUTH_DONE]: (
-    player: import("alt-server").Player,
+    player: alt.Player,
     token: string
   ) => Promise<void> | void;
-  [FromServer.USE_ITEM]: (
-    player: import("../../../server/utility/assertions").InGamePlayer,
-    item: Item
-  ) => Promise<void> | void;
-  [FromServer.EQUIP_ITEM]: (
-    player: import("../../../server/utility/assertions").InGamePlayer,
-    item: Item
-  ) => Promise<void> | void;
+  [FromServer.USE_ITEM]: (player: InGamePlayer, item: Item) => Promise<void> | void;
+  [FromServer.EQUIP_ITEM]: (player: InGamePlayer, item: Item) => Promise<void> | void;
   [FromServer.UNEQUIP_ITEM]: (
-    player: import("../../../server/utility/assertions").InGamePlayer,
+    player: InGamePlayer,
     equipmentSlot: EquipmentSlot
   ) => Promise<void> | void;
-  [FromServer.DROP_ITEM]: (
-    player: import("../../../server/utility/assertions").InGamePlayer,
-    item: Item
-  ) => Promise<void> | void;
+  [FromServer.DROP_ITEM]: (player: InGamePlayer, item: Item) => Promise<void> | void;
 }
 
 declare module "alt-server" {

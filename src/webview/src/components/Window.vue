@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { effect, onMounted, ref } from "vue";
+import { ref } from "vue";
 import { vClickOutside } from "../directives/click-outside";
 import { useWindows } from "../store/windows.store";
 import DragResize from "./DragResize.vue";
@@ -64,22 +64,29 @@ function blur() {
 
 function stop(rect: { x: number; y: number; width: number; height: number }) {
   if (props.name) {
-    rpc.callServer(ServerCall.FromWebview.MOVE_WINDOW,
-      props.name,
-      {
-        x: rect.x,
-        y: rect.y,
-        w: rect.width,
-        h: rect.height,
-      }
-    );
+    rpc.callServer(ServerCall.FromWebview.MOVE_WINDOW, props.name, {
+      x: rect.x,
+      y: rect.y,
+      w: rect.width,
+      h: rect.height,
+    });
   }
 }
 </script>
 
 <template>
-  <DragResize v-if="!wrapper" @mousedown="focus" @dragstop="stop" v-click-outside="blur" :z="z" class="outline-none"
-    v-bind="props" @move="" :isResizeable="isFocused" :sticks="isFocused ? sticks : []">
+  <DragResize
+    v-if="!wrapper"
+    @mousedown="focus"
+    @dragstop="stop"
+    v-click-outside="blur"
+    :z="z"
+    class="outline-none"
+    v-bind="props"
+    @move=""
+    :isResizeable="isFocused"
+    :sticks="isFocused ? sticks : []"
+  >
     <slot></slot>
   </DragResize>
   <div v-else class="relative" :style="{ zIndex: z }">

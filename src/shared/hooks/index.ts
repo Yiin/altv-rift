@@ -1,4 +1,5 @@
 type HookableFunctionOptions<R = any> = {
+  name?: string;
   defaultReturn?: R;
 };
 
@@ -34,9 +35,17 @@ export function createHookableFunction<F extends (...args: any) => any>(
     for (const handler of handlers) {
       const result = handler(...args);
       if (typeof result !== "undefined") {
+        console.log(
+          `[HookableFunction] ${options.name} hook returned ${
+            options.name !== "findSourceInventory" ? JSON.stringify(result) : "inventory"
+          }`
+        );
         return result;
       }
     }
+    console.log(
+      `[HookableFunction] ${options.name} hook returned default value ${options.defaultReturn}}`
+    );
     return options.defaultReturn as ReturnType<F>;
   };
 

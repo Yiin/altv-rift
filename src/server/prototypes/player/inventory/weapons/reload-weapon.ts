@@ -10,7 +10,7 @@ declare module "alt-server" {
 }
 
 alt.Player.prototype.reloadWeapon = function () {
-  const weapon = this.store.character.equipment.weapon;
+  const weapon = this.character.equipment.weapon;
 
   if (!weapon) {
     return false;

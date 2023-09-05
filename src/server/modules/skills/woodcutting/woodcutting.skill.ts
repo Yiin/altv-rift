@@ -9,11 +9,11 @@ import { MessageType } from "@shared/modules/chat";
 import { createItem } from "@shared/modules/items";
 import { rpc } from "@/rpc";
 import { sendChatMessage } from "@/modules/chat";
-import { needsToBeInGame } from "@/utility/assertions";
+import { InGamePlayer, needsToBeInGame } from "@/utility/assertions";
 
 const virtualTreeGroup = new VirtualEntityGroup(30);
 const virtualTreeById: Map<number, VirtualEntity> = new Map();
-const playerHittingTree: WeakMap<alt.Player, number> = new WeakMap();
+const playerHittingTree: WeakMap<InGamePlayer, number> = new WeakMap();
 
 for (const [type, list] of Object.entries(trees)) {
   for (const { Position } of list) {
@@ -50,7 +50,7 @@ rpc.registerClient(ServerCall.FromClient.BEGIN_TREE_HIT, (player, virtualTreeId)
 
   playerHittingTree.set(player, virtualTreeId);
 
-  const level = getLevel(player.store.character.skills.woodcutting.experience);
+  const level = getLevel(player.character.skills.woodcutting.experience);
 
   const cooldown = Math.max(450, 1000 - (level * 1000) / 120);
 
@@ -123,16 +123,16 @@ rpc.registerClient(ServerCall.FromClient.TREE_HIT, (player, virtualTreeId) => {
     refillTree(virtualTree);
   }
 
-  const currentLevel = getLevel(player.store.character.skills.woodcutting.experience);
+  const currentLevel = getLevel(player.character.skills.woodcutting.experience);
 
   const experience = logs * getTreeLogXp(treeType);
-  player.store.character.skills.woodcutting.experience += experience;
+  player.character.skills.woodcutting.experience += experience;
 
-  const newLevel = getLevel(player.store.character.skills.woodcutting.experience);
+  const newLevel = getLevel(player.character.skills.woodcutting.experience);
 
   if (logs) {
     console.log(
-      `Player ${player.name} got ${logs} logs and now has ${player.store.character.skills.woodcutting.experience} woodcutting experience.`
+      `Player ${player.name} got ${logs} logs and now has ${player.character.skills.woodcutting.experience} woodcutting experience.`
     );
     sendChatMessage(player, `You got ${logs} logs (${experience}xp).`, MessageType.Info);
     if (newLevel > currentLevel) {
@@ -149,17 +149,11 @@ rpc.registerClient(ServerCall.FromClient.TREE_HIT, (player, virtualTreeId) => {
   return logs;
 });
 
-function isPlayerNearTree(player: alt.Player, virtualTree: alt.VirtualEntity) {
+function isPlayerNearTree(player: InGamePlayer, virtualTree: alt.VirtualEntity) {
   return player.pos.distanceTo(virtualTree.pos) < 5;
 }
 
-function canPlayerHitTheTree(player: alt.Player, virtualTree: alt.VirtualEntity) {
-  if (!player.store.isLoggedIn) {
-    return false;
-  }
-  if (!player.store.character) {
-    return false;
-  }
+function canPlayerHitTheTree(player: InGamePlayer, virtualTree: alt.VirtualEntity) {
   const treeType = virtualTree.getStreamSyncedMeta("treeType");
 
   if (!treeType) {
@@ -167,7 +161,7 @@ function canPlayerHitTheTree(player: alt.Player, virtualTree: alt.VirtualEntity)
     return false;
   }
 
-  if (getLevel(player.store.character.skills.woodcutting.experience) < getTreeLevel(treeType)) {
+  if (getLevel(player.character.skills.woodcutting.experience) < getTreeLevel(treeType)) {
     console.log("Not enough level", virtualTree.id);
     return false;
   }

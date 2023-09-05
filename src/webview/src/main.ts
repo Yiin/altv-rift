@@ -7,7 +7,27 @@ import { router } from "./router";
 import { pinia } from "./store";
 
 import "./main.css";
+import { DefineComponent } from "vue";
 
 loadFonts();
 
-createApp(App).use(router).use(pinia).use(vuetify).mount("#app");
+const app = createApp(App).use(router).use(pinia).use(vuetify);
+
+// Dynamically import and register all components in the @/components/icons folder
+// const registerIcons = async () => {
+//   const components = import.meta.glob("@/components/icons/*.vue");
+
+//   for (const path in components) {
+//     const componentConfig = (await components[path]()!) as { default: DefineComponent };
+//     const componentName = path
+//       .split("/")
+//       .pop()!
+//       .replace(/\.\w+$/, ""); // Get file name without extension
+
+//     app.component(componentName, componentConfig.default);
+//   }
+// };
+
+// registerIcons().then(() => {
+// });
+app.mount("#app");

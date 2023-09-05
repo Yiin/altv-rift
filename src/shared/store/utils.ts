@@ -35,7 +35,7 @@ export function subscribeToStore<T extends Store>(
     onUpdateState: (payload: StoreUpdatePayload) => void;
   }
 ) {
-  store.$subscribe(
+  return store.$subscribe(
     (mutation, state) => {
       if (!mutation.events) {
         onSetState(toRaw(state));

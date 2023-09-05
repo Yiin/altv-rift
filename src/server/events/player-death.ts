@@ -1,6 +1,6 @@
 import alt from "alt-server";
 
-alt.on("playerDeath", async (player: alt.Player, killer: alt.Entity | null, reason: number) => {
+alt.on("playerDeath", (player: alt.Player, killer: alt.Entity | null, reason: number) => {
   setTimeout(() => {
     if (!player.valid) {
       return;

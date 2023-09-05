@@ -1,7 +1,7 @@
 import alt from "alt-server";
 import { ItemKey } from "@shared/modules/items";
 import { InGamePlayer } from "@/utility/assertions";
-import { getInventoryItemByKey, removeItemFromInventory } from "@/modules/items-manager";
+import { getInventoryItemByKey, removeItemFromInventorySlot } from "@/modules/items-manager";
 
 declare module "alt-server" {
   export interface Player {
@@ -14,11 +14,11 @@ declare module "alt-server" {
 }
 
 alt.Player.prototype.removeInventoryItemByKey = function (key, amount = 0) {
-  const item = getInventoryItemByKey(this.store.character.inventory, key);
+  const item = getInventoryItemByKey(this.character.inventory, key);
 
   if (!item) {
     return false;
   }
 
-  return removeItemFromInventory(this.store.character.inventory, item.slot, amount) !== null;
+  return removeItemFromInventorySlot(this.character.inventory, item.slot, amount) !== null;
 };

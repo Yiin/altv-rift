@@ -24,8 +24,12 @@ export const FromServer = {
   IPL_UNLOAD: "IPL_UNLOAD",
   ENTITYSET_ACTIVATE: "ENTITYSET_ACTIVATE",
   ENTITYSET_DEACTIVATE: "ENTITYSET_DEACTIVATE",
-  SET_PLAYER_STATE: "SET_PLAYER_STATE",
-  UPDATE_PLAYER_STATE: "UPDATE_PLAYER_STATE",
+  SET_USER_STATE: "SET_USER_STATE",
+  UPDATE_USER_STATE: "UPDATE_USER_STATE",
+  SET_CHARACTER_STATE: "SET_CHARACTER_STATE",
+  UPDATE_CHARACTER_STATE: "UPDATE_CHARACTER_STATE",
+  SET_GAME_STATE: "SET_GAME_STATE",
+  UPDATE_GAME_STATE: "UPDATE_GAME_STATE",
   SET_SERVER_STATE: "SET_SERVER_STATE",
   UPDATE_SERVER_STATE: "UPDATE_SERVER_STATE",
 } as const;
@@ -59,8 +63,12 @@ export interface EventFromServer {
   [FromServer.IPL_UNLOAD]: (name: string) => void;
   [FromServer.ENTITYSET_ACTIVATE]: (interior: number, entitySetName: string) => void;
   [FromServer.ENTITYSET_DEACTIVATE]: (interior: number, entitySetName: string) => void;
-  [FromServer.SET_PLAYER_STATE]: (state: any) => void;
-  [FromServer.UPDATE_PLAYER_STATE]: (payload: StoreUpdatePayload) => void;
+  [FromServer.SET_USER_STATE]: (state: any) => void;
+  [FromServer.UPDATE_USER_STATE]: (payload: StoreUpdatePayload) => void;
+  [FromServer.SET_CHARACTER_STATE]: (state: any) => void;
+  [FromServer.UPDATE_CHARACTER_STATE]: (payload: StoreUpdatePayload) => void;
+  [FromServer.SET_GAME_STATE]: (state: any) => void;
+  [FromServer.UPDATE_GAME_STATE]: (payload: StoreUpdatePayload) => void;
   [FromServer.SET_SERVER_STATE]: (state: any) => void;
   [FromServer.UPDATE_SERVER_STATE]: (payload: StoreUpdatePayload) => void;
 }

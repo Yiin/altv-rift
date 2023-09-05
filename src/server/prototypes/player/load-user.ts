@@ -12,8 +12,6 @@ declare module "alt-server" {
 }
 
 Player.prototype.loadUser = async function (discordIdOrUser: string | LoadedUser) {
-  this.store.isLoggedIn = true;
-
   if (typeof discordIdOrUser === "string") {
     const user = await prisma.user.findFirst({
       where: {
@@ -25,12 +23,13 @@ Player.prototype.loadUser = async function (discordIdOrUser: string | LoadedUser
     });
 
     if (user) {
-      this.store.user = user;
+      this.setupUserStore(user);
     }
 
     return user;
   }
 
-  this.store.user = discordIdOrUser;
+  this.setupUserStore(discordIdOrUser);
+
   return discordIdOrUser;
 };

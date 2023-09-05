@@ -4,22 +4,22 @@ import { ServerCall } from "@shared/calls/server";
 import { isRequired, isUnique, validate } from "@/validator";
 import { ServerEvent } from "@/constants/server-events";
 import { rpc } from "@/rpc";
-import { isInGame } from "@/utility/assertions";
+import { LoggedInPlayer, isLoggedIn, needsToBeLoggedIn } from "@/utility/assertions";
 import { getDefaultCharacterData } from "./character-data";
 
 alt.on(ServerEvent.USER_LOADED, async (player: Player) => {
-  if (!player.store.isLoggedIn) {
+  if (!isLoggedIn(player)) {
     return;
   }
 
-  const charactersCount = player.store.user.characters.length;
+  const charactersCount = player.user.characters.length;
 
   if (charactersCount === 0) {
     alt.log("triggering client (start character creation scene)");
     player.emitRaw(ClientEvents.FromServer.START_CHARACTER_CREATION_SCENE);
     // Forward player to character creation scene because they have no characters
   } else {
-    startGame(player, player.store.user.characters[0].id!);
+    startGame(player, player.user.characters[0].id!);
     // alt.log("triggering client (start character selection scene)");
     // void player.emitRaw(Events.Client.START_CHARACTER_SELECTION_SCENE);
     // Start character selection scene
@@ -27,9 +27,7 @@ alt.on(ServerEvent.USER_LOADED, async (player: Player) => {
 });
 
 rpc.registerWebview(ServerCall.FromWebview.CREATE_CHARACTER, async (player, data) => {
-  if (!player.store.isLoggedIn) {
-    throw new Error("Unauthenticated.");
-  }
+  needsToBeLoggedIn(player);
 
   await validate(data, {
     name: [
@@ -49,7 +47,7 @@ rpc.registerWebview(ServerCall.FromWebview.CREATE_CHARACTER, async (player, data
       appearance,
       user: {
         connect: {
-          id: player.store.user.id,
+          id: player.user.id,
         },
       },
       ...getDefaultCharacterData(),
@@ -64,16 +62,14 @@ rpc.registerWebview(ServerCall.FromWebview.CREATE_CHARACTER, async (player, data
   }
 });
 
-async function startGame(player: Player, characterId: string) {
-  if (!player.store.isLoggedIn) {
-    return;
-  }
-
+async function startGame(player: LoggedInPlayer, characterId: string) {
   const character = await player.loadCharacter(characterId);
 
   if (!character) {
     return;
   }
+
+  player.setupCharacterStore(character);
 
   player.updateCharacterAppearance(character.appearance);
 

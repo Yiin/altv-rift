@@ -2,21 +2,20 @@ import { Player } from "alt-server";
 import { PrismaClient } from "@prisma/client";
 import { container } from "@shared/dependency-injection";
 import { Character } from "@shared/interfaces";
+import { LoggedInPlayer } from "@/utility/assertions";
 
 const prisma = container.get(PrismaClient);
 
 declare module "alt-server" {
   export interface Player {
-    getCharacters(): Promise<Character[]>;
+    getCharacters(this: LoggedInPlayer): Promise<Character[]>;
   }
 }
 
 Player.prototype.getCharacters = function () {
-  if (!this.store.isLoggedIn) return Promise.resolve([]);
-
   return prisma.character.findMany({
     where: {
-      userId: this.store.user!.id,
+      userId: this.user!.id,
     },
-  }) as Promise<Character[]>;
+  }) as any as Promise<Character[]>;
 };

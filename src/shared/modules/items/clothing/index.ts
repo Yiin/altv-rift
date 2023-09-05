@@ -1,5 +1,5 @@
 import { ItemType } from "@prisma/client/edge";
-import { Equipment } from "@shared/interfaces";
+import { ClothingItem, Equipment, Item } from "@shared/interfaces";
 
 export const Clothing = {
   BOOTS: "boots",
@@ -24,3 +24,11 @@ export const clothing: Record<ClothingItemKey, ClothingItemInfo> = {
     equipmentSlot: "shoes",
   },
 };
+
+export function isItemKeyClothing(key: string): key is ClothingItemKey {
+  return key in clothing;
+}
+
+export function isItemClothing(item: Item): item is ClothingItem {
+  return isItemKeyClothing(item.key);
+}

@@ -1,16 +1,139 @@
 Questing:
-  ✔ NPC interaction menu @done(23-08-03 05:47)
-  ✔ Quest progress tracking (with quest facts) @done(23-08-03 05:47)
-  ☐ Quest list menu @started(23-08-03 05:48)
-  ☐ Multiple concurrent quests
+  ✔ NPC interaction menu @done
+  ✔ Quest progress tracking 
+  ✔ Quest list menu @started
+  ✔ Multiple concurrent quests @done
   ☐ Quest rewards
   ☐ Quest failure states
   Main quests:
     ☐ Tutorial quest
-      ☐ Heal yourself
-      ☐ Get some food for others
-      ☐ Talk to townsfolk and pick a task
+      ✔ Heal yourself @done
+      ✘ Get some food for others @cancelled
+      ✔ Pick a task @done
+      ☐ Talk to townsfolk and do the task
       ☐ Make a deal with ferry captain to transport goods
+
+Skills:
+  ✔ Woodcutting @done
+  ☐ Fishing @started
+  ☐ Mining
+  ☐ Crafting
+
+Inventory:
+  ✔ Personal inventory system @done
+    ✔ Weight and size limits @done
+    ☐ Item categorization
+      ✔ Backend @done
+      ☐ UI
+  ☐ Vehicle trunk inventory
+  ☐ Home storage system
+    ☐ Storage limits
+    ☐ UI for home storage
+  ✔ Equippable items @done
+    ✔ Weapons @done
+    ☐ Clothing
+  ✔ Consumable items @done
+    ✔ Bullets @done
+    ✔ Medical supplies @done
+
+Shops:
+  ☐ Shop types
+    ☐ Weapons store
+    ☐ Clothing store
+  ☐ Inventory update algorithm
+  ☐ Selling mechanics
+  ☐ Shop-specific UI
+
+Collection of Materials:
+  ☐ Tool types
+    ☐ Axes for wood
+    ☐ Picks for mining
+    ☐ Fishing rods for fishing
+  ☐ Material types
+    ✔ Wood @done(23-08-29 03:09)
+    ☐ Stone
+    ☐ Metals
+    ☐ Food
+  ☐ Collection efficiency factors (time, skill, gear)
+
+Materials Processing:
+  ☐ Processing stations
+    ☐ Wood mill
+    ☐ Metal refinery
+  ☐ Time-based processing
+  ☐ Optional mini-games for processing
+
+Production:
+  ☐ Recipe types
+  ☐ Material requirements
+  ☐ Crafting locations
+    ☐ Workbench
+    ☐ Factory
+
+Tasks:
+  ☐ Daily tasks
+  ☐ Global tasks
+  ☐ Random tasks
+
+Temporary Jobs:
+  ☐ Job types
+    ☐ Transport
+    ☐ Security
+  ☐ Job experience tracking
+  ☐ Job-related bonuses
+
+Professions:
+  ☐ Skill tree or progression system
+  ☐ Profession types
+    ☐ Blacksmith
+    ☐ Engineer
+
+Control of Territories:
+  ☐ Territory contestation time-frame
+  ☐ Territory management system
+    ☐ Maintenance
+    ☐ Defense mechanisms
+
+Improving Things:
+  ☐ Item upgrade system
+    ☐ Damage upgrades
+    ☐ Protection upgrades
+
+Trade:
+  ☐ Player-set prices
+  ☐ Auction house system
+  ☐ Live exchanges (1-on-1)
+
+Raid Bosses:
+  ☐ Boss types
+  ☐ Teamwork mechanics
+  ☐ Raid rewards
+    ☐ Rare items
+    ☐ Currency
+
+Treasure Hunts:
+  ☐ Randomly generated treasures
+  ☐ NPC-based treasures
+  ☐ Treasure rewards
+
+Vehicles:
+  ☐ Vehicle types
+    ☐ Cars
+    ☐ Boats
+  ☐ Upgrade system
+  ☐ Garage/parking system
+
+Animal System:
+  ☐ Pet types
+  ☐ Pet acquisition methods
+  ☐ Pet-related quests
+
+Player House:
+  ☐ House types
+  ☐ Interior customization
+  ☐ Workstations
+
+
 
 NPC Sync:
   ✔ Stream range & streamed npc owner @done(23-03-03 17:43)

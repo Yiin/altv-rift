@@ -5,7 +5,7 @@ import { ServerEvents } from "@shared/events/server";
 import { WebviewEvents } from "@shared/events/webview";
 import { ServerCall } from "@shared/calls/server";
 import { SCENE } from "@/constants/ui";
-import { getWebview, setScene } from "@/utility/user-interface";
+import { getWebview, setScene } from "@/user-interface/webview";
 import { rpc } from "@/rpc";
 
 // TODO: it should be possible to use process.env here, but
@@ -34,9 +34,7 @@ async function beginAuth() {
     cacheAuthToken(token);
   } catch (e) {
     // fallback to manual discord auth (opens browser)
-    const url = await rpc.callServer(
-      ServerCall.FromClient.GET_DISCORD_AUTH_URL
-    );
+    const url = await rpc.callServer(ServerCall.FromClient.GET_DISCORD_AUTH_URL);
 
     setScene(SCENE.DISCORD_AUTH);
     getWebview((webview) => {

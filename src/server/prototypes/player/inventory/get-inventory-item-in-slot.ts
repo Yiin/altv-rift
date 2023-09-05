@@ -9,5 +9,5 @@ declare module "alt-server" {
 }
 
 alt.Player.prototype.getInventoryItemInSlot = function (slot) {
-  return this.store.character.inventory.items.find((item) => item.slot === slot);
+  return this.character.inventory.items.find((item) => item.slot === slot);
 };

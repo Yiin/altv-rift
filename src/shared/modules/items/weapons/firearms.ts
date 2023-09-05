@@ -825,8 +825,8 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
     description: getWeaponData(1119849093).Description,
     flags: ItemFlags.IsEquippable,
     group: WeaponGroup.HEAVY,
-    ammoGroup: AmmoGroup.HEAVY,
-    clipSize: 15000,
+    ammoGroup: AmmoGroup.MACHINE_GUN,
+    clipSize: 0,
     price: 470000,
     stats: {
       damage: 30,

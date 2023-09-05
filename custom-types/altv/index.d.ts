@@ -31,6 +31,10 @@ declare module "alt-client" {
     PLAY_SOUND: IWebviewEventHandler;
   }
 
+  interface ICustomEmitEvent {
+    gameStart(): void | Promise<void>;
+  }
+
   export interface ICustomPedMeta extends ICustomEntityMeta {}
 
   export interface Ped {

@@ -27,6 +27,7 @@ export type EquipedAmmo = Override<
     rest: AmmoItemData;
   }
 >;
+
 export type FirearmWeaponItemData = OptionalNullable<
   Override<
     Prisma.FirearmWeaponItem,
@@ -41,6 +42,7 @@ export type AmmoItemData = OptionalNullable<Prisma.AmmoItem>;
 export type ClothingItemData = OptionalNullable<Prisma.ClothingItem>;
 export type ConsumableItemData = OptionalNullable<Prisma.ConsumableItem>;
 export type MaterialItemData = OptionalNullable<Prisma.MaterialItem>;
+export type BasicItemData = OptionalNullable<Prisma.BasicItem>;
 
 type DefaultItem = {
   [Prisma.ItemType.FIREARM_WEAPON]?: never;
@@ -50,6 +52,7 @@ type DefaultItem = {
   [Prisma.ItemType.CLOTHING]?: never;
   [Prisma.ItemType.CONSUMABLE]?: never;
   [Prisma.ItemType.MATERIAL]?: never;
+  [Prisma.ItemType.BASIC]?: never;
 };
 
 export type FirearmWeaponItem = Override<
@@ -115,6 +118,15 @@ export type MaterialItem = Override<
   }
 >;
 
+export type BasicItem = Override<
+  DefaultItem,
+  {
+    type: typeof Prisma.ItemType.BASIC;
+    key: BasicItemKey;
+    [Prisma.ItemType.BASIC]: BasicItemData;
+  }
+>;
+
 export type Item =
   | FirearmWeaponItem
   | ThrowableWeaponItem
@@ -122,7 +134,8 @@ export type Item =
   | AmmoItem
   | ClothingItem
   | ConsumableItem
-  | MaterialItem;
+  | MaterialItem
+  | BasicItem;
 
 export type ItemData =
   | FirearmWeaponItemData
@@ -131,7 +144,8 @@ export type ItemData =
   | AmmoItemData
   | ClothingItemData
   | ConsumableItemData
-  | MaterialItemData;
+  | MaterialItemData
+  | BasicItemData;
 
 export type InventoryItem<T = Item> = Override<
   Prisma.InventoryItem,
@@ -182,6 +196,7 @@ export type ItemTypeToItemMap = {
   [Prisma.ItemType.CLOTHING]: ClothingItem;
   [Prisma.ItemType.CONSUMABLE]: ConsumableItem;
   [Prisma.ItemType.MATERIAL]: MaterialItem;
+  [Prisma.ItemType.BASIC]: BasicItem;
 };
 
 export type ItemTypeToItemDataMap = {
@@ -192,6 +207,7 @@ export type ItemTypeToItemDataMap = {
   [Prisma.ItemType.CLOTHING]: ClothingItemData;
   [Prisma.ItemType.CONSUMABLE]: ConsumableItemData;
   [Prisma.ItemType.MATERIAL]: MaterialItemData;
+  [Prisma.ItemType.BASIC]: BasicItemData;
 };
 
 export type ItemTypeByKey<K extends ItemKey> = (typeof ITEMS_REGISTRY)[K]["itemType"];

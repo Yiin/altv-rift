@@ -5,7 +5,7 @@ import {
   CALL_WEBVIEW_FROM_SERVER,
   CALL_WEBVIEW_FROM_SERVER_RESPONSE,
 } from "@shared/calls/constants";
-import { getWebview } from "@/utility/user-interface";
+import { getWebview } from "@/user-interface/webview";
 
 alt.onServer(CALL_WEBVIEW_FROM_SERVER, async (payload) => {
   getWebview((webview) => {

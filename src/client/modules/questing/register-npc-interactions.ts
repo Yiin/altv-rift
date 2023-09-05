@@ -1,18 +1,13 @@
 import alt from "alt-client";
 import { Npc } from "@shared/modules/npc/list";
 import { NpcInteraction } from "@shared/modules/npc/interactions";
-import { IconName } from "../rmlui/components/icon/icon";
+import { IconName } from "@/core/rmlui/components/icon/icon";
 
-export type NpcInteractionRegistration = (
-  ped: alt.Ped
-) => NpcInteraction<IconName>[];
+export type NpcInteractionRegistration = (ped: alt.Ped) => NpcInteraction<IconName>[];
 
 const npcInteractions = new Map<Npc, NpcInteractionRegistration[]>();
 
-export function registerNpcInteractions(
-  npcKey: Npc,
-  npcInteraction: NpcInteractionRegistration
-) {
+export function registerNpcInteractions(npcKey: Npc, npcInteraction: NpcInteractionRegistration) {
   if (!npcInteractions.has(npcKey)) {
     npcInteractions.set(npcKey, []);
   }

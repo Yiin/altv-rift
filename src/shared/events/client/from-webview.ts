@@ -5,6 +5,7 @@ export const FromWebview = {
   CAMERA_MOVE_START: "CAMERA_MOVE_START",
   CAMERA_MOVE_END: "CAMERA_MOVE_END",
   PLAY_SOUND: "PLAY_SOUND",
+  ACTION_MENU_SELECT: "ACTION_MENU_SELECT",
 } as const;
 
 interface EventFromWebview {
@@ -14,13 +15,11 @@ interface EventFromWebview {
   [FromWebview.CAMERA_MOVE_START]: () => void;
   [FromWebview.CAMERA_MOVE_END]: () => void;
   [FromWebview.PLAY_SOUND]: (audioName: string, ref: string) => void;
+  [FromWebview.ACTION_MENU_SELECT]: (key: string) => void;
 }
 
 declare module "alt-client" {
   export interface WebView {
-    on(
-      eventName: keyof typeof FromWebview,
-      listener: EventFromWebview[typeof eventName]
-    ): void;
+    on(eventName: keyof typeof FromWebview, listener: EventFromWebview[typeof eventName]): void;
   }
 }

@@ -10,5 +10,5 @@ declare module "alt-server" {
 }
 
 Player.prototype.addItem = function (itemToAdd) {
-  return addItemToInventory(this.store.character.inventory, itemToAdd);
+  return addItemToInventory(this.character.inventory, itemToAdd);
 };

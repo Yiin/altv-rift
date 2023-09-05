@@ -1,21 +1,18 @@
 import { Player } from "alt-server";
 import { PrismaClient } from "@prisma/client";
 import { container } from "@shared/dependency-injection";
+import { InGamePlayer } from "@/utility/assertions";
 
 const prisma = container.get(PrismaClient);
 
 declare module "alt-server" {
   export interface Player {
-    saveCharacter(this: Player): Promise<void>;
+    saveCharacter(this: InGamePlayer): Promise<void>;
   }
 }
 
 Player.prototype.saveCharacter = async function () {
-  if (!this.store.isLoggedIn) {
-    return;
-  }
-
-  const { id, name, userId, ...data } = this.store.character;
+  const { id, name, userId, ...data } = this.character.$state;
 
   await prisma.character.update({
     where: {

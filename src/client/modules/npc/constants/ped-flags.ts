@@ -234,7 +234,7 @@ export enum PED_RESET_FLAG {
   ForcePedToStrafe = 69, // Forces an actor to strafe
   UseKinematicPhysics = 71, // Enables kinematic physics mode on this ped. This stops other physical objects from pushing the ped around, and causes the ped to push any physical objects out of its way when it moves into them.
   ClearLockonTarget = 72, // Clear the players lockon target next frame
-  ForcePedToUseScripCamHeading = 77, // forces a ped to the scripted camera heading instead of gameplay
+  ForcePedToUseScriptCamHeading = 77, // forces a ped to the scripted camera heading instead of gameplay
   IgnoreTargetsCoverForLOS = 85, // When doing LOS checks to other peds we won't use the cover vantage position as the "target" position
   DisableCrouchWhileInCover = 88, // Force the crouch flag to return true while in cover.
   ForceRunningSpeedForFragSmashing = 91, // Forces a ped to apply forces to frags as if running on contact, to guarantee peds will smash through frag objects when playing custom anims

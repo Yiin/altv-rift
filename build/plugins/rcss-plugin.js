@@ -3,10 +3,10 @@ import glob from "glob";
 import * as xml2js from "xml-js";
 
 async function updateRml() {
-  const rcssFiles = await glob("src/client/modules/rmlui/**/*.rcss", {
+  const rcssFiles = await glob("src/client/core/rmlui/**/*.rcss", {
     platform: "linux",
   });
-  const screenRmlPath = "src/client/modules/rmlui/screen.rml";
+  const screenRmlPath = "src/client/core/rmlui/screen.rml";
 
   const rmlFile = await fs.readFile(screenRmlPath, "utf-8");
   const rmlJson = xml2js.xml2js(rmlFile, { compact: true });
@@ -33,7 +33,7 @@ async function updateRml() {
     });
   }
 
-  // Add a dummy text node to prevent the body tag from being self-closing
+  // Add empty text node to prevent the body tag from being self-closing
   if (rmlJson.rml.body._text === undefined) {
     rmlJson.rml.body._text = "";
   }

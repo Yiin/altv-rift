@@ -5,7 +5,7 @@ useItem.hook((player, item) => {
     return;
   }
 
-  const character = player.store.character;
+  const character = player.character;
 
   character.health = Math.min(character.health + 20, character.maxHealth);
 

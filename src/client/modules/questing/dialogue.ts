@@ -2,7 +2,7 @@ import alt from "alt-client";
 import game from "natives";
 import { ConversationOption } from "@shared/interfaces/conversation";
 import { Control, ControlType } from "@/constants/controls";
-import { clientStore } from "@/store/client.store";
+import { clientState } from "@/store/client.store";
 
 interface ConversationInfo {
   pages: string[];
@@ -20,13 +20,13 @@ let promise: {
 } | null = null;
 
 export function isInConversation() {
-  return clientStore.conversation !== null;
+  return clientState.conversation !== null;
 }
 
 export function stopConversation(option?: ConversationOption) {
   alt.nextTick(() => {
     currentPage = 0;
-    clientStore.conversation = null;
+    clientState.conversation = null;
   });
   if (promise) {
     promise.resolve?.(option);
@@ -40,7 +40,7 @@ export async function startConversation(
 ) {
   currentPage = 0;
 
-  clientStore.conversation = {
+  clientState.conversation = {
     with: ped.getStreamSyncedMeta("name") ?? "?",
     pages,
     topic,
@@ -58,7 +58,7 @@ export async function startConversation(
 }
 
 function updateConversation() {
-  const conversation = clientStore.conversation;
+  const conversation = clientState.conversation;
 
   if (!conversation) {
     return;
@@ -91,39 +91,35 @@ function updateConversation() {
 }
 
 function selectPreviousOption() {
-  if (!isInConversation() || !clientStore.conversation) {
+  if (!isInConversation() || !clientState.conversation) {
     return;
   }
-  if (--clientStore.conversation.selectedOption < 0) {
-    clientStore.conversation.selectedOption =
-      clientStore.conversation.options.length - 1;
+  if (--clientState.conversation.selectedOption < 0) {
+    clientState.conversation.selectedOption = clientState.conversation.options.length - 1;
   }
-  if (clientStore.conversation.options.length > 1) {
+  if (clientState.conversation.options.length > 1) {
     game.playSoundFrontend(-1, "NAV_UP_DOWN", "HUD_FREEMODE_SOUNDSET", true);
   }
 }
 
 function selectNextOption() {
-  if (!isInConversation || !clientStore.conversation) {
+  if (!isInConversation || !clientState.conversation) {
     return;
   }
-  if (
-    ++clientStore.conversation.selectedOption >=
-    clientStore.conversation.options.length
-  ) {
-    clientStore.conversation.selectedOption = 0;
+  if (++clientState.conversation.selectedOption >= clientState.conversation.options.length) {
+    clientState.conversation.selectedOption = 0;
   }
-  if (clientStore.conversation.options.length > 1) {
+  if (clientState.conversation.options.length > 1) {
     game.playSoundFrontend(-1, "NAV_UP_DOWN", "HUD_FREEMODE_SOUNDSET", true);
   }
 }
 
 function confirmOption() {
-  if (!clientStore.conversation) {
+  if (!clientState.conversation) {
     return;
   }
 
-  const conversation = clientStore.conversation;
+  const conversation = clientState.conversation;
 
   const option = conversation.options[conversation.selectedOption];
 
@@ -139,32 +135,15 @@ alt.everyTick(() => {
     return;
   }
 
-  game.disableControlAction(
-    ControlType.PLAYER_CONTROL,
-    Control.INPUT_ATTACK,
-    true
-  );
+  game.disableControlAction(ControlType.PLAYER_CONTROL, Control.INPUT_ATTACK, true);
 
-  if (
-    game.isControlJustPressed(
-      ControlType.PLAYER_CONTROL,
-      Control.INPUT_WEAPON_WHEEL_PREV
-    )
-  ) {
+  if (game.isControlJustPressed(ControlType.PLAYER_CONTROL, Control.INPUT_WEAPON_WHEEL_PREV)) {
     selectPreviousOption();
   } else if (
-    game.isControlJustPressed(
-      ControlType.PLAYER_CONTROL,
-      Control.INPUT_WEAPON_WHEEL_NEXT
-    )
+    game.isControlJustPressed(ControlType.PLAYER_CONTROL, Control.INPUT_WEAPON_WHEEL_NEXT)
   ) {
     selectNextOption();
-  } else if (
-    game.isDisabledControlJustPressed(
-      ControlType.PLAYER_CONTROL,
-      Control.INPUT_ATTACK
-    )
-  ) {
+  } else if (game.isDisabledControlJustPressed(ControlType.PLAYER_CONTROL, Control.INPUT_ATTACK)) {
     confirmOption();
     game.playSoundFrontend(-1, "SELECT", "HUD_FREEMODE_SOUNDSET", true);
   }

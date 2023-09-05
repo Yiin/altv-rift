@@ -9,7 +9,7 @@ import { CallFromWebview } from "@shared/calls/client/from-webview";
 import { WebviewCall } from "@shared/calls/webview";
 import { CallFromClient } from "@shared/calls/webview/from-client";
 import { createPayload } from "@shared/utility/create-payload";
-import { getWebview } from "@/utility/user-interface";
+import { getWebview } from "@/user-interface/webview";
 import { deserialize, serialize } from "./serialization";
 
 const webviewProcedures = new Map<string, any>();
@@ -19,9 +19,7 @@ const webviewHandlers = new Map<
 >();
 
 // call webview from client
-export const callWebview = async <
-  T extends keyof typeof WebviewCall.FromClient
->(
+export const callWebview = async <T extends keyof typeof WebviewCall.FromClient>(
   name: T,
   ...args: Shift<Parameters<CallFromClient[T]>>
 ) => {
@@ -61,11 +59,7 @@ export const registerWebview = <T extends keyof typeof ClientCall.FromWebview>(
   webviewProcedures.set(name, handler);
 };
 
-export const unregisterWebview = <
-  T extends keyof typeof ClientCall.FromWebview
->(
-  name: T
-) => {
+export const unregisterWebview = <T extends keyof typeof ClientCall.FromWebview>(name: T) => {
   webviewProcedures.delete(name);
 };
 
@@ -77,9 +71,7 @@ getWebview((webview) => {
 
     try {
       if (!callback) {
-        throw new Error(
-          `CALL_CLIENT_FROM_WEBVIEW: Procedure ${name} does not exist`
-        );
+        throw new Error(`CALL_CLIENT_FROM_WEBVIEW: Procedure ${name} does not exist`);
       }
       const result = await callback(...args);
       webview.emit(CALL_CLIENT_FROM_WEBVIEW_RESPONSE, {

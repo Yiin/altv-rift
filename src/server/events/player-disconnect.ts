@@ -1,10 +1,10 @@
 import alt from "alt-server";
-import { minutesToMilliseconds } from "date-fns";
+import { isInGame } from "@/utility/assertions";
 
 alt.on("playerDisconnect", async (player: alt.Player, reason: string) => {
   alt.log(`Player ${player.name} disconnected. Reason: ${reason}`);
 
-  if (!player.store?.isLoggedIn) {
+  if (!isInGame(player)) {
     return;
   }
 

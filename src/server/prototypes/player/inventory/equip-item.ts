@@ -1,12 +1,14 @@
 import alt from "alt-server";
 import { Equipment, InventoryItemSource, ItemSource } from "@shared/interfaces";
 import { ServerEvents } from "@shared/events/server";
-import { getItemEquipmentSlot, isItemAmmo } from "@shared/modules/items";
+import { getItemEquipmentSlot, getItemInfoByKey, isItemAmmo } from "@shared/modules/items";
+import { isItemFirearmWeapon } from "@shared/modules/items/weapons/firearms";
 import { InGamePlayer } from "@/utility/assertions";
 import {
   addItemToInventory,
   findItem,
   findSourceInventory,
+  getInventoryItemByKey,
   loadWeaponWithAmmo,
   removeItem,
 } from "@/modules/items-manager";
@@ -44,7 +46,7 @@ alt.Player.prototype.equipItem = function (source) {
           type: "equipment",
           equipmentSlot: "weapon",
           source: "character",
-          sourceId: this.store.character.id,
+          sourceId: this.character.id,
         },
         source
       )
@@ -57,7 +59,7 @@ alt.Player.prototype.equipItem = function (source) {
 
     const slot = equipmentSlot as Exclude<typeof equipmentSlot, "ammo">;
 
-    const unequippedItem = this.store.character.equipment[slot];
+    const unequippedItem = this.character.equipment[slot];
 
     if (unequippedItem && !addItemToInventory(inventory, unequippedItem)) {
       return false;
@@ -65,7 +67,27 @@ alt.Player.prototype.equipItem = function (source) {
 
     // @ts-expect-error item is guaranteed to be of correct type,
     // but TS is complaining that e.g. ClothingItem might be on weapon slot
-    this.store.character.equipment[slot] = item;
+    this.character.equipment[slot] = item;
+
+    if (slot === "weapon" && isItemFirearmWeapon(item)) {
+      // Quick hack to auto-equip weapon ammo
+      if (!item.FIREARM_WEAPON.ammo) {
+        const ammo = this.character.inventory.items.find(
+          ({ item: ammo }) =>
+            isItemAmmo(ammo) &&
+            getItemInfoByKey(ammo.key).group === getItemInfoByKey(item.key).ammoGroup
+        );
+
+        if (ammo) {
+          this.equipItem({
+            type: "inventory",
+            inventorySlot: ammo.slot,
+            source: "character",
+            sourceId: this.character.id,
+          });
+        }
+      }
+    }
   }
 
   alt.emit(ServerEvents.FromServer.EQUIP_ITEM, this, item);

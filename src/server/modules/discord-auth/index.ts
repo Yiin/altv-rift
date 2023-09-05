@@ -7,6 +7,7 @@ import { ServerCall } from "@shared/calls/server";
 import { container } from "@shared/dependency-injection";
 import { ServerEvent } from "@/constants/server-events";
 import { checkForQuestionableActivity } from "@/utility/questionable-activity";
+import { isLoggedIn } from "@/utility/assertions";
 import { rpc } from "@/rpc";
 import { getDiscordAuthUrl } from "./verify";
 import "./webserver";
@@ -26,11 +27,7 @@ alt.on("playerConnect", (player) => {
  * receive data from the server.
  */
 alt.onClient(ServerEvents.FromClient.BEGIN_CONNECTION, (player) => {
-  checkForQuestionableActivity(
-    player,
-    player.store.isLoggedIn,
-    "onBeginConnection"
-  );
+  checkForQuestionableActivity(player, isLoggedIn(player), "onBeginConnection");
 
   player.emitRaw(ClientEvents.FromServer.BEGIN_NATIVE_DISCORD_AUTH);
 });
@@ -39,19 +36,16 @@ rpc.registerClient(ServerCall.FromClient.GET_DISCORD_AUTH_URL, (player) => {
   return getDiscordAuthUrl(player);
 });
 
-rpc.registerClient(
-  ServerCall.FromClient.TRY_CACHED_TOKEN,
-  async (player, token) => {
-    const discordInfo = await getDiscordInfo(token);
+rpc.registerClient(ServerCall.FromClient.TRY_CACHED_TOKEN, async (player, token) => {
+  const discordInfo = await getDiscordInfo(token);
 
-    if (!discordInfo) {
-      return false;
-    }
-
-    await onDiscordAuthDone(player, token);
-    return true;
+  if (!discordInfo) {
+    return false;
   }
-);
+
+  await onDiscordAuthDone(player, token);
+  return true;
+});
 
 // native altv discord auth
 alt.onClient(ServerEvents.FromClient.DISCORD_AUTH_DONE, onDiscordAuthDone);
@@ -59,11 +53,7 @@ alt.onClient(ServerEvents.FromClient.DISCORD_AUTH_DONE, onDiscordAuthDone);
 alt.on(ServerEvents.FromServer.MANUAL_DISCORD_AUTH_DONE, onDiscordAuthDone);
 
 async function onDiscordAuthDone(player: alt.Player, token: string) {
-  checkForQuestionableActivity(
-    player,
-    player.store.isLoggedIn,
-    "onDiscordAuthDone"
-  );
+  checkForQuestionableActivity(player, isLoggedIn(player), "onDiscordAuthDone");
 
   const discordInfo = await getDiscordInfo(token);
 

@@ -1,7 +1,7 @@
 import alt from "alt-client";
 import game from "natives";
 import { Appearance } from "@prisma/client";
-import { Character } from "./character";
+import { PedAppearance } from "./ped-appearance";
 import { loadModel } from "./model";
 
 let id: number | undefined;
@@ -54,7 +54,7 @@ export const CharacterPed = {
         } else {
           game.setEntityHeading(id, _rot);
         }
-        await Character.applyEquipment(CharacterPed.get(), [], isMale);
+        await PedAppearance.applyEquipment(CharacterPed.get(), [], isMale);
         return resolve(id);
       });
     });
@@ -79,7 +79,7 @@ export const CharacterPed = {
       await CharacterPed.create(_appearance.sex === 0, pos, rot);
     }
 
-    await Character.applyAppearance(id, _appearance);
+    await PedAppearance.applyAppearance(id, _appearance);
 
     await CharacterPed.setHidden(false);
 

@@ -70,6 +70,12 @@ rpc.registerWebview(ServerCall.FromWebview.LOAD_AMMO, (player, weaponSource, amm
     return false;
   }
 
+  // Do not support equiping already equiped ammo
+  // Player should first unload ammo from the weapon before loading it into another weapon
+  if (ammoSource.type === "equipment") {
+    return false;
+  }
+
   return loadWeaponWithAmmo(weaponSource, ammoSource);
 });
 

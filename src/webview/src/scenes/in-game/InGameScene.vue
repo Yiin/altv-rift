@@ -12,10 +12,11 @@ import WeaponHud from "./weapon-hud/WeaponHud.vue";
 import Notifications from "./notifications/Notifications.vue";
 import AreaIndicators from "./area-indicators/AreaIndicators.vue";
 import ActionMenu from "./action-menu/ActionMenu.vue";
+import TargetAction from "./target-action/TargetAction.vue";
 
 const { on } = useAlt();
 
-const visibleElements = reactive(new Set(globalThis.altMock ? ["action-menu"] : []));
+const visibleElements = reactive(new Set(globalThis.altMock ? ["target-action"] : []));
 
 on(WebviewEvents.FromClient.TOGGLE_ELEMENT, (element: string, visible) => {
   if (visible === null) {
@@ -32,13 +33,16 @@ on(WebviewEvents.FromClient.TOGGLE_ELEMENT, (element: string, visible) => {
 <template>
   <Screen>
     <ChatBox v-if="visibleElements.has('chat')" />
-    <Inventory v-if="visibleElements.has('inventory')" />
-    <QuestMenu v-if="visibleElements.has('quest-menu')" />
-    <SkillMenu v-if="visibleElements.has('skill-menu')" />
-    <Conversation />
-    <AreaIndicators />
-    <WeaponHud />
-    <Notifications />
     <ActionMenu v-if="visibleElements.has('action-menu')" />
+    <template v-else>
+      <Inventory v-if="visibleElements.has('inventory')" />
+      <QuestMenu v-if="visibleElements.has('quest-menu')" />
+      <SkillMenu v-if="visibleElements.has('skill-menu')" />
+      <TargetAction v-if="visibleElements.has('target-action')" />
+      <Conversation />
+      <AreaIndicators />
+      <WeaponHud />
+    </template>
+    <Notifications />
   </Screen>
 </template>

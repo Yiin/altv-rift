@@ -5,5 +5,5 @@ canInteractWithItem.hook((player, itemSource) => {
     return;
   }
 
-  return player.store.character.id === itemSource.sourceId;
+  return player.character.id === itemSource.sourceId;
 });

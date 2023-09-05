@@ -2,10 +2,10 @@ import { Player } from "alt-server";
 
 export function checkForQuestionableActivity(
   player: Player,
-  condition: boolean,
+  isQuestionable: boolean,
   context: string
 ) {
-  if (condition) {
+  if (isQuestionable) {
     player.kick(`Questionable activity. (${context})`);
     throw new Error("Questionable activity detected");
   }

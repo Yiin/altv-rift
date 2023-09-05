@@ -1,4 +1,4 @@
-import { onUnmounted, Ref } from "vue";
+import { onUnmounted, onMounted } from "vue";
 
 type Options = boolean | AddEventListenerOptions | undefined;
 
@@ -13,7 +13,9 @@ export const useEventListener = <K extends keyof WindowEventMap>(
   };
 
   // add event listener
-  window.addEventListener(type, handler, options);
+  onMounted(() => {
+    window.addEventListener(type, handler, options);
+  });
 
   // remove event listener on unmount
   onUnmounted(() => {

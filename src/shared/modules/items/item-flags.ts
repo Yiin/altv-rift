@@ -3,4 +3,5 @@ export enum ItemFlags {
   IsStackable = 1 << 0,
   IsEquippable = 1 << 1,
   IsUsable = 1 << 2,
+  IsEdible = 1 << 3,
 }

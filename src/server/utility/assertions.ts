@@ -1,15 +1,40 @@
+// Client throws errors because it imports this file from @/shared/events/server/index.ts
+
 import alt from "alt-server";
 
-export type InGamePlayer = alt.Player & { store: { isLoggedIn: true } };
+export type LoggedInPlayer = alt.Player & {
+  /* @ts-ignore */
+  pinia: Exclude<alt.Player["pinia"], undefined>;
+  /* @ts-ignore */
+  user: Exclude<alt.Player["user"], undefined>;
+};
 
+export type InGamePlayer = alt.Player & {
+  /* @ts-ignore */
+  character: Exclude<alt.Player["character"], undefined>;
+  /* @ts-ignore */
+  gameState: Exclude<alt.Player["gameState"], undefined>;
+};
+
+/* @ts-ignore */
 export function needsToBeInGame(player: alt.Player): asserts player is InGamePlayer {
-  // @ts-ignore Client throws error because it imports this file from @/shared/events/server/index.ts
-  if (!player.store.isLoggedIn) {
+  if (!isInGame(player)) {
     throw new Error("Not in game.");
   }
 }
 
 export function isInGame(player: alt.Player): player is InGamePlayer {
-  // @ts-ignore Client throws error because it imports this file from @/shared/events/server/index.ts
-  return player.store.isLoggedIn;
+  /* @ts-ignore */
+  return player.character !== undefined;
+}
+
+export function needsToBeLoggedIn(player: alt.Player): asserts player is LoggedInPlayer {
+  if (!isLoggedIn(player)) {
+    throw new Error("Not logged in.");
+  }
+}
+
+export function isLoggedIn(player: alt.Player): player is LoggedInPlayer {
+  /* @ts-ignore */
+  return player.user !== undefined;
 }

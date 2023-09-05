@@ -108,6 +108,7 @@ enum ItemType {
   CLOTHING
   CONSUMABLE
   MATERIAL
+  BASIC
 }
 
 type ItemData {
@@ -120,6 +121,7 @@ type ItemData {
   CLOTHING         ClothingItem?
   CONSUMABLE       ConsumableItem?
   MATERIAL         MaterialItem?
+  BASIC            BasicItem?
 }
 
 type FirearmWeaponItem {
@@ -166,6 +168,10 @@ type ConsumableItem {
 }
 
 type MaterialItem {
+  amount Int
+}
+
+type BasicItem {
   amount Int
 }
 

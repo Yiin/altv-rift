@@ -14,21 +14,6 @@ let closest: [number, alt.VirtualEntity] | null = null;
 let currentTree: alt.VirtualEntity;
 const player = alt.Player.local;
 
-export function getNearbyTrees() {
-  return alt.VirtualEntity.streamedIn.filter(
-    (entity) => entity.getStreamSyncedMeta("entityType") === "tree"
-  );
-}
-
-// Function to calculate and update the closest tree
-const updateClosestTree = () => {
-  closest = getNearbyTrees().reduce<[number, alt.VirtualEntity] | null>((closest, tree) => {
-    const distance = player.pos.distanceTo(tree.pos);
-    if (distance > 5) return closest;
-    return !closest || distance < closest[0] ? [distance, tree] : closest;
-  }, null);
-};
-
 const raycastTreeEdge = (
   playerPos: alt.Vector3,
   treePos: alt.IVector3,
@@ -205,8 +190,19 @@ const loadAssets = async () => {
   }
 };
 
-// Interval to update closest tree
-alt.setInterval(updateClosestTree, 300);
+export function getNearbyTrees() {
+  return alt.VirtualEntity.streamedIn.filter(
+    (entity) => entity.getStreamSyncedMeta("entityType") === "tree"
+  );
+}
+
+alt.setInterval(function updateClosestTree() {
+  closest = getNearbyTrees().reduce<[number, alt.VirtualEntity] | null>((closest, tree) => {
+    const distance = player.pos.distanceTo(tree.pos);
+    if (distance > 5) return closest;
+    return !closest || distance < closest[0] ? [distance, tree] : closest;
+  }, null);
+}, 300);
 
 // Main tick logic
 alt.everyTick(async () => {

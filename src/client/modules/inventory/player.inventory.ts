@@ -1,6 +1,6 @@
 import { KeyCode } from "altv-enums";
 import { ELEMENT } from "@/constants/ui";
-import { toggleElement } from "@/utility/user-interface";
+import { toggleElement } from "@/user-interface/webview";
 import { onKeyDown } from "@/utility/event-helpers";
 
 let isOpen = false;

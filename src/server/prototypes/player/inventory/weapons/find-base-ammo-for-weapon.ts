@@ -15,7 +15,7 @@ alt.Player.prototype.findBaseAmmoForWeapon = function (weapon: WeaponItemInfo) {
     return;
   }
 
-  const ammo = this.store.character.inventory.items.find(
+  const ammo = this.character.inventory.items.find(
     (inventoryItem): inventoryItem is InventoryItem<AmmoItem> => {
       return (
         inventoryItem.item.type === ItemType.AMMO &&

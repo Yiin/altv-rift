@@ -10,6 +10,7 @@ import {
   ClothingItemData,
   ConsumableItemData,
   MaterialItemData,
+  BasicItemData,
 } from "@shared/interfaces";
 import { ItemKey, ItemTypeByKey } from "../types";
 import { getItemType } from "../registry";
@@ -38,7 +39,9 @@ export const ITEM_DATA_DEFAULTS = {
     components: [],
     tint: 0,
   } satisfies Partial<FirearmWeaponItemData>,
-  [ItemType.THROWABLE_WEAPON]: {} satisfies Partial<ThrowableWeaponItemData>,
+  [ItemType.THROWABLE_WEAPON]: {
+    amount: 1,
+  } satisfies Partial<ThrowableWeaponItemData>,
   [ItemType.MELEE_WEAPON]: {
     durability: 100,
     customName: null,
@@ -51,6 +54,13 @@ export const ITEM_DATA_DEFAULTS = {
     customName: null,
     texture: 0,
   } satisfies Partial<ClothingItemData>,
-  [ItemType.CONSUMABLE]: {} satisfies Partial<ConsumableItemData>,
-  [ItemType.MATERIAL]: {} satisfies Partial<MaterialItemData>,
+  [ItemType.CONSUMABLE]: {
+    amount: 1,
+  } satisfies Partial<ConsumableItemData>,
+  [ItemType.MATERIAL]: {
+    amount: 1,
+  } satisfies Partial<MaterialItemData>,
+  [ItemType.BASIC]: {
+    amount: 1,
+  } satisfies Partial<BasicItemData>,
 } as const;

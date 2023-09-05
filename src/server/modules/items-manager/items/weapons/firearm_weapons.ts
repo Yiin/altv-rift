@@ -8,7 +8,13 @@ import {
   toEquipedAmmo,
 } from "@shared/modules/items";
 import { isItemFirearmWeapon } from "@shared/modules/items/weapons/firearms";
-import { AmmoItem, FirearmWeaponItem, Item, ItemSource } from "@shared/interfaces";
+import {
+  AmmoItem,
+  FirearmWeaponItem,
+  InventoryItemSource,
+  Item,
+  ItemSource,
+} from "@shared/interfaces";
 import { InGamePlayer, isInGame } from "@/utility/assertions";
 import { findItem, findSourceInventory } from "../../api/hooks";
 import { removeItem, addItemToInventory } from "../../api/utils";
@@ -21,11 +27,15 @@ alt.on(ServerEvents.FromServer.EQUIP_ITEM, (player, item) => {
   const itemInfo = getItemInfoByKey(item.key);
   const itemData = getItemData(item);
 
+  if (player.currentWeapon === itemInfo.hash) {
+    return;
+  }
+
   if (itemData.ammo && itemData.ammo.clip.amount + itemData.ammo.rest.amount <= 0) {
     itemData.ammo = null;
   }
 
-  player.giveWeapon(itemInfo.hash, 1, true);
+  player.giveWeapon(itemInfo.hash, 0, true);
 });
 
 alt.onClient(ServerEvents.FromClient.WEAPON_SHOOT, (player) => {
@@ -33,7 +43,7 @@ alt.onClient(ServerEvents.FromClient.WEAPON_SHOOT, (player) => {
     return;
   }
 
-  const equipedWeapon = player.store.character.equipment.weapon;
+  const equipedWeapon = player.character.equipment.weapon;
 
   if (!equipedWeapon) {
     return false;
@@ -68,62 +78,28 @@ alt.onClient(ServerEvents.FromClient.WEAPON_SHOOT, (player) => {
   return true;
 });
 
-// alt.on("startProjectile", (player, pos, dir, ammoHash, weaponHash) => {
-//   if (!isInGame(player)) {
-//     return false;
-//   }
-
-//   const equipedWeapon = player.store.character.equipment.weapon;
-
-//   if (!equipedWeapon) {
-//     console.log("No weapon equiped");
-//     return false;
-//   }
-
-//   const weaponInfo = getItemInfoByKey(equipedWeapon.key);
-
-//   if (weaponInfo.hash !== weaponHash) {
-//     console.log("Weapon hashes don't match");
-//     return false;
-//   }
-
-//   if (equipedWeapon.type !== ItemType.FIREARM_WEAPON) {
-//     return;
-//   }
-
-//   const weaponData = getItemData(equipedWeapon);
-
-//   if (!weaponData.ammo) {
-//     console.log("Weapon has no loaded ammo");
-//     return false;
-//   }
-
-//   if (weaponData.ammo.data.amount <= 0) {
-//     console.log("Weapon has no ammo");
-//     return false;
-//   }
-
-//   weaponData.ammo.data.amount -= 1;
-
-//   return true;
-// });
-
-export function loadWeaponWithAmmo(weaponSource: ItemSource, ammoSource: ItemSource): boolean {
-  // Do not support equiping ammo from equipment
-  // Player should first unload ammo from the weapon before loading it into another weapon
-  if (ammoSource.type === "equipment") {
-    return false;
-  }
-
+/**
+ * Loads ammo from inventory into weapon.
+ */
+export function loadWeaponWithAmmo(
+  weaponSource: ItemSource,
+  ammoSource: InventoryItemSource
+): boolean {
   const weapon = findItem.call(weaponSource);
   const ammo = findItem.call(ammoSource);
   const ammoInventory = findSourceInventory.call(ammoSource);
 
   if (!weapon || !ammo || !ammoInventory) {
+    console.log({
+      weapon: !!weapon,
+      ammo: !!ammo,
+      ammoInventory: !!ammoInventory,
+    });
     return false;
   }
 
   if (!isItemFirearmWeapon(weapon) || !isItemAmmo(ammo)) {
+    console.log("Not a firearm weapon or ammo", weapon, ammo);
     return false;
   }
 
@@ -138,6 +114,9 @@ export function loadWeaponWithAmmo(weaponSource: ItemSource, ammoSource: ItemSou
   return true;
 }
 
+/**
+ * Unloads ammo from weapon to its inventory (or players inventory if equiped).
+ */
 export function unloadAmmoFromWeapon(source: ItemSource) {
   const weapon = findItem.call(source);
 
@@ -152,7 +131,7 @@ export function unloadAmmoFromWeapon(source: ItemSource) {
   // Weapon is equipped
   if (source.type === "equipment") {
     const player = alt.Player.all.find(
-      (player): player is InGamePlayer => player.store.character?.id === source.sourceId
+      (player): player is InGamePlayer => player.character?.id === source.sourceId
     );
 
     if (!player) {
@@ -165,7 +144,7 @@ export function unloadAmmoFromWeapon(source: ItemSource) {
       return false;
     }
 
-    if (!addItemToInventory(player.store.character.inventory, ammo)) {
+    if (!addItemToInventory(player.character.inventory, ammo)) {
       // If player inventory is full, load ammo back into the weapon
       loadWeaponItemWithAmmoItem(weapon, ammo);
       return false;
@@ -223,6 +202,9 @@ export function loadWeaponItemWithAmmoItem(
   return null;
 }
 
+/**
+ * Unloads ammo from weapon item and returns ammo item.
+ */
 export function unloadWeaponItemAmmo(item: Item) {
   if (!isItemFirearmWeapon(item)) {
     return null;

@@ -5,6 +5,7 @@ import { InGamePlayer } from "@/utility/assertions";
 export const findSourceInventory = createHookableFunction<
   (source: InventoryItemSource) => Inventory | null
 >({
+  name: "findSourceInventory",
   defaultReturn: null,
 });
 
@@ -16,6 +17,7 @@ export const findSourceInventory = createHookableFunction<
 export const findItem = createHookableFunction<
   (source: ItemSource, player?: InGamePlayer) => Item | null
 >({
+  name: "findItem",
   defaultReturn: null,
 });
 
@@ -25,6 +27,7 @@ export const findItem = createHookableFunction<
 export const canInteractWithItem = createHookableFunction<
   (player: InGamePlayer, source: ItemSource) => boolean
 >({
+  name: "canInteractWithItem",
   defaultReturn: true,
 });
 
@@ -34,6 +37,7 @@ export const canInteractWithItem = createHookableFunction<
 export const canDropItem = createHookableFunction<
   (player: InGamePlayer, source: ItemSource) => boolean
 >({
+  name: "canDropItem",
   defaultReturn: true,
 });
 
@@ -43,6 +47,7 @@ export const canDropItem = createHookableFunction<
 export const useItemFromSource = createHookableFunction<
   (player: InGamePlayer, source: ItemSource) => boolean
 >({
+  name: "useItemFromSource",
   defaultReturn: false,
 });
 
@@ -50,6 +55,7 @@ export const useItemFromSource = createHookableFunction<
  * Tries to use the item. If none of the item hooks return true, it won't be used.
  */
 export const useItem = createHookableFunction<(player: InGamePlayer, item: Item) => boolean>({
+  name: "the",
   defaultReturn: false,
 });
 
@@ -59,6 +65,7 @@ export const useItem = createHookableFunction<(player: InGamePlayer, item: Item)
 export const canEquipItem = createHookableFunction<
   (player: InGamePlayer, source: ItemSource) => boolean
 >({
+  name: "canEquipItem",
   defaultReturn: true,
 });
 
@@ -68,5 +75,6 @@ export const canEquipItem = createHookableFunction<
 export const equipItem = createHookableFunction<
   (player: InGamePlayer, source: ItemSource) => boolean
 >({
+  name: "equipItem",
   defaultReturn: false,
 });

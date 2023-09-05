@@ -7,13 +7,15 @@ import { WeaponItemKey } from "./weapons";
 import { FirearmWeaponItemKey } from "./weapons/firearms";
 import { MeleeWeaponItemKey } from "./weapons/melee";
 import { ThrowableWeaponItemKey } from "./weapons/throwable";
+import { BasicItemKey } from "./basic";
 
 export type ItemKey =
   | WeaponItemKey
   | AmmoItemKey
   | ClothingItemKey
   | ConsumableItemKey
-  | MaterialItemKey;
+  | MaterialItemKey
+  | BasicItemKey;
 
 export type ItemTypeByKey = {
   [K in FirearmWeaponItemKey]: typeof ItemType.FIREARM_WEAPON;
@@ -29,6 +31,8 @@ export type ItemTypeByKey = {
   [K in ConsumableItemKey]: typeof ItemType.CONSUMABLE;
 } & {
   [K in MaterialItemKey]: typeof ItemType.MATERIAL;
+} & {
+  [K in BasicItemKey]: typeof ItemType.BASIC;
 };
 
 export type KeysByItemType = {
@@ -39,4 +43,5 @@ export type KeysByItemType = {
   [ItemType.CLOTHING]: ClothingItemKey;
   [ItemType.CONSUMABLE]: ConsumableItemKey;
   [ItemType.MATERIAL]: MaterialItemKey;
+  [ItemType.BASIC]: BasicItemKey;
 };
