@@ -8,6 +8,7 @@ export const FromClient = {
   RELOAD_WEAPON: "RELOAD_WEAPON",
   START_FISHING: "START_FISHING",
   STOP_FISHING: "STOP_FISHING",
+  TOGGLE_VEHICLE_DOOR: "TOGGLE_VEHICLE_DOOR",
 } as const;
 
 export interface CallFromClient<
@@ -34,4 +35,9 @@ export interface CallFromClient<
   [FromClient.RELOAD_WEAPON]: (player: P) => boolean;
   [FromClient.START_FISHING]: (player: P) => void;
   [FromClient.STOP_FISHING]: (player: P) => void;
+  [FromClient.TOGGLE_VEHICLE_DOOR]: (
+    player: P,
+    vehicleId: number,
+    doorId: number
+  ) => void;
 }

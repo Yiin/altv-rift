@@ -1,8 +1,8 @@
-import { ItemType } from "@prisma/client/edge";
-import { FirearmWeaponItem, Item } from "@shared/interfaces";
+import { Item } from "@shared/interfaces";
 import { ItemFlags } from "../item-flags";
 import { getWeaponData } from "../weapons";
 import { ItemKey } from "../types";
+import { AmmoItemKey } from "../ammo";
 import { AmmoGroup, WeaponGroup } from "./weapon-groups";
 
 export const FirearmWeapon = {
@@ -74,9 +74,24 @@ export const FirearmWeapon = {
 
 export type FirearmWeaponItemKey = (typeof FirearmWeapon)[keyof typeof FirearmWeapon];
 
+export type EquipedAmmo = {
+  key: AmmoItemKey;
+  clip: number;
+  rest: number;
+};
+
+export type FirearmWeaponItem = {
+  key: FirearmWeaponItemKey;
+
+  customName?: string | null;
+  durability: number;
+  tint: number;
+  components: number[];
+  ammo?: EquipedAmmo | null;
+};
+
 export type FirearmWeaponItemInfo = {
   key: FirearmWeaponItemKey;
-  itemType: typeof ItemType.FIREARM_WEAPON;
   hash: number;
   name: string;
   description: string;
@@ -97,7 +112,6 @@ export type FirearmWeaponItemInfo = {
 export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo> = {
   advancedrifle: {
     key: "advancedrifle",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 2937143193,
     name: getWeaponData(2937143193).Name,
     description: getWeaponData(2937143193).Description,
@@ -116,7 +130,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   appistol: {
     key: "appistol",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 584646201,
     name: getWeaponData(584646201).Name,
     description: getWeaponData(584646201).Description,
@@ -135,7 +148,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   assaultrifle: {
     key: "assaultrifle",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 3220176749,
     name: getWeaponData(3220176749).Name,
     description: getWeaponData(3220176749).Description,
@@ -154,7 +166,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   assaultriflemk2: {
     key: "assaultriflemk2",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 961495388,
     name: getWeaponData(961495388).Name,
     description: getWeaponData(961495388).Description,
@@ -173,7 +184,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   assaultshotgun: {
     key: "assaultshotgun",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 3800352039,
     name: getWeaponData(3800352039).Name,
     description: getWeaponData(3800352039).Description,
@@ -192,7 +202,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   assaultsmg: {
     key: "assaultsmg",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 4024951519,
     name: getWeaponData(4024951519).Name,
     description: getWeaponData(4024951519).Description,
@@ -211,7 +220,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   autoshotgun: {
     key: "autoshotgun",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 317205821,
     name: getWeaponData(317205821).Name,
     description: getWeaponData(317205821).Description,
@@ -230,7 +238,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   bullpuprifle: {
     key: "bullpuprifle",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 2132975508,
     name: getWeaponData(2132975508).Name,
     description: getWeaponData(2132975508).Description,
@@ -249,7 +256,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   bullpupriflemk2: {
     key: "bullpupriflemk2",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 2228681469,
     name: getWeaponData(2228681469).Name,
     description: getWeaponData(2228681469).Description,
@@ -268,7 +274,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   bullpupshotgun: {
     key: "bullpupshotgun",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 2640438543,
     name: getWeaponData(2640438543).Name,
     description: getWeaponData(2640438543).Description,
@@ -287,7 +292,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   carbinerifle: {
     key: "carbinerifle",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 2210333304,
     name: getWeaponData(2210333304).Name,
     description: getWeaponData(2210333304).Description,
@@ -306,7 +310,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   carbineriflemk2: {
     key: "carbineriflemk2",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 4208062921,
     name: getWeaponData(4208062921).Name,
     description: getWeaponData(4208062921).Description,
@@ -325,7 +328,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   ceramicpistol: {
     key: "ceramicpistol",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 727643628,
     name: getWeaponData(727643628).Name,
     description: getWeaponData(727643628).Description,
@@ -344,7 +346,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   combatmg: {
     key: "combatmg",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 2144741730,
     name: getWeaponData(2144741730).Name,
     description: getWeaponData(2144741730).Description,
@@ -363,7 +364,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   combatmgmk2: {
     key: "combatmgmk2",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 3686625920,
     name: getWeaponData(3686625920).Name,
     description: getWeaponData(3686625920).Description,
@@ -382,7 +382,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   combatpdw: {
     key: "combatpdw",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 171789620,
     name: getWeaponData(171789620).Name,
     description: getWeaponData(171789620).Description,
@@ -401,7 +400,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   combatpistol: {
     key: "combatpistol",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 1593441988,
     name: getWeaponData(1593441988).Name,
     description: getWeaponData(1593441988).Description,
@@ -420,7 +418,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   compactlauncher: {
     key: "compactlauncher",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 125959754,
     name: getWeaponData(125959754).Name,
     description: getWeaponData(125959754).Description,
@@ -439,7 +436,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   compactrifle: {
     key: "compactrifle",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 1649403952,
     name: getWeaponData(1649403952).Name,
     description: getWeaponData(1649403952).Description,
@@ -458,7 +454,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   dbshotgun: {
     key: "dbshotgun",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 4019527611,
     name: getWeaponData(4019527611).Name,
     description: getWeaponData(4019527611).Description,
@@ -477,7 +472,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   doubleaction: {
     key: "doubleaction",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 2548703416,
     name: getWeaponData(2548703416).Name,
     description: getWeaponData(2548703416).Description,
@@ -496,7 +490,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   fireextinguisher: {
     key: "fireextinguisher",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 101631238,
     name: getWeaponData(101631238).Name,
     description: getWeaponData(101631238).Description,
@@ -515,7 +508,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   firework: {
     key: "firework",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 2138347493,
     name: getWeaponData(2138347493).Name,
     description: getWeaponData(2138347493).Description,
@@ -534,7 +526,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   flaregun: {
     key: "flaregun",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 1198879012,
     name: getWeaponData(1198879012).Name,
     description: getWeaponData(1198879012).Description,
@@ -553,7 +544,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   grenadelauncher: {
     key: "grenadelauncher",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 2726580491,
     name: getWeaponData(2726580491).Name,
     description: getWeaponData(2726580491).Description,
@@ -572,7 +562,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   smokelauncher: {
     key: "smokelauncher",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 1305664598,
     name: getWeaponData(1305664598).Name,
     description: getWeaponData(1305664598).Description,
@@ -591,7 +580,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   gusenberg: {
     key: "gusenberg",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 1627465347,
     name: getWeaponData(1627465347).Name,
     description: getWeaponData(1627465347).Description,
@@ -610,7 +598,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   heavypistol: {
     key: "heavypistol",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 3523564046,
     name: getWeaponData(3523564046).Name,
     description: getWeaponData(3523564046).Description,
@@ -629,7 +616,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   heavyshotgun: {
     key: "heavyshotgun",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 984333226,
     name: getWeaponData(984333226).Name,
     description: getWeaponData(984333226).Description,
@@ -648,7 +634,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   heavysniper: {
     key: "heavysniper",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 205991906,
     name: getWeaponData(205991906).Name,
     description: getWeaponData(205991906).Description,
@@ -667,7 +652,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   heavysnipermk2: {
     key: "heavysnipermk2",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 177293209,
     name: getWeaponData(177293209).Name,
     description: getWeaponData(177293209).Description,
@@ -686,7 +670,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   hominglauncher: {
     key: "hominglauncher",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 1672152130,
     name: getWeaponData(1672152130).Name,
     description: getWeaponData(1672152130).Description,
@@ -705,7 +688,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   machinepistol: {
     key: "machinepistol",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 3675956304,
     name: getWeaponData(3675956304).Name,
     description: getWeaponData(3675956304).Description,
@@ -724,7 +706,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   marksmanpistol: {
     key: "marksmanpistol",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 3696079510,
     name: getWeaponData(3696079510).Name,
     description: getWeaponData(3696079510).Description,
@@ -743,7 +724,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   marksmanrifle: {
     key: "marksmanrifle",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 3342088282,
     name: getWeaponData(3342088282).Name,
     description: getWeaponData(3342088282).Description,
@@ -762,7 +742,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   marksmanriflemk2: {
     key: "marksmanriflemk2",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 1785463520,
     name: getWeaponData(1785463520).Name,
     description: getWeaponData(1785463520).Description,
@@ -781,7 +760,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   mg: {
     key: "mg",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 2634544996,
     name: getWeaponData(2634544996).Name,
     description: getWeaponData(2634544996).Description,
@@ -800,7 +778,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   microsmg: {
     key: "microsmg",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 324215364,
     name: getWeaponData(324215364).Name,
     description: getWeaponData(324215364).Description,
@@ -819,7 +796,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   minigun: {
     key: "minigun",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 1119849093,
     name: getWeaponData(1119849093).Name,
     description: getWeaponData(1119849093).Description,
@@ -838,7 +814,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   minismg: {
     key: "minismg",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 3173288789,
     name: getWeaponData(3173288789).Name,
     description: getWeaponData(3173288789).Description,
@@ -857,7 +832,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   musket: {
     key: "musket",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 2828843422,
     name: getWeaponData(2828843422).Name,
     description: getWeaponData(2828843422).Description,
@@ -876,7 +850,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   navyrevolver: {
     key: "navyrevolver",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 2441047180,
     name: getWeaponData(2441047180).Name,
     description: getWeaponData(2441047180).Description,
@@ -904,7 +877,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   // },
   pistol: {
     key: "pistol",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 453432689,
     name: getWeaponData(453432689).Name,
     description: getWeaponData(453432689).Description,
@@ -923,7 +895,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   pistol50: {
     key: "pistol50",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 2578377531,
     name: getWeaponData(2578377531).Name,
     description: getWeaponData(2578377531).Description,
@@ -942,7 +913,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   pistolmk2: {
     key: "pistolmk2",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 3219281620,
     name: getWeaponData(3219281620).Name,
     description: getWeaponData(3219281620).Description,
@@ -961,7 +931,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   pumpshotgun: {
     key: "pumpshotgun",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 487013001,
     name: getWeaponData(487013001).Name,
     description: getWeaponData(487013001).Description,
@@ -980,7 +949,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   pumpshotgunmk2: {
     key: "pumpshotgunmk2",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 1432025498,
     name: getWeaponData(1432025498).Name,
     description: getWeaponData(1432025498).Description,
@@ -999,7 +967,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   railgun: {
     key: "railgun",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 1834241177,
     name: getWeaponData(1834241177).Name,
     description: getWeaponData(1834241177).Description,
@@ -1018,7 +985,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   raycarbine: {
     key: "raycarbine",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 1198256469,
     name: getWeaponData(1198256469).Name,
     description: getWeaponData(1198256469).Description,
@@ -1037,7 +1003,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   rayminigun: {
     key: "rayminigun",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 3056410471,
     name: getWeaponData(3056410471).Name,
     description: getWeaponData(3056410471).Description,
@@ -1056,7 +1021,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   raypistol: {
     key: "raypistol",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 2939590305,
     name: getWeaponData(2939590305).Name,
     description: getWeaponData(2939590305).Description,
@@ -1075,7 +1039,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   revolver: {
     key: "revolver",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 3249783761,
     name: getWeaponData(3249783761).Name,
     description: getWeaponData(3249783761).Description,
@@ -1094,7 +1057,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   revolvermk2: {
     key: "revolvermk2",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 3415619887,
     name: getWeaponData(3415619887).Name,
     description: getWeaponData(3415619887).Description,
@@ -1113,7 +1075,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   rpg: {
     key: "rpg",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 2982836145,
     name: getWeaponData(2982836145).Name,
     description: getWeaponData(2982836145).Description,
@@ -1132,7 +1093,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   sawnoffshotgun: {
     key: "sawnoffshotgun",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 2017895192,
     name: getWeaponData(2017895192).Name,
     description: getWeaponData(2017895192).Description,
@@ -1151,7 +1111,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   smg: {
     key: "smg",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 736523883,
     name: getWeaponData(736523883).Name,
     description: getWeaponData(736523883).Description,
@@ -1170,7 +1129,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   smgmk2: {
     key: "smgmk2",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 2024373456,
     name: getWeaponData(2024373456).Name,
     description: getWeaponData(2024373456).Description,
@@ -1189,7 +1147,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   sniperrifle: {
     key: "sniperrifle",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 100416529,
     name: getWeaponData(100416529).Name,
     description: getWeaponData(100416529).Description,
@@ -1208,7 +1165,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   snspistol: {
     key: "snspistol",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 3218215474,
     name: getWeaponData(3218215474).Name,
     description: getWeaponData(3218215474).Description,
@@ -1227,7 +1183,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   snspistolmk2: {
     key: "snspistolmk2",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 2285322324,
     name: getWeaponData(2285322324).Name,
     description: getWeaponData(2285322324).Description,
@@ -1246,7 +1201,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   specialcarbine: {
     key: "specialcarbine",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 3231910285,
     name: getWeaponData(3231910285).Name,
     description: getWeaponData(3231910285).Description,
@@ -1265,7 +1219,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   specialcarbinemk2: {
     key: "specialcarbinemk2",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 2526821735,
     name: getWeaponData(2526821735).Name,
     description: getWeaponData(2526821735).Description,
@@ -1284,7 +1237,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   stungun: {
     key: "stungun",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 911657153,
     name: getWeaponData(911657153).Name,
     description: getWeaponData(911657153).Description,
@@ -1303,7 +1255,6 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
   },
   vintagepistol: {
     key: "vintagepistol",
-    itemType: ItemType.FIREARM_WEAPON,
     hash: 137902532,
     name: getWeaponData(137902532).Name,
     description: getWeaponData(137902532).Description,

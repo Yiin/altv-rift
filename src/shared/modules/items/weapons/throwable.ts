@@ -1,5 +1,4 @@
-import { ItemType } from "@prisma/client/edge";
-import { Item, ThrowableWeaponItem } from "@shared/interfaces";
+import { Item } from "@shared/interfaces";
 import { ItemFlags } from "../item-flags";
 import { WeaponGroup } from "./weapon-groups";
 import { getWeaponData } from ".";
@@ -21,9 +20,14 @@ export const ThrowableWeapon = {
 
 export type ThrowableWeaponItemKey = (typeof ThrowableWeapon)[keyof typeof ThrowableWeapon];
 
+export type ThrowableWeaponItem = {
+  key: ThrowableWeaponItemKey;
+
+  amount: number;
+};
+
 export type ThrowableWeaponItemInfo = {
   key: ThrowableWeaponItemKey;
-  itemType: typeof ItemType.THROWABLE_WEAPON;
   hash: number;
   name: string;
   description: string;
@@ -42,7 +46,6 @@ export type ThrowableWeaponItemInfo = {
 export const throwableWeapons: Record<ThrowableWeaponItemKey, ThrowableWeaponItemInfo> = {
   pipebomb: {
     key: "pipebomb",
-    itemType: ItemType.THROWABLE_WEAPON,
     hash: 3125143736,
     name: getWeaponData(3125143736).Name,
     description: getWeaponData(3125143736).Description,
@@ -59,7 +62,6 @@ export const throwableWeapons: Record<ThrowableWeaponItemKey, ThrowableWeaponIte
   },
   proxmine: {
     key: "proxmine",
-    itemType: ItemType.THROWABLE_WEAPON,
     hash: 2874559379,
     name: getWeaponData(2874559379).Name,
     description: getWeaponData(2874559379).Description,
@@ -76,7 +78,6 @@ export const throwableWeapons: Record<ThrowableWeaponItemKey, ThrowableWeaponIte
   },
   grenade: {
     key: "grenade",
-    itemType: ItemType.THROWABLE_WEAPON,
     hash: 2481070269,
     name: getWeaponData(2481070269).Name,
     description: getWeaponData(2481070269).Description,
@@ -93,7 +94,6 @@ export const throwableWeapons: Record<ThrowableWeaponItemKey, ThrowableWeaponIte
   },
   stickybomb: {
     key: "stickybomb",
-    itemType: ItemType.THROWABLE_WEAPON,
     hash: 741814745,
     name: getWeaponData(741814745).Name,
     description: getWeaponData(741814745).Description,
@@ -110,7 +110,6 @@ export const throwableWeapons: Record<ThrowableWeaponItemKey, ThrowableWeaponIte
   },
   snowball: {
     key: "snowball",
-    itemType: ItemType.THROWABLE_WEAPON,
     hash: 126349499,
     name: getWeaponData(126349499).Name,
     description: getWeaponData(126349499).Description,
@@ -127,7 +126,6 @@ export const throwableWeapons: Record<ThrowableWeaponItemKey, ThrowableWeaponIte
   },
   smokegrenade: {
     key: "smokegrenade",
-    itemType: ItemType.THROWABLE_WEAPON,
     hash: 4256991824,
     name: getWeaponData(4256991824).Name,
     description: getWeaponData(4256991824).Description,
@@ -144,7 +142,6 @@ export const throwableWeapons: Record<ThrowableWeaponItemKey, ThrowableWeaponIte
   },
   jerrycan: {
     key: "jerrycan",
-    itemType: ItemType.THROWABLE_WEAPON,
     hash: 883325847,
     name: getWeaponData(883325847).Name,
     description: getWeaponData(883325847).Description,
@@ -161,7 +158,6 @@ export const throwableWeapons: Record<ThrowableWeaponItemKey, ThrowableWeaponIte
   },
   molotov: {
     key: "molotov",
-    itemType: ItemType.THROWABLE_WEAPON,
     hash: 615608432,
     name: getWeaponData(615608432).Name,
     description: getWeaponData(615608432).Description,
@@ -178,7 +174,6 @@ export const throwableWeapons: Record<ThrowableWeaponItemKey, ThrowableWeaponIte
   },
   hazardcan: {
     key: "hazardcan",
-    itemType: ItemType.THROWABLE_WEAPON,
     hash: 3126027122,
     name: getWeaponData(3126027122).Name,
     description: getWeaponData(3126027122).Description,
@@ -195,7 +190,6 @@ export const throwableWeapons: Record<ThrowableWeaponItemKey, ThrowableWeaponIte
   },
   ball: {
     key: "ball",
-    itemType: ItemType.THROWABLE_WEAPON,
     hash: 600439132,
     name: getWeaponData(600439132).Name,
     description: getWeaponData(600439132).Description,
@@ -212,7 +206,6 @@ export const throwableWeapons: Record<ThrowableWeaponItemKey, ThrowableWeaponIte
   },
   bzgas: {
     key: "bzgas",
-    itemType: ItemType.THROWABLE_WEAPON,
     hash: 2694266206,
     name: getWeaponData(2694266206).Name,
     description: getWeaponData(2694266206).Description,
@@ -229,7 +222,6 @@ export const throwableWeapons: Record<ThrowableWeaponItemKey, ThrowableWeaponIte
   },
   flare: {
     key: "flare",
-    itemType: ItemType.THROWABLE_WEAPON,
     hash: 1233104067,
     name: getWeaponData(1233104067).Name,
     description: getWeaponData(1233104067).Description,

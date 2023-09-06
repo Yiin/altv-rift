@@ -1,15 +1,29 @@
 import alt from "alt-client";
 import game, { getVehicleSize } from "natives";
+import { KeyCode } from "altv-enums";
+import { markRaw, ref, toRaw } from "vue";
+import { ServerCall } from "@shared/calls/server";
 import { VehicleBones } from "@/constants/vehicle-bones";
+import { rpc } from "@/rpc";
+import { everyFrame } from "../renderer/hooks/every-frame";
 import { br, div } from "../renderer/rml-tags";
 import { AnchorType } from "../renderer/anchors";
 import { registerElement } from "../renderer/element-registry";
-import { everyFrame } from "../renderer/hooks/every-frame";
 import { Icon } from "../components/icon/icon";
+import { useEffect } from "../renderer/hooks/use-effect";
+
+const PARTS = [
+  VehicleBones.BONNET,
+  VehicleBones.BOOT,
+  VehicleBones.HANDLE_DSIDE_F,
+  VehicleBones.HANDLE_PSIDE_F,
+  VehicleBones.HANDLE_DSIDE_R,
+  VehicleBones.HANDLE_PSIDE_R,
+] as const;
 
 function getVehiclePartPosition(
   vehicle: alt.Vehicle,
-  part: (typeof VehicleBones)[keyof typeof VehicleBones]
+  part: (typeof PARTS)[number]
 ) {
   const boneIndex = game.getEntityBoneIndexByName(vehicle.scriptID, part);
 
@@ -36,16 +50,31 @@ function getVehiclePartPosition(
       const { x, y } = game.getOffsetFromEntityInWorldCoords(vehicle.scriptID, 0, back.y + 0.2, 0);
       return new alt.Vector3(x, y, z);
     }
+    default:
+      return game.getWorldPositionOfEntityBone(vehicle.scriptID, boneIndex);
   }
-  return null;
 }
+
+const prevClosest = ref({
+  part: null as null | typeof PARTS[number],
+  position: null as null | alt.Vector3,
+  vehicle: null as null | alt.Vehicle,
+  dist: Infinity,
+});
+
+let newClosest = {
+  part: null as null | typeof PARTS[number],
+  position: null as null | alt.Vector3,
+  vehicle: null as null | alt.Vehicle,
+  dist: Infinity,
+};
 
 function getClosestPart(vehicle: alt.Vehicle) {
   let closestPart = null;
   let closestPosition = null;
   let closestDist = Infinity;
 
-  for (const part of [VehicleBones.BONNET, VehicleBones.BOOT]) {
+  for (const part of PARTS) {
     const position = getVehiclePartPosition(vehicle, part);
 
     if (!position) {
@@ -60,17 +89,56 @@ function getClosestPart(vehicle: alt.Vehicle) {
       closestPosition = position;
     }
   }
+  if (closestPart) {
+    if (!newClosest.vehicle || newClosest.dist > closestDist) {
+      newClosest = {
+        part: closestPart,
+        position: closestPosition,
+        vehicle: markRaw(vehicle),
+        dist: closestDist,
+      };
+    }
+  }
 
   return {
     part: closestPart,
     position: closestPosition,
+    dist: closestDist,
   };
 }
 
+alt.everyTick(() => {
+  if (prevClosest.value.vehicle !== newClosest.vehicle || prevClosest.value.part !== newClosest.part) {
+    prevClosest.value = newClosest;
+  }
+  newClosest = {
+    part: null,
+    position: null,
+    vehicle: null,
+    dist: Infinity,
+  };
+});
+
+alt.on("keydown", (key) => {
+  const { part, vehicle: closestVehicle } = prevClosest.value;
+
+  if (key === KeyCode.E && part && closestVehicle) {
+    const door = ({
+      [VehicleBones.BONNET]: 4,
+      [VehicleBones.BOOT]: 5,
+      [VehicleBones.HANDLE_DSIDE_F]: 0,
+      [VehicleBones.HANDLE_PSIDE_F]: 1,
+      [VehicleBones.HANDLE_DSIDE_R]: 2,
+      [VehicleBones.HANDLE_PSIDE_R]: 3,
+    } as const)[part];
+
+    rpc.callServer(ServerCall.FromClient.TOGGLE_VEHICLE_DOOR, closestVehicle.remoteId, door);
+  }
+});
+
 registerElement({
-  key: "vehicle-action-boot",
-  renderDistance: 5,
-  focusable: true,
+  key: "vehicle-action",
+  renderDistance: 2,
   anchorType: AnchorType.Vehicle,
   anchorPos(vehicle) {
     const { position } = getClosestPart(vehicle);
@@ -78,15 +146,17 @@ registerElement({
     return position ?? vehicle.pos;
   },
   render({ entity: vehicle }) {
-    const controllableParts = [
-      // VehicleBones.BONNET,
-      // VehicleBones.HANDLE_DSIDE_F,
-      // VehicleBones.HANDLE_PSIDE_F,
-      // VehicleBones.HANDLE_DSIDE_R,
-      // VehicleBones.HANDLE_PSIDE_R,
-    ];
+    const { part, vehicle: closestVehicle } = prevClosest.value;
 
-    const boneIndex = game.getEntityBoneIndexByName(vehicle.scriptID, VehicleBones.BOOT);
+    if (closestVehicle?.remoteId !== vehicle.remoteId) {
+      return null;
+    }
+
+    if (!part) {
+      return null;
+    }
+
+    const boneIndex = game.getEntityBoneIndexByName(vehicle.scriptID, part);
 
     if (boneIndex === -1) {
       return null;
@@ -104,15 +174,25 @@ registerElement({
         },
       },
       [
-        Icon("car-trunk"),
+        everyFrame(() => {
+          const { part } = getClosestPart(vehicle);
+
+          if (!part) {
+            return null;
+          }
+
+          return Icon(({
+            [VehicleBones.BOOT]: "car-trunk",
+            [VehicleBones.BONNET]: "car-bonnet",
+            [VehicleBones.HANDLE_DSIDE_F]: "car-door",
+            [VehicleBones.HANDLE_PSIDE_F]: "car-door",
+            [VehicleBones.HANDLE_DSIDE_R]: "car-door",
+            [VehicleBones.HANDLE_PSIDE_R]: "car-door",
+          } as const)[part]);
+        }),
         br([]),
         div(
-          {
-            className: "vehicle-action__text",
-            style: {
-              transform: everyFrame(({ scale }) => `scale(${scale})`),
-            },
-          },
+          { className: "vehicle-action__text" },
           [`[E]`]
         ),
       ]

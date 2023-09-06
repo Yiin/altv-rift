@@ -76,7 +76,6 @@ rpc.registerClient(ServerCall.FromClient.TREE_HIT, (player, virtualTreeId) => {
   const virtualTree = virtualTreeById.get(virtualTreeId);
 
   if (!virtualTree) {
-    console.log("No virtual tree");
     return 0;
   }
 
@@ -87,14 +86,13 @@ rpc.registerClient(ServerCall.FromClient.TREE_HIT, (player, virtualTreeId) => {
   const treeType = virtualTree.getStreamSyncedMeta("treeType");
 
   if (!isPlayerNearTree(player, virtualTree)) {
-    console.log("Not near tree", treeType, virtualTree.id);
+    alt.logDebug("Not near tree", treeType, virtualTree.id);
     return 0;
   }
 
   const cooldownUntil = virtualTree.getStreamSyncedMeta("cooldownUntil");
 
   if (cooldownUntil && cooldownUntil > Date.now()) {
-    console.log("Cooldown", treeType, virtualTree.id);
     return 0;
   }
 
@@ -107,7 +105,6 @@ rpc.registerClient(ServerCall.FromClient.TREE_HIT, (player, virtualTreeId) => {
     if (!cooldownUntil || cooldownUntil < Date.now()) {
       virtualTree.setStreamSyncedMeta("cooldownUntil", Date.now() + minutesToMilliseconds(10));
     }
-    console.log("No capacity", virtualTree.id);
     return 0;
   }
 
@@ -131,26 +128,23 @@ rpc.registerClient(ServerCall.FromClient.TREE_HIT, (player, virtualTreeId) => {
   const newLevel = getLevel(player.character.skills.woodcutting.experience);
 
   if (logs) {
-    console.log(
-      `Player ${player.name} got ${logs} logs and now has ${player.character.skills.woodcutting.experience} woodcutting experience.`
-    );
     sendChatMessage(player, `You got ${logs} logs (${experience}xp).`, MessageType.Info);
     if (newLevel > currentLevel) {
-      console.log(`${player.name} have reached woodcutting level ${newLevel}!`);
       sendChatMessage(
         player,
         "You have reached woodcutting level " + newLevel + "!",
         MessageType.Success
       );
     }
-    player.addItem(createItem(getTreeLogs(treeType), { amount: logs })); //
+    player.addItem(createItem(getTreeLogs(treeType), { amount: logs }));
   }
 
   return logs;
 });
 
 function isPlayerNearTree(player: InGamePlayer, virtualTree: alt.VirtualEntity) {
-  return player.pos.distanceTo(virtualTree.pos) < 5;
+  const dist = new alt.Vector2(player.pos).distanceTo(virtualTree.pos);
+  return dist < 5;
 }
 
 function canPlayerHitTheTree(player: InGamePlayer, virtualTree: alt.VirtualEntity) {

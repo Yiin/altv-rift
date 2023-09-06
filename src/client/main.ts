@@ -1,4 +1,3 @@
-import "./events";
 import "./modules/world";
 import "./modules/discord-auth";
 import "./modules/spawn";
@@ -11,4 +10,6 @@ import "./modules/npc";
 import "./modules/questing";
 import "./modules/woodcutting";
 import "./modules/fishing";
+import "./modules/weapon-ammo";
 import "./core/rmlui";
+//

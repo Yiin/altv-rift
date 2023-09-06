@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onUnmounted, watch } from "vue";
+import { computed, onUnmounted, ref, watch } from "vue";
 import Window from "@/components/Window.vue";
 import { useWindowSize } from "@/composables/use-window-size";
 import DropItemWarning from "./DropItemWarning.vue";
@@ -14,8 +14,10 @@ import EquipmentMenu from "./equipment/EquipmentMenu.vue";
 const windowSize = useWindowSize();
 const inventory = useInventory();
 
-const width = computed(() => px(90) * 5 - px(10));
-const height = computed(() => ~~(inventory.size / 5) * px(90) - px(10));
+const width = computed(() => px(90) * 5);
+const height = computed(() => ~~(inventory.size / 5) * px(90));
+
+const eq = ref(true);
 
 useEventListener("mousemove", inventory.handleMouseMove);
 useEventListener("mouseup", inventory.handleMouseUp);
@@ -30,7 +32,6 @@ onUnmounted(() => {
 
 <template>
   <Window
-    parent-limitation
     :is-active="false"
     is-draggable
     w="auto"
@@ -46,6 +47,7 @@ onUnmounted(() => {
         class="relative"
         :style="{ width: `${width}px`, height: `${height}px` }"
       >
+        <!-- <button @click="eq = !eq" class="absolute top-4 -left-20 px-1.5 py-0.5 text-xs bg-gray-900 rounded text-gray-300">Equipment</button> -->
         <InventorySlot v-for="i in inventory.size" :key="i" :slot="i - 1" />
       </div>
     </div>

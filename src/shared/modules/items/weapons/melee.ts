@@ -1,5 +1,4 @@
-import { ItemType } from "@prisma/client/edge";
-import { Item, MeleeWeaponItem } from "@shared/interfaces";
+import { Item } from "@shared/interfaces";
 import { ItemFlags } from "../item-flags";
 import { WeaponGroup } from "./weapon-groups";
 import { getWeaponData } from ".";
@@ -27,9 +26,17 @@ export const MeleeWeapon = {
 
 export type MeleeWeaponItemKey = (typeof MeleeWeapon)[keyof typeof MeleeWeapon];
 
+export type MeleeWeaponItem = {
+  key: MeleeWeaponItemKey;
+
+  customName?: string | null;
+  durability: number;
+  tint: number;
+  components: number[];
+};
+
 export type MeleeItemInfo = {
   key: MeleeWeaponItemKey;
-  itemType: typeof ItemType.MELEE_WEAPON;
   hash: number;
   name: string;
   description: string;
@@ -47,7 +54,6 @@ export type MeleeItemInfo = {
 export const meleeWeapons: Record<MeleeWeaponItemKey, MeleeItemInfo> = {
   switchblade: {
     key: "switchblade",
-    itemType: ItemType.MELEE_WEAPON,
     hash: 3756226112,
     name: getWeaponData(3756226112).Name,
     description: getWeaponData(3756226112).Description,
@@ -63,7 +69,6 @@ export const meleeWeapons: Record<MeleeWeaponItemKey, MeleeItemInfo> = {
   },
   unarmed: {
     key: "unarmed",
-    itemType: ItemType.MELEE_WEAPON,
     hash: 2725352035,
     name: getWeaponData(2725352035).Name,
     description: getWeaponData(2725352035).Description,
@@ -79,7 +84,6 @@ export const meleeWeapons: Record<MeleeWeaponItemKey, MeleeItemInfo> = {
   },
   stonehatchet: {
     key: "stonehatchet",
-    itemType: ItemType.MELEE_WEAPON,
     hash: 940833800,
     name: getWeaponData(940833800).Name,
     description: getWeaponData(940833800).Description,
@@ -95,7 +99,6 @@ export const meleeWeapons: Record<MeleeWeaponItemKey, MeleeItemInfo> = {
   },
   poolcue: {
     key: "poolcue",
-    itemType: ItemType.MELEE_WEAPON,
     hash: 2484171525,
     name: getWeaponData(2484171525).Name,
     description: getWeaponData(2484171525).Description,
@@ -111,7 +114,6 @@ export const meleeWeapons: Record<MeleeWeaponItemKey, MeleeItemInfo> = {
   },
   pipewrench: {
     key: "pipewrench",
-    itemType: ItemType.MELEE_WEAPON,
     hash: 419712736,
     name: getWeaponData(419712736).Name,
     description: getWeaponData(419712736).Description,
@@ -127,7 +129,6 @@ export const meleeWeapons: Record<MeleeWeaponItemKey, MeleeItemInfo> = {
   },
   nightstick: {
     key: "nightstick",
-    itemType: ItemType.MELEE_WEAPON,
     hash: 1737195953,
     name: getWeaponData(1737195953).Name,
     description: getWeaponData(1737195953).Description,
@@ -143,7 +144,6 @@ export const meleeWeapons: Record<MeleeWeaponItemKey, MeleeItemInfo> = {
   },
   knife: {
     key: "knife",
-    itemType: ItemType.MELEE_WEAPON,
     hash: 2578778090,
     name: getWeaponData(2578778090).Name,
     description: getWeaponData(2578778090).Description,
@@ -159,7 +159,6 @@ export const meleeWeapons: Record<MeleeWeaponItemKey, MeleeItemInfo> = {
   },
   knuckle: {
     key: "knuckle",
-    itemType: ItemType.MELEE_WEAPON,
     hash: 3638508604,
     name: getWeaponData(3638508604).Name,
     description: getWeaponData(3638508604).Description,
@@ -175,7 +174,6 @@ export const meleeWeapons: Record<MeleeWeaponItemKey, MeleeItemInfo> = {
   },
   machete: {
     key: "machete",
-    itemType: ItemType.MELEE_WEAPON,
     hash: 3713923289,
     name: getWeaponData(3713923289).Name,
     description: getWeaponData(3713923289).Description,
@@ -191,7 +189,6 @@ export const meleeWeapons: Record<MeleeWeaponItemKey, MeleeItemInfo> = {
   },
   hammer: {
     key: "hammer",
-    itemType: ItemType.MELEE_WEAPON,
     hash: 1317494643,
     name: getWeaponData(1317494643).Name,
     description: getWeaponData(1317494643).Description,
@@ -207,7 +204,6 @@ export const meleeWeapons: Record<MeleeWeaponItemKey, MeleeItemInfo> = {
   },
   hatchet: {
     key: "hatchet",
-    itemType: ItemType.MELEE_WEAPON,
     hash: 4191993645,
     name: getWeaponData(4191993645).Name,
     description: getWeaponData(4191993645).Description,
@@ -223,7 +219,6 @@ export const meleeWeapons: Record<MeleeWeaponItemKey, MeleeItemInfo> = {
   },
   flashlight: {
     key: "flashlight",
-    itemType: ItemType.MELEE_WEAPON,
     hash: 2343591895,
     name: getWeaponData(2343591895).Name,
     description: getWeaponData(2343591895).Description,
@@ -239,7 +234,6 @@ export const meleeWeapons: Record<MeleeWeaponItemKey, MeleeItemInfo> = {
   },
   golfclub: {
     key: "golfclub",
-    itemType: ItemType.MELEE_WEAPON,
     hash: 1141786504,
     name: getWeaponData(1141786504).Name,
     description: getWeaponData(1141786504).Description,
@@ -255,7 +249,6 @@ export const meleeWeapons: Record<MeleeWeaponItemKey, MeleeItemInfo> = {
   },
   crowbar: {
     key: "crowbar",
-    itemType: ItemType.MELEE_WEAPON,
     hash: 2227010557,
     name: getWeaponData(2227010557).Name,
     description: getWeaponData(2227010557).Description,
@@ -271,7 +264,6 @@ export const meleeWeapons: Record<MeleeWeaponItemKey, MeleeItemInfo> = {
   },
   dagger: {
     key: "dagger",
-    itemType: ItemType.MELEE_WEAPON,
     hash: 2460120199,
     name: getWeaponData(2460120199).Name,
     description: getWeaponData(2460120199).Description,
@@ -287,7 +279,6 @@ export const meleeWeapons: Record<MeleeWeaponItemKey, MeleeItemInfo> = {
   },
   bat: {
     key: "bat",
-    itemType: ItemType.MELEE_WEAPON,
     hash: 2508868239,
     name: getWeaponData(2508868239).Name,
     description: getWeaponData(2508868239).Description,
@@ -303,7 +294,6 @@ export const meleeWeapons: Record<MeleeWeaponItemKey, MeleeItemInfo> = {
   },
   battleaxe: {
     key: "battleaxe",
-    itemType: ItemType.MELEE_WEAPON,
     hash: 3441901897,
     name: getWeaponData(3441901897).Name,
     description: getWeaponData(3441901897).Description,
@@ -319,7 +309,6 @@ export const meleeWeapons: Record<MeleeWeaponItemKey, MeleeItemInfo> = {
   },
   bottle: {
     key: "bottle",
-    itemType: ItemType.MELEE_WEAPON,
     hash: 4192643659,
     name: getWeaponData(4192643659).Name,
     description: getWeaponData(4192643659).Description,

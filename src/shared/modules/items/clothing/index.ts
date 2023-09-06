@@ -1,5 +1,4 @@
-import { ItemType } from "@prisma/client/edge";
-import { ClothingItem, Equipment, Item } from "@shared/interfaces";
+import { Equipment, Item } from "@shared/interfaces";
 
 export const Clothing = {
   BOOTS: "boots",
@@ -7,9 +6,16 @@ export const Clothing = {
 
 export type ClothingItemKey = (typeof Clothing)[keyof typeof Clothing];
 
+export type ClothingItem = {
+  key: ClothingItemKey;
+
+  customName?: string | null;
+  durability: number;
+  texture: number;
+};
+
 export type ClothingItemInfo = {
   key: ClothingItemKey;
-  itemType: typeof ItemType.CLOTHING;
   name: string;
   description: string;
   equipmentSlot: keyof Equipment;
@@ -18,7 +24,6 @@ export type ClothingItemInfo = {
 export const clothing: Record<ClothingItemKey, ClothingItemInfo> = {
   boots: {
     key: "boots",
-    itemType: ItemType.CLOTHING,
     name: "Boots",
     description: "A pair of boots",
     equipmentSlot: "shoes",

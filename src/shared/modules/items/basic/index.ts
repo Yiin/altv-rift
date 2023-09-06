@@ -1,10 +1,16 @@
-import { BasicItem, Item } from "@shared/interfaces";
+import { Item } from "@shared/interfaces";
 import { ItemKey } from "../types";
 import { tools } from "./tools";
 import { fishBaits } from "./fish-bait";
 
 export type BasicItemKey = keyof typeof basics;
 export type BasicItemInfo = (typeof basics)[BasicItemKey];
+
+export type BasicItem = {
+  key: BasicItemKey;
+
+  amount: number;
+};
 
 export const basics = {
   ...tools,

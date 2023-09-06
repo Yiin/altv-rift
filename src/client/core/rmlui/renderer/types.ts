@@ -10,6 +10,7 @@ declare module "alt-client" {
     isFresh: boolean;
     renderedContent: ComputedRef<ParsedElement | null>;
     hooks: ((props: { scale: number; distance: number; pos: alt.Vector3 }) => void)[];
+    cleanup: (() => void)[];
   }
 }
 

@@ -65,10 +65,11 @@ whileInGame(() => {
   }
 
   function onPlayerWeaponChange() {
-    alt.Utils.waitFor(() => !game.isPedSwitchingWeapon(player.scriptID)).finally(() => {
-      updateAmmo();
-      setTimeout(updateAmmo, 500); // just in case
-    });
+    alt.Utils.waitFor(
+      () =>
+        !game.isPedSwitchingWeapon(player.scriptID) &&
+        game.getAmmoInClip(player.scriptID, player.currentWeapon)[0]
+    ).finally(updateAmmo);
   }
 
   function onKeyDown(key: KeyCode) {
@@ -94,8 +95,7 @@ whileInGame(() => {
 
     const [, gameClip] = game.getAmmoInClip(player.scriptID, hash);
 
-    if ((gameClip <= 1 && clip > 0) || gameClip > clip) {
-      alt.log("setAmmoInClip", clip);
+    if ((gameClip <= 3 && clip > 0) || gameClip > clip) {
       game.setAmmoInClip(player.scriptID, hash, clip);
     }
   }

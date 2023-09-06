@@ -1,19 +1,29 @@
 import alt from "alt-client";
-import { defineStore } from "pinia";
+import { StoreDefinition, defineStore } from "pinia";
+import { ref } from "vue";
 import { updateStoreState } from "@shared/store/utils";
 import { ClientEvents } from "@shared/events/client";
 import { WebviewEvents } from "@shared/events/webview";
 import { getWebview } from "@/user-interface/webview";
 import { pinia } from ".";
 
-export const useUser = defineStore("player", {
-  state: () => ({} as LoadedUser),
-});
+type UserStore = StoreDefinition<"user", LoadedUser, {}, {}>;
 
-export const user = useUser(pinia);
+let userStore: UserStore | undefined;
+
+export const isUserStoreAvailable = ref(false);
+
+export const useUser = () => {
+  if (!userStore) {
+    throw new Error("User store have not been setup.");
+  }
+  return userStore(pinia);
+};
 
 alt.onServer(ClientEvents.FromServer.UPDATE_USER_STATE, (event: any) => {
   getWebview().emit(WebviewEvents.FromClient.UPDATE_USER_STATE, event);
+
+  const user = useUser();
 
   updateStoreState(user, event);
 });
@@ -21,5 +31,17 @@ alt.onServer(ClientEvents.FromServer.UPDATE_USER_STATE, (event: any) => {
 alt.onServer(ClientEvents.FromServer.SET_USER_STATE, (state: any) => {
   getWebview().emit(WebviewEvents.FromClient.SET_USER_STATE, event);
 
-  user.$state = state;
+  if (userStore) {
+    const user = useUser();
+    user.$dispose();
+    delete pinia.state.value[user.$id];
+    isUserStoreAvailable.value = false;
+  }
+  
+  if (state) {
+    userStore = defineStore("user", {
+      state: () => state,
+    });
+    isUserStoreAvailable.value = true;
+  }
 });

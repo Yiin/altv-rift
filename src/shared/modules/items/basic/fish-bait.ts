@@ -1,4 +1,3 @@
-import { ItemType } from "@prisma/client/edge";
 import { FoodIngredient } from "../materials/food-ingredients";
 
 export const FishBait = {
@@ -23,7 +22,6 @@ export type FishBaitItemKey = (typeof FishBait)[keyof typeof FishBait];
 
 export type FishBaitItemInfo = {
   key: FishBaitItemKey;
-  itemType: typeof ItemType.BASIC;
   name: string;
   description: string;
 };
@@ -31,91 +29,76 @@ export type FishBaitItemInfo = {
 export const fishBaits: Record<FishBaitItemKey, FishBaitItemInfo> = {
   worms: {
     key: "worms",
-    itemType: ItemType.BASIC,
     name: "Worms",
     description: "Common bait for freshwater fishing.",
   },
   roe: {
     key: "roe",
-    itemType: ItemType.BASIC,
     name: "Fish Roe",
     description: "Fish eggs ideal for catching salmon.",
   },
   crawfish: {
     key: "crawfish",
-    itemType: ItemType.BASIC,
     name: "Crawfish",
     description: "Good for luring bass.",
   },
   chickenliver: {
     key: "chickenliver",
-    itemType: ItemType.BASIC,
     name: "Chicken Liver",
     description: "Effective bait for catfish.",
   },
   minnows: {
     key: "minnows",
-    itemType: ItemType.BASIC,
     name: "Minnows",
     description: "Small fish that attract bigger fish like pike.",
   },
   squid: {
     key: "squid",
-    itemType: ItemType.BASIC,
     name: "Squid",
     description: "Saltwater bait for tuna.",
   },
   cutmackerel: {
     key: "cutmackerel",
-    itemType: ItemType.BASIC,
     name: "Cut Mackerel",
     description: "Great for catching mackerel and other saltwater fish.",
   },
   sweetcorn: {
     key: "sweetcorn",
-    itemType: ItemType.BASIC,
     name: "Sweet Corn",
     description: "Attracts carp.",
   },
   shrimp: {
     key: "shrimp",
-    itemType: ItemType.BASIC,
     name: "Shrimp",
     description: "Good for red snapper.",
   },
   mackerelsteak: {
     key: "mackerelsteak",
-    itemType: ItemType.BASIC,
     name: "Mackerel Steak",
     description: "Effective bait for swordfish.",
   },
   crabmeat: {
     key: "crabmeat",
-    itemType: ItemType.BASIC,
     name: "Crab Meat",
     description: "Effective for catching extreme sea creatures like octopus.",
   },
   frogs: {
     key: "frogs",
-    itemType: ItemType.BASIC,
     name: "Frogs",
     description: "Ideal for luring electric eels.",
   },
   tunahead: {
     key: "tunahead",
-    itemType: ItemType.BASIC,
     name: "Tuna Head",
     description: "Perfect for catching hammerhead sharks.",
   },
   smallfishbundle: {
     key: "smallfishbundle",
-    itemType: ItemType.BASIC,
     name: "Small Fish Bundle",
     description: "A bundle of small fish, used to catch giant squids.",
   },
   goldenworms: {
     key: "goldenworms",
-    itemType: ItemType.BASIC,
     name: "Golden Worms",
     description: "Rare bait used to catch the mythical Golden Koi.",
   },

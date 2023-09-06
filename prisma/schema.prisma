@@ -78,101 +78,26 @@ type Inventory {
 
 type InventoryItem {
   slot Int
-  item ItemData
+  item Json
 }
 
 type Equipment {
-  mask      ItemData?
-  glasses   ItemData?
-  headwear  ItemData?
-  earrings  ItemData?
-  top       ItemData?
-  shirt     ItemData?
-  armor     ItemData?
-  neckwear  ItemData?
-  weapon    ItemData?
-  gloves    ItemData?
-  lefthand  ItemData?
-  pants     ItemData?
-  righthand ItemData?
-  backpack  ItemData?
-  shoes     ItemData?
-  phone     ItemData?
-}
-
-enum ItemType {
-  FIREARM_WEAPON
-  THROWABLE_WEAPON
-  MELEE_WEAPON
-  AMMO
-  CLOTHING
-  CONSUMABLE
-  MATERIAL
-  BASIC
-}
-
-type ItemData {
-  key              String
-  type             ItemType
-  FIREARM_WEAPON   FirearmWeaponItem?
-  THROWABLE_WEAPON ThrowableWeaponItem?
-  MELEE_WEAPON     MeleeWeaponItem?
-  AMMO             AmmoItem?
-  CLOTHING         ClothingItem?
-  CONSUMABLE       ConsumableItem?
-  MATERIAL         MaterialItem?
-  BASIC            BasicItem?
-}
-
-type FirearmWeaponItem {
-  customName String?
-  durability Float
-
-  ammo       EquipedAmmo?
-  tint       Int          @default(0)
-  components Int[]        @default([])
-}
-
-type ThrowableWeaponItem {
-  amount Int
-}
-
-type MeleeWeaponItem {
-  customName String?
-  durability Float
-
-  tint       Int   @default(0)
-  components Int[] @default([])
-}
-
-type EquipedAmmo {
-  key  String
-  clip AmmoItem
-  rest AmmoItem
-}
-
-type AmmoItem {
-  amount Int
-}
-
-type ClothingItem {
-  customName String?
-  durability Float
-
-  // Color
-  texture Int
-}
-
-type ConsumableItem {
-  amount Int
-}
-
-type MaterialItem {
-  amount Int
-}
-
-type BasicItem {
-  amount Int
+  mask      Json?
+  glasses   Json?
+  headwear  Json?
+  earrings  Json?
+  top       Json?
+  shirt     Json?
+  armor     Json?
+  neckwear  Json?
+  weapon    Json?
+  gloves    Json?
+  lefthand  Json?
+  pants     Json?
+  righthand Json?
+  backpack  Json?
+  shoes     Json?
+  phone     Json?
 }
 
 type Position {

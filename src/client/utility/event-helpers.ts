@@ -100,10 +100,12 @@ export function onKeyDown(key: KeyCode, callback: () => void) {
   });
 }
 
+alt.nextTick(() => {
 getWebview((webview) => {
   webview.on(ClientEvents.FromWebview.INPUT_FOCUS, (isFocused: boolean) => {
     inputFocused = isFocused;
   });
+});
 });
 
 // alt.on("disconnect", () => {

@@ -6,9 +6,7 @@ export function distance(vector1: alt.IVector3, vector2: alt.IVector3) {
   }
 
   return Math.sqrt(
-    (vector1.x - vector2.x) ** 2 +
-      (vector1.y - vector2.y) ** 2 +
-      (vector1.z - vector2.z) ** 2
+    (vector1.x - vector2.x) ** 2 + (vector1.y - vector2.y) ** 2 + (vector1.z - vector2.z) ** 2
   );
 }
 
@@ -20,10 +18,7 @@ export function distance2d(vector1: alt.IVector2, vector2: alt.IVector2) {
   return Math.sqrt((vector1.x - vector2.x) ** 2 + (vector1.y - vector2.y) ** 2);
 }
 
-export function getClosestVector(
-  pos: alt.IVector3,
-  arrayOfPositions: alt.IVector3[]
-) {
+export function getClosestVector(pos: alt.IVector3, arrayOfPositions: alt.IVector3[]) {
   arrayOfPositions.sort((a, b) => distance(pos, a) - distance(pos, b));
 
   return arrayOfPositions[0];
@@ -34,19 +29,30 @@ export function getClosestVectorByPos<T extends Record<string, alt.Vector3>>(
   arrayOfPositions: T[],
   posVariable: string = "pos"
 ): T {
-  arrayOfPositions.sort(
-    (a, b) => distance(pos, a[posVariable]!) - distance(pos, b[posVariable]!)
-  );
+  arrayOfPositions.sort((a, b) => distance(pos, a[posVariable]!) - distance(pos, b[posVariable]!));
 
   return arrayOfPositions[0]!;
+}
+
+export function getClosest<T extends { pos: alt.IVector3 }>(pos: alt.Vector3, nodes: T[]) {
+  let closest: T | null = null;
+  let closestDistance = Infinity;
+
+  for (const node of nodes) {
+    const distance = pos.distanceTo(node.pos);
+    if (distance < closestDistance) {
+      closest = node;
+      closestDistance = distance;
+    }
+  }
+
+  return closest;
 }
 
 /**
  * Gets an array of the closest types.
  */
-export function getClosestTypes<
-  T extends { pos: alt.IVector3; valid: boolean }
->(
+export function getClosestTypes<T extends { pos: alt.IVector3; valid: boolean }>(
   pos: alt.IVector3,
   elements: T[],
   maxDistance: number,

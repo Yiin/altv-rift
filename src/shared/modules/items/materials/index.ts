@@ -5,6 +5,12 @@ import { treeLogs } from "./tree-logs";
 export type MaterialItemKey = keyof typeof materials;
 export type MaterialItemInfo = (typeof materials)[MaterialItemKey];
 
+export type MaterialItem = {
+  key: MaterialItemKey;
+
+  amount: number;
+};
+
 export const materials = {
   ...treeLogs,
   ...foodIngredients,

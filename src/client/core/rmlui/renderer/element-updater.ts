@@ -98,7 +98,12 @@ export function prepareEntityElements(entity: AnchorEntity) {
       node.isFresh = true;
       node.renderedContent = computed(
         () => {
+          if (node.cleanup?.length) {
+            node.cleanup.forEach((fn) => fn());
+          }
+          node.cleanup = [];
           node.hooks = [];
+
           return registeredElement.render({ entity });
         },
         {

@@ -1,5 +1,6 @@
 import alt from "alt-client";
 import { StoreDefinition, defineStore } from "pinia";
+import { ref } from "vue";
 import { updateStoreState } from "@shared/store/utils";
 import { ClientEvents } from "@shared/events/client";
 import { WebviewEvents } from "@shared/events/webview";
@@ -10,6 +11,8 @@ import { pinia } from ".";
 type CharacterStore = StoreDefinition<"character", Character, {}, {}>;
 
 let characterStore: CharacterStore | undefined;
+
+export const isCharacterStoreAvailable = ref(false);
 
 export const useCharacter = () => {
   if (!characterStore) {
@@ -33,9 +36,13 @@ alt.onServer(ClientEvents.FromServer.SET_CHARACTER_STATE, (state: any) => {
     const character = useCharacter();
     character.$dispose();
     delete pinia.state.value[character.$id];
+    isCharacterStoreAvailable.value = false;
   }
-
-  characterStore = defineStore("character", {
-    state: () => state,
-  });
+  
+  if (state) {
+    characterStore = defineStore("character", {
+      state: () => state,
+    });
+    isCharacterStoreAvailable.value = true;
+  }
 });

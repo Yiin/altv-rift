@@ -140,9 +140,9 @@ inventory.registerItemSlot({
     <div
       class="w-20 h-20 bg-gray-800/80 item-slot text-white"
       :class="{
-        'drop-shadow-[2px_4px_6px_black] scale-105': draggingOver || (item && !dragging),
-        'drop-shadow-[2px_4px_6px_gold]': combinableWithHoveredItem,
-        'drop-shadow-[2px_4px_6px_silver]': combinableWithOtherItems,
+        'drop-shadow-[0px_0px_6px_black] scale-105': draggingOver || (item && !dragging),
+        'border-2 border-solid border-yellow-500': combinableWithHoveredItem,
+        'border-2 border-solid border-gray-400': combinableWithOtherItems,
         'item-slot--selected': selected,
       }"
     ></div>
