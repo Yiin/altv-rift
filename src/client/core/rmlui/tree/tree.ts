@@ -16,21 +16,17 @@ registerElement({
     const type = tree.getStreamSyncedMeta("treeType");
     const name = getTreeName(type);
     const level = getTreeLevel(type);
-    const isUnavailable = getLevel(character.skills.woodcutting.experience ?? 0) < level;
+    const isUnavailable = getLevel(character.skills.woodcutting.experience) < level;
     const isOnCooldown = (tree.getStreamSyncedMeta("cooldownUntil") ?? 0) > Date.now();
-
-    const transform = everyFrame(() => {
-      const { x: screenX, y: screenY } = alt.worldToScreen(tree.pos.x, tree.pos.y, tree.pos.z);
-      return `translate(-50%, -50%) translate(${screenX}px, ${screenY}px)`;
-    });
-
-    const scale = everyFrame(({ scale }) => `scale(${scale})`);
 
     return div(
       {
         className: "tree-wrapper",
         style: {
-          transform,
+          transform: everyFrame(() => {
+            const { x, y } = alt.worldToScreen(tree.pos);
+            return `translate(-50%, -50%) translate(${x}px, ${y}px)`;
+          }),
         },
       },
       [
@@ -39,7 +35,6 @@ registerElement({
             className: "tree",
             style: {
               color: isUnavailable ? "gray" : isOnCooldown ? "silver" : "green",
-              transform: scale,
             },
           },
           [div([`${name} (${tree.remoteId})`]), br([]), div([`Level ${level}`])]
