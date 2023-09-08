@@ -1,6 +1,7 @@
 import alt from "alt-server";
-import { Equipment, EquipmentSlot } from "@shared/interfaces";
+import { EquipmentSlot } from "@shared/interfaces";
 import { ServerEvents } from "@shared/events/server";
+import { Equipment } from "@shared/modules/items";
 import { InGamePlayer } from "@/utility/assertions";
 import { unloadAmmoFromWeapon, unloadWeaponItemAmmo } from "@/modules/items-manager";
 

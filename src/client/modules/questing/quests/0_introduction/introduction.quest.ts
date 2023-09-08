@@ -5,7 +5,7 @@ import { ServerEvents } from "@shared/events/server";
 import { NpcInteraction } from "@shared/modules/npc/interactions";
 import { ConversationOption } from "@shared/interfaces/conversation";
 import { IconName } from "@/core/rmlui/components/icon/icon";
-import { useCharacter } from "@/store/character.store";
+import { useCharacter } from "@/core/store/character.store";
 import { registerQuest } from "../../register-quest";
 import { registerNpcInteractions } from "../../register-npc-interactions";
 import { startConversation } from "../../dialogue";

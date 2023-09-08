@@ -1,5 +1,5 @@
 import { computed, watch } from "vue";
-import { isUserStoreAvailable } from "@/store/user.store";
+import { isUserStoreAvailable } from "@/core/store/user.store";
 
 export const isAuthenticating = computed(() => !isUserStoreAvailable.value);
 

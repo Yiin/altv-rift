@@ -1,8 +1,8 @@
 import alt from "alt-client";
 import game from "natives";
 import { ServerEvents } from "@shared/events/server";
-import { everyTick } from "@/utility/event-helpers";
-import { waitForUserInterface } from "@/user-interface/webview";
+import { everyTick } from "@/core/utility/event-helpers";
+import { waitForUserInterface } from "@/core/user-interface/webview";
 
 alt.on("connectionComplete", handleConnectionComplete);
 alt.setWatermarkPosition(4);
@@ -10,7 +10,7 @@ alt.setWatermarkPosition(4);
 async function handleConnectionComplete() {
   game.destroyAllCams(true);
   game.renderScriptCams(false, false, 0, false, false, 0);
-  game.freezeEntityPosition(alt.Player.local.scriptID, true);
+  game.freezeEntityPosition(alt.Player.local, true);
   game.doScreenFadeOut(0);
   game.triggerScreenblurFadeIn(0);
 
@@ -39,7 +39,7 @@ function handleTick() {
   game.clearAmbientZoneState("AZ_DISTANT_SASQUATCH", false);
   game.setAudioFlag("LoadMPData", true);
   game.setAudioFlag("DisableFlightMusic", true);
-  // game.setPedCanSwitchWeapon(alt.Player.local.scriptID, false);
+  // game.setPedCanSwitchWeapon(alt.Player.local, false);
 }
 
 everyTick(() => {

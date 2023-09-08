@@ -1,26 +1,29 @@
 <script setup lang="ts">
 import Window from "@/components/Window.vue";
 import SkillProgressBar from "./SkillProgressBar.vue";
+import { useCharacter } from "@/store/synced/character.store";
+
+const character = useCharacter();
 
 const skills = [
     {
         name: "Woodcutting",
-        xp: 78658,
+        xp: character.skills.woodcutting,
         color: "bg-green-600",
     },
     {
         name: "Fishing",
-        xp: 8275987,
+        xp: character.skills.fishing,
         color: "bg-blue-600",
     },
     {
         name: "Mining",
-        xp: 5226460,
+        xp: 0,
         color: "bg-gray-300",
     },
     {
         name: "Crafting",
-        xp: 56530,
+        xp: 0,
         color: "bg-orange-600",
     },
 ]

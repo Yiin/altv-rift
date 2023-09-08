@@ -1,17 +1,19 @@
 import { isValidItem, createItem } from "@shared/modules/items";
 import { needsToBeInGame } from "@/utility/assertions";
-import { registerCmd } from "../chat";
+import { registerCmd, sendChatMessage } from "../chat";
 
 registerCmd("additem", (player, [key, amount]) => {
   needsToBeInGame(player);
 
   if (!isValidItem(key)) {
+    sendChatMessage(player, "Unknown item.");
     return;
   }
 
-  const item = createItem(key, amount ? { amount: +amount } : undefined);
+  const item = createItem(key, { amount: amount ? +amount : 1 });
 
   if (!item) {
+    sendChatMessage(player, "Couldn't create item.");
     return;
   }
 

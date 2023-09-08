@@ -1,6 +1,6 @@
 import { computed, watch } from "vue";
-import { isUserStoreAvailable } from "@/store/user.store";
-import { isCharacterStoreAvailable } from "@/store/character.store";
+import { isUserStoreAvailable } from "@/core/store/user.store";
+import { isCharacterStoreAvailable } from "@/core/store/character.store";
 
 export const isCreatingCharacter = computed(
   () => isUserStoreAvailable.value && !isCharacterStoreAvailable.value

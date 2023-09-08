@@ -3,8 +3,8 @@ import game, { getVehicleSize } from "natives";
 import { KeyCode } from "altv-enums";
 import { markRaw, ref, toRaw } from "vue";
 import { ServerCall } from "@shared/calls/server";
-import { VehicleBones } from "@/constants/vehicle-bones";
-import { rpc } from "@/rpc";
+import { VehicleBones } from "@/core/constants/vehicle-bones";
+import { rpc } from "@/core/rpc";
 import { everyFrame } from "../renderer/hooks/every-frame";
 import { br, div } from "../renderer/rml-tags";
 import { AnchorType } from "../renderer/anchors";
@@ -21,11 +21,8 @@ const PARTS = [
   VehicleBones.HANDLE_PSIDE_R,
 ] as const;
 
-function getVehiclePartPosition(
-  vehicle: alt.Vehicle,
-  part: (typeof PARTS)[number]
-) {
-  const boneIndex = game.getEntityBoneIndexByName(vehicle.scriptID, part);
+function getVehiclePartPosition(vehicle: alt.Vehicle, part: (typeof PARTS)[number]) {
+  const boneIndex = game.getEntityBoneIndexByName(vehicle, part);
 
   if (boneIndex === -1) {
     return null;
@@ -33,37 +30,37 @@ function getVehiclePartPosition(
 
   switch (part) {
     case VehicleBones.BONNET: {
-      const [, , front] = getVehicleSize(vehicle.scriptID);
+      const [, , front] = getVehicleSize(vehicle);
       const { z } = game.getWorldPositionOfEntityBone(
-        vehicle.scriptID,
-        game.getEntityBoneIndexByName(vehicle.scriptID, VehicleBones.BONNET)
+        vehicle,
+        game.getEntityBoneIndexByName(vehicle, VehicleBones.BONNET)
       );
-      const { x, y } = game.getOffsetFromEntityInWorldCoords(vehicle.scriptID, 0, front.y - 0.2, 0);
+      const { x, y } = game.getOffsetFromEntityInWorldCoords(vehicle, 0, front.y - 0.2, 0);
       return new alt.Vector3(x, y, z);
     }
     case VehicleBones.BOOT: {
-      const [, back] = getVehicleSize(vehicle.scriptID);
+      const [, back] = getVehicleSize(vehicle);
       const { z } = game.getWorldPositionOfEntityBone(
-        vehicle.scriptID,
-        game.getEntityBoneIndexByName(vehicle.scriptID, VehicleBones.BOOT)
+        vehicle,
+        game.getEntityBoneIndexByName(vehicle, VehicleBones.BOOT)
       );
-      const { x, y } = game.getOffsetFromEntityInWorldCoords(vehicle.scriptID, 0, back.y + 0.2, 0);
+      const { x, y } = game.getOffsetFromEntityInWorldCoords(vehicle, 0, back.y + 0.2, 0);
       return new alt.Vector3(x, y, z);
     }
     default:
-      return game.getWorldPositionOfEntityBone(vehicle.scriptID, boneIndex);
+      return game.getWorldPositionOfEntityBone(vehicle, boneIndex);
   }
 }
 
 const prevClosest = ref({
-  part: null as null | typeof PARTS[number],
+  part: null as null | (typeof PARTS)[number],
   position: null as null | alt.Vector3,
   vehicle: null as null | alt.Vehicle,
   dist: Infinity,
 });
 
 let newClosest = {
-  part: null as null | typeof PARTS[number],
+  part: null as null | (typeof PARTS)[number],
   position: null as null | alt.Vector3,
   vehicle: null as null | alt.Vehicle,
   dist: Infinity,
@@ -108,7 +105,10 @@ function getClosestPart(vehicle: alt.Vehicle) {
 }
 
 alt.everyTick(() => {
-  if (prevClosest.value.vehicle !== newClosest.vehicle || prevClosest.value.part !== newClosest.part) {
+  if (
+    prevClosest.value.vehicle !== newClosest.vehicle ||
+    prevClosest.value.part !== newClosest.part
+  ) {
     prevClosest.value = newClosest;
   }
   newClosest = {
@@ -123,14 +123,16 @@ alt.on("keydown", (key) => {
   const { part, vehicle: closestVehicle } = prevClosest.value;
 
   if (key === KeyCode.E && part && closestVehicle) {
-    const door = ({
-      [VehicleBones.BONNET]: 4,
-      [VehicleBones.BOOT]: 5,
-      [VehicleBones.HANDLE_DSIDE_F]: 0,
-      [VehicleBones.HANDLE_PSIDE_F]: 1,
-      [VehicleBones.HANDLE_DSIDE_R]: 2,
-      [VehicleBones.HANDLE_PSIDE_R]: 3,
-    } as const)[part];
+    const door = (
+      {
+        [VehicleBones.BONNET]: 4,
+        [VehicleBones.BOOT]: 5,
+        [VehicleBones.HANDLE_DSIDE_F]: 0,
+        [VehicleBones.HANDLE_PSIDE_F]: 1,
+        [VehicleBones.HANDLE_DSIDE_R]: 2,
+        [VehicleBones.HANDLE_PSIDE_R]: 3,
+      } as const
+    )[part];
 
     rpc.callServer(ServerCall.FromClient.TOGGLE_VEHICLE_DOOR, closestVehicle.remoteId, door);
   }
@@ -181,20 +183,21 @@ registerElement({
             return null;
           }
 
-          return Icon(({
-            [VehicleBones.BOOT]: "car-trunk",
-            [VehicleBones.BONNET]: "car-bonnet",
-            [VehicleBones.HANDLE_DSIDE_F]: "car-door",
-            [VehicleBones.HANDLE_PSIDE_F]: "car-door",
-            [VehicleBones.HANDLE_DSIDE_R]: "car-door",
-            [VehicleBones.HANDLE_PSIDE_R]: "car-door",
-          } as const)[part]);
+          return Icon(
+            (
+              {
+                [VehicleBones.BOOT]: "car-trunk",
+                [VehicleBones.BONNET]: "car-bonnet",
+                [VehicleBones.HANDLE_DSIDE_F]: "car-door",
+                [VehicleBones.HANDLE_PSIDE_F]: "car-door",
+                [VehicleBones.HANDLE_DSIDE_R]: "car-door",
+                [VehicleBones.HANDLE_PSIDE_R]: "car-door",
+              } as const
+            )[part]
+          );
         }),
         br([]),
-        div(
-          { className: "vehicle-action__text" },
-          [`[E]`]
-        ),
+        div({ className: "vehicle-action__text" }, [`[E]`]),
       ]
     );
   },

@@ -3,14 +3,14 @@ import Window from "@/components/Window.vue";
 import {
   CombineType,
   getCombineType,
-  getItemData,
   getItemName,
   isItemEquipable,
   isItemUsable,
+  isItemFirearmWeapon,
+  isItemFishingRod
 } from "@shared/modules/items";
 import { computed } from "vue";
 import { InteractionType, ItemActionMenu, useInventory } from "@/store/inventory.store";
-import { ItemType } from "@prisma/client";
 
 const props = defineProps<ItemActionMenu>();
 
@@ -28,9 +28,8 @@ const isEquipable = computed(
   () => itemSource.value.type === "inventory" && isItemEquipable(item.value.key)
 );
 const isUnequipable = computed(() => itemSource.value.type === "equipment");
-const hasAmmo = computed(
-  () => !!(item.value.type === ItemType.FIREARM_WEAPON && getItemData(item.value).ammo)
-);
+const hasAmmo = computed(() => isItemFirearmWeapon(item.value) && !!item.value.ammo);
+const hasFishBait = computed(() => isItemFishingRod(item.value) && !!item.value.bait);
 
 const combine = computed(() => {
   if (itemSource.value.type !== "inventory") {
@@ -83,14 +82,17 @@ function executeAction(action: string) {
     case "load-ammo":
       if (inventory.selectedItem) {
         if (combine.value.reverse) {
-          inventory.loadAmmo(inventory.selectedItem.source, source);
+          inventory.combineItems(inventory.selectedItem.source, source);
         } else {
-          inventory.loadAmmo(source, inventory.selectedItem.source);
+          inventory.combineItems(source, inventory.selectedItem.source);
         }
       }
       break;
     case "unload-ammo":
       inventory.unloadAmmo(source);
+      break;
+    case "remove-bait":
+      inventory.removeBait(source);
       break;
   }
 }
@@ -127,6 +129,12 @@ const actions = computed(() => [
     select: () => executeAction("unload-ammo"),
   },
   {
+    name: "Remove bait",
+    icon: "mdi-chart-bubble",
+    enabled: hasFishBait.value,
+    select: () => executeAction("remove-bait"),
+  },
+  {
     name: "Drop",
     icon: "mdi-place-item",
     select: () => executeAction("drop"),
@@ -135,13 +143,8 @@ const actions = computed(() => [
 </script>
 
 <template>
-  <div
-    v-if="visible"
-    :key="ts"
-    class="absolute flex justify-start"
-    @click.stop
-    v-click-outside="inventory.closeActionMenu"
-  >
+  <div v-if="visible" :key="ts" class="absolute flex justify-start" @click.stop
+    v-click-outside="inventory.closeActionMenu">
     <Window v-bind="{ x, y }" :is-active="false">
       <ul class="flex flex-col space-y-2 bg-gray-800 rounded-lg overflow-hidden shadow-lg">
         <li>
@@ -150,14 +153,9 @@ const actions = computed(() => [
           </strong>
           <ul>
             <template v-for="action in actions">
-              <li
-                v-if="'enabled' in action === false || action.enabled"
-                @mousedown="action.select"
-                class="border-t border-t-gray-700"
-              >
-                <div
-                  class="flex items-center gap-4 px-4 py-3 bg-gray-800 text-gray-200 hover:bg-gray-700 cursor-pointer"
-                >
+              <li v-if="'enabled' in action === false || action.enabled" @mousedown="action.select"
+                class="border-t border-t-gray-700">
+                <div class="flex items-center gap-4 px-4 py-3 bg-gray-800 text-gray-200 hover:bg-gray-700 cursor-pointer">
                   <v-icon :icon="action.icon" size="sm" />
                   <span class="text-sm font-medium -mt-0.5">{{ action.name }}</span>
                 </div>

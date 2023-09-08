@@ -1,5 +1,6 @@
 import alt from "alt-server";
-import { EquipmentSlot, Item } from "@shared/interfaces";
+import { EquipmentSlot } from "@shared/interfaces";
+import { Item } from "@shared/modules/items";
 import { InGamePlayer } from "../../../server/utility/assertions";
 
 export const FromServer = {

@@ -1,5 +1,5 @@
 import { Player } from "alt-server";
-import { Item } from "@shared/interfaces";
+import { Item } from "@shared/modules/items";
 import { InGamePlayer } from "@/utility/assertions";
 import { addItemToInventory } from "@/modules/items-manager";
 

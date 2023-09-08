@@ -1,4 +1,4 @@
-import { CharacterPed } from "@/utility/character-ped";
+import { CharacterPed } from "@/core/utility/character-ped";
 import { CharacterCreationCamera } from "./camera";
 
 export function cleanupCharacterCreationScene() {

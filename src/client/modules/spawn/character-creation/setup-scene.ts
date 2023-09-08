@@ -1,8 +1,8 @@
 import alt from "alt-client";
-import { sleep } from "@/utility/sleep";
-import { PedAppearance } from "@/utility/ped-appearance";
-import { getGroundPos } from "@/utility/get-ground-pos";
-import { CharacterPed } from "@/utility/character-ped";
+import { sleep } from "@/core/utility/sleep";
+import { PedAppearance } from "@/core/utility/ped-appearance";
+import { getGroundPos } from "@/core/utility/get-ground-pos";
+import { CharacterPed } from "@/core/utility/character-ped";
 import { CharacterCreationCamera } from "./camera";
 
 const pedPosition = new alt.Vector3(1507.9, -1732.3, 78.65);

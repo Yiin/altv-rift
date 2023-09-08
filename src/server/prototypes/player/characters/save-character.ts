@@ -12,7 +12,7 @@ declare module "alt-server" {
 }
 
 Player.prototype.saveCharacter = async function () {
-  const { id, name, userId, ...data } = this.character.$state;
+  const { id, name, userId, equipment, ...data } = this.character.$state;
 
   await prisma.character.update({
     where: {
@@ -20,6 +20,9 @@ Player.prototype.saveCharacter = async function () {
     },
     data: {
       ...data,
+      equipment: {
+        set: equipment,
+      },
       lastPosition: {
         x: this.pos.x,
         y: this.pos.y,

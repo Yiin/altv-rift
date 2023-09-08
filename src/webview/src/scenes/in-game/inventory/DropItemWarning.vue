@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useItemDetails } from "@/composables/use-item-details";
-import { getItemName } from "@shared/modules/items";
+import { getItemName, isItemFirearmWeapon } from "@shared/modules/items";
 import { Dropping, useInventory } from "@/store/inventory.store";
 import { computed } from "vue";
 
@@ -52,11 +52,15 @@ const details = useItemDetails(item);
         </v-list-item-subtitle>
       </v-list-item>
 
-      <v-list-item v-if="details.equipedAmmo" density="compact" prepend-icon="mdi-ammunition">
+      <v-list-item
+        v-if="isItemFirearmWeapon(item) && item.ammo"
+        density="compact"
+        prepend-icon="mdi-ammunition"
+      >
         <v-list-item-subtitle class="flex items-end gap-1">
-          <span class="font-bold">{{ getItemName(details.equipedAmmo.key) }}</span>
+          <span class="font-bold">{{ getItemName(item.ammo.key) }}</span>
           <v-icon icon="mdi-close" size="12" />
-          {{ details.equipedAmmo.clip }} / {{ details.equipedAmmo.rest }}
+          {{ item.ammo.clip }} / {{ item.ammo.rest }}
         </v-list-item-subtitle>
       </v-list-item>
     </div>

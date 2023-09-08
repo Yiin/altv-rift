@@ -1,8 +1,8 @@
 import { toggleGameControls, WebView } from "alt-client";
 import { CommandSuggestion, MessageType, WindowOptions } from "@shared/modules/chat";
 import { bind } from "@shared/decorators";
-import { ELEMENT } from "@/constants/ui";
-import { getWebview, toggleElement } from "@/user-interface/webview";
+import { ELEMENT } from "@/core/constants/ui";
+import { getWebview, toggleElement } from "@/core/user-interface/webview";
 import type { Message } from "../interfaces";
 
 @bind()

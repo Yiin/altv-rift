@@ -9,38 +9,31 @@ const gender = computed(() => character.appearance.sex);
 </script>
 
 <template>
-  <div
-    @mousedown.stop
-    @touchstart.stop
-    class="relative bg-right bg-contain h-132.5"
-    :style="{
-      backgroundImage: gender
-        ? `url(./assets/inventory/ManSilhouetteOutline.png)`
-        : `url(./assets/inventory/WomanSilhouetteOutline.png)`,
-    }"
-  >
-    <EquipmentSlot
-      v-for="slot in ([
-              'headwear',
-              'mask',
-              'glasses',
-              'headwear',
-              'earrings',
-              'top',
-              'shirt',
-              'armor',
-              'neckwear',
-              'weapon',
-              'ammo',
-              'gloves',
-              'lefthand',
-              'pants',
-              'righthand',
-              'backpack',
-              'shoes',
-              'phone',
-            ] as const)"
-      :name="slot"
-    />
+  <div @mousedown.stop @touchstart.stop class="relative bg-right bg-contain h-132.5" :style="{
+    backgroundImage: gender
+      ? `url(./assets/inventory/ManSilhouetteOutline.png)`
+      : `url(./assets/inventory/WomanSilhouetteOutline.png)`,
+  }">
+    <EquipmentSlot v-for="slot in ([
+      'headwear',
+      'mask',
+      'glasses',
+      'headwear',
+      'earrings',
+      'top',
+      'shirt',
+      'armor',
+      'neckwear',
+      'weapon',
+      'ammo',
+      'gloves',
+      'lefthand',
+      'pants',
+      'righthand',
+      'backpack',
+      'shoes',
+      'phone',
+      'tool'
+    ] as const)" :name="slot" />
   </div>
 </template>

@@ -1,7 +1,9 @@
 import { ServerCall } from "@shared/calls/server";
+import { CombineType, getCombineType } from "@shared/modules/items";
 import { rpc } from "@/rpc";
 import { needsToBeInGame } from "@/utility/assertions";
 import { loadWeaponWithAmmo, unloadAmmoFromWeapon } from "../items/weapons/firearm_weapons";
+import { removeBaitFromFishingRod, useFishBaitOnFishingRod } from "../items/fishing-rod";
 import {
   canDropItem,
   canEquipItem,
@@ -60,23 +62,46 @@ rpc.registerWebview(ServerCall.FromWebview.UNEQUIP_ITEM, (player, equipmentSlot)
   return player.unequipItem(equipmentSlot) !== null;
 });
 
-rpc.registerWebview(ServerCall.FromWebview.LOAD_AMMO, (player, weaponSource, ammoSource) => {
+rpc.registerWebview(ServerCall.FromWebview.COMBINE_ITEMS, (player, sourceA, sourceB) => {
   needsToBeInGame(player);
 
-  if (
-    !canInteractWithItem.call(player, weaponSource) ||
-    !canInteractWithItem.call(player, ammoSource)
-  ) {
+  if (!canInteractWithItem.call(player, sourceA) || !canInteractWithItem.call(player, sourceB)) {
     return false;
   }
 
-  // Do not support equiping already equiped ammo
-  // Player should first unload ammo from the weapon before loading it into another weapon
-  if (ammoSource.type === "equipment") {
+  const itemA = findItem.call(sourceA, player);
+  const itemB = findItem.call(sourceB, player);
+
+  if (!itemA || !itemB) {
     return false;
   }
 
-  return loadWeaponWithAmmo(weaponSource, ammoSource);
+  const [combineType, reverse] = getCombineType(itemA.key, itemB.key);
+
+  switch (combineType) {
+    case CombineType.EquipAmmo: {
+      const [weaponSource, ammoSource] = reverse ? [sourceB, sourceA] : [sourceA, sourceB];
+
+      // Do not support equiping already equiped ammo
+      // Player should first unload ammo from the weapon before loading it into another weapon
+      if (ammoSource.type === "equipment") {
+        return false;
+      }
+
+      return loadWeaponWithAmmo(weaponSource, ammoSource);
+    }
+    case CombineType.EquipFishBait: {
+      const [fishingRodSource, baitSource] = reverse ? [sourceB, sourceA] : [sourceA, sourceB];
+
+      if (baitSource.type === "equipment") {
+        // Should never happen
+        return false;
+      }
+
+      return useFishBaitOnFishingRod(fishingRodSource, baitSource);
+    }
+  }
+  return false;
 });
 
 rpc.registerWebview(ServerCall.FromWebview.UNLOAD_AMMO, (player, itemSource) => {
@@ -87,6 +112,16 @@ rpc.registerWebview(ServerCall.FromWebview.UNLOAD_AMMO, (player, itemSource) => 
   }
 
   return unloadAmmoFromWeapon(itemSource);
+});
+
+rpc.registerWebview(ServerCall.FromWebview.REMOVE_BAIT, (player, itemSource) => {
+  needsToBeInGame(player);
+
+  if (!canInteractWithItem.call(player, itemSource)) {
+    return false;
+  }
+
+  return removeBaitFromFishingRod(itemSource);
 });
 
 rpc.registerClient(ServerCall.FromClient.RELOAD_WEAPON, (player) => {

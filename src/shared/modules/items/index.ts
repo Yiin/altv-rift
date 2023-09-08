@@ -1,8 +1,7 @@
-export * from "./ammo";
-export * from "./clothing";
-export * from "./consumables";
-export * from "./materials";
-export * from "./weapons";
-export * from "./registry";
+// @index('./*', f => `export * from "${f.path}";`)
+export * from "./item-flags";
+export * from "./items-registry";
 export * from "./lib";
+export * from "./registry";
 export * from "./types";
+// @endindex

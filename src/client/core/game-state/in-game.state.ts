@@ -1,5 +1,5 @@
 import { computed, watch } from "vue";
-import { isCharacterStoreAvailable } from "@/store/character.store";
+import { isCharacterStoreAvailable } from "@/core/store/character.store";
 
 export const isInGame = computed(() => {
   return isCharacterStoreAvailable.value;

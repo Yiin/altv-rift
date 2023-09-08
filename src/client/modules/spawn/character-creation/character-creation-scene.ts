@@ -1,9 +1,9 @@
 import alt from "alt-client";
 import game from "natives";
 import { ClientEvents } from "@shared/events/client";
-import { SCENE } from "@/constants/ui";
-import { CharacterPed } from "@/utility/character-ped";
-import { getWebview, setScene } from "@/user-interface/webview";
+import { SCENE } from "@/core/constants/ui";
+import { CharacterPed } from "@/core/utility/character-ped";
+import { getWebview, setScene } from "@/core/user-interface/webview";
 import { setupCharacterCreationScene } from "./setup-scene";
 import { cleanupCharacterCreationScene } from "./cleanup-scene";
 
@@ -33,7 +33,7 @@ function exitCharacterCreation() {
 function startGame() {
   game.disableScreenblurFade();
   game.doScreenFadeIn(1000);
-  game.freezeEntityPosition(alt.Player.local.scriptID, false);
+  game.freezeEntityPosition(alt.Player.local, false);
 
   setScene(SCENE.IN_GAME);
 

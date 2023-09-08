@@ -2,11 +2,11 @@ import alt from "alt-client";
 import game from "natives";
 import { Bones } from "@shared/enums/bones";
 import { ClientEvents } from "@shared/events/client";
-import { loadSceneAtCoords } from "@/utility/scene";
-import { CharacterPed } from "@/utility/character-ped";
-import { Control, ControlType } from "@/constants/controls";
-import { everyTickWhile } from "@/utility/event-helpers";
-import { getWebview } from "@/user-interface/webview";
+import { loadSceneAtCoords } from "@/core/utility/scene";
+import { CharacterPed } from "@/core/utility/character-ped";
+import { Control, ControlType } from "@/core/constants/controls";
+import { everyTickWhile } from "@/core/utility/event-helpers";
+import { getWebview } from "@/core/user-interface/webview";
 
 const cameraPositionBaseline = new alt.Vector3(1508.8, -1731.9, 79.3);
 let cameraHorizontalOffset = 0;

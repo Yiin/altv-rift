@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { useItemDetails } from "@/composables/use-item-details";
 import { getItemIconScale, getItemImage } from "@/utils/items";
-import { Item } from "@shared/interfaces";
-import { TreeLogItemKey } from "@shared/modules/items/materials/tree-logs";
 import { computed, ref, watch } from "vue";
 import LogIcon from "./dynamic-icons/LogIcon.vue";
+import { Item, TreeLogItemKey} from "@shared/modules/items";
 
 const props = defineProps<{
   item: Item;
@@ -45,11 +44,8 @@ watch(
         {{ itemDetails.customName ?? itemDetails.name }}
       </div>
     </template>
-    <div
-      v-if="itemDetails.data && `amount` in itemDetails.data"
-      class="absolute bottom-1 right-1 font-bold shadow-sm"
-    >
-      {{ itemDetails.data.amount }}
+    <div v-if="`amount` in item" class="absolute bottom-1 right-1 font-bold shadow-sm">
+      {{ item.amount }}
     </div>
   </div>
 </template>

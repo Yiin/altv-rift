@@ -64,11 +64,8 @@ model Character {
 }
 
 type Skills {
-  woodcutting Skill
-}
-
-type Skill {
-  experience Int @default(0)
+  woodcutting Int @default(0)
+  fishing     Int @default(0)
 }
 
 type Inventory {
@@ -98,6 +95,7 @@ type Equipment {
   backpack  Json?
   shoes     Json?
   phone     Json?
+  tool      Json?
 }
 
 type Position {

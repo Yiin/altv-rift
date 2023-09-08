@@ -1,6 +1,6 @@
 import alt from "alt-client";
 import game from "natives";
-import { Control, ControlType } from "@/constants/controls";
+import { Control, ControlType } from "@/core/constants/controls";
 import { isInConversation } from "@/modules/questing/dialogue";
 import { getCurrentNode } from "../internals/current-node";
 import { AnchorEntity } from "../types";
@@ -50,10 +50,7 @@ export function updateMenu() {
   }
 }
 
-export function useMenu<T>(
-  options: T[],
-  menu: Omit<Menu<T>, "options" | "node">
-) {
+export function useMenu<T>(options: T[], menu: Omit<Menu<T>, "options" | "node">) {
   registeredMenus.set(getCurrentNode().entity, {
     ...menu,
     options,
@@ -142,32 +139,15 @@ alt.everyTick(() => {
     return;
   }
 
-  game.disableControlAction(
-    ControlType.PLAYER_CONTROL,
-    Control.INPUT_ATTACK,
-    true
-  );
+  game.disableControlAction(ControlType.PLAYER_CONTROL, Control.INPUT_ATTACK, true);
 
-  if (
-    game.isControlJustPressed(
-      ControlType.PLAYER_CONTROL,
-      Control.INPUT_WEAPON_WHEEL_PREV
-    )
-  ) {
+  if (game.isControlJustPressed(ControlType.PLAYER_CONTROL, Control.INPUT_WEAPON_WHEEL_PREV)) {
     menuControls.selectPrevious();
   } else if (
-    game.isControlJustPressed(
-      ControlType.PLAYER_CONTROL,
-      Control.INPUT_WEAPON_WHEEL_NEXT
-    )
+    game.isControlJustPressed(ControlType.PLAYER_CONTROL, Control.INPUT_WEAPON_WHEEL_NEXT)
   ) {
     menuControls.selectNext();
-  } else if (
-    game.isDisabledControlJustPressed(
-      ControlType.PLAYER_CONTROL,
-      Control.INPUT_ATTACK
-    )
-  ) {
+  } else if (game.isDisabledControlJustPressed(ControlType.PLAYER_CONTROL, Control.INPUT_ATTACK)) {
     game.playSoundFrontend(-1, "SELECT", "HUD_FREEMODE_SOUNDSET", true);
     currentMenu.onSelect(currentMenu.options[currentIndex]);
   }

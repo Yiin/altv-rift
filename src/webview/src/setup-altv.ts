@@ -7,6 +7,9 @@ if (!("alt" in globalThis)) {
     on() {},
     once() {},
     getEventListeners: () => [],
+    getVersion: () => "0.0.0",
+    getBranch: () => "dev",
+    getLocale: () => "en",
   };
   globalThis.altMock = true;
 } else {
@@ -20,10 +23,7 @@ if (!("alt" in globalThis)) {
     listener: (...args: any[]) => void;
   }[] = [];
 
-  globalThis.alt.on = function (
-    eventName: string,
-    listener: (...args: any[]) => void
-  ) {
+  globalThis.alt.on = function (eventName: string, listener: (...args: any[]) => void) {
     function handler(...args: any[]) {
       listener(...args.map((arg) => deserialize(arg)));
     }
@@ -35,17 +35,12 @@ if (!("alt" in globalThis)) {
     on(eventName, handler);
   };
 
-  globalThis.alt.once = function (
-    eventName: string,
-    listener: (...args: any[]) => void
-  ) {
+  globalThis.alt.once = function (eventName: string, listener: (...args: any[]) => void) {
     function handler(...args: any[]) {
       handlers.splice(
         handlers.findIndex(
           (item) =>
-            item.eventName === eventName &&
-            item.listener === listener &&
-            item.handler === handler
+            item.eventName === eventName && item.listener === listener && item.handler === handler
         ),
         1
       );
@@ -59,10 +54,7 @@ if (!("alt" in globalThis)) {
     once(eventName, handler);
   };
 
-  globalThis.alt.off = function (
-    eventName: string,
-    listener: (...args: any[]) => void
-  ) {
+  globalThis.alt.off = function (eventName: string, listener: (...args: any[]) => void) {
     const index = handlers.findIndex(
       (item) => item.eventName === eventName && item.listener === listener
     );

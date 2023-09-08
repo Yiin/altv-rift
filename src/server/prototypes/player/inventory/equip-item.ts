@@ -1,17 +1,23 @@
 import alt from "alt-server";
-import { Equipment, InventoryItemSource, ItemSource } from "@shared/interfaces";
+import { InventoryItemSource } from "@shared/interfaces";
 import { ServerEvents } from "@shared/events/server";
-import { getItemEquipmentSlot, getItemInfoByKey, isItemAmmo } from "@shared/modules/items";
-import { isItemFirearmWeapon } from "@shared/modules/items/weapons/firearms";
+import {
+  getItemEquipmentSlot,
+  getItemInfoByKey,
+  isItemAmmo,
+  isItemFishingRod,
+} from "@shared/modules/items";
+import { isItemFirearmWeapon } from "@shared/modules/items/registry/weapons/firearm-weapon.items";
+import { FishBaitItem, isItemFishBait } from "@shared/modules/items/registry/fish-bait.items";
 import { InGamePlayer } from "@/utility/assertions";
 import {
   addItemToInventory,
   findItem,
   findSourceInventory,
-  getInventoryItemByKey,
   loadWeaponWithAmmo,
   removeItem,
 } from "@/modules/items-manager";
+import { useFishBaitOnFishingRod } from "@/modules/items-manager/items/fishing-rod";
 
 declare module "alt-server" {
   export interface Player {
@@ -19,6 +25,12 @@ declare module "alt-server" {
   }
 }
 
+/**
+ * Tries to equip an item from a source.
+ *
+ * NOTE:
+ *   This method doesn't check if the source is available for the player.
+ */
 alt.Player.prototype.equipItem = function (source) {
   const item = findItem.call(source, this);
 
@@ -26,7 +38,7 @@ alt.Player.prototype.equipItem = function (source) {
     return false;
   }
 
-  const equipmentSlot = getItemEquipmentSlot(item);
+  const equipmentSlot = isItemFishBait(item) ? "fishbait" : getItemEquipmentSlot(item);
 
   if (!equipmentSlot) {
     return false;
@@ -38,8 +50,7 @@ alt.Player.prototype.equipItem = function (source) {
     return false;
   }
 
-  // Ammo equipment is a special case
-  if (equipmentSlot === "ammo" && isItemAmmo(item)) {
+  if (equipmentSlot === "ammo") {
     if (
       !loadWeaponWithAmmo(
         {
@@ -53,13 +64,26 @@ alt.Player.prototype.equipItem = function (source) {
     ) {
       return false;
     }
-  } else {
-    // Normal flow
+  } else if (equipmentSlot === "fishbait") {
+    if (
+      !useFishBaitOnFishingRod(
+        {
+          type: "equipment",
+          equipmentSlot: "tool",
+          source: "character",
+          sourceId: this.character.id,
+        },
+        source
+      )
+    ) {
+      return false;
+    }
+  }
+  // Normal flow
+  else {
     removeItem(source);
 
-    const slot = equipmentSlot as Exclude<typeof equipmentSlot, "ammo">;
-
-    const unequippedItem = this.character.equipment[slot];
+    const unequippedItem = this.character.equipment[equipmentSlot];
 
     if (unequippedItem && !addItemToInventory(inventory, unequippedItem)) {
       return false;
@@ -67,11 +91,11 @@ alt.Player.prototype.equipItem = function (source) {
 
     // @ts-expect-error item is guaranteed to be of correct type,
     // but TS is complaining that e.g. ClothingItem might be on weapon slot
-    this.character.equipment[slot] = item;
+    this.character.equipment[equipmentSlot] = item;
 
-    if (slot === "weapon" && isItemFirearmWeapon(item)) {
+    if (equipmentSlot === "weapon" && isItemFirearmWeapon(item)) {
       // Quick hack to auto-equip weapon ammo
-      if (!item.FIREARM_WEAPON.ammo) {
+      if (!item.ammo) {
         const ammo = this.character.inventory.items.find(
           ({ item: ammo }) =>
             isItemAmmo(ammo) &&

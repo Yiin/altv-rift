@@ -1,8 +1,8 @@
 import alt from "alt-server";
 import { toRaw } from "vue";
 import { isEqual } from "lodash";
-import { Inventory, InventoryItemSource, Item } from "@shared/interfaces";
-import { createItem, getItemData, isStackable } from "@shared/modules/items";
+import { Inventory, InventoryItemSource } from "@shared/interfaces";
+import { Item, createItem, isStackable } from "@shared/modules/items";
 import { findSourceInventory } from "./hooks";
 
 export function getInventoryItemInSlot(inventory: Inventory, slot: number) {
@@ -50,25 +50,17 @@ export function removeItemFromInventorySlot(
 
   const { item } = inventoryItem;
 
-  const itemData = getItemData(item);
-
-  if (!itemData) {
-    return null;
-  }
-
-  if (!isStackable(itemData) || itemData.amount - amount <= 0 || amount <= 0) {
-    console.log("removing item");
+  if (!isStackable(item) || item.amount - amount <= 0 || amount <= 0) {
     inventory.items.splice(
       inventory.items.findIndex((item) => item.slot === slot),
       1
     );
-    console.log("item removed");
     return item;
   }
 
-  itemData.amount -= amount;
+  item.amount -= amount;
 
-  return createItem(item.key, { ...itemData, amount });
+  return createItem(item.key, { ...item, amount });
 }
 
 export function dropItemOnTheGround(item: Item, position: alt.IVector3) {
@@ -76,20 +68,16 @@ export function dropItemOnTheGround(item: Item, position: alt.IVector3) {
 }
 
 export function addItemToInventory(inventory: Inventory, item: Item, slot?: number) {
-  const itemData = getItemData(item);
-
-  if (isStackable(itemData)) {
+  if (isStackable(item)) {
     const existingItem = getInventoryItemByKey(inventory, item.key);
 
     if (existingItem) {
-      const existingItemData = getItemData(existingItem.item);
-
-      if (isStackable(existingItemData)) {
-        existingItemData.amount += itemData.amount;
+      if (isStackable(existingItem.item)) {
+        existingItem.item.amount += item.amount;
         return true;
       }
       // unreachable
-      return false;
+      throw new Error("Existing item is not stackable??");
     }
   }
 

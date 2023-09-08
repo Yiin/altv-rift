@@ -1,5 +1,5 @@
 import alt from "alt-server";
-import { ItemKey, getItemData, isStackable } from "@shared/modules/items";
+import { ItemKey, isStackable } from "@shared/modules/items";
 import { InGamePlayer } from "@/utility/assertions";
 import { getInventoryItemByKey } from "@/modules/items-manager";
 
@@ -16,7 +16,5 @@ alt.Player.prototype.hasItem = function (key, amount = 0) {
     return false;
   }
 
-  const item = getItemData(inventoryItem.item);
-
-  return isStackable(item) ? item.amount >= amount : true;
+  return isStackable(inventoryItem.item) ? inventoryItem.item.amount >= amount : true;
 };

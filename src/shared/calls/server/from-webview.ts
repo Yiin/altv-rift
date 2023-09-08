@@ -9,8 +9,9 @@ export const FromWebview = {
   EQUIP_ITEM: "EQUIP_ITEM",
   UNEQUIP_ITEM: "UNEQUIP_ITEM",
   DROP_ITEM: "DROP_ITEM",
-  LOAD_AMMO: "LOAD_AMMO",
+  COMBINE_ITEMS: "COMBINE_ITEMS",
   UNLOAD_AMMO: "UNLOAD_AMMO",
+  REMOVE_BAIT: "REMOVE_BAIT",
 } as const;
 
 export interface CallFromWebview<
@@ -37,6 +38,7 @@ export interface CallFromWebview<
   [FromWebview.EQUIP_ITEM]: (player: P, source: ItemSource) => boolean;
   [FromWebview.UNEQUIP_ITEM]: (player: P, equipmentSlot: EquipmentSlot) => boolean;
   [FromWebview.DROP_ITEM]: (player: P, source: ItemSource) => boolean;
-  [FromWebview.LOAD_AMMO]: (player: P, weaponSource: ItemSource, ammoSource: ItemSource) => boolean;
+  [FromWebview.COMBINE_ITEMS]: (player: P, sourceA: ItemSource, sourceB: ItemSource) => boolean;
   [FromWebview.UNLOAD_AMMO]: (player: P, source: ItemSource) => boolean;
+  [FromWebview.REMOVE_BAIT]: (player: P, source: ItemSource) => boolean;
 }

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useItemDetails } from "@/composables/use-item-details";
-import { CombineType, getCombineType, getItemName } from "@shared/modules/items";
+import { CombineType, getCombineType, getItemName, isItemFirearmWeapon, isItemFishingRod } from "@shared/modules/items";
 import { Hovering, useInventory } from "@/store/inventory.store";
 
 const props = defineProps<Hovering>();
@@ -25,6 +25,9 @@ const combination = computed(() => {
     case CombineType.EquipAmmo:
       const [ammo, weapon] = reverse ? [target, source] : [source, target];
       return `Click to load ${getItemName(weapon)} with ${getItemName(ammo)}`;
+    case CombineType.EquipFishBait:
+      const [bait, rod] = reverse ? [target, source] : [source, target];
+      return `Click to use ${getItemName(bait)} for ${getItemName(rod)}`;
   }
 
   return null;
@@ -32,14 +35,11 @@ const combination = computed(() => {
 </script>
 
 <template>
-  <div
-    class="mx-auto absolute pointer-events-none select-none z-max w-72 bg-gray-950/80 text-white p-4"
-    theme="light"
+  <div class="mx-auto absolute pointer-events-none select-none z-max w-72 bg-gray-950/80 text-white p-4" theme="light"
     :style="{
       left: `${position.x}px`,
       top: `${position.y}px`,
-    }"
-  >
+    }">
     <div v-if="combination" class="text-yellow-500 font-bold mb-2">
       {{ combination }}
     </div>
@@ -58,17 +58,31 @@ const combination = computed(() => {
         </div>
       </div>
 
-      <div v-if="details.equipedAmmo" class="flex items-center gap-1">
+      <div v-if="isItemFirearmWeapon(item) && item.ammo" class="flex items-center gap-1">
         <v-icon icon="mdi-ammunition" />
         <div>
           <div class="font-bold">
-            {{ getItemName(details.equipedAmmo.key) }}
+            {{ getItemName(item.ammo.key) }}
           </div>
           <div class="flex items-baseline gap-1">
             <v-icon icon="mdi-close" size="12" />
             <div class="font-bold text-yellow-500">
-              {{ details.equipedAmmo.clip }}
-              <span class="text-xs">/ {{ details.equipedAmmo.rest }}</span>
+              {{ item.ammo.clip }}
+              <span class="text-xs">/ {{ item.ammo.rest }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div v-else-if="isItemFishingRod(item) && item.bait" class="flex items-center gap-1">
+        <v-icon icon="mdi-chart-bubble" />
+        <div>
+          <div class="font-bold">
+            {{ getItemName(item.bait.key) }}
+          </div>
+          <div class="flex items-baseline gap-1">
+            <v-icon icon="mdi-close" size="12" />
+            <div class="font-bold text-yellow-500">
+              {{ item.bait.amount }}
             </div>
           </div>
         </div>

@@ -1,8 +1,8 @@
 import alt from "alt-client";
 import game from "natives";
 import { ConversationOption } from "@shared/interfaces/conversation";
-import { Control, ControlType } from "@/constants/controls";
-import { clientState } from "@/store/client.store";
+import { Control, ControlType } from "@/core/constants/controls";
+import { clientState } from "@/core/store/client.store";
 
 interface ConversationInfo {
   pages: string[];

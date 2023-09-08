@@ -1,6 +1,6 @@
 import alt from "alt-server";
-import { getItemData, getItemInfoByKey } from "@shared/modules/items";
-import { isItemFirearmWeapon } from "@shared/modules/items/weapons/firearms";
+import { getItemInfoByKey } from "@shared/modules/items";
+import { isItemFirearmWeapon } from "@shared/modules/items/registry/weapons/firearm-weapon.items";
 import { InGamePlayer, isInGame } from "@/utility/assertions";
 
 declare module "alt-server" {
@@ -20,20 +20,19 @@ alt.Player.prototype.reloadWeapon = function () {
     return false;
   }
 
-  const weaponData = getItemData(weapon);
+  const ammo = weapon.ammo;
 
-  if (!weaponData.ammo) {
+  if (!ammo) {
     return false;
   }
 
   const weaponInfo = getItemInfoByKey(weapon.key);
-  const ammo = weaponData.ammo;
 
-  if (ammo.clip.amount >= weaponInfo.clipSize) {
+  if (ammo.clip >= weaponInfo.clipSize) {
     return false;
   }
 
-  const rest = ammo.rest.amount;
+  const rest = ammo.rest;
 
   if (rest <= 0) {
     return false;
@@ -41,10 +40,10 @@ alt.Player.prototype.reloadWeapon = function () {
 
   setTimeout(() => {
     if (this.valid && isInGame(this) && this.isReloading) {
-      const amount = Math.min(weaponInfo.clipSize - ammo.clip.amount, rest);
+      const amount = Math.min(weaponInfo.clipSize - ammo.clip, rest);
 
-      ammo.rest.amount -= amount;
-      ammo.clip.amount += amount;
+      ammo.rest -= amount;
+      ammo.clip += amount;
     }
   }, 1000);
 

@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { useInventory } from "@/store/inventory.store";
-import { getItemData, getItemName, getItemInfoByKey } from "@shared/modules/items";
-import { isItemFirearmWeapon } from "@shared/modules/items/weapons/firearms";
 import { computed } from "vue";
+import { useInventory } from "@/store/inventory.store";
+import { getItemName, getItemInfoByKey, isItemFirearmWeapon } from "@shared/modules/items";
 
 const inventory = useInventory();
 
@@ -25,8 +24,8 @@ const weapon = computed(() => {
   return {
     name,
     clipSize: weaponInfo.clipSize ?? 0,
-    clip: getItemData(weaponItem).ammo?.clip.amount ?? 0,
-    rest: getItemData(weaponItem).ammo?.rest.amount ?? 0,
+    clip: weaponItem.ammo?.clip ?? 0,
+    rest: weaponItem.ammo?.rest ?? 0,
   };
 });
 </script>

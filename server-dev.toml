@@ -1,6 +1,6 @@
 name = "yolo"
 
-modules = ["js-module"]
+modules = ["jsv2"]
 
 resources = ["main", "qa-tools"]
 

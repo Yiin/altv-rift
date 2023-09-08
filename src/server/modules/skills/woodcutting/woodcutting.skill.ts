@@ -50,7 +50,7 @@ rpc.registerClient(ServerCall.FromClient.BEGIN_TREE_HIT, (player, virtualTreeId)
 
   playerHittingTree.set(player, virtualTreeId);
 
-  const level = getLevel(player.character.skills.woodcutting.experience);
+  const level = getLevel(player.character.skills.woodcutting);
 
   const cooldown = Math.max(450, 1000 - (level * 1000) / 120);
 
@@ -120,12 +120,12 @@ rpc.registerClient(ServerCall.FromClient.TREE_HIT, (player, virtualTreeId) => {
     refillTree(virtualTree);
   }
 
-  const currentLevel = getLevel(player.character.skills.woodcutting.experience);
+  const currentLevel = getLevel(player.character.skills.woodcutting);
 
   const experience = logs * getTreeLogXp(treeType);
-  player.character.skills.woodcutting.experience += experience;
+  player.character.skills.woodcutting += experience;
 
-  const newLevel = getLevel(player.character.skills.woodcutting.experience);
+  const newLevel = getLevel(player.character.skills.woodcutting);
 
   if (logs) {
     sendChatMessage(player, `You got ${logs} logs (${experience}xp).`, MessageType.Info);
@@ -155,7 +155,7 @@ function canPlayerHitTheTree(player: InGamePlayer, virtualTree: alt.VirtualEntit
     return false;
   }
 
-  if (getLevel(player.character.skills.woodcutting.experience) < getTreeLevel(treeType)) {
+  if (getLevel(player.character.skills.woodcutting) < getTreeLevel(treeType)) {
     console.log("Not enough level", virtualTree.id);
     return false;
   }

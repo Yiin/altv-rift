@@ -1,3 +1,4 @@
-// @index('./*.ts', f => `export * from "${f.path}";`)
-export * from "./player.inventory";
+// @index('./*', f => `export * from "${f.path}";`)
+export * from "./keybinds";
+export * from "./sync";
 // @endindex

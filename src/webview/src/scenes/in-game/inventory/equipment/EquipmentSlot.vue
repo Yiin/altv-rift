@@ -3,9 +3,9 @@ import { computed, ref } from "vue";
 import { InteractionType, SlottedItem, useInventory } from "@/store/inventory.store";
 import ItemIcon from "../ItemIcon.vue";
 import { px } from "@/composables/use-pixel";
-import { ItemType } from "@prisma/client";
-import { AmmoItem, LocalEquipmentItemSource } from "@shared/interfaces";
-import { getItemEquipmentSlot } from "@shared/modules/items";
+
+import { LocalEquipmentItemSource } from "@shared/interfaces";
+import { AmmoItem, getItemEquipmentSlot, isItemFirearmWeapon } from "@shared/modules/items";
 
 const equipmentSlots = {
   headwear: {
@@ -110,6 +110,12 @@ const equipmentSlots = {
     x: px(90),
     y: px(450),
   },
+  tool: {
+    label: "Tool",
+    image: "./assets/inventory/gloves.png",
+    x: px(180),
+    y: px(450),
+  },
 };
 
 type EquipmentSlotName = keyof typeof equipmentSlots;
@@ -122,17 +128,15 @@ const inventory = useInventory();
 
 const item = computed(() => {
   if (props.name === "ammo") {
-    const equipedAmmo = inventory.equipment.weapon?.item?.FIREARM_WEAPON?.ammo;
+    const weapon = inventory.equipment.weapon?.item;
+    const equipedAmmo = weapon && isItemFirearmWeapon(weapon) && weapon?.ammo;
 
     if (equipedAmmo) {
       // Construct a fake slotted item that represents the ammo in the weapon
       return {
         item: {
-          type: ItemType.AMMO,
           key: equipedAmmo.key,
-          [ItemType.AMMO]: {
-            amount: equipedAmmo.clip.amount + equipedAmmo.rest.amount,
-          },
+          amount: equipedAmmo.clip + equipedAmmo.rest,
         },
         source: {
           type: "equipment",
@@ -189,31 +193,18 @@ inventory.registerItemSlot({
 </script>
 
 <template>
-  <div
-    ref="nodeRef"
-    class="absolute top-0 left-0 w-20 h-20 bg-gray-800/80 item-slot text-white"
-    :class="[(draggingOver || item) && 'drop-shadow-[2px_4px_6px_black]']"
-    :style="{
+  <div ref="nodeRef" class="absolute top-0 left-0 w-20 h-20 bg-gray-800/80 item-slot text-white"
+    :class="[(draggingOver || item) && 'drop-shadow-[2px_4px_6px_black]']" :style="{
       transform: `translate(${slot.x}px, ${slot.y}px)`,
-    }"
-  >
-    <div
-      v-if="!item"
-      class="absolute w-full h-full bg-[center_35%] text-center pt-12 text-xs"
-      :style="{
-        backgroundImage: `url(${slot.image})`,
-        backgroundSize: `30%`,
-        filter: `contrast(0) opacity(0.9)`,
-      }"
-    >
+    }">
+    <div v-if="!item" class="absolute w-full h-full bg-[center_35%] text-center pt-12 text-xs" :style="{
+      backgroundImage: `url(${slot.image})`,
+      backgroundSize: `30%`,
+      filter: `contrast(0) opacity(0.9)`,
+    }">
       {{ slot.label }}
     </div>
   </div>
-  <ItemIcon
-    v-if="item"
-    :item="item.item"
-    :style="{ transform: `translate(${slot.x}px, ${slot.y}px)` }"
-    @dblclick="unequipItem"
-    @contextmenu.prevent="(e) => item && inventory.openContextMenu(item, e)"
-  />
+  <ItemIcon v-if="item" :item="item.item" :style="{ transform: `translate(${slot.x}px, ${slot.y}px)` }"
+    @dblclick="unequipItem" @contextmenu.prevent="(e) => item && inventory.openContextMenu(item, e)" />
 </template>

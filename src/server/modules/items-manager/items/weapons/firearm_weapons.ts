@@ -2,19 +2,17 @@ import alt from "alt-server";
 import { ServerEvents } from "@shared/events/server";
 import {
   getItemInfoByKey,
-  getItemData,
   createItem,
   isItemAmmo,
   toEquipedAmmo,
-} from "@shared/modules/items";
-import { isItemFirearmWeapon } from "@shared/modules/items/weapons/firearms";
-import {
   AmmoItem,
-  FirearmWeaponItem,
-  InventoryItemSource,
   Item,
-  ItemSource,
-} from "@shared/interfaces";
+} from "@shared/modules/items";
+import {
+  FirearmWeaponItem,
+  isItemFirearmWeapon,
+} from "@shared/modules/items/registry/weapons/firearm-weapon.items";
+import { InventoryItemSource, ItemSource } from "@shared/interfaces";
 import { InGamePlayer, isInGame } from "@/utility/assertions";
 import { findItem, findSourceInventory } from "../../api/hooks";
 import { removeItem, addItemToInventory } from "../../api/utils";
@@ -25,14 +23,13 @@ alt.on(ServerEvents.FromServer.EQUIP_ITEM, (player, item) => {
   }
 
   const itemInfo = getItemInfoByKey(item.key);
-  const itemData = getItemData(item);
 
   if (player.currentWeapon === itemInfo.hash) {
     return;
   }
 
-  if (itemData.ammo && itemData.ammo.clip.amount + itemData.ammo.rest.amount <= 0) {
-    itemData.ammo = null;
+  if (item.ammo && item.ammo.clip + item.ammo.rest <= 0) {
+    item.ammo = null;
   }
 
   player.giveWeapon(itemInfo.hash, 0, true);
@@ -59,20 +56,18 @@ alt.onClient(ServerEvents.FromClient.WEAPON_SHOOT, (player) => {
     return false;
   }
 
-  const weaponData = getItemData(equipedWeapon);
-
-  if (!weaponData.ammo) {
+  if (!equipedWeapon.ammo) {
     return false;
   }
 
-  if (weaponData.ammo.clip.amount <= 0) {
+  if (equipedWeapon.ammo.clip <= 0) {
     return false;
   }
 
-  weaponData.ammo.clip.amount--;
+  equipedWeapon.ammo.clip--;
 
-  if (weaponData.ammo.clip.amount + weaponData.ammo.rest.amount <= 0) {
-    weaponData.ammo = null;
+  if (equipedWeapon.ammo.clip + equipedWeapon.ammo.rest <= 0) {
+    equipedWeapon.ammo = null;
   }
 
   return true;
@@ -90,16 +85,10 @@ export function loadWeaponWithAmmo(
   const ammoInventory = findSourceInventory.call(ammoSource);
 
   if (!weapon || !ammo || !ammoInventory) {
-    console.log({
-      weapon: !!weapon,
-      ammo: !!ammo,
-      ammoInventory: !!ammoInventory,
-    });
     return false;
   }
 
   if (!isItemFirearmWeapon(weapon) || !isItemAmmo(ammo)) {
-    console.log("Not a firearm weapon or ammo", weapon, ammo);
     return false;
   }
 
@@ -180,24 +169,22 @@ export function loadWeaponItemWithAmmoItem(
   weapon: FirearmWeaponItem,
   ammo: AmmoItem
 ): AmmoItem | null {
-  const weaponData = getItemData(weapon);
-
   const { clipSize } = getItemInfoByKey(weapon.key);
 
-  if (!weaponData.ammo) {
-    weaponData.ammo = toEquipedAmmo(ammo, clipSize);
+  if (!weapon.ammo) {
+    weapon.ammo = toEquipedAmmo(ammo, clipSize);
   } else {
-    const previousAmmo = weaponData.ammo;
+    const previousAmmo = weapon.ammo;
 
     if (previousAmmo.key !== ammo.key) {
-      weaponData.ammo = toEquipedAmmo(ammo, clipSize);
+      weapon.ammo = toEquipedAmmo(ammo, clipSize);
 
       return createItem(previousAmmo.key, {
-        amount: previousAmmo.clip.amount + previousAmmo.rest.amount,
+        amount: previousAmmo.clip + previousAmmo.rest,
       });
     }
 
-    weaponData.ammo = toEquipedAmmo(ammo, clipSize, weaponData.ammo);
+    weapon.ammo = toEquipedAmmo(ammo, clipSize, weapon.ammo);
   }
   return null;
 }
@@ -210,17 +197,15 @@ export function unloadWeaponItemAmmo(item: Item) {
     return null;
   }
 
-  const itemData = getItemData(item);
-
-  if (!itemData.ammo) {
+  if (!item.ammo) {
     return null;
   }
 
-  const ammo = itemData.ammo;
+  const ammo = item.ammo;
 
-  itemData.ammo = null;
+  item.ammo = null;
 
   return createItem(ammo.key, {
-    amount: ammo.clip.amount + ammo.rest.amount,
+    amount: ammo.clip + ammo.rest,
   });
 }

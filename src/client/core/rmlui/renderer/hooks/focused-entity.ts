@@ -1,4 +1,4 @@
-import { getScreenResolution } from "@/utility/screen-resolution";
+import { getScreenResolution } from "@/core/utility/screen-resolution";
 import { AnchorEntity } from "../types";
 
 let focusedEntity: AnchorEntity | null = null;
@@ -9,14 +9,8 @@ export function resetFocusedEntity() {
   closestDistance = Number.MAX_SAFE_INTEGER;
 }
 
-export function updateFocusedEntity(
-  entity: AnchorEntity,
-  distanceToCenter: number
-) {
-  if (
-    distanceToCenter < getScreenResolution().x / 8 &&
-    distanceToCenter < closestDistance
-  ) {
+export function updateFocusedEntity(entity: AnchorEntity, distanceToCenter: number) {
+  if (distanceToCenter < getScreenResolution().x / 8 && distanceToCenter < closestDistance) {
     focusedEntity = entity;
     closestDistance = distanceToCenter;
   }

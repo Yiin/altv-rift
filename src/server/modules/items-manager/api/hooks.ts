@@ -1,5 +1,6 @@
 import { createHookableFunction } from "@shared/hooks";
-import { Inventory, InventoryItemSource, Item, ItemSource } from "@shared/interfaces";
+import { Inventory, InventoryItemSource, ItemSource } from "@shared/interfaces";
+import { Item } from "@shared/modules/items";
 import { InGamePlayer } from "@/utility/assertions";
 
 export const findSourceInventory = createHookableFunction<
