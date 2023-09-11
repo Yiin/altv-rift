@@ -1,4 +1,4 @@
-import { Player } from "alt-server";
+import { Player } from "@altv/server";
 import type { ClientOptions, WindowOptions } from "@shared/modules/chat";
 import { container } from "@shared/dependency-injection";
 import { MountService, WindowService } from "../services";
@@ -13,10 +13,7 @@ export function updateOption(
 ) {
   container
     .resolve(MountService)
-    .waitForMount(
-      player,
-      container.resolve(WindowService).updateOption(player, key, value)
-    );
+    .waitForMount(player, container.resolve(WindowService).updateOption(player, key, value));
 }
 
 /**
@@ -32,23 +29,15 @@ export function updateOptionAll(
 /**
  * Updates the specified options for the specified player.
  */
-export function updateOptions(
-  player: Player,
-  options: Partial<ClientOptions & WindowOptions>
-) {
+export function updateOptions(player: Player, options: Partial<ClientOptions & WindowOptions>) {
   container
     .resolve(MountService)
-    .waitForMount(
-      player,
-      container.resolve(WindowService).updateOptions(player, options)
-    );
+    .waitForMount(player, container.resolve(WindowService).updateOptions(player, options));
 }
 
 /**
  * Updates the specified options for all players.
  */
-export function updateOptionsAll(
-  options: Partial<ClientOptions & WindowOptions>
-) {
+export function updateOptionsAll(options: Partial<ClientOptions & WindowOptions>) {
   Player.all.forEach((player) => updateOptions(player, options));
 }

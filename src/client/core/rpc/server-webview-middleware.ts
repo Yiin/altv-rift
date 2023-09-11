@@ -1,4 +1,4 @@
-import alt from "alt-client";
+import alt from "@altv/client";
 import {
   CALL_SERVER_FROM_WEBVIEW,
   CALL_SERVER_FROM_WEBVIEW_RESPONSE,
@@ -7,7 +7,7 @@ import {
 } from "@shared/calls/constants";
 import { getWebview } from "@/core/user-interface/webview";
 
-alt.onServer(CALL_WEBVIEW_FROM_SERVER, async (payload) => {
+alt.Events.onServer(CALL_WEBVIEW_FROM_SERVER, async (payload) => {
   getWebview((webview) => {
     webview.emit(CALL_WEBVIEW_FROM_SERVER, payload);
   });
@@ -15,15 +15,15 @@ alt.onServer(CALL_WEBVIEW_FROM_SERVER, async (payload) => {
 
 getWebview((webview) => {
   webview.on(CALL_WEBVIEW_FROM_SERVER_RESPONSE, (response) => {
-    alt.emitServerRaw(CALL_WEBVIEW_FROM_SERVER_RESPONSE, response);
+    alt.Events.emitServer(CALL_WEBVIEW_FROM_SERVER_RESPONSE, response);
   });
 
   webview.on(CALL_SERVER_FROM_WEBVIEW, (payload) => {
-    alt.emitServerRaw(CALL_SERVER_FROM_WEBVIEW, payload);
+    alt.Events.emitServer(CALL_SERVER_FROM_WEBVIEW, payload);
   });
 });
 
-alt.onServer(CALL_SERVER_FROM_WEBVIEW_RESPONSE, (response) => {
+alt.Events.onServer(CALL_SERVER_FROM_WEBVIEW_RESPONSE, (response) => {
   getWebview((webview) => {
     webview.emit(CALL_SERVER_FROM_WEBVIEW_RESPONSE, response);
   });

@@ -15,22 +15,22 @@ export const FromWebview = {
 } as const;
 
 export interface CallFromWebview<
-  P extends import("alt-server").Player = import("alt-server").Player
+  P extends import("@altv/server").Player = import("@altv/server").Player
 > {
   [FromWebview.CREATE_CHARACTER]: (
-    player: import("alt-server").Player,
+    player: import("@altv/server").Player,
     data: {
       name: string;
       appearance: Appearance;
     }
   ) => boolean;
   [FromWebview.MOVE_ITEM]: (
-    player: import("alt-server").Player,
+    player: import("@altv/server").Player,
     from: ItemSource,
     toSlot: ItemSource
   ) => boolean;
   [FromWebview.MOVE_WINDOW]: (
-    player: import("alt-server").Player,
+    player: import("@altv/server").Player,
     name: string,
     screen: ScreenPosition
   ) => void;

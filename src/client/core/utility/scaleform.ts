@@ -1,5 +1,5 @@
-import alt from "alt-client";
-import game from "natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 
 export class Scaleform {
   private id: number;
@@ -39,8 +39,7 @@ export class Scaleform {
 
         default: {
           alt.logError(
-            `Bad Argument: ${typeof arg} = ${arg.toString()} passed to scaleform with handle ${
-              this.id
+            `Bad Argument: ${typeof arg} = ${arg.toString()} passed to scaleform with handle ${this.id
             }`
           );
         }
@@ -56,30 +55,19 @@ export class Scaleform {
   }
 
   render(x: number, y: number, width: number, height: number) {
-    game.drawScaleformMovie(
-      this.id,
-      x,
-      y,
-      width,
-      height,
-      255,
-      255,
-      255,
-      255,
-      0
-    );
+    game.drawScaleformMovie(this.id, x, y, width, height, 255, 255, 255, 255, 0);
   }
 }
 
 export function requestScaleForm(scaleformName: string): Promise<Scaleform> {
   return new Promise((resolve: Function) => {
     const instance = new Scaleform(game.requestScaleformMovie(scaleformName));
-    const interval = alt.setInterval(() => {
+    const interval = alt.Timers.setInterval(() => {
       if (!instance.hasLoaded()) {
         return;
       }
 
-      alt.clearInterval(interval);
+      interval.destroy();
       resolve(instance);
     }, 5);
   });

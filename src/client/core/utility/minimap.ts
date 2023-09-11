@@ -1,5 +1,5 @@
-import alt from "alt-client";
-import game from "natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 
 const Minimap = {
   /**
@@ -41,9 +41,7 @@ const Minimap = {
 
     const x = resolution.x * ((1.0 / 20.0) * (Math.abs(safeZone - 1.0) * 10));
     const y =
-      resolution.y -
-      resolution.y * ((1.0 / 20.0) * (Math.abs(safeZone - 1.0) * 10)) -
-      height;
+      resolution.y - resolution.y * ((1.0 / 20.0) * (Math.abs(safeZone - 1.0) * 10)) - height;
 
     if (asPercent) {
       return {

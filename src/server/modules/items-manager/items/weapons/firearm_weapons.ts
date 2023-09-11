@@ -1,4 +1,4 @@
-import alt from "alt-server";
+import alt from "@altv/server";
 import { ServerEvents } from "@shared/events/server";
 import {
   getItemInfoByKey,
@@ -17,7 +17,7 @@ import { InGamePlayer, isInGame } from "@/utility/assertions";
 import { findItem, findSourceInventory } from "../../api/hooks";
 import { removeItem, addItemToInventory } from "../../api/utils";
 
-alt.on(ServerEvents.FromServer.EQUIP_ITEM, (player, item) => {
+alt.Events.on(ServerEvents.FromServer.EQUIP_ITEM, (player, item) => {
   if (!isItemFirearmWeapon(item)) {
     return;
   }
@@ -35,7 +35,7 @@ alt.on(ServerEvents.FromServer.EQUIP_ITEM, (player, item) => {
   player.giveWeapon(itemInfo.hash, 0, true);
 });
 
-alt.onClient(ServerEvents.FromClient.WEAPON_SHOOT, (player) => {
+alt.Events.onPlayer(ServerEvents.FromClient.WEAPON_SHOOT, (player) => {
   if (!isInGame(player)) {
     return;
   }
@@ -43,25 +43,25 @@ alt.onClient(ServerEvents.FromClient.WEAPON_SHOOT, (player) => {
   const equipedWeapon = player.character.equipment.weapon;
 
   if (!equipedWeapon) {
-    return false;
+    return;
   }
 
   const weaponInfo = getItemInfoByKey(equipedWeapon.key);
 
   if (weaponInfo.hash !== player.currentWeapon) {
-    return false;
+    return;
   }
 
   if (!isItemFirearmWeapon(equipedWeapon)) {
-    return false;
+    return;
   }
 
   if (!equipedWeapon.ammo) {
-    return false;
+    return;
   }
 
   if (equipedWeapon.ammo.clip <= 0) {
-    return false;
+    return;
   }
 
   equipedWeapon.ammo.clip--;
@@ -69,8 +69,6 @@ alt.onClient(ServerEvents.FromClient.WEAPON_SHOOT, (player) => {
   if (equipedWeapon.ammo.clip + equipedWeapon.ammo.rest <= 0) {
     equipedWeapon.ammo = null;
   }
-
-  return true;
 });
 
 /**

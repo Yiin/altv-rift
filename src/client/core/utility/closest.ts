@@ -1,4 +1,4 @@
-import alt from "alt-client";
+import alt from "@altv/client";
 import { getClosestOfType } from "@shared/utility/closest";
 
 /**

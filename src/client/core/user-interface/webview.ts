@@ -1,6 +1,5 @@
-import alt from "alt-client";
-import game from "natives";
-import { KeyCode } from "altv-enums";
+import alt, { Enums } from "@altv/client";
+import game from "@altv/natives";
 import { serialize } from "alpha-serializer";
 import { WebviewEvents } from "@shared/events/webview";
 import { ClientEvents } from "@shared/events/client";
@@ -9,18 +8,12 @@ import { onKeyDown } from "../utility/event-helpers";
 import { Elements } from "./elements";
 import { Scenes } from "./scenes";
 
-class WebView extends alt.WebView {
-  constructor(url: string, isOverlay = false) {
-    super(url, isOverlay);
-  }
-
-  override emit(eventName: string, ...args: any[]) {
-    super.emit(eventName, ...args.map((arg) => serialize(arg)));
-  }
-}
+alt.WebView.prototype.emit = function (eventName: string, ...args: unknown[]) {
+  this.emit(eventName, ...args.map((arg) => serialize(arg)));
+};
 
 let url!: string;
-let webview!: WebView;
+let webview!: alt.WebView;
 
 /**
  * There can only be one active scene at a time.
@@ -52,9 +45,9 @@ export async function waitForUserInterface() {
  * Kind of shitty typing here, but it is what it is.
  * Don't call getWebview() until the webview is ready or use getWebview((webview) => {...}).
  */
-export function getWebview(): WebView;
-export function getWebview(cb: (webview: WebView) => void): void;
-export function getWebview(cb?: (webview: WebView) => void): WebView | void {
+export function getWebview(): alt.WebView;
+export function getWebview(cb: (webview: alt.WebView) => void): void;
+export function getWebview(cb?: (webview: alt.WebView) => void): alt.WebView | void {
   if (cb) {
     ready.then(() => {
       cb(webview);
@@ -105,10 +98,10 @@ export function showCursor(state: boolean) {
   if (state) {
     cursorCount++;
     try {
-      webview.focus();
-      alt.showCursor(true);
-      alt.toggleGameControls(false);
-    } catch (err) {}
+      webview.focused = true;
+      alt.Cursor.visible = true;
+      alt.setGameControlsActive(false);
+    } catch (err) { }
   } else {
     const activeElementsSupportingCursor = [...activeElements].filter(
       (element) => Elements[element].hasCursor
@@ -123,16 +116,16 @@ export function showCursor(state: boolean) {
 export function clearCursor() {
   for (let i = 0; i < cursorCount; i++) {
     try {
-      alt.showCursor(false);
-    } catch (err) {}
+      alt.Cursor.visible = false;
+    } catch (err) { }
   }
 
-  alt.toggleGameControls(true);
-  webview.unfocus();
+  alt.setGameControlsActive(true);
+  webview.focused = false;
   cursorCount = 0;
 }
 
-onKeyDown(KeyCode.Z, () => {
+onKeyDown(Enums.KeyCode.Z, () => {
   if (cursorCount) {
     clearCursor();
   } else {
@@ -145,7 +138,7 @@ onKeyDown(KeyCode.Z, () => {
   }
 });
 
-alt.onServer(
+alt.Events.onServer(
   ClientEvents.FromServer.SETUP_WEBVIEW,
   (webviewUrl = `http://resource/client/webview/index.html`) => {
     url = webviewUrl;
@@ -160,10 +153,10 @@ alt.onServer(
       webview.destroy();
     }
 
-    webview = new WebView(`${url}#/`, false);
+    webview = alt.WebView.create({ url: `${url}#/`, isOverlay: false });
 
     webview.on(ClientEvents.FromWebview.VIEW_READY, () => {
-      webview.focus();
+      webview.focused = true;
       markWebViewAsReady();
     });
     webview.on(ClientEvents.FromWebview.PLAY_SOUND, (audioName: string, ref: string) => {
@@ -171,6 +164,6 @@ alt.onServer(
     });
   }
 );
-alt.on("disconnect", () => {
+alt.Events.onDisconnect(() => {
   webview && webview.valid && webview.destroy();
 });

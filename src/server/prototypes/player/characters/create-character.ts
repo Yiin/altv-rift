@@ -1,10 +1,10 @@
-import { Player } from "alt-server";
+import { Player } from "@altv/server";
 import { PrismaClient } from "@prisma/client";
 import { container } from "@shared/dependency-injection";
 
 const prisma = container.get(PrismaClient);
 
-declare module "alt-server" {
+declare module "@altv/server" {
   export interface Player {
     createCharacter(
       this: Player,

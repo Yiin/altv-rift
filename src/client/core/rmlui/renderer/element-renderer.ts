@@ -1,16 +1,17 @@
-import alt from "alt-client";
+import alt from "@altv/client";
 import { join } from "@shared/utility/path";
 import { createRenderer } from "./rml-renderer";
 import { notRenderedElements } from "./frame-state";
 import { registeredElements } from "./element-registry";
-import { frameDataMap } from "./element-updater";
 import { setCurrentNode } from "./internals/current-node";
 
 // Some defaults
 alt.RmlElement.prototype.shown = false;
 
 // Main document
-export const document = new alt.RmlDocument(join(__relativedirname, "../screen.rml"));
+export const document = alt.RmlDocument.create({
+  url: join(__relativedirname, "../screen.rml"),
+});
 
 // Container we render to
 export const container = document.getElementByID("container")!;
@@ -46,7 +47,7 @@ export function renderElement(node: alt.RmlElement) {
 
   const entity = node.entity;
   const pos = registeredElement.anchorPos?.(entity) ?? entity.pos;
-  const distance = alt.getCamPos().distanceTo(pos);
+  const distance = alt.Cam.pos.distanceTo(pos);
   const scale = calculateElementScale(distance);
 
   node.hooks.forEach((hook) => hook({ scale, distance, pos }));

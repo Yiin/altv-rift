@@ -1,6 +1,6 @@
-import type { Player } from "alt-server";
 import { container } from "@shared/dependency-injection";
 import { MountService } from "../services/mount.service";
+import type { Player } from "@altv/server";
 import type { MountCallback } from "../types";
 
 /**

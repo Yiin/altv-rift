@@ -1,11 +1,11 @@
-import alt from "alt-server";
+import alt from "@altv/server";
 import { minutesToMilliseconds } from "date-fns";
 import { ClientEvents } from "@shared/events/client";
 import { Config } from "@/utility/config";
 import { clearMessageHistory, show } from "@/modules/chat";
 import { isInGame } from "@/utility/assertions";
 
-declare module "alt-server" {
+declare module "@altv/server" {
   export interface Player {
     setup: (this: Player) => void;
   }
@@ -29,8 +29,8 @@ alt.Player.prototype.setup = function () {
 
   // Setup Webview
   if (Config.getVueDebugMode()) {
-    this.emitRaw(ClientEvents.FromServer.SETUP_WEBVIEW, Config.getViteServer());
+    this.emit(ClientEvents.FromServer.SETUP_WEBVIEW, Config.getViteServer());
   } else {
-    this.emitRaw(ClientEvents.FromServer.SETUP_WEBVIEW);
+    this.emit(ClientEvents.FromServer.SETUP_WEBVIEW);
   }
 };

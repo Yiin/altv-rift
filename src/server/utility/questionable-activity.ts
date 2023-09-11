@@ -1,4 +1,4 @@
-import { Player } from "alt-server";
+import { Player } from "@altv/server";
 
 export function checkForQuestionableActivity(
   player: Player,

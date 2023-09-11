@@ -1,5 +1,5 @@
-import alt from "alt-client";
-import game from "natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 
 const textureData: Record<any, any> = {};
 
@@ -79,31 +79,13 @@ export function drawTexture(
 
   const width = texture.x * scale;
   const height = texture.y * scale;
-  const [visible, x, y] = game.getScreenCoordFromWorldCoord(
-    position.x,
-    position.y,
-    position.z
-  );
+  const [visible, x, y] = game.getScreenCoordFromWorldCoord(position.x, position.y, position.z);
 
   if (!visible) {
     return;
   }
 
   game.setDrawOrigin(position.x, position.y, position.z, false);
-  game.drawSprite(
-    dictionary,
-    name,
-    0,
-    0,
-    width,
-    height,
-    0,
-    255,
-    255,
-    255,
-    255,
-    false,
-    undefined
-  );
+  game.drawSprite(dictionary, name, 0, 0, width, height, 0, 255, 255, 255, 255, false, undefined);
   game.clearDrawOrigin();
 }

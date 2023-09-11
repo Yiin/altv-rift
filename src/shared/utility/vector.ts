@@ -1,4 +1,4 @@
-import alt from "alt-shared";
+import alt from "@altv/shared";
 
 export function distance(vector1: alt.IVector3, vector2: alt.IVector3) {
   if (vector1 === undefined || vector2 === undefined) {

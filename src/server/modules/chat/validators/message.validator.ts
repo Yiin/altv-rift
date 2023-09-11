@@ -1,4 +1,4 @@
-import { logError } from "alt-server";
+import { logError } from "@altv/server";
 import { MessageType } from "@shared/modules/chat";
 
 export function validateMessage(message: string, type: MessageType) {

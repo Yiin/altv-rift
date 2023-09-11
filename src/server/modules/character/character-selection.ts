@@ -1,13 +1,13 @@
-import alt, { Player } from "alt-server";
+import alt from "@altv/server";
 import { ClientEvents } from "@shared/events/client";
 import { ServerCall } from "@shared/calls/server";
+import { ServerEvents } from "@shared/events/server";
 import { isRequired, isUnique, validate } from "@/validator";
-import { ServerEvent } from "@/constants/server-events";
 import { rpc } from "@/rpc";
 import { LoggedInPlayer, isLoggedIn, needsToBeLoggedIn } from "@/utility/assertions";
 import { getDefaultCharacterData } from "./character-data";
 
-alt.on(ServerEvent.USER_LOADED, async (player: Player) => {
+alt.Events.on(ServerEvents.FromServer.USER_LOADED, async (player) => {
   if (!isLoggedIn(player)) {
     return;
   }
@@ -16,12 +16,12 @@ alt.on(ServerEvent.USER_LOADED, async (player: Player) => {
 
   if (charactersCount === 0) {
     alt.log("triggering client (start character creation scene)");
-    player.emitRaw(ClientEvents.FromServer.START_CHARACTER_CREATION_SCENE);
+    player.emit(ClientEvents.FromServer.START_CHARACTER_CREATION_SCENE);
     // Forward player to character creation scene because they have no characters
   } else {
     startGame(player, player.user.characters[0].id!);
     // alt.log("triggering client (start character selection scene)");
-    // void player.emitRaw(Events.Client.START_CHARACTER_SELECTION_SCENE);
+    // void player.emit(Events.Client.START_CHARACTER_SELECTION_SCENE);
     // Start character selection scene
   }
 });
@@ -73,11 +73,10 @@ async function startGame(player: LoggedInPlayer, characterId: string) {
 
   player.updateCharacterAppearance(character.appearance);
 
-  player.spawn(character.lastPosition.x, character.lastPosition.y, character.lastPosition.z);
+  player.spawn(character.lastPosition);
   player.rot = new alt.Vector3(character.rot);
   player.health = Math.max(character.health, 200);
   player.dimension = 0;
 
   player.emit(ClientEvents.FromServer.START_GAME);
-  player.hasFullySpawned = true;
 }

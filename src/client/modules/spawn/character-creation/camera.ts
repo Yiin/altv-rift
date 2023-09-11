@@ -1,5 +1,5 @@
-import alt from "alt-client";
-import game from "natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 import { Bones } from "@shared/enums/bones";
 import { ClientEvents } from "@shared/events/client";
 import { loadSceneAtCoords } from "@/core/utility/scene";
@@ -14,7 +14,7 @@ let cameraVerticalOffset = 0;
 let zoom = 1;
 let camera: number | undefined;
 let pedPosition: alt.Vector3;
-let cameraControlInterval: number | undefined;
+let cameraControlInterval: alt.Timers.EveryTick | undefined;
 
 export const CharacterCreationCamera = {
   async create(scriptID: number) {
@@ -78,15 +78,15 @@ export const CharacterCreationCamera = {
 
     getWebview().on(ClientEvents.FromWebview.CAMERA_MOVE_START, () => {
       if (cameraControlInterval) {
-        alt.clearEveryTick(cameraControlInterval);
+        cameraControlInterval.destroy();
         cameraControlInterval = undefined;
       }
-      cameraControlInterval = alt.everyTick(this.updateCameraMove);
+      cameraControlInterval = alt.Timers.everyTick(this.updateCameraMove);
     });
 
     getWebview().on(ClientEvents.FromWebview.CAMERA_MOVE_END, () => {
       if (cameraControlInterval) {
-        alt.clearEveryTick(cameraControlInterval);
+        cameraControlInterval.destroy();
         cameraControlInterval = undefined;
       }
     });
@@ -159,7 +159,7 @@ export const CharacterCreationCamera = {
 
   destroy() {
     if (cameraControlInterval) {
-      alt.clearEveryTick(cameraControlInterval);
+      cameraControlInterval.destroy();
       cameraControlInterval = undefined;
     }
 

@@ -1,4 +1,4 @@
-import { Player } from "alt-server";
+import { Player } from "@altv/server";
 import { MessageType } from "@shared/modules/chat";
 import { container } from "@shared/dependency-injection";
 import { MountService } from "../services/mount.service";
@@ -36,5 +36,5 @@ export function broadcast(message: string, type: MessageType = MessageType.Defau
  * Sets the player's name in the chat.
  */
 export function setPlayerName(player: Player, name: string) {
-  player.setSyncedMeta(CHAT_PLAYER_NAME_METADATA, name);
+  player.syncedMeta[CHAT_PLAYER_NAME_METADATA] = name;
 }

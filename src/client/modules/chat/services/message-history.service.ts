@@ -1,12 +1,11 @@
-import { LocalStorage } from "alt-client";
+import { LocalStorage } from "@altv/client";
 import { bind } from "@shared/decorators";
 import type { Message } from "../interfaces";
 
 @bind()
 export class MessageHistoryService {
   private readonly messages =
-    (LocalStorage.get("chatHistory") as Array<Message>) ??
-    ([] as Array<Message>);
+    (LocalStorage.get("chatHistory") as Array<Message>) ?? ([] as Array<Message>);
 
   public add(message: Message) {
     this.messages.push(message);

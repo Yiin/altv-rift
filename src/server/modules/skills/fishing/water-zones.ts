@@ -1,17 +1,25 @@
-import alt from "alt-server";
+import alt from "@altv/server";
 import { PlayerFlags } from "@shared/store/game-state.store";
 import { isInGame } from "@/utility/assertions";
 import WATER_ZONES from "./water-zones.json";
 
-declare module "alt-server" {
+declare module "@altv/server" {
   interface ICustomColshapeMeta {
     isWaterZone?: boolean;
   }
 }
 
 const waterZones = WATER_ZONES.map((zone) => {
-  const colshape = new alt.ColshapeCircle(zone.x, zone.y, zone.radius);
-  colshape.setMeta("isWaterZone", true);
+  const colshape = alt.ColShapeCircle.create({
+    pos: { x: zone.x, y: zone.y },
+    radius: zone.radius,
+  });
+
+  if (!colshape) {
+    throw new Error(`Failed to create colshape for water zone.`);
+  }
+
+  colshape.meta.isWaterZone = true;
   return colshape;
 });
 
@@ -19,14 +27,14 @@ export function getWaterZones() {
   return waterZones;
 }
 
-alt.on("entityEnterColshape", (colshape, entity) => {
-  if (entity instanceof alt.Player && isInGame(entity) && colshape.getMeta("isWaterZone")) {
+alt.Events.onEntityColShapeEnter(({ colShape, entity }) => {
+  if (entity instanceof alt.Player && isInGame(entity) && colShape.meta.isWaterZone) {
     entity.gameState.flags.add(PlayerFlags.InFishingArea);
   }
 });
 
-alt.on("entityLeaveColshape", (colshape, entity) => {
-  if (entity instanceof alt.Player && isInGame(entity) && colshape.getMeta("isWaterZone")) {
+alt.Events.onEntityColShapeLeave(({ colShape, entity }) => {
+  if (entity instanceof alt.Player && isInGame(entity) && colShape.meta.isWaterZone) {
     if (waterZones.some((zone) => zone.isEntityIn(entity))) {
       return;
     }

@@ -1,4 +1,4 @@
-import alt from "alt-client";
+import alt from "@altv/client";
 
 /**
  * Sleep the code for a certain duration.
@@ -6,8 +6,8 @@ import alt from "alt-client";
  */
 export function sleep(duration: number): Promise<void> {
   return new Promise((resolve) => {
-    const timeout = alt.setTimeout(() => {
-      alt.clearTimeout(timeout);
+    const timeout = alt.Timers.setTimeout(() => {
+      timeout.destroy();
       return resolve();
     }, duration);
   });

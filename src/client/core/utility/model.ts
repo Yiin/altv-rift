@@ -1,5 +1,5 @@
-import alt from "alt-client";
-import game from "natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 
 export async function loadModel(hash: number): Promise<boolean> {
   return await new Promise((resolve: Function) => {
@@ -11,10 +11,10 @@ export async function loadModel(hash: number): Promise<boolean> {
       return;
     }
 
-    const interval = alt.setInterval(() => {
+    const interval = alt.Timers.setInterval(() => {
       if (count >= 100) {
         resolve(false);
-        alt.clearInterval(interval);
+        interval.destroy();
         return;
       }
 
@@ -23,7 +23,7 @@ export async function loadModel(hash: number): Promise<boolean> {
         return;
       }
 
-      alt.clearInterval(interval);
+      interval.destroy();
       resolve(true);
     }, 100);
   });

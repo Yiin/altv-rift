@@ -1,8 +1,8 @@
-import alt from "alt-client";
+import alt from "@altv/client";
 import { ComputedRef } from "vue";
 import { AnchorEntityMap, AnchorType } from "./anchors";
 
-declare module "alt-client" {
+declare module "@altv/client" {
   interface RmlElement {
     entity: AnchorEntity;
     shown: boolean;

@@ -1,4 +1,4 @@
-import game from "natives";
+import game from "@altv/natives";
 import { ControlType, Control } from "@/core/constants/controls";
 import { isChoppingTree } from "./is-chopping-tree";
 

@@ -1,4 +1,4 @@
-import { Player } from "alt-server";
+import alt from "@altv/server";
 import { inject } from "inversify";
 import { MessageType } from "@shared/modules/chat";
 import { bind } from "@shared/decorators";
@@ -24,25 +24,16 @@ export class Chat {
     @inject(EventService) private readonly eventService: EventService,
     @inject(LoggerService) private readonly loggerService: LoggerService,
     @inject(OptionsService) private readonly optionsService: OptionsService
-  ) {}
+  ) { }
 
   public start() {
-    this.eventService.onClient(
-      "vchat:sendMessage",
-      this.onChatMessage.bind(this)
-    );
-    this.eventService.onClient(
-      "vchat:requestSettings",
-      this.syncSettings.bind(this)
-    );
-    this.eventService.onClient("vchat:mounted", this.onChatMounted.bind(this));
-    this.eventService.on(
-      "playerDisconnect",
-      this.onPlayerDisconnect.bind(this)
-    );
+    this.eventService.onPlayer("vchat:sendMessage", this.onChatMessage.bind(this));
+    this.eventService.onPlayer("vchat:requestSettings", this.syncSettings.bind(this));
+    this.eventService.onPlayer("vchat:mounted", this.onChatMounted.bind(this));
+    alt.Events.onPlayerDisconnect(this.onPlayerDisconnect.bind(this));
   }
 
-  private onChatMessage(player: Player, message: string) {
+  private onChatMessage(player: alt.Player, message: string) {
     if (typeof message !== "string") return;
 
     message = message.trim();
@@ -65,11 +56,7 @@ export class Chat {
           .replace("{0}", cmdName);
         this.mountService.waitForMount(
           player,
-          this.windowService.send(
-            player,
-            unknownCommandMessage,
-            MessageType.Error
-          )
+          this.windowService.send(player, unknownCommandMessage, MessageType.Error)
         );
       }
     } else {
@@ -82,22 +69,15 @@ export class Chat {
         return;
       }
 
-      let syncedPlayerName = player.getSyncedMeta(
-        CHAT_PLAYER_NAME_METADATA
-      ) as string;
+      let syncedPlayerName = player.syncedMeta[CHAT_PLAYER_NAME_METADATA] as string;
       syncedPlayerName =
-        syncedPlayerName && typeof syncedPlayerName === "string"
-          ? syncedPlayerName
-          : player.name;
+        syncedPlayerName && typeof syncedPlayerName === "string" ? syncedPlayerName : player.name;
 
       if (this.optionsService.getOption("logPlayerMessages"))
         this.loggerService.log(`[message] ${syncedPlayerName}: ${message}`);
 
       if (!this.optionsService.getOption("enableHTMLInjections"))
-        message = message
-          .replace(/</g, "&lt;")
-          .replace(/'/g, "&#39")
-          .replace(/"/g, "&#34");
+        message = message.replace(/</g, "&lt;").replace(/'/g, "&#39").replace(/"/g, "&#34");
 
       message = this.optionsService
         .getOption("playerMessageFormat")
@@ -105,16 +85,13 @@ export class Chat {
         .replace("{1}", message);
       message = this.processMessage(message);
 
-      Player.all.forEach((player) =>
-        this.mountService.waitForMount(
-          player,
-          this.windowService.send(player, message)
-        )
+      alt.Player.all.forEach((player) =>
+        this.mountService.waitForMount(player, this.windowService.send(player, message))
       );
     }
   }
 
-  private syncSettings(player: Player) {
+  private syncSettings(player: alt.Player) {
     this.eventService.emitClient(
       player,
       "vchat:syncSettings",
@@ -126,13 +103,11 @@ export class Chat {
     );
   }
 
-  private onChatMounted(player: Player, mounted: boolean) {
-    mounted
-      ? this.mountService.markAsMounted(player)
-      : this.mountService.markAsUnmounted(player);
+  private onChatMounted(player: alt.Player, mounted: boolean) {
+    mounted ? this.mountService.markAsMounted(player) : this.mountService.markAsUnmounted(player);
   }
 
-  private onPlayerDisconnect(player: Player) {
+  private onPlayerDisconnect({ player }: { player: alt.Player }) {
     this.mountService.markAsUnmounted(player);
   }
 
@@ -148,14 +123,8 @@ export class Chat {
 
     this.optionsService.getEmojis().forEach((emoji) => {
       const escapedName = emoji.name.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
-      const escapedTextEquivalent = emoji.textEquivalent.replace(
-        /[-\/\\^$*+?.()|[\]{}]/g,
-        "\\$&"
-      );
-      const regex = new RegExp(
-        `(:${escapedName}:|${escapedTextEquivalent})`,
-        "g"
-      );
+      const escapedTextEquivalent = emoji.textEquivalent.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
+      const regex = new RegExp(`(:${escapedName}:|${escapedTextEquivalent})`, "g");
       const src =
         emoji.url ??
         this.optionsService

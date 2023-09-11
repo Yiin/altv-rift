@@ -1,16 +1,16 @@
-import alt from "alt-client";
+import alt from "@altv/client";
 import { computed, ComputedRef } from "vue";
 import { NpcInteraction } from "@shared/modules/npc/interactions";
 import { IconName } from "@/core/rmlui/components/icon/icon";
 import { getNpcInteractions } from "./register-npc-interactions";
 
-declare module "alt-client" {
+declare module "@altv/client" {
   export interface Ped {
     interactions?: ComputedRef<NpcInteraction<IconName>[]>;
   }
 }
 
-alt.on("gameEntityDestroy", (entity) => {
+alt.Events.onGameEntityDestroy(({ entity }) => {
   if (!(entity instanceof alt.Ped)) {
     return;
   }
@@ -19,12 +19,12 @@ alt.on("gameEntityDestroy", (entity) => {
   delete entity.interactions;
 });
 
-alt.on("gameEntityCreate", (entity) => {
+alt.Events.onGameEntityCreate(({ entity }) => {
   if (!(entity instanceof alt.Ped)) {
     return;
   }
 
-  const key = entity.getStreamSyncedMeta("key");
+  const key = entity.streamSyncedMeta.key;
 
   if (!key) {
     return;

@@ -1,4 +1,4 @@
-import alt from "alt-client";
+import alt from "@altv/client";
 import { AnchorEntityMap } from "./anchors";
 import { EveryFrameHook, ParsedElement, ParsedNode } from "./types";
 import { getCurrentNode } from "./internals/current-node";
@@ -19,12 +19,12 @@ export function createRenderer(document: alt.RmlDocument) {
 
 function createTextNode(document: alt.RmlDocument, text: string) {
   const node = document.createTextNode(text);
-  node.setMeta("text", text);
+  node.meta.text = text;
   return node;
 }
 
 function renderParsedNode(
-  rmlNode: alt.RmlElement | null,
+  rmlNode: alt.RmlElement | undefined,
   parsedElement: ParsedElement,
   parent: alt.RmlElement,
   document: alt.RmlDocument
@@ -57,7 +57,7 @@ function renderParsedNode(
       rmlNode = ref;
     } else {
       // Update text node
-      if (rmlNode.getMeta("text") !== parsedElement.text) {
+      if (rmlNode.meta.text !== parsedElement.text) {
         const ref = createTextNode(document, parsedElement.text);
         rmlNode.parent?.replaceChild(ref, rmlNode);
         rmlNode.destroy();
@@ -136,8 +136,8 @@ function parseElement(
     typeof props.className === "string"
       ? [props.className]
       : Array.isArray(props.className)
-      ? props.className.filter(Boolean)
-      : [];
+        ? props.className.filter(Boolean)
+        : [];
 
   delete props.className;
 
@@ -188,7 +188,7 @@ export function createSelector(type: string) {
 }
 
 function applyClassesAndAttrs(node: alt.RmlElement, parsedNode: ParsedNode) {
-  const nodeClasses = node.getClassList();
+  const nodeClasses = node.classList;
 
   nodeClasses.forEach((className) => {
     if (!parsedNode.classNames.includes(className)) {
@@ -202,7 +202,7 @@ function applyClassesAndAttrs(node: alt.RmlElement, parsedNode: ParsedNode) {
     }
   });
 
-  for (const attr in node.getAttributes()) {
+  for (const attr in node.attributes) {
     if (!(attr in parsedNode.props)) {
       node.removeAttribute(attr);
     }

@@ -1,5 +1,5 @@
-import alt from "alt-client";
-import game from "natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 
 export const ClientParticles = {
   /**
@@ -18,7 +18,7 @@ export const ClientParticles = {
       return;
     }
 
-    const interval = alt.setInterval(() => {
+    const interval = alt.Timers.setInterval(() => {
       game.useParticleFxAsset(dict);
       game.requestPtfxAsset();
 
@@ -46,8 +46,8 @@ export const ClientParticles = {
     }
 
     return new Promise((resolve: Function) => {
-      alt.setTimeout(() => {
-        alt.clearInterval(interval);
+      alt.Timers.setTimeout(() => {
+        interval.destroy();
 
         if (clearInstantly) {
           game.removeParticleFxInRange(pos.x, pos.y, pos.z, 5);

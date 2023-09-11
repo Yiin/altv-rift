@@ -1,4 +1,4 @@
-import alt from "alt-server";
+import alt from "@altv/server";
 import { InGamePlayer } from "@/utility/assertions";
 import { findSourceInventory } from "../api/hooks";
 

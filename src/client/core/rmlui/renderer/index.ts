@@ -1,4 +1,4 @@
-import alt from "alt-client";
+import alt from "@altv/client";
 import { renderElement, markElementAsHidden } from "./element-renderer";
 import { prepareFrameForEntity } from "./element-updater";
 import { visibleElementsHeap, notRenderedElements } from "./frame-state";
@@ -7,7 +7,7 @@ import { updateMenu } from "./hooks/use-menu";
 import { setCurrentNode } from "./internals/current-node";
 import { streamedInEntities } from "./streamed-in-entities";
 
-alt.everyTick(() => {
+alt.Timers.everyTick(() => {
   // Cleanup previous frame
   visibleElementsHeap.clear();
   notRenderedElements.clear();

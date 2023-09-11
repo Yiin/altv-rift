@@ -1,9 +1,9 @@
-import { KeyCode } from "altv-enums";
+import { Enums } from "@altv/shared";
 import type { ClientOptions } from "../interfaces";
 
 export const DefaultClientOptions: ClientOptions = {
-  focusKey: KeyCode.Y,
+  focusKey: Enums.KeyCode.Y,
   hideOnConnect: false,
   maxMessageHistory: 100,
-  unfocusKey: KeyCode.F11,
+  unfocusKey: Enums.KeyCode.F11,
 };

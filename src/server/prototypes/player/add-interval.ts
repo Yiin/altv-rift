@@ -1,23 +1,23 @@
-import alt, { Player } from "alt-server";
+import alt from "@altv/server";
 
-declare module "alt-server" {
+declare module "@altv/server" {
   export interface Player {
     addInterval: (
       this: Player,
       callback: (...args: any[]) => void,
       interval: number
-    ) => number;
+    ) => alt.Timers.Interval;
   }
 }
 
-Player.prototype.addInterval = function (callback, interval) {
-  const id = alt.setInterval(() => {
+alt.Player.prototype.addInterval = function (callback, intervalMs) {
+  const interval = alt.Timers.setInterval(() => {
     if (!this.valid) {
-      alt.clearInterval(id);
+      interval.destroy();
       return;
     }
     callback();
-  }, interval);
+  }, intervalMs);
 
-  return id;
+  return interval;
 };

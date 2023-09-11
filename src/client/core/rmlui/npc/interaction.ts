@@ -1,5 +1,5 @@
-import alt from "alt-client";
-import game from "natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 import { Bones } from "@shared/enums/bones";
 import { stopConversation } from "@/modules/questing/dialogue";
 import { registerElement } from "../renderer/element-registry";
@@ -32,12 +32,8 @@ registerElement({
 
     const transform = everyFrame(() => {
       const lowerBodyPos = game.getPedBoneCoords(ped.scriptID, Bones.SKEL_Pelvis, 0, 0, 0.2);
-      const { x: screenX, y: screenY } = alt.worldToScreen(
-        lowerBodyPos.x,
-        lowerBodyPos.y,
-        lowerBodyPos.z
-      );
-      return `translate(-50%, -50%) translate(${screenX}px, ${screenY}px)`;
+      const { x, y } = alt.worldToScreen(lowerBodyPos);
+      return `translate(-50%, -50%) translate(${x}px, ${y}px)`;
     });
 
     const scale = everyFrame(({ scale }) => `scale(${scale})`);

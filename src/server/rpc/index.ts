@@ -1,4 +1,4 @@
-import alt from "alt-server";
+import alt from "@altv/server";
 import {
   CALL_CLIENT_FROM_SERVER,
   CALL_CLIENT_FROM_SERVER_RESPONSE,
@@ -30,12 +30,12 @@ const callClient = (player: alt.Player, name: string, ...args: any[]) => {
   return new Promise((resolve, reject) => {
     const payload = createPayload(name, args);
 
-    player.emitRaw(CALL_CLIENT_FROM_SERVER, payload);
+    player.emit(CALL_CLIENT_FROM_SERVER, payload);
     clientHandlers.set(payload.id, { resolve, reject });
   });
 };
 
-alt.onClient(CALL_CLIENT_FROM_SERVER_RESPONSE, (_, response) => {
+alt.Events.onPlayer(CALL_CLIENT_FROM_SERVER_RESPONSE, (_, response) => {
   const handler = clientHandlers.get(response.id);
   if (!handler) {
     return;
@@ -64,7 +64,7 @@ const unregisterClient = (name: string) => {
   clientProcedures.delete(name);
 };
 
-alt.onClient(CALL_SERVER_FROM_CLIENT, async (player, payload) => {
+alt.Events.onPlayer(CALL_SERVER_FROM_CLIENT, async (player, payload) => {
   const { id, name, args } = payload;
   const callback = clientProcedures.get(name);
 
@@ -74,13 +74,13 @@ alt.onClient(CALL_SERVER_FROM_CLIENT, async (player, payload) => {
     }
 
     const result = await callback(player, ...args);
-    player.emitRaw(CALL_SERVER_FROM_CLIENT_RESPONSE, {
+    player.emit(CALL_SERVER_FROM_CLIENT_RESPONSE, {
       id,
       result,
     });
   } catch (error) {
     console.log(error);
-    player.emitRaw(CALL_SERVER_FROM_CLIENT_RESPONSE, {
+    player.emit(CALL_SERVER_FROM_CLIENT_RESPONSE, {
       id,
       error,
     });
@@ -92,12 +92,12 @@ const callWebview = (player: alt.Player, name: string, ...args: any[]) => {
   return new Promise((resolve, reject) => {
     const payload = createPayload(name, args);
 
-    player.emitRaw(CALL_WEBVIEW_FROM_SERVER, payload);
+    player.emit(CALL_WEBVIEW_FROM_SERVER, payload);
     webviewHandlers.set(payload.id, { resolve, reject });
   });
 };
 
-alt.onClient(CALL_WEBVIEW_FROM_SERVER_RESPONSE, (_, response) => {
+alt.Events.onPlayer(CALL_WEBVIEW_FROM_SERVER_RESPONSE, (_, response) => {
   const handler = webviewHandlers.get(response.id);
   if (!handler) {
     return;
@@ -126,7 +126,7 @@ const unregisterWebview = (name: string) => {
   webviewProcedures.delete(name);
 };
 
-alt.onClient(CALL_SERVER_FROM_WEBVIEW, async (player, payload) => {
+alt.Events.onPlayer(CALL_SERVER_FROM_WEBVIEW, async (player, payload) => {
   const { id, name, args } = payload;
   const callback = webviewProcedures.get(name);
 
@@ -136,12 +136,12 @@ alt.onClient(CALL_SERVER_FROM_WEBVIEW, async (player, payload) => {
     }
 
     const result = await callback(player, ...args);
-    player.emitRaw(CALL_SERVER_FROM_WEBVIEW_RESPONSE, {
+    player.emit(CALL_SERVER_FROM_WEBVIEW_RESPONSE, {
       id,
       result,
     });
   } catch (error) {
-    player.emitRaw(CALL_SERVER_FROM_WEBVIEW_RESPONSE, {
+    player.emit(CALL_SERVER_FROM_WEBVIEW_RESPONSE, {
       id,
       error,
     });

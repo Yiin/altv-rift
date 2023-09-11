@@ -1,5 +1,5 @@
-import alt from "alt-client";
-import game from "natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 import { getDirectionFromRotation, rotationToDirection } from "./math";
 
 const Raycast = {
@@ -63,7 +63,7 @@ const Raycast = {
     useShapeTest: boolean = false,
     radius: number = 5
   ): alt.IVector3 | null {
-    const start = alt.getCamPos();
+    const start = alt.Cam.pos;
     const forwardVector = rotationToDirection(game.getFinalRenderedCamRot(2));
     const end = {
       x: start.x + forwardVector.x * 2000,

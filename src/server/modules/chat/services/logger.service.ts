@@ -1,4 +1,4 @@
-import { log, logWarning, logError, Resource } from "alt-server";
+import { log, logWarning, logError, Resource } from "@altv/server";
 import { bind } from "@shared/decorators";
 
 @bind()

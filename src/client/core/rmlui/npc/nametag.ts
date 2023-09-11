@@ -1,5 +1,5 @@
-import alt from "alt-client";
-import game from "natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 import { Bones } from "@shared/enums/bones";
 import { div } from "../renderer/rml-tags";
 import { AnchorType } from "../renderer/anchors";
@@ -11,7 +11,7 @@ registerElement({
   renderDistance: 25,
   anchorType: AnchorType.Ped,
   render({ entity: ped }) {
-    const nametag = (ped.getStreamSyncedMeta("name") as string) ?? `?`;
+    const nametag = ped.streamSyncedMeta.name ?? `?`;
 
     return div(
       {
@@ -26,7 +26,7 @@ registerElement({
               // adjust z position based on distance
               Math.min((distance / 4) * 0.5 + 0.2, 0.5)
             );
-            const { x, y } = alt.worldToScreen(headPos.x, headPos.y, headPos.z);
+            const { x, y } = alt.worldToScreen(headPos);
             return `translate(-50%, -50%) translate(${x}px, ${y}px)`;
           }),
         },

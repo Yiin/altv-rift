@@ -1,4 +1,4 @@
-import alt from "alt-server";
+import alt from "@altv/server";
 import { NpcFlags, PedType } from "@shared/modules/npc/constants";
 
 const npcs = new Map<string, alt.Ped>();
@@ -14,10 +14,18 @@ export function getNpc(key: string) {
   return npcs.get(key);
 }
 
-export function createNpc<
-  T extends { key?: string; name?: string; flags?: NpcFlags }
->(type: PedType, model: number, pos: alt.Vector3, heading: number, data: T) {
-  const npc = new alt.Ped(model, pos, new alt.Vector3(heading));
+export function createNpc<T extends { key?: string; name?: string; flags?: NpcFlags }>(
+  type: PedType,
+  model: number,
+  pos: alt.Vector3,
+  heading: number,
+  data: T
+) {
+  const npc = alt.Ped.create({ model, pos, heading });
+
+  if (!npc) {
+    throw new Error(`Failed to create NPC ${model}.`);
+  }
 
   alt.log(`Created NPC ${data.name} (${npc.id})`);
 
@@ -30,7 +38,7 @@ export function createNpc<
     if (typeof data[key] === undefined) {
       continue;
     }
-    npc.setStreamSyncedMeta(key as string, data[key]);
+    npc.streamSyncedMeta[key] = data[key];
   }
 
   if (data.key) {

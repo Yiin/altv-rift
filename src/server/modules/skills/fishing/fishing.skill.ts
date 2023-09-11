@@ -1,9 +1,8 @@
-import alt from "alt-server";
+import alt from "@altv/server";
 import { ServerCall } from "@shared/calls/server";
 import { PlayerFlags } from "@shared/store/game-state.store";
 import {
   BAIT_TO_FISH_MAP,
-  FishBait,
   FishBaitItem,
   isItemFishBait,
 } from "@shared/modules/items/registry/fish-bait.items";
@@ -134,7 +133,7 @@ function stopFishing(player: alt.Player) {
   player.applyEquipment();
 }
 
-alt.setInterval(() => {
+alt.Timers.setInterval(() => {
   alt.Player.all.forEach(fishingTick);
 }, 1000);
 

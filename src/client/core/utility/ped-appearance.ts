@@ -1,5 +1,5 @@
-import alt from "alt-client";
-import game from "natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 import { Appearance } from "@prisma/client";
 import { ClothingComponent } from "@shared/interfaces/clothing";
 
@@ -67,7 +67,7 @@ export const PedAppearance = {
     if (typeof appearance.hairDlc === "undefined" || appearance.hairDlc === 0) {
       game.setPedComponentVariation(ped, 2, appearance.hair, 0, 0);
     } else {
-      alt.setPedDlcClothes(ped, appearance.hairDlc, 2, appearance.hair, 0, 0);
+      alt.setDlcClothes(ped, appearance.hairDlc, 2, appearance.hair, 0, 0);
     }
 
     game.setPedHairTint(ped, appearance.hairColor1, appearance.hairColor2);
@@ -137,11 +137,11 @@ export const PedAppearance = {
               continue;
             }
 
-            alt.setPedDlcProp(ped, dlc, id, drawable, texture);
+            alt.setDlcProps(ped, dlc, id, drawable, texture);
             continue;
           }
 
-          alt.setPedDlcClothes(ped, dlc, id, drawable, texture, 0);
+          alt.setDlcClothes(ped, dlc, id, drawable, texture, 0);
           continue;
         }
 

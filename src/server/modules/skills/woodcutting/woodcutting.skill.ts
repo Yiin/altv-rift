@@ -1,4 +1,4 @@
-import alt, { Vector3, VirtualEntity, VirtualEntityGroup } from "alt-server";
+import alt from "@altv/server";
 import { minutesToMilliseconds } from "date-fns";
 import { ServerCall } from "@shared/calls/server";
 import * as trees from "@shared/modules/woodcutting/trees";
@@ -11,8 +11,9 @@ import { rpc } from "@/rpc";
 import { sendChatMessage } from "@/modules/chat";
 import { InGamePlayer, needsToBeInGame } from "@/utility/assertions";
 
-const virtualTreeGroup = new VirtualEntityGroup(30);
-const virtualTreeById: Map<number, VirtualEntity> = new Map();
+const virtualTreeGroup = alt.VirtualEntityGroup.create({ maxEntitiesInStream: 30 });
+
+const virtualTreeById: Map<number, alt.VirtualEntity> = new Map();
 const playerHittingTree: WeakMap<InGamePlayer, number> = new WeakMap();
 
 for (const [type, list] of Object.entries(trees)) {
@@ -34,10 +35,15 @@ for (const [type, list] of Object.entries(trees)) {
       z: Position.Z + 1.8,
     };
 
-    const tree = new alt.VirtualEntity(virtualTreeGroup, new Vector3(position), 20, {
-      entityType: "tree",
-      treeType: type,
-      cooldownUntil: 0,
+    const tree = alt.VirtualEntity.create({
+      group: virtualTreeGroup,
+      pos: new alt.Vector3(position),
+      streamingDistance: 30,
+      data: {
+        entityType: "tree",
+        treeType: type,
+        cooldownUntil: 0,
+      },
     });
     refillTree(tree);
 
@@ -83,14 +89,14 @@ rpc.registerClient(ServerCall.FromClient.TREE_HIT, (player, virtualTreeId) => {
     return 0;
   }
 
-  const treeType = virtualTree.getStreamSyncedMeta("treeType");
+  const treeType = virtualTree.streamSyncedMeta.treeType;
 
   if (!isPlayerNearTree(player, virtualTree)) {
-    alt.logDebug("Not near tree", treeType, virtualTree.id);
+    alt.log("Not near tree", treeType, virtualTree.id);
     return 0;
   }
 
-  const cooldownUntil = virtualTree.getStreamSyncedMeta("cooldownUntil");
+  const cooldownUntil = virtualTree.streamSyncedMeta.cooldownUntil;
 
   if (cooldownUntil && cooldownUntil > Date.now()) {
     return 0;
@@ -99,11 +105,11 @@ rpc.registerClient(ServerCall.FromClient.TREE_HIT, (player, virtualTreeId) => {
   if (!canPlayerHitTheTree(player, virtualTree)) {
     return 0;
   }
-  const capacity = virtualTree.getMeta("capacity");
+  const capacity = virtualTree.meta.capacity;
 
   if (!capacity) {
     if (!cooldownUntil || cooldownUntil < Date.now()) {
-      virtualTree.setStreamSyncedMeta("cooldownUntil", Date.now() + minutesToMilliseconds(10));
+      virtualTree.streamSyncedMeta.cooldownUntil = Date.now() + minutesToMilliseconds(10);
     }
     return 0;
   }
@@ -113,10 +119,10 @@ rpc.registerClient(ServerCall.FromClient.TREE_HIT, (player, virtualTreeId) => {
   const logs =
     chance < 0.05 ? 5 + ~~(Math.random() * 4) : chance < 0.3 ? 1 + ~~(Math.random() * 3) : 0;
 
-  virtualTree.setMeta("capacity", Math.max(0, capacity - logs));
+  virtualTree.meta.capacity = Math.max(0, capacity - logs);
 
   if (capacity - logs <= 0) {
-    virtualTree.setStreamSyncedMeta("cooldownUntil", Date.now() + minutesToMilliseconds(10));
+    virtualTree.streamSyncedMeta.cooldownUntil = Date.now() + minutesToMilliseconds(10);
     refillTree(virtualTree);
   }
 
@@ -148,7 +154,7 @@ function isPlayerNearTree(player: InGamePlayer, virtualTree: alt.VirtualEntity) 
 }
 
 function canPlayerHitTheTree(player: InGamePlayer, virtualTree: alt.VirtualEntity) {
-  const treeType = virtualTree.getStreamSyncedMeta("treeType");
+  const treeType = virtualTree.streamSyncedMeta.treeType;
 
   if (!treeType) {
     console.log("No tree type", virtualTree.id);
@@ -163,5 +169,5 @@ function canPlayerHitTheTree(player: InGamePlayer, virtualTree: alt.VirtualEntit
 }
 
 function refillTree(virtualTree: alt.VirtualEntity) {
-  virtualTree.setMeta("capacity", ~~(Math.random() * 50) + 100);
+  virtualTree.meta.capacity = ~~(Math.random() * 50) + 100;
 }

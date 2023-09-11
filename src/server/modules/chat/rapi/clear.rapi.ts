@@ -1,4 +1,4 @@
-import { Player } from "alt-server";
+import { Player } from "@altv/server";
 import { container } from "@shared/dependency-injection";
 import { MountService } from "../services/mount.service";
 import { WindowService } from "../services/window.service";
@@ -9,10 +9,7 @@ import { WindowService } from "../services/window.service";
 export function clearMessageHistory(player: Player) {
   container
     .resolve(MountService)
-    .waitForMount(
-      player,
-      container.resolve(WindowService).clearMessageHistory(player)
-    );
+    .waitForMount(player, container.resolve(WindowService).clearMessageHistory(player));
 }
 
 /**
@@ -28,10 +25,7 @@ export function clearMessageHistoryAll() {
 export function clearMessages(player: Player) {
   container
     .resolve(MountService)
-    .waitForMount(
-      player,
-      container.resolve(WindowService).clearMessages(player)
-    );
+    .waitForMount(player, container.resolve(WindowService).clearMessages(player));
 }
 
 /**

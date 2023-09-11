@@ -1,4 +1,4 @@
-import game from "natives";
+import game from "@altv/natives";
 
 export function drawBar(
   value: number,
@@ -46,15 +46,5 @@ export function drawBarBackground(
     255,
     false
   );
-  game.drawRect(
-    0,
-    lineHeight + position * lineHeight,
-    width,
-    lineHeight / 3,
-    r,
-    g,
-    b,
-    a,
-    false
-  );
+  game.drawRect(0, lineHeight + position * lineHeight, width, lineHeight / 3, r, g, b, a, false);
 }

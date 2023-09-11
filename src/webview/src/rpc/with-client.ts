@@ -11,10 +11,7 @@ import { CallFromClient } from "@shared/calls/webview/from-client";
 import { createPayload } from "@shared/utility/create-payload";
 
 const clientProcedures = new Map<string, (args: any) => any>();
-const clientHandlers = new Map<
-  string,
-  { resolve: Function; reject: Function }
->();
+const clientHandlers = new Map<string, { resolve: Function; reject: Function }>();
 
 // call client from browser
 export const callClient = async <T extends keyof typeof ClientCall.FromWebview>(
@@ -24,12 +21,12 @@ export const callClient = async <T extends keyof typeof ClientCall.FromWebview>(
   return new Promise<ReturnType<CallFromWebview[T]>>((resolve, reject) => {
     const payload = createPayload(name, args);
 
-    alt.emit(CALL_CLIENT_FROM_WEBVIEW, payload);
+    alt.Events.emit(CALL_CLIENT_FROM_WEBVIEW, payload);
     clientHandlers.set(payload.id, { resolve, reject });
   });
 };
 
-alt.on(CALL_CLIENT_FROM_WEBVIEW_RESPONSE, (response) => {
+alt.Events.on(CALL_CLIENT_FROM_WEBVIEW_RESPONSE, (response) => {
   const handler = clientHandlers.get(response.id);
   if (!handler) {
     return;
@@ -54,31 +51,27 @@ export const registerClient = <T extends keyof typeof WebviewCall.FromClient>(
   clientProcedures.set(name, callback);
 };
 
-export const unregisterClient = <T extends keyof typeof WebviewCall.FromClient>(
-  name: T
-) => {
+export const unregisterClient = <T extends keyof typeof WebviewCall.FromClient>(name: T) => {
   clientProcedures.delete(name);
 };
 
-alt.on(CALL_WEBVIEW_FROM_CLIENT, async (payload) => {
+alt.Events.on(CALL_WEBVIEW_FROM_CLIENT, async (payload) => {
   const { id, name, args } = payload;
   const callback = clientProcedures.get(name);
 
   try {
     if (!callback) {
-      throw new Error(
-        `CALL_WEBVIEW_FROM_CLIENT: Procedure ${name} does not exist`
-      );
+      throw new Error(`CALL_WEBVIEW_FROM_CLIENT: Procedure ${name} does not exist`);
     }
 
     const result = await callback(args);
 
-    alt.emit(CALL_WEBVIEW_FROM_CLIENT_RESPONSE, {
+    alt.Events.emit(CALL_WEBVIEW_FROM_CLIENT_RESPONSE, {
       id,
       result,
     });
   } catch (error) {
-    alt.emit(CALL_WEBVIEW_FROM_CLIENT_RESPONSE, {
+    alt.Events.emit(CALL_WEBVIEW_FROM_CLIENT_RESPONSE, {
       id,
       error,
     });

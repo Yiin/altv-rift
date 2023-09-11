@@ -1,5 +1,5 @@
-import type { Player } from "alt-server";
 import { bind } from "@shared/decorators";
+import type { Player } from "@altv/server";
 import type { MountCallback } from "../types";
 
 @bind()

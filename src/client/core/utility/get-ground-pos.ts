@@ -1,5 +1,5 @@
-import alt from "alt-client";
-import game from "natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 import { LOS_FLAGS } from "@/core/constants/shapetest";
 import Raycast from "./raycast";
 
@@ -8,7 +8,7 @@ export async function getGroundPos(
   surface?: boolean,
   flags?: LOS_FLAGS
 ): Promise<alt.Vector3> {
-  alt.FocusData.overrideFocus(point);
+  alt.FocusData.focusOverridePos = point;
   const startPos = new alt.Vector3(point.x, point.y, 1500);
   let destPos = startPos;
   let groundPos: alt.Vector3 | null = null;
@@ -17,7 +17,7 @@ export async function getGroundPos(
     await alt.Utils.waitFor(() => {
       destPos = destPos.sub(0, 0, 200.0);
 
-      alt.FocusData.overrideFocus(point);
+      alt.FocusData.focusOverridePos = point;
 
       if (destPos.z < -500) throw new Error("failed to get ground pos");
 
@@ -32,12 +32,12 @@ export async function getGroundPos(
 
       return true;
     }, 3000);
-  } catch {}
+  } catch { }
 
   if (!groundPos) {
     alt.logWarning("failed to get ground pos for waypoint, trying getGroundZ game...");
 
-    alt.FocusData.overrideFocus(point);
+    alt.FocusData.focusOverridePos = point;
 
     let foundZ: number | null = null;
     try {
@@ -48,7 +48,7 @@ export async function getGroundPos(
         foundZ = z;
         return true;
       }, 3000);
-    } catch {}
+    } catch { }
 
     if (foundZ == null) {
       groundPos = startPos;
@@ -57,7 +57,7 @@ export async function getGroundPos(
     }
   }
 
-  alt.FocusData.clearFocus();
+  alt.FocusData.clearFocusOverride();
 
   if (!groundPos) {
     alt.logError("failed to get ground z");

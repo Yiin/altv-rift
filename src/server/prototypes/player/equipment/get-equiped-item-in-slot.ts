@@ -1,8 +1,8 @@
-import alt from "alt-server";
+import alt from "@altv/server";
 import { Equipment } from "@shared/modules/items";
 import { InGamePlayer } from "@/utility/assertions";
 
-declare module "alt-server" {
+declare module "@altv/server" {
   export interface Player {
     getEquipedItemInSlot<T extends keyof Equipment>(
       this: InGamePlayer,

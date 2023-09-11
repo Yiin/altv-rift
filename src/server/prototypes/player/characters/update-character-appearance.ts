@@ -1,19 +1,14 @@
-import alt, { Player } from "alt-server";
+import alt, { Player } from "@altv/server";
 import { type Appearance } from "@prisma/client";
 import { ClientEvents } from "@shared/events/client";
 
-declare module "alt-server" {
+declare module "@altv/server" {
   export interface Player {
-    updateCharacterAppearance(
-      appearance?: import("@prisma/client").Appearance
-    ): void;
+    updateCharacterAppearance(appearance?: import("@prisma/client").Appearance): void;
   }
 }
 
-Player.prototype.updateCharacterAppearance = function (
-  this: Player,
-  appearance: Appearance
-) {
+Player.prototype.updateCharacterAppearance = function (this: Player, appearance: Appearance) {
   const isFemale = appearance.sex;
 
   if (isFemale) {
@@ -43,17 +38,18 @@ Player.prototype.updateCharacterAppearance = function (
 
   // Set Face
   this.clearBloodDamage();
-  this.setHeadBlendData(
-    appearance.faceMother,
-    appearance.faceFather,
-    0,
-    appearance.skinMother,
-    appearance.skinFather,
-    0,
-    parseFloat(appearance.faceMix.toString()),
-    parseFloat(appearance.skinMix.toString()),
-    0
-  );
+
+  this.headBlendData = {
+    shapeFirstID: appearance.faceMother,
+    shapeSecondID: appearance.faceFather,
+    shapeThirdID: 0,
+    skinFirstID: appearance.skinMother,
+    skinSecondID: appearance.skinFather,
+    skinThirdID: 0,
+    shapeMix: parseFloat(appearance.faceMix.toString()),
+    skinMix: parseFloat(appearance.skinMix.toString()),
+    thirdMix: 0,
+  };
 
   // // Facial Features
   for (let i = 0; i < appearance.features.length; i++) {
@@ -83,10 +79,7 @@ Player.prototype.updateCharacterAppearance = function (
   }
 
   if (decorationsToSync.length >= 1) {
-    this.emit(
-      ClientEvents.FromServer.SET_PLAYER_DECORATIONS,
-      decorationsToSync
-    );
+    this.emit(ClientEvents.FromServer.SET_PLAYER_DECORATIONS, decorationsToSync);
   }
 
   // Hair
@@ -96,9 +89,9 @@ Player.prototype.updateCharacterAppearance = function (
     this.setDlcClothes(appearance.hairDlc, 2, appearance.hair, 0, 0);
   }
 
-  this.setHairColor(appearance.hairColor1);
-  this.setHairHighlightColor(appearance.hairColor2);
+  this.hairColor = appearance.hairColor1;
+  this.hairHighlightColor = appearance.hairColor2;
 
   // Eyes
-  this.setEyeColor(appearance.eyes);
+  this.eyeColor = appearance.eyes;
 };

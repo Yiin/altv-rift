@@ -1,4 +1,4 @@
-import alt from "alt-client";
+import alt from "@altv/client";
 import {
   CALL_SERVER_FROM_CLIENT,
   CALL_SERVER_FROM_CLIENT_RESPONSE,
@@ -26,13 +26,13 @@ export const callServer = <T extends keyof typeof ServerCall.FromClient>(
   return new Promise<ReturnType<CallFromClient[T]>>((resolve, reject) => {
     const payload = createPayload(name, serialize(args));
 
-    alt.emitServerRaw(CALL_SERVER_FROM_CLIENT, payload);
+    alt.Events.emitServer(CALL_SERVER_FROM_CLIENT, payload);
     serverHandlers.set(payload.id, { resolve, reject });
   });
 };
 
 // get response from server on client
-alt.onServer(CALL_SERVER_FROM_CLIENT_RESPONSE, (response) => {
+alt.Events.onServer(CALL_SERVER_FROM_CLIENT_RESPONSE, (response) => {
   const handler = serverHandlers.get(response.id);
   if (!handler) {
     return;
@@ -57,32 +57,28 @@ export const registerServer = <T extends keyof typeof ClientCall.FromServer>(
   serverProcedures.set(name, handler);
 };
 
-export const unregisterServer = <T extends keyof typeof ClientCall.FromServer>(
-  name: T
-) => {
+export const unregisterServer = <T extends keyof typeof ClientCall.FromServer>(name: T) => {
   serverProcedures.delete(name);
 };
 
 // receive call from server on client
-alt.onServer(CALL_CLIENT_FROM_SERVER, async (payload) => {
+alt.Events.onServer(CALL_CLIENT_FROM_SERVER, async (payload) => {
   const { id, name, args } = payload;
   const callback = serverProcedures.get(name);
 
   try {
     if (!callback) {
-      throw new Error(
-        `CALL_CLIENT_FROM_SERVER: Procedure ${name} does not exist`
-      );
+      throw new Error(`CALL_CLIENT_FROM_SERVER: Procedure ${name} does not exist`);
     }
 
     const result = await callback(...deserialize(args));
 
-    alt.emitServer(CALL_CLIENT_FROM_SERVER_RESPONSE, {
+    alt.Events.emitServer(CALL_CLIENT_FROM_SERVER_RESPONSE, {
       id,
       result: serialize(result),
     });
   } catch (error) {
-    alt.emitServer(CALL_CLIENT_FROM_SERVER_RESPONSE, {
+    alt.Events.emitServer(CALL_CLIENT_FROM_SERVER_RESPONSE, {
       id,
       error,
     });

@@ -1,5 +1,5 @@
-import alt from "alt-client";
-import game from "natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 import { ConversationOption } from "@shared/interfaces/conversation";
 import { Control, ControlType } from "@/core/constants/controls";
 import { clientState } from "@/core/store/client.store";
@@ -24,7 +24,7 @@ export function isInConversation() {
 }
 
 export function stopConversation(option?: ConversationOption) {
-  alt.nextTick(() => {
+  alt.Timers.nextTick(() => {
     currentPage = 0;
     clientState.conversation = null;
   });
@@ -41,7 +41,7 @@ export async function startConversation(
   currentPage = 0;
 
   clientState.conversation = {
-    with: ped.getStreamSyncedMeta("name") ?? "?",
+    with: ped.streamSyncedMeta.name ?? "?",
     pages,
     topic,
     finalOptions,
@@ -130,7 +130,7 @@ function confirmOption() {
   }
 }
 
-alt.everyTick(() => {
+alt.Timers.everyTick(() => {
   if (!isInConversation()) {
     return;
   }

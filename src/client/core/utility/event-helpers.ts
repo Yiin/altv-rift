@@ -1,24 +1,23 @@
-import alt from "alt-client";
-import { KeyCode } from "altv-enums";
+import alt, { Enums } from "@altv/client";
 import { ClientEvents } from "@shared/events/client";
 import { getWebview } from "../user-interface/webview";
 
-const intervals: number[] = [];
-const timeouts: number[] = [];
-const ticks: number[] = [];
+const intervals: alt.Timers.Interval[] = [];
+const timeouts: alt.Timers.Timeout[] = [];
+const ticks: alt.Timers.EveryTick[] = [];
 let inputFocused = false;
 const registeredKeyDownKeys = new Set();
 
 export function tick() {
   return new Promise((resolve) => {
-    alt.nextTick(resolve);
+    alt.Timers.nextTick(resolve);
   });
 }
 
 export function intervalWhile(condition: () => boolean, callback: () => void, intervalTime = 0) {
-  const interval = alt.setInterval(() => {
+  const interval = alt.Timers.setInterval(() => {
     if (!condition()) {
-      alt.clearInterval(interval);
+      interval?.destroy();
       intervals.splice(intervals.indexOf(interval), 1);
       return;
     }
@@ -34,9 +33,9 @@ export function everyTickWhile(
   onEnd?: () => void,
   options: { skipFirstCheck?: boolean } = {}
 ) {
-  const tick = alt.everyTick(() => {
+  const tick = alt.Timers.everyTick(() => {
     if (!options.skipFirstCheck && !condition()) {
-      alt.clearEveryTick(tick);
+      tick.destroy();
       ticks.splice(ticks.indexOf(tick), 1);
       onEnd?.();
       return;
@@ -50,7 +49,7 @@ export function everyTickWhile(
 
 export function waitNextTick() {
   return new Promise<void>((resolve) => {
-    alt.nextTick(() => {
+    alt.Timers.nextTick(() => {
       resolve();
     });
   });
@@ -58,19 +57,19 @@ export function waitNextTick() {
 
 export function waitUntil(condition: () => boolean, timeoutMS = 10000) {
   return new Promise<void>((resolve) => {
-    const timeout = alt.setTimeout(() => {
+    const timeout = alt.Timers.setTimeout(() => {
       timeouts.splice(timeouts.indexOf(timeout), 1);
       resolve();
     }, timeoutMS);
 
-    const tick = alt.everyTick(() => {
+    const tick = alt.Timers.everyTick(() => {
       if (!condition()) {
         return;
       }
       try {
-        alt.clearTimeout(timeout);
-        alt.clearEveryTick(tick);
-      } catch {}
+        timeout.destroy();
+        tick.destroy();
+      } catch { }
       ticks.splice(ticks.indexOf(tick), 1);
       resolve();
     });
@@ -80,17 +79,17 @@ export function waitUntil(condition: () => boolean, timeoutMS = 10000) {
 }
 
 export function everyTick(callback: () => void) {
-  const tick = alt.everyTick(callback);
+  const tick = alt.Timers.everyTick(callback);
   ticks.push(tick);
 }
 
-export function onKeyDown(key: KeyCode, callback: () => void) {
+export function onKeyDown(key: Enums.KeyCode, callback: () => void) {
   if (registeredKeyDownKeys?.has(key)) {
     throw new Error(`KeyDown ${key} is already registered.`);
   }
   registeredKeyDownKeys?.add(key);
 
-  alt.on("keydown", (keyPressed: number) => {
+  alt.Events.onKeyDown(({ key: keyPressed }) => {
     if (inputFocused) {
       return;
     }
@@ -100,7 +99,7 @@ export function onKeyDown(key: KeyCode, callback: () => void) {
   });
 }
 
-alt.nextTick(() => {
+alt.Timers.nextTick(() => {
   getWebview((webview) => {
     webview.on(ClientEvents.FromWebview.INPUT_FOCUS, (isFocused: boolean) => {
       inputFocused = isFocused;
@@ -108,7 +107,7 @@ alt.nextTick(() => {
   });
 });
 
-// alt.on("disconnect", () => {
+// alt.Events.onDisconnect(() => {
 //   for (const interval of intervals) {
 //     try {
 //       alt.clearInterval(interval);

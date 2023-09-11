@@ -8,18 +8,18 @@ export const FromWebview = {
   ACTION_MENU_SELECT: "ACTION_MENU_SELECT",
 } as const;
 
-interface EventFromWebview {
-  [FromWebview.VIEW_READY]: () => void;
-  [FromWebview.UPDATE_CHARACTER_APPEARANCE]: (data: string, x: number) => void;
-  [FromWebview.INPUT_FOCUS]: (isFocused: boolean) => void;
-  [FromWebview.CAMERA_MOVE_START]: () => void;
-  [FromWebview.CAMERA_MOVE_END]: () => void;
-  [FromWebview.PLAY_SOUND]: (audioName: string, ref: string) => void;
-  [FromWebview.ACTION_MENU_SELECT]: (key: string) => void;
-}
-
-declare module "alt-client" {
-  export interface WebView {
-    on(eventName: keyof typeof FromWebview, listener: EventFromWebview[typeof eventName]): void;
+declare module "@altv/shared" {
+  namespace Events {
+    interface CustomWebViewToClientEvent {
+      [FromWebview.VIEW_READY]: () => void;
+      [FromWebview.UPDATE_CHARACTER_APPEARANCE]: (
+        appearance: import("@prisma/client/edge").Appearance
+      ) => void;
+      [FromWebview.INPUT_FOCUS]: (isFocused: boolean) => void;
+      [FromWebview.CAMERA_MOVE_START]: () => void;
+      [FromWebview.CAMERA_MOVE_END]: () => void;
+      [FromWebview.PLAY_SOUND]: (audioName: string, ref: string) => void;
+      [FromWebview.ACTION_MENU_SELECT]: (key: string) => void;
+    }
   }
 }

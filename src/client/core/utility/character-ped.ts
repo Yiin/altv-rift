@@ -1,5 +1,5 @@
-import alt from "alt-client";
-import game from "natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 import { Appearance } from "@prisma/client";
 import { PedAppearance } from "./ped-appearance";
 import { loadModel } from "./model";
@@ -37,7 +37,7 @@ export const CharacterPed = {
     id = game.createPed(2, hash, _pos.x, _pos.y, _pos.z, 0, false, false);
 
     return new Promise(async (resolve: Function) => {
-      alt.nextTick(async () => {
+      alt.Timers.nextTick(async () => {
         if (id === undefined || id < 0) {
           return resolve(-1);
         }
@@ -63,7 +63,7 @@ export const CharacterPed = {
   /**
    * Apply pedestrian appearance data.
    */
-  async apply(_appearance: Appearance): Promise<void> {
+  async apply(newAppearance: Appearance): Promise<void> {
     if (id === undefined || id < 0) {
       return;
     }
@@ -74,16 +74,16 @@ export const CharacterPed = {
 
     isUpdating = true;
 
-    if (!appearance || (appearance && appearance.sex !== _appearance.sex)) {
+    if (!appearance || (appearance && appearance.sex !== newAppearance.sex)) {
       await CharacterPed.destroy();
-      await CharacterPed.create(_appearance.sex === 0, pos, rot);
+      await CharacterPed.create(newAppearance.sex === 0, pos, rot);
     }
 
-    await PedAppearance.applyAppearance(id, _appearance);
+    await PedAppearance.applyAppearance(id, newAppearance);
 
     await CharacterPed.setHidden(false);
 
-    appearance = _appearance;
+    appearance = newAppearance;
     isUpdating = false;
   },
 
@@ -129,21 +129,21 @@ export const CharacterPed = {
 
     return new Promise((resolve: Function) => {
       let attempts = 0;
-      const interval = alt.setInterval(() => {
+      const interval = alt.Timers.setInterval(() => {
         if (id === undefined || id < 0) {
-          alt.clearInterval(interval);
+          interval.destroy();
           return resolve();
         }
 
         if (!game.doesEntityExist(id)) {
           id = undefined;
-          alt.clearInterval(interval);
+          interval.destroy();
           return resolve();
         }
 
         if (attempts >= 10) {
           id = undefined;
-          alt.clearInterval(interval);
+          interval.destroy();
           return resolve();
         }
 
@@ -154,5 +154,3 @@ export const CharacterPed = {
     });
   },
 };
-
-alt.on("disconnect", CharacterPed.destroy);

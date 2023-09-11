@@ -1,3 +1,3 @@
-import type { Player } from 'alt-server';
+import type { Player } from "@altv/server";
 
 export type MountCallback = (player: Player, mounted: boolean) => void;

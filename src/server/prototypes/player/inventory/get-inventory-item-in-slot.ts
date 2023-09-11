@@ -1,8 +1,8 @@
-import alt from "alt-server";
+import alt from "@altv/server";
 import { InventoryItem } from "@shared/interfaces";
 import { InGamePlayer } from "@/utility/assertions";
 
-declare module "alt-server" {
+declare module "@altv/server" {
   export interface Player {
     getInventoryItemInSlot(this: InGamePlayer, slot: number): InventoryItem | undefined;
   }

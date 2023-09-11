@@ -1,5 +1,5 @@
-import alt from "alt-client";
-import game from "natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 import { getPointsInCircle } from "./math";
 import { loadSceneAtCoords } from "./scene";
 
@@ -74,12 +74,12 @@ const InternalFunctions = {
    */
   async isCameraUpdating() {
     return new Promise((resolve: Function) => {
-      const interval = alt.setInterval(() => {
+      const interval = alt.Timers.setInterval(() => {
         if (isUpdating) {
           return;
         }
 
-        alt.clearInterval(interval);
+        interval.destroy();
         resolve();
       }, 25);
     });
@@ -206,7 +206,7 @@ const InternalFunctions = {
     }
 
     await new Promise((resolve: Function) => {
-      alt.setTimeout(
+      alt.Timers.setTimeout(
         () => {
           resolve();
 
@@ -335,7 +335,7 @@ export const CinematicCam = {
   },
 
   demo() {
-    alt.setTimeout(() => {
+    alt.Timers.setTimeout(() => {
       game.setEntityCoordsNoOffset(
         alt.Player.local,
         -383.385375976562,
@@ -367,4 +367,4 @@ export const CinematicCam = {
   },
 };
 
-// alt.onServer(SYSTEM_EVENTS.TICKS_START, CinematicCam.demo);
+// alt.Events.onServer(SYSTEM_EVENTS.TICKS_START, CinematicCam.demo);

@@ -1,5 +1,5 @@
-import alt from "alt-client";
-import game from "natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 import { watchEffect } from "vue";
 import { ClientFlags } from "@shared/store/client.store";
 import { PlayerFlags } from "@shared/store/game-state.store";
@@ -9,16 +9,16 @@ import { stopFishingTask } from "./fishing-task";
 import { testProbeAgainstWaterInFrontOfPlayer } from "./test-probe-against-water-in-front-of-player";
 
 export function trackCanFishFlag() {
-  let waterTestingTick: number | undefined;
+  let waterTestingTick: alt.Timers.EveryTick | undefined;
 
-  watchEffect(() => {
+  return watchEffect(() => {
     if (!gameState.flags.has(PlayerFlags.InFishingArea)) {
       if (waterTestingTick) {
-        alt.clearEveryTick(waterTestingTick);
+        waterTestingTick.destroy();
         waterTestingTick = undefined;
       }
     } else {
-      waterTestingTick ??= alt.everyTick(() => {
+      waterTestingTick ??= alt.Timers.everyTick(() => {
         if (game.isPedSwimming(alt.Player.local)) {
           clientState.flags.delete(ClientFlags.CanFish);
           return;

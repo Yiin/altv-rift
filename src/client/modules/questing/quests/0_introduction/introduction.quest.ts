@@ -1,4 +1,4 @@
-import alt from "alt-client";
+import alt from "@altv/client";
 import { Npc } from "@shared/modules/npc/list";
 import { Quests } from "@shared/modules/quests";
 import { ServerEvents } from "@shared/events/server";
@@ -98,7 +98,7 @@ registerNpcInteractions(Npc.CAL_BURNETT, (ped: alt.Ped) => {
           ],
         }).then((option) => {
           if (option?.value === "accept") {
-            alt.emitServerRaw(
+            alt.Events.emitServer(
               ServerEvents.FromClient.NOTIFY,
               Quests.Introduction.Facts.GOT_INTRODUCTION
             );
@@ -124,7 +124,7 @@ registerNpcInteractions(Npc.CAL_BURNETT, (ped: alt.Ped) => {
         }).then((option) => {
           console.log(option);
           if (option?.value === "confirm") {
-            alt.emitServerRaw(
+            alt.Events.emitServer(
               ServerEvents.FromClient.NOTIFY,
               Quests.Introduction.Facts.GOT_DIRECTIONS
             );
@@ -188,7 +188,7 @@ registerNpcInteractions(Npc.DIEGO_MOREIRA, (ped) => {
         options: [{ value: "complete", label: "Complete", color: "primary" }],
       }).then((option) => {
         if (option?.value === "complete") {
-          alt.emitServerRaw(ServerEvents.FromClient.NOTIFY, selectedOption.value);
+          alt.Events.emitServer(ServerEvents.FromClient.NOTIFY, selectedOption.value);
         }
       });
     });
@@ -241,7 +241,7 @@ registerNpcInteractions(Npc.DIEGO_MOREIRA, (ped) => {
             { label: "Cancel" },
           ],
         }).then(() => {
-          alt.emitServerRaw(
+          alt.Events.emitServer(
             ServerEvents.FromClient.NOTIFY,
             Quests.Introduction.Facts.COMPLETED_ALL
           );

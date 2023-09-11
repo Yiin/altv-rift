@@ -1,6 +1,6 @@
 import fs from "fs";
 import net from "net";
-import * as alt from "alt-server";
+import * as alt from "@altv/server";
 
 interface IConfig {
   VUE_DEBUG?: string | boolean;
@@ -24,9 +24,7 @@ export const Config = {
     // Fetch the configuration
     if (!fs.existsSync(DefaultConfigName)) {
       alt.logWarning(`${DefaultConfigName} does not exist in root directory.`);
-      alt.logWarning(
-        `Please get ${DefaultConfigName} from default server files.`
-      );
+      alt.logWarning(`Please get ${DefaultConfigName} from default server files.`);
       process.exit(1);
     }
 
@@ -36,9 +34,7 @@ export const Config = {
       config = JSON.parse(fs.readFileSync(DefaultConfigName).toString());
     } catch (err) {
       alt.logWarning(`${DefaultConfigName} has formatting errors.`);
-      alt.logWarning(
-        `Please use https://jsonlint.com/ to verify your configuration.`
-      );
+      alt.logWarning(`Please use https://jsonlint.com/ to verify your configuration.`);
       process.exit(1);
     }
 

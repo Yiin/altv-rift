@@ -1,4 +1,4 @@
-import alt from "alt-client";
+import alt from "@altv/client";
 
 export enum AnchorType {
   Ped,

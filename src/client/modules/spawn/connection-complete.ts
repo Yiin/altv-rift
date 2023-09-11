@@ -1,10 +1,10 @@
-import alt from "alt-client";
-import game from "natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 import { ServerEvents } from "@shared/events/server";
 import { everyTick } from "@/core/utility/event-helpers";
 import { waitForUserInterface } from "@/core/user-interface/webview";
 
-alt.on("connectionComplete", handleConnectionComplete);
+alt.Events.onConnectionComplete(handleConnectionComplete);
 alt.setWatermarkPosition(4);
 
 async function handleConnectionComplete() {
@@ -14,17 +14,17 @@ async function handleConnectionComplete() {
   game.doScreenFadeOut(0);
   game.triggerScreenblurFadeIn(0);
 
-  alt.setConfigFlag("DISABLE_IDLE_CAMERA", true);
-  alt.setConfigFlag("DISABLE_PED_PROP_KNOCK_OFF", true);
-  alt.setConfigFlag("DISABLE_AUTO_WEAPON_SWAP", true);
+  alt.ConfigFlag.set(alt.Enums.ConfigFlag.DisableIdleCamera, true);
+  alt.ConfigFlag.set(alt.Enums.ConfigFlag.DisablePedPropKnockOff, true);
+  alt.ConfigFlag.set(alt.Enums.ConfigFlag.DisableAutoWeaponSwap, true);
 
   await waitForUserInterface();
 
-  alt.loadDefaultIpls();
+  alt.Streaming.loadDefaultIpls();
 
   alt.log("Connection Complete");
   // Calls the login functionality
-  alt.emitServer(ServerEvents.FromClient.BEGIN_CONNECTION);
+  alt.Events.emitServer(ServerEvents.FromClient.BEGIN_CONNECTION);
   handleTick();
 }
 

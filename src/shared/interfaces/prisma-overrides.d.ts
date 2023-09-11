@@ -24,3 +24,7 @@ export type Character = Override<
     equipment: Equipment;
   }
 >;
+
+export type User = Prisma.User & {
+  characters: Character[];
+};

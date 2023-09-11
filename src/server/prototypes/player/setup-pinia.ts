@@ -1,19 +1,19 @@
-import alt from "alt-server";
+import alt from "@altv/server";
 import { Pinia, Store, createPinia, defineStore } from "pinia";
 import { ClientEvents } from "@shared/events/client";
 import { subscribeToStore } from "@shared/store/utils";
-import { Character } from "@shared/interfaces";
+import { Character, User } from "@shared/interfaces";
 import { serverStore } from "@/store/server.store";
 import { LoggedInPlayer } from "@/utility/assertions";
 import { useGameState } from "@/store/game-state.store";
 
-declare module "alt-server" {
+declare module "@altv/server" {
   export interface Player {
-    setupUserStore(user: LoadedUser): void;
+    setupUserStore(user: User): void;
     setupCharacterStore(this: LoggedInPlayer, character: Character): void;
 
     pinia?: Pinia;
-    user: Store<"user", LoadedUser, {}, {}>;
+    user: Store<"user", User, {}, {}>;
     character?: Store<"character", Character, {}, {}>;
     gameState?: ReturnType<typeof useGameState>;
   }
@@ -21,7 +21,7 @@ declare module "alt-server" {
 
 const unsubscribeStores = new WeakMap<alt.Player, (() => void)[]>();
 
-alt.Player.prototype.setupUserStore = async function (user: LoadedUser) {
+alt.Player.prototype.setupUserStore = async function (user: User) {
   this.pinia = createPinia();
 
   // User store
@@ -31,20 +31,20 @@ alt.Player.prototype.setupUserStore = async function (user: LoadedUser) {
 
   const unsubscribeUserStore = subscribeToStore(this.user, {
     onSetState: (state) => {
-      this.emitRaw(ClientEvents.FromServer.SET_USER_STATE, state);
+      this.emit(ClientEvents.FromServer.SET_USER_STATE, state);
     },
     onUpdateState: (payload) => {
-      this.emitRaw(ClientEvents.FromServer.UPDATE_USER_STATE, payload);
+      this.emit(ClientEvents.FromServer.UPDATE_USER_STATE, payload);
     },
   });
 
   // Server state
   const unsubscribeServerStore = subscribeToStore(serverStore, {
     onSetState: (state) => {
-      this.emitRaw(ClientEvents.FromServer.SET_SERVER_STATE, state);
+      this.emit(ClientEvents.FromServer.SET_SERVER_STATE, state);
     },
     onUpdateState: (payload) => {
-      this.emitRaw(ClientEvents.FromServer.UPDATE_SERVER_STATE, payload);
+      this.emit(ClientEvents.FromServer.UPDATE_SERVER_STATE, payload);
     },
   });
 
@@ -59,10 +59,10 @@ alt.Player.prototype.setupCharacterStore = async function (character: Character)
 
   const unsubscribeCharacterStore = subscribeToStore(this.character, {
     onSetState: (state) => {
-      this.emitRaw(ClientEvents.FromServer.SET_CHARACTER_STATE, state);
+      this.emit(ClientEvents.FromServer.SET_CHARACTER_STATE, state);
     },
     onUpdateState: (payload) => {
-      this.emitRaw(ClientEvents.FromServer.UPDATE_CHARACTER_STATE, payload);
+      this.emit(ClientEvents.FromServer.UPDATE_CHARACTER_STATE, payload);
     },
   });
 
@@ -73,10 +73,10 @@ alt.Player.prototype.setupCharacterStore = async function (character: Character)
 
   const unsubscribeGameStateStore = subscribeToStore(this.gameState, {
     onSetState: (state) => {
-      this.emitRaw(ClientEvents.FromServer.SET_GAME_STATE, state);
+      this.emit(ClientEvents.FromServer.SET_GAME_STATE, state);
     },
     onUpdateState: (payload) => {
-      this.emitRaw(ClientEvents.FromServer.UPDATE_GAME_STATE, payload);
+      this.emit(ClientEvents.FromServer.UPDATE_GAME_STATE, payload);
     },
   });
 
@@ -90,7 +90,7 @@ alt.Player.prototype.setupCharacterStore = async function (character: Character)
 /**
  * Unsubscribe from all stores when a player disconnects
  */
-alt.on("playerDisconnect", (player) => {
+alt.Events.onPlayerDisconnect(({ player }) => {
   const unsubscribe = unsubscribeStores.get(player);
   if (!unsubscribe) {
     return;

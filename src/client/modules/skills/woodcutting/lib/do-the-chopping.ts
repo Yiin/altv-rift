@@ -1,4 +1,4 @@
-import alt from "alt-client";
+import alt from "@altv/client";
 import { getHeadingInDegrees } from "@/core/utility/math";
 import { alignPlayerToTree } from "./align-player-to-tree";
 import { setIsChoppingTree } from "./is-chopping-tree";

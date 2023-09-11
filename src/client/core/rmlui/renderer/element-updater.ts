@@ -1,9 +1,9 @@
-import alt from "alt-client";
-import game from "natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 import { computed } from "vue";
 import { focusableElements, registeredElements } from "./element-registry";
 import { notRenderedElements, visibleElementsHeap } from "./frame-state";
-import { container, document, renderer } from "./element-renderer";
+import { container, document } from "./element-renderer";
 import { elements } from "./rml-renderer";
 import { AnchorEntity, FrameData } from "./types";
 import { updateFocusedEntity } from "./hooks/focused-entity";
@@ -16,7 +16,7 @@ let screenRes = alt.getScreenResolution().div(
   2
 );
 
-alt.on("windowResolutionChange", () => {
+alt.Events.onWindowResolutionChange(() => {
   screenRes = alt.getScreenResolution().div(2.2, 2);
 });
 
@@ -32,7 +32,7 @@ export function getAnchorType(entity: AnchorEntity) {
       return AnchorType.Vehicle;
     }
     if (entity instanceof alt.VirtualEntity) {
-      if (entity.getStreamSyncedMeta("entityType") === "tree") {
+      if (entity.streamSyncedMeta.entityType === "tree") {
         return AnchorType.Tree;
       }
     }

@@ -1,20 +1,20 @@
-import alt from "alt-server";
+import alt from "@altv/server";
 import axios from "axios";
 import { PrismaClient } from "@prisma/client";
 import { ServerEvents } from "@shared/events/server";
 import { ClientEvents } from "@shared/events/client";
 import { ServerCall } from "@shared/calls/server";
 import { container } from "@shared/dependency-injection";
-import { ServerEvent } from "@/constants/server-events";
+import { User } from "@shared/interfaces";
 import { checkForQuestionableActivity } from "@/utility/questionable-activity";
-import { isLoggedIn } from "@/utility/assertions";
+import { LoggedInPlayer, isLoggedIn } from "@/utility/assertions";
 import { rpc } from "@/rpc";
 import { getDiscordAuthUrl } from "./verify";
 import "./webserver";
 
 const prisma = container.get(PrismaClient);
 
-alt.on("playerConnect", (player) => {
+alt.Events.onPlayerConnect(({ player }) => {
   player.dimension = player.id + 1;
   player.setup();
 });
@@ -26,10 +26,10 @@ alt.on("playerConnect", (player) => {
  * BEGIN_CONNECTION event is fired when the player is ready to
  * receive data from the server.
  */
-alt.onClient(ServerEvents.FromClient.BEGIN_CONNECTION, (player) => {
+alt.Events.onPlayer(ServerEvents.FromClient.BEGIN_CONNECTION, (player) => {
   checkForQuestionableActivity(player, isLoggedIn(player), "onBeginConnection");
 
-  player.emitRaw(ClientEvents.FromServer.BEGIN_NATIVE_DISCORD_AUTH);
+  player.emit(ClientEvents.FromServer.BEGIN_NATIVE_DISCORD_AUTH);
 });
 
 rpc.registerClient(ServerCall.FromClient.GET_DISCORD_AUTH_URL, (player) => {
@@ -48,9 +48,10 @@ rpc.registerClient(ServerCall.FromClient.TRY_CACHED_TOKEN, async (player, token)
 });
 
 // native altv discord auth
-alt.onClient(ServerEvents.FromClient.DISCORD_AUTH_DONE, onDiscordAuthDone);
 // webserver based discord auth
-alt.on(ServerEvents.FromServer.MANUAL_DISCORD_AUTH_DONE, onDiscordAuthDone);
+alt.Events.on(ServerEvents.FromServer.MANUAL_DISCORD_AUTH_DONE, (player, token) =>
+  onDiscordAuthDone(player, token)
+);
 
 async function onDiscordAuthDone(player: alt.Player, token: string) {
   checkForQuestionableActivity(player, isLoggedIn(player), "onDiscordAuthDone");
@@ -62,9 +63,9 @@ async function onDiscordAuthDone(player: alt.Player, token: string) {
     return;
   }
 
-  alt.logDebug(`${discordInfo.username}#${discordInfo.discriminator}`);
+  alt.log(`${discordInfo.username}#${discordInfo.discriminator}`);
 
-  const user = await prisma.user.upsert({
+  const user = (await prisma.user.upsert({
     where: {
       discordId: discordInfo.id,
     },
@@ -78,11 +79,11 @@ async function onDiscordAuthDone(player: alt.Player, token: string) {
     include: {
       characters: true,
     },
-  });
+  })) as User;
 
   await player.loadUser(user);
 
-  alt.emit(ServerEvent.USER_LOADED, player);
+  alt.Events.emit(ServerEvents.FromServer.USER_LOADED, player as LoggedInPlayer);
 }
 
 async function getDiscordInfo(token: string) {

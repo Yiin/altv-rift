@@ -22,14 +22,14 @@ var vite_config_default = defineConfig({
       { find: "@", replacement: path.resolve(__vite_injected_original_dirname, "./src") },
       { find: "@shared", replacement: path.resolve(__vite_injected_original_dirname, "../shared") },
       {
-        find: "alt-shared",
+        find: "@altv/shared",
         replacement: "alt"
       }
     ]
   },
   plugins: [
     externalGlobals({
-      "alt-shared": "alt"
+      "@altv/shared": "alt"
     }),
     vue(),
     vuetify({

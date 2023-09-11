@@ -1,5 +1,5 @@
-import alt from "alt-client";
-import game from "natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 import { Control, ControlType } from "@/core/constants/controls";
 import { isInConversation } from "@/modules/questing/dialogue";
 import { getCurrentNode } from "../internals/current-node";
@@ -120,7 +120,7 @@ const menuControls: MenuControls<any> = {
   },
 };
 
-alt.everyTick(() => {
+alt.Timers.everyTick(() => {
   if (!currentEntity) {
     return;
   }

@@ -1,6 +1,5 @@
-import alt from "alt-client";
-import game from "natives";
-import { KeyCode } from "altv-enums";
+import alt, { Enums } from "@altv/client";
+import game from "@altv/natives";
 import { computed, reactive, watchEffect } from "vue";
 import { ActionItem } from "@shared/store/client.store";
 import { ClientEvents } from "@shared/events/client";
@@ -51,14 +50,14 @@ function closeActionMenu() {
   toggleElement(ELEMENT.ACTION_MENU, false);
 }
 
-alt.on("keydown", (key) => {
-  if (key === KeyCode.Alt) {
+alt.Events.onKeyDown(({ key }) => {
+  if (key === Enums.KeyCode.Alt) {
     openActionMenu();
   }
 });
 
-alt.on("keyup", (key) => {
-  if (key === KeyCode.Alt) {
+alt.Events.onKeyUp(({ key }) => {
+  if (key === Enums.KeyCode.Alt) {
     closeActionMenu();
   }
 });

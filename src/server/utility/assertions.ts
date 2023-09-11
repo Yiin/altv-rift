@@ -1,6 +1,6 @@
 // Client throws errors because it imports this file from @/shared/events/server/index.ts
 
-import alt from "alt-server";
+import alt from "@altv/server";
 
 export type LoggedInPlayer = alt.Player & {
   /* @ts-ignore */

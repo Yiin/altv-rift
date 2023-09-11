@@ -1,9 +1,9 @@
-import alt from "alt-server";
+import alt from "@altv/server";
 import { getItemInfoByKey } from "@shared/modules/items";
 import { isItemFirearmWeapon } from "@shared/modules/items/registry/weapons/firearm-weapon.items";
 import { InGamePlayer, isInGame } from "@/utility/assertions";
 
-declare module "alt-server" {
+declare module "@altv/server" {
   export interface Player {
     reloadWeapon(this: InGamePlayer): boolean;
   }

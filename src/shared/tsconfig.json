@@ -6,5 +6,5 @@
       "@shared/*": ["./*"]
     }
   },
-  "include": ["./**/*", "../client/constants/ui.ts"]
+  "include": ["./**/*", "../client/constants/ui.ts", "../../custom-types"]
 }

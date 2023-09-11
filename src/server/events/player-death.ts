@@ -1,10 +1,10 @@
-import alt from "alt-server";
+import alt from "@altv/server";
 
-alt.on("playerDeath", (player: alt.Player, killer: alt.Entity | null, reason: number) => {
+alt.Events.onPlayerDeath(({ player }) => {
   setTimeout(() => {
     if (!player.valid) {
       return;
     }
-    player.spawn(player.pos.x, player.pos.y, player.pos.z, 0);
+    player.spawn(player.pos, 0);
   }, 2000);
 });

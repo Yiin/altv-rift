@@ -12,7 +12,7 @@ useEventListener(
   "focus",
   (e) => {
     if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
-      alt.emit(ClientEvents.FromWebview.INPUT_FOCUS, true);
+      alt.Events.emit(ClientEvents.FromWebview.INPUT_FOCUS, true);
     }
   },
   true
@@ -22,14 +22,14 @@ useEventListener(
   "blur",
   (e) => {
     if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
-      alt.emit(ClientEvents.FromWebview.INPUT_FOCUS, false);
+      alt.Events.emit(ClientEvents.FromWebview.INPUT_FOCUS, false);
     }
   },
   true
 );
 
 onMounted(() => {
-  alt.emit(ClientEvents.FromWebview.VIEW_READY);
+  alt.Events.emit(ClientEvents.FromWebview.VIEW_READY);
 });
 </script>
 

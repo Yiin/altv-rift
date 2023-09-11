@@ -1,5 +1,5 @@
-import alt, { Colshape, Entity } from "alt-client";
-import game from "natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 
 const islandIpls = [
   "h4_islandairstrip",
@@ -125,14 +125,14 @@ const islandIpls = [
   "h4_islandx_placement_10",
 ];
 
-const islandCenter = new alt.Vector3(4840.571, -5174.425, 2.0);
+const islandCenter = new alt.Vector2(4840.571, -5174.425);
 let nearIsland = false;
 
-const islandArea = new alt.ColshapeCircle(islandCenter.x, islandCenter.y, 3000);
+const islandArea = alt.ColShapeCircle.create({ pos: islandCenter, radius: 3000 });
 
 islandArea.playersOnly = true;
-alt.on("entityEnterColshape", (colshape: Colshape, entity: Entity) => {
-  if (colshape !== islandArea) {
+alt.Events.onEntityColShapeEnter(({ colShape, entity }) => {
+  if (colShape !== islandArea) {
     return;
   }
 
@@ -156,8 +156,8 @@ alt.on("entityEnterColshape", (colshape: Colshape, entity: Entity) => {
   }
 });
 
-alt.on("entityLeaveColshape", (colshape: Colshape, entity: Entity) => {
-  if (colshape !== islandArea) {
+alt.Events.onEntityColShapeLeave(({ colShape, entity }) => {
+  if (colShape !== islandArea) {
     return;
   }
 
@@ -177,7 +177,7 @@ alt.on("entityLeaveColshape", (colshape: Colshape, entity: Entity) => {
   }
 });
 
-alt.everyTick(() => {
+alt.Timers.everyTick(() => {
   if (nearIsland) {
     game.setRadarAsExteriorThisFrame();
     game.setRadarAsInteriorThisFrame(alt.hash("h4_fake_islandx"), 4700.0, -5145.0, 0, 0);

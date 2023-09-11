@@ -1,9 +1,9 @@
-import alt from "alt-client";
+import alt from "@altv/client";
 
 let screenResolution = alt.getScreenResolution();
 
-alt.on("windowResolutionChange", (_, resolution) => {
-  screenResolution = resolution;
+alt.Events.onWindowResolutionChange(({ newResolution }) => {
+  screenResolution = newResolution;
 });
 
 export function getScreenResolution() {

@@ -1,11 +1,9 @@
-import alt from "alt-client";
-import game from "natives";
-import { Timer } from "./timers";
+import alt from "@altv/client";
+import game from "@altv/natives";
 
 export function loadSceneAtCoords(pos: alt.IVector3): Promise<boolean> {
-  let timerHandle: number;
+  let timerHandle: alt.Timers.Interval;
   return new Promise<boolean>((resolve) => {
-    // noinspection JSSuspiciousNameCombination
     game.newLoadSceneStartSphere(
       pos.x,
       pos.y,
@@ -14,7 +12,7 @@ export function loadSceneAtCoords(pos: alt.IVector3): Promise<boolean> {
       1
     );
 
-    timerHandle = Timer.createInterval(
+    timerHandle = alt.Timers.setInterval(
       () => {
         if (!game.isNewLoadSceneActive()) {
           return resolve(false);
@@ -27,10 +25,9 @@ export function loadSceneAtCoords(pos: alt.IVector3): Promise<boolean> {
         return resolve(true);
       },
       10,
-      "scene.ts"
     );
   }).finally(() => {
     game.newLoadSceneStop();
-    Timer.clearInterval(timerHandle);
+    timerHandle.destroy();
   });
 }

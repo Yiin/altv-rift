@@ -1,39 +1,31 @@
-import game from "natives";
-import { Timer } from "./timers";
+import alt from "@altv/client";
+import game from "@altv/natives";
 
-let everyTickControls: number | undefined;
-let everyTickAttacks: number | undefined;
+let everyTickControls: alt.Timers.EveryTick | undefined;
+let everyTickAttacks: alt.Timers.EveryTick | undefined;
 
 /**
  * Completely disabled all local player controls.
  */
 export function disableAllControls(value: boolean) {
   if (everyTickControls) {
-    Timer.clearInterval(everyTickControls);
+    everyTickControls.destroy();
     everyTickControls = undefined;
   }
 
   if (value) {
-    everyTickControls = Timer.createInterval(
-      handleDisablingControls,
-      0,
-      "disableControls.ts - All"
-    );
+    everyTickControls = alt.Timers.everyTick(handleDisablingControls);
   }
 }
 
 export function disableAllAttacks(value: boolean) {
   if (everyTickAttacks) {
-    Timer.clearInterval(everyTickAttacks);
+    everyTickAttacks?.destroy();
     everyTickAttacks = undefined;
   }
 
   if (value) {
-    everyTickAttacks = Timer.createInterval(
-      handleDisablingAttacks,
-      0,
-      "disableControls.ts - Attacks"
-    );
+    everyTickAttacks = alt.Timers.everyTick(handleDisablingAttacks);
   }
 }
 

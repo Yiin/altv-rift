@@ -1,11 +1,11 @@
-import alt from "alt-server";
+import alt from "@altv/server";
 import { ServerEvents } from "@shared/events/server";
 import { getWeaponHash } from "@shared/modules/items";
 import { isItemThrowableWeapon } from "@shared/modules/items/registry/weapons/throwable-weapon.items";
 import { isInGame } from "@/utility/assertions";
 import { removeItemFromInventory } from "../../api";
 
-alt.on(ServerEvents.FromServer.EQUIP_ITEM, (player, item) => {
+alt.Events.on(ServerEvents.FromServer.EQUIP_ITEM, (player, item) => {
   if (!isItemThrowableWeapon(item)) {
     return;
   }
@@ -22,19 +22,19 @@ alt.on(ServerEvents.FromServer.EQUIP_ITEM, (player, item) => {
   player.giveWeapon(getWeaponHash(item.key), item.amount, true);
 });
 
-alt.on("startProjectile", (player, pos, dir, ammoHash, weaponHash) => {
+alt.Events.onProjectileStart(({ player, weaponHash }) => {
   if (!isInGame(player)) {
-    return false;
+    return;
   }
 
   const equipedWeapon = player.character.equipment.weapon;
 
   if (!equipedWeapon) {
-    return false;
+    return;
   }
 
   if (getWeaponHash(equipedWeapon.key) !== weaponHash) {
-    return false;
+    return;
   }
 
   if (!isItemThrowableWeapon(equipedWeapon)) {
@@ -43,12 +43,12 @@ alt.on("startProjectile", (player, pos, dir, ammoHash, weaponHash) => {
 
   if (equipedWeapon.amount <= 0) {
     player.removeEquipedItem("weapon");
-    return false;
+    return;
   }
 
   if ((equipedWeapon.amount -= 1) <= 0) {
     player.removeEquipedItem("weapon");
   }
 
-  return true;
+  return;
 });

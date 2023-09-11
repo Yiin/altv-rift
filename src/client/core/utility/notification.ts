@@ -1,5 +1,5 @@
-import alt from "alt-client";
-import game from "natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 import { ClientEvents } from "@shared/events/client";
 
 const NotificationConst = {
@@ -14,7 +14,7 @@ export const Notification = {
   ...NotificationConst,
 };
 
-alt.onServer(
+alt.Events.onServer(
   ClientEvents.FromServer.PLAYER_EMIT_NOTIFICATION,
   NotificationConst.notification
 );

@@ -12,7 +12,7 @@ export const FromClient = {
 } as const;
 
 export interface CallFromClient<
-  P extends import("alt-server").Player = import("alt-server").Player
+  P extends import("@altv/server").Player = import("@altv/server").Player
 > {
   [FromClient.GET_DISCORD_AUTH_URL]: (player: P) => string;
   [FromClient.TRY_CACHED_TOKEN]: (player: P, token: string) => boolean;
@@ -22,7 +22,7 @@ export interface CallFromClient<
   ) => { label: string; key: string }[];
   [FromClient.START_CONVERSATION]: (
     player: P,
-    pedId: import("alt-server").Ped["id"]
+    pedId: import("@altv/server").Ped["id"]
   ) => {
     type: "quest";
     pages: string[];
@@ -35,9 +35,5 @@ export interface CallFromClient<
   [FromClient.RELOAD_WEAPON]: (player: P) => boolean;
   [FromClient.START_FISHING]: (player: P) => void;
   [FromClient.STOP_FISHING]: (player: P) => void;
-  [FromClient.TOGGLE_VEHICLE_DOOR]: (
-    player: P,
-    vehicleId: number,
-    doorId: number
-  ) => void;
+  [FromClient.TOGGLE_VEHICLE_DOOR]: (player: P, vehicleId: number, doorId: number) => void;
 }

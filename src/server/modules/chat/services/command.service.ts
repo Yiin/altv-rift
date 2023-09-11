@@ -1,4 +1,4 @@
-import { emitClientRaw, Player } from "alt-server";
+import alt from "@altv/server";
 import type { CommandSuggestion } from "@shared/modules/chat";
 import { bind } from "@shared/decorators";
 import { validateCommandName, validateCommandSuggestion } from "../validators";
@@ -17,7 +17,7 @@ export class CommandService {
     return this.handlers.delete(command);
   }
 
-  public invoke(player: Player, command: string, args: string[]) {
+  public invoke(player: alt.Player, command: string, args: string[]) {
     command = command.toLowerCase();
     const handler = this.handlers.get(command);
     if (!handler) return false;
@@ -26,16 +26,16 @@ export class CommandService {
   }
 
   public addSuggestion(
-    player: Player,
+    player: alt.Player,
     suggestion: CommandSuggestion | Array<CommandSuggestion>
   ) {
     if (!Array.isArray(suggestion)) suggestion = [suggestion];
     const result = suggestion.some((s) => validateCommandSuggestion(s));
     if (!result) return;
-    return () => emitClientRaw(player, "vchat:addSuggestion", suggestion);
+    return () => player.emit("vchat:addSuggestion", suggestion);
   }
 
-  public removeSuggestions(player: Player) {
-    return () => emitClientRaw(player, "vchat:removeSuggestions");
+  public removeSuggestions(player: alt.Player) {
+    return () => player.emit("vchat:removeSuggestions");
   }
 }

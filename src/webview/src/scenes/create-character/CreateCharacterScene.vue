@@ -29,11 +29,11 @@ const createCharacter = useCreateCharacter();
 const screenRef = ref<InstanceType<typeof Screen> | null>(null);
 
 watch(createCharacter, () => {
-  alt.emit(ClientEvents.FromWebview.UPDATE_CHARACTER_APPEARANCE, createCharacter.appearance);
+  alt.Events.emit(ClientEvents.FromWebview.UPDATE_CHARACTER_APPEARANCE, createCharacter.appearance);
 });
 
 onMounted(() => {
-  alt.emit(ClientEvents.FromWebview.UPDATE_CHARACTER_APPEARANCE, createCharacter.appearance);
+  alt.Events.emit(ClientEvents.FromWebview.UPDATE_CHARACTER_APPEARANCE, createCharacter.appearance);
 });
 
 useEventListener("pointerdown", (e) => {
@@ -41,12 +41,12 @@ useEventListener("pointerdown", (e) => {
     e.target instanceof HTMLElement &&
     (e.target.classList.contains("v-main") || "screen" in e.target.dataset)
   ) {
-    alt.emit(ClientEvents.FromWebview.CAMERA_MOVE_START);
+    alt.Events.emit(ClientEvents.FromWebview.CAMERA_MOVE_START);
   }
 });
 
 useEventListener("pointerup", (e) => {
-  alt.emit(ClientEvents.FromWebview.CAMERA_MOVE_END);
+  alt.Events.emit(ClientEvents.FromWebview.CAMERA_MOVE_END);
 });
 
 function randomize() {

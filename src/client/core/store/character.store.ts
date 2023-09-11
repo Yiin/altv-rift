@@ -1,4 +1,4 @@
-import alt from "alt-client";
+import alt from "@altv/client";
 import { StoreDefinition, defineStore } from "pinia";
 import { ref } from "vue";
 import { updateStoreState } from "@shared/store/utils";
@@ -21,7 +21,7 @@ export const useCharacter = () => {
   return characterStore(pinia);
 };
 
-alt.onServer(ClientEvents.FromServer.UPDATE_CHARACTER_STATE, (event: any) => {
+alt.Events.onServer(ClientEvents.FromServer.UPDATE_CHARACTER_STATE, (event: any) => {
   getWebview().emit(WebviewEvents.FromClient.UPDATE_CHARACTER_STATE, event);
 
   const character = useCharacter();
@@ -29,7 +29,7 @@ alt.onServer(ClientEvents.FromServer.UPDATE_CHARACTER_STATE, (event: any) => {
   updateStoreState(character, event);
 });
 
-alt.onServer(ClientEvents.FromServer.SET_CHARACTER_STATE, (state: any) => {
+alt.Events.onServer(ClientEvents.FromServer.SET_CHARACTER_STATE, (state: any) => {
   getWebview().emit(WebviewEvents.FromClient.SET_CHARACTER_STATE, state);
 
   if (characterStore) {

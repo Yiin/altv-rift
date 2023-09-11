@@ -1,4 +1,4 @@
-import alt from "alt-client";
+import alt from "@altv/client";
 import { whileInGame } from "@/core/game-state/in-game.state";
 import {
   hasHatchetInHand,
@@ -9,7 +9,7 @@ import {
 } from "./lib";
 
 whileInGame(() => {
-  const tick = alt.everyTick(async () => {
+  const tick = alt.Timers.everyTick(async () => {
     if (hasHatchetInHand() && isNextToTree()) {
       if (isTryingToChop()) {
         const tree = getChoppingTree();
@@ -19,6 +19,6 @@ whileInGame(() => {
   });
 
   return () => {
-    alt.clearEveryTick(tick);
+    tick.destroy();
   };
 });

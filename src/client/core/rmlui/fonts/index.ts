@@ -1,4 +1,4 @@
-import alt from "alt-client";
+import alt from "@altv/client";
 import { join } from "@shared/utility/path";
 
 const googleFonts = [
@@ -45,7 +45,7 @@ for (const font of googleFonts) {
 
     alt.log(`Loading font ${rcssFontName} from ${font.name}-${variant}`);
 
-    alt.loadRmlFont(
+    alt.loadRmlFontFace(
       join(__relativedirname, `${normalizedFontName}/${font.name}-${variant}.ttf`),
       rcssFontName,
       variant.endsWith("Italic") ? true : undefined
@@ -53,6 +53,6 @@ for (const font of googleFonts) {
   }
 }
 
-if (alt.debug) {
+if (alt.isDebug) {
   alt.logWarning(`Registering a font twice is normal with reconnect.`);
 }

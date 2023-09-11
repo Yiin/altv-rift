@@ -1,26 +1,27 @@
-import { Player } from "alt-server";
+import { Player } from "@altv/server";
 import { PrismaClient } from "@prisma/client";
 import { container } from "@shared/dependency-injection";
+import { User } from "@shared/interfaces";
 
 const prisma = container.get(PrismaClient);
 
-declare module "alt-server" {
+declare module "@altv/server" {
   export interface Player {
-    loadUser(user: LoadedUser): Promise<LoadedUser | null>;
-    loadUser(discordId: string): Promise<LoadedUser | null>;
+    loadUser(user: User): Promise<User | null>;
+    loadUser(discordId: string): Promise<User | null>;
   }
 }
 
-Player.prototype.loadUser = async function (discordIdOrUser: string | LoadedUser) {
+Player.prototype.loadUser = async function (discordIdOrUser: string | User) {
   if (typeof discordIdOrUser === "string") {
-    const user = await prisma.user.findFirst({
+    const user = (await prisma.user.findFirst({
       where: {
         discordId: discordIdOrUser,
       },
       include: {
         characters: true,
       },
-    });
+    })) as User;
 
     if (user) {
       this.setupUserStore(user);

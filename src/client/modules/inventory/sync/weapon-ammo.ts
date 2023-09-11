@@ -1,6 +1,6 @@
-import alt from "alt-client";
-import game from "natives";
-import { KeyCode } from "altv-enums";
+import { Enums } from "@altv/client";
+import alt from "@altv/client";
+import game from "@altv/natives";
 import { computed, watchEffect } from "vue";
 import { ServerEvents } from "@shared/events/server";
 import { ServerCall } from "@shared/calls/server";
@@ -50,16 +50,17 @@ whileInGame(() => {
 
   const stopWatchingAmmo = watchEffect(updateAmmo);
 
-  alt.on("playerWeaponChange", onPlayerWeaponChange);
-  alt.on("keydown", handleManualReload);
-  alt.on("playerWeaponShoot", onPlayerWeaponShoot);
+  // @ts-expect-error FIX THE EVENTS API AHHHH
+  alt.Events.onPlayerWeaponChange(onPlayerWeaponChange);
+  alt.Events.onKeyDown(handleManualReload);
+  alt.Events.onPlayerWeaponShoot(onPlayerWeaponShoot);
 
   /**
    * Notify the server that the player has shot their weapon,
    * so we can update the current ammo in the clip.
    */
   function onPlayerWeaponShoot() {
-    alt.emitServerRaw(ServerEvents.FromClient.WEAPON_SHOOT);
+    alt.Events.emitServer(ServerEvents.FromClient.WEAPON_SHOOT);
   }
 
   /**
@@ -75,8 +76,8 @@ whileInGame(() => {
   /**
    * Reloads the weapon when the player presses the reload key.
    */
-  function handleManualReload(key: KeyCode) {
-    if (key === KeyCode.R) {
+  function handleManualReload({ key }: alt.Events.KeyUpDownEventParameters) {
+    if (key === Enums.KeyCode.R) {
       reloadWeapon();
     }
   }
@@ -114,7 +115,7 @@ whileInGame(() => {
       return;
     }
 
-    const disableMeleeAttackLight_R = alt.everyTick(() => {
+    const disableMeleeAttackLight_R = alt.Timers.everyTick(() => {
       game.disableControlAction(
         ControlType.PLAYER_CONTROL,
         Control.INPUT_MELEE_ATTACK_LIGHT,
@@ -131,14 +132,11 @@ whileInGame(() => {
 
       await alt.Utils.waitFor(() => !player.isReloading);
     } finally {
-      alt.clearEveryTick(disableMeleeAttackLight_R);
+      disableMeleeAttackLight_R.destroy();
     }
   }
 
   return () => {
-    alt.off("playerWeaponShoot", onPlayerWeaponShoot);
-    alt.off("playerWeaponChange", onPlayerWeaponChange);
-    alt.off("keydown", handleManualReload);
     stopWatchingAmmo();
     weaponCanReload.effect.stop();
     currentFirearm.effect.stop();

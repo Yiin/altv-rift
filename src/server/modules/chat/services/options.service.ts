@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { Resource } from "alt-server";
+import { Resource } from "@altv/server";
 import { inject } from "inversify";
 import { bind } from "@shared/decorators";
 import {
@@ -30,9 +30,7 @@ export class OptionsService {
   private commandSuggestions = [] as Array<CommandSuggestion>;
   private emojis = [] as Array<Emoji>;
 
-  public constructor(
-    @inject(LoggerService) private readonly loggerService: LoggerService
-  ) {
+  public constructor(@inject(LoggerService) private readonly loggerService: LoggerService) {
     this.readOptions();
     this.readCommandSuggestions();
     this.readEmojis();
@@ -61,30 +59,18 @@ export class OptionsService {
     this.commandSuggestions = JSON.parse(
       fs.readFileSync(commandSuggestionsPath, "utf8")
     ).commandSuggestions;
-    this.loggerService.log(
-      `Loaded command suggestions from ${commandSuggestionsPath}`
-    );
+    this.loggerService.log(`Loaded command suggestions from ${commandSuggestionsPath}`);
   }
 
   private readEmojis() {
-    const emojisPath = path.join(
-      process.cwd(),
-      "resources",
-      Resource.current.name,
-      "emojis.json"
-    );
+    const emojisPath = path.join(process.cwd(), "resources", Resource.current.name, "emojis.json");
     if (!fs.existsSync(emojisPath)) return;
     this.emojis = JSON.parse(fs.readFileSync(emojisPath, "utf8")).emojis;
     this.loggerService.log(`Loaded emojis from ${emojisPath}`);
   }
 
-  public getOption<
-    T extends keyof (ClientOptions & ServerOptions & WindowOptions)
-  >(key: T) {
-    if (
-      !this.options[key] ||
-      typeof this.options[key] !== typeof this.defaultOptions[key]
-    )
+  public getOption<T extends keyof (ClientOptions & ServerOptions & WindowOptions)>(key: T) {
+    if (!this.options[key] || typeof this.options[key] !== typeof this.defaultOptions[key])
       return this.defaultOptions[key];
     return this.options[key];
   }

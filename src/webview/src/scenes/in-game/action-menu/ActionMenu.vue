@@ -62,7 +62,7 @@ watch(
   () => currentSlice.value,
   (slice) => {
     if (!slice.empty) {
-      alt.emit(ClientEvents.FromWebview.PLAY_SOUND, "NAV_UP_DOWN", "HUD_FREEMODE_SOUNDSET");
+      alt.Events.emit(ClientEvents.FromWebview.PLAY_SOUND, "NAV_UP_DOWN", "HUD_FREEMODE_SOUNDSET");
     }
   }
 );
@@ -129,7 +129,7 @@ function polarToCartesian(
 }
 
 function select() {
-  alt.emit(ClientEvents.FromWebview.ACTION_MENU_SELECT, currentSlice.value.title);
+  alt.Events.emit(ClientEvents.FromWebview.ACTION_MENU_SELECT, currentSlice.value.title);
 }
 </script>
 

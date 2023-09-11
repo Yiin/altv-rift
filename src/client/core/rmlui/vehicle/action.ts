@@ -1,6 +1,5 @@
-import alt from "alt-client";
-import game, { getVehicleSize } from "natives";
-import { KeyCode } from "altv-enums";
+import alt, { Enums } from "@altv/client";
+import game, { getVehicleSize } from "@altv/natives";
 import { markRaw, ref, toRaw } from "vue";
 import { ServerCall } from "@shared/calls/server";
 import { VehicleBones } from "@/core/constants/vehicle-bones";
@@ -10,7 +9,6 @@ import { br, div } from "../renderer/rml-tags";
 import { AnchorType } from "../renderer/anchors";
 import { registerElement } from "../renderer/element-registry";
 import { Icon } from "../components/icon/icon";
-import { useEffect } from "../renderer/hooks/use-effect";
 
 const PARTS = [
   VehicleBones.BONNET,
@@ -104,7 +102,7 @@ function getClosestPart(vehicle: alt.Vehicle) {
   };
 }
 
-alt.everyTick(() => {
+alt.Timers.everyTick(() => {
   if (
     prevClosest.value.vehicle !== newClosest.vehicle ||
     prevClosest.value.part !== newClosest.part
@@ -119,10 +117,10 @@ alt.everyTick(() => {
   };
 });
 
-alt.on("keydown", (key) => {
+alt.Events.onKeyDown(({ key }) => {
   const { part, vehicle: closestVehicle } = prevClosest.value;
 
-  if (key === KeyCode.E && part && closestVehicle) {
+  if (key === Enums.KeyCode.E && part && closestVehicle) {
     const door = (
       {
         [VehicleBones.BONNET]: 4,

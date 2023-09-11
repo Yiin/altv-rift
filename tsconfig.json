@@ -22,11 +22,13 @@
     "pretty": true,
     "skipLibCheck": false,
     "typeRoots": [
-      "./node_modules/@altv",
       "./node_modules/@types",
       "./node_modules/reflect-metadata/*.d.ts",
-      "./custom-types",
-      "./node_modules/altv-esbuild/altv-enums/types",
+      "./custom-types/game",
+      "./custom-types/prisma",
+      "./custom-types/utils",
+      "./custom-types/vendor",
+      "./node_modules/altv-esbuild/@altv/shared/types",
     ],
   },
   "exclude": [

@@ -1,13 +1,13 @@
-import alt from "alt-client";
 import { PlayerFlags } from "@shared/store/game-state.store";
 import { ActionType, ClientFlags } from "@shared/store/client.store";
 import { gameState } from "@/core/store/game-state.store";
 import { clientState } from "@/core/store/client.store";
 import { registerActions } from "@/core/user-interface/action-menu";
+import { whileInGame } from "@/core/game-state/in-game.state";
 import { startFishingTask, stopFishingTask } from "./utils/fishing-task";
 import { trackCanFishFlag } from "./utils/track-can-fish-flag";
 
-alt.on("gameStart", () => {
+whileInGame(() => {
   trackCanFishFlag();
 
   registerActions(() => {

@@ -1,4 +1,5 @@
-import alt from "alt-client";
+import alt from "@altv/client";
+import { objectExpression } from "@babel/types";
 import { getAnchorType } from "./element-updater";
 import { AnchorEntity } from "./types";
 import { elements } from "./rml-renderer";
@@ -7,26 +8,26 @@ import { container } from "./element-renderer";
 
 export const streamedInEntities = new Set<AnchorEntity>();
 
-alt.on("gameEntityCreate", (entity) => {
+alt.Events.onGameEntityCreate(({ entity }) => {
   try {
     getAnchorType(entity as AnchorEntity);
     streamedInEntities.add(entity as AnchorEntity);
-  } catch {}
+  } catch { }
 });
 
-alt.on("gameEntityDestroy", (entity) => {
+alt.Events.onGameEntityDestroy(({ entity }) => {
   removeOrphanedElement(entity as AnchorEntity);
 });
 
-alt.on("worldObjectStreamIn", (entity) => {
+alt.Events.onWorldObjectStreamIn(({ object }) => {
   try {
-    getAnchorType(entity as AnchorEntity);
-    streamedInEntities.add(entity as AnchorEntity);
-  } catch {}
+    getAnchorType(object as AnchorEntity);
+    streamedInEntities.add(object as AnchorEntity);
+  } catch { }
 });
 
-alt.on("worldObjectStreamOut", (entity) => {
-  removeOrphanedElement(entity as AnchorEntity);
+alt.Events.onWorldObjectStreamOut(({ object }) => {
+  removeOrphanedElement(object as AnchorEntity);
 });
 
 function removeOrphanedElement(entity: AnchorEntity) {

@@ -1,4 +1,4 @@
-import alt from "alt-client";
+import alt from "@altv/client";
 import { getLevel } from "@shared/modules/experience/experience-table";
 import { getTreeLevel, getTreeName } from "@shared/modules/woodcutting";
 import { useCharacter } from "@/core/store/character.store";
@@ -13,11 +13,11 @@ registerElement({
   anchorType: AnchorType.Tree,
   render({ entity: tree }) {
     const character = useCharacter();
-    const type = tree.getStreamSyncedMeta("treeType");
+    const type = tree.streamSyncedMeta.treeType;
     const name = getTreeName(type);
     const level = getTreeLevel(type);
     const isUnavailable = getLevel(character.skills.woodcutting) < level;
-    const isOnCooldown = (tree.getStreamSyncedMeta("cooldownUntil") ?? 0) > Date.now();
+    const isOnCooldown = (tree.streamSyncedMeta.cooldownUntil ?? 0) > Date.now();
 
     return div(
       {

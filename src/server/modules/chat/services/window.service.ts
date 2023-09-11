@@ -1,9 +1,5 @@
-import { emitClientRaw, Player } from "alt-server";
-import {
-  ClientOptions,
-  MessageType,
-  WindowOptions,
-} from "@shared/modules/chat";
+import { Player } from "@altv/server";
+import { ClientOptions, MessageType, WindowOptions } from "@shared/modules/chat";
 import { bind } from "@shared/decorators";
 import { validateMessage } from "../validators";
 
@@ -11,21 +7,17 @@ import { validateMessage } from "../validators";
 export class WindowService {
   private readonly mutedPlayers = new Set<Player>();
 
-  public send(
-    player: Player,
-    message: string,
-    type: MessageType = MessageType.Default
-  ) {
+  public send(player: Player, message: string, type: MessageType = MessageType.Default) {
     if (!validateMessage(message, type)) return;
-    return () => emitClientRaw(player, "vchat:addMessage", message, type);
+    return () => player.emit("vchat:addMessage", message, type);
   }
 
   public show(player: Player) {
-    return () => emitClientRaw(player, "vchat:toggleVisibility", true);
+    return () => player.emit("vchat:toggleVisibility", true);
   }
 
   public hide(player: Player) {
-    return () => emitClientRaw(player, "vchat:toggleVisibility", false);
+    return () => player.emit("vchat:toggleVisibility", false);
   }
 
   public mute(player: Player) {
@@ -41,38 +33,34 @@ export class WindowService {
   }
 
   public toggleFocusEnabled(player: Player, enabled: boolean) {
-    return () => emitClientRaw(player, "vchat:toggleFocusEnabled", enabled);
+    return () => player.emit("vchat:toggleFocusEnabled", enabled);
   }
 
   public focus(player: Player) {
-    return () => emitClientRaw(player, "vchat:toggleFocus", true);
+    return () => player.emit("vchat:toggleFocus", true);
   }
 
   public unfocus(player: Player) {
-    return () => emitClientRaw(player, "vchat:toggleFocus", false);
+    return () => player.emit("vchat:toggleFocus", false);
   }
 
   public clearMessageHistory(player: Player) {
-    return () => emitClientRaw(player, "vchat:clearMessageHistory");
+    return () => player.emit("vchat:clearMessageHistory");
   }
 
   public clearMessages(player: Player) {
-    return () => emitClientRaw(player, "vchat:clearMessages");
+    return () => player.emit("vchat:clearMessages");
   }
 
   public updateOption(
     player: Player,
     key: keyof (ClientOptions & WindowOptions),
-    value: (ClientOptions & WindowOptions)[keyof (ClientOptions &
-      WindowOptions)]
+    value: (ClientOptions & WindowOptions)[keyof (ClientOptions & WindowOptions)]
   ) {
-    return () => emitClientRaw(player, "vchat:updateOption", key, value);
+    return () => player.emit("vchat:updateOption", key, value);
   }
 
-  public updateOptions(
-    player: Player,
-    options: Partial<ClientOptions & WindowOptions>
-  ) {
-    return () => emitClientRaw(player, "vchat:updateOptions", options);
+  public updateOptions(player: Player, options: Partial<ClientOptions & WindowOptions>) {
+    return () => player.emit("vchat:updateOptions", options);
   }
 }

@@ -1,5 +1,5 @@
-import alt from "alt-client";
-import game from "natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 import { getPointNextToPointRelativeToPoint } from "@/core/utility/math";
 import { LOS_FLAGS } from "@/core/constants/shapetest";
 import { MaterialHash } from "../material-hash";
@@ -19,10 +19,10 @@ export function raycastTreeEdge(
   const targetPos = new alt.Vector3({ x, y, z: treePos.z });
 
   // Calculate the direction from the player to the tree
-  const direction = targetPos.sub(playerPos).normalize();
+  const direction = targetPos.sub(playerPos).normalized;
 
   // Find the perpendicular direction to create a vertical rectangle
-  const perpendicular = new alt.Vector3(-direction.y, direction.x, 0).normalize();
+  const perpendicular = new alt.Vector3(-direction.y, direction.x, 0).normalized;
 
   // Initialize variables to track the closest hit
   let closestHit: null | alt.Vector3 = null;

@@ -1,11 +1,10 @@
-import alt from "alt-client";
-import game from "natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 import { loadSceneAtCoords } from "./scene";
-import { Timer } from "./timers";
 
 let isLocalPlayer = false;
 let scriptID: number | undefined;
-let cameraControlsInterval: number | undefined;
+let cameraControlsInterval: alt.Timers.EveryTick | undefined;
 let camera: number | undefined;
 let zpos = 0;
 let fov = 90;
@@ -71,7 +70,7 @@ const PedEditCamera = {
       game.renderScriptCams(true, false, 0, true, false, 0);
     }
 
-    cameraControlsInterval = Timer.createInterval(PedEditCamera.handleControls, 0, "camera.ts");
+    cameraControlsInterval = alt.Timers.everyTick(PedEditCamera.handleControls);
   },
 
   /**
@@ -113,7 +112,7 @@ const PedEditCamera = {
    */
   async destroy() {
     if (cameraControlsInterval !== undefined || cameraControlsInterval !== undefined) {
-      Timer.clearInterval(cameraControlsInterval);
+      cameraControlsInterval?.destroy();
       cameraControlsInterval = undefined;
     }
 
@@ -198,7 +197,7 @@ const PedEditCamera = {
     game.renderScriptCams(true, true, queueRef.easeTime, true, false, 0);
 
     await new Promise((resolve: Function) => {
-      alt.setTimeout(() => {
+      alt.Timers.setTimeout(() => {
         resolve();
       }, queueRef.easeTime);
     });
@@ -256,7 +255,7 @@ const PedEditCamera = {
     }
 
     const [_, width] = game.getActualScreenResolution(0, 0);
-    const cursor = alt.getCursorPos();
+    const cursor = alt.Cursor.pos;
     const _x = cursor.x;
     let oldHeading = game.getEntityHeading(entity);
 
@@ -346,7 +345,7 @@ const PedEditCamera = {
     if (Date.now() > timeBetweenAnimChecks) {
       timeBetweenAnimChecks = Date.now() + 1500;
       if (!game.isEntityPlayingAnim(entity, "nm@hands", "hands_up", 3)) {
-        alt.emit("animation:Play", {
+        alt.Events.emit("animation:Play", {
           dict: "nm@hands",
           name: "hands_up",
           duration: -1,
@@ -359,10 +358,10 @@ const PedEditCamera = {
 
 export default PedEditCamera;
 
-alt.on("connectionComplete", () => {
+alt.Events.onConnectionComplete(() => {
   PedEditCamera.destroy();
 });
 
-alt.on("disconnect", () => {
+alt.Events.onDisconnect(() => {
   PedEditCamera.destroy();
 });

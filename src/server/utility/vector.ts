@@ -1,4 +1,4 @@
-import * as alt from "alt-server";
+import * as alt from "@altv/server";
 import { distance } from "@shared/utility/vector";
 
 /**
@@ -22,10 +22,7 @@ export function getForwardVector(rot: alt.IVector3): alt.IVector3 {
  * @param {number} distance
  * @return {alt.Vector3}
  */
-export function getVectorInFrontOfPlayer(
-  player: alt.Player,
-  distance: number
-): alt.Vector3 {
+export function getVectorInFrontOfPlayer(player: alt.Player, distance: number): alt.Vector3 {
   const forwardVector = getForwardVector(player.rot);
   const posFront = {
     x: player.pos.x + forwardVector.x * distance,
@@ -62,9 +59,7 @@ export function isBetweenVectors(
  * @param {number} distance
  * @return {*}  {(T | null)}
  */
-export function getClosestEntity<
-  T extends { pos: alt.IVector3; valid?: boolean }
->(
+export function getClosestEntity<T extends { pos: alt.IVector3; valid?: boolean }>(
   playerPosition: alt.IVector3,
   rot: alt.IVector3,
   entities: T[],

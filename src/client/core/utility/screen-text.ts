@@ -1,5 +1,5 @@
-import alt from "alt-client";
-import game from "natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 import { drawRectangle2D, drawText2D } from "./text";
 
 interface TextProperties {
@@ -32,9 +32,7 @@ export const ScreenText = {
         position = Math.min(maxStringLength, text.length - currentIndex);
       }
 
-      game.addTextComponentSubstringPlayerName(
-        text.substring(currentIndex, position)
-      );
+      game.addTextComponentSubstringPlayerName(text.substring(currentIndex, position));
     }
   },
 

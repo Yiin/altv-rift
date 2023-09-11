@@ -1,4 +1,4 @@
-import natives from "natives";
+import natives from "@altv/natives";
 import { SCREEN_EFFECTS } from "@shared/modules/game/ui/screen-effects";
 
 /**
@@ -11,11 +11,7 @@ export function isScreenEffectActive(screenEffect: SCREEN_EFFECTS) {
 /**
  * Starts applying the specified effect to the screen.
  */
-export function startScreenEffect(
-  screenEffect: SCREEN_EFFECTS,
-  duration = 0,
-  looped = false
-) {
+export function startScreenEffect(screenEffect: SCREEN_EFFECTS, duration = 0, looped = false) {
   natives.animpostfxPlay(screenEffect, duration, looped);
 }
 

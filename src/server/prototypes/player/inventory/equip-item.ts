@@ -1,14 +1,9 @@
-import alt from "alt-server";
+import alt from "@altv/server";
 import { InventoryItemSource } from "@shared/interfaces";
 import { ServerEvents } from "@shared/events/server";
-import {
-  getItemEquipmentSlot,
-  getItemInfoByKey,
-  isItemAmmo,
-  isItemFishingRod,
-} from "@shared/modules/items";
+import { getItemEquipmentSlot, getItemInfoByKey, isItemAmmo } from "@shared/modules/items";
 import { isItemFirearmWeapon } from "@shared/modules/items/registry/weapons/firearm-weapon.items";
-import { FishBaitItem, isItemFishBait } from "@shared/modules/items/registry/fish-bait.items";
+import { isItemFishBait } from "@shared/modules/items/registry/fish-bait.items";
 import { InGamePlayer } from "@/utility/assertions";
 import {
   addItemToInventory,
@@ -19,7 +14,7 @@ import {
 } from "@/modules/items-manager";
 import { useFishBaitOnFishingRod } from "@/modules/items-manager/items/fishing-rod";
 
-declare module "alt-server" {
+declare module "@altv/server" {
   export interface Player {
     equipItem(this: InGamePlayer, source: InventoryItemSource): boolean;
   }
@@ -114,6 +109,6 @@ alt.Player.prototype.equipItem = function (source) {
     }
   }
 
-  alt.emit(ServerEvents.FromServer.EQUIP_ITEM, this, item);
+  alt.Events.emit(ServerEvents.FromServer.EQUIP_ITEM, this, item);
   return true;
 };

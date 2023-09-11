@@ -1,5 +1,5 @@
 import path from "path";
-import alt from "alt-server";
+import alt from "@altv/server";
 import axios from "axios";
 import express, { Request, Response } from "express";
 import cors from "cors";
@@ -30,18 +30,11 @@ async function handleMainRedirect(req: Request, res: Response) {
   authParams.append(`grant_type`, `authorization_code`);
   authParams.append(`code`, token);
   authParams.append(`scope`, `identify`);
-  authParams.append(
-    `redirect_uri`,
-    `http://${process.env["REDIRECT_IP"]}:7790/authenticate`
-  );
+  authParams.append(`redirect_uri`, `http://${process.env["REDIRECT_IP"]}:7790/authenticate`);
 
-  request = await axios.post(
-    `https://discordapp.com/api/oauth2/token`,
-    authParams,
-    {
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    }
-  );
+  request = await axios.post(`https://discordapp.com/api/oauth2/token`, authParams, {
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+  });
 
   if (!request.data || !request.data.access_token) {
     res.sendFile(path.join(htmlPath, "/error.html"), (err) => {});
@@ -49,24 +42,19 @@ async function handleMainRedirect(req: Request, res: Response) {
   }
 
   // id, username, avatar, discriminator, public_flags, flags, locale, mfa_enabled
-  const player = [...alt.Player.all].find(
-    (player) => player.getSyncedMeta("discord:Token") === userToken
-  );
+  const player = [...alt.Player.all].find((player) => player.syncedMeta.discordToken === userToken);
 
   if (!player || !player.valid) {
     res.sendFile(path.join(htmlPath, "/error.html"), (err) => {});
     return;
   }
 
-  alt.emit(
+  alt.Events.emit(
     ServerEvents.FromServer.MANUAL_DISCORD_AUTH_DONE,
     player,
     request.data.access_token
   );
-  player.emitRaw(
-    ClientEvents.FromServer.REMEMBER_AUTH_TOKEN,
-    request.data.access_token
-  );
+  player.emit(ClientEvents.FromServer.REMEMBER_AUTH_TOKEN, request.data.access_token);
   res.sendFile(path.join(htmlPath, "/done.html"), (err) => {});
 }
 

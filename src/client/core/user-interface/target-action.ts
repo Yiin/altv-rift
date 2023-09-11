@@ -1,8 +1,6 @@
-import alt from "alt-client";
-import game from "natives";
-import { KeyCode } from "altv-enums";
+import alt, { Enums } from "@altv/client";
+import game from "@altv/natives";
 import { reactive, ref, watchEffect } from "vue";
-import { tsNullKeyword } from "@babel/types";
 import { TargetAction } from "@shared/store/client.store";
 import { clientState } from "@/core/store/client.store";
 import { ELEMENT } from "@/core/constants/ui";
@@ -41,8 +39,8 @@ watchEffect(() => {
   toggleElement(ELEMENT.TARGET_ACTION, false);
 });
 
-alt.on("keydown", (key) => {
-  if (key === KeyCode.E) {
+alt.Events.onKeyDown(({ key }) => {
+  if (key === Enums.KeyCode.E) {
     if (!currentAction) {
       return;
     }
@@ -67,11 +65,11 @@ function getTargetedVehicleResult() {
 }
 
 function searchForAction() {
-  const interval = alt.setInterval(() => {
+  const interval = alt.Timers.setInterval(() => {
     const result = getTargetedVehicleResult();
 
     if (result) {
-      alt.clearInterval(interval);
+      interval.destroy();
 
       everyTickWhile(
         () => vehicleAction.value !== null,
@@ -101,7 +99,7 @@ function searchForAction() {
                   text: "Open trunk",
                   screenPos: { x: x * getScreenResolution().x, y: y * getScreenResolution().y },
                 },
-                onAction() {},
+                onAction() { },
               };
               return;
             }

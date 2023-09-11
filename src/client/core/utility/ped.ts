@@ -1,5 +1,5 @@
-import alt from "alt-client";
-import game from "natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 import { ANIM_DICTS } from "@/core/constants/anim-dicts";
 import { ANIM_TYPE } from "@/core/constants/entity";
 import { COMMON_SCENARIOS } from "@/core/constants/scenarios";

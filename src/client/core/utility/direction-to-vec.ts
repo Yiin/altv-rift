@@ -1,4 +1,4 @@
-import alt from "alt-client";
+import alt from "@altv/client";
 
 export class DirectionVector {
   private position: alt.IVector3;

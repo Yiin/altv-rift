@@ -1,11 +1,11 @@
-import { Player } from "alt-server";
+import { Player } from "@altv/server";
 import { PrismaClient } from "@prisma/client";
 import { container } from "@shared/dependency-injection";
 import { LoggedInPlayer } from "@/utility/assertions";
 
 const prisma = container.get(PrismaClient);
 
-declare module "alt-server" {
+declare module "@altv/server" {
   export interface Player {
     deleteCharacter(this: LoggedInPlayer, characterId: string): Promise<void>;
   }

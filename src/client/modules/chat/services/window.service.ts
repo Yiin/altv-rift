@@ -1,4 +1,4 @@
-import { toggleGameControls, WebView } from "alt-client";
+import alt from "@altv/client";
 import { CommandSuggestion, MessageType, WindowOptions } from "@shared/modules/chat";
 import { bind } from "@shared/decorators";
 import { ELEMENT } from "@/core/constants/ui";
@@ -8,7 +8,7 @@ import type { Message } from "../interfaces";
 @bind()
 export class WindowService {
   private focusEnabled = true;
-  private webView!: WebView;
+  private webView!: alt.WebView;
 
   public constructor() {
     getWebview((webView) => {
@@ -20,17 +20,17 @@ export class WindowService {
   }
 
   public focus() {
-    if (!this.webView.isVisible || !this.focusEnabled) return;
+    if (!this.webView.visible || !this.focusEnabled) return;
     this.webView.emit("vchat:focus", true);
-    this.webView.focus();
-    toggleGameControls(false);
+    this.webView.focused = true;
+    alt.setGameControlsActive(false);
   }
 
   public unfocus() {
-    if (!this.webView.isVisible || !this.focusEnabled) return;
+    if (!this.webView.visible || !this.focusEnabled) return;
     this.webView.emit("vchat:focus", false);
-    this.webView.unfocus();
-    toggleGameControls(true);
+    this.webView.focused = true;
+    alt.setGameControlsActive(true);
   }
 
   public toggleFocus(value: boolean) {

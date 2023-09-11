@@ -1,8 +1,8 @@
-import alt from "alt-client";
-import game from "natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 import { ClientEvents } from "@shared/events/client";
 
-let timeoutId: number | undefined;
+let timeoutId: alt.Timers.Timeout | undefined;
 
 /**
  * Draw mission text on the bottom of screen
@@ -10,7 +10,7 @@ let timeoutId: number | undefined;
 export function drawMissionText(text: string, duration?: number) {
   if (timeoutId) {
     alt.setWatermarkPosition(0);
-    alt.clearTimeout(timeoutId);
+    timeoutId.destroy();
   }
 
   game.clearPrints();
@@ -21,10 +21,10 @@ export function drawMissionText(text: string, duration?: number) {
   }
 
   game.endTextCommandPrint(duration, true);
-  timeoutId = alt.setTimeout(() => {
+  timeoutId = alt.Timers.setTimeout(() => {
     alt.setWatermarkPosition(4);
     timeoutId = undefined;
   }, duration);
 }
 
-alt.onServer(ClientEvents.FromServer.PLAYER_EMIT_MISSION_TEXT, drawMissionText);
+alt.Events.onServer(ClientEvents.FromServer.PLAYER_EMIT_MISSION_TEXT, drawMissionText);

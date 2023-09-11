@@ -1,4 +1,4 @@
-import { Player } from "alt-server";
+import { Player } from "@altv/server";
 import { container } from "@shared/dependency-injection";
 import { WindowService } from "../services/window.service";
 

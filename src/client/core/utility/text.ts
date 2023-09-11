@@ -1,9 +1,19 @@
-import alt from "alt-client";
-import game from "natives";
-import { Timer } from "./timers";
+import alt from "@altv/client";
+import game from "@altv/natives";
 
-const temporaryText: any[] = [];
-let tempInterval: number | undefined;
+const temporaryText: {
+  identifier: string;
+  msg: string;
+  x: number;
+  y: number;
+  scale: number;
+  r: number;
+  g: number;
+  b: number;
+  a: number;
+  timeout: alt.Timers.Timeout | null;
+}[] = [];
+let tempInterval: alt.Timers.EveryTick | undefined;
 
 /**
  * Draw text on your screen in a 2D position with an every tick.
@@ -36,65 +46,26 @@ export function drawText2D(
   game.endTextCommandDisplayText(pos.x, pos.y, 0);
 }
 
-export function drawRectangle(
-  pos: alt.IVector3,
-  size: alt.IVector2,
-  color: alt.RGBA
-) {
-  const [isOnScreen, x, y] = game.getScreenCoordFromWorldCoord(
-    pos.x,
-    pos.y,
-    pos.z,
-    0,
-    0
-  );
+export function drawRectangle(pos: alt.IVector3, size: alt.IVector2, color: alt.RGBA) {
+  const [isOnScreen, x, y] = game.getScreenCoordFromWorldCoord(pos.x, pos.y, pos.z, 0, 0);
   if (!isOnScreen) {
     return;
   }
 
   game.setDrawOrigin(pos.x, pos.y, pos.z, false);
-  game.drawRect(
-    0,
-    0,
-    size.x,
-    size.y,
-    color.r,
-    color.g,
-    color.b,
-    color.a,
-    false
-  );
+  game.drawRect(0, 0, size.x, size.y, color.r, color.g, color.b, color.a, false);
   game.clearDrawOrigin();
 }
 
-export function drawRectangle2D(
-  pos: alt.IVector2,
-  size: alt.IVector2,
-  color: alt.RGBA
-) {
+export function drawRectangle2D(pos: alt.IVector2, size: alt.IVector2, color: alt.RGBA) {
   game.clearDrawOrigin();
-  game.drawRect(
-    pos.x,
-    pos.y,
-    size.x,
-    size.y,
-    color.r,
-    color.g,
-    color.b,
-    color.a,
-    false
-  );
+  game.drawRect(pos.x, pos.y, size.x, size.y, color.r, color.g, color.b, color.a, false);
 }
 
 /**
  * Draw stable text in a 3D position with an every tick.
  */
-export function drawText3D(
-  text: string,
-  pos: alt.IVector3,
-  scale: number,
-  color: alt.RGBA
-) {
+export function drawText3D(text: string, pos: alt.IVector3, scale: number, color: alt.RGBA) {
   if (scale > 2) {
     scale = 2;
   }
@@ -128,40 +99,32 @@ export function addTemporaryText(
   a: number,
   ms: number
 ) {
-  const index = temporaryText.findIndex(
-    (data) => data.identifier === identifier
-  );
+  const index = temporaryText.findIndex((data) => data.identifier === identifier);
 
   if (index !== -1) {
     try {
-      alt.clearTimeout(temporaryText[index].timeout);
+      temporaryText[index].timeout?.destroy();
       temporaryText[index].timeout = null;
     } catch (err) {}
 
     temporaryText.splice(index, 1);
   }
 
-  const timeout = alt.setTimeout(() => {
+  const timeout = alt.Timers.setTimeout(() => {
     removeText(identifier);
   }, ms);
 
   temporaryText.push({ identifier, msg, x, y, scale, r, g, b, a, timeout });
 
-  if (tempInterval) {
-    Timer.clearInterval(tempInterval);
-    tempInterval = undefined;
-  }
-
-  tempInterval = Timer.createInterval(handleDrawTemporaryText, 0, "text.ts");
+  tempInterval?.destroy();
+  tempInterval = alt.Timers.everyTick(handleDrawTemporaryText);
 }
 
 /**
  * Stop drawing temporary text based on the name.
  */
 function removeText(identifier: string): void {
-  const index = temporaryText.findIndex(
-    (data) => data.identifier === identifier
-  );
+  const index = temporaryText.findIndex((data) => data.identifier === identifier);
   if (index <= -1) {
     return;
   }
@@ -169,7 +132,7 @@ function removeText(identifier: string): void {
   temporaryText.splice(index, 1);
 
   if (temporaryText.length <= 0) {
-    Timer.clearInterval(tempInterval!);
+    tempInterval?.destroy();
     tempInterval = undefined;
   }
 }

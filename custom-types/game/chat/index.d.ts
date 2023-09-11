@@ -2,7 +2,7 @@
  * @module vchat
  */
 declare module "vchat" {
-  import { Player } from "alt-server";
+  import { Player } from "@altv/server";
 
   export type CommandHandler = (player: Player, args: Array<string>) => void;
   export type MessageFormatter = (message: string) => string;
@@ -142,16 +142,14 @@ declare module "vchat" {
   export function updateOption(
     player: Player,
     key: keyof (ClientOptions & WindowOptions),
-    value: (ClientOptions & WindowOptions)[keyof (ClientOptions &
-      WindowOptions)]
+    value: (ClientOptions & WindowOptions)[keyof (ClientOptions & WindowOptions)]
   ): void;
   /**
    * Updates the specified options for all players.
    */
   export function updateOptionAll(
     key: keyof (ClientOptions & WindowOptions),
-    value: (ClientOptions & WindowOptions)[keyof (ClientOptions &
-      WindowOptions)]
+    value: (ClientOptions & WindowOptions)[keyof (ClientOptions & WindowOptions)]
   ): void;
   /**
    * Updates the specified options for the specified player.
@@ -163,17 +161,11 @@ declare module "vchat" {
   /**
    * Updates the specified options for all players.
    */
-  export function updateOptionsAll(
-    options: Partial<ClientOptions & WindowOptions>
-  ): void;
+  export function updateOptionsAll(options: Partial<ClientOptions & WindowOptions>): void;
   /**
    * Sends a message to the player.
    */
-  export function send(
-    player: Player,
-    message: string,
-    type?: MessageType
-  ): void;
+  export function send(player: Player, message: string, type?: MessageType): void;
   /**
    * Sends a message to all players.
    */
@@ -188,9 +180,7 @@ declare module "vchat" {
   /**
    * Adds a command suggestion to all players' chat webview.
    */
-  export function addSuggetionAll(
-    suggestion: CommandSuggestion | Array<CommandSuggestion>
-  ): void;
+  export function addSuggetionAll(suggestion: CommandSuggestion | Array<CommandSuggestion>): void;
   /**
    * Removes all command suggestions from the player's chat webview.
    */

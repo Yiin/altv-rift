@@ -1,5 +1,5 @@
-import alt from "alt-client";
-import game from "natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 import { distance, vectorLerp } from "@shared/utility/vector";
 import { ClientEvents } from "@shared/events/client";
 import { loadModel } from "./model";
@@ -15,7 +15,7 @@ const LerpObject = {
     game.freezeEntityPosition(id, true);
 
     return new Promise((resolve) => {
-      const objectInterval = alt.setInterval(() => {
+      const objectInterval = alt.Timers.setInterval(() => {
         const pos = game.getEntityCoords(id, false);
         dist = distance(pos, to);
 
@@ -26,7 +26,7 @@ const LerpObject = {
         game.setEntityCoords(id, posTick.x, posTick.y, posTick.z, false, false, false, false);
 
         if (dist <= 0.05) {
-          alt.clearInterval(objectInterval);
+          objectInterval.destroy();
           resolve(true);
         }
       }, 1);
@@ -53,4 +53,4 @@ const LerpObject = {
   },
 };
 
-alt.onServer(ClientEvents.FromServer.PLAYER_EMIT_TEMP_OBJECT_LERP, LerpObject.tempLerp);
+alt.Events.onServer(ClientEvents.FromServer.PLAYER_EMIT_TEMP_OBJECT_LERP, LerpObject.tempLerp);

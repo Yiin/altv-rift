@@ -11,10 +11,7 @@ import { CallFromServer } from "@shared/calls/webview/from-server";
 import { createPayload } from "@shared/utility/create-payload";
 
 const serverProcedures = new Map<string, (args: any) => any>();
-const serverHandlers = new Map<
-  string,
-  { resolve: Function; reject: Function }
->();
+const serverHandlers = new Map<string, { resolve: Function; reject: Function }>();
 
 export const callServer = async <T extends keyof typeof ServerCall.FromWebview>(
   name: T,
@@ -23,12 +20,12 @@ export const callServer = async <T extends keyof typeof ServerCall.FromWebview>(
   return new Promise<ReturnType<CallFromWebview[T]>>((resolve, reject) => {
     const payload = createPayload(name, args);
 
-    alt.emit(CALL_SERVER_FROM_WEBVIEW, payload);
+    alt.Events.emit(CALL_SERVER_FROM_WEBVIEW, payload);
     serverHandlers.set(payload.id, { resolve, reject });
   });
 };
 
-alt.on(CALL_SERVER_FROM_WEBVIEW_RESPONSE, (response) => {
+alt.Events.on(CALL_SERVER_FROM_WEBVIEW_RESPONSE, (response) => {
   const handler = serverHandlers.get(response.id);
   if (!handler) {
     return;
@@ -52,31 +49,27 @@ export const registerServer = <T extends keyof typeof WebviewCall.FromServer>(
   serverProcedures.set(name, callback);
 };
 
-export const unregisterServer = <T extends keyof typeof WebviewCall.FromServer>(
-  name: T
-) => {
+export const unregisterServer = <T extends keyof typeof WebviewCall.FromServer>(name: T) => {
   serverProcedures.delete(name);
 };
 
-alt.on(CALL_WEBVIEW_FROM_SERVER, async (payload) => {
+alt.Events.on(CALL_WEBVIEW_FROM_SERVER, async (payload) => {
   const { id, name, args } = payload;
   const callback = serverProcedures.get(name);
 
   try {
     if (!callback) {
-      throw new Error(
-        `CALL_WEBVIEW_FROM_SERVER: Procedure ${name} does not exist`
-      );
+      throw new Error(`CALL_WEBVIEW_FROM_SERVER: Procedure ${name} does not exist`);
     }
 
     const result = await callback(args);
 
-    alt.emit(CALL_WEBVIEW_FROM_SERVER_RESPONSE, {
+    alt.Events.emit(CALL_WEBVIEW_FROM_SERVER_RESPONSE, {
       id,
       result,
     });
   } catch (error) {
-    alt.emit(CALL_WEBVIEW_FROM_SERVER_RESPONSE, {
+    alt.Events.emit(CALL_WEBVIEW_FROM_SERVER_RESPONSE, {
       id,
       error,
     });
