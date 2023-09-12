@@ -1,4 +1,4 @@
-import alt from "@altv/client";
+import * as alt from "@altv/client";
 import game from "@altv/natives";
 import { Control, ControlType } from "@/core/constants/controls";
 import { isInConversation } from "@/modules/questing/dialogue";

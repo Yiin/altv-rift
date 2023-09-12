@@ -26,6 +26,11 @@ esbuild
     platform: "node",
     entryPoints: ["src/client/main.ts"],
     outfile: "resources/main/client.js",
+    external: [
+      "@altv/shared",
+      "@altv/client",
+      "@altv/natives"
+    ],
     plugins: [
       yamlPlugin,
       filelocPlugin({

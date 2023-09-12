@@ -1,4 +1,4 @@
-import alt from "@altv/client";
+import * as alt from "@altv/client";
 import { renderElement, markElementAsHidden } from "./element-renderer";
 import { prepareFrameForEntity } from "./element-updater";
 import { visibleElementsHeap, notRenderedElements } from "./frame-state";

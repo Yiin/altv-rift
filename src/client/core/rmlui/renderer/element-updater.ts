@@ -1,4 +1,4 @@
-import alt from "@altv/client";
+import * as alt from "@altv/client";
 import game from "@altv/natives";
 import { computed } from "vue";
 import { focusableElements, registeredElements } from "./element-registry";

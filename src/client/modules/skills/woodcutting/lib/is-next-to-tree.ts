@@ -1,4 +1,4 @@
-import alt from "@altv/client";
+import * as alt from "@altv/client";
 import { getClosest } from "@shared/utility/vector";
 import { getChoppingTree, setChoppingTree } from "./current-chopping-tree";
 import { getNearbyTrees } from "./get-nearby-trees";

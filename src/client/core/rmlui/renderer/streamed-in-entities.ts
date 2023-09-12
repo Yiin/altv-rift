@@ -1,4 +1,4 @@
-import alt from "@altv/client";
+import * as alt from "@altv/client";
 import { objectExpression } from "@babel/types";
 import { getAnchorType } from "./element-updater";
 import { AnchorEntity } from "./types";
@@ -12,7 +12,7 @@ alt.Events.onGameEntityCreate(({ entity }) => {
   try {
     getAnchorType(entity as AnchorEntity);
     streamedInEntities.add(entity as AnchorEntity);
-  } catch { }
+  } catch {}
 });
 
 alt.Events.onGameEntityDestroy(({ entity }) => {
@@ -23,7 +23,7 @@ alt.Events.onWorldObjectStreamIn(({ object }) => {
   try {
     getAnchorType(object as AnchorEntity);
     streamedInEntities.add(object as AnchorEntity);
-  } catch { }
+  } catch {}
 });
 
 alt.Events.onWorldObjectStreamOut(({ object }) => {

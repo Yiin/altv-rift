@@ -1,4 +1,4 @@
-import alt from "@altv/server";
+import * as alt from "@altv/server";
 import { Pinia, Store, createPinia, defineStore } from "pinia";
 import { ClientEvents } from "@shared/events/client";
 import { subscribeToStore } from "@shared/store/utils";

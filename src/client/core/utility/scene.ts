@@ -1,4 +1,4 @@
-import alt from "@altv/client";
+import * as alt from "@altv/client";
 import game from "@altv/natives";
 
 export function loadSceneAtCoords(pos: alt.IVector3): Promise<boolean> {
@@ -12,20 +12,17 @@ export function loadSceneAtCoords(pos: alt.IVector3): Promise<boolean> {
       1
     );
 
-    timerHandle = alt.Timers.setInterval(
-      () => {
-        if (!game.isNewLoadSceneActive()) {
-          return resolve(false);
-        }
+    timerHandle = alt.Timers.setInterval(() => {
+      if (!game.isNewLoadSceneActive()) {
+        return resolve(false);
+      }
 
-        if (!game.isNewLoadSceneLoaded()) {
-          return;
-        }
+      if (!game.isNewLoadSceneLoaded()) {
+        return;
+      }
 
-        return resolve(true);
-      },
-      10,
-    );
+      return resolve(true);
+    }, 10);
   }).finally(() => {
     game.newLoadSceneStop();
     timerHandle.destroy();

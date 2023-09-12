@@ -1,4 +1,4 @@
-import alt from "@altv/server";
+import * as alt from "@altv/server";
 import axios from "axios";
 import { PrismaClient } from "@prisma/client";
 import { ServerEvents } from "@shared/events/server";
@@ -6,6 +6,7 @@ import { ClientEvents } from "@shared/events/client";
 import { ServerCall } from "@shared/calls/server";
 import { container } from "@shared/dependency-injection";
 import { User } from "@shared/interfaces";
+import { ServerEventsFromClient } from "@shared/events/server/from-client";
 import { checkForQuestionableActivity } from "@/utility/questionable-activity";
 import { LoggedInPlayer, isLoggedIn } from "@/utility/assertions";
 import { rpc } from "@/rpc";
@@ -26,7 +27,7 @@ alt.Events.onPlayerConnect(({ player }) => {
  * BEGIN_CONNECTION event is fired when the player is ready to
  * receive data from the server.
  */
-alt.Events.onPlayer(ServerEvents.FromClient.BEGIN_CONNECTION, (player) => {
+alt.Events.onPlayer(ServerEventsFromClient.BEGIN_CONNECTION, (player) => {
   checkForQuestionableActivity(player, isLoggedIn(player), "onBeginConnection");
 
   player.emit(ClientEvents.FromServer.BEGIN_NATIVE_DISCORD_AUTH);

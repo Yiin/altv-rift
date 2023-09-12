@@ -1,4 +1,4 @@
-import alt from "@altv/server";
+import * as alt from "@altv/server";
 import { ServerEvents } from "@shared/events/server";
 import { Equipment } from "@shared/modules/items";
 import { InGamePlayer, isInGame } from "@/utility/assertions";

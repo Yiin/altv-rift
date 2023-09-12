@@ -1,4 +1,4 @@
-import alt from "@altv/client";
+import * as alt from "@altv/client";
 import { getLevel } from "@shared/modules/experience/experience-table";
 import { getTreeLevel, getTreeName } from "@shared/modules/woodcutting";
 import { useCharacter } from "@/core/store/character.store";

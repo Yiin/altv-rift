@@ -1,7 +1,8 @@
-import alt from "@altv/server";
+import * as alt from "@altv/server";
 import { StringBuffer } from "@shared/utility/buffer";
 import { ServerEvents } from "@shared/events/server";
 import { ClientEvents } from "@shared/events/client";
+import { ServerEventsFromClient } from "@shared/events/server/from-client";
 
 const MAX_TRIES = 1000;
 const pendingScreenshots: {
@@ -76,4 +77,4 @@ export class Screenshot {
   }
 }
 
-alt.Events.onPlayer(ServerEvents.FromClient.SCREENSHOT_POPULATE_DATA, Screenshot.buildData);
+alt.Events.onPlayer(ServerEventsFromClient.SCREENSHOT_POPULATE_DATA, Screenshot.buildData);

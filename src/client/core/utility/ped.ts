@@ -1,4 +1,4 @@
-import alt from "@altv/client";
+import * as alt from "@altv/client";
 import game from "@altv/natives";
 import { ANIM_DICTS } from "@/core/constants/anim-dicts";
 import { ANIM_TYPE } from "@/core/constants/entity";

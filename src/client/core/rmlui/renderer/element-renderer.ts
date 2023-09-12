@@ -1,4 +1,4 @@
-import alt from "@altv/client";
+import * as alt from "@altv/client";
 import { join } from "@shared/utility/path";
 import { createRenderer } from "./rml-renderer";
 import { notRenderedElements } from "./frame-state";

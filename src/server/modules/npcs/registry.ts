@@ -1,4 +1,4 @@
-import alt from "@altv/server";
+import * as alt from "@altv/server";
 import { NpcFlags, PedType } from "@shared/modules/npc/constants";
 
 const npcs = new Map<string, alt.Ped>();

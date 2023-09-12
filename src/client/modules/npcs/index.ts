@@ -1,4 +1,4 @@
-import alt from "@altv/client";
+import * as alt from "@altv/client";
 import game from "@altv/natives";
 import { NpcFlags } from "@shared/modules/npc/constants";
 import { waitUntil } from "@/core/utility/event-helpers";

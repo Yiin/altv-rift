@@ -1,4 +1,4 @@
-import alt from "@altv/server";
+import * as alt from "@altv/server";
 import sjcl from "sjcl";
 
 const ip = encodeURI(`http://${process.env["REDIRECT_IP"]}:7790/authenticate`);

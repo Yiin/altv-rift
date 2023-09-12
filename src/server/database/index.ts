@@ -1,4 +1,4 @@
-import alt from "@altv/server";
+import * as alt from "@altv/server";
 import { PrismaClient } from "@prisma/client";
 import _ from "lodash";
 import { container } from "@shared/dependency-injection";

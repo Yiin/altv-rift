@@ -1,4 +1,4 @@
-import alt from "@altv/shared";
+import * as alt from "@altv/shared";
 import { injectable } from "inversify";
 import { container } from "@shared/dependency-injection";
 

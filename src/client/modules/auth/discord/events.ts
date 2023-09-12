@@ -1,7 +1,7 @@
-import alt from "@altv/client";
+import * as alt from "@altv/client";
 import game from "@altv/natives";
 import { ClientEvents } from "@shared/events/client";
-import { ServerEvents } from "@shared/events/server";
+import { ServerEventsFromClient } from "@shared/events/server/from-client";
 import { WebviewEvents } from "@shared/events/webview";
 import { ServerCall } from "@shared/calls/server";
 import { SCENE } from "@/core/constants/ui";
@@ -38,7 +38,7 @@ async function beginAuth() {
   try {
     // try native discord api (requires running discord client)
     const token = await alt.Discord.requestOAuth2Token(DISCORD_CLIENT_ID);
-    alt.Events.emitServer(ServerEvents.FromClient.DISCORD_AUTH_DONE, token);
+    alt.Events.emitServer(ServerEventsFromClient.DISCORD_AUTH_DONE, token);
     cacheAuthToken(token);
   } catch (e) {
     // fallback to manual discord auth (opens browser)

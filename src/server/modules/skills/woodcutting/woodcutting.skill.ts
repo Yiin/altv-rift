@@ -1,4 +1,4 @@
-import alt from "@altv/server";
+import * as alt from "@altv/server";
 import { minutesToMilliseconds } from "date-fns";
 import { ServerCall } from "@shared/calls/server";
 import * as trees from "@shared/modules/woodcutting/trees";

@@ -1,4 +1,4 @@
-import alt from "@altv/server";
+import * as alt from "@altv/server";
 
 export const serialize = (value: any): any => {
   if (value instanceof alt.Vehicle) {

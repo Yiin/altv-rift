@@ -1,4 +1,4 @@
-import alt from "@altv/client";
+import * as alt from "@altv/client";
 
 export function getNearbyTrees({ distance }: { distance?: number } = {}) {
   return alt.VirtualEntity.streamedIn.filter(

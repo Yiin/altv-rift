@@ -1,4 +1,4 @@
-import alt from "@altv/shared";
+import * as alt from "@altv/shared";
 import { StoreUpdatePayload } from "@shared/store/utils";
 import { Spinner } from "@shared/modules/game/ui/spinner/spinner";
 

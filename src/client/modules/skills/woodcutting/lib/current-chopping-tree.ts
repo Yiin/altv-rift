@@ -1,4 +1,4 @@
-import alt from "@altv/client";
+import * as alt from "@altv/client";
 
 let tree: alt.VirtualEntity | null = null;
 

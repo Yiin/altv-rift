@@ -1,4 +1,4 @@
-import alt from "@altv/client";
+import * as alt from "@altv/client";
 import game from "@altv/natives";
 
 export function getScaledCursorPosition(): alt.IVector2 {

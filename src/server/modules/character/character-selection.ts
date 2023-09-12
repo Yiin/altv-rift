@@ -1,4 +1,4 @@
-import alt from "@altv/server";
+import * as alt from "@altv/server";
 import { ClientEvents } from "@shared/events/client";
 import { ServerCall } from "@shared/calls/server";
 import { ServerEvents } from "@shared/events/server";

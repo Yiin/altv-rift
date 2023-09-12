@@ -1,5 +1,5 @@
 import game from "@altv/natives";
-import alt from "@altv/client";
+import * as alt from "@altv/client";
 import { RAGDOLL_BLOCKING_FLAGS } from "@shared/enums/ragdoll-blocking-flags";
 import { everyTickWhile } from "@/core/utility/event-helpers";
 import { PED_RESET_FLAG } from "@/core/constants/ped-flags";

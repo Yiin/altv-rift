@@ -1,11 +1,11 @@
-import alt from "@altv/server";
-import { ServerEvents } from "@shared/events/server";
+import * as alt from "@altv/server";
 import { Quests } from "@shared/modules/quests";
+import { ServerEventsFromClient } from "@shared/events/server/from-client";
 import { isInGame } from "@/utility/assertions";
 
 const allQuestFacts = Object.values(Quests).flatMap((quest) => Object.values<string>(quest.Facts));
 
-alt.Events.onPlayer(ServerEvents.FromClient.NOTIFY, (player, questFact) => {
+alt.Events.onPlayer(ServerEventsFromClient.NOTIFY, (player, questFact) => {
   if (!isInGame(player)) {
     return;
   }

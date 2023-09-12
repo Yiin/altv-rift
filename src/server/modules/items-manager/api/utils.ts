@@ -1,4 +1,4 @@
-import alt from "@altv/server";
+import * as alt from "@altv/server";
 import { toRaw } from "vue";
 import { isEqual } from "lodash";
 import { Inventory, InventoryItemSource } from "@shared/interfaces";

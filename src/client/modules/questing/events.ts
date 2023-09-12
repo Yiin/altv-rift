@@ -1,4 +1,4 @@
-import alt from "@altv/client";
+import * as alt from "@altv/client";
 import { computed, ComputedRef } from "vue";
 import { NpcInteraction } from "@shared/modules/npc/interactions";
 import { IconName } from "@/core/rmlui/components/icon/icon";

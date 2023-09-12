@@ -1,4 +1,4 @@
-import alt from "@altv/shared";
+import * as alt from "@altv/shared";
 
 /**
  * Get a random number between min and max (max excluded)

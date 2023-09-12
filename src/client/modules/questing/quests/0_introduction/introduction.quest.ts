@@ -1,7 +1,7 @@
-import alt from "@altv/client";
+import * as alt from "@altv/client";
 import { Npc } from "@shared/modules/npc/list";
 import { Quests } from "@shared/modules/quests";
-import { ServerEvents } from "@shared/events/server";
+import { ServerEventsFromClient } from "@shared/events/server/from-client";
 import { NpcInteraction } from "@shared/modules/npc/interactions";
 import { ConversationOption } from "@shared/interfaces/conversation";
 import { IconName } from "@/core/rmlui/components/icon/icon";
@@ -99,7 +99,7 @@ registerNpcInteractions(Npc.CAL_BURNETT, (ped: alt.Ped) => {
         }).then((option) => {
           if (option?.value === "accept") {
             alt.Events.emitServer(
-              ServerEvents.FromClient.NOTIFY,
+              ServerEventsFromClient.NOTIFY,
               Quests.Introduction.Facts.GOT_INTRODUCTION
             );
           }
@@ -125,7 +125,7 @@ registerNpcInteractions(Npc.CAL_BURNETT, (ped: alt.Ped) => {
           console.log(option);
           if (option?.value === "confirm") {
             alt.Events.emitServer(
-              ServerEvents.FromClient.NOTIFY,
+              ServerEventsFromClient.NOTIFY,
               Quests.Introduction.Facts.GOT_DIRECTIONS
             );
           }
@@ -188,7 +188,7 @@ registerNpcInteractions(Npc.DIEGO_MOREIRA, (ped) => {
         options: [{ value: "complete", label: "Complete", color: "primary" }],
       }).then((option) => {
         if (option?.value === "complete") {
-          alt.Events.emitServer(ServerEvents.FromClient.NOTIFY, selectedOption.value);
+          alt.Events.emitServer(ServerEventsFromClient.NOTIFY, selectedOption.value);
         }
       });
     });
@@ -242,7 +242,7 @@ registerNpcInteractions(Npc.DIEGO_MOREIRA, (ped) => {
           ],
         }).then(() => {
           alt.Events.emitServer(
-            ServerEvents.FromClient.NOTIFY,
+            ServerEventsFromClient.NOTIFY,
             Quests.Introduction.Facts.COMPLETED_ALL
           );
         });

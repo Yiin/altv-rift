@@ -1,4 +1,4 @@
-import alt from "@altv/client";
+import * as alt from "@altv/client";
 import { Npc } from "@shared/modules/npc/list";
 import { NpcInteraction } from "@shared/modules/npc/interactions";
 import { IconName } from "@/core/rmlui/components/icon/icon";

@@ -1,5 +1,5 @@
 import path from "path";
-import alt from "@altv/server";
+import * as alt from "@altv/server";
 import axios from "axios";
 import express, { Request, Response } from "express";
 import cors from "cors";

@@ -1,6 +1,6 @@
-import alt from "@altv/client";
+import * as alt from "@altv/client";
 import game from "@altv/natives";
-import { ServerEvents } from "@shared/events/server";
+import { ServerEventsFromClient } from "@shared/events/server/from-client";
 import { everyTick } from "@/core/utility/event-helpers";
 import { waitForUserInterface } from "@/core/user-interface/webview";
 
@@ -24,7 +24,7 @@ async function handleConnectionComplete() {
 
   alt.log("Connection Complete");
   // Calls the login functionality
-  alt.Events.emitServer(ServerEvents.FromClient.BEGIN_CONNECTION);
+  alt.Events.emitServer(ServerEventsFromClient.BEGIN_CONNECTION);
   handleTick();
 }
 

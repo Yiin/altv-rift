@@ -1,4 +1,4 @@
-import alt from "@altv/client";
+import * as alt from "@altv/client";
 import game from "@altv/natives";
 import { getPointNextToPointRelativeToPoint } from "@/core/utility/math";
 import { LOS_FLAGS } from "@/core/constants/shapetest";

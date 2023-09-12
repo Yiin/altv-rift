@@ -1,4 +1,4 @@
-import alt from "@altv/client";
+import * as alt from "@altv/client";
 
 export function vec3ToArr(vec: alt.IVector3) {
   return [vec.x, vec.y, vec.z] as const;

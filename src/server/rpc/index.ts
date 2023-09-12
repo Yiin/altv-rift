@@ -1,4 +1,4 @@
-import alt from "@altv/server";
+import * as alt from "@altv/server";
 import {
   CALL_CLIENT_FROM_SERVER,
   CALL_CLIENT_FROM_SERVER_RESPONSE,

@@ -1,4 +1,4 @@
-import alt from "@altv/client";
+import * as alt from "@altv/client";
 import { ComputedRef } from "vue";
 import { AnchorEntityMap, AnchorType } from "./anchors";
 

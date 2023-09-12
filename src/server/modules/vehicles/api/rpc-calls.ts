@@ -1,4 +1,4 @@
-import alt from "@altv/server";
+import * as alt from "@altv/server";
 import { ServerCall } from "@shared/calls/server";
 import { rpc } from "@/rpc";
 

@@ -1,4 +1,4 @@
-import alt from "@altv/client";
+import * as alt from "@altv/client";
 import { inject } from "inversify";
 import { bind } from "@shared/decorators";
 import { ClientOptions, CommandSuggestion, MessageType, WindowOptions } from "@shared/modules/chat";
@@ -13,7 +13,7 @@ export class Chat {
     private readonly messageHistoryService: MessageHistoryService,
     @inject(OptionsService) private readonly optionsService: OptionsService,
     @inject(WindowService) private readonly windowService: WindowService
-  ) { }
+  ) {}
 
   public start() {
     this.eventService.onServer("vchat:toggleVisibility", this.toggleWindowVisibility.bind(this));

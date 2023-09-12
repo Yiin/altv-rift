@@ -10,5 +10,5 @@
     }
   },
   "include": ["./**/*", "../shared/**/*", "../../custom-types"],
-  "exclude": ["../webview/**/*"]
+  "exclude": ["../webview/**/*", "../shared/events/server/index.ts", "../shared/events/server/from-server.ts"]
 }

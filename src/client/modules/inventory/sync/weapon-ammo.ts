@@ -1,8 +1,8 @@
 import { Enums } from "@altv/client";
-import alt from "@altv/client";
+import * as alt from "@altv/client";
 import game from "@altv/natives";
 import { computed, watchEffect } from "vue";
-import { ServerEvents } from "@shared/events/server";
+import { ServerEventsFromClient } from "@shared/events/server/from-client";
 import { ServerCall } from "@shared/calls/server";
 import { getItemInfoByKey, getWeaponHash } from "@shared/modules/items";
 import { isItemFirearmWeapon } from "@shared/modules/items/registry/weapons/firearm-weapon.items";
@@ -50,7 +50,7 @@ whileInGame(() => {
 
   const stopWatchingAmmo = watchEffect(updateAmmo);
 
-  // @ts-expect-error FIX THE EVENTS API AHHHH
+  // @-ts-expect-error FIX THE EVENTS API AHHHH
   alt.Events.onPlayerWeaponChange(onPlayerWeaponChange);
   alt.Events.onKeyDown(handleManualReload);
   alt.Events.onPlayerWeaponShoot(onPlayerWeaponShoot);
@@ -60,7 +60,7 @@ whileInGame(() => {
    * so we can update the current ammo in the clip.
    */
   function onPlayerWeaponShoot() {
-    alt.Events.emitServer(ServerEvents.FromClient.WEAPON_SHOOT);
+    alt.Events.emitServer(ServerEventsFromClient.WEAPON_SHOOT);
   }
 
   /**

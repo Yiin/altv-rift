@@ -1,4 +1,4 @@
-import alt from "@altv/client";
+import * as alt from "@altv/client";
 import { CommandSuggestion, MessageType, WindowOptions } from "@shared/modules/chat";
 import { bind } from "@shared/decorators";
 import { ELEMENT } from "@/core/constants/ui";

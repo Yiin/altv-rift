@@ -7,6 +7,6 @@ import "./modules/chat";
 import "./modules/player";
 import "./modules/admin";
 import "./modules/inventory";
-import "./modules/npc";
+import "./modules/npcs";
 import "./modules/questing";
 import "./modules/skills";

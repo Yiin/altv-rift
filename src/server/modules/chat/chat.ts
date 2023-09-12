@@ -1,4 +1,4 @@
-import alt from "@altv/server";
+import * as alt from "@altv/server";
 import { inject } from "inversify";
 import { MessageType } from "@shared/modules/chat";
 import { bind } from "@shared/decorators";
@@ -24,7 +24,7 @@ export class Chat {
     @inject(EventService) private readonly eventService: EventService,
     @inject(LoggerService) private readonly loggerService: LoggerService,
     @inject(OptionsService) private readonly optionsService: OptionsService
-  ) { }
+  ) {}
 
   public start() {
     this.eventService.onPlayer("vchat:sendMessage", this.onChatMessage.bind(this));

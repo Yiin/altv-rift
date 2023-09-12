@@ -9,6 +9,10 @@ esbuild.build({
   platform: "node",
   entryPoints: ["src/server/main.ts"],
   outfile: "resources/main/server.js",
+  external: [
+    "@altv/shared",
+    "@altv/server"
+  ],
   plugins: [
     yamlPlugin,
     filelocPlugin({

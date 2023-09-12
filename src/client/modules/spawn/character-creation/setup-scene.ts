@@ -1,4 +1,4 @@
-import alt from "@altv/client";
+import * as alt from "@altv/client";
 import { sleep } from "@/core/utility/sleep";
 import { PedAppearance } from "@/core/utility/ped-appearance";
 import { getGroundPos } from "@/core/utility/get-ground-pos";

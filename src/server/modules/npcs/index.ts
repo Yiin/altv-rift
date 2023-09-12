@@ -1,4 +1,4 @@
-import alt from "@altv/server";
+import * as alt from "@altv/server";
 import { NpcFlags, PedType } from "@shared/modules/npc";
 import { Npc } from "@shared/modules/npc/list";
 import { createNpc } from "./registry";

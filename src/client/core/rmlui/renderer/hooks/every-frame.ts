@@ -1,4 +1,4 @@
-import alt from "@altv/client";
+import * as alt from "@altv/client";
 
 export function everyFrame(
   compute: (props: { distance: number; scale: number; pos: alt.Vector3 }) => any

@@ -1,4 +1,4 @@
-import alt from "@altv/server";
+import * as alt from "@altv/server";
 import { bind } from "@shared/decorators";
 
 @bind()

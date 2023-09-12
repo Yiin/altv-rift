@@ -2,7 +2,7 @@
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import { createRequire } from "module";
-import alt from "@altv/server";
+import * as alt from "@altv/server";
 
 global["__filename"] = import.meta.url ? fileURLToPath(import.meta.url) : "";
 global["__dirname"] = dirname(global["__filename"]);

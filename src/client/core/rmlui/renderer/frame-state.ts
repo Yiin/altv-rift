@@ -1,4 +1,4 @@
-import alt from "@altv/client";
+import * as alt from "@altv/client";
 import FixedReverseHeap from "mnemonist/fixed-reverse-heap";
 import { MAX_RENDERED_ELEMENTS } from "./config";
 

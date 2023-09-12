@@ -6,6 +6,12 @@ export const FromClient = {
   WEAPON_SHOOT: "WEAPON_SHOOT",
 } as const;
 
+// This is needed because if client imports ../index.ts,
+// it also imports InGamePlayer and LoggedInPlayer, which
+// have properties that are only available in server types,
+// and typescript complains about it.
+export const ServerEventsFromClient = FromClient;
+
 declare module "@altv/shared" {
   namespace Events {
     interface CustomPlayerToServerEvent {

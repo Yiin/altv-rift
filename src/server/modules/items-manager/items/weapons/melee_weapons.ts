@@ -1,4 +1,4 @@
-import alt from "@altv/server";
+import * as alt from "@altv/server";
 import { ServerEvents } from "@shared/events/server";
 import { getWeaponHash } from "@shared/modules/items";
 import { isItemMeleeWeapon } from "@shared/modules/items/registry/weapons/melee-weapon.items";
