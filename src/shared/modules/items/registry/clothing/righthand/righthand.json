@@ -1,1692 +1,1311 @@
 {
-    "DLC_MP_SUM23_M_PRIGHT_WRIST_0_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_SUM23_M_PRIGHT_WRIST_0_0",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 13,
-        "textureId": 0,
-        "name": "Aqua Hippy Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_SUM23_M_PRIGHT_WRIST_0_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_SUM23_M_PRIGHT_WRIST_0_1",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 13,
-        "textureId": 1,
-        "name": "Moss Hippy Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_SUM23_M_PRIGHT_WRIST_0_2": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_SUM23_M_PRIGHT_WRIST_0_2",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 13,
-        "textureId": 2,
-        "name": "Sand Hippy Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_SUM23_M_PRIGHT_WRIST_0_3": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_SUM23_M_PRIGHT_WRIST_0_3",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 13,
-        "textureId": 3,
-        "name": "Stone Hippy Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_SUM23_M_PRIGHT_WRIST_0_4": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_SUM23_M_PRIGHT_WRIST_0_4",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 13,
-        "textureId": 4,
-        "name": "Bright Hippy Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_SUM23_M_PRIGHT_WRIST_0_5": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_SUM23_M_PRIGHT_WRIST_0_5",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 13,
-        "textureId": 5,
-        "name": "Rust Hippy Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_SUM23_F_PRIGHT_WRIST_0_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_SUM23_F_PRIGHT_WRIST_0_0",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 20,
-        "textureId": 0,
-        "name": "Aqua Hippy Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_SUM23_F_PRIGHT_WRIST_0_1": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_SUM23_F_PRIGHT_WRIST_0_1",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 20,
-        "textureId": 1,
-        "name": "Moss Hippy Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_SUM23_F_PRIGHT_WRIST_0_2": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_SUM23_F_PRIGHT_WRIST_0_2",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 20,
-        "textureId": 2,
-        "name": "Sand Hippy Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_SUM23_F_PRIGHT_WRIST_0_3": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_SUM23_F_PRIGHT_WRIST_0_3",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 20,
-        "textureId": 3,
-        "name": "Stone Hippy Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_SUM23_F_PRIGHT_WRIST_0_4": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_SUM23_F_PRIGHT_WRIST_0_4",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 20,
-        "textureId": 4,
-        "name": "Bright Hippy Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_SUM23_F_PRIGHT_WRIST_0_5": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_SUM23_F_PRIGHT_WRIST_0_5",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 20,
-        "textureId": 5,
-        "name": "Rust Hippy Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_F_PRIGHT_WRIST_0_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_X22_F_PRIGHT_WRIST_0_0",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 17,
-        "textureId": 0,
-        "name": "Silver Chunky Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_F_PRIGHT_WRIST_0_1": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_X22_F_PRIGHT_WRIST_0_1",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 17,
-        "textureId": 1,
-        "name": "Mono Chunky Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_F_PRIGHT_WRIST_0_2": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_X22_F_PRIGHT_WRIST_0_2",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 17,
-        "textureId": 2,
-        "name": "Gold Chunky Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_F_PRIGHT_WRIST_0_3": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_X22_F_PRIGHT_WRIST_0_3",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 17,
-        "textureId": 3,
-        "name": "Rose Chunky Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_F_PRIGHT_WRIST_0_4": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_X22_F_PRIGHT_WRIST_0_4",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 17,
-        "textureId": 4,
-        "name": "Copper Chunky Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_F_PRIGHT_WRIST_1_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_X22_F_PRIGHT_WRIST_1_0",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 18,
-        "textureId": 0,
-        "name": "Silver Chain Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_F_PRIGHT_WRIST_1_1": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_X22_F_PRIGHT_WRIST_1_1",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 18,
-        "textureId": 1,
-        "name": "Mono Chain Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_F_PRIGHT_WRIST_1_2": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_X22_F_PRIGHT_WRIST_1_2",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 18,
-        "textureId": 2,
-        "name": "Gold Chain Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_F_PRIGHT_WRIST_1_3": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_X22_F_PRIGHT_WRIST_1_3",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 18,
-        "textureId": 3,
-        "name": "Rose Chain Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_F_PRIGHT_WRIST_1_4": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_X22_F_PRIGHT_WRIST_1_4",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 18,
-        "textureId": 4,
-        "name": "Copper Chain Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_F_PRIGHT_WRIST_2_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_X22_F_PRIGHT_WRIST_2_0",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 19,
-        "textureId": 0,
-        "name": "Black Woven Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_F_PRIGHT_WRIST_2_1": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_X22_F_PRIGHT_WRIST_2_1",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 19,
-        "textureId": 1,
-        "name": "Dark Gray Woven Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_F_PRIGHT_WRIST_2_10": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_X22_F_PRIGHT_WRIST_2_10",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 19,
-        "textureId": 10,
-        "name": "Chestnut Woven Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_F_PRIGHT_WRIST_2_11": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_X22_F_PRIGHT_WRIST_2_11",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 19,
-        "textureId": 11,
-        "name": "Dark Nut Woven Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_F_PRIGHT_WRIST_2_12": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_X22_F_PRIGHT_WRIST_2_12",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 19,
-        "textureId": 12,
-        "name": "Blue Woven Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_F_PRIGHT_WRIST_2_13": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_X22_F_PRIGHT_WRIST_2_13",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 19,
-        "textureId": 13,
-        "name": "Light Blue Woven Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_F_PRIGHT_WRIST_2_2": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_X22_F_PRIGHT_WRIST_2_2",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 19,
-        "textureId": 2,
-        "name": "Light Gray Woven Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_F_PRIGHT_WRIST_2_3": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_X22_F_PRIGHT_WRIST_2_3",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 19,
-        "textureId": 3,
-        "name": "White Woven Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_F_PRIGHT_WRIST_2_4": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_X22_F_PRIGHT_WRIST_2_4",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 19,
-        "textureId": 4,
-        "name": "Ox Blood Woven Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_F_PRIGHT_WRIST_2_5": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_X22_F_PRIGHT_WRIST_2_5",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 19,
-        "textureId": 5,
-        "name": "Crimson Woven Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_F_PRIGHT_WRIST_2_6": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_X22_F_PRIGHT_WRIST_2_6",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 19,
-        "textureId": 6,
-        "name": "Green Woven Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_F_PRIGHT_WRIST_2_7": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_X22_F_PRIGHT_WRIST_2_7",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 19,
-        "textureId": 7,
-        "name": "Red Woven Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_F_PRIGHT_WRIST_2_8": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_X22_F_PRIGHT_WRIST_2_8",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 19,
-        "textureId": 8,
-        "name": "Orange Woven Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_F_PRIGHT_WRIST_2_9": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_X22_F_PRIGHT_WRIST_2_9",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 19,
-        "textureId": 9,
-        "name": "Mustard Woven Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_M_PRIGHT_WRIST_0_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_X22_M_PRIGHT_WRIST_0_0",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 10,
-        "textureId": 0,
-        "name": "Silver Chunky Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_M_PRIGHT_WRIST_0_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_X22_M_PRIGHT_WRIST_0_1",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 10,
-        "textureId": 1,
-        "name": "Mono Chunky Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_M_PRIGHT_WRIST_0_2": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_X22_M_PRIGHT_WRIST_0_2",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 10,
-        "textureId": 2,
-        "name": "Gold Chunky Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_M_PRIGHT_WRIST_0_3": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_X22_M_PRIGHT_WRIST_0_3",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 10,
-        "textureId": 3,
-        "name": "Rose Chunky Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_M_PRIGHT_WRIST_0_4": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_X22_M_PRIGHT_WRIST_0_4",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 10,
-        "textureId": 4,
-        "name": "Copper Chunky Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_M_PRIGHT_WRIST_1_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_X22_M_PRIGHT_WRIST_1_0",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 11,
-        "textureId": 0,
-        "name": "Silver Chain Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_M_PRIGHT_WRIST_1_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_X22_M_PRIGHT_WRIST_1_1",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 11,
-        "textureId": 1,
-        "name": "Mono Chain Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_M_PRIGHT_WRIST_1_2": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_X22_M_PRIGHT_WRIST_1_2",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 11,
-        "textureId": 2,
-        "name": "Gold Chain Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_M_PRIGHT_WRIST_1_3": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_X22_M_PRIGHT_WRIST_1_3",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 11,
-        "textureId": 3,
-        "name": "Rose Chain Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_M_PRIGHT_WRIST_1_4": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_X22_M_PRIGHT_WRIST_1_4",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 11,
-        "textureId": 4,
-        "name": "Copper Chain Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_M_PRIGHT_WRIST_2_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_X22_M_PRIGHT_WRIST_2_0",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 12,
-        "textureId": 0,
-        "name": "Black Woven Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_M_PRIGHT_WRIST_2_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_X22_M_PRIGHT_WRIST_2_1",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 12,
-        "textureId": 1,
-        "name": "Dark Gray Woven Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_M_PRIGHT_WRIST_2_10": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_X22_M_PRIGHT_WRIST_2_10",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 12,
-        "textureId": 10,
-        "name": "Chestnut Woven Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_M_PRIGHT_WRIST_2_11": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_X22_M_PRIGHT_WRIST_2_11",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 12,
-        "textureId": 11,
-        "name": "Dark Nut Woven Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_M_PRIGHT_WRIST_2_12": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_X22_M_PRIGHT_WRIST_2_12",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 12,
-        "textureId": 12,
-        "name": "Blue Woven Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_M_PRIGHT_WRIST_2_13": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_X22_M_PRIGHT_WRIST_2_13",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 12,
-        "textureId": 13,
-        "name": "Light Blue Woven Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_M_PRIGHT_WRIST_2_2": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_X22_M_PRIGHT_WRIST_2_2",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 12,
-        "textureId": 2,
-        "name": "Light Gray Woven Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_M_PRIGHT_WRIST_2_3": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_X22_M_PRIGHT_WRIST_2_3",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 12,
-        "textureId": 3,
-        "name": "White Woven Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_M_PRIGHT_WRIST_2_4": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_X22_M_PRIGHT_WRIST_2_4",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 12,
-        "textureId": 4,
-        "name": "Ox Blood Woven Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_M_PRIGHT_WRIST_2_5": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_X22_M_PRIGHT_WRIST_2_5",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 12,
-        "textureId": 5,
-        "name": "Crimson Woven Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_M_PRIGHT_WRIST_2_6": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_X22_M_PRIGHT_WRIST_2_6",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 12,
-        "textureId": 6,
-        "name": "Green Woven Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_M_PRIGHT_WRIST_2_7": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_X22_M_PRIGHT_WRIST_2_7",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 12,
-        "textureId": 7,
-        "name": "Red Woven Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_M_PRIGHT_WRIST_2_8": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_X22_M_PRIGHT_WRIST_2_8",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 12,
-        "textureId": 8,
-        "name": "Orange Woven Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_X22_M_PRIGHT_WRIST_2_9": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_X22_M_PRIGHT_WRIST_2_9",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 12,
-        "textureId": 9,
-        "name": "Mustard Woven Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_H4_F_PRIGHT_WRIST_0_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_H4_F_PRIGHT_WRIST_0_0",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 15,
-        "textureId": 0,
-        "name": "Blue Bangles (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF",
-            "LIGHT_UP"
-        ]
-    },
-    "DLC_MP_H4_F_PRIGHT_WRIST_0_1": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_H4_F_PRIGHT_WRIST_0_1",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 15,
-        "textureId": 1,
-        "name": "Red Bangles (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF",
-            "LIGHT_UP"
-        ]
-    },
-    "DLC_MP_H4_F_PRIGHT_WRIST_0_10": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_H4_F_PRIGHT_WRIST_0_10",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 15,
-        "textureId": 10,
-        "name": "Sunset Bangles (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF",
-            "LIGHT_UP"
-        ]
-    },
-    "DLC_MP_H4_F_PRIGHT_WRIST_0_11": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_H4_F_PRIGHT_WRIST_0_11",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 15,
-        "textureId": 11,
-        "name": "Tropical Bangles (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF",
-            "LIGHT_UP"
-        ]
-    },
-    "DLC_MP_H4_F_PRIGHT_WRIST_0_2": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_H4_F_PRIGHT_WRIST_0_2",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 15,
-        "textureId": 2,
-        "name": "Pink Bangles (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF",
-            "LIGHT_UP"
-        ]
-    },
-    "DLC_MP_H4_F_PRIGHT_WRIST_0_3": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_H4_F_PRIGHT_WRIST_0_3",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 15,
-        "textureId": 3,
-        "name": "Yellow Bangles (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF",
-            "LIGHT_UP"
-        ]
-    },
-    "DLC_MP_H4_F_PRIGHT_WRIST_0_4": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_H4_F_PRIGHT_WRIST_0_4",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 15,
-        "textureId": 4,
-        "name": "Orange Bangles (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF",
-            "LIGHT_UP"
-        ]
-    },
-    "DLC_MP_H4_F_PRIGHT_WRIST_0_5": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_H4_F_PRIGHT_WRIST_0_5",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 15,
-        "textureId": 5,
-        "name": "Green Bangles (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF",
-            "LIGHT_UP"
-        ]
-    },
-    "DLC_MP_H4_F_PRIGHT_WRIST_0_6": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_H4_F_PRIGHT_WRIST_0_6",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 15,
-        "textureId": 6,
-        "name": "Red & Blue Bangles (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF",
-            "LIGHT_UP"
-        ]
-    },
-    "DLC_MP_H4_F_PRIGHT_WRIST_0_7": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_H4_F_PRIGHT_WRIST_0_7",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 15,
-        "textureId": 7,
-        "name": "Yellow & Orange Bangles (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF",
-            "LIGHT_UP"
-        ]
-    },
-    "DLC_MP_H4_F_PRIGHT_WRIST_0_8": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_H4_F_PRIGHT_WRIST_0_8",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 15,
-        "textureId": 8,
-        "name": "Green & Pink Bangles (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF",
-            "LIGHT_UP"
-        ]
-    },
-    "DLC_MP_H4_F_PRIGHT_WRIST_0_9": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_H4_F_PRIGHT_WRIST_0_9",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 15,
-        "textureId": 9,
-        "name": "Rainbow Bangles (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF",
-            "LIGHT_UP"
-        ]
-    },
-    "DLC_MP_H4_M_PRIGHT_WRIST_0_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_H4_M_PRIGHT_WRIST_0_0",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 8,
-        "textureId": 0,
-        "name": "Blue Bangles (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF",
-            "LIGHT_UP"
-        ]
-    },
-    "DLC_MP_H4_M_PRIGHT_WRIST_0_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_H4_M_PRIGHT_WRIST_0_1",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 8,
-        "textureId": 1,
-        "name": "Red Bangles (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF",
-            "LIGHT_UP"
-        ]
-    },
-    "DLC_MP_H4_M_PRIGHT_WRIST_0_10": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_H4_M_PRIGHT_WRIST_0_10",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 8,
-        "textureId": 10,
-        "name": "Sunset Bangles (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF",
-            "LIGHT_UP"
-        ]
-    },
-    "DLC_MP_H4_M_PRIGHT_WRIST_0_11": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_H4_M_PRIGHT_WRIST_0_11",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 8,
-        "textureId": 11,
-        "name": "Tropical Bangles (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF",
-            "LIGHT_UP"
-        ]
-    },
-    "DLC_MP_H4_M_PRIGHT_WRIST_0_2": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_H4_M_PRIGHT_WRIST_0_2",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 8,
-        "textureId": 2,
-        "name": "Pink Bangles (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF",
-            "LIGHT_UP"
-        ]
-    },
-    "DLC_MP_H4_M_PRIGHT_WRIST_0_3": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_H4_M_PRIGHT_WRIST_0_3",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 8,
-        "textureId": 3,
-        "name": "Yellow Bangles (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF",
-            "LIGHT_UP"
-        ]
-    },
-    "DLC_MP_H4_M_PRIGHT_WRIST_0_4": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_H4_M_PRIGHT_WRIST_0_4",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 8,
-        "textureId": 4,
-        "name": "Orange Bangles (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF",
-            "LIGHT_UP"
-        ]
-    },
-    "DLC_MP_H4_M_PRIGHT_WRIST_0_5": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_H4_M_PRIGHT_WRIST_0_5",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 8,
-        "textureId": 5,
-        "name": "Green Bangles (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF",
-            "LIGHT_UP"
-        ]
-    },
-    "DLC_MP_H4_M_PRIGHT_WRIST_0_6": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_H4_M_PRIGHT_WRIST_0_6",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 8,
-        "textureId": 6,
-        "name": "Red & Blue Bangles (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF",
-            "LIGHT_UP"
-        ]
-    },
-    "DLC_MP_H4_M_PRIGHT_WRIST_0_7": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_H4_M_PRIGHT_WRIST_0_7",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 8,
-        "textureId": 7,
-        "name": "Yellow & Orange Bangles (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF",
-            "LIGHT_UP"
-        ]
-    },
-    "DLC_MP_H4_M_PRIGHT_WRIST_0_8": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_H4_M_PRIGHT_WRIST_0_8",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 8,
-        "textureId": 8,
-        "name": "Green & Pink Bangles (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF",
-            "LIGHT_UP"
-        ]
-    },
-    "DLC_MP_H4_M_PRIGHT_WRIST_0_9": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_H4_M_PRIGHT_WRIST_0_9",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 8,
-        "textureId": 9,
-        "name": "Rainbow Bangles (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF",
-            "LIGHT_UP"
-        ]
-    },
-    "DLC_MP_BIKER_M_PRIGHT_WRIST_0_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_BIKER_M_PRIGHT_WRIST_0_0",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 0,
-        "textureId": 0,
-        "name": "Light Wrist Chain (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_BIKER_M_PRIGHT_WRIST_1_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_BIKER_M_PRIGHT_WRIST_1_0",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 1,
-        "textureId": 0,
-        "name": "Chunky Wrist Chain (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_BIKER_M_PRIGHT_WRIST_2_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_BIKER_M_PRIGHT_WRIST_2_0",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 2,
-        "textureId": 0,
-        "name": "Square Wrist Chain (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_BIKER_M_PRIGHT_WRIST_3_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_BIKER_M_PRIGHT_WRIST_3_0",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 3,
-        "textureId": 0,
-        "name": "Skull Wrist Chain (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_BIKER_M_PRIGHT_WRIST_4_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_BIKER_M_PRIGHT_WRIST_4_0",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 4,
-        "textureId": 0,
-        "name": "Tread Wrist Chain (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_BIKER_M_PRIGHT_WRIST_5_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_BIKER_M_PRIGHT_WRIST_5_0",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 5,
-        "textureId": 0,
-        "name": "Gear Wrist Chains (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_BIKER_M_PRIGHT_WRIST_6_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_BIKER_M_PRIGHT_WRIST_6_0",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 6,
-        "textureId": 0,
-        "name": "Spiked Gauntlet (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_BIKER_M_PRIGHT_WRIST_7_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_BIKER_M_PRIGHT_WRIST_7_0",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 7,
-        "textureId": 0,
-        "name": "Black Gauntlet (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_BIKER_M_PRIGHT_WRIST_7_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_BIKER_M_PRIGHT_WRIST_7_1",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 7,
-        "textureId": 1,
-        "name": "Chocolate Gauntlet (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_BIKER_M_PRIGHT_WRIST_7_2": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_BIKER_M_PRIGHT_WRIST_7_2",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 7,
-        "textureId": 2,
-        "name": "Tan Gauntlet (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_BIKER_M_PRIGHT_WRIST_7_3": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_BIKER_M_PRIGHT_WRIST_7_3",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 7,
-        "textureId": 3,
-        "name": "Ox Blood Gauntlet (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_BIKER_F_PRIGHT_WRIST_0_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_BIKER_F_PRIGHT_WRIST_0_0",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 7,
-        "textureId": 0,
-        "name": "Light Wrist Chain (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_BIKER_F_PRIGHT_WRIST_1_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_BIKER_F_PRIGHT_WRIST_1_0",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 8,
-        "textureId": 0,
-        "name": "Chunky Wrist Chain (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_BIKER_F_PRIGHT_WRIST_2_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_BIKER_F_PRIGHT_WRIST_2_0",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 9,
-        "textureId": 0,
-        "name": "Square Wrist Chain (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_BIKER_F_PRIGHT_WRIST_3_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_BIKER_F_PRIGHT_WRIST_3_0",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 10,
-        "textureId": 0,
-        "name": "Skull Wrist Chain (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_BIKER_F_PRIGHT_WRIST_4_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_BIKER_F_PRIGHT_WRIST_4_0",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 11,
-        "textureId": 0,
-        "name": "Tread Wrist Chain (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_BIKER_F_PRIGHT_WRIST_5_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_BIKER_F_PRIGHT_WRIST_5_0",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 12,
-        "textureId": 0,
-        "name": "Gear Wrist Chains (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_BIKER_F_PRIGHT_WRIST_6_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_BIKER_F_PRIGHT_WRIST_6_0",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 13,
-        "textureId": 0,
-        "name": "Spiked Gauntlet (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_BIKER_F_PRIGHT_WRIST_7_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_BIKER_F_PRIGHT_WRIST_7_0",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 14,
-        "textureId": 0,
-        "name": "Black Gauntlet (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_BIKER_F_PRIGHT_WRIST_7_1": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_BIKER_F_PRIGHT_WRIST_7_1",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 14,
-        "textureId": 1,
-        "name": "Chocolate Gauntlet (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_BIKER_F_PRIGHT_WRIST_7_2": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_BIKER_F_PRIGHT_WRIST_7_2",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 14,
-        "textureId": 2,
-        "name": "Tan Gauntlet (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_BIKER_F_PRIGHT_WRIST_7_3": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_BIKER_F_PRIGHT_WRIST_7_3",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 14,
-        "textureId": 3,
-        "name": "Ox Blood Gauntlet (R)",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_SUM2_F_PRIGHT_WRIST_0_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_SUM2_F_PRIGHT_WRIST_0_0",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 16,
-        "textureId": 0,
-        "name": "Gold Meander Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_SUM2_F_PRIGHT_WRIST_0_1": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_SUM2_F_PRIGHT_WRIST_0_1",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 16,
-        "textureId": 1,
-        "name": "Silver Meander Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_SUM2_F_PRIGHT_WRIST_0_2": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_SUM2_F_PRIGHT_WRIST_0_2",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 16,
-        "textureId": 2,
-        "name": "Rose Meander Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_LUXE2_F_PRIGHT_WRIST_0_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_LUXE2_F_PRIGHT_WRIST_0_0",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 0,
-        "textureId": 0,
-        "name": "Gold Snake Cuff",
-        "price": 32750,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_LUXE2_F_PRIGHT_WRIST_1_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_LUXE2_F_PRIGHT_WRIST_1_0",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 1,
-        "textureId": 0,
-        "name": "Gold Diamond Cuff",
-        "price": 40000,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_LUXE2_F_PRIGHT_WRIST_2_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_LUXE2_F_PRIGHT_WRIST_2_0",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 2,
-        "textureId": 0,
-        "name": "Gold Plain Cuff",
-        "price": 28450,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_LUXE2_F_PRIGHT_WRIST_3_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_LUXE2_F_PRIGHT_WRIST_3_0",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 3,
-        "textureId": 0,
-        "name": "Gold Le Chien Cuff",
-        "price": 24350,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_LUXE2_F_PRIGHT_WRIST_4_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_LUXE2_F_PRIGHT_WRIST_4_0",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 4,
-        "textureId": 0,
-        "name": "Gold Detail Cuff",
-        "price": 31600,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_LUXE2_F_PRIGHT_WRIST_5_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_LUXE2_F_PRIGHT_WRIST_5_0",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 5,
-        "textureId": 0,
-        "name": "Gold Swirl Cuff",
-        "price": 33590,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_LUXE2_F_PRIGHT_WRIST_6_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_LUXE2_F_PRIGHT_WRIST_6_0",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 6,
-        "textureId": 0,
-        "name": "Gold Textured Cuff",
-        "price": 38720,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_SUM2_M_PRIGHT_WRIST_0_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_SUM2_M_PRIGHT_WRIST_0_0",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 9,
-        "textureId": 0,
-        "name": "Gold Meander Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_SUM2_M_PRIGHT_WRIST_0_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_SUM2_M_PRIGHT_WRIST_0_1",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 9,
-        "textureId": 1,
-        "name": "Silver Meander Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    },
-    "DLC_MP_SUM2_M_PRIGHT_WRIST_0_2": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_SUM2_M_PRIGHT_WRIST_0_2",
-        "anchorPoint": "ANCHOR_RIGHT_WRIST",
-        "componentId": 7,
-        "drawableId": 9,
-        "textureId": 2,
-        "name": "Rose Meander Bracelet",
-        "price": 0,
-        "restrictionTags": [
-            "WATCH",
-            "CUFF"
-        ]
-    }
+  "DLC_MP_SUM23_M_PRIGHT_WRIST_0_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_SUM23_M_PRIGHT_WRIST_0_0",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 13,
+    "textureId": 0,
+    "name": "Aqua Hippy Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_SUM23_M_PRIGHT_WRIST_0_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_SUM23_M_PRIGHT_WRIST_0_1",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 13,
+    "textureId": 1,
+    "name": "Moss Hippy Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_SUM23_M_PRIGHT_WRIST_0_2": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_SUM23_M_PRIGHT_WRIST_0_2",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 13,
+    "textureId": 2,
+    "name": "Sand Hippy Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_SUM23_M_PRIGHT_WRIST_0_3": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_SUM23_M_PRIGHT_WRIST_0_3",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 13,
+    "textureId": 3,
+    "name": "Stone Hippy Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_SUM23_M_PRIGHT_WRIST_0_4": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_SUM23_M_PRIGHT_WRIST_0_4",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 13,
+    "textureId": 4,
+    "name": "Bright Hippy Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_SUM23_M_PRIGHT_WRIST_0_5": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_SUM23_M_PRIGHT_WRIST_0_5",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 13,
+    "textureId": 5,
+    "name": "Rust Hippy Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_SUM23_F_PRIGHT_WRIST_0_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_SUM23_F_PRIGHT_WRIST_0_0",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 20,
+    "textureId": 0,
+    "name": "Aqua Hippy Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_SUM23_F_PRIGHT_WRIST_0_1": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_SUM23_F_PRIGHT_WRIST_0_1",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 20,
+    "textureId": 1,
+    "name": "Moss Hippy Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_SUM23_F_PRIGHT_WRIST_0_2": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_SUM23_F_PRIGHT_WRIST_0_2",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 20,
+    "textureId": 2,
+    "name": "Sand Hippy Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_SUM23_F_PRIGHT_WRIST_0_3": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_SUM23_F_PRIGHT_WRIST_0_3",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 20,
+    "textureId": 3,
+    "name": "Stone Hippy Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_SUM23_F_PRIGHT_WRIST_0_4": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_SUM23_F_PRIGHT_WRIST_0_4",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 20,
+    "textureId": 4,
+    "name": "Bright Hippy Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_SUM23_F_PRIGHT_WRIST_0_5": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_SUM23_F_PRIGHT_WRIST_0_5",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 20,
+    "textureId": 5,
+    "name": "Rust Hippy Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_F_PRIGHT_WRIST_0_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_X22_F_PRIGHT_WRIST_0_0",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 17,
+    "textureId": 0,
+    "name": "Silver Chunky Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_F_PRIGHT_WRIST_0_1": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_X22_F_PRIGHT_WRIST_0_1",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 17,
+    "textureId": 1,
+    "name": "Mono Chunky Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_F_PRIGHT_WRIST_0_2": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_X22_F_PRIGHT_WRIST_0_2",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 17,
+    "textureId": 2,
+    "name": "Gold Chunky Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_F_PRIGHT_WRIST_0_3": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_X22_F_PRIGHT_WRIST_0_3",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 17,
+    "textureId": 3,
+    "name": "Rose Chunky Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_F_PRIGHT_WRIST_0_4": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_X22_F_PRIGHT_WRIST_0_4",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 17,
+    "textureId": 4,
+    "name": "Copper Chunky Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_F_PRIGHT_WRIST_1_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_X22_F_PRIGHT_WRIST_1_0",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 18,
+    "textureId": 0,
+    "name": "Silver Chain Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_F_PRIGHT_WRIST_1_1": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_X22_F_PRIGHT_WRIST_1_1",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 18,
+    "textureId": 1,
+    "name": "Mono Chain Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_F_PRIGHT_WRIST_1_2": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_X22_F_PRIGHT_WRIST_1_2",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 18,
+    "textureId": 2,
+    "name": "Gold Chain Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_F_PRIGHT_WRIST_1_3": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_X22_F_PRIGHT_WRIST_1_3",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 18,
+    "textureId": 3,
+    "name": "Rose Chain Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_F_PRIGHT_WRIST_1_4": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_X22_F_PRIGHT_WRIST_1_4",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 18,
+    "textureId": 4,
+    "name": "Copper Chain Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_F_PRIGHT_WRIST_2_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_X22_F_PRIGHT_WRIST_2_0",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 19,
+    "textureId": 0,
+    "name": "Black Woven Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_F_PRIGHT_WRIST_2_1": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_X22_F_PRIGHT_WRIST_2_1",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 19,
+    "textureId": 1,
+    "name": "Dark Gray Woven Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_F_PRIGHT_WRIST_2_10": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_X22_F_PRIGHT_WRIST_2_10",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 19,
+    "textureId": 10,
+    "name": "Chestnut Woven Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_F_PRIGHT_WRIST_2_11": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_X22_F_PRIGHT_WRIST_2_11",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 19,
+    "textureId": 11,
+    "name": "Dark Nut Woven Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_F_PRIGHT_WRIST_2_12": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_X22_F_PRIGHT_WRIST_2_12",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 19,
+    "textureId": 12,
+    "name": "Blue Woven Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_F_PRIGHT_WRIST_2_13": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_X22_F_PRIGHT_WRIST_2_13",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 19,
+    "textureId": 13,
+    "name": "Light Blue Woven Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_F_PRIGHT_WRIST_2_2": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_X22_F_PRIGHT_WRIST_2_2",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 19,
+    "textureId": 2,
+    "name": "Light Gray Woven Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_F_PRIGHT_WRIST_2_3": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_X22_F_PRIGHT_WRIST_2_3",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 19,
+    "textureId": 3,
+    "name": "White Woven Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_F_PRIGHT_WRIST_2_4": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_X22_F_PRIGHT_WRIST_2_4",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 19,
+    "textureId": 4,
+    "name": "Ox Blood Woven Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_F_PRIGHT_WRIST_2_5": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_X22_F_PRIGHT_WRIST_2_5",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 19,
+    "textureId": 5,
+    "name": "Crimson Woven Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_F_PRIGHT_WRIST_2_6": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_X22_F_PRIGHT_WRIST_2_6",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 19,
+    "textureId": 6,
+    "name": "Green Woven Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_F_PRIGHT_WRIST_2_7": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_X22_F_PRIGHT_WRIST_2_7",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 19,
+    "textureId": 7,
+    "name": "Red Woven Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_F_PRIGHT_WRIST_2_8": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_X22_F_PRIGHT_WRIST_2_8",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 19,
+    "textureId": 8,
+    "name": "Orange Woven Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_F_PRIGHT_WRIST_2_9": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_X22_F_PRIGHT_WRIST_2_9",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 19,
+    "textureId": 9,
+    "name": "Mustard Woven Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_M_PRIGHT_WRIST_0_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_X22_M_PRIGHT_WRIST_0_0",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 10,
+    "textureId": 0,
+    "name": "Silver Chunky Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_M_PRIGHT_WRIST_0_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_X22_M_PRIGHT_WRIST_0_1",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 10,
+    "textureId": 1,
+    "name": "Mono Chunky Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_M_PRIGHT_WRIST_0_2": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_X22_M_PRIGHT_WRIST_0_2",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 10,
+    "textureId": 2,
+    "name": "Gold Chunky Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_M_PRIGHT_WRIST_0_3": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_X22_M_PRIGHT_WRIST_0_3",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 10,
+    "textureId": 3,
+    "name": "Rose Chunky Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_M_PRIGHT_WRIST_0_4": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_X22_M_PRIGHT_WRIST_0_4",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 10,
+    "textureId": 4,
+    "name": "Copper Chunky Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_M_PRIGHT_WRIST_1_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_X22_M_PRIGHT_WRIST_1_0",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 11,
+    "textureId": 0,
+    "name": "Silver Chain Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_M_PRIGHT_WRIST_1_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_X22_M_PRIGHT_WRIST_1_1",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 11,
+    "textureId": 1,
+    "name": "Mono Chain Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_M_PRIGHT_WRIST_1_2": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_X22_M_PRIGHT_WRIST_1_2",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 11,
+    "textureId": 2,
+    "name": "Gold Chain Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_M_PRIGHT_WRIST_1_3": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_X22_M_PRIGHT_WRIST_1_3",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 11,
+    "textureId": 3,
+    "name": "Rose Chain Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_M_PRIGHT_WRIST_1_4": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_X22_M_PRIGHT_WRIST_1_4",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 11,
+    "textureId": 4,
+    "name": "Copper Chain Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_M_PRIGHT_WRIST_2_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_X22_M_PRIGHT_WRIST_2_0",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 12,
+    "textureId": 0,
+    "name": "Black Woven Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_M_PRIGHT_WRIST_2_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_X22_M_PRIGHT_WRIST_2_1",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 12,
+    "textureId": 1,
+    "name": "Dark Gray Woven Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_M_PRIGHT_WRIST_2_10": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_X22_M_PRIGHT_WRIST_2_10",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 12,
+    "textureId": 10,
+    "name": "Chestnut Woven Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_M_PRIGHT_WRIST_2_11": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_X22_M_PRIGHT_WRIST_2_11",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 12,
+    "textureId": 11,
+    "name": "Dark Nut Woven Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_M_PRIGHT_WRIST_2_12": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_X22_M_PRIGHT_WRIST_2_12",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 12,
+    "textureId": 12,
+    "name": "Blue Woven Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_M_PRIGHT_WRIST_2_13": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_X22_M_PRIGHT_WRIST_2_13",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 12,
+    "textureId": 13,
+    "name": "Light Blue Woven Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_M_PRIGHT_WRIST_2_2": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_X22_M_PRIGHT_WRIST_2_2",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 12,
+    "textureId": 2,
+    "name": "Light Gray Woven Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_M_PRIGHT_WRIST_2_3": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_X22_M_PRIGHT_WRIST_2_3",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 12,
+    "textureId": 3,
+    "name": "White Woven Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_M_PRIGHT_WRIST_2_4": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_X22_M_PRIGHT_WRIST_2_4",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 12,
+    "textureId": 4,
+    "name": "Ox Blood Woven Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_M_PRIGHT_WRIST_2_5": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_X22_M_PRIGHT_WRIST_2_5",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 12,
+    "textureId": 5,
+    "name": "Crimson Woven Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_M_PRIGHT_WRIST_2_6": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_X22_M_PRIGHT_WRIST_2_6",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 12,
+    "textureId": 6,
+    "name": "Green Woven Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_M_PRIGHT_WRIST_2_7": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_X22_M_PRIGHT_WRIST_2_7",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 12,
+    "textureId": 7,
+    "name": "Red Woven Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_M_PRIGHT_WRIST_2_8": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_X22_M_PRIGHT_WRIST_2_8",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 12,
+    "textureId": 8,
+    "name": "Orange Woven Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_X22_M_PRIGHT_WRIST_2_9": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_X22_M_PRIGHT_WRIST_2_9",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 12,
+    "textureId": 9,
+    "name": "Mustard Woven Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_H4_F_PRIGHT_WRIST_0_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_H4_F_PRIGHT_WRIST_0_0",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 15,
+    "textureId": 0,
+    "name": "Blue Bangles (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF", "LIGHT_UP"]
+  },
+  "DLC_MP_H4_F_PRIGHT_WRIST_0_1": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_H4_F_PRIGHT_WRIST_0_1",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 15,
+    "textureId": 1,
+    "name": "Red Bangles (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF", "LIGHT_UP"]
+  },
+  "DLC_MP_H4_F_PRIGHT_WRIST_0_10": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_H4_F_PRIGHT_WRIST_0_10",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 15,
+    "textureId": 10,
+    "name": "Sunset Bangles (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF", "LIGHT_UP"]
+  },
+  "DLC_MP_H4_F_PRIGHT_WRIST_0_11": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_H4_F_PRIGHT_WRIST_0_11",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 15,
+    "textureId": 11,
+    "name": "Tropical Bangles (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF", "LIGHT_UP"]
+  },
+  "DLC_MP_H4_F_PRIGHT_WRIST_0_2": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_H4_F_PRIGHT_WRIST_0_2",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 15,
+    "textureId": 2,
+    "name": "Pink Bangles (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF", "LIGHT_UP"]
+  },
+  "DLC_MP_H4_F_PRIGHT_WRIST_0_3": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_H4_F_PRIGHT_WRIST_0_3",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 15,
+    "textureId": 3,
+    "name": "Yellow Bangles (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF", "LIGHT_UP"]
+  },
+  "DLC_MP_H4_F_PRIGHT_WRIST_0_4": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_H4_F_PRIGHT_WRIST_0_4",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 15,
+    "textureId": 4,
+    "name": "Orange Bangles (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF", "LIGHT_UP"]
+  },
+  "DLC_MP_H4_F_PRIGHT_WRIST_0_5": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_H4_F_PRIGHT_WRIST_0_5",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 15,
+    "textureId": 5,
+    "name": "Green Bangles (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF", "LIGHT_UP"]
+  },
+  "DLC_MP_H4_F_PRIGHT_WRIST_0_6": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_H4_F_PRIGHT_WRIST_0_6",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 15,
+    "textureId": 6,
+    "name": "Red & Blue Bangles (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF", "LIGHT_UP"]
+  },
+  "DLC_MP_H4_F_PRIGHT_WRIST_0_7": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_H4_F_PRIGHT_WRIST_0_7",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 15,
+    "textureId": 7,
+    "name": "Yellow & Orange Bangles (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF", "LIGHT_UP"]
+  },
+  "DLC_MP_H4_F_PRIGHT_WRIST_0_8": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_H4_F_PRIGHT_WRIST_0_8",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 15,
+    "textureId": 8,
+    "name": "Green & Pink Bangles (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF", "LIGHT_UP"]
+  },
+  "DLC_MP_H4_F_PRIGHT_WRIST_0_9": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_H4_F_PRIGHT_WRIST_0_9",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 15,
+    "textureId": 9,
+    "name": "Rainbow Bangles (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF", "LIGHT_UP"]
+  },
+  "DLC_MP_H4_M_PRIGHT_WRIST_0_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_H4_M_PRIGHT_WRIST_0_0",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 8,
+    "textureId": 0,
+    "name": "Blue Bangles (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF", "LIGHT_UP"]
+  },
+  "DLC_MP_H4_M_PRIGHT_WRIST_0_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_H4_M_PRIGHT_WRIST_0_1",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 8,
+    "textureId": 1,
+    "name": "Red Bangles (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF", "LIGHT_UP"]
+  },
+  "DLC_MP_H4_M_PRIGHT_WRIST_0_10": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_H4_M_PRIGHT_WRIST_0_10",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 8,
+    "textureId": 10,
+    "name": "Sunset Bangles (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF", "LIGHT_UP"]
+  },
+  "DLC_MP_H4_M_PRIGHT_WRIST_0_11": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_H4_M_PRIGHT_WRIST_0_11",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 8,
+    "textureId": 11,
+    "name": "Tropical Bangles (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF", "LIGHT_UP"]
+  },
+  "DLC_MP_H4_M_PRIGHT_WRIST_0_2": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_H4_M_PRIGHT_WRIST_0_2",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 8,
+    "textureId": 2,
+    "name": "Pink Bangles (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF", "LIGHT_UP"]
+  },
+  "DLC_MP_H4_M_PRIGHT_WRIST_0_3": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_H4_M_PRIGHT_WRIST_0_3",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 8,
+    "textureId": 3,
+    "name": "Yellow Bangles (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF", "LIGHT_UP"]
+  },
+  "DLC_MP_H4_M_PRIGHT_WRIST_0_4": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_H4_M_PRIGHT_WRIST_0_4",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 8,
+    "textureId": 4,
+    "name": "Orange Bangles (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF", "LIGHT_UP"]
+  },
+  "DLC_MP_H4_M_PRIGHT_WRIST_0_5": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_H4_M_PRIGHT_WRIST_0_5",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 8,
+    "textureId": 5,
+    "name": "Green Bangles (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF", "LIGHT_UP"]
+  },
+  "DLC_MP_H4_M_PRIGHT_WRIST_0_6": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_H4_M_PRIGHT_WRIST_0_6",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 8,
+    "textureId": 6,
+    "name": "Red & Blue Bangles (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF", "LIGHT_UP"]
+  },
+  "DLC_MP_H4_M_PRIGHT_WRIST_0_7": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_H4_M_PRIGHT_WRIST_0_7",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 8,
+    "textureId": 7,
+    "name": "Yellow & Orange Bangles (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF", "LIGHT_UP"]
+  },
+  "DLC_MP_H4_M_PRIGHT_WRIST_0_8": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_H4_M_PRIGHT_WRIST_0_8",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 8,
+    "textureId": 8,
+    "name": "Green & Pink Bangles (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF", "LIGHT_UP"]
+  },
+  "DLC_MP_H4_M_PRIGHT_WRIST_0_9": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_H4_M_PRIGHT_WRIST_0_9",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 8,
+    "textureId": 9,
+    "name": "Rainbow Bangles (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF", "LIGHT_UP"]
+  },
+  "DLC_MP_BIKER_M_PRIGHT_WRIST_0_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_BIKER_M_PRIGHT_WRIST_0_0",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 0,
+    "textureId": 0,
+    "name": "Light Wrist Chain (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_BIKER_M_PRIGHT_WRIST_1_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_BIKER_M_PRIGHT_WRIST_1_0",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 1,
+    "textureId": 0,
+    "name": "Chunky Wrist Chain (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_BIKER_M_PRIGHT_WRIST_2_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_BIKER_M_PRIGHT_WRIST_2_0",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 2,
+    "textureId": 0,
+    "name": "Square Wrist Chain (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_BIKER_M_PRIGHT_WRIST_3_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_BIKER_M_PRIGHT_WRIST_3_0",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 3,
+    "textureId": 0,
+    "name": "Skull Wrist Chain (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_BIKER_M_PRIGHT_WRIST_4_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_BIKER_M_PRIGHT_WRIST_4_0",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 4,
+    "textureId": 0,
+    "name": "Tread Wrist Chain (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_BIKER_M_PRIGHT_WRIST_5_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_BIKER_M_PRIGHT_WRIST_5_0",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 5,
+    "textureId": 0,
+    "name": "Gear Wrist Chains (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_BIKER_M_PRIGHT_WRIST_6_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_BIKER_M_PRIGHT_WRIST_6_0",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 6,
+    "textureId": 0,
+    "name": "Spiked Gauntlet (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_BIKER_M_PRIGHT_WRIST_7_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_BIKER_M_PRIGHT_WRIST_7_0",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 7,
+    "textureId": 0,
+    "name": "Black Gauntlet (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_BIKER_M_PRIGHT_WRIST_7_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_BIKER_M_PRIGHT_WRIST_7_1",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 7,
+    "textureId": 1,
+    "name": "Chocolate Gauntlet (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_BIKER_M_PRIGHT_WRIST_7_2": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_BIKER_M_PRIGHT_WRIST_7_2",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 7,
+    "textureId": 2,
+    "name": "Tan Gauntlet (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_BIKER_M_PRIGHT_WRIST_7_3": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_BIKER_M_PRIGHT_WRIST_7_3",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 7,
+    "textureId": 3,
+    "name": "Ox Blood Gauntlet (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_BIKER_F_PRIGHT_WRIST_0_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_BIKER_F_PRIGHT_WRIST_0_0",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 7,
+    "textureId": 0,
+    "name": "Light Wrist Chain (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_BIKER_F_PRIGHT_WRIST_1_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_BIKER_F_PRIGHT_WRIST_1_0",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 8,
+    "textureId": 0,
+    "name": "Chunky Wrist Chain (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_BIKER_F_PRIGHT_WRIST_2_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_BIKER_F_PRIGHT_WRIST_2_0",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 9,
+    "textureId": 0,
+    "name": "Square Wrist Chain (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_BIKER_F_PRIGHT_WRIST_3_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_BIKER_F_PRIGHT_WRIST_3_0",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 10,
+    "textureId": 0,
+    "name": "Skull Wrist Chain (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_BIKER_F_PRIGHT_WRIST_4_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_BIKER_F_PRIGHT_WRIST_4_0",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 11,
+    "textureId": 0,
+    "name": "Tread Wrist Chain (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_BIKER_F_PRIGHT_WRIST_5_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_BIKER_F_PRIGHT_WRIST_5_0",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 12,
+    "textureId": 0,
+    "name": "Gear Wrist Chains (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_BIKER_F_PRIGHT_WRIST_6_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_BIKER_F_PRIGHT_WRIST_6_0",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 13,
+    "textureId": 0,
+    "name": "Spiked Gauntlet (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_BIKER_F_PRIGHT_WRIST_7_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_BIKER_F_PRIGHT_WRIST_7_0",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 14,
+    "textureId": 0,
+    "name": "Black Gauntlet (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_BIKER_F_PRIGHT_WRIST_7_1": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_BIKER_F_PRIGHT_WRIST_7_1",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 14,
+    "textureId": 1,
+    "name": "Chocolate Gauntlet (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_BIKER_F_PRIGHT_WRIST_7_2": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_BIKER_F_PRIGHT_WRIST_7_2",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 14,
+    "textureId": 2,
+    "name": "Tan Gauntlet (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_BIKER_F_PRIGHT_WRIST_7_3": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_BIKER_F_PRIGHT_WRIST_7_3",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 14,
+    "textureId": 3,
+    "name": "Ox Blood Gauntlet (R)",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_SUM2_F_PRIGHT_WRIST_0_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_SUM2_F_PRIGHT_WRIST_0_0",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 16,
+    "textureId": 0,
+    "name": "Gold Meander Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_SUM2_F_PRIGHT_WRIST_0_1": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_SUM2_F_PRIGHT_WRIST_0_1",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 16,
+    "textureId": 1,
+    "name": "Silver Meander Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_SUM2_F_PRIGHT_WRIST_0_2": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_SUM2_F_PRIGHT_WRIST_0_2",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 16,
+    "textureId": 2,
+    "name": "Rose Meander Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_LUXE2_F_PRIGHT_WRIST_0_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_LUXE2_F_PRIGHT_WRIST_0_0",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 0,
+    "textureId": 0,
+    "name": "Gold Snake Cuff",
+    "price": 32750,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_LUXE2_F_PRIGHT_WRIST_1_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_LUXE2_F_PRIGHT_WRIST_1_0",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 1,
+    "textureId": 0,
+    "name": "Gold Diamond Cuff",
+    "price": 40000,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_LUXE2_F_PRIGHT_WRIST_2_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_LUXE2_F_PRIGHT_WRIST_2_0",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 2,
+    "textureId": 0,
+    "name": "Gold Plain Cuff",
+    "price": 28450,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_LUXE2_F_PRIGHT_WRIST_3_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_LUXE2_F_PRIGHT_WRIST_3_0",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 3,
+    "textureId": 0,
+    "name": "Gold Le Chien Cuff",
+    "price": 24350,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_LUXE2_F_PRIGHT_WRIST_4_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_LUXE2_F_PRIGHT_WRIST_4_0",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 4,
+    "textureId": 0,
+    "name": "Gold Detail Cuff",
+    "price": 31600,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_LUXE2_F_PRIGHT_WRIST_5_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_LUXE2_F_PRIGHT_WRIST_5_0",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 5,
+    "textureId": 0,
+    "name": "Gold Swirl Cuff",
+    "price": 33590,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_LUXE2_F_PRIGHT_WRIST_6_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_LUXE2_F_PRIGHT_WRIST_6_0",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 6,
+    "textureId": 0,
+    "name": "Gold Textured Cuff",
+    "price": 38720,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_SUM2_M_PRIGHT_WRIST_0_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_SUM2_M_PRIGHT_WRIST_0_0",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 9,
+    "textureId": 0,
+    "name": "Gold Meander Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_SUM2_M_PRIGHT_WRIST_0_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_SUM2_M_PRIGHT_WRIST_0_1",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 9,
+    "textureId": 1,
+    "name": "Silver Meander Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  },
+  "DLC_MP_SUM2_M_PRIGHT_WRIST_0_2": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_SUM2_M_PRIGHT_WRIST_0_2",
+    "anchorPoint": "ANCHOR_RIGHT_WRIST",
+    "componentId": 7,
+    "drawableId": 9,
+    "textureId": 2,
+    "name": "Rose Meander Bracelet",
+    "price": 0,
+    "restrictionTags": ["WATCH", "CUFF"]
+  }
 }

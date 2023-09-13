@@ -1,146 +1,134 @@
 {
-    "DLC_MP_APA_F_SPECIAL2_1_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_APA_F_SPECIAL2_1_0",
-        "type": "PV_COMP_TASK",
-        "componentId": 9,
-        "drawableId": 17,
-        "textureId": 0,
-        "name": "Tan Utility Vest",
-        "price": 0,
-        "restrictionTags": null
-    },
-    "DLC_MP_APA_F_SPECIAL2_1_1": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_APA_F_SPECIAL2_1_1",
-        "type": "PV_COMP_TASK",
-        "componentId": 9,
-        "drawableId": 17,
-        "textureId": 1,
-        "name": "Khaki Utility Vest",
-        "price": 0,
-        "restrictionTags": null
-    },
-    "DLC_MP_APA_F_SPECIAL2_1_2": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_APA_F_SPECIAL2_1_2",
-        "type": "PV_COMP_TASK",
-        "componentId": 9,
-        "drawableId": 17,
-        "textureId": 2,
-        "name": "Black Utility Vest",
-        "price": 0,
-        "restrictionTags": null
-    },
-    "DLC_MP_APA_F_SPECIAL2_2_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_APA_F_SPECIAL2_2_0",
-        "type": "PV_COMP_TASK",
-        "componentId": 9,
-        "drawableId": 18,
-        "textureId": 0,
-        "name": "Tan Pocket Utility Vest",
-        "price": 0,
-        "restrictionTags": null
-    },
-    "DLC_MP_APA_F_SPECIAL2_2_1": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_APA_F_SPECIAL2_2_1",
-        "type": "PV_COMP_TASK",
-        "componentId": 9,
-        "drawableId": 18,
-        "textureId": 1,
-        "name": "Khaki Pocket Utility Vest",
-        "price": 0,
-        "restrictionTags": null
-    },
-    "DLC_MP_APA_F_SPECIAL2_2_2": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_APA_F_SPECIAL2_2_2",
-        "type": "PV_COMP_TASK",
-        "componentId": 9,
-        "drawableId": 18,
-        "textureId": 2,
-        "name": "Black Pocket Utility Vest",
-        "price": 0,
-        "restrictionTags": null
-    },
-    "DLC_MP_APA_M_SPECIAL2_1_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_APA_M_SPECIAL2_1_0",
-        "type": "PV_COMP_TASK",
-        "componentId": 9,
-        "drawableId": 15,
-        "textureId": 0,
-        "name": "Tan Utility Vest",
-        "price": 0,
-        "restrictionTags": [
-            "APART_DRAW_1"
-        ]
-    },
-    "DLC_MP_APA_M_SPECIAL2_1_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_APA_M_SPECIAL2_1_1",
-        "type": "PV_COMP_TASK",
-        "componentId": 9,
-        "drawableId": 15,
-        "textureId": 1,
-        "name": "Khaki Utility Vest",
-        "price": 0,
-        "restrictionTags": [
-            "APART_DRAW_1"
-        ]
-    },
-    "DLC_MP_APA_M_SPECIAL2_1_2": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_APA_M_SPECIAL2_1_2",
-        "type": "PV_COMP_TASK",
-        "componentId": 9,
-        "drawableId": 15,
-        "textureId": 2,
-        "name": "Black Utility Vest",
-        "price": 0,
-        "restrictionTags": [
-            "APART_DRAW_1"
-        ]
-    },
-    "DLC_MP_APA_M_SPECIAL2_2_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_APA_M_SPECIAL2_2_0",
-        "type": "PV_COMP_TASK",
-        "componentId": 9,
-        "drawableId": 16,
-        "textureId": 0,
-        "name": "Tan Pocket Utility Vest",
-        "price": 0,
-        "restrictionTags": [
-            "APART_DRAW_2"
-        ]
-    },
-    "DLC_MP_APA_M_SPECIAL2_2_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_APA_M_SPECIAL2_2_1",
-        "type": "PV_COMP_TASK",
-        "componentId": 9,
-        "drawableId": 16,
-        "textureId": 1,
-        "name": "Khaki Pocket Utility Vest",
-        "price": 0,
-        "restrictionTags": [
-            "APART_DRAW_2"
-        ]
-    },
-    "DLC_MP_APA_M_SPECIAL2_2_2": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_APA_M_SPECIAL2_2_2",
-        "type": "PV_COMP_TASK",
-        "componentId": 9,
-        "drawableId": 16,
-        "textureId": 2,
-        "name": "Black Pocket Utility Vest",
-        "price": 0,
-        "restrictionTags": [
-            "APART_DRAW_2"
-        ]
-    }
+  "DLC_MP_APA_F_SPECIAL2_1_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_APA_F_SPECIAL2_1_0",
+    "type": "PV_COMP_TASK",
+    "componentId": 9,
+    "drawableId": 17,
+    "textureId": 0,
+    "name": "Tan Utility Vest",
+    "price": 0,
+    "restrictionTags": null
+  },
+  "DLC_MP_APA_F_SPECIAL2_1_1": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_APA_F_SPECIAL2_1_1",
+    "type": "PV_COMP_TASK",
+    "componentId": 9,
+    "drawableId": 17,
+    "textureId": 1,
+    "name": "Khaki Utility Vest",
+    "price": 0,
+    "restrictionTags": null
+  },
+  "DLC_MP_APA_F_SPECIAL2_1_2": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_APA_F_SPECIAL2_1_2",
+    "type": "PV_COMP_TASK",
+    "componentId": 9,
+    "drawableId": 17,
+    "textureId": 2,
+    "name": "Black Utility Vest",
+    "price": 0,
+    "restrictionTags": null
+  },
+  "DLC_MP_APA_F_SPECIAL2_2_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_APA_F_SPECIAL2_2_0",
+    "type": "PV_COMP_TASK",
+    "componentId": 9,
+    "drawableId": 18,
+    "textureId": 0,
+    "name": "Tan Pocket Utility Vest",
+    "price": 0,
+    "restrictionTags": null
+  },
+  "DLC_MP_APA_F_SPECIAL2_2_1": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_APA_F_SPECIAL2_2_1",
+    "type": "PV_COMP_TASK",
+    "componentId": 9,
+    "drawableId": 18,
+    "textureId": 1,
+    "name": "Khaki Pocket Utility Vest",
+    "price": 0,
+    "restrictionTags": null
+  },
+  "DLC_MP_APA_F_SPECIAL2_2_2": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_APA_F_SPECIAL2_2_2",
+    "type": "PV_COMP_TASK",
+    "componentId": 9,
+    "drawableId": 18,
+    "textureId": 2,
+    "name": "Black Pocket Utility Vest",
+    "price": 0,
+    "restrictionTags": null
+  },
+  "DLC_MP_APA_M_SPECIAL2_1_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_APA_M_SPECIAL2_1_0",
+    "type": "PV_COMP_TASK",
+    "componentId": 9,
+    "drawableId": 15,
+    "textureId": 0,
+    "name": "Tan Utility Vest",
+    "price": 0,
+    "restrictionTags": ["APART_DRAW_1"]
+  },
+  "DLC_MP_APA_M_SPECIAL2_1_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_APA_M_SPECIAL2_1_1",
+    "type": "PV_COMP_TASK",
+    "componentId": 9,
+    "drawableId": 15,
+    "textureId": 1,
+    "name": "Khaki Utility Vest",
+    "price": 0,
+    "restrictionTags": ["APART_DRAW_1"]
+  },
+  "DLC_MP_APA_M_SPECIAL2_1_2": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_APA_M_SPECIAL2_1_2",
+    "type": "PV_COMP_TASK",
+    "componentId": 9,
+    "drawableId": 15,
+    "textureId": 2,
+    "name": "Black Utility Vest",
+    "price": 0,
+    "restrictionTags": ["APART_DRAW_1"]
+  },
+  "DLC_MP_APA_M_SPECIAL2_2_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_APA_M_SPECIAL2_2_0",
+    "type": "PV_COMP_TASK",
+    "componentId": 9,
+    "drawableId": 16,
+    "textureId": 0,
+    "name": "Tan Pocket Utility Vest",
+    "price": 0,
+    "restrictionTags": ["APART_DRAW_2"]
+  },
+  "DLC_MP_APA_M_SPECIAL2_2_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_APA_M_SPECIAL2_2_1",
+    "type": "PV_COMP_TASK",
+    "componentId": 9,
+    "drawableId": 16,
+    "textureId": 1,
+    "name": "Khaki Pocket Utility Vest",
+    "price": 0,
+    "restrictionTags": ["APART_DRAW_2"]
+  },
+  "DLC_MP_APA_M_SPECIAL2_2_2": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_APA_M_SPECIAL2_2_2",
+    "type": "PV_COMP_TASK",
+    "componentId": 9,
+    "drawableId": 16,
+    "textureId": 2,
+    "name": "Black Pocket Utility Vest",
+    "price": 0,
+    "restrictionTags": ["APART_DRAW_2"]
+  }
 }

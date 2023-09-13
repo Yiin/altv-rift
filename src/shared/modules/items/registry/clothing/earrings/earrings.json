@@ -1,2411 +1,2015 @@
 {
-    "DLC_MP_HEIST_F_EAR0_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_HEIST_F_EAR0_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 0,
-        "textureId": 0,
-        "name": "Gray Earpiece",
-        "price": 1200,
-        "restrictionTags": [
-            "EAR_PIECE",
-            "GUN_ACCS"
-        ]
-    },
-    "DLC_MP_HEIST_F_EAR1_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_HEIST_F_EAR1_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 1,
-        "textureId": 0,
-        "name": "Red Earpiece",
-        "price": 1350,
-        "restrictionTags": [
-            "EAR_PIECE",
-            "GUN_ACCS"
-        ]
-    },
-    "DLC_MP_HEIST_F_EAR2_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_HEIST_F_EAR2_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 2,
-        "textureId": 0,
-        "name": "LCD Earpiece",
-        "price": 1500,
-        "restrictionTags": [
-            "EAR_PIECE",
-            "GUN_ACCS"
-        ]
-    },
-    "DLC_MP_HEIST_M_EAR0_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_HEIST_M_EAR0_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 0,
-        "textureId": 0,
-        "name": "Gray Earpiece",
-        "price": 1200,
-        "restrictionTags": [
-            "EAR_PIECE",
-            "GUN_ACCS"
-        ]
-    },
-    "DLC_MP_HEIST_M_EAR1_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_HEIST_M_EAR1_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 1,
-        "textureId": 0,
-        "name": "Red Earpiece",
-        "price": 1350,
-        "restrictionTags": [
-            "EAR_PIECE",
-            "GUN_ACCS"
-        ]
-    },
-    "DLC_MP_HEIST_M_EAR2_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_HEIST_M_EAR2_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 2,
-        "textureId": 0,
-        "name": "LCD Earpiece",
-        "price": 1500,
-        "restrictionTags": [
-            "EAR_PIECE",
-            "GUN_ACCS"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_0_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_0_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 3,
-        "textureId": 0,
-        "name": "Gold Angled Hoop (L)",
-        "price": 1575,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_0_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_0_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 3,
-        "textureId": 1,
-        "name": "Black Angled Hoop (L)",
-        "price": 1440,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_0_2": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_0_2",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 3,
-        "textureId": 2,
-        "name": "Platinum Angled Hoop (L)",
-        "price": 1990,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_1_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_1_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 4,
-        "textureId": 0,
-        "name": "Gold Angled Hoop (R)",
-        "price": 1575,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_1_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_1_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 4,
-        "textureId": 1,
-        "name": "Black Angled Hoop (R)",
-        "price": 1440,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_1_2": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_1_2",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 4,
-        "textureId": 2,
-        "name": "Platinum Angled Hoop (R)",
-        "price": 1990,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_10_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_10_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 13,
-        "textureId": 0,
-        "name": "Gold Pillow Stud (R)",
-        "price": 1525,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_10_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_10_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 13,
-        "textureId": 1,
-        "name": "Black Pillow Stud (R)",
-        "price": 1400,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_10_2": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_10_2",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 13,
-        "textureId": 2,
-        "name": "Platinum Pillow Stud (R)",
-        "price": 1875,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_11_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_11_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 14,
-        "textureId": 0,
-        "name": "Gold Pillow Studs",
-        "price": 6100,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_11_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_11_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 14,
-        "textureId": 1,
-        "name": "Black Pillow Studs",
-        "price": 5600,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_11_2": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_11_2",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 14,
-        "textureId": 2,
-        "name": "Platinum Pillow Studs",
-        "price": 7500,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_12_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_12_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 15,
-        "textureId": 0,
-        "name": "Gold Gem Stud (L)",
-        "price": 1340,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_12_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_12_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 15,
-        "textureId": 1,
-        "name": "Black Gem Stud (L)",
-        "price": 1215,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_12_2": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_12_2",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 15,
-        "textureId": 2,
-        "name": "Platinum Gem Stud (L)",
-        "price": 1690,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_13_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_13_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 16,
-        "textureId": 0,
-        "name": "Gold Gem Stud (R)",
-        "price": 1340,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_13_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_13_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 16,
-        "textureId": 1,
-        "name": "Black Gem Stud (R)",
-        "price": 1215,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_13_2": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_13_2",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 16,
-        "textureId": 2,
-        "name": "Platinum Gem Stud (R)",
-        "price": 1690,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_14_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_14_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 17,
-        "textureId": 0,
-        "name": "Gold Gem Studs",
-        "price": 5350,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_14_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_14_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 17,
-        "textureId": 1,
-        "name": "Black Gem Studs",
-        "price": 4850,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_14_2": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_14_2",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 17,
-        "textureId": 2,
-        "name": "Platinum Gem Studs",
-        "price": 6750,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_15_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_15_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 18,
-        "textureId": 0,
-        "name": "Gold Illusion Square Stud (L)",
-        "price": 6465,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_15_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_15_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 18,
-        "textureId": 1,
-        "name": "Gold Grid Square Stud (L)",
-        "price": 6950,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_15_2": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_15_2",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 18,
-        "textureId": 2,
-        "name": "Gold Noir Square Stud (L)",
-        "price": 5800,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_15_3": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_15_3",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 18,
-        "textureId": 3,
-        "name": "Platinum Grid Square Stud (L)",
-        "price": 8750,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_15_4": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_15_4",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 18,
-        "textureId": 4,
-        "name": "Platinum Noir Square Stud (L)",
-        "price": 8375,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_16_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_16_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 19,
-        "textureId": 0,
-        "name": "Gold Illusion Square Stud (R)",
-        "price": 6465,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_16_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_16_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 19,
-        "textureId": 1,
-        "name": "Gold Grid Square Stud (R)",
-        "price": 6950,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_16_2": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_16_2",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 19,
-        "textureId": 2,
-        "name": "Gold Noir Square Stud (R)",
-        "price": 5800,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_16_3": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_16_3",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 19,
-        "textureId": 3,
-        "name": "Platinum Grid Square Stud (R)",
-        "price": 8750,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_16_4": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_16_4",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 19,
-        "textureId": 4,
-        "name": "Platinum Noir Square Stud (R)",
-        "price": 8375,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_17_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_17_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 20,
-        "textureId": 0,
-        "name": "Gold Illusion Square Studs",
-        "price": 25850,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_17_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_17_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 20,
-        "textureId": 1,
-        "name": "Gold Grid Square Studs",
-        "price": 27800,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_17_2": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_17_2",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 20,
-        "textureId": 2,
-        "name": "Gold Noir Square Studs",
-        "price": 23200,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_17_3": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_17_3",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 20,
-        "textureId": 3,
-        "name": "Platinum Grid Square Studs",
-        "price": 35000,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_17_4": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_17_4",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 20,
-        "textureId": 4,
-        "name": "Platinum Noir Square Studs",
-        "price": 33500,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_2_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_2_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 5,
-        "textureId": 0,
-        "name": "Gold Angled Hoops",
-        "price": 6300,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_2_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_2_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 5,
-        "textureId": 1,
-        "name": "Black Angled Hoops",
-        "price": 5750,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_2_2": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_2_2",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 5,
-        "textureId": 2,
-        "name": "Platinum Angled Hoops",
-        "price": 7950,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_3_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_3_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 6,
-        "textureId": 0,
-        "name": "Gold Circle Stud (L)",
-        "price": 1025,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_3_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_3_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 6,
-        "textureId": 1,
-        "name": "Platinum Circle Stud (L)",
-        "price": 1350,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_4_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_4_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 7,
-        "textureId": 0,
-        "name": "Gold Circle Stud (R)",
-        "price": 1025,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_4_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_4_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 7,
-        "textureId": 1,
-        "name": "Platinum Circle Stud (R)",
-        "price": 1350,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_5_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_5_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 8,
-        "textureId": 0,
-        "name": "Gold Circle Studs",
-        "price": 4100,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_5_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_5_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 8,
-        "textureId": 1,
-        "name": "Platinum Circle Studs",
-        "price": 5400,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_6_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_6_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 9,
-        "textureId": 0,
-        "name": "Gold Diamond Stud (L)",
-        "price": 1650,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_6_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_6_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 9,
-        "textureId": 1,
-        "name": "Black Diamond Stud (L)",
-        "price": 1525,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_6_2": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_6_2",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 9,
-        "textureId": 2,
-        "name": "Platinum Diamond Stud (L)",
-        "price": 2000,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_7_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_7_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 10,
-        "textureId": 0,
-        "name": "Gold Diamond Stud (R)",
-        "price": 1650,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_7_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_7_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 10,
-        "textureId": 1,
-        "name": "Black Diamond Stud (R)",
-        "price": 1525,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_7_2": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_7_2",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 10,
-        "textureId": 2,
-        "name": "Platinum Diamond Stud (R)",
-        "price": 2000,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_8_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_8_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 11,
-        "textureId": 0,
-        "name": "Gold Diamond Studs",
-        "price": 6600,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_8_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_8_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 11,
-        "textureId": 1,
-        "name": "Black Diamond Studs",
-        "price": 6100,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_8_2": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_8_2",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 11,
-        "textureId": 2,
-        "name": "Platinum Diamond Studs",
-        "price": 8000,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_9_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_9_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 12,
-        "textureId": 0,
-        "name": "Gold Pillow Stud (L)",
-        "price": 1525,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_9_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_9_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 12,
-        "textureId": 1,
-        "name": "Black Pillow Stud (L)",
-        "price": 1400,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_M_PEARS_9_2": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE_M_PEARS_9_2",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 12,
-        "textureId": 2,
-        "name": "Platinum Pillow Stud (L)",
-        "price": 1875,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LOW2_F_PEARS_0_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_LOW2_F_PEARS_0_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 16,
-        "textureId": 0,
-        "name": "FU Hoops",
-        "price": 17500,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LOW2_F_PEARS_1_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_LOW2_F_PEARS_1_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 17,
-        "textureId": 0,
-        "name": "Screw You Hoops",
-        "price": 16350,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LOW_F_PEARS_0_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_LOW_F_PEARS_0_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 13,
-        "textureId": 0,
-        "name": "Assault Hoops",
-        "price": 15550,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LOW_F_PEARS_1_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_LOW_F_PEARS_1_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 14,
-        "textureId": 0,
-        "name": "Chunky Hoops",
-        "price": 12350,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LOW_F_PEARS_2_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_LOW_F_PEARS_2_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 15,
-        "textureId": 0,
-        "name": "Classic Hoops",
-        "price": 10200,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_VWD_F_PEARS_0_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_VWD_F_PEARS_0_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 18,
-        "textureId": 0,
-        "name": "Gold Fame or Shame Mics",
-        "price": 0,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_VWD_F_PEARS_0_1": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_VWD_F_PEARS_0_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 18,
-        "textureId": 1,
-        "name": "Silver Fame or Shame Mics",
-        "price": 0,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_VWD_F_PEARS_1_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_VWD_F_PEARS_1_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 19,
-        "textureId": 0,
-        "name": "Clubs Earrings",
-        "price": 0,
-        "restrictionTags": [
-            "CASINO_ITEM",
-            "EARRING"
-        ]
-    },
-    "DLC_MP_VWD_F_PEARS_1_1": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_VWD_F_PEARS_1_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 19,
-        "textureId": 1,
-        "name": "Diamonds Earrings",
-        "price": 0,
-        "restrictionTags": [
-            "CASINO_ITEM",
-            "EARRING"
-        ]
-    },
-    "DLC_MP_VWD_F_PEARS_1_2": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_VWD_F_PEARS_1_2",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 19,
-        "textureId": 2,
-        "name": "Hearts Earrings",
-        "price": 0,
-        "restrictionTags": [
-            "CASINO_ITEM",
-            "EARRING"
-        ]
-    },
-    "DLC_MP_VWD_F_PEARS_1_3": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_VWD_F_PEARS_1_3",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 19,
-        "textureId": 3,
-        "name": "Spades Earrings",
-        "price": 0,
-        "restrictionTags": [
-            "CASINO_ITEM",
-            "EARRING"
-        ]
-    },
-    "DLC_MP_VWD_F_PEARS_2_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_VWD_F_PEARS_2_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 20,
-        "textureId": 0,
-        "name": "White Dice Earrings",
-        "price": 0,
-        "restrictionTags": [
-            "CASINO_ITEM",
-            "EARRING"
-        ]
-    },
-    "DLC_MP_VWD_F_PEARS_2_1": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_VWD_F_PEARS_2_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 20,
-        "textureId": 1,
-        "name": "Red Dice Earrings",
-        "price": 0,
-        "restrictionTags": [
-            "CASINO_ITEM",
-            "EARRING"
-        ]
-    },
-    "DLC_MP_VWD_F_PEARS_2_2": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_VWD_F_PEARS_2_2",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 20,
-        "textureId": 2,
-        "name": "Tan Dice Earrings",
-        "price": 0,
-        "restrictionTags": [
-            "CASINO_ITEM",
-            "EARRING"
-        ]
-    },
-    "DLC_MP_VWD_F_PEARS_2_3": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_VWD_F_PEARS_2_3",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 20,
-        "textureId": 3,
-        "name": "Gray Dice Earrings",
-        "price": 0,
-        "restrictionTags": [
-            "CASINO_ITEM",
-            "EARRING"
-        ]
-    },
-    "DLC_MP_VWD_F_PEARS_3_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_VWD_F_PEARS_3_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 21,
-        "textureId": 0,
-        "name": "Black Chips Earrings",
-        "price": 0,
-        "restrictionTags": [
-            "CASINO_ITEM",
-            "EARRING"
-        ]
-    },
-    "DLC_MP_VWD_F_PEARS_3_1": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_VWD_F_PEARS_3_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 21,
-        "textureId": 1,
-        "name": "Yellow Chips Earrings",
-        "price": 0,
-        "restrictionTags": [
-            "CASINO_ITEM",
-            "EARRING"
-        ]
-    },
-    "DLC_MP_VWD_F_PEARS_3_2": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_VWD_F_PEARS_3_2",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 21,
-        "textureId": 2,
-        "name": "Red Chips Earrings",
-        "price": 0,
-        "restrictionTags": [
-            "CASINO_ITEM",
-            "EARRING"
-        ]
-    },
-    "DLC_MP_VWD_F_PEARS_3_3": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_VWD_F_PEARS_3_3",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 21,
-        "textureId": 3,
-        "name": "Pink Chips Earrings",
-        "price": 0,
-        "restrictionTags": [
-            "CASINO_ITEM",
-            "EARRING"
-        ]
-    },
-    "DLC_MP_VWD_M_PEARS_0_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_VWD_M_PEARS_0_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 37,
-        "textureId": 0,
-        "name": "Gold Fame or Shame Mics",
-        "price": 0,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_VWD_M_PEARS_0_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_VWD_M_PEARS_0_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 37,
-        "textureId": 1,
-        "name": "Silver Fame or Shame Mics",
-        "price": 0,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_VWD_M_PEARS_1_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_VWD_M_PEARS_1_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 38,
-        "textureId": 0,
-        "name": "Clubs Earrings",
-        "price": 0,
-        "restrictionTags": [
-            "CASINO_ITEM",
-            "EARRING"
-        ]
-    },
-    "DLC_MP_VWD_M_PEARS_1_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_VWD_M_PEARS_1_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 38,
-        "textureId": 1,
-        "name": "Diamonds Earrings",
-        "price": 0,
-        "restrictionTags": [
-            "CASINO_ITEM",
-            "EARRING"
-        ]
-    },
-    "DLC_MP_VWD_M_PEARS_1_2": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_VWD_M_PEARS_1_2",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 38,
-        "textureId": 2,
-        "name": "Hearts Earrings",
-        "price": 0,
-        "restrictionTags": [
-            "CASINO_ITEM",
-            "EARRING"
-        ]
-    },
-    "DLC_MP_VWD_M_PEARS_1_3": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_VWD_M_PEARS_1_3",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 38,
-        "textureId": 3,
-        "name": "Spades Earrings",
-        "price": 0,
-        "restrictionTags": [
-            "CASINO_ITEM",
-            "EARRING"
-        ]
-    },
-    "DLC_MP_VWD_M_PEARS_2_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_VWD_M_PEARS_2_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 39,
-        "textureId": 0,
-        "name": "White Dice Earrings",
-        "price": 0,
-        "restrictionTags": [
-            "CASINO_ITEM",
-            "EARRING"
-        ]
-    },
-    "DLC_MP_VWD_M_PEARS_2_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_VWD_M_PEARS_2_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 39,
-        "textureId": 1,
-        "name": "Red Dice Earrings",
-        "price": 0,
-        "restrictionTags": [
-            "CASINO_ITEM",
-            "EARRING"
-        ]
-    },
-    "DLC_MP_VWD_M_PEARS_2_2": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_VWD_M_PEARS_2_2",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 39,
-        "textureId": 2,
-        "name": "Tan Dice Earrings",
-        "price": 0,
-        "restrictionTags": [
-            "CASINO_ITEM",
-            "EARRING"
-        ]
-    },
-    "DLC_MP_VWD_M_PEARS_2_3": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_VWD_M_PEARS_2_3",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 39,
-        "textureId": 3,
-        "name": "Gray Dice Earrings",
-        "price": 0,
-        "restrictionTags": [
-            "CASINO_ITEM",
-            "EARRING"
-        ]
-    },
-    "DLC_MP_VWD_M_PEARS_3_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_VWD_M_PEARS_3_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 40,
-        "textureId": 0,
-        "name": "Black Chips Earrings",
-        "price": 0,
-        "restrictionTags": [
-            "CASINO_ITEM",
-            "EARRING"
-        ]
-    },
-    "DLC_MP_VWD_M_PEARS_3_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_VWD_M_PEARS_3_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 40,
-        "textureId": 1,
-        "name": "Yellow Chips Earrings",
-        "price": 0,
-        "restrictionTags": [
-            "CASINO_ITEM",
-            "EARRING"
-        ]
-    },
-    "DLC_MP_VWD_M_PEARS_3_2": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_VWD_M_PEARS_3_2",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 40,
-        "textureId": 2,
-        "name": "Red Chips Earrings",
-        "price": 0,
-        "restrictionTags": [
-            "CASINO_ITEM",
-            "EARRING"
-        ]
-    },
-    "DLC_MP_VWD_M_PEARS_3_3": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_VWD_M_PEARS_3_3",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 40,
-        "textureId": 3,
-        "name": "Pink Chips Earrings",
-        "price": 0,
-        "restrictionTags": [
-            "CASINO_ITEM",
-            "EARRING"
-        ]
-    },
-    "DLC_MP_SUM2_F_PEARS_0_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_SUM2_F_PEARS_0_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 22,
-        "textureId": 0,
-        "name": "White Beat Off Earphones",
-        "price": 0,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_SUM2_F_PEARS_0_1": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_SUM2_F_PEARS_0_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 22,
-        "textureId": 1,
-        "name": "Yellow Beat Off Earphones",
-        "price": 0,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_SUM2_F_PEARS_0_10": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_SUM2_F_PEARS_0_10",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 22,
-        "textureId": 10,
-        "name": "Teal Beat Off Earphones",
-        "price": 0,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_SUM2_F_PEARS_0_11": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_SUM2_F_PEARS_0_11",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 22,
-        "textureId": 11,
-        "name": "Red Beat Off Earphones",
-        "price": 0,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_SUM2_F_PEARS_0_2": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_SUM2_F_PEARS_0_2",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 22,
-        "textureId": 2,
-        "name": "Salmon Beat Off Earphones",
-        "price": 0,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_SUM2_F_PEARS_0_3": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_SUM2_F_PEARS_0_3",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 22,
-        "textureId": 3,
-        "name": "Orange Beat Off Earphones",
-        "price": 0,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_SUM2_F_PEARS_0_4": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_SUM2_F_PEARS_0_4",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 22,
-        "textureId": 4,
-        "name": "Purple Beat Off Earphones",
-        "price": 0,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_SUM2_F_PEARS_0_5": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_SUM2_F_PEARS_0_5",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 22,
-        "textureId": 5,
-        "name": "Pink Beat Off Earphones",
-        "price": 0,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_SUM2_F_PEARS_0_6": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_SUM2_F_PEARS_0_6",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 22,
-        "textureId": 6,
-        "name": "Turquoise Beat Off Earphones",
-        "price": 0,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_SUM2_F_PEARS_0_7": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_SUM2_F_PEARS_0_7",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 22,
-        "textureId": 7,
-        "name": "Blue Beat Off Earphones",
-        "price": 0,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_SUM2_F_PEARS_0_8": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_SUM2_F_PEARS_0_8",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 22,
-        "textureId": 8,
-        "name": "Black Beat Off Earphones",
-        "price": 0,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_SUM2_F_PEARS_0_9": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_SUM2_F_PEARS_0_9",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 22,
-        "textureId": 9,
-        "name": "Gray Beat Off Earphones",
-        "price": 0,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE2_M_PEARS_0_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE2_M_PEARS_0_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 21,
-        "textureId": 0,
-        "name": "Gold SN Stud (L)",
-        "price": 1300,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE2_M_PEARS_0_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE2_M_PEARS_0_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 21,
-        "textureId": 1,
-        "name": "Platinum SN Stud (L)",
-        "price": 1640,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE2_M_PEARS_1_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE2_M_PEARS_1_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 22,
-        "textureId": 0,
-        "name": "Gold SN Stud (R)",
-        "price": 1300,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE2_M_PEARS_1_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE2_M_PEARS_1_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 22,
-        "textureId": 1,
-        "name": "Platinum SN Stud (R)",
-        "price": 1640,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE2_M_PEARS_10_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE2_M_PEARS_10_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 31,
-        "textureId": 0,
-        "name": "Gold Onyx Stud (R)",
-        "price": 1990,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE2_M_PEARS_10_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE2_M_PEARS_10_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 31,
-        "textureId": 1,
-        "name": "Black Onyx Stud (R)",
-        "price": 1800,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE2_M_PEARS_10_2": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE2_M_PEARS_10_2",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 31,
-        "textureId": 2,
-        "name": "Platinum Onyx Stud (R)",
-        "price": 2500,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE2_M_PEARS_11_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE2_M_PEARS_11_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 32,
-        "textureId": 0,
-        "name": "Gold Onyx Studs",
-        "price": 7950,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE2_M_PEARS_11_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE2_M_PEARS_11_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 32,
-        "textureId": 1,
-        "name": "Black Onyx Studs",
-        "price": 7200,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE2_M_PEARS_11_2": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE2_M_PEARS_11_2",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 32,
-        "textureId": 2,
-        "name": "Platinum Onyx Studs",
-        "price": 10000,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE2_M_PEARS_13_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE2_M_PEARS_13_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 34,
-        "textureId": 0,
-        "name": "Platinum SN Bullion Stud (L)",
-        "price": 1565,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE2_M_PEARS_13_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE2_M_PEARS_13_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 34,
-        "textureId": 1,
-        "name": "Gold SN Bullion Stud (L)",
-        "price": 1240,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE2_M_PEARS_14_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE2_M_PEARS_14_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 35,
-        "textureId": 0,
-        "name": "Platinum SN Bullion Stud (R)",
-        "price": 1565,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE2_M_PEARS_14_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE2_M_PEARS_14_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 35,
-        "textureId": 1,
-        "name": "Gold SN Bullion Stud (R)",
-        "price": 1240,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE2_M_PEARS_15_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE2_M_PEARS_15_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 36,
-        "textureId": 0,
-        "name": "Platinum SN Bullion Studs",
-        "price": 6250,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE2_M_PEARS_15_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE2_M_PEARS_15_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 36,
-        "textureId": 1,
-        "name": "Gold SN Bullion Studs",
-        "price": 4950,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE2_M_PEARS_2_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE2_M_PEARS_2_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 23,
-        "textureId": 0,
-        "name": "Gold SN Studs",
-        "price": 5200,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE2_M_PEARS_2_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE2_M_PEARS_2_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 23,
-        "textureId": 1,
-        "name": "Platinum SN Studs",
-        "price": 6550,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE2_M_PEARS_3_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE2_M_PEARS_3_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 24,
-        "textureId": 0,
-        "name": "Silver Skull Stud (L)",
-        "price": 1000,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE2_M_PEARS_3_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE2_M_PEARS_3_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 24,
-        "textureId": 1,
-        "name": "Gold Skull Stud (L)",
-        "price": 1140,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE2_M_PEARS_3_2": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE2_M_PEARS_3_2",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 24,
-        "textureId": 2,
-        "name": "Black Skull Stud (L)",
-        "price": 1040,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE2_M_PEARS_3_3": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE2_M_PEARS_3_3",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 24,
-        "textureId": 3,
-        "name": "Platinum Skull Stud (L)",
-        "price": 1440,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE2_M_PEARS_4_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE2_M_PEARS_4_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 25,
-        "textureId": 0,
-        "name": "Silver Skull Stud (R)",
-        "price": 1000,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE2_M_PEARS_4_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE2_M_PEARS_4_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 25,
-        "textureId": 1,
-        "name": "Gold Skull Stud (R)",
-        "price": 1140,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE2_M_PEARS_4_2": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE2_M_PEARS_4_2",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 25,
-        "textureId": 2,
-        "name": "Black Skull Stud (R)",
-        "price": 1040,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE2_M_PEARS_4_3": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE2_M_PEARS_4_3",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 25,
-        "textureId": 3,
-        "name": "Platinum Skull Stud (R)",
-        "price": 1440,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE2_M_PEARS_5_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE2_M_PEARS_5_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 26,
-        "textureId": 0,
-        "name": "Silver Skull Studs",
-        "price": 4000,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE2_M_PEARS_5_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE2_M_PEARS_5_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 26,
-        "textureId": 1,
-        "name": "Gold Skull Studs",
-        "price": 4550,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE2_M_PEARS_5_2": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE2_M_PEARS_5_2",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 26,
-        "textureId": 2,
-        "name": "Black Skull Studs",
-        "price": 4150,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE2_M_PEARS_5_3": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE2_M_PEARS_5_3",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 26,
-        "textureId": 3,
-        "name": "Platinum Skull Studs",
-        "price": 5750,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE2_M_PEARS_6_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE2_M_PEARS_6_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 27,
-        "textureId": 0,
-        "name": "Platinum Spike Stud (L)",
-        "price": 1365,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE2_M_PEARS_6_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE2_M_PEARS_6_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 27,
-        "textureId": 1,
-        "name": "Gold Spike Stud (L)",
-        "price": 1090,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE2_M_PEARS_7_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE2_M_PEARS_7_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 28,
-        "textureId": 0,
-        "name": "Platinum Spike Stud (R)",
-        "price": 1365,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE2_M_PEARS_7_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE2_M_PEARS_7_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 28,
-        "textureId": 1,
-        "name": "Gold Spike Stud (R)",
-        "price": 1090,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE2_M_PEARS_8_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE2_M_PEARS_8_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 29,
-        "textureId": 0,
-        "name": "Platinum Spike Studs",
-        "price": 5450,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE2_M_PEARS_8_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE2_M_PEARS_8_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 29,
-        "textureId": 1,
-        "name": "Gold Spike Studs",
-        "price": 4350,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE2_M_PEARS_9_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE2_M_PEARS_9_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 30,
-        "textureId": 0,
-        "name": "Gold Onyx Stud (L)",
-        "price": 1990,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE2_M_PEARS_9_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE2_M_PEARS_9_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 30,
-        "textureId": 1,
-        "name": "Black Onyx Stud (L)",
-        "price": 1800,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE2_M_PEARS_9_2": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_LUXE2_M_PEARS_9_2",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 30,
-        "textureId": 2,
-        "name": "Platinum Onyx Stud (L)",
-        "price": 2500,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_F_PEARS_0_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_LUXE_F_PEARS_0_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 3,
-        "textureId": 0,
-        "name": "Platinum Pendulums",
-        "price": 35000,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_F_PEARS_1_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_LUXE_F_PEARS_1_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 4,
-        "textureId": 0,
-        "name": "Gold Pendulums",
-        "price": 27800,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_F_PEARS_2_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_LUXE_F_PEARS_2_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 5,
-        "textureId": 0,
-        "name": "Gold Diamond Rounds",
-        "price": 25250,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_F_PEARS_3_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_LUXE_F_PEARS_3_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 6,
-        "textureId": 0,
-        "name": "Gold Diamond Drops",
-        "price": 29850,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_F_PEARS_3_1": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_LUXE_F_PEARS_3_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 6,
-        "textureId": 1,
-        "name": "Platinum Diamond Drops",
-        "price": 37995,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_F_PEARS_3_2": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_LUXE_F_PEARS_3_2",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 6,
-        "textureId": 2,
-        "name": "Black Gold Diamond Drops",
-        "price": 25250,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_F_PEARS_4_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_LUXE_F_PEARS_4_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 7,
-        "textureId": 0,
-        "name": "Gold Waterfalls",
-        "price": 8400,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_F_PEARS_4_1": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_LUXE_F_PEARS_4_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 7,
-        "textureId": 1,
-        "name": "Platinum Waterfalls",
-        "price": 10600,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_F_PEARS_4_2": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_LUXE_F_PEARS_4_2",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 7,
-        "textureId": 2,
-        "name": "Black Gold Waterfalls",
-        "price": 7650,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_F_PEARS_5_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_LUXE_F_PEARS_5_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 8,
-        "textureId": 0,
-        "name": "Gold Totems",
-        "price": 8795,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_F_PEARS_5_1": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_LUXE_F_PEARS_5_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 8,
-        "textureId": 1,
-        "name": "Black Gold Totems",
-        "price": 8045,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_F_PEARS_5_2": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_LUXE_F_PEARS_5_2",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 8,
-        "textureId": 2,
-        "name": "Platinum Totems",
-        "price": 10995,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_F_PEARS_6_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_LUXE_F_PEARS_6_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 9,
-        "textureId": 0,
-        "name": "Gold Diamond Chains",
-        "price": 7745,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_F_PEARS_6_1": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_LUXE_F_PEARS_6_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 9,
-        "textureId": 1,
-        "name": "Platinum Diamond Chains",
-        "price": 9945,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_F_PEARS_6_2": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_LUXE_F_PEARS_6_2",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 9,
-        "textureId": 2,
-        "name": "Black Gold Diamond Chains",
-        "price": 6995,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_F_PEARS_7_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_LUXE_F_PEARS_7_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 10,
-        "textureId": 0,
-        "name": "Gold Emerald Chains",
-        "price": 6650,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_F_PEARS_7_1": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_LUXE_F_PEARS_7_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 10,
-        "textureId": 1,
-        "name": "Platinum Emerald Chains",
-        "price": 8350,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_F_PEARS_7_2": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_LUXE_F_PEARS_7_2",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 10,
-        "textureId": 2,
-        "name": "Black Gold Emerald Chains",
-        "price": 6000,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_F_PEARS_8_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_LUXE_F_PEARS_8_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 11,
-        "textureId": 0,
-        "name": "Gold Sun Drops",
-        "price": 9190,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_F_PEARS_8_1": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_LUXE_F_PEARS_8_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 11,
-        "textureId": 1,
-        "name": "Platinum Sun Drops",
-        "price": 11390,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_F_PEARS_8_2": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_LUXE_F_PEARS_8_2",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 11,
-        "textureId": 2,
-        "name": "Black Gold Sun Drops",
-        "price": 8440,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_F_PEARS_9_0": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_LUXE_F_PEARS_9_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 12,
-        "textureId": 0,
-        "name": "Platinum Diamond Studs",
-        "price": 8950,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_F_PEARS_9_1": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_LUXE_F_PEARS_9_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 12,
-        "textureId": 1,
-        "name": "Gold Diamond Studs",
-        "price": 7100,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_LUXE_F_PEARS_9_2": {
-        "ped": "mp_f_freemode_01",
-        "key": "DLC_MP_LUXE_F_PEARS_9_2",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 12,
-        "textureId": 2,
-        "name": "Black Gold Diamond Studs",
-        "price": 6450,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_SUM2_M_PEARS_0_0": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_SUM2_M_PEARS_0_0",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 41,
-        "textureId": 0,
-        "name": "White Beat Off Earphones",
-        "price": 0,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_SUM2_M_PEARS_0_1": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_SUM2_M_PEARS_0_1",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 41,
-        "textureId": 1,
-        "name": "Yellow Beat Off Earphones",
-        "price": 0,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_SUM2_M_PEARS_0_10": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_SUM2_M_PEARS_0_10",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 41,
-        "textureId": 10,
-        "name": "Teal Beat Off Earphones",
-        "price": 0,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_SUM2_M_PEARS_0_11": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_SUM2_M_PEARS_0_11",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 41,
-        "textureId": 11,
-        "name": "Red Beat Off Earphones",
-        "price": 0,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_SUM2_M_PEARS_0_2": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_SUM2_M_PEARS_0_2",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 41,
-        "textureId": 2,
-        "name": "Salmon Beat Off Earphones",
-        "price": 0,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_SUM2_M_PEARS_0_3": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_SUM2_M_PEARS_0_3",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 41,
-        "textureId": 3,
-        "name": "Orange Beat Off Earphones",
-        "price": 0,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_SUM2_M_PEARS_0_4": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_SUM2_M_PEARS_0_4",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 41,
-        "textureId": 4,
-        "name": "Purple Beat Off Earphones",
-        "price": 0,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_SUM2_M_PEARS_0_5": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_SUM2_M_PEARS_0_5",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 41,
-        "textureId": 5,
-        "name": "Pink Beat Off Earphones",
-        "price": 0,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_SUM2_M_PEARS_0_6": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_SUM2_M_PEARS_0_6",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 41,
-        "textureId": 6,
-        "name": "Turquoise Beat Off Earphones",
-        "price": 0,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_SUM2_M_PEARS_0_7": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_SUM2_M_PEARS_0_7",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 41,
-        "textureId": 7,
-        "name": "Blue Beat Off Earphones",
-        "price": 0,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_SUM2_M_PEARS_0_8": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_SUM2_M_PEARS_0_8",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 41,
-        "textureId": 8,
-        "name": "Black Beat Off Earphones",
-        "price": 0,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    },
-    "DLC_MP_SUM2_M_PEARS_0_9": {
-        "ped": "mp_m_freemode_01",
-        "key": "DLC_MP_SUM2_M_PEARS_0_9",
-        "anchorPoint": "ANCHOR_EARS",
-        "componentId": 2,
-        "drawableId": 41,
-        "textureId": 9,
-        "name": "Gray Beat Off Earphones",
-        "price": 0,
-        "restrictionTags": [
-            "EARRING"
-        ]
-    }
+  "DLC_MP_HEIST_F_EAR0_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_HEIST_F_EAR0_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 0,
+    "textureId": 0,
+    "name": "Gray Earpiece",
+    "price": 1200,
+    "restrictionTags": ["EAR_PIECE", "GUN_ACCS"]
+  },
+  "DLC_MP_HEIST_F_EAR1_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_HEIST_F_EAR1_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 1,
+    "textureId": 0,
+    "name": "Red Earpiece",
+    "price": 1350,
+    "restrictionTags": ["EAR_PIECE", "GUN_ACCS"]
+  },
+  "DLC_MP_HEIST_F_EAR2_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_HEIST_F_EAR2_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 2,
+    "textureId": 0,
+    "name": "LCD Earpiece",
+    "price": 1500,
+    "restrictionTags": ["EAR_PIECE", "GUN_ACCS"]
+  },
+  "DLC_MP_HEIST_M_EAR0_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_HEIST_M_EAR0_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 0,
+    "textureId": 0,
+    "name": "Gray Earpiece",
+    "price": 1200,
+    "restrictionTags": ["EAR_PIECE", "GUN_ACCS"]
+  },
+  "DLC_MP_HEIST_M_EAR1_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_HEIST_M_EAR1_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 1,
+    "textureId": 0,
+    "name": "Red Earpiece",
+    "price": 1350,
+    "restrictionTags": ["EAR_PIECE", "GUN_ACCS"]
+  },
+  "DLC_MP_HEIST_M_EAR2_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_HEIST_M_EAR2_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 2,
+    "textureId": 0,
+    "name": "LCD Earpiece",
+    "price": 1500,
+    "restrictionTags": ["EAR_PIECE", "GUN_ACCS"]
+  },
+  "DLC_MP_LUXE_M_PEARS_0_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_0_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 3,
+    "textureId": 0,
+    "name": "Gold Angled Hoop (L)",
+    "price": 1575,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_0_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_0_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 3,
+    "textureId": 1,
+    "name": "Black Angled Hoop (L)",
+    "price": 1440,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_0_2": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_0_2",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 3,
+    "textureId": 2,
+    "name": "Platinum Angled Hoop (L)",
+    "price": 1990,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_1_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_1_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 4,
+    "textureId": 0,
+    "name": "Gold Angled Hoop (R)",
+    "price": 1575,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_1_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_1_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 4,
+    "textureId": 1,
+    "name": "Black Angled Hoop (R)",
+    "price": 1440,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_1_2": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_1_2",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 4,
+    "textureId": 2,
+    "name": "Platinum Angled Hoop (R)",
+    "price": 1990,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_10_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_10_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 13,
+    "textureId": 0,
+    "name": "Gold Pillow Stud (R)",
+    "price": 1525,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_10_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_10_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 13,
+    "textureId": 1,
+    "name": "Black Pillow Stud (R)",
+    "price": 1400,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_10_2": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_10_2",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 13,
+    "textureId": 2,
+    "name": "Platinum Pillow Stud (R)",
+    "price": 1875,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_11_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_11_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 14,
+    "textureId": 0,
+    "name": "Gold Pillow Studs",
+    "price": 6100,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_11_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_11_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 14,
+    "textureId": 1,
+    "name": "Black Pillow Studs",
+    "price": 5600,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_11_2": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_11_2",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 14,
+    "textureId": 2,
+    "name": "Platinum Pillow Studs",
+    "price": 7500,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_12_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_12_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 15,
+    "textureId": 0,
+    "name": "Gold Gem Stud (L)",
+    "price": 1340,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_12_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_12_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 15,
+    "textureId": 1,
+    "name": "Black Gem Stud (L)",
+    "price": 1215,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_12_2": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_12_2",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 15,
+    "textureId": 2,
+    "name": "Platinum Gem Stud (L)",
+    "price": 1690,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_13_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_13_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 16,
+    "textureId": 0,
+    "name": "Gold Gem Stud (R)",
+    "price": 1340,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_13_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_13_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 16,
+    "textureId": 1,
+    "name": "Black Gem Stud (R)",
+    "price": 1215,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_13_2": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_13_2",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 16,
+    "textureId": 2,
+    "name": "Platinum Gem Stud (R)",
+    "price": 1690,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_14_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_14_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 17,
+    "textureId": 0,
+    "name": "Gold Gem Studs",
+    "price": 5350,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_14_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_14_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 17,
+    "textureId": 1,
+    "name": "Black Gem Studs",
+    "price": 4850,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_14_2": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_14_2",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 17,
+    "textureId": 2,
+    "name": "Platinum Gem Studs",
+    "price": 6750,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_15_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_15_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 18,
+    "textureId": 0,
+    "name": "Gold Illusion Square Stud (L)",
+    "price": 6465,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_15_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_15_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 18,
+    "textureId": 1,
+    "name": "Gold Grid Square Stud (L)",
+    "price": 6950,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_15_2": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_15_2",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 18,
+    "textureId": 2,
+    "name": "Gold Noir Square Stud (L)",
+    "price": 5800,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_15_3": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_15_3",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 18,
+    "textureId": 3,
+    "name": "Platinum Grid Square Stud (L)",
+    "price": 8750,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_15_4": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_15_4",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 18,
+    "textureId": 4,
+    "name": "Platinum Noir Square Stud (L)",
+    "price": 8375,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_16_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_16_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 19,
+    "textureId": 0,
+    "name": "Gold Illusion Square Stud (R)",
+    "price": 6465,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_16_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_16_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 19,
+    "textureId": 1,
+    "name": "Gold Grid Square Stud (R)",
+    "price": 6950,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_16_2": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_16_2",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 19,
+    "textureId": 2,
+    "name": "Gold Noir Square Stud (R)",
+    "price": 5800,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_16_3": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_16_3",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 19,
+    "textureId": 3,
+    "name": "Platinum Grid Square Stud (R)",
+    "price": 8750,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_16_4": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_16_4",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 19,
+    "textureId": 4,
+    "name": "Platinum Noir Square Stud (R)",
+    "price": 8375,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_17_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_17_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 20,
+    "textureId": 0,
+    "name": "Gold Illusion Square Studs",
+    "price": 25850,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_17_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_17_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 20,
+    "textureId": 1,
+    "name": "Gold Grid Square Studs",
+    "price": 27800,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_17_2": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_17_2",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 20,
+    "textureId": 2,
+    "name": "Gold Noir Square Studs",
+    "price": 23200,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_17_3": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_17_3",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 20,
+    "textureId": 3,
+    "name": "Platinum Grid Square Studs",
+    "price": 35000,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_17_4": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_17_4",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 20,
+    "textureId": 4,
+    "name": "Platinum Noir Square Studs",
+    "price": 33500,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_2_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_2_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 5,
+    "textureId": 0,
+    "name": "Gold Angled Hoops",
+    "price": 6300,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_2_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_2_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 5,
+    "textureId": 1,
+    "name": "Black Angled Hoops",
+    "price": 5750,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_2_2": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_2_2",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 5,
+    "textureId": 2,
+    "name": "Platinum Angled Hoops",
+    "price": 7950,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_3_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_3_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 6,
+    "textureId": 0,
+    "name": "Gold Circle Stud (L)",
+    "price": 1025,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_3_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_3_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 6,
+    "textureId": 1,
+    "name": "Platinum Circle Stud (L)",
+    "price": 1350,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_4_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_4_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 7,
+    "textureId": 0,
+    "name": "Gold Circle Stud (R)",
+    "price": 1025,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_4_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_4_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 7,
+    "textureId": 1,
+    "name": "Platinum Circle Stud (R)",
+    "price": 1350,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_5_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_5_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 8,
+    "textureId": 0,
+    "name": "Gold Circle Studs",
+    "price": 4100,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_5_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_5_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 8,
+    "textureId": 1,
+    "name": "Platinum Circle Studs",
+    "price": 5400,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_6_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_6_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 9,
+    "textureId": 0,
+    "name": "Gold Diamond Stud (L)",
+    "price": 1650,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_6_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_6_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 9,
+    "textureId": 1,
+    "name": "Black Diamond Stud (L)",
+    "price": 1525,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_6_2": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_6_2",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 9,
+    "textureId": 2,
+    "name": "Platinum Diamond Stud (L)",
+    "price": 2000,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_7_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_7_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 10,
+    "textureId": 0,
+    "name": "Gold Diamond Stud (R)",
+    "price": 1650,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_7_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_7_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 10,
+    "textureId": 1,
+    "name": "Black Diamond Stud (R)",
+    "price": 1525,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_7_2": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_7_2",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 10,
+    "textureId": 2,
+    "name": "Platinum Diamond Stud (R)",
+    "price": 2000,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_8_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_8_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 11,
+    "textureId": 0,
+    "name": "Gold Diamond Studs",
+    "price": 6600,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_8_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_8_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 11,
+    "textureId": 1,
+    "name": "Black Diamond Studs",
+    "price": 6100,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_8_2": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_8_2",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 11,
+    "textureId": 2,
+    "name": "Platinum Diamond Studs",
+    "price": 8000,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_9_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_9_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 12,
+    "textureId": 0,
+    "name": "Gold Pillow Stud (L)",
+    "price": 1525,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_9_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_9_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 12,
+    "textureId": 1,
+    "name": "Black Pillow Stud (L)",
+    "price": 1400,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_M_PEARS_9_2": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE_M_PEARS_9_2",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 12,
+    "textureId": 2,
+    "name": "Platinum Pillow Stud (L)",
+    "price": 1875,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LOW2_F_PEARS_0_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_LOW2_F_PEARS_0_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 16,
+    "textureId": 0,
+    "name": "FU Hoops",
+    "price": 17500,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LOW2_F_PEARS_1_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_LOW2_F_PEARS_1_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 17,
+    "textureId": 0,
+    "name": "Screw You Hoops",
+    "price": 16350,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LOW_F_PEARS_0_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_LOW_F_PEARS_0_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 13,
+    "textureId": 0,
+    "name": "Assault Hoops",
+    "price": 15550,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LOW_F_PEARS_1_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_LOW_F_PEARS_1_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 14,
+    "textureId": 0,
+    "name": "Chunky Hoops",
+    "price": 12350,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LOW_F_PEARS_2_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_LOW_F_PEARS_2_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 15,
+    "textureId": 0,
+    "name": "Classic Hoops",
+    "price": 10200,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_VWD_F_PEARS_0_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_VWD_F_PEARS_0_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 18,
+    "textureId": 0,
+    "name": "Gold Fame or Shame Mics",
+    "price": 0,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_VWD_F_PEARS_0_1": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_VWD_F_PEARS_0_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 18,
+    "textureId": 1,
+    "name": "Silver Fame or Shame Mics",
+    "price": 0,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_VWD_F_PEARS_1_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_VWD_F_PEARS_1_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 19,
+    "textureId": 0,
+    "name": "Clubs Earrings",
+    "price": 0,
+    "restrictionTags": ["CASINO_ITEM", "EARRING"]
+  },
+  "DLC_MP_VWD_F_PEARS_1_1": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_VWD_F_PEARS_1_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 19,
+    "textureId": 1,
+    "name": "Diamonds Earrings",
+    "price": 0,
+    "restrictionTags": ["CASINO_ITEM", "EARRING"]
+  },
+  "DLC_MP_VWD_F_PEARS_1_2": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_VWD_F_PEARS_1_2",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 19,
+    "textureId": 2,
+    "name": "Hearts Earrings",
+    "price": 0,
+    "restrictionTags": ["CASINO_ITEM", "EARRING"]
+  },
+  "DLC_MP_VWD_F_PEARS_1_3": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_VWD_F_PEARS_1_3",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 19,
+    "textureId": 3,
+    "name": "Spades Earrings",
+    "price": 0,
+    "restrictionTags": ["CASINO_ITEM", "EARRING"]
+  },
+  "DLC_MP_VWD_F_PEARS_2_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_VWD_F_PEARS_2_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 20,
+    "textureId": 0,
+    "name": "White Dice Earrings",
+    "price": 0,
+    "restrictionTags": ["CASINO_ITEM", "EARRING"]
+  },
+  "DLC_MP_VWD_F_PEARS_2_1": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_VWD_F_PEARS_2_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 20,
+    "textureId": 1,
+    "name": "Red Dice Earrings",
+    "price": 0,
+    "restrictionTags": ["CASINO_ITEM", "EARRING"]
+  },
+  "DLC_MP_VWD_F_PEARS_2_2": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_VWD_F_PEARS_2_2",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 20,
+    "textureId": 2,
+    "name": "Tan Dice Earrings",
+    "price": 0,
+    "restrictionTags": ["CASINO_ITEM", "EARRING"]
+  },
+  "DLC_MP_VWD_F_PEARS_2_3": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_VWD_F_PEARS_2_3",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 20,
+    "textureId": 3,
+    "name": "Gray Dice Earrings",
+    "price": 0,
+    "restrictionTags": ["CASINO_ITEM", "EARRING"]
+  },
+  "DLC_MP_VWD_F_PEARS_3_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_VWD_F_PEARS_3_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 21,
+    "textureId": 0,
+    "name": "Black Chips Earrings",
+    "price": 0,
+    "restrictionTags": ["CASINO_ITEM", "EARRING"]
+  },
+  "DLC_MP_VWD_F_PEARS_3_1": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_VWD_F_PEARS_3_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 21,
+    "textureId": 1,
+    "name": "Yellow Chips Earrings",
+    "price": 0,
+    "restrictionTags": ["CASINO_ITEM", "EARRING"]
+  },
+  "DLC_MP_VWD_F_PEARS_3_2": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_VWD_F_PEARS_3_2",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 21,
+    "textureId": 2,
+    "name": "Red Chips Earrings",
+    "price": 0,
+    "restrictionTags": ["CASINO_ITEM", "EARRING"]
+  },
+  "DLC_MP_VWD_F_PEARS_3_3": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_VWD_F_PEARS_3_3",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 21,
+    "textureId": 3,
+    "name": "Pink Chips Earrings",
+    "price": 0,
+    "restrictionTags": ["CASINO_ITEM", "EARRING"]
+  },
+  "DLC_MP_VWD_M_PEARS_0_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_VWD_M_PEARS_0_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 37,
+    "textureId": 0,
+    "name": "Gold Fame or Shame Mics",
+    "price": 0,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_VWD_M_PEARS_0_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_VWD_M_PEARS_0_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 37,
+    "textureId": 1,
+    "name": "Silver Fame or Shame Mics",
+    "price": 0,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_VWD_M_PEARS_1_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_VWD_M_PEARS_1_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 38,
+    "textureId": 0,
+    "name": "Clubs Earrings",
+    "price": 0,
+    "restrictionTags": ["CASINO_ITEM", "EARRING"]
+  },
+  "DLC_MP_VWD_M_PEARS_1_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_VWD_M_PEARS_1_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 38,
+    "textureId": 1,
+    "name": "Diamonds Earrings",
+    "price": 0,
+    "restrictionTags": ["CASINO_ITEM", "EARRING"]
+  },
+  "DLC_MP_VWD_M_PEARS_1_2": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_VWD_M_PEARS_1_2",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 38,
+    "textureId": 2,
+    "name": "Hearts Earrings",
+    "price": 0,
+    "restrictionTags": ["CASINO_ITEM", "EARRING"]
+  },
+  "DLC_MP_VWD_M_PEARS_1_3": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_VWD_M_PEARS_1_3",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 38,
+    "textureId": 3,
+    "name": "Spades Earrings",
+    "price": 0,
+    "restrictionTags": ["CASINO_ITEM", "EARRING"]
+  },
+  "DLC_MP_VWD_M_PEARS_2_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_VWD_M_PEARS_2_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 39,
+    "textureId": 0,
+    "name": "White Dice Earrings",
+    "price": 0,
+    "restrictionTags": ["CASINO_ITEM", "EARRING"]
+  },
+  "DLC_MP_VWD_M_PEARS_2_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_VWD_M_PEARS_2_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 39,
+    "textureId": 1,
+    "name": "Red Dice Earrings",
+    "price": 0,
+    "restrictionTags": ["CASINO_ITEM", "EARRING"]
+  },
+  "DLC_MP_VWD_M_PEARS_2_2": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_VWD_M_PEARS_2_2",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 39,
+    "textureId": 2,
+    "name": "Tan Dice Earrings",
+    "price": 0,
+    "restrictionTags": ["CASINO_ITEM", "EARRING"]
+  },
+  "DLC_MP_VWD_M_PEARS_2_3": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_VWD_M_PEARS_2_3",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 39,
+    "textureId": 3,
+    "name": "Gray Dice Earrings",
+    "price": 0,
+    "restrictionTags": ["CASINO_ITEM", "EARRING"]
+  },
+  "DLC_MP_VWD_M_PEARS_3_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_VWD_M_PEARS_3_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 40,
+    "textureId": 0,
+    "name": "Black Chips Earrings",
+    "price": 0,
+    "restrictionTags": ["CASINO_ITEM", "EARRING"]
+  },
+  "DLC_MP_VWD_M_PEARS_3_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_VWD_M_PEARS_3_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 40,
+    "textureId": 1,
+    "name": "Yellow Chips Earrings",
+    "price": 0,
+    "restrictionTags": ["CASINO_ITEM", "EARRING"]
+  },
+  "DLC_MP_VWD_M_PEARS_3_2": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_VWD_M_PEARS_3_2",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 40,
+    "textureId": 2,
+    "name": "Red Chips Earrings",
+    "price": 0,
+    "restrictionTags": ["CASINO_ITEM", "EARRING"]
+  },
+  "DLC_MP_VWD_M_PEARS_3_3": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_VWD_M_PEARS_3_3",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 40,
+    "textureId": 3,
+    "name": "Pink Chips Earrings",
+    "price": 0,
+    "restrictionTags": ["CASINO_ITEM", "EARRING"]
+  },
+  "DLC_MP_SUM2_F_PEARS_0_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_SUM2_F_PEARS_0_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 22,
+    "textureId": 0,
+    "name": "White Beat Off Earphones",
+    "price": 0,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_SUM2_F_PEARS_0_1": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_SUM2_F_PEARS_0_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 22,
+    "textureId": 1,
+    "name": "Yellow Beat Off Earphones",
+    "price": 0,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_SUM2_F_PEARS_0_10": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_SUM2_F_PEARS_0_10",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 22,
+    "textureId": 10,
+    "name": "Teal Beat Off Earphones",
+    "price": 0,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_SUM2_F_PEARS_0_11": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_SUM2_F_PEARS_0_11",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 22,
+    "textureId": 11,
+    "name": "Red Beat Off Earphones",
+    "price": 0,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_SUM2_F_PEARS_0_2": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_SUM2_F_PEARS_0_2",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 22,
+    "textureId": 2,
+    "name": "Salmon Beat Off Earphones",
+    "price": 0,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_SUM2_F_PEARS_0_3": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_SUM2_F_PEARS_0_3",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 22,
+    "textureId": 3,
+    "name": "Orange Beat Off Earphones",
+    "price": 0,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_SUM2_F_PEARS_0_4": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_SUM2_F_PEARS_0_4",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 22,
+    "textureId": 4,
+    "name": "Purple Beat Off Earphones",
+    "price": 0,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_SUM2_F_PEARS_0_5": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_SUM2_F_PEARS_0_5",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 22,
+    "textureId": 5,
+    "name": "Pink Beat Off Earphones",
+    "price": 0,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_SUM2_F_PEARS_0_6": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_SUM2_F_PEARS_0_6",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 22,
+    "textureId": 6,
+    "name": "Turquoise Beat Off Earphones",
+    "price": 0,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_SUM2_F_PEARS_0_7": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_SUM2_F_PEARS_0_7",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 22,
+    "textureId": 7,
+    "name": "Blue Beat Off Earphones",
+    "price": 0,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_SUM2_F_PEARS_0_8": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_SUM2_F_PEARS_0_8",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 22,
+    "textureId": 8,
+    "name": "Black Beat Off Earphones",
+    "price": 0,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_SUM2_F_PEARS_0_9": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_SUM2_F_PEARS_0_9",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 22,
+    "textureId": 9,
+    "name": "Gray Beat Off Earphones",
+    "price": 0,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE2_M_PEARS_0_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE2_M_PEARS_0_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 21,
+    "textureId": 0,
+    "name": "Gold SN Stud (L)",
+    "price": 1300,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE2_M_PEARS_0_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE2_M_PEARS_0_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 21,
+    "textureId": 1,
+    "name": "Platinum SN Stud (L)",
+    "price": 1640,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE2_M_PEARS_1_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE2_M_PEARS_1_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 22,
+    "textureId": 0,
+    "name": "Gold SN Stud (R)",
+    "price": 1300,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE2_M_PEARS_1_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE2_M_PEARS_1_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 22,
+    "textureId": 1,
+    "name": "Platinum SN Stud (R)",
+    "price": 1640,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE2_M_PEARS_10_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE2_M_PEARS_10_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 31,
+    "textureId": 0,
+    "name": "Gold Onyx Stud (R)",
+    "price": 1990,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE2_M_PEARS_10_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE2_M_PEARS_10_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 31,
+    "textureId": 1,
+    "name": "Black Onyx Stud (R)",
+    "price": 1800,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE2_M_PEARS_10_2": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE2_M_PEARS_10_2",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 31,
+    "textureId": 2,
+    "name": "Platinum Onyx Stud (R)",
+    "price": 2500,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE2_M_PEARS_11_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE2_M_PEARS_11_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 32,
+    "textureId": 0,
+    "name": "Gold Onyx Studs",
+    "price": 7950,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE2_M_PEARS_11_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE2_M_PEARS_11_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 32,
+    "textureId": 1,
+    "name": "Black Onyx Studs",
+    "price": 7200,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE2_M_PEARS_11_2": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE2_M_PEARS_11_2",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 32,
+    "textureId": 2,
+    "name": "Platinum Onyx Studs",
+    "price": 10000,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE2_M_PEARS_13_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE2_M_PEARS_13_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 34,
+    "textureId": 0,
+    "name": "Platinum SN Bullion Stud (L)",
+    "price": 1565,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE2_M_PEARS_13_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE2_M_PEARS_13_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 34,
+    "textureId": 1,
+    "name": "Gold SN Bullion Stud (L)",
+    "price": 1240,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE2_M_PEARS_14_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE2_M_PEARS_14_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 35,
+    "textureId": 0,
+    "name": "Platinum SN Bullion Stud (R)",
+    "price": 1565,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE2_M_PEARS_14_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE2_M_PEARS_14_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 35,
+    "textureId": 1,
+    "name": "Gold SN Bullion Stud (R)",
+    "price": 1240,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE2_M_PEARS_15_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE2_M_PEARS_15_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 36,
+    "textureId": 0,
+    "name": "Platinum SN Bullion Studs",
+    "price": 6250,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE2_M_PEARS_15_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE2_M_PEARS_15_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 36,
+    "textureId": 1,
+    "name": "Gold SN Bullion Studs",
+    "price": 4950,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE2_M_PEARS_2_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE2_M_PEARS_2_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 23,
+    "textureId": 0,
+    "name": "Gold SN Studs",
+    "price": 5200,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE2_M_PEARS_2_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE2_M_PEARS_2_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 23,
+    "textureId": 1,
+    "name": "Platinum SN Studs",
+    "price": 6550,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE2_M_PEARS_3_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE2_M_PEARS_3_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 24,
+    "textureId": 0,
+    "name": "Silver Skull Stud (L)",
+    "price": 1000,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE2_M_PEARS_3_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE2_M_PEARS_3_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 24,
+    "textureId": 1,
+    "name": "Gold Skull Stud (L)",
+    "price": 1140,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE2_M_PEARS_3_2": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE2_M_PEARS_3_2",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 24,
+    "textureId": 2,
+    "name": "Black Skull Stud (L)",
+    "price": 1040,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE2_M_PEARS_3_3": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE2_M_PEARS_3_3",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 24,
+    "textureId": 3,
+    "name": "Platinum Skull Stud (L)",
+    "price": 1440,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE2_M_PEARS_4_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE2_M_PEARS_4_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 25,
+    "textureId": 0,
+    "name": "Silver Skull Stud (R)",
+    "price": 1000,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE2_M_PEARS_4_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE2_M_PEARS_4_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 25,
+    "textureId": 1,
+    "name": "Gold Skull Stud (R)",
+    "price": 1140,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE2_M_PEARS_4_2": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE2_M_PEARS_4_2",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 25,
+    "textureId": 2,
+    "name": "Black Skull Stud (R)",
+    "price": 1040,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE2_M_PEARS_4_3": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE2_M_PEARS_4_3",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 25,
+    "textureId": 3,
+    "name": "Platinum Skull Stud (R)",
+    "price": 1440,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE2_M_PEARS_5_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE2_M_PEARS_5_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 26,
+    "textureId": 0,
+    "name": "Silver Skull Studs",
+    "price": 4000,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE2_M_PEARS_5_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE2_M_PEARS_5_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 26,
+    "textureId": 1,
+    "name": "Gold Skull Studs",
+    "price": 4550,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE2_M_PEARS_5_2": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE2_M_PEARS_5_2",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 26,
+    "textureId": 2,
+    "name": "Black Skull Studs",
+    "price": 4150,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE2_M_PEARS_5_3": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE2_M_PEARS_5_3",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 26,
+    "textureId": 3,
+    "name": "Platinum Skull Studs",
+    "price": 5750,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE2_M_PEARS_6_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE2_M_PEARS_6_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 27,
+    "textureId": 0,
+    "name": "Platinum Spike Stud (L)",
+    "price": 1365,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE2_M_PEARS_6_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE2_M_PEARS_6_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 27,
+    "textureId": 1,
+    "name": "Gold Spike Stud (L)",
+    "price": 1090,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE2_M_PEARS_7_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE2_M_PEARS_7_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 28,
+    "textureId": 0,
+    "name": "Platinum Spike Stud (R)",
+    "price": 1365,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE2_M_PEARS_7_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE2_M_PEARS_7_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 28,
+    "textureId": 1,
+    "name": "Gold Spike Stud (R)",
+    "price": 1090,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE2_M_PEARS_8_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE2_M_PEARS_8_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 29,
+    "textureId": 0,
+    "name": "Platinum Spike Studs",
+    "price": 5450,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE2_M_PEARS_8_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE2_M_PEARS_8_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 29,
+    "textureId": 1,
+    "name": "Gold Spike Studs",
+    "price": 4350,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE2_M_PEARS_9_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE2_M_PEARS_9_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 30,
+    "textureId": 0,
+    "name": "Gold Onyx Stud (L)",
+    "price": 1990,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE2_M_PEARS_9_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE2_M_PEARS_9_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 30,
+    "textureId": 1,
+    "name": "Black Onyx Stud (L)",
+    "price": 1800,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE2_M_PEARS_9_2": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_LUXE2_M_PEARS_9_2",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 30,
+    "textureId": 2,
+    "name": "Platinum Onyx Stud (L)",
+    "price": 2500,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_F_PEARS_0_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_LUXE_F_PEARS_0_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 3,
+    "textureId": 0,
+    "name": "Platinum Pendulums",
+    "price": 35000,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_F_PEARS_1_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_LUXE_F_PEARS_1_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 4,
+    "textureId": 0,
+    "name": "Gold Pendulums",
+    "price": 27800,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_F_PEARS_2_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_LUXE_F_PEARS_2_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 5,
+    "textureId": 0,
+    "name": "Gold Diamond Rounds",
+    "price": 25250,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_F_PEARS_3_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_LUXE_F_PEARS_3_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 6,
+    "textureId": 0,
+    "name": "Gold Diamond Drops",
+    "price": 29850,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_F_PEARS_3_1": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_LUXE_F_PEARS_3_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 6,
+    "textureId": 1,
+    "name": "Platinum Diamond Drops",
+    "price": 37995,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_F_PEARS_3_2": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_LUXE_F_PEARS_3_2",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 6,
+    "textureId": 2,
+    "name": "Black Gold Diamond Drops",
+    "price": 25250,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_F_PEARS_4_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_LUXE_F_PEARS_4_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 7,
+    "textureId": 0,
+    "name": "Gold Waterfalls",
+    "price": 8400,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_F_PEARS_4_1": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_LUXE_F_PEARS_4_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 7,
+    "textureId": 1,
+    "name": "Platinum Waterfalls",
+    "price": 10600,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_F_PEARS_4_2": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_LUXE_F_PEARS_4_2",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 7,
+    "textureId": 2,
+    "name": "Black Gold Waterfalls",
+    "price": 7650,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_F_PEARS_5_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_LUXE_F_PEARS_5_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 8,
+    "textureId": 0,
+    "name": "Gold Totems",
+    "price": 8795,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_F_PEARS_5_1": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_LUXE_F_PEARS_5_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 8,
+    "textureId": 1,
+    "name": "Black Gold Totems",
+    "price": 8045,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_F_PEARS_5_2": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_LUXE_F_PEARS_5_2",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 8,
+    "textureId": 2,
+    "name": "Platinum Totems",
+    "price": 10995,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_F_PEARS_6_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_LUXE_F_PEARS_6_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 9,
+    "textureId": 0,
+    "name": "Gold Diamond Chains",
+    "price": 7745,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_F_PEARS_6_1": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_LUXE_F_PEARS_6_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 9,
+    "textureId": 1,
+    "name": "Platinum Diamond Chains",
+    "price": 9945,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_F_PEARS_6_2": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_LUXE_F_PEARS_6_2",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 9,
+    "textureId": 2,
+    "name": "Black Gold Diamond Chains",
+    "price": 6995,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_F_PEARS_7_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_LUXE_F_PEARS_7_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 10,
+    "textureId": 0,
+    "name": "Gold Emerald Chains",
+    "price": 6650,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_F_PEARS_7_1": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_LUXE_F_PEARS_7_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 10,
+    "textureId": 1,
+    "name": "Platinum Emerald Chains",
+    "price": 8350,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_F_PEARS_7_2": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_LUXE_F_PEARS_7_2",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 10,
+    "textureId": 2,
+    "name": "Black Gold Emerald Chains",
+    "price": 6000,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_F_PEARS_8_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_LUXE_F_PEARS_8_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 11,
+    "textureId": 0,
+    "name": "Gold Sun Drops",
+    "price": 9190,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_F_PEARS_8_1": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_LUXE_F_PEARS_8_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 11,
+    "textureId": 1,
+    "name": "Platinum Sun Drops",
+    "price": 11390,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_F_PEARS_8_2": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_LUXE_F_PEARS_8_2",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 11,
+    "textureId": 2,
+    "name": "Black Gold Sun Drops",
+    "price": 8440,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_F_PEARS_9_0": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_LUXE_F_PEARS_9_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 12,
+    "textureId": 0,
+    "name": "Platinum Diamond Studs",
+    "price": 8950,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_F_PEARS_9_1": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_LUXE_F_PEARS_9_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 12,
+    "textureId": 1,
+    "name": "Gold Diamond Studs",
+    "price": 7100,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_LUXE_F_PEARS_9_2": {
+    "ped": "mp_f_freemode_01",
+    "key": "DLC_MP_LUXE_F_PEARS_9_2",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 12,
+    "textureId": 2,
+    "name": "Black Gold Diamond Studs",
+    "price": 6450,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_SUM2_M_PEARS_0_0": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_SUM2_M_PEARS_0_0",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 41,
+    "textureId": 0,
+    "name": "White Beat Off Earphones",
+    "price": 0,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_SUM2_M_PEARS_0_1": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_SUM2_M_PEARS_0_1",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 41,
+    "textureId": 1,
+    "name": "Yellow Beat Off Earphones",
+    "price": 0,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_SUM2_M_PEARS_0_10": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_SUM2_M_PEARS_0_10",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 41,
+    "textureId": 10,
+    "name": "Teal Beat Off Earphones",
+    "price": 0,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_SUM2_M_PEARS_0_11": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_SUM2_M_PEARS_0_11",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 41,
+    "textureId": 11,
+    "name": "Red Beat Off Earphones",
+    "price": 0,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_SUM2_M_PEARS_0_2": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_SUM2_M_PEARS_0_2",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 41,
+    "textureId": 2,
+    "name": "Salmon Beat Off Earphones",
+    "price": 0,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_SUM2_M_PEARS_0_3": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_SUM2_M_PEARS_0_3",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 41,
+    "textureId": 3,
+    "name": "Orange Beat Off Earphones",
+    "price": 0,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_SUM2_M_PEARS_0_4": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_SUM2_M_PEARS_0_4",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 41,
+    "textureId": 4,
+    "name": "Purple Beat Off Earphones",
+    "price": 0,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_SUM2_M_PEARS_0_5": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_SUM2_M_PEARS_0_5",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 41,
+    "textureId": 5,
+    "name": "Pink Beat Off Earphones",
+    "price": 0,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_SUM2_M_PEARS_0_6": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_SUM2_M_PEARS_0_6",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 41,
+    "textureId": 6,
+    "name": "Turquoise Beat Off Earphones",
+    "price": 0,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_SUM2_M_PEARS_0_7": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_SUM2_M_PEARS_0_7",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 41,
+    "textureId": 7,
+    "name": "Blue Beat Off Earphones",
+    "price": 0,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_SUM2_M_PEARS_0_8": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_SUM2_M_PEARS_0_8",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 41,
+    "textureId": 8,
+    "name": "Black Beat Off Earphones",
+    "price": 0,
+    "restrictionTags": ["EARRING"]
+  },
+  "DLC_MP_SUM2_M_PEARS_0_9": {
+    "ped": "mp_m_freemode_01",
+    "key": "DLC_MP_SUM2_M_PEARS_0_9",
+    "anchorPoint": "ANCHOR_EARS",
+    "componentId": 2,
+    "drawableId": 41,
+    "textureId": 9,
+    "name": "Gray Beat Off Earphones",
+    "price": 0,
+    "restrictionTags": ["EARRING"]
+  }
 }
