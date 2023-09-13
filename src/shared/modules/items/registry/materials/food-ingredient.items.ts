@@ -1,6 +1,7 @@
 import { registerItem } from "../../items-registry";
+import { makeItemKeys } from "../../lib/make-item-keys";
 
-export const FoodIngredient = {
+export const FoodIngredient = makeItemKeys<FoodIngredientItemKey>()({
   RAW_TROUT: "rawtrout",
   RAW_SALMON: "rawsalmon",
   RAW_BASS: "rawbass",
@@ -16,9 +17,9 @@ export const FoodIngredient = {
   RAW_HAMMERHEAD_SHARK: "rawhammerheadshark",
   RAW_GIANT_SQUID: "rawgiantsquid",
   RAW_GOLDEN_KOI: "rawgoldenkoi",
-} as const;
+});
 
-export type FoodIngredientItemKey = (typeof FoodIngredient)[keyof typeof FoodIngredient];
+export type FoodIngredientItemKey = Brand<string, "FoodIngredientItemKey">;
 
 export type FoodIngredientItemInfo = {
   key: FoodIngredientItemKey;
@@ -102,7 +103,7 @@ export const foodIngredients: Record<FoodIngredientItemKey, FoodIngredientItemIn
     name: "Raw Golden Koi",
     description: "A mythical fish, beautiful and rare.",
   },
-};
+} as Record<FoodIngredientItemKey, FoodIngredientItemInfo>;
 
 /**
  * Register all food ingredients.

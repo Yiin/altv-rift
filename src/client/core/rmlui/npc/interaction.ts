@@ -30,23 +30,16 @@ registerElement({
       return null;
     }
 
-    const transform = everyFrame(() => {
-      const lowerBodyPos = game.getPedBoneCoords(ped.scriptID, Bones.SKEL_Pelvis, 0, 0, 0.2);
-      const { x: screenX, y: screenY } = alt.worldToScreen(
-        lowerBodyPos.x,
-        lowerBodyPos.y,
-        lowerBodyPos.z
-      );
-      return `translate(-50%, -50%) translate(${screenX}px, ${screenY}px)`;
-    });
-
-    const scale = everyFrame(({ scale }) => `scale(${scale})`);
-
     return div(
       {
         className: "interaction-wrapper",
         style: {
-          transform,
+          transform: everyFrame(() => {
+            const { x, y } = alt.worldToScreen(
+              game.getPedBoneCoords(ped.scriptID, Bones.SKEL_Pelvis, 0, 0, 0.2)
+            );
+            return `translate(-50%, -50%) translate(${x}px, ${y}px)`;
+          }),
           opacity: menu.isActive ? 1 : 0.5,
         },
       },
@@ -55,7 +48,7 @@ registerElement({
           {
             className: "interaction-content",
             style: {
-              transform: scale,
+              transform: everyFrame(({ scale }) => `scale(${scale})`),
             },
           },
           menu.interactions.map((interaction, index) =>

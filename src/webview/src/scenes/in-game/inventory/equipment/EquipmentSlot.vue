@@ -38,8 +38,8 @@ const equipmentSlots = {
     x: px(90),
     y: px(90),
   },
-  neckwear: {
-    label: "Neckwear",
+  accessory: {
+    label: "Accessories",
     image: "./assets/inventory/bowtie.png",
     x: px(180),
     y: px(90),

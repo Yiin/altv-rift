@@ -13,7 +13,15 @@ import { ComponentPublicInstance, markRaw, reactive } from "vue";
 import DropItemWarning from "@/scenes/in-game/inventory/DropItemWarning.vue";
 import { px } from "@/composables/use-pixel";
 import { ClientEvents } from "@shared/events/client";
-import { CombineType, Equipment, Item, createItem, getCombineType, isItemAmmo, isItemFirearmWeapon } from "@shared/modules/items";
+import {
+  CombineType,
+  Equipment,
+  Item,
+  createItem,
+  getCombineType,
+  isItemAmmo,
+  isItemFirearmWeapon,
+} from "@shared/modules/items";
 
 import { useCharacter } from "./synced/character.store";
 import { useGameState } from "./synced/game-state.store";
@@ -100,22 +108,22 @@ export enum InteractionType {
 export type ItemInteraction =
   | { type: InteractionType.None }
   | {
-    type: InteractionType.Dragging;
-    maybe: boolean;
-    state: Dragging;
-  }
+      type: InteractionType.Dragging;
+      maybe: boolean;
+      state: Dragging;
+    }
   | {
-    type: InteractionType.Dropping;
-    state: Dropping;
-  }
+      type: InteractionType.Dropping;
+      state: Dropping;
+    }
   | {
-    type: InteractionType.Hovering;
-    state: Hovering;
-  }
+      type: InteractionType.Hovering;
+      state: Hovering;
+    }
   | {
-    type: InteractionType.ContextMenu;
-    state: ItemActionMenu;
-  };
+      type: InteractionType.ContextMenu;
+      state: ItemActionMenu;
+    };
 
 const IDLE = { type: InteractionType.None } as const;
 
@@ -222,7 +230,7 @@ export const useInventory = defineStore("inventory", {
         top: null,
         shirt: null,
         armor: null,
-        neckwear: null,
+        accessory: null,
         weapon: null,
         gloves: null,
         lefthand: null,
@@ -365,6 +373,7 @@ export const useInventory = defineStore("inventory", {
           const source = this.getItemSource(e.clientX, e.clientY);
 
           if (!source) {
+            this.currentInteraction = IDLE;
             return;
           }
 
@@ -378,24 +387,24 @@ export const useInventory = defineStore("inventory", {
           const itemInSlot =
             source.type === "equipment" && source.equipmentSlot === "ammo"
               ? (() => {
-                const weapon = this.items.find((item) =>
-                  isSameSource(item.source, {
-                    type: "equipment",
-                    equipmentSlot: "weapon",
-                  })
-                )?.item;
+                  const weapon = this.items.find((item) =>
+                    isSameSource(item.source, {
+                      type: "equipment",
+                      equipmentSlot: "weapon",
+                    })
+                  )?.item;
 
-                const ammo = weapon && isItemFirearmWeapon(weapon) && weapon.ammo;
+                  const ammo = weapon && isItemFirearmWeapon(weapon) && weapon.ammo;
 
-                return (
-                  ammo && {
-                    source,
-                    item: createItem(ammo.key, {
-                      amount: ammo.clip + ammo.rest,
-                    }),
-                  }
-                );
-              })()
+                  return (
+                    ammo && {
+                      source,
+                      item: createItem(ammo.key, {
+                        amount: ammo.clip + ammo.rest,
+                      }),
+                    }
+                  );
+                })()
               : this.items.find((item) => isSameSource(item.source, source));
 
           if (!itemInSlot) {

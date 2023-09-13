@@ -10,5 +10,5 @@
     }
   },
   "include": ["./**/*", "../shared/**/*"],
-  "exclude": ["../webview/**/*", "./modules/streamed-npc/**/*"]
+  "exclude": ["../webview/**/*", "./modules/streamed-npc/**/*", "../server/**/*", "../shared/events/server/index.ts", "../shared/events/server/from-server.ts"]
 }

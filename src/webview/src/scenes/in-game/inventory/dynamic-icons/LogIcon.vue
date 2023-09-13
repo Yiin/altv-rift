@@ -18,7 +18,7 @@ const color = computed(
       joshua_tree_logs: "#726250",
       palm_logs: "#60624F",
       royal_palm_logs: "#967352",
-      russian_olive_logs: "#748075",
+      olive_logs: "#748075",
       birch_logs: "#D2D4D9",
       cedar_logs: "#94424F",
       eucalyptus_logs: "#748C7D",

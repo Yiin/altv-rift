@@ -20,7 +20,7 @@
     "noEmit": true,
     "preserveWatchOutput": false,
     "pretty": true,
-    "skipLibCheck": false,
+    "skipLibCheck": true,
     "typeRoots": [
       "./node_modules/@altv",
       "./node_modules/@types",
@@ -31,7 +31,6 @@
   },
   "exclude": [
     "src/webview",
-    "src/**/streamed-npc",
     "**/unused_*"
   ]
 }

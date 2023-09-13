@@ -86,7 +86,7 @@ type Equipment {
   top       Json?
   shirt     Json?
   armor     Json?
-  neckwear  Json?
+  accessory Json?
   weapon    Json?
   gloves    Json?
   lefthand  Json?

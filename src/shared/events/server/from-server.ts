@@ -11,28 +11,18 @@ export const FromServer = {
   DROP_ITEM: "DROP_ITEM",
 } as const;
 
-export interface EventFromServer {
-  [FromServer.MANUAL_DISCORD_AUTH_DONE]: (
-    player: alt.Player,
-    token: string
-  ) => Promise<void> | void;
-  [FromServer.USE_ITEM]: (player: InGamePlayer, item: Item) => Promise<void> | void;
-  [FromServer.EQUIP_ITEM]: (player: InGamePlayer, item: Item) => Promise<void> | void;
-  [FromServer.UNEQUIP_ITEM]: (
-    player: InGamePlayer,
-    equipmentSlot: EquipmentSlot
-  ) => Promise<void> | void;
-  [FromServer.DROP_ITEM]: (player: InGamePlayer, item: Item) => Promise<void> | void;
-}
-
 declare module "alt-server" {
-  export function emit<T extends keyof typeof FromServer>(
-    eventName: T,
-    ...args: Parameters<EventFromServer[T]>
-  ): void;
-
-  export function on<T extends keyof typeof FromServer>(
-    eventName: T,
-    listener: EventFromServer[T]
-  ): void;
+  export interface ICustomEmitEvent {
+    [FromServer.MANUAL_DISCORD_AUTH_DONE]: (
+      player: alt.Player,
+      token: string
+    ) => Promise<void> | void;
+    [FromServer.USE_ITEM]: (player: InGamePlayer, item: Item) => Promise<void> | void;
+    [FromServer.EQUIP_ITEM]: (player: InGamePlayer, item: Item) => Promise<void> | void;
+    [FromServer.UNEQUIP_ITEM]: (
+      player: InGamePlayer,
+      equipmentSlot: EquipmentSlot
+    ) => Promise<void> | void;
+    [FromServer.DROP_ITEM]: (player: InGamePlayer, item: Item) => Promise<void> | void;
+  }
 }

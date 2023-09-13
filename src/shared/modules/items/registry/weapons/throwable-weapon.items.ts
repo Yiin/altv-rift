@@ -1,10 +1,11 @@
 import { registerItem } from "@shared/modules/items";
 import { ItemFlags } from "../../item-flags";
 import { Item } from "../../types";
+import { makeItemKeys } from "../../lib/make-item-keys";
 import { WeaponGroup } from "./weapon-groups";
 import { getWeaponData } from "./weapon.items";
 
-export const ThrowableWeapon = {
+export const ThrowableWeapon = makeItemKeys<ThrowableWeaponItemKey>()({
   GRENADE: "grenade",
   STICKYBOMB: "stickybomb",
   SNOWBALL: "snowball",
@@ -17,9 +18,9 @@ export const ThrowableWeapon = {
   FLARE: "flare",
   PROXMINE: "proxmine",
   PIPEBOMB: "pipebomb",
-} as const;
+});
 
-export type ThrowableWeaponItemKey = (typeof ThrowableWeapon)[keyof typeof ThrowableWeapon];
+export type ThrowableWeaponItemKey = Brand<string, "ThrowableWeaponItemKey">;
 
 export type ThrowableWeaponItem = {
   key: ThrowableWeaponItemKey;
@@ -237,7 +238,7 @@ export const throwableWeapons: Record<ThrowableWeaponItemKey, ThrowableWeaponIte
       overall: 11.25,
     },
   },
-};
+} as Record<ThrowableWeaponItemKey, ThrowableWeaponItemInfo>;
 
 /**
  * Register throwable weapons

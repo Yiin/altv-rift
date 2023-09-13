@@ -6,24 +6,16 @@ export const FromClient = {
   WEAPON_SHOOT: "WEAPON_SHOOT",
 } as const;
 
-export interface EventFromClient {
-  [FromClient.BEGIN_CONNECTION]: (player: import("alt-server").Player) => void;
-  [FromClient.SCREENSHOT_POPULATE_DATA]: (
-    player: import("alt-server").Player,
-    payload: {
+declare module "alt-shared" {
+  export interface ICustomClientServerEvent {
+    [FromClient.BEGIN_CONNECTION]: () => void;
+    [FromClient.SCREENSHOT_POPULATE_DATA]: (payload: {
       data: string;
       i: number;
       totalLength: number;
-    }
-  ) => void;
-  [FromClient.DISCORD_AUTH_DONE]: (player: import("alt-server").Player, token: string) => void;
-  [FromClient.NOTIFY]: (player: import("alt-server").Player, notification: string) => void;
-  [FromClient.WEAPON_SHOOT]: (player: import("alt-server").Player) => void;
-}
-
-declare module "alt-server" {
-  export function onClient<T extends keyof typeof FromClient>(
-    eventName: T,
-    listener: EventFromClient[T]
-  ): void;
+    }) => void;
+    [FromClient.DISCORD_AUTH_DONE]: (token: string) => void;
+    [FromClient.NOTIFY]: (notification: string) => void;
+    [FromClient.WEAPON_SHOOT]: () => void;
+  }
 }

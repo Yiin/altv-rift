@@ -16,7 +16,7 @@ registerCharacterData({
       top: null,
       shirt: null,
       armor: null,
-      neckwear: null,
+      accessory: null,
       weapon: null,
       gloves: null,
       lefthand: null,

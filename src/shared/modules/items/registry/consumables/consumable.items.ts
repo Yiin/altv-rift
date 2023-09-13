@@ -1,10 +1,10 @@
 import { Item, ItemKey } from "../../types";
 import { ItemFlags } from "../../item-flags";
 import { registerItem } from "../../items-registry";
+import { makeItemKeys } from "../../lib/make-item-keys";
 
-export const Consumable = {
+export const Consumable = makeItemKeys<ConsumableItemKey>()({
   SIMPLE_MEDKIT: "simple_medkit",
-
   COOKED_TROUT: "cookedtrout",
   COOKED_SALMON: "cookedsalmon",
   COOKED_BASS: "cookedbass",
@@ -20,9 +20,9 @@ export const Consumable = {
   COOKED_HAMMERHEAD_SHARK: "cookedhammerheadshark",
   COOKED_GIANT_SQUID: "cookedgiantsquid",
   COOKED_GOLDEN_KOI: "cookedgoldenkoi",
-} as const;
+});
 
-export type ConsumableItemKey = (typeof Consumable)[keyof typeof Consumable];
+export type ConsumableItemKey = Brand<string, "ConsumableItemKey">;
 
 export type ConsumableItem = {
   key: ConsumableItemKey;
@@ -135,7 +135,7 @@ export const consumables: Record<ConsumableItemKey, ConsumableItemInfo> = {
     description: "Grants special benefits when consumed.",
     flags: ItemFlags.IsEdible,
   },
-};
+} as Record<ConsumableItemKey, ConsumableItemInfo>;
 
 /**
  * Register all consumable items.

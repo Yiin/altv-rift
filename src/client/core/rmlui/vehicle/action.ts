@@ -105,6 +105,16 @@ function getClosestPart(vehicle: alt.Vehicle) {
 }
 
 alt.everyTick(() => {
+  // Do not show actions if player's in a vehicle
+  if (alt.Player.local.vehicle) {
+    prevClosest.value = {
+      part: null,
+      position: null,
+      vehicle: null,
+      dist: Infinity,
+    };
+    return;
+  }
   if (
     prevClosest.value.vehicle !== newClosest.vehicle ||
     prevClosest.value.part !== newClosest.part

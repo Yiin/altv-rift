@@ -18,15 +18,16 @@ registerElement({
         className: "nametag-wrapper",
         style: {
           transform: everyFrame(({ distance }) => {
-            const headPos = game.getPedBoneCoords(
-              ped.scriptID,
-              Bones.SKEL_Head,
-              0,
-              0,
-              // adjust z position based on distance
-              Math.min((distance / 4) * 0.5 + 0.2, 0.5)
+            const { x, y } = alt.worldToScreen(
+              game.getPedBoneCoords(
+                ped.scriptID,
+                Bones.SKEL_Head,
+                0,
+                0,
+                // adjust z position based on distance
+                Math.min((distance / 4) * 0.5 + 0.2, 0.5)
+              )
             );
-            const { x, y } = alt.worldToScreen(headPos.x, headPos.y, headPos.z);
             return `translate(-50%, -50%) translate(${x}px, ${y}px)`;
           }),
         },

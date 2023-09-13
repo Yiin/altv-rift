@@ -2,10 +2,11 @@ import { registerItem } from "@shared/modules/items";
 import { ItemFlags } from "../../item-flags";
 import { Item, ItemKey } from "../../types";
 import { AmmoItemKey } from "../ammo/ammo.items";
+import { makeItemKeys } from "../../lib/make-item-keys";
 import { AmmoGroup, WeaponGroup } from "./weapon-groups";
 import { getWeaponData } from "./weapon.items";
 
-export const FirearmWeapon = {
+export const FirearmWeapon = makeItemKeys<FirearmWeaponItemKey>()({
   ADVANCEDRIFLE: "advancedrifle",
   APPISTOL: "appistol",
   ASSAULTRIFLE: "assaultrifle",
@@ -70,9 +71,9 @@ export const FirearmWeapon = {
   SPECIALCARBINEMK2: "specialcarbinemk2",
   STUNGUN: "stungun",
   VINTAGEPISTOL: "vintagepistol",
-} as const;
+});
 
-export type FirearmWeaponItemKey = (typeof FirearmWeapon)[keyof typeof FirearmWeapon];
+export type FirearmWeaponItemKey = Brand<string, "FirearmWeaponItemKey">;
 
 export type EquipedAmmo = {
   key: AmmoItemKey;
@@ -1271,7 +1272,7 @@ export const firearmWeapons: Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>
       overall: 29.2,
     },
   },
-};
+} as Record<FirearmWeaponItemKey, FirearmWeaponItemInfo>;
 
 /**
  * Register all firearm weapons.

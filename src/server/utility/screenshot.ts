@@ -36,17 +36,12 @@ export class Screenshot {
           return resolve(null);
         }
 
-        if (
-          !pendingScreenshots[player.id] ||
-          !pendingScreenshots[player.id].didComplete
-        ) {
+        if (!pendingScreenshots[player.id] || !pendingScreenshots[player.id].didComplete) {
           return;
         }
 
         alt.clearInterval(interval);
-        const fullData = StringBuffer.fromBuffer(
-          pendingScreenshots[player.id].data
-        );
+        const fullData = StringBuffer.fromBuffer(pendingScreenshots[player.id].data);
         delete pendingScreenshots[player.id];
         return resolve(fullData);
       }, 100);
@@ -55,35 +50,24 @@ export class Screenshot {
 
   /**
    * Builds data from a screenshot event.
-   * @static
-   * @param {alt.Player} player
-   * @param {string} data
-   * @param {number} index
-   * @param {number} lengthOfData
-   * @memberof AthenaScreenshot
    */
   static async buildData(
     player: alt.Player,
-    data: string,
-    index: number,
-    lengthOfData: number
+    { data, i, totalLength }: { data: string; i: number; totalLength: number }
   ) {
     if (!pendingScreenshots[player.id]) {
       pendingScreenshots[player.id] = {
-        data: new Array(lengthOfData),
+        data: new Array(totalLength),
         didComplete: false,
       };
     }
 
-    pendingScreenshots[player.id].data[index] = data;
+    pendingScreenshots[player.id].data[i] = data;
 
-    if (index === lengthOfData - 1) {
+    if (i === totalLength - 1) {
       pendingScreenshots[player.id].didComplete = true;
     }
   }
 }
 
-alt.onClient(
-  ServerEvents.FromClient.SCREENSHOT_POPULATE_DATA,
-  Screenshot.buildData
-);
+alt.onClient(ServerEvents.FromClient.SCREENSHOT_POPULATE_DATA, Screenshot.buildData);

@@ -94,7 +94,7 @@ export const PedAppearance = {
       // game.setPedComponentVariation(ped, 4, 61, 0, 2); // pants
       // game.setPedComponentVariation(ped, 5, 0, 0, 2); // bag
       // game.setPedComponentVariation(ped, 6, 34, 0, 2); // shoes
-      // game.setPedComponentVariation(ped, 7, 0, 0, 2); // accessories
+      // game.setPedComponentVariation(ped, 7, 0, 0, 2); // accessory
       // game.setPedComponentVariation(ped, 8, 15, 0, 2); // undershirt
       // game.setPedComponentVariation(ped, 9, 0, 0, 2); // body armour
       // game.setPedComponentVariation(ped, 11, 15, 0, 2); // torso
@@ -104,7 +104,7 @@ export const PedAppearance = {
       // game.setPedComponentVariation(ped, 4, 14, 0, 2); // pants
       // game.setPedComponentVariation(ped, 5, 0, 0, 2); // bag
       game.setPedComponentVariation(ped, 6, 4, 0, 0); // shoes
-      // game.setPedComponentVariation(ped, 7, 0, 0, 2); // accessories
+      // game.setPedComponentVariation(ped, 7, 0, 0, 2); // accessory
       // game.setPedComponentVariation(ped, 8, 15, 0, 2); // undershirt
       // game.setPedComponentVariation(ped, 9, 0, 0, 2); // body armour
       game.setPedComponentVariation(ped, 11, 2, 0, 0); // torso

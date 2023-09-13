@@ -1,8 +1,9 @@
 import { registerItem } from "../items-registry";
+import { makeItemKeys } from "../lib/make-item-keys";
 import { Item } from "../types";
 import { FoodIngredient } from "./materials/food-ingredient.items";
 
-export const FishBait = {
+export const FishBait = makeItemKeys<FishBaitItemKey>()({
   WORMS: "worms",
   ROE: "roe",
   CRAWFISH: "crawfish",
@@ -18,9 +19,9 @@ export const FishBait = {
   TUNA_HEAD: "tunahead",
   SMALL_FISH_BUNDLE: "smallfishbundle",
   GOLDEN_WORMS: "goldenworms",
-} as const;
+});
 
-export type FishBaitItemKey = (typeof FishBait)[keyof typeof FishBait];
+export type FishBaitItemKey = Brand<string, "FishBaitItemKey">;
 
 export type FishBaitItem = {
   key: FishBaitItemKey;
@@ -109,7 +110,7 @@ export const fishBaits: Record<FishBaitItemKey, FishBaitItemInfo> = {
     name: "Golden Worms",
     description: "Rare bait used to catch the mythical Golden Koi.",
   },
-};
+} as Record<FishBaitItemKey, FishBaitItemInfo>;
 
 /**
  * Register all fish baits.

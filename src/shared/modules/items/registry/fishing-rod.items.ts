@@ -1,12 +1,13 @@
 import { registerItem } from "@shared/modules/items";
 import { Item } from "../types";
+import { makeItemKeys } from "../lib/make-item-keys";
 import { FishBaitItem } from "./fish-bait.items";
 
-export const FishingRod = {
+export const FishingRod = makeItemKeys<FishingRodItemKey>()({
   BASIC_FISHING_ROD: "fishingrod",
-} as const;
+});
 
-export type FishingRodItemKey = (typeof FishingRod)[keyof typeof FishingRod];
+export type FishingRodItemKey = Brand<string, "FishingRodItemKey">;
 
 export type FishingRodItem = {
   key: FishingRodItemKey;
@@ -25,7 +26,7 @@ export const fishingRods: Record<FishingRodItemKey, FishingRodItemInfo> = {
     name: "Fishing rod",
     description: "A simple rod and reel for catching fish. Ideal for beginners.",
   },
-};
+} as Record<FishingRodItemKey, FishingRodItemInfo>;
 
 /**
  * Register all fishing rods.

@@ -23,7 +23,7 @@ const gender = computed(() => character.appearance.sex);
       'top',
       'shirt',
       'armor',
-      'neckwear',
+      'accessory',
       'weapon',
       'ammo',
       'gloves',

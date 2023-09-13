@@ -1,19 +1,65 @@
-import alt, { Player } from "alt-server";
+import alt from "alt-server";
 import { type Appearance } from "@prisma/client";
 import { ClientEvents } from "@shared/events/client";
 
 declare module "alt-server" {
   export interface Player {
-    updateCharacterAppearance(
-      appearance?: import("@prisma/client").Appearance
-    ): void;
+    resetClothes(this: Player, component?: number): void;
+    updateCharacterAppearance(this: Player, appearance?: import("@prisma/client").Appearance): void;
   }
 }
 
-Player.prototype.updateCharacterAppearance = function (
-  this: Player,
-  appearance: Appearance
-) {
+alt.Player.prototype.resetClothes = function (component?: number) {
+  if (typeof component === "undefined") {
+    for (let i = 0; i < 12; i++) {
+      this.resetClothes(i);
+    }
+    return;
+  }
+  if (this.model === alt.hash("mp_f_freemode_01")) {
+    switch (component) {
+      case 3: // torso
+        this.setDlcClothes(0, 3, 15, 0, 0);
+        break;
+      case 4: // pants
+        this.setDlcClothes(0, 4, 21, 0, 0);
+        break;
+      case 6: // shoes
+        this.setDlcClothes(0, 6, 34, 0, 0);
+        break;
+      case 8: // undershirt
+        this.setDlcClothes(0, 8, 15, 0, 0);
+        break;
+      case 11: // tops
+        this.setDlcClothes(0, 11, 91, 0, 0);
+        break;
+      default:
+        this.setDlcClothes(0, component, 0, 0, 0);
+    }
+  } else {
+    switch (component) {
+      case 3: // torso
+        this.setDlcClothes(0, 3, 15, 0, 0);
+        break;
+      case 4: // pants
+        this.setDlcClothes(0, 4, 21, 0, 0);
+        break;
+      case 6: // shoes
+        this.setDlcClothes(0, 6, 34, 0, 0);
+        break;
+      case 8: // undershirt
+        this.setDlcClothes(0, 8, 15, 0, 0);
+        break;
+      case 11: // tops
+        this.setDlcClothes(0, 11, 91, 0, 0);
+        break;
+      default:
+        this.setDlcClothes(0, component, 0, 0, 0);
+    }
+  }
+};
+
+alt.Player.prototype.updateCharacterAppearance = function (appearance: Appearance) {
   const isFemale = appearance.sex;
 
   if (isFemale) {
@@ -22,18 +68,7 @@ Player.prototype.updateCharacterAppearance = function (
     this.model = "mp_m_freemode_01";
   }
 
-  if (isFemale) {
-    this.setDlcClothes(0, 3, 14, 0, 0); // torso
-    this.setDlcClothes(0, 4, 14, 0, 0); // pants
-    this.setDlcClothes(0, 6, 1, 0, 0); // shoes
-    this.setDlcClothes(0, 11, 14, 0, 0); // shoes
-  } else {
-    this.setDlcClothes(0, 3, 15, 0, 0); // torso / arms
-    this.setDlcClothes(0, 4, 14, 0, 0); // pants
-    this.setDlcClothes(0, 6, 34, 0, 0); // shoes
-    this.setDlcClothes(0, 8, 15, 0, 0); // undershirt
-    this.setDlcClothes(0, 11, 91, 0, 0); // tops
-  }
+  this.resetClothes();
 
   // this.setProp(3, 15, 0);
   // this.setProp(4, isFemale ? 15 : 61, isFemale ? 3 : 0);
@@ -83,10 +118,7 @@ Player.prototype.updateCharacterAppearance = function (
   }
 
   if (decorationsToSync.length >= 1) {
-    this.emit(
-      ClientEvents.FromServer.SET_PLAYER_DECORATIONS,
-      decorationsToSync
-    );
+    this.emit(ClientEvents.FromServer.SET_PLAYER_DECORATIONS, decorationsToSync);
   }
 
   // Hair
