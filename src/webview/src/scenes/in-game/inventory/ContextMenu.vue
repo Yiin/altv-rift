@@ -77,7 +77,7 @@ function executeAction(action: string) {
       }
       break;
     case "drop":
-      inventory.dropFromMenu(props.item);
+      inventory.dropFromMenu(source);
       break;
     case "load-ammo":
       if (inventory.selectedItem) {
@@ -143,9 +143,9 @@ const actions = computed(() => [
 </script>
 
 <template>
-  <div v-if="visible" :key="ts" class="absolute flex justify-start" @click.stop
+  <div v-if="visible" :key="ts" class="absolute flex justify-start"
     v-click-outside="inventory.closeActionMenu">
-    <Window v-bind="{ x, y }" :is-active="false">
+    <Window v-bind="{ x, y }" :is-active="false" @mousedown.stop>
       <ul class="flex flex-col space-y-2 bg-gray-800 rounded-lg overflow-hidden shadow-lg">
         <li>
           <strong class="py-3 px-4 block text-sm font-medium uppercase text-gray-400">
@@ -153,7 +153,7 @@ const actions = computed(() => [
           </strong>
           <ul>
             <template v-for="action in actions">
-              <li v-if="'enabled' in action === false || action.enabled" @mousedown="action.select"
+              <li v-if="'enabled' in action === false || action.enabled" @mousedown.stop="action.select"
                 class="border-t border-t-gray-700">
                 <div class="flex items-center gap-4 px-4 py-3 bg-gray-800 text-gray-200 hover:bg-gray-700 cursor-pointer">
                   <v-icon :icon="action.icon" size="sm" />

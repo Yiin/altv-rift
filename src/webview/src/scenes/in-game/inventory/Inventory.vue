@@ -36,7 +36,7 @@ onUnmounted(() => {
     is-draggable
     w="auto"
     h="auto"
-    :x="px(windowSize.width / 2 - width / 2)"
+    :x="px(windowSize.width / 2 + width / 4)"
     :y="px(windowSize.height / 2 - 200)"
   >
     <div class="shadow-md flex gap-4 h-full bg-gray-800/95 px-4 py-4">

@@ -39,7 +39,6 @@ import {
   RightHandItemKey,
   isItemKeyRightHand,
 } from "./righthand/righthand.items";
-import { ShirtItem, ShirtItemInfo, ShirtItemKey, isItemKeyShirt } from "./shirt/shit.items";
 import { ShoesItem, ShoesItemInfo, ShoesItemKey, isItemKeyShoes } from "./shoes/shoes.items";
 import { TopItem, TopItemInfo, TopItemKey, isItemKeyTop } from "./top/top.items";
 
@@ -54,7 +53,6 @@ export type ClothingItemKey =
   | MaskItemKey
   | PantsItemKey
   | RightHandItemKey
-  | ShirtItemKey
   | ShoesItemKey
   | TopItemKey;
 
@@ -69,7 +67,6 @@ export type ClothingItem =
   | MaskItem
   | PantsItem
   | RightHandItem
-  | ShirtItem
   | ShoesItem
   | TopItem;
 
@@ -84,7 +81,6 @@ export type ClothingItemInfo =
   | MaskItemInfo
   | PantsItemInfo
   | RightHandItemInfo
-  | ShirtItemInfo
   | ShoesItemInfo
   | TopItemInfo;
 
@@ -100,7 +96,6 @@ export function isItemKeyClothing(key: string): key is ClothingItemKey {
     isItemKeyMask(key) ||
     isItemKeyPants(key) ||
     isItemKeyRightHand(key) ||
-    isItemKeyShirt(key) ||
     isItemKeyShoes(key) ||
     isItemKeyTop(key)
   );

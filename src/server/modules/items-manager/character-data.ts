@@ -14,7 +14,6 @@ registerCharacterData({
       headwear: null,
       earrings: null,
       top: null,
-      shirt: null,
       armor: null,
       accessory: null,
       weapon: null,

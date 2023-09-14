@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useItemDetails } from "@/composables/use-item-details";
-import { getItemIconScale, getItemImage } from "@/utils/items";
+import { getItemIconScale, getItemImage, getItemIconPosition } from "@/utils/items";
 import { computed, ref, watch } from "vue";
 import LogIcon from "./dynamic-icons/LogIcon.vue";
 import { Item, TreeLogItemKey} from "@shared/modules/items";
@@ -31,12 +31,7 @@ watch(
 
 <template>
   <div
-    class="absolute top-0 left-0 w-20 h-20 text-white flex items-center justify-center cursor-pointer"
-    :style="{
-      backgroundImage: `url(${getItemImage(item)})`,
-      backgroundSize: getItemIconScale(item),
-      backgroundPosition: 'center',
-    }"
+    class="absolute top-0 left-0 w-20 h-20 text-white flex items-center justify-center cursor-pointer p-2"
   >
     <template v-if="noImage">
       <LogIcon v-if="item.key.endsWith(`_logs`)" :item-key="(item.key as TreeLogItemKey)" />
@@ -44,6 +39,15 @@ watch(
         {{ itemDetails.customName ?? itemDetails.name }}
       </div>
     </template>
+    <div
+      v-else
+      class="w-full h-full"
+      :style="{
+        backgroundImage: `url(${getItemImage(item)})`,
+        backgroundSize: getItemIconScale(item),
+        backgroundPosition: getItemIconPosition(item),
+      }"
+    />
     <div v-if="`amount` in item" class="absolute bottom-1 right-1 font-bold shadow-sm">
       {{ item.amount }}
     </div>

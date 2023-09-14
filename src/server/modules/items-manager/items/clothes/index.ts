@@ -1,22 +1,12 @@
 import alt from "alt-server";
 import { ServerEvents } from "@shared/events/server";
-import { isItemClothing, getItemInfoByKey } from "@shared/modules/items";
+import { isItemClothing, getItemInfoByKey, getItemEquipmentSlot } from "@shared/modules/items";
+import { getTorsoForTop } from "@shared/modules/items/registry/clothing/get-correct-torso";
 
-alt.on(ServerEvents.FromServer.EQUIP_ITEM, (player, item) => {
-  if (!isItemClothing(item)) {
-    return;
-  }
-
-  const itemInfo = getItemInfoByKey(item.key);
-
-  player.setClothes(itemInfo.componentId, itemInfo.drawableId, itemInfo.textureId);
-});
-
-alt.on(ServerEvents.FromServer.UNEQUIP_ITEM, (player, equipmentSlot) => {
-  const isComponentVariation = [
+export function isComponentVariation(equipmentSlot: string) {
+  return [
     "mask",
     "top",
-    "shirt",
     "armor",
     "accessory",
     "gloves",
@@ -26,13 +16,44 @@ alt.on(ServerEvents.FromServer.UNEQUIP_ITEM, (player, equipmentSlot) => {
     "phone",
     "tool",
   ].includes(equipmentSlot);
+}
 
-  if (isComponentVariation) {
+export function isProp(equipmentSlot: string) {
+  return ["glasses", "headwear", "earrings", "lefthand", "righthand"].includes(equipmentSlot);
+}
+
+alt.on(ServerEvents.FromServer.EQUIP_ITEM, (player, item) => {
+  if (!isItemClothing(item)) {
+    return;
+  }
+
+  const equipmentSlot = getItemEquipmentSlot(item)!;
+  const itemInfo = getItemInfoByKey(item.key);
+
+  if (isComponentVariation(equipmentSlot)) {
+    player.setClothes(itemInfo.componentId, itemInfo.drawableId, itemInfo.textureId);
+
+    if (itemInfo.componentId === 11) {
+      const torso = getTorsoForTop(player.model, itemInfo.drawableId, itemInfo.textureId);
+
+      if (torso) {
+        player.setClothes(3, torso.drawableId, torso.textureId);
+      } else {
+        player.setClothes(3, 14, 0);
+      }
+    }
+  } else if (isProp(equipmentSlot)) {
+    alt.log("Setting prop", itemInfo.componentId, itemInfo.drawableId, itemInfo.textureId);
+    player.setProp(itemInfo.componentId, itemInfo.drawableId, itemInfo.textureId);
+  }
+});
+
+alt.on(ServerEvents.FromServer.UNEQUIP_ITEM, (player, equipmentSlot) => {
+  if (isComponentVariation(equipmentSlot)) {
     const componentId =
       {
         mask: 1,
         top: 11,
-        shirt: 8,
         armor: 9,
         accessory: 7,
         gloves: 3,
@@ -47,11 +68,7 @@ alt.on(ServerEvents.FromServer.UNEQUIP_ITEM, (player, equipmentSlot) => {
     return;
   }
 
-  const isProp = ["glasses", "headwear", "earrings", "lefthand", "righthand"].includes(
-    equipmentSlot
-  );
-
-  if (isProp) {
+  if (isProp(equipmentSlot)) {
     const componentId =
       {
         glasses: 1,

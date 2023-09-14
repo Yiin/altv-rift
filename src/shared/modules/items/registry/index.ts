@@ -11,7 +11,6 @@ export * from "./clothing/lefthand/lefthand.items";
 export * from "./clothing/masks/mask.items";
 export * from "./clothing/pants/pants.items";
 export * from "./clothing/righthand/righthand.items";
-export * from "./clothing/shirt/shit.items";
 export * from "./clothing/shoes/shoes.items";
 export * from "./clothing/top/top.items";
 export * from "./consumables/consumable.items";

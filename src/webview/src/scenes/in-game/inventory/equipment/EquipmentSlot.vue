@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { InteractionType, SlottedItem, useInventory } from "@/store/inventory.store";
+import { InteractionType, SlottedItem, useInventory, isSameSource } from "@/store/inventory.store";
 import ItemIcon from "../ItemIcon.vue";
 import { px } from "@/composables/use-pixel";
 
@@ -50,16 +50,10 @@ const equipmentSlots = {
     x: px(0),
     y: px(180),
   },
-  shirt: {
-    label: "Shirt",
-    image: "./assets/inventory/shirt.png",
-    x: px(90),
-    y: px(180),
-  },
   armor: {
     label: "Armor",
     image: "./assets/inventory/armor.png",
-    x: px(180),
+    x: px(90),
     y: px(180),
   },
   gloves: {
@@ -177,6 +171,42 @@ const draggingOver = computed(() => {
   return false;
 });
 
+const draggingStyle = computed(() => {
+  if (!item.value) {
+    console.log('no item');
+    return {};
+  }
+  const interaction = inventory.currentInteraction;
+
+  if (
+    interaction.type === InteractionType.Dragging &&
+    isSameSource(interaction.state.item.source, item.value.source)
+  ) {
+    const x =
+      interaction.state.currentPosition.x -
+      interaction.state.startPosition.x +
+      slot.value.x;
+    const y =
+      interaction.state.currentPosition.y -
+      interaction.state.startPosition.y +
+      slot.value.y;
+
+    console.log("dragging", x, y);
+    // We're currently dragging this item
+    return {
+      transform: `translate(${x + px(4)}px, ${y + px(4)}px)`,
+      zIndex: Number.MAX_SAFE_INTEGER,
+    };
+  } else {
+  console.log("chilling");
+    // Item is chilling in its slot
+    return {
+      transform: `translate(${slot.value.x}px, ${slot.value.y}px)`,
+      zIndex: 10,
+    };
+  }
+});
+
 function unequipItem() {
   inventory.unequipItem(props.name);
 }
@@ -196,7 +226,8 @@ inventory.registerItemSlot({
   <div ref="nodeRef" class="absolute top-0 left-0 w-20 h-20 bg-gray-800/80 item-slot text-white"
     :class="[(draggingOver || item) && 'drop-shadow-[2px_4px_6px_black]']" :style="{
       transform: `translate(${slot.x}px, ${slot.y}px)`,
-    }">
+    }"
+  >
     <div v-if="!item" class="absolute w-full h-full bg-[center_35%] text-center pt-12 text-xs" :style="{
       backgroundImage: `url(${slot.image})`,
       backgroundSize: `30%`,
@@ -205,6 +236,7 @@ inventory.registerItemSlot({
       {{ slot.label }}
     </div>
   </div>
-  <ItemIcon v-if="item" :item="item.item" :style="{ transform: `translate(${slot.x}px, ${slot.y}px)` }"
+  <ItemIcon v-if="item" :item="item.item" :style="draggingStyle"
+    @mousedown="inventory.handleMouseDown"
     @dblclick="unequipItem" @contextmenu.prevent="(e) => item && inventory.openContextMenu(item, e)" />
 </template>

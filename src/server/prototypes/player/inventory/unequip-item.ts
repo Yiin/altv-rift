@@ -1,16 +1,25 @@
 import alt from "alt-server";
-import { EquipmentSlot } from "@shared/interfaces";
+import { EquipmentSlot, InventoryItemSource } from "@shared/interfaces";
 import { ServerEvents } from "@shared/events/server";
 import { Equipment } from "@shared/modules/items";
 import { InGamePlayer } from "@/utility/assertions";
-import { unloadAmmoFromWeapon, unloadWeaponItemAmmo } from "@/modules/items-manager";
+import {
+  addItemToInventory,
+  findSourceInventory,
+  unloadAmmoFromWeapon,
+  unloadWeaponItemAmmo,
+} from "@/modules/items-manager";
 
 declare module "alt-server" {
   export interface Player {
     /**
      * Unequips an item from the player's equipment to the inventory
      */
-    unequipItem(this: InGamePlayer, equipmentSlot: EquipmentSlot): boolean;
+    unequipItem(
+      this: InGamePlayer,
+      equipmentSlot: EquipmentSlot,
+      to?: InventoryItemSource
+    ): boolean;
 
     /**
      * Removes an item from the player's equipment
@@ -19,7 +28,7 @@ declare module "alt-server" {
   }
 }
 
-alt.Player.prototype.unequipItem = function (equipmentSlot) {
+alt.Player.prototype.unequipItem = function (equipmentSlot, to) {
   if (equipmentSlot === "ammo") {
     if (
       !unloadAmmoFromWeapon({
@@ -39,7 +48,15 @@ alt.Player.prototype.unequipItem = function (equipmentSlot) {
       return false;
     }
 
-    if (!this.addItem(item)) {
+    if (to) {
+      const inventory = findSourceInventory.call(to);
+      if (!inventory) {
+        return false;
+      }
+      if (!addItemToInventory(inventory, item, to.inventorySlot)) {
+        return false;
+      }
+    } else if (!this.addItem(item)) {
       return false;
     }
 

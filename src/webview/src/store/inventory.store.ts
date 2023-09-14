@@ -228,7 +228,6 @@ export const useInventory = defineStore("inventory", {
         headwear: null,
         earrings: null,
         top: null,
-        shirt: null,
         armor: null,
         accessory: null,
         weapon: null,
@@ -545,8 +544,11 @@ export const useInventory = defineStore("inventory", {
         this.currentInteraction = IDLE;
       }
     },
-    dropFromMenu(item: SlottedItem) {
-      if (this.currentInteraction.type !== InteractionType.ContextMenu) {
+    dropFromMenu(source: LocalItemSource) {
+      const position = this.getItemSourceScreenPosition(source);
+      const item = this.items.find((item) => isSameSource(item.source, source));
+
+      if (!item) {
         return;
       }
 
@@ -555,8 +557,8 @@ export const useInventory = defineStore("inventory", {
         state: {
           item,
           position: {
-            x: this.currentInteraction.state.x,
-            y: this.currentInteraction.state.y,
+            x: position.x,
+            y: position.y,
           },
         },
       };

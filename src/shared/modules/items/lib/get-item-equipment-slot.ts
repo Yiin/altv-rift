@@ -14,7 +14,6 @@ import {
   isItemKeyMask,
   isItemKeyPants,
   isItemKeyRightHand,
-  isItemKeyShirt,
   isItemKeyShoes,
   isItemKeyTop,
 } from "../registry";
@@ -62,9 +61,6 @@ export function getItemKeyEquipmentSlot(key: ItemKey): EquipmentSlot | undefined
     }
     if (isItemKeyRightHand(key)) {
       return "righthand";
-    }
-    if (isItemKeyShirt(key)) {
-      return "shirt";
     }
     if (isItemKeyShoes(key)) {
       return "shoes";

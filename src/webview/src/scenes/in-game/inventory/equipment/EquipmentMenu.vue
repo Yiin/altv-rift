@@ -10,7 +10,7 @@ const gender = computed(() => character.appearance.sex);
 
 <template>
   <div @mousedown.stop @touchstart.stop class="relative bg-right bg-contain h-132.5" :style="{
-    backgroundImage: gender
+    backgroundImage: !gender
       ? `url(./assets/inventory/ManSilhouetteOutline.png)`
       : `url(./assets/inventory/WomanSilhouetteOutline.png)`,
   }">
@@ -21,7 +21,6 @@ const gender = computed(() => character.appearance.sex);
       'headwear',
       'earrings',
       'top',
-      'shirt',
       'armor',
       'accessory',
       'weapon',

@@ -84,7 +84,6 @@ type Equipment {
   headwear  Json?
   earrings  Json?
   top       Json?
-  shirt     Json?
   armor     Json?
   accessory Json?
   weapon    Json?

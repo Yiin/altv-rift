@@ -1,6 +1,9 @@
 import alt from "alt-server";
 import { type Appearance } from "@prisma/client";
 import { ClientEvents } from "@shared/events/client";
+import { Gloves, Pants, Shoes, Top, getItemInfoByKey } from "@shared/modules/items";
+import { getTorsoForTop } from "@shared/modules/items/registry/clothing/get-correct-torso";
+import { getDefaultClothing } from "@shared/modules/items/registry/clothing/clothing-defaults";
 
 declare module "alt-server" {
   export interface Player {
@@ -18,43 +21,62 @@ alt.Player.prototype.resetClothes = function (component?: number) {
   }
   if (this.model === alt.hash("mp_f_freemode_01")) {
     switch (component) {
-      case 3: // torso
-        this.setDlcClothes(0, 3, 15, 0, 0);
+      case 3: {
+        // gloves
+        const top = this.getClothes(11);
+
+        const torso = getTorsoForTop(this.model, top.drawable, top.texture);
+
+        if (torso) {
+          this.setClothes(3, torso.drawableId, torso.textureId);
+        } else {
+          const defaults = getDefaultClothing(false, component);
+          if (defaults) {
+            this.setClothes(component, defaults[0], defaults[1]);
+          }
+        }
         break;
-      case 4: // pants
-        this.setDlcClothes(0, 4, 21, 0, 0);
-        break;
-      case 6: // shoes
-        this.setDlcClothes(0, 6, 34, 0, 0);
-        break;
-      case 8: // undershirt
-        this.setDlcClothes(0, 8, 15, 0, 0);
-        break;
-      case 11: // tops
-        this.setDlcClothes(0, 11, 91, 0, 0);
-        break;
-      default:
-        this.setDlcClothes(0, component, 0, 0, 0);
+      }
+      default: {
+        const defaults = getDefaultClothing(false, component);
+        if (defaults) {
+          this.setClothes(component, defaults[0], defaults[1]);
+
+          if (component === 11) {
+            this.resetClothes(3);
+          }
+        }
+      }
     }
   } else {
     switch (component) {
-      case 3: // torso
-        this.setDlcClothes(0, 3, 15, 0, 0);
+      case 3: {
+        // gloves
+        const top = this.getClothes(11);
+
+        try {
+          const torso = getTorsoForTop(this.model, top.drawable, top.texture);
+
+          if (torso) {
+            this.setClothes(3, torso.drawableId, torso.textureId);
+          }
+        } catch {
+          const defaults = getDefaultClothing(true, component);
+          if (defaults) {
+            this.setClothes(component, defaults[0], defaults[1]);
+          }
+        }
         break;
-      case 4: // pants
-        this.setDlcClothes(0, 4, 21, 0, 0);
-        break;
-      case 6: // shoes
-        this.setDlcClothes(0, 6, 34, 0, 0);
-        break;
-      case 8: // undershirt
-        this.setDlcClothes(0, 8, 15, 0, 0);
-        break;
-      case 11: // tops
-        this.setDlcClothes(0, 11, 91, 0, 0);
-        break;
+      }
       default:
-        this.setDlcClothes(0, component, 0, 0, 0);
+        const defaults = getDefaultClothing(true, component);
+        if (defaults) {
+          this.setClothes(component, defaults[0], defaults[1]);
+
+          if (component === 11) {
+            this.resetClothes(3);
+          }
+        }
     }
   }
 };
@@ -69,12 +91,6 @@ alt.Player.prototype.updateCharacterAppearance = function (appearance: Appearanc
   }
 
   this.resetClothes();
-
-  // this.setProp(3, 15, 0);
-  // this.setProp(4, isFemale ? 15 : 61, isFemale ? 3 : 0);
-  // this.setProp(6, isFemale ? 35 : 34, 0);
-  // this.setProp(8, 15, 0);
-  // this.setProp(11, isFemale ? 5 : 15, 0);
 
   // Set Face
   this.clearBloodDamage();

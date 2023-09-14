@@ -22,6 +22,7 @@ const details = useItemDetails(item);
       left: `${position.x}px`,
       top: `${position.y}px`,
     }"
+    @mousedown.stop
     v-click-outside="inventory.cancelDropping"
   >
     <v-card-item title="Drop item">
@@ -68,8 +69,8 @@ const details = useItemDetails(item);
     <v-divider></v-divider>
 
     <v-card-actions class="justify-between">
-      <v-btn @click="inventory.cancelDropping">Keep</v-btn>
-      <v-btn color="error" @click="inventory.completeDropping">Destroy</v-btn>
+      <v-btn @mousedown="inventory.cancelDropping">Keep</v-btn>
+      <v-btn color="error" @mousedown="inventory.completeDropping">Destroy</v-btn>
     </v-card-actions>
   </v-card>
 </template>
