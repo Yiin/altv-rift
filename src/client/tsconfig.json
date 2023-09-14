@@ -1,14 +1,3 @@
-{
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "baseUrl": ".",
-    "jsx": "preserve",
-    "jsxFactory": "createElement",
-    "paths": {
-      "@shared/*": ["../shared/*"],
-      "@/*": ["./*"]
-    }
-  },
-  "include": ["./**/*", "../shared/**/*"],
-  "exclude": ["../webview/**/*", "./modules/streamed-npc/**/*", "../server/**/*", "../shared/events/server/index.ts", "../shared/events/server/from-server.ts"]
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:e4fb5dde6f484fcc781b04d2c6e4fde5b88708547be31751bcfa5f536934af7f
+size 427
