@@ -3,6 +3,7 @@ import { ServerEvents } from "@shared/events/server";
 import { Quests } from "@shared/modules/quests";
 import { Consumable, createItem } from "@shared/modules/items";
 import { isInGame } from "@/utility/assertions";
+import { useItem } from "@/modules/items-manager";
 
 alt.onClient(ServerEvents.FromClient.NOTIFY, (player, questFact) => {
   if (!isInGame(player)) {
@@ -21,10 +22,6 @@ alt.onClient(ServerEvents.FromClient.NOTIFY, (player, questFact) => {
 });
 
 alt.on(ServerEvents.FromServer.USE_ITEM, (player, item) => {
-  if (!isInGame(player)) {
-    return;
-  }
-
   const questFacts = player.character.questFacts;
 
   if (
@@ -32,7 +29,6 @@ alt.on(ServerEvents.FromServer.USE_ITEM, (player, item) => {
     questFacts.includes(Quests.Introduction.Facts.GOT_INTRODUCTION) &&
     !questFacts.includes(Quests.Introduction.Facts.USED_MEDKIT)
   ) {
-    alt.log("QuestFact: USED_MEDKIT");
     questFacts.push(Quests.Introduction.Facts.USED_MEDKIT);
   }
 });

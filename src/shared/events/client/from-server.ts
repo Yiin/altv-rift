@@ -1,4 +1,5 @@
 import alt from "alt-shared";
+import * as game from "natives";
 import { StoreUpdatePayload } from "@shared/store/utils";
 import { Spinner } from "@shared/modules/game/ui/spinner/spinner";
 
@@ -32,6 +33,7 @@ export const FromServer = {
   UPDATE_GAME_STATE: "UPDATE_GAME_STATE",
   SET_SERVER_STATE: "SET_SERVER_STATE",
   UPDATE_SERVER_STATE: "UPDATE_SERVER_STATE",
+  CALL_NATIVE: "CALL_NATIVE",
 } as const;
 
 export interface EventFromServer {
@@ -71,6 +73,7 @@ export interface EventFromServer {
   [FromServer.UPDATE_GAME_STATE]: (payload: StoreUpdatePayload) => void;
   [FromServer.SET_SERVER_STATE]: (state: any) => void;
   [FromServer.UPDATE_SERVER_STATE]: (payload: StoreUpdatePayload) => void;
+  [FromServer.CALL_NATIVE]: (name: string, ...args: unknown[]) => void;
 }
 
 declare module "alt-client" {

@@ -9,7 +9,7 @@ const player = alt.Player.local;
 export async function performChopAnimation(tree: alt.VirtualEntity) {
   await loadAssets();
 
-  const cooldown = await rpc.callServer(ServerCall.FromClient.BEGIN_TREE_HIT, tree.remoteId);
+  const cooldown = await rpc.callServer(ServerCall.FromClient.BEGIN_TREE_HIT, tree.remoteID);
 
   alt.Utils.wait(cooldown).then(() => {
     setIsChoppingTree(false);
@@ -35,7 +35,7 @@ export async function performChopAnimation(tree: alt.VirtualEntity) {
     false,
     false
   );
-  const logs = await rpc.callServer(ServerCall.FromClient.TREE_HIT, tree.remoteId);
+  const logs = await rpc.callServer(ServerCall.FromClient.TREE_HIT, tree.remoteID);
 
   if (logs) {
     game.playSoundFromCoord(

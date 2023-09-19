@@ -22,10 +22,10 @@ registerElement({
               game.getPedBoneCoords(
                 ped.scriptID,
                 Bones.SKEL_Head,
-                0,
-                0,
                 // adjust z position based on distance
-                Math.min((distance / 4) * 0.5 + 0.2, 0.5)
+                Math.min((distance / 4) * 0.5 + 0.2, 0.5),
+                0,
+                0
               )
             );
             return `translate(-50%, -50%) translate(${x}px, ${y}px)`;

@@ -20,7 +20,7 @@ const progress = computed(() => getLevelProgress(props.xp));
             </p>
         </span>
         <span role="progressbar" aria-labelledby="ProgressLabel" aria-valuenow="75"
-            class="block rounded-full bg-gray-200 dark:bg-gray-700 w-full">
+            class="block rounded-full bg-neutral-200 dark:bg-neutral-700 w-full">
             <span class="block h-1 rounded-full" :class="[color]" :style="{ width: progress + '%' }"></span>
         </span>
         <span class="inline-flex items-center justify-center rounded-full px-2.5 py-0.5">

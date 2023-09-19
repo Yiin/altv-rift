@@ -2,15 +2,14 @@ import alt from "alt-client";
 import game from "natives";
 import { KeyCode } from "altv-enums";
 import { reactive, ref, watchEffect } from "vue";
-import { tsNullKeyword } from "@babel/types";
 import { TargetAction } from "@shared/store/client.store";
+import { UIElement } from "@shared/enums/ui";
 import { clientState } from "@/core/store/client.store";
-import { ELEMENT } from "@/core/constants/ui";
 import Raycast from "@/core/utility/raycast";
 import { VehicleBones } from "@/core/constants/vehicle-bones";
 import { everyTickWhile } from "@/core/utility/event-helpers";
 import { getScreenResolution } from "@/core/utility/screen-resolution";
-import { toggleElement } from "./webview";
+import { toggleElement } from "../../webview";
 
 type Action = {
   action: TargetAction;
@@ -33,12 +32,12 @@ watchEffect(() => {
     if (result) {
       currentAction = result;
       clientState.targetAction = result.action;
-      toggleElement(ELEMENT.TARGET_ACTION, true);
+      toggleElement(UIElement.TARGET_ACTION, true);
       return;
     }
   }
   clientState.targetAction = currentAction = null;
-  toggleElement(ELEMENT.TARGET_ACTION, false);
+  toggleElement(UIElement.TARGET_ACTION, false);
 });
 
 alt.on("keydown", (key) => {

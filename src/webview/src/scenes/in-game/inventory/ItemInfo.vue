@@ -35,11 +35,10 @@ const combination = computed(() => {
 </script>
 
 <template>
-  <div class="mx-auto absolute pointer-events-none select-none z-max w-72 bg-gray-950/70 text-white p-4" theme="light"
+  <div class="mx-auto absolute pointer-events-none select-none z-max w-72 bg-neutral-950/70 text-white p-4" theme="light"
     :style="{
       transform: `translate(${position.x}px, ${position.y}px)`,
-    }"
-  >
+    }">
     <div v-if="combination" class="text-yellow-500 font-bold mb-2">
       {{ combination }}
     </div>

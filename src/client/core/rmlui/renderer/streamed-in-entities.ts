@@ -7,6 +7,10 @@ import { container } from "./element-renderer";
 
 export const streamedInEntities = new Set<AnchorEntity>();
 
+alt.setInterval(() => {
+  console.log(`Streamed in entities: ${streamedInEntities.size}`);
+}, 10000);
+
 alt.on("gameEntityCreate", (entity) => {
   try {
     getAnchorType(entity as AnchorEntity);

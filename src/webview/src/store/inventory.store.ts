@@ -30,9 +30,7 @@ const MOCK_ITEMS = reactive([
   {
     slot: 0,
     item: {
-      key: "snowball",
-
-      amount: 50,
+      key: "DLC_MP_XMAS3_M_JBIB_1_0",
     },
   },
   {
@@ -43,20 +41,6 @@ const MOCK_ITEMS = reactive([
       ammo: null,
       components: [],
       tint: 0,
-    },
-  },
-  {
-    slot: 2,
-    item: {
-      key: "handgunammo",
-      amount: 100,
-    },
-  },
-  {
-    slot: 3,
-    item: {
-      key: "assaultrifleammo",
-      amount: 256,
     },
   },
 ] as InventoryItem[]);
@@ -181,12 +165,15 @@ export const useInventory = defineStore("inventory", {
     items(): SlottedItem[] {
       const items: SlottedItem[] = reactive([]);
 
-      if (!useGameState().isInGame) {
+      if (!('altMock' in globalThis) && !useGameState().isInGame) {
         return items;
       }
 
       const inventoryItems = this.character.inventory.items.filter(Boolean);
-      for (const inventoryItem of inventoryItems ?? MOCK_ITEMS) {
+      if ('altMock' in globalThis) {
+        inventoryItems.push(...MOCK_ITEMS);
+      }
+      for (const inventoryItem of inventoryItems) {
         items.push({
           item: inventoryItem.item,
           source: {
@@ -431,6 +418,7 @@ export const useInventory = defineStore("inventory", {
 
         // If the item is dropped outside of the inventory
         if (!source) {
+          console.log(`No source found for ${e.clientX}, ${e.clientY}`);
           this.currentInteraction = {
             type: InteractionType.Dropping,
             state: {
@@ -586,14 +574,19 @@ export const useInventory = defineStore("inventory", {
     },
     getItemSource(x: number, y: number) {
       const result = this.itemSlots
-        .map((slot) => [slot.source, slot.node.value?.getBoundingClientRect()] as const)
+        .map((slot) => [
+          slot.source,
+          slot.node.value?.parentElement?.classList.contains('node-anchor')
+            ? slot.node.value?.parentElement.getBoundingClientRect()
+            : slot.node.value?.getBoundingClientRect()
+        ] as const)
         .find(([, rect]) => {
           return (
             rect &&
-            x > rect.left - px(5) &&
-            x <= rect.right + px(5) &&
-            y > rect.top - px(5) &&
-            y <= rect.bottom + px(5)
+            x > rect.left &&
+            x <= rect.right &&
+            y > rect.top &&
+            y <= rect.bottom
           );
         });
 
@@ -617,5 +610,13 @@ export const useInventory = defineStore("inventory", {
 
       return { x: rect.x, y: rect.y };
     },
+    getItemSourceRelativePosition(source: LocalItemSource) {
+      const node = this.getItemSourceNode(source);
+
+      if (!node) {
+        return { x: 0, y: 0 };
+      }
+      return { x: node.offsetLeft, y: node.offsetTop };
+    }
   },
 });

@@ -26,5 +26,5 @@ export const useAlt = () => {
     }
   });
 
-  return { on };
+  return { ...alt, on };
 };

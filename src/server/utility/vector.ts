@@ -22,10 +22,7 @@ export function getForwardVector(rot: alt.IVector3): alt.IVector3 {
  * @param {number} distance
  * @return {alt.Vector3}
  */
-export function getVectorInFrontOfPlayer(
-  player: alt.Player,
-  distance: number
-): alt.Vector3 {
+export function getVectorInFrontOfPlayer(player: alt.Player, distance: number): alt.Vector3 {
   const forwardVector = getForwardVector(player.rot);
   const posFront = {
     x: player.pos.x + forwardVector.x * distance,
@@ -53,6 +50,26 @@ export function isBetweenVectors(
   return validX && validY ? true : false;
 }
 
+export function angleToFaceTarget(subject: alt.IVector2, target: alt.IVector2): number {
+  // Calculate the vector from subject to target
+  const vectorToTarget = new alt.Vector2(target).sub(subject);
+
+  // Use the positive x-axis (1, 0) as the reference vector
+  const referenceVector = new alt.Vector2(1, 0);
+
+  // Calculate the angle in radians between the reference vector and the vector to the target
+  const angleRad =
+    Math.atan2(vectorToTarget.y, vectorToTarget.x) -
+    Math.atan2(referenceVector.y, referenceVector.x);
+
+  return angleRad;
+
+  // Convert the angle to degrees
+  // const angleDeg = angleRad * (180 / Math.PI);
+
+  // return angleDeg;
+}
+
 /**
  * Get the closest server entity type. Server only.
  * @template T
@@ -62,9 +79,7 @@ export function isBetweenVectors(
  * @param {number} distance
  * @return {*}  {(T | null)}
  */
-export function getClosestEntity<
-  T extends { pos: alt.IVector3; valid?: boolean }
->(
+export function getClosestEntity<T extends { pos: alt.IVector3; valid?: boolean }>(
   playerPosition: alt.IVector3,
   rot: alt.IVector3,
   entities: T[],

@@ -144,7 +144,7 @@ alt.on("keydown", (key) => {
       } as const
     )[part];
 
-    rpc.callServer(ServerCall.FromClient.TOGGLE_VEHICLE_DOOR, closestVehicle.remoteId, door);
+    rpc.callServer(ServerCall.FromClient.TOGGLE_VEHICLE_DOOR, closestVehicle.remoteID, door);
   }
 });
 
@@ -160,7 +160,7 @@ registerElement({
   render({ entity: vehicle }) {
     const { part, vehicle: closestVehicle } = prevClosest.value;
 
-    if (closestVehicle?.remoteId !== vehicle.remoteId) {
+    if (closestVehicle?.remoteID !== vehicle.remoteID) {
       return null;
     }
 

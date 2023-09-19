@@ -13,6 +13,7 @@ export function trackCanFishFlag() {
 
   watchEffect(() => {
     if (!gameState.flags.has(PlayerFlags.InFishingArea)) {
+      clientState.flags.delete(ClientFlags.CanFish);
       if (waterTestingTick) {
         alt.clearEveryTick(waterTestingTick);
         waterTestingTick = undefined;

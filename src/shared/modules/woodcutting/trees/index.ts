@@ -29,6 +29,7 @@ export { default as prop_palm_med_01c } from "./prop_palm_med_01c-locations.json
 export { default as prop_palm_med_01d } from "./prop_palm_med_01d-locations.json";
 export { default as prop_palm_sm_01a } from "./prop_palm_sm_01a-locations.json";
 export { default as prop_palm_sm_01d } from "./prop_palm_sm_01d-locations.json";
+export { default as prop_palm_sm_01e } from "./prop_palm_sm_01e-locations.json";
 export { default as prop_palm_sm_01f } from "./prop_palm_sm_01f-locations.json";
 export { default as prop_plant_palm_01b } from "./prop_plant_palm_01b-locations.json";
 export { default as prop_rus_olive_wint } from "./prop_rus_olive_wint-locations.json";

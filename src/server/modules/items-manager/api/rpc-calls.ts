@@ -23,7 +23,7 @@ rpc.registerWebview(ServerCall.FromWebview.USE_ITEM, (player, itemSource) => {
     return false;
   }
 
-  return useItemFromSource.call(player, itemSource);
+  return useItemFromSource.call(player, itemSource) !== false;
 });
 
 /**
@@ -32,7 +32,7 @@ rpc.registerWebview(ServerCall.FromWebview.USE_ITEM, (player, itemSource) => {
 rpc.registerWebview(ServerCall.FromWebview.EQUIP_ITEM, (player, itemSource) => {
   needsToBeInGame(player);
 
-  if (itemSource.type === "equipment") {
+  if (itemSource.type !== "inventory") {
     return false;
   }
 

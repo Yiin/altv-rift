@@ -13,5 +13,20 @@ export function registerCharacterData(data: Partial<CharacterData>) {
 }
 
 export function getDefaultCharacterData() {
-  return defaultData;
+  const { x, y } = getRandomPositionInsideCircle(4476.591796875, -4495.673828125, 25);
+
+  return {
+    ...defaultData,
+    lastPosition: { x, y, z: 4.190207481384277 },
+  };
+}
+
+function getRandomPositionInsideCircle(x: number, y: number, radius: number) {
+  const angle = Math.random() * Math.PI * 2;
+  const r = Math.random() * radius;
+
+  return {
+    x: x + r * Math.cos(angle),
+    y: y + r * Math.sin(angle),
+  };
 }

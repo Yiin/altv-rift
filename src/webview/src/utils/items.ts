@@ -38,3 +38,11 @@ export function getItemIconPosition(item: { key: string }) {
   }
   return "center";
 }
+
+
+export function getItemClasses(item: { key: string }) {
+  if (isItemKeyClothing(item.key)) {
+    return 'brightness-125';
+  }
+  return;
+}

@@ -4,6 +4,7 @@ export const FromClient = {
   DISCORD_AUTH_DONE: "DISCORD_AUTH_DONE",
   NOTIFY: "NOTIFY",
   WEAPON_SHOOT: "WEAPON_SHOOT",
+  CONVERSATION_STARTED: "CONVERSATION_STARTED",
 } as const;
 
 declare module "alt-shared" {
@@ -17,5 +18,6 @@ declare module "alt-shared" {
     [FromClient.DISCORD_AUTH_DONE]: (token: string) => void;
     [FromClient.NOTIFY]: (notification: string) => void;
     [FromClient.WEAPON_SHOOT]: () => void;
+    [FromClient.CONVERSATION_STARTED]: (pedRemoteId: number) => void;
   }
 }

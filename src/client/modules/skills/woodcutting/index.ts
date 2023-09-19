@@ -1,5 +1,5 @@
 import alt from "alt-client";
-import { whileInGame } from "@/core/game-state/in-game.state";
+import { whileInGame } from "@/core/game-state-hooks/in-game.state";
 import {
   hasHatchetInHand,
   isNextToTree,

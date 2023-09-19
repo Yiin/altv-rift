@@ -106,6 +106,11 @@ export const TreeTypes = {
     name: "Palm Tree (Small)",
     logs: TreeLogs.PALM_LOGS,
   },
+  prop_palm_sm_01e: {
+    key: "prop_palm_sm_01e",
+    name: "Palm Tree (Medium)",
+    logs: TreeLogs.PALM_LOGS,
+  },
   prop_palm_sm_01f: {
     key: "prop_palm_sm_01f",
     name: "Palm Tree (Small)",

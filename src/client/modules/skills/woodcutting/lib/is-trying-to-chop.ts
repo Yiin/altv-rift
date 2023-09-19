@@ -1,8 +1,10 @@
+import alt from "alt-client";
 import game from "natives";
 import { ControlType, Control } from "@/core/constants/controls";
 import { isChoppingTree } from "./is-chopping-tree";
 
 export function isTryingToChop() {
+  game.disablePlayerFiring(alt.Player.local, false);
   game.disableControlAction(ControlType.PLAYER_CONTROL, Control.INPUT_ATTACK, true);
 
   return (

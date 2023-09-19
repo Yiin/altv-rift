@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { getDefaultClientStoreState, QuestRegistration } from "@shared/store/client.store";
+import { getDefaultClientStoreState, QuestInfo } from "@shared/store/client.store";
 import { useCharacter } from "./character.store";
 
 export const useClient = defineStore("client", {
@@ -19,7 +19,7 @@ export const useClient = defineStore("client", {
       );
     },
     activeQuests(state) {
-      const quests: QuestRegistration[] = [];
+      const quests: QuestInfo[] = [];
 
       for (const quest of state.quests.values()) {
         const visibleTasks = quest.tasks.filter(

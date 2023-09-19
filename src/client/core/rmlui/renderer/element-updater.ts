@@ -113,6 +113,8 @@ export function prepareEntityElements(entity: AnchorEntity) {
         }
       );
 
+      console.log(typeof container);
+
       container.appendChild(node);
       elementsMap.set(key, node);
     }

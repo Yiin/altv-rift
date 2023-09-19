@@ -1,7 +1,7 @@
 import alt from "alt-client";
 import game from "natives";
 import { Bones } from "@shared/enums/bones";
-import { stopConversation } from "@/modules/questing/dialogue";
+import { stopConversation } from "@/modules/questing/conversation";
 import { registerElement } from "../renderer/element-registry";
 import { div, span } from "../renderer/rml-tags";
 import { Icon } from "../components/icon/icon";
@@ -25,6 +25,8 @@ registerElement({
         stopConversation();
       },
     });
+
+    const currentMenuIndex = menu.currentIndex();
 
     if (!menu.interactions.length) {
       return null;
@@ -55,10 +57,7 @@ registerElement({
             div([
               div(
                 {
-                  className: [
-                    "interaction",
-                    menu.currentIndex() === index && "interaction--selected",
-                  ],
+                  className: ["interaction", currentMenuIndex === index && "interaction--selected"],
                 },
                 [Icon(interaction.icon), span({ className: "label" }, [interaction.label])]
               ),

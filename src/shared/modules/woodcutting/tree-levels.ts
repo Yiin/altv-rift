@@ -5,6 +5,7 @@ export const TreeLevels = {
   prop_palm_med_01a: 1,
   prop_palm_sm_01a: 1,
   prop_palm_sm_01d: 1,
+  prop_palm_sm_01e: 1,
   prop_palm_sm_01f: 1,
   h4_prop_tree_palm_thatch_01: 1,
   prop_palm_huge_01a: 1,

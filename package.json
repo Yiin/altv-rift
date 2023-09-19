@@ -19,10 +19,10 @@
   },
   "type": "module",
   "dependencies": {
-    "@altv/types-client": "^2.8.7",
+    "@altv/types-client": "2.9.4",
     "@altv/types-natives": "^1.5.4",
-    "@altv/types-server": "^2.9.0",
-    "@altv/types-shared": "^1.5.8",
+    "@altv/types-server": "^3.0.0",
+    "@altv/types-shared": "^1.6.4",
     "@prisma/client": "^5.2.0",
     "@sentry/node": "^7.30.0",
     "@sentry/tracing": "^7.30.0",

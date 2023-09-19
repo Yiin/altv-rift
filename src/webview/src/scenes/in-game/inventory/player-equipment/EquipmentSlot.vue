@@ -173,7 +173,6 @@ const draggingOver = computed(() => {
 
 const draggingStyle = computed(() => {
   if (!item.value) {
-    console.log('no item');
     return {};
   }
   const interaction = inventory.currentInteraction;
@@ -191,14 +190,12 @@ const draggingStyle = computed(() => {
       interaction.state.startPosition.y +
       slot.value.y;
 
-    console.log("dragging", x, y);
     // We're currently dragging this item
     return {
       transform: `translate(${x + px(4)}px, ${y + px(4)}px)`,
       zIndex: Number.MAX_SAFE_INTEGER,
     };
   } else {
-  console.log("chilling");
     // Item is chilling in its slot
     return {
       transform: `translate(${slot.value.x}px, ${slot.value.y}px)`,
@@ -223,11 +220,10 @@ inventory.registerItemSlot({
 </script>
 
 <template>
-  <div ref="nodeRef" class="absolute top-0 left-0 w-20 h-20 bg-gray-800/80 item-slot text-white"
+  <div ref="nodeRef" class="absolute top-0 left-0 w-20 h-20 bg-black/80 item-slot text-white"
     :class="[(draggingOver || item) && 'drop-shadow-[2px_4px_6px_black]']" :style="{
       transform: `translate(${slot.x}px, ${slot.y}px)`,
-    }"
-  >
+    }">
     <div v-if="!item" class="absolute w-full h-full bg-[center_35%] text-center pt-12 text-xs" :style="{
       backgroundImage: `url(${slot.image})`,
       backgroundSize: `30%`,
@@ -236,7 +232,6 @@ inventory.registerItemSlot({
       {{ slot.label }}
     </div>
   </div>
-  <ItemIcon v-if="item" :item="item.item" :style="draggingStyle"
-    @mousedown="inventory.handleMouseDown"
+  <ItemIcon v-if="item" :item="item.item" :style="draggingStyle" @mousedown="inventory.handleMouseDown"
     @dblclick="unequipItem" @contextmenu.prevent="(e) => item && inventory.openContextMenu(item, e)" />
 </template>

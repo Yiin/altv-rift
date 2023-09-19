@@ -9,6 +9,7 @@ declare module "alt-server" {
 
 import "./core/user-interface";
 import "./core/rmlui";
+import "./core/remote-native";
 import "./modules/world";
 import "./modules/auth";
 import "./modules/spawn";

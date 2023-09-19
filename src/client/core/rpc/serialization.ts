@@ -4,19 +4,19 @@ export const serialize = (value: any): any => {
   if (value instanceof alt.Vehicle) {
     return {
       $$type: "vehicle",
-      id: value.remoteId,
+      id: value.remoteID,
     };
   }
   if (value instanceof alt.Player) {
     return {
       $$type: "player",
-      id: value.remoteId,
+      id: value.remoteID,
     };
   }
   if (value instanceof alt.Entity) {
     return {
       $$type: "entity",
-      id: value.remoteId,
+      id: value.remoteID,
     };
   }
   if (value instanceof alt.Vector3) {

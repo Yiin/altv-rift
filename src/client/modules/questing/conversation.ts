@@ -1,6 +1,7 @@
 import alt from "alt-client";
 import game from "natives";
 import { ConversationOption } from "@shared/interfaces/conversation";
+import { ServerEvents } from "@shared/events/server";
 import { Control, ControlType } from "@/core/constants/controls";
 import { clientState } from "@/core/store/client.store";
 
@@ -39,6 +40,9 @@ export async function startConversation(
   { pages, topic, options: finalOptions }: ConversationInfo
 ) {
   currentPage = 0;
+
+  alt.emitServer(ServerEvents.FromClient.CONVERSATION_STARTED, ped.remoteID);
+  // game.taskTurnPedToFaceEntity(ped.scriptID, alt.Player.local.scriptID, 2000);
 
   clientState.conversation = {
     with: ped.getStreamSyncedMeta("name") ?? "?",
@@ -135,12 +139,17 @@ alt.everyTick(() => {
     return;
   }
 
+  game.disablePlayerFiring(alt.Player.local, false);
   game.disableControlAction(ControlType.PLAYER_CONTROL, Control.INPUT_ATTACK, true);
+  game.disableControlAction(ControlType.PLAYER_CONTROL, Control.INPUT_WEAPON_WHEEL_PREV, true);
+  game.disableControlAction(ControlType.PLAYER_CONTROL, Control.INPUT_WEAPON_WHEEL_NEXT, true);
 
-  if (game.isControlJustPressed(ControlType.PLAYER_CONTROL, Control.INPUT_WEAPON_WHEEL_PREV)) {
+  if (
+    game.isDisabledControlJustPressed(ControlType.PLAYER_CONTROL, Control.INPUT_WEAPON_WHEEL_PREV)
+  ) {
     selectPreviousOption();
   } else if (
-    game.isControlJustPressed(ControlType.PLAYER_CONTROL, Control.INPUT_WEAPON_WHEEL_NEXT)
+    game.isDisabledControlJustPressed(ControlType.PLAYER_CONTROL, Control.INPUT_WEAPON_WHEEL_NEXT)
   ) {
     selectNextOption();
   } else if (game.isDisabledControlJustPressed(ControlType.PLAYER_CONTROL, Control.INPUT_ATTACK)) {

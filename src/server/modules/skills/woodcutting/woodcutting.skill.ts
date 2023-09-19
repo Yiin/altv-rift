@@ -76,10 +76,12 @@ rpc.registerClient(ServerCall.FromClient.TREE_HIT, (player, virtualTreeId) => {
   const virtualTree = virtualTreeById.get(virtualTreeId);
 
   if (!virtualTree) {
+    console.log("no virtual tree", virtualTreeId);
     return 0;
   }
 
   if (playerHittingTree.get(player) !== virtualTreeId) {
+    console.log("not hitting tree", virtualTreeId);
     return 0;
   }
 
@@ -93,10 +95,12 @@ rpc.registerClient(ServerCall.FromClient.TREE_HIT, (player, virtualTreeId) => {
   const cooldownUntil = virtualTree.getStreamSyncedMeta("cooldownUntil");
 
   if (cooldownUntil && cooldownUntil > Date.now()) {
+    alt.logDebug("On cooldown", treeType, virtualTree.id);
     return 0;
   }
 
   if (!canPlayerHitTheTree(player, virtualTree)) {
+    alt.logDebug("Can't hit tree", treeType, virtualTree.id);
     return 0;
   }
   const capacity = virtualTree.getMeta("capacity");

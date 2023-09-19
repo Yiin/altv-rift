@@ -34,10 +34,10 @@ registerElement({
           {
             className: "tree",
             style: {
-              color: isUnavailable ? "gray" : isOnCooldown ? "silver" : "green",
+              color: isUnavailable ? "gray" : isOnCooldown ? "silver" : "#88CC00",
             },
           },
-          [div([`${name} (${tree.remoteId})`]), br([]), div([`Level ${level}`])]
+          [div([name]), br([]), div([`Level ${level}`])]
         ),
       ]
     );

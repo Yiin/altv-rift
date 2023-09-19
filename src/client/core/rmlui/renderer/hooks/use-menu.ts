@@ -1,7 +1,7 @@
 import alt from "alt-client";
 import game from "natives";
 import { Control, ControlType } from "@/core/constants/controls";
-import { isInConversation } from "@/modules/questing/dialogue";
+import { isInConversation } from "@/modules/questing/conversation";
 import { getCurrentNode } from "../internals/current-node";
 import { AnchorEntity } from "../types";
 import { getFocusedEntity } from "./focused-entity";
@@ -97,7 +97,7 @@ const menuControls: MenuControls<any> = {
     }
 
     if (--currentIndex < 0) {
-      currentIndex = currentMenu.options.length - 1;
+      currentIndex = Math.max(0, currentMenu.options.length - 1);
     }
     if (currentMenu.options.length > 1) {
       game.playSoundFrontend(-1, "NAV_UP_DOWN", "HUD_FREEMODE_SOUNDSET", true);
@@ -131,7 +131,7 @@ alt.everyTick(() => {
     return;
   }
 
-  if (!currentMenu.node.isVisible) {
+  if (!currentMenu.node.valid || !currentMenu.node.isVisible) {
     return;
   }
 
@@ -139,7 +139,10 @@ alt.everyTick(() => {
     return;
   }
 
+  game.disablePlayerFiring(alt.Player.local, false);
   game.disableControlAction(ControlType.PLAYER_CONTROL, Control.INPUT_ATTACK, true);
+  game.disableControlAction(ControlType.PLAYER_CONTROL, Control.INPUT_WEAPON_WHEEL_NEXT, true);
+  game.disableControlAction(ControlType.PLAYER_CONTROL, Control.INPUT_WEAPON_WHEEL_PREV, true);
 
   if (game.isControlJustPressed(ControlType.PLAYER_CONTROL, Control.INPUT_WEAPON_WHEEL_PREV)) {
     menuControls.selectPrevious();
