@@ -77,7 +77,7 @@ function executeAction(action: string) {
       }
       break;
     case "drop":
-      inventory.dropFromMenu(props.item);
+      inventory.dropFromMenu(source);
       break;
     case "load-ammo":
       if (inventory.selectedItem) {
@@ -143,19 +143,19 @@ const actions = computed(() => [
 </script>
 
 <template>
-  <div v-if="visible" :key="ts" class="absolute flex justify-start" @click.stop
-    v-click-outside="inventory.closeActionMenu">
-    <Window v-bind="{ x, y }" :is-active="false">
-      <ul class="flex flex-col space-y-2 bg-gray-800 rounded-lg overflow-hidden shadow-lg">
+  <div v-if="visible" :key="ts" class="absolute flex justify-start" v-click-outside="inventory.closeActionMenu">
+    <Window v-bind="{ x, y }" :is-active="false" @mousedown.stop>
+      <ul class="flex flex-col space-y-2 bg-neutral-800 rounded-lg overflow-hidden shadow-lg">
         <li>
-          <strong class="py-3 px-4 block text-sm font-medium uppercase text-gray-400">
+          <strong class="py-3 px-4 block text-sm font-medium uppercase text-neutral-400">
             {{ itemName }}
           </strong>
           <ul>
             <template v-for="action in actions">
-              <li v-if="'enabled' in action === false || action.enabled" @mousedown="action.select"
-                class="border-t border-t-gray-700">
-                <div class="flex items-center gap-4 px-4 py-3 bg-gray-800 text-gray-200 hover:bg-gray-700 cursor-pointer">
+              <li v-if="'enabled' in action === false || action.enabled" @mousedown.stop="action.select"
+                class="border-t border-t-neutral-700">
+                <div
+                  class="flex items-center gap-4 px-4 py-3 bg-neutral-800 text-neutral-200 hover:bg-neutral-700 cursor-pointer">
                   <v-icon :icon="action.icon" size="sm" />
                   <span class="text-sm font-medium -mt-0.5">{{ action.name }}</span>
                 </div>

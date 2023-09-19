@@ -112,17 +112,17 @@ function trackDragging(e: PointerEvent) {
 <template>
   <div class="p-6 flex justify-center items-center">
     <v-sheet ref="container" @pointerdown="dragstart" color="grey-darken-4"
-      class="overflow-visible relative border-solid border-gray-600 border-1" rounded :height="size" :width="size">
+      class="overflow-visible relative border-solid border-neutral-600 border-1" rounded :height="size" :width="size">
       <!-- Horizontal lines -->
       <div v-for="top in ['top-1/5', 'top-2/5', 'top-3/5', 'top-4/5']" :class="[
         top,
-        'absolute w-full border-solid border-b-gray-600 border-b-1',
+        'absolute w-full border-solid border-b-neutral-600 border-b-1',
       ]" />
 
       <!-- Vertical lines -->
       <div v-for="left in ['left-1/5', 'left-2/5', 'left-3/5', 'left-4/5']" :class="[
         left,
-        'absolute h-full border-solid border-l-gray-600 border-l-1',
+        'absolute h-full border-solid border-l-neutral-600 border-l-1',
       ]" />
 
       <!-- Pointer -->

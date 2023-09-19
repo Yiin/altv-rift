@@ -1,6 +1,6 @@
 import { watch } from "vue";
 import { getLevel } from "@shared/modules/experience/experience-table";
-import { whileInGame } from "@/core/game-state/in-game.state";
+import { whileInGame } from "@/core/game-state-hooks/in-game.state";
 import { useCharacter } from "@/core/store/character.store";
 import { addInfoMessage, addSuccessMessage } from "../chat";
 

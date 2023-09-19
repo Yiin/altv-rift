@@ -20,7 +20,7 @@
     "noEmit": true,
     "preserveWatchOutput": false,
     "pretty": true,
-    "skipLibCheck": false,
+    "skipLibCheck": true,
     "typeRoots": [
       "./node_modules/@types",
       "./node_modules/reflect-metadata/*.d.ts",
@@ -33,7 +33,6 @@
   },
   "exclude": [
     "src/webview",
-    "src/**/streamed-npc",
     "**/unused_*"
   ]
 }

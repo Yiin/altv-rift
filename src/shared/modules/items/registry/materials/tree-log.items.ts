@@ -1,7 +1,8 @@
 import { registerItem } from "../../items-registry";
+import { makeItemKeys } from "../../lib/make-item-keys";
 import { Item, ItemKey } from "../../types";
 
-export const TreeLogs = {
+export const TreeLogs = makeItemKeys<TreeLogItemKey>()({
   HAWTHORN_LOGS: "hawthorn_logs",
   BEECH_LOGS: "beech_logs",
   BLACK_MANGROVE_LOGS: "black_mangrove_logs",
@@ -11,7 +12,7 @@ export const TreeLogs = {
   JOSHUA_TREE_LOGS: "joshua_tree_logs",
   PALM_LOGS: "palm_logs",
   ROYAL_PALM_LOGS: "royal_palm_logs",
-  RUSSIAN_OLIVE_LOGS: "russian_olive_logs",
+  OLIVE_LOGS: "olive_logs",
   BIRCH_LOGS: "birch_logs",
   CEDAR_LOGS: "cedar_logs",
   EUCALYPTUS_LOGS: "eucalyptus_logs",
@@ -21,9 +22,9 @@ export const TreeLogs = {
   MESQUITE_LOGS: "mesquite_logs",
   OAK_LOGS: "oak_logs",
   PINE_LOGS: "pine_logs",
-} as const;
+});
 
-export type TreeLogItemKey = (typeof TreeLogs)[keyof typeof TreeLogs];
+export type TreeLogItemKey = Brand<string, "TreeLogItemKey">;
 
 export type TreeLogItem = {
   key: TreeLogItemKey;
@@ -65,7 +66,7 @@ export const treeLogs: Record<TreeLogItemKey, TreeLogItemInfo> = {
   umbrella_logs: {
     key: "umbrella_logs",
     name: "Umbrella Logs",
-    description: "Logs from a Umbrella Tree.",
+    description: "Logs from an Umbrella Tree.",
   },
   joshua_tree_logs: {
     key: "joshua_tree_logs",
@@ -82,10 +83,10 @@ export const treeLogs: Record<TreeLogItemKey, TreeLogItemInfo> = {
     name: "Royal Palm Logs",
     description: "Logs from a Royal Palm Tree.",
   },
-  russian_olive_logs: {
-    key: "russian_olive_logs",
-    name: "Russian Olive Logs",
-    description: "Logs from a Russian Olive.",
+  olive_logs: {
+    key: "olive_logs",
+    name: "Olive Logs",
+    description: "Logs from an Olive tree.",
   },
   birch_logs: {
     key: "birch_logs",
@@ -125,14 +126,14 @@ export const treeLogs: Record<TreeLogItemKey, TreeLogItemInfo> = {
   oak_logs: {
     key: "oak_logs",
     name: "Oak Logs",
-    description: "Logs from a Oak Tree.",
+    description: "Logs from an Oak Tree.",
   },
   pine_logs: {
     key: "pine_logs",
     name: "Pine Logs",
     description: "Logs from a Pine Tree.",
   },
-};
+} as Record<TreeLogItemKey, TreeLogItemInfo>;
 
 /**
  * Register all tree logs.

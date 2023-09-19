@@ -11,7 +11,6 @@ const props = defineProps<{
 }>();
 
 const inventory = useInventory();
-const inventoryGrid = useInventoryGrid();
 
 const slottedItem = computed(() => props.item);
 
@@ -28,9 +27,11 @@ const shouldShow = computed(
 
 const draggingStyle = computed(() => {
   const interaction = inventory.currentInteraction;
-  const slotPositionInGrid = inventoryGrid.getSlotPositionInGrid(
-    slottedItem.value.source.inventorySlot
-  );
+  const slotPositionInGrid = inventory.getItemSourceRelativePosition(slottedItem.value.source);
+
+  if (!slotPositionInGrid.x && !slotPositionInGrid.y) {
+    return {};
+  }
 
   if (
     interaction.type === InteractionType.Dragging &&
@@ -47,13 +48,13 @@ const draggingStyle = computed(() => {
 
     // We're currently dragging this item
     return {
-      transform: `translate(${x + px(4)}px, ${y + px(4)}px)`,
+      transform: `translate(${x}px, ${y}px)`,
       zIndex: Number.MAX_SAFE_INTEGER,
     };
   } else {
     // Item is chilling in its slot
     return {
-      transform: `translate(${slotPositionInGrid.x + px(4)}px, ${slotPositionInGrid.y + px(4)}px)`,
+      transform: `translate(${slotPositionInGrid.x}px, ${slotPositionInGrid.y}px)`,
       zIndex: 10,
     };
   }
@@ -61,10 +62,6 @@ const draggingStyle = computed(() => {
 </script>
 
 <template>
-  <ItemIcon
-    :item="slottedItem.item"
-    :class="{ 'transition-all duration-75': !isDraggingOrDropping }"
-    v-show="shouldShow"
-    :style="[draggingStyle]"
-  />
+  <ItemIcon :item="slottedItem.item" :class="{ 'transition-transform duration-75': !isDraggingOrDropping }"
+    v-show="shouldShow" :style="[draggingStyle]" />
 </template>

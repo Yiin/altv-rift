@@ -1,10 +1,11 @@
 import { registerItem } from "@shared/modules/items";
 import { ItemFlags } from "../../item-flags";
 import { Item } from "../../types";
+import { makeItemKeys } from "../../lib/make-item-keys";
 import { WeaponGroup } from "./weapon-groups";
 import { getWeaponData } from "./weapon.items";
 
-export const MeleeWeapon = {
+export const MeleeWeapon = makeItemKeys<MeleeWeaponItemKey>()({
   BAT: "bat",
   BATTLEAXE: "battleaxe",
   BOTTLE: "bottle",
@@ -22,9 +23,9 @@ export const MeleeWeapon = {
   POOLCUE: "poolcue",
   STONEHATCHET: "stonehatchet",
   SWITCHBLADE: "switchblade",
-} as const;
+});
 
-export type MeleeWeaponItemKey = (typeof MeleeWeapon)[keyof typeof MeleeWeapon];
+export type MeleeWeaponItemKey = Brand<string, "MeleeWeaponItemKey">;
 
 export type MeleeWeaponItem = {
   key: MeleeWeaponItemKey;
@@ -307,7 +308,7 @@ export const meleeWeapons: Record<MeleeWeaponItemKey, MeleeWeaponItemInfo> = {
       overall: 12,
     },
   },
-};
+} as Record<MeleeWeaponItemKey, MeleeWeaponItemInfo>;
 
 /**
  * Register all melee weapons.

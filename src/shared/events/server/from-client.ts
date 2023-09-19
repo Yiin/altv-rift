@@ -4,13 +4,8 @@ export const FromClient = {
   DISCORD_AUTH_DONE: "DISCORD_AUTH_DONE",
   NOTIFY: "NOTIFY",
   WEAPON_SHOOT: "WEAPON_SHOOT",
+  CONVERSATION_STARTED: "CONVERSATION_STARTED",
 } as const;
-
-// This is needed because if client imports ../index.ts,
-// it also imports InGamePlayer and LoggedInPlayer, which
-// have properties that are only available in server types,
-// and typescript complains about it.
-export const ServerEventsFromClient = FromClient;
 
 declare module "@altv/shared" {
   namespace Events {
@@ -24,6 +19,7 @@ declare module "@altv/shared" {
       [FromClient.DISCORD_AUTH_DONE]: (token: string) => void;
       [FromClient.NOTIFY]: (notification: string) => void;
       [FromClient.WEAPON_SHOOT]: () => void;
+      [FromClient.CONVERSATION_STARTED]: (pedRemoteId: number) => void;
     }
   }
 }

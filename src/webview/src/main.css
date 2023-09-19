@@ -16,8 +16,9 @@ body {
 body {
   margin: 0;
   /* background: #111; */
-  /* background-image: url(https://news-cdn.softpedia.com/images/news2/GTA-5-Gets-New-Gorgeous-4K-Screenshots-on-PC-478043-23.jpg);
-  background-size: cover; */
+  /* background-image: url(https://news-cdn.softpedia.com/images/news2/GTA-5-Gets-New-Gorgeous-4K-Screenshots-on-PC-478043-23.jpg); */
+  /* background-image: url(/assets/game-scene.png); */
+  /* background-size: ; */
 }
 
 *:has(::-webkit-scrollbar) {

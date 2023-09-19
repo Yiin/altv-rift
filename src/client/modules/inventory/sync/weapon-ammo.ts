@@ -9,7 +9,7 @@ import { isItemFirearmWeapon } from "@shared/modules/items/registry/weapons/fire
 import { rpc } from "@/core/rpc";
 import { useCharacter } from "@/core/store/character.store";
 import { Control, ControlType } from "@/core/constants/controls";
-import { whileInGame } from "@/core/game-state/in-game.state";
+import { whileInGame } from "@/core/game-state-hooks/in-game.state";
 
 const player = alt.Player.local;
 

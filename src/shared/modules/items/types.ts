@@ -85,9 +85,8 @@ export type Equipment = {
   headwear?: ClothingItem | null;
   earrings?: ClothingItem | null;
   top?: ClothingItem | null;
-  shirt?: ClothingItem | null;
   armor?: ClothingItem | null;
-  neckwear?: ClothingItem | null;
+  accessory?: ClothingItem | null;
   weapon?: FirearmWeaponItem | ThrowableWeaponItem | MeleeWeaponItem | null;
   gloves?: ClothingItem | null;
   lefthand?: ClothingItem | null;

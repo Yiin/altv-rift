@@ -1,11 +1,12 @@
 import { registerItem } from "../items-registry";
+import { makeItemKeys } from "../lib/make-item-keys";
 import { Item } from "../types";
 
-export const Tools = {
+export const Tools = makeItemKeys<ToolItemKey>()({
   PICKAXE: "pickaxe",
-} as const;
+});
 
-export type ToolItemKey = (typeof Tools)[keyof typeof Tools];
+export type ToolItemKey = Brand<string, "ToolItemKey">;
 
 export type ToolItem = {
   key: ToolItemKey;
@@ -23,7 +24,7 @@ export const tools: Record<ToolItemKey, ToolItemInfo> = {
     name: "Simple Pickaxe",
     description: "A simple pickaxe for mining.",
   },
-};
+} as Record<ToolItemKey, ToolItemInfo>;
 
 /**
  * Register all tools.

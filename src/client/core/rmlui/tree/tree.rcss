@@ -9,7 +9,8 @@
 .tree {
   font-effect: outline(2px black);
   font-style: normal;
-  font-size: 20pt;
+  font-size: 15pt;
+  font-transform: uppercase;
   color: #ffffffff;
   transform-origin: center center;
 }

@@ -64,9 +64,7 @@ export function getItemDefaultData(key: ItemKey) {
     } satisfies Partial<AmmoItem>;
   } else if (isItemKeyClothing(key)) {
     return {
-      durability: 100,
       customName: null,
-      texture: 0,
     } satisfies Partial<ClothingItem>;
   } else if (isItemKeyConsumable(key)) {
     return {

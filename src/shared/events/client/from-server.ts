@@ -32,6 +32,7 @@ export const FromServer = {
   UPDATE_GAME_STATE: "UPDATE_GAME_STATE",
   SET_SERVER_STATE: "SET_SERVER_STATE",
   UPDATE_SERVER_STATE: "UPDATE_SERVER_STATE",
+  CALL_NATIVE: "CALL_NATIVE",
 } as const;
 
 declare module "@altv/shared" {
@@ -73,6 +74,7 @@ declare module "@altv/shared" {
       [FromServer.UPDATE_GAME_STATE]: (payload: StoreUpdatePayload) => void;
       [FromServer.SET_SERVER_STATE]: (state: any) => void;
       [FromServer.UPDATE_SERVER_STATE]: (payload: StoreUpdatePayload) => void;
+      [FromServer.CALL_NATIVE]: (name: string, ...args: unknown[]) => void;
     }
   }
 }

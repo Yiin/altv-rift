@@ -1,5 +1,5 @@
 import { Character } from "@shared/interfaces";
-import { StoreDefinition } from "pinia";
+import { Store, StoreDefinition } from "pinia";
 
 type CharacterStore = StoreDefinition<"character", Character, {}, {}>;
 
@@ -9,4 +9,14 @@ export function setCharacterStore(store: CharacterStore) {
   characterStore = store;
 }
 
-export const useCharacter = () => characterStore?.();
+export const useCharacter = () => 'altMock' in globalThis ? {
+  id: '0x',
+  appearance: {
+    sex: 1,
+  },
+  equipment: {},
+  inventory: {
+    size: 30,
+    items: [],
+  }
+} as any as Store<"character", Character, {}, {}> : characterStore?.();

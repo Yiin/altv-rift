@@ -23,7 +23,7 @@ rpc.registerWebview(ServerCall.FromWebview.USE_ITEM, (player, itemSource) => {
     return false;
   }
 
-  return useItemFromSource.call(player, itemSource);
+  return useItemFromSource.call(player, itemSource) !== false;
 });
 
 /**
@@ -32,7 +32,7 @@ rpc.registerWebview(ServerCall.FromWebview.USE_ITEM, (player, itemSource) => {
 rpc.registerWebview(ServerCall.FromWebview.EQUIP_ITEM, (player, itemSource) => {
   needsToBeInGame(player);
 
-  if (itemSource.type === "equipment") {
+  if (itemSource.type !== "inventory") {
     return false;
   }
 
@@ -59,7 +59,7 @@ rpc.registerWebview(ServerCall.FromWebview.EQUIP_ITEM, (player, itemSource) => {
 rpc.registerWebview(ServerCall.FromWebview.UNEQUIP_ITEM, (player, equipmentSlot) => {
   needsToBeInGame(player);
 
-  return player.unequipItem(equipmentSlot) !== null;
+  return player.unequipItem(equipmentSlot);
 });
 
 rpc.registerWebview(ServerCall.FromWebview.COMBINE_ITEMS, (player, sourceA, sourceB) => {
@@ -144,7 +144,7 @@ rpc.registerWebview(ServerCall.FromWebview.DROP_ITEM, (player, itemSource) => {
       return false;
     }
 
-    player.unequipItem(itemSource.equipmentSlot);
+    player.removeEquipedItem(itemSource.equipmentSlot);
 
     dropItemOnTheGround(item, player.pos);
     return true;
@@ -180,7 +180,7 @@ rpc.registerWebview(ServerCall.FromWebview.MOVE_ITEM, (player, from, to) => {
     return player.equipItem(from);
   }
   if (from.type === "equipment" && to.type === "inventory") {
-    return player.unequipItem(from.equipmentSlot);
+    return player.unequipItem(from.equipmentSlot, to);
   }
   if (from.type === "inventory" && to.type === "inventory") {
     return swapItems(from, to);

@@ -12,5 +12,5 @@ export function getItemName(key: ItemKey) {
   }
 
   const itemInfo = getItemInfoByKey(key);
-  return itemInfo.name ?? "Unknown Item";
+  return itemInfo?.name ?? "Unknown Item";
 }

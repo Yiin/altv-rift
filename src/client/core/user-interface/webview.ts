@@ -1,12 +1,16 @@
 import alt, { Enums } from "@altv/client";
 import game from "@altv/natives";
 import { serialize } from "alpha-serializer";
-import { WebviewEvents } from "@shared/events/webview";
 import { ClientEvents } from "@shared/events/client";
-import { ELEMENT, SCENE } from "@/core/constants/ui";
+import { Scene, UIElement } from "@shared/enums/ui";
+import { createHookableFunction } from "@shared/hooks";
+import { clientState } from "../store/client.store";
 import { onKeyDown } from "../utility/event-helpers";
-import { Elements } from "./elements";
-import { Scenes } from "./scenes";
+
+export const doesElementHaveCursor = createHookableFunction({
+  name: "doesElementHaveCursor",
+  defaultReturn: false,
+});
 
 alt.WebView.prototype.emit = function (eventName: string, ...args: unknown[]) {
   this.emit(eventName, ...args.map((arg) => serialize(arg)));
@@ -14,22 +18,6 @@ alt.WebView.prototype.emit = function (eventName: string, ...args: unknown[]) {
 
 let url!: string;
 let webview!: alt.WebView;
-
-/**
- * There can only be one active scene at a time.
- */
-let currentScene!: SCENE;
-
-/**
- * Active elements such as Inventory, Chat, etc. that does not depend on the scene.
- */
-let activeElements = new Set<ELEMENT>();
-
-/**
- * The amount of times the cursor has been shown. This is used to determine if the cursor should be hidden.
- * E.g. if the cursor is shown 3 times, then it should be hidden 3 times before it is actually hidden.
- */
-let cursorCount = 0;
 
 // Make sure the webview is ready before we do anything with it.
 let markWebViewAsReady!: () => void;
@@ -57,83 +45,85 @@ export function getWebview(cb?: (webview: alt.WebView) => void): alt.WebView | v
   }
 }
 
-export async function setScene(scene: SCENE) {
-  currentScene = scene;
+let sceneCursorState = false;
+
+export async function setScene(scene: Scene, { hasCursor }: { hasCursor: boolean }) {
+  if (clientState.ui.scene && sceneCursorState) {
+    sceneCursorState = false;
+    showCursor(false);
+  }
+
+  clientState.ui.scene = scene;
   webview.url = `${url}#/${scene}`;
 
-  if (Scenes[scene].hasCursor) {
+  if (hasCursor) {
+    sceneCursorState = true;
     showCursor(true);
-  } else {
-    showCursor(false);
   }
 }
 
-export function toggleElement(element: ELEMENT, state: boolean) {
+export function toggleElement(element: UIElement, state?: boolean) {
   if (!webview) {
     return;
   }
 
-  if (!webview.url.startsWith(`${url}#/${SCENE.IN_GAME}`)) {
-    return;
-  }
+  if (typeof state === "undefined") {
+    toggleElement(element, !clientState.ui.elements.has(element));
+  } else if (state) {
+    clientState.ui.elements.add(element);
 
-  webview.emit(WebviewEvents.FromClient.TOGGLE_ELEMENT, element, state);
-
-  if (state) {
-    activeElements.add(element);
-
-    if (Elements[element].hasCursor) {
+    if (doesElementHaveCursor.call(element)) {
       showCursor(true);
     }
   } else {
-    activeElements.delete(element);
+    clientState.ui.elements.delete(element);
 
-    if (Elements[element].hasCursor) {
+    if (doesElementHaveCursor.call(element)) {
       showCursor(false);
     }
   }
 }
 
 export function showCursor(state: boolean) {
-  if (state) {
-    cursorCount++;
-    try {
-      webview.focused = true;
-      alt.Cursor.visible = true;
-      alt.setGameControlsActive(false);
-    } catch (err) { }
-  } else {
-    const activeElementsSupportingCursor = [...activeElements].filter(
-      (element) => Elements[element].hasCursor
-    );
+  try {
+    alt.Cursor.visible = state;
+  } catch {}
 
-    if (!activeElementsSupportingCursor.length && !Scenes[currentScene].hasCursor) {
-      clearCursor();
+  alt.Timers.nextTick(() => {
+    if (alt.Cursor.visible) {
+      webview.focused = true;
+      alt.setGameControlsActive(false);
+    } else {
+      alt.setGameControlsActive(true);
+      webview.focused = false;
     }
-  }
+  });
 }
 
 export function clearCursor() {
-  for (let i = 0; i < cursorCount; i++) {
+  let cursorCount = 0;
+  while (true) {
     try {
       alt.Cursor.visible = false;
-    } catch (err) { }
+      cursorCount++;
+    } catch {
+      break;
+    }
   }
 
   alt.setGameControlsActive(true);
   webview.focused = false;
-  cursorCount = 0;
+  return cursorCount;
 }
 
+let clearedCursors = 0;
+
 onKeyDown(Enums.KeyCode.Z, () => {
-  if (cursorCount) {
-    clearCursor();
+  if (alt.Cursor.visible) {
+    clearedCursors = clearCursor();
   } else {
-    const activeElementsSupportingCursor = [...activeElements].filter(
-      (element) => Elements[element].hasCursor
-    );
-    if (activeElementsSupportingCursor.length || Scenes[currentScene].hasCursor) {
-      showCursor(true);
+    for (let i = 0; i < clearedCursors; i++) {
+      alt.Cursor.visible = true;
     }
   }
 });

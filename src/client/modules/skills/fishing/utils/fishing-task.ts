@@ -6,9 +6,9 @@ import { PlayerFlags } from "@shared/store/game-state.store";
 import { everyTickWhile } from "@/core/utility/event-helpers";
 import { rpc } from "@/core/rpc";
 import { gameState } from "@/core/store/game-state.store";
-import { whileInGame } from "@/core/game-state/in-game.state";
+import { whileInGame } from "@/core/game-state-hooks/in-game.state";
 
-export let rodObject: alt.LocalObject | undefined;
+export let rodObject: alt.LocalObject["scriptID"] | null;
 
 let stoppedFishingByServer = true;
 
@@ -17,7 +17,7 @@ export function getRodObject() {
 }
 
 export function resetRodObject() {
-  rodObject = undefined;
+  rodObject = null;
 }
 
 whileInGame(() => {
@@ -33,18 +33,25 @@ whileInGame(() => {
 });
 
 export async function startFishingTask() {
+  if (rodObject) {
+    removeRod();
+  }
   await rpc.callServer(ServerCall.FromClient.START_FISHING);
   stoppedFishingByServer = true;
 
   everyTickWhile(
     () => !rodObject,
     () => {
-      rodObject = alt.LocalObject.allWorld.find((obj) => {
-        return (
-          obj.pos.distanceTo(alt.Player.local.pos) <= 1.1 &&
-          obj.model === alt.hash("prop_fishing_rod_01")
-        );
-      });
+      rodObject =
+        alt.LocalObject.allWorld.find((obj) => {
+          return (
+            obj.pos.distanceTo(alt.Player.local.pos) <= 1.1 &&
+            obj.model === alt.hash("prop_fishing_rod_01")
+          );
+        })?.scriptID ?? null;
+    },
+    () => {
+      console.log("rodObject", rodObject);
     }
   );
 }
@@ -60,8 +67,11 @@ function removeRod() {
   const rodObject = getRodObject();
 
   if (rodObject) {
-    game.setEntityAsMissionEntity(rodObject, true, true);
-    game.deleteEntity(rodObject);
-    resetRodObject();
+    try {
+      game.setEntityAsMissionEntity(rodObject, true, true);
+      game.deleteEntity(rodObject);
+    } finally {
+      resetRodObject();
+    }
   }
 }

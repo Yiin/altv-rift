@@ -2,6 +2,8 @@ import * as alt from "@altv/client";
 import game from "@altv/natives";
 import { Appearance } from "@prisma/client";
 import { ClothingComponent } from "@shared/interfaces/clothing";
+import { Pants, Shoes, Top, getItemInfoByKey } from "@shared/modules/items";
+import { getDefaultClothing } from "@shared/modules/items/registry/clothing/clothing-defaults";
 
 export const PedAppearance = {
   /**
@@ -86,28 +88,14 @@ export const PedAppearance = {
       return;
     }
 
-    // game.clearAllPedProps(ped);
+    // Clothing
+    for (let i = 2; i < 12; i++) {
+      const defaults = getDefaultClothing(isMale, i);
+      if (!defaults) {
+        continue;
+      }
 
-    if (isMale) {
-      // game.setPedComponentVariation(ped, 1, 0, 0, 2); // mask
-      // game.setPedComponentVariation(ped, 3, 15, 0, 2); // arms
-      // game.setPedComponentVariation(ped, 4, 61, 0, 2); // pants
-      // game.setPedComponentVariation(ped, 5, 0, 0, 2); // bag
-      // game.setPedComponentVariation(ped, 6, 34, 0, 2); // shoes
-      // game.setPedComponentVariation(ped, 7, 0, 0, 2); // accessories
-      // game.setPedComponentVariation(ped, 8, 15, 0, 2); // undershirt
-      // game.setPedComponentVariation(ped, 9, 0, 0, 2); // body armour
-      // game.setPedComponentVariation(ped, 11, 15, 0, 2); // torso
-    } else {
-      // game.setPedComponentVariation(ped, 1, 0, 0, 2); // mask
-      game.setPedComponentVariation(ped, 3, 11, 0, 0); // arms
-      // game.setPedComponentVariation(ped, 4, 14, 0, 2); // pants
-      // game.setPedComponentVariation(ped, 5, 0, 0, 2); // bag
-      game.setPedComponentVariation(ped, 6, 4, 0, 0); // shoes
-      // game.setPedComponentVariation(ped, 7, 0, 0, 2); // accessories
-      // game.setPedComponentVariation(ped, 8, 15, 0, 2); // undershirt
-      // game.setPedComponentVariation(ped, 9, 0, 0, 2); // body armour
-      game.setPedComponentVariation(ped, 11, 2, 0, 0); // torso
+      alt.setPedDlcClothes(ped, 0, i, defaults[0], defaults[1]);
     }
 
     if (!components || !Array.isArray(components)) {

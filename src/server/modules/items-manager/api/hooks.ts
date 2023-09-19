@@ -1,7 +1,10 @@
+import alt from "alt-server";
 import { createHookableFunction } from "@shared/hooks";
 import { Inventory, InventoryItemSource, ItemSource } from "@shared/interfaces";
 import { Item } from "@shared/modules/items";
+import { ServerEvents } from "@shared/events/server";
 import { InGamePlayer } from "@/utility/assertions";
+import { removeItem } from "./utils";
 
 export const findSourceInventory = createHookableFunction<
   (source: InventoryItemSource) => Inventory | null
@@ -46,19 +49,31 @@ export const canDropItem = createHookableFunction<
  * Tries to use the item from the soruce. If none of the sources return true, it won't be used.
  */
 export const useItemFromSource = createHookableFunction<
-  (player: InGamePlayer, source: ItemSource) => boolean
+  (player: InGamePlayer, source: InventoryItemSource) => number | false
 >({
   name: "useItemFromSource",
   defaultReturn: false,
+  onResult(result, [, source]) {
+    if (result !== false && result > 0) {
+      removeItem(source, result);
+    }
+  },
 });
 
 /**
  * Tries to use the item. If none of the item hooks return true, it won't be used.
  */
-export const useItem = createHookableFunction<(player: InGamePlayer, item: Item) => boolean>({
-  name: "the",
-  defaultReturn: false,
-});
+export const useItem = createHookableFunction<(player: InGamePlayer, item: Item) => number | false>(
+  {
+    name: "useItem",
+    defaultReturn: false,
+    onResult(result, [player, item]) {
+      if (result !== false) {
+        alt.emit(ServerEvents.FromServer.USE_ITEM, player, item);
+      }
+    },
+  }
+);
 
 /**
  * Can player equip the item? E.g. if player is dying or immobilized, he can't equip anything.

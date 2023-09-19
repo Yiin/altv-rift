@@ -2,9 +2,11 @@ import * as alt from "@altv/server";
 import { ClientEvents } from "@shared/events/client";
 import { ServerCall } from "@shared/calls/server";
 import { ServerEvents } from "@shared/events/server";
+import { isValidItem } from "@shared/modules/items";
 import { isRequired, isUnique, validate } from "@/validator";
 import { rpc } from "@/rpc";
-import { LoggedInPlayer, isLoggedIn, needsToBeLoggedIn } from "@/utility/assertions";
+import { LoggedInPlayer, isInGame, isLoggedIn, needsToBeLoggedIn } from "@/utility/assertions";
+import { removeItemFromInventorySlot } from "../items-manager";
 import { getDefaultCharacterData } from "./character-data";
 
 alt.Events.on(ServerEvents.FromServer.USER_LOADED, async (player) => {
@@ -72,6 +74,14 @@ async function startGame(player: LoggedInPlayer, characterId: string) {
   player.setupCharacterStore(character);
 
   player.updateCharacterAppearance(character.appearance);
+
+  if (isInGame(player)) {
+    player.character.inventory.items
+      .filter(({ item }) => !isValidItem(item.key))
+      .forEach(({ slot }) => {
+        removeItemFromInventorySlot(player.character.inventory, slot);
+      });
+  }
 
   player.spawn(character.lastPosition);
   player.rot = new alt.Vector3(character.rot);

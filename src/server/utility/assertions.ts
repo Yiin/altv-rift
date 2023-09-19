@@ -14,6 +14,7 @@ export type InGamePlayer = alt.Player & {
   character: Exclude<alt.Player["character"], undefined>;
   gameState: Exclude<alt.Player["gameState"], undefined>;
 };
+
 export function needsToBeInGame(player: alt.Player): asserts player is InGamePlayer {
   if (!isInGame(player)) {
     throw new Error("Not in game.");

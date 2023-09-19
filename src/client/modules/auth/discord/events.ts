@@ -4,7 +4,7 @@ import { ClientEvents } from "@shared/events/client";
 import { ServerEventsFromClient } from "@shared/events/server/from-client";
 import { WebviewEvents } from "@shared/events/webview";
 import { ServerCall } from "@shared/calls/server";
-import { SCENE } from "@/core/constants/ui";
+import { Scene } from "@shared/enums/ui";
 import { getWebview, setScene } from "@/core/user-interface/webview";
 import { rpc } from "@/core/rpc";
 
@@ -44,7 +44,7 @@ async function beginAuth() {
     // fallback to manual discord auth (opens browser)
     const url = await rpc.callServer(ServerCall.FromClient.GET_DISCORD_AUTH_URL);
 
-    setScene(SCENE.DISCORD_AUTH);
+    setScene(Scene.DISCORD_AUTH, { hasCursor: true });
     getWebview((webview) => {
       webview.emit(WebviewEvents.FromClient.SETUP_DISCORD_AUTH, url);
     });

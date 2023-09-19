@@ -2,8 +2,9 @@ import { AmmoGroup } from "../weapons/weapon-groups";
 import { Item, ItemKey } from "../../types";
 import { EquipedAmmo } from "../weapons/firearm-weapon.items";
 import { registerItem } from "../../items-registry";
+import { makeItemKeys } from "../../lib/make-item-keys";
 
-export const Ammo = {
+export const Ammo = makeItemKeys<AmmoItemKey>()({
   HANDGUN_AMMO: "handgunammo",
   SHOTGUN_AMMO: "shotgunshells",
   SNIPER_RIFLE_AMMO: "riflerounds",
@@ -18,9 +19,9 @@ export const Ammo = {
   PLASMA_RAYS: "plasmarays",
   FIRE_EXTINGUISHER_POWDER: "fireextinguisherpowder",
   SMOKE_GRENADES: "smokegrenades",
-} as const;
+});
 
-export type AmmoItemKey = (typeof Ammo)[keyof typeof Ammo];
+export type AmmoItemKey = Brand<string, "AmmoItemKey">;
 
 export type AmmoItem = {
   key: AmmoItemKey;
@@ -135,7 +136,7 @@ export const ammo: Record<AmmoItemKey, AmmoItemInfo> = {
     name: "Smoke grenades",
     damagemultiplier: 0,
   },
-};
+} as Record<AmmoItemKey, AmmoItemInfo>;
 
 /**
  * Register all ammo items.

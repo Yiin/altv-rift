@@ -1,5 +1,4 @@
 import * as alt from "@altv/client";
-import { objectExpression } from "@babel/types";
 import { getAnchorType } from "./element-updater";
 import { AnchorEntity } from "./types";
 import { elements } from "./rml-renderer";

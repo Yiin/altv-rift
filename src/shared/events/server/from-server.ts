@@ -1,7 +1,7 @@
 import * as alt from "@altv/server";
 import { EquipmentSlot } from "@shared/interfaces";
 import { Item } from "@shared/modules/items";
-import { InGamePlayer, LoggedInPlayer } from "../../../server/utility/assertions";
+import { InGamePlayer } from "../../../server/utility/assertions";
 
 export const FromServer = {
   USER_LOADED: "USER_LOADED",
@@ -15,7 +15,6 @@ export const FromServer = {
 declare module "@altv/server" {
   namespace Events {
     interface CustomServerEvent {
-      [FromServer.USER_LOADED]: (player: LoggedInPlayer) => Promise<void> | void;
       [FromServer.MANUAL_DISCORD_AUTH_DONE]: (
         player: alt.Player,
         token: string

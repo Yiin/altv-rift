@@ -51,12 +51,6 @@ export class Screenshot {
 
   /**
    * Builds data from a screenshot event.
-   * @static
-   * @param {alt.Player} player
-   * @param {string} data
-   * @param {number} index
-   * @param {number} lengthOfData
-   * @memberof AthenaScreenshot
    */
   static async buildData(
     player: alt.Player,

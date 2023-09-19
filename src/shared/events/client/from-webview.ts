@@ -6,6 +6,8 @@ export const FromWebview = {
   CAMERA_MOVE_END: "CAMERA_MOVE_END",
   PLAY_SOUND: "PLAY_SOUND",
   ACTION_MENU_SELECT: "ACTION_MENU_SELECT",
+  TOGGLE_PLAYER_PREVIEW: "TOGGLE_PLAYER_PREVIEW",
+  TRACK_QUEST: "TRACK_QUEST",
 } as const;
 
 declare module "@altv/shared" {
@@ -20,6 +22,8 @@ declare module "@altv/shared" {
       [FromWebview.CAMERA_MOVE_END]: () => void;
       [FromWebview.PLAY_SOUND]: (audioName: string, ref: string) => void;
       [FromWebview.ACTION_MENU_SELECT]: (key: string) => void;
+      [FromWebview.TOGGLE_PLAYER_PREVIEW]: (show: boolean) => void;
+      [FromWebview.TRACK_QUEST]: (key: string) => void;
     }
   }
 }

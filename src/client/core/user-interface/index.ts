@@ -1,7 +1,4 @@
-// @index('./*.ts', f => `import "${f.path}";`)
-import "./action-menu";
+// @index('./*', f => `import "${f.path}";`)
 import "./elements";
-import "./scenes";
-import "./target-action";
 import "./webview";
 // @endindex

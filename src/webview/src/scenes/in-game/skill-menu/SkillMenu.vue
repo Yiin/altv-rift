@@ -19,7 +19,7 @@ const skills = [
     {
         name: "Mining",
         xp: 0,
-        color: "bg-gray-300",
+        color: "bg-neutral-300",
     },
     {
         name: "Crafting",
@@ -31,7 +31,7 @@ const skills = [
 
 <template>
     <Window :minw="400" :is-active="false" :sticks="[]">
-        <div class="divide-y rounded-xl border divide-gray-800 border-gray-800 bg-gray-900">
+        <div class="divide-y rounded-xl border divide-neutral-800 border-neutral-800 bg-neutral-900">
 
             <h3 class="text-lg font-bold text-white sm:text-xl m-4">
                 Skills

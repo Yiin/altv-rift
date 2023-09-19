@@ -27,5 +27,6 @@ export function getItemInfoByKey<K extends ItemKey>(key: K): ItemInfoByKey<K> {
  * Gives the summary description for an item by it's key.
  */
 export function getItemDescription(key: ItemKey) {
-  return getItemInfoByKey(key).description;
+  const itemInfo = getItemInfoByKey(key);
+  return "description" in itemInfo ? itemInfo.description : "";
 }

@@ -1,0 +1,44 @@
+import alt from "alt-server";
+import { ServerEvents } from "@shared/events/server";
+import { ClientEvents } from "@shared/events/client";
+import { angleToFaceTarget } from "@/utility/vector";
+import { isInGame } from "@/utility/assertions";
+
+declare module "alt-server" {
+  interface Ped {
+    taskTurnPedToFaceCoord(pos: alt.IVector3, duration: number): void;
+  }
+}
+
+alt.Ped.prototype.taskTurnPedToFaceCoord = function (pos, duration) {
+  if (!this.netOwner) {
+    this.rot = new alt.Vector3(0, 0, angleToFaceTarget(this.pos, pos));
+    return;
+  }
+
+  this.netOwner.emit(
+    ClientEvents.FromServer.CALL_NATIVE,
+    "taskTurnPedToFaceCoord",
+    this,
+    pos.x,
+    pos.y,
+    pos.z,
+    duration
+  );
+};
+
+alt.onClient(ServerEvents.FromClient.CONVERSATION_STARTED, (player, pedRemoteId) => {
+  const ped = alt.Ped.getByID(pedRemoteId);
+
+  if (!ped) {
+    return;
+  }
+
+  ped.taskTurnPedToFaceCoord(player.pos, 2000);
+});
+
+alt.onClient("clearquests", (player) => {
+  if (isInGame(player)) {
+    player.character.questFacts = [];
+  }
+});

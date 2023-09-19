@@ -1,11 +1,12 @@
-type HookableFunctionOptions<R = any> = {
+type HookableFunctionOptions<F extends (...args: any) => any> = {
   name?: string;
-  defaultReturn?: R;
+  defaultReturn?: ReturnType<F>;
+  onResult?: (result: ReturnType<F>, args: Parameters<F>) => void;
 };
 
 type HookFunction<F extends (...args: any) => any> = (
   ...args: Parameters<F>
-) => ReturnType<F> | undefined;
+) => ReturnType<F> | void;
 
 interface Hookable<F extends (...args: any) => any> {
   /**
@@ -23,7 +24,7 @@ interface Hookable<F extends (...args: any) => any> {
 }
 
 export function createHookableFunction<F extends (...args: any) => any>(
-  options: HookableFunctionOptions<ReturnType<F>> = { defaultReturn: undefined as ReturnType<F> }
+  options: HookableFunctionOptions<F> = { defaultReturn: undefined as ReturnType<F> }
 ): Hookable<F> {
   const handlers: HookFunction<F>[] = [];
 
@@ -40,12 +41,14 @@ export function createHookableFunction<F extends (...args: any) => any>(
             options.name !== "findSourceInventory" ? JSON.stringify(result) : "inventory"
           }`
         );
+        options.onResult?.(result, args);
         return result;
       }
     }
     console.log(
       `[HookableFunction] ${options.name} hook returned default value ${options.defaultReturn}}`
     );
+    options.onResult?.(options.defaultReturn as ReturnType<F>, args);
     return options.defaultReturn as ReturnType<F>;
   };
 

@@ -9,6 +9,14 @@ declare module "@altv/server" {
   }
 }
 
+// Cayo Perico
+WATER_ZONES.push({
+  x: 4840.571,
+  y: -5174.425,
+  z: 0,
+  radius: 3000,
+});
+
 const waterZones = WATER_ZONES.map((zone) => {
   const colshape = alt.ColShapeCircle.create({
     pos: { x: zone.x, y: zone.y },

@@ -5,7 +5,9 @@
  * @ref src/webview/src/store/client.ts
  */
 
+import { Scene, UIElement } from "@shared/enums/ui";
 import { ConversationOption } from "@shared/interfaces/conversation";
+import { Quests } from "@shared/modules/quests";
 
 export type CurrentConversation = {
   with: string;
@@ -17,17 +19,17 @@ export type CurrentConversation = {
   selectedOption: number;
 };
 
-export interface QuestTask {
+export interface QuestTaskInfo {
   visibleFact?: string;
   completedFact: string;
   title: string;
   summary: string;
 }
 
-export interface QuestRegistration {
+export interface QuestInfo {
   name: string;
   summary: string;
-  tasks: QuestTask[];
+  tasks: QuestTaskInfo[];
 }
 
 export enum ClientFlags {
@@ -53,16 +55,33 @@ export type TargetAction = {
   text: string;
 };
 
+export type CurrentWindow = {
+  type: "playerInventory";
+  interaction: null;
+};
+
 interface ClientState {
+  ui: {
+    scene: Scene | null;
+    elements: Set<UIElement>;
+    window: CurrentWindow | null;
+  };
   conversation: CurrentConversation | null;
-  quests: Map<string, QuestRegistration>;
+  trackingQuest: string | null;
+  quests: Map<string, QuestInfo>;
   flags: Set<ClientFlags>;
   actionMenu: ActionItem[];
   targetAction: TargetAction | null;
 }
 
 export const getDefaultClientStoreState = (): ClientState => ({
+  ui: {
+    scene: null,
+    elements: new Set(),
+    window: null,
+  },
   conversation: null,
+  trackingQuest: null,
   quests: new Map(),
   flags: new Set(),
   actionMenu: [],

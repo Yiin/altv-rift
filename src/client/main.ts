@@ -1,5 +1,15 @@
+declare module "alt-server" {
+  interface Player {
+    pinia: undefined;
+    user: undefined;
+    character: undefined;
+    gameState: undefined;
+  }
+}
+
 import "./core/user-interface";
 import "./core/rmlui";
+import "./core/remote-native";
 import "./modules/world";
 import "./modules/auth";
 import "./modules/spawn";

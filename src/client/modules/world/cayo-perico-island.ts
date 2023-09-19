@@ -129,8 +129,35 @@ const islandCenter = new alt.Vector2(4840.571, -5174.425);
 let nearIsland = false;
 
 const islandArea = alt.ColShapeCircle.create({ pos: islandCenter, radius: 3000 });
-
 islandArea.playersOnly = true;
+
+function loadIsland() {
+  nearIsland = true;
+  game.setIslandEnabled("HeistIsland", true);
+  game.setScenarioGroupEnabled("Heist_Island_Peds", true);
+  game.setAudioFlag("PlayerOnDLCHeist4Island", true);
+  game.setAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Zones", true, true);
+  game.setAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Disabled_Zones", false, true);
+
+  for (const ipl of islandIpls) {
+    game.requestIpl(ipl);
+  }
+}
+
+function unloadIsland() {
+  nearIsland = false;
+  game.setIslandEnabled("HeistIsland", false);
+  game.setScenarioGroupEnabled("Heist_Island_Peds", false);
+  game.setAudioFlag("PlayerOnDLCHeist4Island", false);
+  game.setAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Zones", false, false);
+  game.setAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Disabled_Zones", false, false);
+
+  for (const ipl of islandIpls) {
+    game.removeIpl(ipl);
+  }
+}
+
+
 alt.Events.onEntityColShapeEnter(({ colShape, entity }) => {
   if (colShape !== islandArea) {
     return;
@@ -144,16 +171,7 @@ alt.Events.onEntityColShapeEnter(({ colShape, entity }) => {
     return;
   }
 
-  nearIsland = true;
-  game.setIslandEnabled("HeistIsland", true);
-  game.setScenarioGroupEnabled("Heist_Island_Peds", true);
-  game.setAudioFlag("PlayerOnDLCHeist4Island", true);
-  game.setAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Zones", true, true);
-  game.setAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Disabled_Zones", false, true);
-
-  for (const ipl of islandIpls) {
-    game.requestIpl(ipl);
-  }
+  loadIsland();
 });
 
 alt.Events.onEntityColShapeLeave(({ colShape, entity }) => {
@@ -165,16 +183,7 @@ alt.Events.onEntityColShapeLeave(({ colShape, entity }) => {
     return;
   }
 
-  nearIsland = false;
-  game.setIslandEnabled("HeistIsland", false);
-  game.setScenarioGroupEnabled("Heist_Island_Peds", false);
-  game.setAudioFlag("PlayerOnDLCHeist4Island", false);
-  game.setAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Zones", false, false);
-  game.setAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Disabled_Zones", false, false);
-
-  for (const ipl of islandIpls) {
-    game.removeIpl(ipl);
-  }
+  unloadIsland();
 });
 
 alt.Timers.everyTick(() => {

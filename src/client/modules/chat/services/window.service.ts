@@ -1,9 +1,23 @@
 import * as alt from "@altv/client";
 import { CommandSuggestion, MessageType, WindowOptions } from "@shared/modules/chat";
 import { bind } from "@shared/decorators";
-import { ELEMENT } from "@/core/constants/ui";
-import { getWebview, toggleElement } from "@/core/user-interface/webview";
+import { UIElement } from "@shared/enums/ui";
+import {
+  doesElementHaveCursor,
+  getWebview,
+  showCursor,
+  toggleElement,
+} from "@/core/user-interface/webview";
 import type { Message } from "../interfaces";
+
+let isFocused = false;
+
+doesElementHaveCursor.hook((element) => {
+  if (element !== UIElement.CHAT) {
+    return;
+  }
+  return isFocused;
+});
 
 @bind()
 export class WindowService {
@@ -23,14 +37,18 @@ export class WindowService {
     if (!this.webView.visible || !this.focusEnabled) return;
     this.webView.emit("vchat:focus", true);
     this.webView.focused = true;
+    isFocused = true;
     alt.setGameControlsActive(false);
+    alt.Cursor.visible = true;
   }
 
   public unfocus() {
     if (!this.webView.visible || !this.focusEnabled) return;
     this.webView.emit("vchat:focus", false);
     this.webView.focused = true;
+    isFocused = false;
     alt.setGameControlsActive(true);
+    alt.Cursor.visible = false;
   }
 
   public toggleFocus(value: boolean) {
@@ -43,11 +61,11 @@ export class WindowService {
   }
 
   public show() {
-    toggleElement(ELEMENT.CHAT, true);
+    toggleElement(UIElement.CHAT, true);
   }
 
   public hide() {
-    toggleElement(ELEMENT.CHAT, false);
+    toggleElement(UIElement.CHAT, false);
   }
 
   public addMessage(message: string, type: MessageType = MessageType.Default) {
