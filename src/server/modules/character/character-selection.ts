@@ -9,7 +9,7 @@ import { LoggedInPlayer, isInGame, isLoggedIn, needsToBeLoggedIn } from "@/utili
 import { removeItemFromInventorySlot } from "../items-manager";
 import { getDefaultCharacterData } from "./character-data";
 
-alt.Events.on(ServerEvents.FromServer.USER_LOADED, async (player) => {
+alt.Events.on(ServerEvents.FromServer.USER_LOADED, (player) => {
   if (!isLoggedIn(player)) {
     return;
   }

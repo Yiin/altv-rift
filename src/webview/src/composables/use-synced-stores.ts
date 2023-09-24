@@ -14,10 +14,18 @@ export function useSyncedStores() {
   const gameStateStore = useGameState();
 
   on(WebviewEvents.FromClient.SET_CLIENT_STATE, (state: any) => {
-    clientStore.$state = state;
+    try {
+      clientStore.$state = state;
+    } catch (e) {
+      console.error('SET_CLIENT_STATE', e);
+    }
   });
   on(WebviewEvents.FromClient.UPDATE_CLIENT_STATE, (event: any) => {
-    updateStoreState(clientStore, event);
+    try {
+      updateStoreState(clientStore, event);
+    } catch (e) {
+      console.error('UPDATE_CLIENT_STATE', e);
+    }
   });
 
   on(WebviewEvents.FromClient.SET_USER_STATE, (event: any) => {
@@ -28,15 +36,24 @@ export function useSyncedStores() {
       delete pinia.state.value[userStore.$id];
     }
 
-    setUserStore(
-      defineStore("user", {
-        state: () => event,
-      })
-    );
+    try {
+      setUserStore(
+        defineStore("user", {
+          state: () => event,
+        })
+      );
+    } catch (e) {
+      console.error('SET_USER_STATE', e);
+    }
   });
   on(WebviewEvents.FromClient.UPDATE_USER_STATE, (event: any) => {
     const userStore = useUser();
-    updateStoreState(userStore, event);
+
+    try {
+      updateStoreState(userStore, event);
+    } catch (e) {
+      console.error('UPDATE_USER_STATE', e);
+    }
   });
 
   on(WebviewEvents.FromClient.SET_CHARACTER_STATE, (state: any) => {
@@ -47,22 +64,38 @@ export function useSyncedStores() {
       delete pinia.state.value[characterStore.$id];
     }
 
-    setCharacterStore(
-      defineStore("character", {
-        state: () => state,
-      })
-    );
+    try {
+      setCharacterStore(
+        defineStore("character", {
+          state: () => state,
+        })
+      );
+    } catch (e) {
+      console.error('SET_CHARACTER_STATE', e);
+    }
   });
   on(WebviewEvents.FromClient.UPDATE_CHARACTER_STATE, (event: any) => {
     const characterStore = useCharacter();
 
-    updateStoreState(characterStore, event);
+    try {
+      updateStoreState(characterStore, event);
+    } catch (e) {
+      console.error('UPDATE_CHARACTER_STATE', e);
+    }
   });
 
   on(WebviewEvents.FromClient.SET_GAME_STATE, (state: any) => {
-    gameStateStore.$state = state;
+    try {
+      gameStateStore.$state = state;
+    } catch (e) {
+      console.error('SET_GAME_STATE', e);
+    }
   });
   on(WebviewEvents.FromClient.UPDATE_GAME_STATE, (event: any) => {
-    updateStoreState(gameStateStore, event);
+    try {
+      updateStoreState(gameStateStore, event);
+    } catch (e) {
+      console.error('UPDATE_GAME_STATE', e);
+    }
   });
 }

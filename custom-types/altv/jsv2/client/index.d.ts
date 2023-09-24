@@ -101,6 +101,7 @@ declare module "@altv/client" {
     seek(time: number): void;
 
     on(eventName: string, func: (...args: unknown[]) => void): void;
+    once(eventName: string, func: (...args: unknown[]) => void): void;
     off(eventName: string, func: (...args: unknown[]) => void): void;
     readonly listeners: Readonly<{
       [eventName: string]: ReadonlyArray<(...args: unknown[]) => void>;
@@ -284,9 +285,10 @@ declare module "@altv/client" {
 
   export class BaseObject extends altShared.BaseObject {
     readonly isRemote: boolean;
-    readonly remoteId: number;
+    readonly remoteID: number;
 
     static getByID(type: altShared.Enums.BaseObjectType, id: number): BaseObject | null;
+    static getByRemoteID(type: altShared.Enums.BaseObjectType, id: number): BaseObject | null;
 
     readonly meta: BaseObjectMeta;
     readonly syncedMeta: Readonly<altShared.BaseObjectSyncedMeta>;
@@ -349,8 +351,9 @@ declare module "@altv/client" {
     attachTo(entity: Entity): boolean;
     fade(opacity: number, duration: number): void;
 
-    static getByID(id: number): Blip | null;
     static create(options: BlipCreateOptions): Blip;
+    static getByID(id: number): Blip | null;
+    static getByRemoteID(id: number): Blip | null;
   }
 
   export abstract class ColShape extends WorldObject {
@@ -363,6 +366,18 @@ declare module "@altv/client" {
 
     static create(opts: altShared.ColShapeCreateOptions): ColShape;
     static getByID(id: number): ColShape | null;
+    static getByRemoteID(id: number): ColShape | null;
+  }
+
+  interface CheckpointCreateOptions {
+    type: altShared.Enums.CheckpointType;
+    pos: altShared.IVector3;
+    radius: number;
+    height: number;
+    color: altShared.RGBA;
+    iconColor: altShared.RGBA;
+    nextPos: altShared.IVector3;
+    streamingDistance: number;
   }
 
   // @ts-expect-error - Suppresses "Class static side incorrectly extends base class static side"
@@ -383,8 +398,9 @@ declare module "@altv/client" {
     isEntityIdIn(id: number): boolean;
     isPointIn(point: altShared.Vector3): boolean;
 
-    static create(opts: altShared.CheckpointCreateOptions): Checkpoint;
+    static create(opts: CheckpointCreateOptions): Checkpoint;
     static getByID(id: number): Checkpoint | null;
+    static getByRemoteID(id: number): Checkpoint | null;
   }
 
   export abstract class Entity extends WorldObject {
@@ -514,7 +530,9 @@ declare module "@altv/client" {
 
     static readonly all: ReadonlyArray<Object>;
     static readonly streamedIn: ReadonlyArray<Object>;
+
     static getByID(id: number): Object | null;
+    static getByRemoteID(id: number): Object | null;
   }
 
   interface LocalObjectCreateOptions {
@@ -592,6 +610,9 @@ declare module "@altv/client" {
 
     static readonly all: ReadonlyArray<Ped>;
     static readonly streamedIn: ReadonlyArray<Ped>;
+
+    static getByID(id: number): Ped | null;
+    static getByRemoteID(id: number): Ped | null;
   }
 
   interface LocalPedCreateOptions {
@@ -691,6 +712,7 @@ declare module "@altv/client" {
     readonly isOnLadder: boolean;
     readonly isInMelee: boolean;
     readonly isInCover: boolean;
+    readonly isParachuting: boolean;
     readonly armour: number;
     readonly maxArmour: number;
     readonly moveSpeed: number;
@@ -717,7 +739,9 @@ declare module "@altv/client" {
     static readonly local: LocalPlayer;
     static readonly all: ReadonlyArray<Player>;
     static readonly streamedIn: ReadonlyArray<Player>;
+
     static getByID(id: number): Player | null;
+    static getByRemoteID(id: number): Player | null;
   }
 
   interface RmlDocumentCreateOptions {
@@ -741,7 +765,6 @@ declare module "@altv/client" {
 
     static create(options: RmlDocumentCreateOptions): RmlDocument;
 
-    // TODO (xLuxy): Check if RmlDocument has (it's not undefined)
     static getByID(id: string): RmlDocument | null;
   }
 
@@ -828,12 +851,12 @@ declare module "@altv/client" {
     querySelectorAll(selector: string): ReadonlyArray<RmlElement>;
 
     on(eventName: string, func: (...args: unknown[]) => void): void;
+    once(eventName: string, func: (...args: unknown[]) => void): void;
     off(eventName: string, func: (...args: unknown[]) => void): void;
     readonly listeners: Readonly<{
       [eventName: string]: ReadonlyArray<(...args: unknown[]) => void>;
     }>;
 
-    // TODO (xLuxy): Check if RmlElement has (it's not undefined)
     static getByID(id: string): RmlElement | null;
   }
 
@@ -848,7 +871,10 @@ declare module "@altv/client" {
     faceCamera: boolean;
     readonly streamingDistance: number;
 
+    static create(opts: TextLabelCreateOptions): TextLabel | null;
+
     static getByID(id: number): TextLabel | null;
+    // static getByRemoteID(id: number): TextLabel | null;
   }
 
   export abstract class Vehicle extends Entity {
@@ -972,7 +998,23 @@ declare module "@altv/client" {
 
     static readonly all: ReadonlyArray<Vehicle>;
     static readonly streamedIn: ReadonlyArray<Vehicle>;
+
     static getByID(id: number): Vehicle | null;
+    static getByRemoteID(id: number): Vehicle | null;
+  }
+
+  interface TextLabelCreateOptions {
+    text: string;
+    fontName: string;
+    fontSize: number;
+    pos: altShared.IVector3;
+    rot?: altShared.IVector3; // default: { x: 0, y: 0, z: 0 }
+    color?: altShared.RGBA; // default: { r: 255, g: 255, b: 255, a: 255 }
+    outlineColor?: altShared.RGBA; // default: { r: 0, g: 0, b: 0, a: 255 }
+    outlineWidth?: number; // default: 0
+    fontScale?: number; // default: 1
+    useStreaming?: boolean; // default: false
+    streamingDistance?: number; // default: 0
   }
 
   interface VirtualEntityCreateOptions {
@@ -1118,7 +1160,6 @@ declare module "@altv/client" {
       listener: Events.CustomEventCallback<unknown[]>
     ): void;
 
-    // Not implemented yet
     once<E extends keyof altShared.Events.CustomWebViewToClientEvent>(
       eventName: E,
       listener: altShared.Events.CustomWebViewToClientEvent[E]
@@ -1210,10 +1251,6 @@ declare module "@altv/client" {
     export function setBlipFactory(factory: typeof Blip): void;
     export function getBlipFactory<T extends Blip>(): T;
 
-    // TODO (xLuxy): Server-only - find a better way to extend namespaces and move this into server typings
-    export function setVoiceChannelFactory(factory: typeof VoiceChannel): void;
-    export function getVoiceChannelFactory<T extends VoiceChannel>(): T;
-
     export function setColShapeFactory(factory: typeof ColShape): void;
     export function getColShapeFactory<T extends ColShape>(): T;
 
@@ -1222,6 +1259,9 @@ declare module "@altv/client" {
 
     export function setCheckpointFactory(factory: typeof Checkpoint): void;
     export function getCheckpointFactory<T extends Checkpoint>(): T;
+
+    export function setTextLabelFactory(factory: typeof TextLabel): void;
+    export function getTextLabelFactory<T extends TextLabel>(): T;
 
     export function setVirtualEntityFactory(factory: typeof VirtualEntity): void;
     export function getVirtualEntityFactory<T extends VirtualEntity>(): T;
@@ -1242,28 +1282,52 @@ declare module "@altv/client" {
     export function create(opts: altShared.RadiusBlipCreateOptions): Blip;
   }
 
-  export namespace ColShapeSphere {
-    export function create(opts: altShared.ColShapeSphereCreateOptions): ColShape;
+  // @ts-expect-error - Suppresses "Class static side incorrectly extends base class static side"
+  export abstract class ColShapeSphere extends ColShape {
+    readonly radius: number;
+
+    static create(opts: altShared.ColShapeSphereCreateOptions): ColShapeSphere;
   }
 
-  export namespace ColShapeCylinder {
-    export function create(opts: altShared.ColShapeCylinderCreateOptions): ColShape;
+  // @ts-expect-error - Suppresses "Class static side incorrectly extends base class static side"
+  export abstract class ColShapeCylinder extends ColShape {
+    readonly radius: number;
+    readonly height: number;
+
+    static create(opts: altShared.ColShapeCylinderCreateOptions): ColShapeCylinder;
   }
 
-  export namespace ColShapeCircle {
-    export function create(opts: altShared.ColShapeCircleCreateOptions): ColShape;
+  // @ts-expect-error - Suppresses "Class static side incorrectly extends base class static side"
+  export abstract class ColShapeCircle extends ColShape {
+    readonly radius: number;
+
+    static create(opts: altShared.ColShapeCircleCreateOptions): ColShapeCircle;
   }
 
-  export namespace ColShapeCuboid {
-    export function create(opts: altShared.ColShapeCuboidCreateOptions): ColShape;
+  // @ts-expect-error - Suppresses "Class static side incorrectly extends base class static side"
+  export abstract class ColShapeCuboid extends ColShape {
+    readonly min: altShared.Vector3;
+    readonly max: altShared.Vector3;
+
+    static create(opts: altShared.ColShapeCuboidCreateOptions): ColShapeCuboid;
   }
 
-  export namespace ColShapeRectangle {
-    export function create(opts: altShared.ColShapeRectangleCreateOptions): ColShape;
+  // @ts-expect-error - Suppresses "Class static side incorrectly extends base class static side"
+  export abstract class ColShapeRectangle extends ColShape {
+    readonly min: altShared.Vector2;
+    readonly max: altShared.Vector2;
+
+    static create(opts: altShared.ColShapeRectangleCreateOptions): ColShapeRectangle;
   }
 
-  export namespace ColShapePolygon {
-    export function create(opts: altShared.ColShapePolygonCreateOptions): ColShape;
+  // @ts-expect-error - Suppresses "Class static side incorrectly extends base class static side"
+  export abstract class ColShapePolygon extends ColShape {
+    readonly minZ: number;
+    readonly maxZ: number;
+
+    readonly points: ReadonlyArray<altShared.Vector2>;
+
+    static create(opts: altShared.ColShapePolygonCreateOptions): ColShapePolygon;
   }
 
   export namespace Events {
@@ -1294,64 +1358,180 @@ declare module "@altv/client" {
       ...args: unknown[]
     ): void;
 
-    export function onKeyBoardEvent(callback: GenericEventCallback<KeyBoardEventParameters>): void;
-    export function onKeyUp(callback: GenericEventCallback<KeyUpDownEventParameters>): void;
-    export function onKeyDown(callback: GenericEventCallback<KeyUpDownEventParameters>): void;
-    export function onWebViewEvent(callback: GenericEventCallback<WebViewEventParameters>): void;
+    export function onKeyBoardEvent(
+      callback: GenericEventCallback<KeyBoardEventParameters>
+    ): altShared.Events.EventHandler;
+    export function onceKeyBoardEvent(
+      callback: GenericEventCallback<KeyBoardEventParameters>
+    ): altShared.Events.EventHandler;
+    export function onKeyUp(
+      callback: GenericEventCallback<KeyUpDownEventParameters>
+    ): altShared.Events.EventHandler;
+    export function onceKeyUp(
+      callback: GenericEventCallback<KeyUpDownEventParameters>
+    ): altShared.Events.EventHandler;
+    export function onKeyDown(
+      callback: GenericEventCallback<KeyUpDownEventParameters>
+    ): altShared.Events.EventHandler;
+    export function onceKeyDown(
+      callback: GenericEventCallback<KeyUpDownEventParameters>
+    ): altShared.Events.EventHandler;
+    export function onWebViewEvent(
+      callback: GenericEventCallback<WebViewEventParameters>
+    ): altShared.Events.EventHandler;
+    export function onceWebViewEvent(
+      callback: GenericEventCallback<WebViewEventParameters>
+    ): altShared.Events.EventHandler;
     export function onWebSocketEvent(
       callback: GenericEventCallback<WebSocketEventParameters>
-    ): void;
-    export function onAudioEvent(callback: GenericEventCallback<AudioEventParameters>): void;
-    export function onRmluiEvent(callback: GenericEventCallback<RmluiEventParameters>): void;
+    ): altShared.Events.EventHandler;
+    export function onceWebSocketEvent(
+      callback: GenericEventCallback<WebSocketEventParameters>
+    ): altShared.Events.EventHandler;
+    export function onAudioEvent(
+      callback: GenericEventCallback<AudioEventParameters>
+    ): altShared.Events.EventHandler;
+    export function onceAudioEvent(
+      callback: GenericEventCallback<AudioEventParameters>
+    ): altShared.Events.EventHandler;
+    export function onRmluiEvent(
+      callback: GenericEventCallback<RmluiEventParameters>
+    ): altShared.Events.EventHandler;
+    export function onceRmluiEvent(
+      callback: GenericEventCallback<RmluiEventParameters>
+    ): altShared.Events.EventHandler;
     export function onWindowFocusChange(
       callback: GenericEventCallback<WindowFocusChangeEventParameters>
-    ): void;
+    ): altShared.Events.EventHandler;
+    export function onceWindowFocusChange(
+      callback: GenericEventCallback<WindowFocusChangeEventParameters>
+    ): altShared.Events.EventHandler;
     export function onWindowResolutionChange(
       callback: GenericEventCallback<WindowResolutionChangeEventParameters>
-    ): void;
-    export function onConnectionComplete(callback: GenericEventCallback): void;
-    export function onDisconnect(callback: GenericEventCallback): void;
-    export function onSpawned(callback: GenericEventCallback): void;
+    ): altShared.Events.EventHandler;
+    export function onceWindowResolutionChange(
+      callback: GenericEventCallback<WindowResolutionChangeEventParameters>
+    ): altShared.Events.EventHandler;
+    export function onConnectionComplete(
+      callback: GenericEventCallback
+    ): altShared.Events.EventHandler;
+    export function onceConnectionComplete(
+      callback: GenericEventCallback
+    ): altShared.Events.EventHandler;
+    export function onDisconnect(callback: GenericEventCallback): altShared.Events.EventHandler;
+    export function onceDisconnect(callback: GenericEventCallback): altShared.Events.EventHandler;
+    export function onSpawned(callback: GenericEventCallback): altShared.Events.EventHandler;
+    export function onceSpawned(callback: GenericEventCallback): altShared.Events.EventHandler;
 
     export function onGameEntityCreate(
       callback: GenericEventCallback<GameEntityCreateEventParameters>
-    ): void;
+    ): altShared.Events.EventHandler;
+    export function onceGameEntityCreate(
+      callback: GenericEventCallback<GameEntityCreateEventParameters>
+    ): altShared.Events.EventHandler;
     export function onGameEntityDestroy(
       callback: GenericEventCallback<GameEntityDestroyEventParameters>
-    ): void;
+    ): altShared.Events.EventHandler;
+    export function onceGameEntityDestroy(
+      callback: GenericEventCallback<GameEntityDestroyEventParameters>
+    ): altShared.Events.EventHandler;
     export function onEntityHitEntity(
       callback: GenericEventCallback<EntityHitEntityEventParameters>
-    ): void;
-    export function onTaskChange(callback: GenericEventCallback<TaskChangeEventParameters>): void;
+    ): altShared.Events.EventHandler;
+    export function onceEntityHitEntity(
+      callback: GenericEventCallback<EntityHitEntityEventParameters>
+    ): altShared.Events.EventHandler;
+    export function onTaskChange(
+      callback: GenericEventCallback<TaskChangeEventParameters>
+    ): altShared.Events.EventHandler;
+    export function onceTaskChange(
+      callback: GenericEventCallback<TaskChangeEventParameters>
+    ): altShared.Events.EventHandler;
 
     export function onPlayerWeaponShoot(
       callback: GenericEventCallback<PlayerWeaponShootEventParameters>
-    ): void;
+    ): altShared.Events.EventHandler;
+    export function oncePlayerWeaponShoot(
+      callback: GenericEventCallback<PlayerWeaponShootEventParameters>
+    ): altShared.Events.EventHandler;
     export function onPlayerBulletHit(
       callback: GenericEventCallback<PlayerBulletHitEventParameters>
-    ): void;
+    ): altShared.Events.EventHandler;
+    export function oncePlayerBulletHit(
+      callback: GenericEventCallback<PlayerBulletHitEventParameters>
+    ): altShared.Events.EventHandler;
     export function onPlayerWeaponChange(
       callback: GenericEventCallback<PlayerWeaponChangeEventParameters>
-    ): void;
-    export function onPlayerStartEnterVehicle(
-      callback: GenericPlayerEventCallback<PlayerStartEnterVehicleEventParameters>
-    ): void;
-    export function onPlayerStartLeaveVehicle(
-      callback: GenericPlayerEventCallback<PlayerStartLeaveVehicleEventParameters>
-    ): void;
+    ): altShared.Events.EventHandler;
+    export function oncePlayerWeaponChange(
+      callback: GenericEventCallback<PlayerWeaponChangeEventParameters>
+    ): altShared.Events.EventHandler;
+    export function onPlayerStartEnterVehicle<T extends Player>(
+      callback: GenericPlayerEventCallback<PlayerStartEnterVehicleEventParameters, T>
+    ): altShared.Events.EventHandler;
+    export function oncePlayerStartEnterVehicle<T extends Player>(
+      callback: GenericPlayerEventCallback<PlayerStartEnterVehicleEventParameters, T>
+    ): altShared.Events.EventHandler;
+    export function onPlayerStartLeaveVehicle<T extends Player>(
+      callback: GenericPlayerEventCallback<PlayerStartLeaveVehicleEventParameters, T>
+    ): altShared.Events.EventHandler;
+    export function oncePlayerStartLeaveVehicle<T extends Player>(
+      callback: GenericPlayerEventCallback<PlayerStartLeaveVehicleEventParameters, T>
+    ): altShared.Events.EventHandler;
     export function onVoiceConnectionUpdate(
       callback: GenericEventCallback<VoiceConnectionEventParameters>
-    ): void;
+    ): altShared.Events.EventHandler;
+    export function onceVoiceConnectionUpdate(
+      callback: GenericEventCallback<VoiceConnectionEventParameters>
+    ): altShared.Events.EventHandler;
 
+    export function onPlayerStartTalking<T extends Player>(
+      callback: GenericPlayerEventCallback<{}, T>
+    ): altShared.Events.EventHandler;
+    export function oncePlayerStartTalking<T extends Player>(
+      callback: GenericPlayerEventCallback<{}, T>
+    ): altShared.Events.EventHandler;
+    export function onPlayerStopTalking<T extends Player>(
+      callback: GenericPlayerEventCallback<{}, T>
+    ): altShared.Events.EventHandler;
+    export function oncePlayerStopTalking<T extends Player>(
+      callback: GenericPlayerEventCallback<{}, T>
+    ): altShared.Events.EventHandler;
+
+    // Ped related events
+    export function onPedDeath(
+      callback: GenericEventCallback<PedDeathEventParameters>
+    ): altShared.Events.EventHandler;
+    export function oncePedDeath(
+      callback: GenericEventCallback<PedDeathEventParameters>
+    ): altShared.Events.EventHandler;
+
+    export function onPedDamage(
+      callback: GenericEventCallback<PedDamageEventParameters>
+    ): altShared.Events.EventHandler;
+    export function oncePedDamage(
+      callback: GenericEventCallback<PedDamageEventParameters>
+    ): altShared.Events.EventHandler;
+
+    // World object related
     export function onWorldObjectPositionChange(
       callback: GenericEventCallback<WorldObjectPositionChangeEventParameters>
-    ): void;
+    ): altShared.Events.EventHandler;
+    export function onceWorldObjectPositionChange(
+      callback: GenericEventCallback<WorldObjectPositionChangeEventParameters>
+    ): altShared.Events.EventHandler;
     export function onWorldObjectStreamIn(
       callback: GenericEventCallback<WorldObjectStreamInEventParameters>
-    ): void;
+    ): altShared.Events.EventHandler;
+    export function onceWorldObjectStreamIn(
+      callback: GenericEventCallback<WorldObjectStreamInEventParameters>
+    ): altShared.Events.EventHandler;
     export function onWorldObjectStreamOut(
       callback: GenericEventCallback<WorldObjectStreamOutEventParameters>
-    ): void;
+    ): altShared.Events.EventHandler;
+    export function onceWorldObjectStreamOut(
+      callback: GenericEventCallback<WorldObjectStreamOutEventParameters>
+    ): altShared.Events.EventHandler;
 
     export function setWarningThreshold(threshold: number): void;
     export function setSourceLocationFrameSkipCount(skipCount: number): void;
@@ -1371,6 +1551,20 @@ declare module "@altv/client" {
 
     interface VoiceConnectionEventParameters {
       state: altShared.Enums.VoiceConnectionState;
+    }
+
+    interface PedDeathEventParameters {
+      ped: Ped;
+      killer: Entity;
+      weapon: number;
+    }
+
+    interface PedDamageEventParameters {
+      ped: Ped;
+      attacker: Entity;
+      healthDamage: number;
+      armourDamage: number;
+      weapon: number;
     }
 
     interface PlayerWeaponShootEventParameters {
@@ -1464,101 +1658,143 @@ declare module "@altv/client" {
     // SHARED Entity related events
     export function onBaseObjectCreate(
       callback: GenericEventCallback<BaseObjectCreateEventParameters>
-    ): void;
+    ): altShared.Events.EventHandler;
     export function onBaseObjectRemove(
       callback: GenericEventCallback<BaseObjectRemoveEventParameters>
-    ): void;
+    ): altShared.Events.EventHandler;
     export function onNetOwnerChange(
       callback: GenericEventCallback<NetOwnerChangeEventParameters>
-    ): void;
+    ): altShared.Events.EventHandler;
     export function onWeaponDamage(
       callback: GenericEventCallback<WeaponDamageEventParameters>
-    ): void;
+    ): altShared.Events.EventHandler;
 
     // SHARED meta related events
     export function onLocalMetaChange(
       callback: GenericPlayerEventCallback<LocalMetaChangeEventParameters>
-    ): void;
+    ): altShared.Events.EventHandler;
     export function onSyncedMetaChange(
       callback: GenericEventCallback<SyncedMetaChangeEventParameters>
-    ): void;
+    ): altShared.Events.EventHandler;
     export function onStreamSyncedMetaChange(
       callback: GenericEventCallback<StreamSyncedMetaChangeEventParameters>
-    ): void;
+    ): altShared.Events.EventHandler;
     export function onGlobalMetaChange(
       callback: GenericEventCallback<GlobalMetaChangeEventParameters>
-    ): void;
+    ): altShared.Events.EventHandler;
     export function onGlobalSyncedMetaChange(
       callback: GenericEventCallback<GlobalSyncedMetaChangeEventParameters>
-    ): void;
+    ): altShared.Events.EventHandler;
 
     // Script related events
     export function onEntityColShapeEnter(
       callback: GenericEventCallback<EntityColShapeEnterEventParameters>
-    ): void;
+    ): altShared.Events.EventHandler;
     export function onEntityColShapeLeave(
       callback: GenericEventCallback<EntityColShapeLeaveEventParameters>
-    ): void;
+    ): altShared.Events.EventHandler;
+    export function onEntityCheckpointEnter(
+      callback: GenericEventCallback<EntityCheckpointEnterEventParameters>
+    ): altShared.Events.EventHandler;
+    export function onEntityCheckpointLeave(
+      callback: GenericEventCallback<EntityCheckpointLeaveEventParameters>
+    ): altShared.Events.EventHandler;
+    export function onColShapeEvent(
+      callback: GenericEventCallback<ColShapeEventParameters>
+    ): altShared.Events.EventHandler;
 
     // SHARED custom events
     export function onConsoleCommand(
       callback: GenericEventCallback<ConsoleCommandEventParameters>
-    ): void;
-    export function onError(callback: GenericEventCallback<ErrorEventParameters>): void;
+    ): altShared.Events.EventHandler;
+    export function onError(
+      callback: GenericEventCallback<ErrorEventParameters>
+    ): altShared.Events.EventHandler;
 
     // SHARED script related events
     export function onLocalScriptEvent(
       callback: GenericEventCallback<LocalScriptEventParameters>
-    ): void;
+    ): altShared.Events.ScriptEventHandler;
     export function onRemoteScriptEvent(
       callback: GenericEventCallback<RemoteScriptEventParameters>
-    ): void;
+    ): altShared.Events.ScriptEventHandler;
 
     // SHARED resource events
     export function onResourceStart(
       callback: GenericEventCallback<ResourceStartEventParameters>
-    ): void;
+    ): altShared.Events.EventHandler;
     export function onResourceStop(
       callback: GenericEventCallback<ResourceStopEventParameters>
-    ): void;
+    ): altShared.Events.EventHandler;
     export function onResourceError(
       callback: GenericEventCallback<ResourceErrorEventParameters>
-    ): void;
+    ): altShared.Events.EventHandler;
 
     // Custom events
     export function on<E extends keyof CustomClientEvent>(
       eventName: E,
       callback: CustomEventCallback<Parameters<CustomClientEvent[E]>>
-    ): EventSubscription;
+    ): altShared.Events.ScriptEventHandler;
     export function on<E extends string>(
       eventName: Exclude<E, keyof CustomClientEvent>,
       callback: CustomEventCallback<unknown[]>
-    ): EventSubscription;
+    ): altShared.Events.ScriptEventHandler;
+    export function once<E extends keyof CustomClientEvent>(
+      eventName: E,
+      callback: CustomEventCallback<Parameters<CustomClientEvent[E]>>
+    ): altShared.Events.ScriptEventHandler;
+    export function once<E extends string>(
+      eventName: Exclude<E, keyof CustomClientEvent>,
+      callback: CustomEventCallback<unknown[]>
+    ): altShared.Events.ScriptEventHandler;
 
     export function onServer<E extends keyof altShared.Events.CustomServerToPlayerEvent>(
       eventName: E,
       callback: CustomEventCallback<Parameters<altShared.Events.CustomServerToPlayerEvent[E]>>
-    ): EventSubscription;
+    ): altShared.Events.ScriptEventHandler;
     export function onServer<E extends string>(
       eventName: Exclude<E, keyof altShared.Events.CustomServerToPlayerEvent>,
       callback: CustomEventCallback<unknown[]>
-    ): EventSubscription;
+    ): altShared.Events.ScriptEventHandler;
+    export function onceServer<E extends keyof altShared.Events.CustomServerToPlayerEvent>(
+      eventName: E,
+      callback: CustomEventCallback<Parameters<altShared.Events.CustomServerToPlayerEvent[E]>>
+    ): altShared.Events.ScriptEventHandler;
+    export function onceServer<E extends string>(
+      eventName: Exclude<E, keyof altShared.Events.CustomServerToPlayerEvent>,
+      callback: CustomEventCallback<unknown[]>
+    ): altShared.Events.ScriptEventHandler;
 
     export function onRemote<E extends keyof altShared.Events.CustomServerToPlayerEvent>(
       eventName: E,
       callback: CustomEventCallback<Parameters<altShared.Events.CustomServerToPlayerEvent[E]>>
-    ): EventSubscription;
+    ): altShared.Events.ScriptEventHandler;
     export function onRemote<E extends keyof altShared.Events.CustomRemoteEvent>(
       eventName: E,
       callback: CustomEventCallback<Parameters<altShared.Events.CustomRemoteEvent[E]>>
-    ): EventSubscription;
+    ): altShared.Events.ScriptEventHandler;
     export function onRemote<E extends string>(
       eventName: Exclude<
         E,
         keyof altShared.Events.CustomServerToPlayerEvent | keyof altShared.Events.CustomRemoteEvent
       >,
       callback: CustomEventCallback<unknown[]>
-    ): EventSubscription;
+    ): altShared.Events.ScriptEventHandler;
+    export function onceRemote<E extends keyof altShared.Events.CustomServerToPlayerEvent>(
+      eventName: E,
+      callback: CustomEventCallback<Parameters<altShared.Events.CustomServerToPlayerEvent[E]>>
+    ): altShared.Events.ScriptEventHandler;
+    export function onceRemote<E extends keyof altShared.Events.CustomRemoteEvent>(
+      eventName: E,
+      callback: CustomEventCallback<Parameters<altShared.Events.CustomRemoteEvent[E]>>
+    ): altShared.Events.ScriptEventHandler;
+    export function onceRemote<E extends string>(
+      eventName: Exclude<
+        E,
+        keyof altShared.Events.CustomServerToPlayerEvent | keyof altShared.Events.CustomRemoteEvent
+      >,
+      callback: CustomEventCallback<unknown[]>
+    ): altShared.Events.ScriptEventHandler;
 
     interface PlayerAnimationChangeEventParameters {
       oldAnimDict: number;
@@ -1593,11 +1829,6 @@ declare module "@altv/client" {
       remove(callback: altShared.Events.GenericOnEventCallback): void;
     }
 
-    interface EventSubscription {
-      readonly listeners: ReadonlyArray<GenericEventCallback>;
-      remove(eventName: string, callback: GenericEventCallback): void;
-    }
-
     interface EntityColShapeEnterEventParameters {
       entity: WorldObject;
       colShape: ColShape;
@@ -1612,8 +1843,8 @@ declare module "@altv/client" {
 
     export type CustomEventCallback<T extends unknown[]> = (...params: T) => void | Promise<void>;
     export type GenericEventCallback<T = {}> = (params: T) => void | Promise<void>;
-    export type GenericPlayerEventCallback<T = {}> = (
-      params: T & { player: Player }
+    export type GenericPlayerEventCallback<T = {}, U extends Player = Player> = (
+      params: T & { player: U }
     ) => void | Promise<void>;
 
     type LocalScriptEvents = CustomClientEvent;
@@ -1656,6 +1887,22 @@ declare module "@altv/client" {
       bodyPart: altShared.Enums.BodyPart;
 
       setDamageValue(value: number): void;
+    }
+
+    interface EntityCheckpointEnterEventParameters {
+      entity: WorldObject;
+      colShape: ColShape;
+    }
+
+    interface EntityCheckpointLeaveEventParameters {
+      entity: WorldObject;
+      colShape: ColShape;
+    }
+
+    interface ColShapeEventParameters {
+      entity: WorldObject;
+      target: ColShape;
+      state: boolean;
     }
 
     interface LocalMetaChangeEventParameters {

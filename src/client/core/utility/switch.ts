@@ -1,5 +1,5 @@
 import * as alt from "@altv/client";
-import game from "@altv/natives";
+import * as game from "@altv/natives";
 import { SWITCHOUT_TYPES } from "@shared/modules/game/ui/switch-out-types";
 import { sleep } from "./sleep";
 

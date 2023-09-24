@@ -1,4 +1,4 @@
-import alt, { Enums } from "@altv/client";
+import * as alt from "@altv/client";
 import { ClientEvents } from "@shared/events/client";
 import { getWebview } from "../user-interface/webview";
 
@@ -69,7 +69,7 @@ export function waitUntil(condition: () => boolean, timeoutMS = 10000) {
       try {
         timeout.destroy();
         tick.destroy();
-      } catch { }
+      } catch {}
       ticks.splice(ticks.indexOf(tick), 1);
       resolve();
     });
@@ -83,7 +83,7 @@ export function everyTick(callback: () => void) {
   ticks.push(tick);
 }
 
-export function onKeyDown(key: Enums.KeyCode, callback: () => void) {
+export function onKeyDown(key: alt.Enums.KeyCode, callback: () => void) {
   if (registeredKeyDownKeys?.has(key)) {
     throw new Error(`KeyDown ${key} is already registered.`);
   }

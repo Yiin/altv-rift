@@ -2756,14 +2756,16 @@ export const masks: Record<MaskItemKey, MaskItemInfo> = MASK_ITEMS as Record<
 >;
 
 /**
- * Register all melee weapons.
+ * Register all masks.
  */
-for (const [key, info] of Object.entries(masks)) {
-  registerItem(key as MaskItemKey, info);
+// console.log("Registering masks...");
+for (const key in masks) {
+  registerItem(key as MaskItemKey, masks[key as MaskItemKey]);
 }
+// console.log(`Registered ${Object.keys(masks).length} masks.`);
 
 /**
- * Type guards for melee weapons
+ * Type guards for masks
  */
 export function isItemKeyMask(key: string): key is MaskItemKey {
   return key in masks;

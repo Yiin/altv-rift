@@ -36,10 +36,6 @@ esbuild
       filelocPlugin({
         rootDir: "src",
       }),
-      altvEsbuild({
-        ...altvEsbuildOptions,
-        mode: "client",
-      }),
       rcssPlugin(),
     ],
     define: {

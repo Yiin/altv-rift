@@ -16,40 +16,46 @@ const virtualTreeGroup = alt.VirtualEntityGroup.create({ maxEntitiesInStream: 30
 const virtualTreeById: Map<number, alt.VirtualEntity> = new Map();
 const playerHittingTree: WeakMap<InGamePlayer, number> = new WeakMap();
 
-for (const [type, list] of Object.entries(trees)) {
-  for (const { Position } of list) {
-    if (
-      IGNORED_TREES.some(
-        (tree) =>
-          tree.pos.x === Position.X &&
-          tree.pos.y === Position.Y &&
-          tree.pos.z === Position.Z &&
-          tree.type === type
-      )
-    ) {
-      continue;
-    }
-    const position = {
-      x: Position.X,
-      y: Position.Y,
-      z: Position.Z + 1.8,
-    };
+console.log("Growing trees... Will take a while.");
 
-    const tree = alt.VirtualEntity.create({
-      group: virtualTreeGroup,
-      pos: new alt.Vector3(position),
-      streamingDistance: 30,
-      data: {
-        entityType: "tree",
-        treeType: type,
-        cooldownUntil: 0,
-      },
-    });
-    refillTree(tree);
+// for (const type in trees) {
+//   const list = trees[type as keyof typeof trees];
 
-    virtualTreeById.set(tree.id, tree);
-  }
-}
+//   for (const { Position } of list) {
+//     if (
+//       IGNORED_TREES.some(
+//         (tree) =>
+//           tree.pos.x === Position.X &&
+//           tree.pos.y === Position.Y &&
+//           tree.pos.z === Position.Z &&
+//           tree.type === type
+//       )
+//     ) {
+//       continue;
+//     }
+//     const position = {
+//       x: Position.X,
+//       y: Position.Y,
+//       z: Position.Z + 1.8,
+//     };
+
+//     const tree = alt.VirtualEntity.create({
+//       group: virtualTreeGroup,
+//       pos: new alt.Vector3(position),
+//       streamingDistance: 30,
+//       data: {
+//         entityType: "tree",
+//         treeType: type,
+//         cooldownUntil: 0,
+//       },
+//     });
+//     refillTree(tree);
+
+//     virtualTreeById.set(tree.id, tree);
+//   }
+// }
+
+console.log("Trees grown.");
 
 rpc.registerClient(ServerCall.FromClient.BEGIN_TREE_HIT, (player, virtualTreeId) => {
   needsToBeInGame(player);
@@ -101,12 +107,12 @@ rpc.registerClient(ServerCall.FromClient.TREE_HIT, (player, virtualTreeId) => {
   const cooldownUntil = virtualTree.streamSyncedMeta.cooldownUntil;
 
   if (cooldownUntil && cooldownUntil > Date.now()) {
-    alt.logDebug("On cooldown", treeType, virtualTree.id);
+    alt.log("On cooldown", treeType, virtualTree.id);
     return 0;
   }
 
   if (!canPlayerHitTheTree(player, virtualTree)) {
-    alt.logDebug("Can't hit tree", treeType, virtualTree.id);
+    alt.log("Can't hit tree", treeType, virtualTree.id);
     return 0;
   }
   const capacity = virtualTree.meta.capacity;

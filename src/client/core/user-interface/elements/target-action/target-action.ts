@@ -1,5 +1,5 @@
-import alt, { Enums } from "@altv/client";
-import game from "@altv/natives";
+import * as alt from "@altv/client";
+import * as game from "@altv/natives";
 import { reactive, ref, watchEffect } from "vue";
 import { TargetAction } from "@shared/store/client.store";
 import { UIElement } from "@shared/enums/ui";
@@ -40,7 +40,7 @@ watchEffect(() => {
 });
 
 alt.Events.onKeyDown(({ key }) => {
-  if (key === Enums.KeyCode.E) {
+  if (key === alt.Enums.KeyCode.E) {
     if (!currentAction) {
       return;
     }
@@ -99,7 +99,7 @@ function searchForAction() {
                   text: "Open trunk",
                   screenPos: { x: x * getScreenResolution().x, y: y * getScreenResolution().y },
                 },
-                onAction() { },
+                onAction() {},
               };
               return;
             }

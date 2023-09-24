@@ -1,5 +1,5 @@
 import * as alt from "@altv/client";
-import game from "@altv/natives";
+import * as game from "@altv/natives";
 import { Appearance } from "@prisma/client";
 import { ClothingComponent } from "@shared/interfaces/clothing";
 import { Pants, Shoes, Top, getItemInfoByKey } from "@shared/modules/items";
@@ -95,7 +95,7 @@ export const PedAppearance = {
         continue;
       }
 
-      alt.setPedDlcClothes(ped, 0, i, defaults[0], defaults[1]);
+      alt.setDlcClothes(ped, 0, i, defaults[0], defaults[1]);
     }
 
     if (!components || !Array.isArray(components)) {

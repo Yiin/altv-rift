@@ -1,6 +1,6 @@
 import * as alt from "@altv/client";
 import { ClientEvents } from "@shared/events/client";
-import { ServerEventsFromClient } from "@shared/events/server/from-client";
+import { ServerEvents } from "@shared/events/server";
 import { StringBuffer } from "@shared/utility/buffer";
 
 alt.Events.onServer(ClientEvents.FromServer.SCREENSHOT_CREATE, async () => {
@@ -9,7 +9,7 @@ alt.Events.onServer(ClientEvents.FromServer.SCREENSHOT_CREATE, async () => {
   const totalLength = data.length;
 
   for (let i = 0; i < totalLength; i++) {
-    alt.Events.emitServer(ServerEventsFromClient.SCREENSHOT_POPULATE_DATA, {
+    alt.Events.emitServer(ServerEvents.FromClient.SCREENSHOT_POPULATE_DATA, {
       data: data[i],
       i,
       totalLength,

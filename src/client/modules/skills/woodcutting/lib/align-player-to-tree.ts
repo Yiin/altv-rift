@@ -1,5 +1,5 @@
-import game from "@altv/natives";
 import * as alt from "@altv/client";
+import * as game from "@altv/natives";
 import { everyTickWhile } from "@/core/utility/event-helpers";
 
 let diff: number, angle: number, currentHeading: number;

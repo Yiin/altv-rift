@@ -1,4 +1,4 @@
-import alt from "@altv/server";
+import * as alt from "@altv/server";
 import { type Appearance } from "@prisma/client";
 import { ClientEvents } from "@shared/events/client";
 import { getTorsoForTop } from "@shared/modules/items/registry/clothing/get-correct-torso";
@@ -27,11 +27,11 @@ alt.Player.prototype.resetClothes = function (component?: number) {
         const torso = getTorsoForTop(this.model, top.drawable, top.texture);
 
         if (torso) {
-          this.setClothes(3, torso.drawableId, torso.textureId);
+          this.setClothes(3, torso.drawableId, torso.textureId, 2);
         } else {
           const defaults = getDefaultClothing(false, component);
           if (defaults) {
-            this.setClothes(component, defaults[0], defaults[1]);
+            this.setClothes(component, defaults[0], defaults[1], 2);
           }
         }
         break;
@@ -39,7 +39,7 @@ alt.Player.prototype.resetClothes = function (component?: number) {
       default: {
         const defaults = getDefaultClothing(false, component);
         if (defaults) {
-          this.setClothes(component, defaults[0], defaults[1]);
+          this.setClothes(component, defaults[0], defaults[1], 2);
 
           if (component === 11) {
             this.resetClothes(3);
@@ -57,12 +57,12 @@ alt.Player.prototype.resetClothes = function (component?: number) {
           const torso = getTorsoForTop(this.model, top.drawable, top.texture);
 
           if (torso) {
-            this.setClothes(3, torso.drawableId, torso.textureId);
+            this.setClothes(3, torso.drawableId, torso.textureId, 2);
           }
         } catch {
           const defaults = getDefaultClothing(true, component);
           if (defaults) {
-            this.setClothes(component, defaults[0], defaults[1]);
+            this.setClothes(component, defaults[0], defaults[1], 2);
           }
         }
         break;
@@ -70,7 +70,7 @@ alt.Player.prototype.resetClothes = function (component?: number) {
       default:
         const defaults = getDefaultClothing(true, component);
         if (defaults) {
-          this.setClothes(component, defaults[0], defaults[1]);
+          this.setClothes(component, defaults[0], defaults[1], 2);
 
           if (component === 11) {
             this.resetClothes(3);

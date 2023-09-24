@@ -1,8 +1,8 @@
-import alt from "alt-client";
-import game from "natives";
+import * as alt from "@altv/client";
+import * as game from "@altv/natives";
 import { ClientEvents } from "@shared/events/client";
 
-alt.onServer(ClientEvents.FromServer.CALL_NATIVE, (native, ...args) => {
+alt.Events.onServer(ClientEvents.FromServer.CALL_NATIVE, (native, ...args) => {
   const nativeArgs = args.map((arg) => {
     if (arg instanceof alt.Entity) {
       return arg.scriptID;

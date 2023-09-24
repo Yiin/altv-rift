@@ -1,5 +1,5 @@
-import alt, { Enums } from "@altv/client";
-import game, { getVehicleSize } from "@altv/natives";
+import * as alt from "@altv/client";
+import * as game from "@altv/natives";
 import { markRaw, ref, toRaw } from "vue";
 import { ServerCall } from "@shared/calls/server";
 import { VehicleBones } from "@/core/constants/vehicle-bones";
@@ -28,7 +28,7 @@ function getVehiclePartPosition(vehicle: alt.Vehicle, part: (typeof PARTS)[numbe
 
   switch (part) {
     case VehicleBones.BONNET: {
-      const [, , front] = getVehicleSize(vehicle);
+      const [, , front] = game.getVehicleSize(vehicle);
       const { z } = game.getWorldPositionOfEntityBone(
         vehicle,
         game.getEntityBoneIndexByName(vehicle, VehicleBones.BONNET)
@@ -37,7 +37,7 @@ function getVehiclePartPosition(vehicle: alt.Vehicle, part: (typeof PARTS)[numbe
       return new alt.Vector3(x, y, z);
     }
     case VehicleBones.BOOT: {
-      const [, back] = getVehicleSize(vehicle);
+      const [, back] = game.getVehicleSize(vehicle);
       const { z } = game.getWorldPositionOfEntityBone(
         vehicle,
         game.getEntityBoneIndexByName(vehicle, VehicleBones.BOOT)
@@ -131,7 +131,7 @@ alt.Timers.everyTick(() => {
 alt.Events.onKeyDown(({ key }) => {
   const { part, vehicle: closestVehicle } = prevClosest.value;
 
-  if (key === Enums.KeyCode.E && part && closestVehicle) {
+  if (key === alt.Enums.KeyCode.E && part && closestVehicle) {
     const door = (
       {
         [VehicleBones.BONNET]: 4,
@@ -143,7 +143,7 @@ alt.Events.onKeyDown(({ key }) => {
       } as const
     )[part];
 
-    rpc.callServer(ServerCall.FromClient.TOGGLE_VEHICLE_DOOR, closestVehicle.remoteId, door);
+    rpc.callServer(ServerCall.FromClient.TOGGLE_VEHICLE_DOOR, closestVehicle.remoteID, door);
   }
 });
 
@@ -159,7 +159,7 @@ registerElement({
   render({ entity: vehicle }) {
     const { part, vehicle: closestVehicle } = prevClosest.value;
 
-    if (closestVehicle?.remoteId !== vehicle.remoteId) {
+    if (closestVehicle?.remoteID !== vehicle.remoteID) {
       return null;
     }
 

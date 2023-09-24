@@ -1,15 +1,15 @@
 // Setup
-import "./sentry";
+// import "./sentry";
 import "./setup-globals";
 import "./database";
 
 // prototypes
 import "./prototypes/player";
 
-// events
+// // events
 import "./events";
 
-// modules
+// // modules
 import "./modules/chat";
 import "./modules/discord-auth";
 import "./modules/character";

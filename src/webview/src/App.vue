@@ -5,6 +5,12 @@ import { useEventListener } from "./composables/use-event-listener";
 import { useSceneManager } from "./composables/use-scene-manager";
 import { useSyncedStores } from "./composables/use-synced-stores";
 
+window.addEventListener("error", (e) => {
+  if (e instanceof ErrorEvent) {
+    console.error(e.message, e.filename, e.lineno, e.colno);
+  }
+});
+
 useSceneManager();
 useSyncedStores();
 
@@ -12,7 +18,7 @@ useEventListener(
   "focus",
   (e) => {
     if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
-      alt.Events.emit(ClientEvents.FromWebview.INPUT_FOCUS, true);
+      alt.emit(ClientEvents.FromWebview.INPUT_FOCUS, true);
     }
   },
   true
@@ -22,14 +28,14 @@ useEventListener(
   "blur",
   (e) => {
     if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
-      alt.Events.emit(ClientEvents.FromWebview.INPUT_FOCUS, false);
+      alt.emit(ClientEvents.FromWebview.INPUT_FOCUS, false);
     }
   },
   true
 );
 
 onMounted(() => {
-  alt.Events.emit(ClientEvents.FromWebview.VIEW_READY);
+  alt.emit(ClientEvents.FromWebview.VIEW_READY);
 });
 </script>
 

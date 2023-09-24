@@ -959,14 +959,16 @@ export const glasses: Record<GlassesItemKey, GlassesItemInfo> = GLASSES_ITEMS as
 >;
 
 /**
- * Register all melee weapons.
+ * Register all glasses.
  */
-for (const [key, info] of Object.entries(glasses)) {
-  registerItem(key as GlassesItemKey, info);
+// console.log("Registering glasses...");
+for (const key in glasses) {
+  registerItem(key as GlassesItemKey, glasses[key as GlassesItemKey]);
 }
+// console.log(`Registered ${Object.keys(glasses).length} glasses.`);
 
 /**
- * Type guards for melee weapons
+ * Type guards for glasses
  */
 export function isItemKeyGlasses(key: string): key is GlassesItemKey {
   return key in glasses;

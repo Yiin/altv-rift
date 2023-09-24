@@ -2212,14 +2212,16 @@ export const gloves: Record<GlovesItemKey, GlovesItemInfo> = GLOVES_ITEMS as Rec
 >;
 
 /**
- * Register all melee weapons.
+ * Register all gloves.
  */
-for (const [key, info] of Object.entries(gloves)) {
-  registerItem(key as GlovesItemKey, info);
+// console.log("Registering gloves...");
+for (const key in gloves) {
+  registerItem(key as GlovesItemKey, gloves[key as GlovesItemKey]);
 }
+// console.log(`Registered ${Object.keys(gloves).length} gloves.`);
 
 /**
- * Type guards for melee weapons
+ * Type guards for gloves
  */
 export function isItemKeyGloves(key: string): key is GlovesItemKey {
   return key in gloves;

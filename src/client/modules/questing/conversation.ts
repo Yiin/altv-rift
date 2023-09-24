@@ -1,5 +1,5 @@
 import * as alt from "@altv/client";
-import game from "@altv/natives";
+import * as game from "@altv/natives";
 import { ConversationOption } from "@shared/interfaces/conversation";
 import { ServerEvents } from "@shared/events/server";
 import { Control, ControlType } from "@/core/constants/controls";
@@ -41,7 +41,7 @@ export async function startConversation(
 ) {
   currentPage = 0;
 
-  alt.emitServer(ServerEvents.FromClient.CONVERSATION_STARTED, ped.remoteID);
+  alt.Events.emitServer(ServerEvents.FromClient.CONVERSATION_STARTED, ped.remoteID);
   // game.taskTurnPedToFaceEntity(ped.scriptID, alt.Player.local.scriptID, 2000);
 
   clientState.conversation = {

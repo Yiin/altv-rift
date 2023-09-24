@@ -19,7 +19,8 @@ WATER_ZONES.push({
 
 const waterZones = WATER_ZONES.map((zone) => {
   const colshape = alt.ColShapeCircle.create({
-    pos: { x: zone.x, y: zone.y },
+    // @ts-expect-error remove z when api is fixed
+    pos: { x: zone.x, y: zone.y, z: 0 },
     radius: zone.radius,
   });
 
@@ -37,6 +38,7 @@ export function getWaterZones() {
 
 alt.Events.onEntityColShapeEnter(({ colShape, entity }) => {
   if (entity instanceof alt.Player && isInGame(entity) && colShape.meta.isWaterZone) {
+    alt.log(`Player entered water zone.`);
     entity.gameState.flags.add(PlayerFlags.InFishingArea);
   }
 });
@@ -46,6 +48,7 @@ alt.Events.onEntityColShapeLeave(({ colShape, entity }) => {
     if (waterZones.some((zone) => zone.isEntityIn(entity))) {
       return;
     }
+    alt.log(`Player left water zone.`);
     entity.gameState.flags.delete(PlayerFlags.InFishingArea);
   }
 });

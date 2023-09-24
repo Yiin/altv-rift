@@ -1,4 +1,6 @@
 {
-  "loadBytecodeModule": true,
+  "loadJSModule": true,
+  "loadJSV2Module": false,
+  "loadBytecodeModule": false,
   "loadCSharpModule": false
 }

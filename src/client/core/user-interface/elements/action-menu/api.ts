@@ -1,4 +1,4 @@
-import game from "natives";
+import * as game from "@altv/natives";
 import { UIElement } from "@shared/enums/ui";
 import { ClientEvents } from "@shared/events/client";
 import { toggleElement, getWebview } from "../../webview";

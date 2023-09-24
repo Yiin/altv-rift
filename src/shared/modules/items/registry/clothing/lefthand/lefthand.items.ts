@@ -341,14 +341,16 @@ export const lefthand: Record<LeftHandItemKey, LeftHandItemInfo> = LEFTHAND_ITEM
 >;
 
 /**
- * Register all melee weapons.
+ * Register all left hand items.
  */
-for (const [key, info] of Object.entries(lefthand)) {
-  registerItem(key as LeftHandItemKey, info);
+// console.log("Registering left hand items...");
+for (const key in lefthand) {
+  registerItem(key as LeftHandItemKey, lefthand[key as LeftHandItemKey]);
 }
+// console.log(`Registered ${Object.keys(lefthand).length} left hand items.`);
 
 /**
- * Type guards for melee weapons
+ * Type guards for left hand items
  */
 export function isItemKeyLeftHand(key: string): key is LeftHandItemKey {
   return key in lefthand;

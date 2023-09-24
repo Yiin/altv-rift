@@ -1,5 +1,5 @@
 import * as alt from "@altv/client";
-import game from "@altv/natives";
+import * as game from "@altv/natives";
 import { ClientEvents } from "@shared/events/client";
 import { Spinner } from "@shared/modules/game/ui/spinner/spinner";
 

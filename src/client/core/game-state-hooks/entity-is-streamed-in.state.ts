@@ -1,4 +1,4 @@
-import alt from "alt-client";
+import * as alt from "@altv/client";
 
 export function whileEntityIsStreamedIn<T extends alt.Entity>(
   check: (entity: alt.Entity) => entity is T,
@@ -6,30 +6,29 @@ export function whileEntityIsStreamedIn<T extends alt.Entity>(
 ) {
   let cleanup: void | (() => void);
 
-  const create = (entity: alt.Entity) => {
+  const create = ({ entity }: alt.Events.GameEntityCreateEventParameters) => {
     if (check(entity)) {
       cleanup = fn(entity);
     }
   };
-  alt.on("gameEntityCreate", create);
+  const createHandler = alt.Events.onGameEntityCreate(create);
 
   const existingEntity = alt.Entity.all.find(check);
 
   if (existingEntity) {
-    create(existingEntity);
+    create({ entity: existingEntity });
   }
 
-  const destroy = (entity: alt.Entity) => {
+  const destroy = ({ entity }: alt.Events.GameEntityDestroyEventParameters) => {
     if (check(entity)) {
       cleanup?.();
-      alt.off("gameEntityDestroy", destroy);
     }
   };
-  alt.on("gameEntityDestroy", destroy);
+  const destroyHandler = alt.Events.onGameEntityDestroy(destroy);
 
   return () => {
     cleanup?.();
-    alt.off("gameEntityCreate", create);
-    alt.off("gameEntityDestroy", destroy);
+    createHandler.destroy();
+    destroyHandler.destroy();
   };
 }

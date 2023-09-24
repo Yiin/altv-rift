@@ -1,4 +1,4 @@
-import alt from "alt-shared";
+import * as alt from "@altv/shared";
 import TORSO_MALE from "./torso_male.json";
 import TORSO_FEMALE from "./torso_female.json";
 

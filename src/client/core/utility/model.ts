@@ -1,5 +1,5 @@
 import * as alt from "@altv/client";
-import game from "@altv/natives";
+import * as game from "@altv/natives";
 
 export async function loadModel(hash: number): Promise<boolean> {
   return await new Promise((resolve: Function) => {

@@ -1,8 +1,7 @@
-import { Enums } from "@altv/client";
 import * as alt from "@altv/client";
-import game from "@altv/natives";
+import * as game from "@altv/natives";
 import { computed, watchEffect } from "vue";
-import { ServerEventsFromClient } from "@shared/events/server/from-client";
+import { ServerEvents } from "@shared/events/server";
 import { ServerCall } from "@shared/calls/server";
 import { getItemInfoByKey, getWeaponHash } from "@shared/modules/items";
 import { isItemFirearmWeapon } from "@shared/modules/items/registry/weapons/firearm-weapon.items";
@@ -50,17 +49,16 @@ whileInGame(() => {
 
   const stopWatchingAmmo = watchEffect(updateAmmo);
 
-  // @-ts-expect-error FIX THE EVENTS API AHHHH
-  alt.Events.onPlayerWeaponChange(onPlayerWeaponChange);
-  alt.Events.onKeyDown(handleManualReload);
-  alt.Events.onPlayerWeaponShoot(onPlayerWeaponShoot);
+  const playerWeaponChangeListener = alt.Events.onPlayerWeaponChange(onPlayerWeaponChange);
+  const keyDownListener = alt.Events.onKeyDown(handleManualReload);
+  const playerWeaponShootListener = alt.Events.onPlayerWeaponShoot(onPlayerWeaponShoot);
 
   /**
    * Notify the server that the player has shot their weapon,
    * so we can update the current ammo in the clip.
    */
   function onPlayerWeaponShoot() {
-    alt.Events.emitServer(ServerEventsFromClient.WEAPON_SHOOT);
+    alt.Events.emitServer(ServerEvents.FromClient.WEAPON_SHOOT);
   }
 
   /**
@@ -69,7 +67,7 @@ whileInGame(() => {
   function onPlayerWeaponChange() {
     alt.Utils.waitFor(
       () =>
-        !game.isPedSwitchingWeapon(player) && game.getAmmoInClip(player, player.currentWeapon)[0] // [hasClip, ammoInClip]
+        !game.isPedSwitchingWeapon(player) && game.getAmmoInClip(player, player.currentWeapon, 0)[0] // [hasClip, ammoInClip]
     ).finally(updateAmmo);
   }
 
@@ -77,7 +75,7 @@ whileInGame(() => {
    * Reloads the weapon when the player presses the reload key.
    */
   function handleManualReload({ key }: alt.Events.KeyUpDownEventParameters) {
-    if (key === Enums.KeyCode.R) {
+    if (key === alt.Enums.KeyCode.R) {
       reloadWeapon();
     }
   }
@@ -96,10 +94,17 @@ whileInGame(() => {
 
     const hash = getWeaponHash(weapon.key);
 
-    const [, gameClip] = game.getAmmoInClip(player, hash);
+    try {
+      alt.log(`game.getAmmoInClip(${player.scriptID}, ${hash})`);
+      const [, gameClip] = game.getAmmoInClip(player, hash);
 
-    if ((gameClip <= 3 && clip > 0) || gameClip > clip) {
-      game.setAmmoInClip(player, hash, clip);
+      alt.log(`Game clip: ${gameClip}, clip: ${clip}`);
+
+      if ((gameClip <= 3 && clip > 0) || gameClip > clip) {
+        game.setAmmoInClip(player, hash, clip);
+      }
+    } catch (e) {
+      alt.log(`Failed to update ammo in clip for weapon ${weapon.key}`);
     }
   }
 
@@ -137,6 +142,9 @@ whileInGame(() => {
   }
 
   return () => {
+    playerWeaponChangeListener.destroy();
+    keyDownListener.destroy();
+    playerWeaponShootListener.destroy();
     stopWatchingAmmo();
     weaponCanReload.effect.stop();
     currentFirearm.effect.stop();

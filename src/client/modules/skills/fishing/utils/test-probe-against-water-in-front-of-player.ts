@@ -1,5 +1,5 @@
-import game from "@altv/natives";
 import * as alt from "@altv/client";
+import * as game from "@altv/natives";
 
 const top = [0, 1];
 const bottom = [0, -1];

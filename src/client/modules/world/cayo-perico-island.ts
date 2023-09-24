@@ -1,5 +1,5 @@
 import * as alt from "@altv/client";
-import game from "@altv/natives";
+import * as game from "@altv/natives";
 
 const islandIpls = [
   "h4_islandairstrip",
@@ -156,7 +156,6 @@ function unloadIsland() {
     game.removeIpl(ipl);
   }
 }
-
 
 alt.Events.onEntityColShapeEnter(({ colShape, entity }) => {
   if (colShape !== islandArea) {

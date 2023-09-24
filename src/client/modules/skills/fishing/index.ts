@@ -2,10 +2,10 @@ import { PlayerFlags } from "@shared/store/game-state.store";
 import { ActionType, ClientFlags } from "@shared/store/client.store";
 import { gameState } from "@/core/store/game-state.store";
 import { clientState } from "@/core/store/client.store";
-import { startFishingTask, stopFishingTask } from "./utils/fishing-task";
-import { trackCanFishFlag } from "./utils/track-can-fish-flag";
 import { whileInGame } from "@/core/game-state-hooks/in-game.state";
 import { registerActions } from "@/core/user-interface/elements";
+import { startFishingTask, stopFishingTask } from "./utils/fishing-task";
+import { trackCanFishFlag } from "./utils/track-can-fish-flag";
 
 whileInGame(() => {
   trackCanFishFlag();

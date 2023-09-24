@@ -73,9 +73,11 @@ alt.Player.prototype.setupCharacterStore = async function (character: Character)
 
   const unsubscribeGameStateStore = subscribeToStore(this.gameState, {
     onSetState: (state) => {
+      alt.log("Setting game state", state);
       this.emit(ClientEvents.FromServer.SET_GAME_STATE, state);
     },
     onUpdateState: (payload) => {
+      alt.log("Updating game state", payload);
       this.emit(ClientEvents.FromServer.UPDATE_GAME_STATE, payload);
     },
   });

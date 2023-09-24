@@ -942,14 +942,16 @@ export const accessories: Record<AccessoryItemKey, AccessoryItemInfo> = ACCESSOR
 >;
 
 /**
- * Register all melee weapons.
+ * Register all accessories.
  */
-for (const [key, info] of Object.entries(accessories)) {
-  registerItem(key as AccessoryItemKey, info);
+// console.log("Registering accessories...");
+for (const key in accessories) {
+  registerItem(key as AccessoryItemKey, accessories[key as AccessoryItemKey]);
 }
+// console.log(`Registered ${Object.keys(accessories).length} accessories.`);
 
 /**
- * Type guards for melee weapons
+ * Type guards for accessories
  */
 export function isItemKeyAccessory(key: string): key is AccessoryItemKey {
   return key in accessories;

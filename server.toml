@@ -1,6 +1,6 @@
 name = "yolo"
 
-modules = ["js-module"]
+modules = ['js-module-v2', 'js-module']
 
 resources = ["main", "qa-tools"]
 
@@ -11,6 +11,12 @@ host = '192.168.68.104'
 port = 8888
 
 [js-module]
+extra-cli-args = [
+  # resource restart in js module needs more memory
+  "--max-old-space-size=8192",
+]
+
+[js-module-v2]
 extra-cli-args = [
   # resource restart in js module needs more memory
   "--max-old-space-size=8192",

@@ -345,7 +345,7 @@ export const useInventory = defineStore("inventory", {
           this.currentInteraction.state.startPosition.x !== e.clientX ||
           this.currentInteraction.state.startPosition.y !== e.clientY
         ) {
-          alt.Events.emit(
+          alt.emit(
             ClientEvents.FromWebview.PLAY_SOUND,
             "SELECT",
             "HUD_FRONTEND_DEFAULT_SOUNDSET"

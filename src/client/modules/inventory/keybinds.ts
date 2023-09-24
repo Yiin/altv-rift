@@ -1,5 +1,5 @@
 import * as alt from "@altv/client";
-import game from "@altv/natives";
+import * as game from "@altv/natives";
 import { watch } from "vue";
 import { ClientEvents } from "@shared/events/client";
 import { everyTickWhile, onKeyDown } from "@/core/utility/event-helpers";
@@ -71,7 +71,7 @@ getWebview((webView) => {
       game.activateFrontendMenu(game.getHashKey("FE_MENU_VERSION_EMPTY_NO_BACKGROUND"), false, -1);
       hideGameCursor();
       while (!equipmentPed) {
-        equipmentPed = game.clonePedAlt(alt.Player.local.scriptID, false, false, true, true);
+        equipmentPed = game.clonePed(alt.Player.local.scriptID, false, false, true);
         await alt.Utils.wait(10);
       }
       game.setEntityAlpha(equipmentPed, 0, false);

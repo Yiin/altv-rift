@@ -1,4 +1,5 @@
 import * as alt from "@altv/server";
+import { isReactive } from "vue";
 import { ServerEvents } from "@shared/events/server";
 import { Equipment } from "@shared/modules/items";
 import { InGamePlayer, isInGame } from "@/utility/assertions";
@@ -18,7 +19,17 @@ alt.Player.prototype.applyEquipment = function () {
       continue;
     }
 
-    alt.Events.emit(ServerEvents.FromServer.EQUIP_ITEM, this, item);
+    try {
+      alt.Events.emit("test", item);
+    } catch (err) {
+      alt.logError(`Failed to emit event: ${err}`);
+      alt.log(item);
+      // @ts-expect-error
+      alt.log(item["__v_isReactive"]);
+      alt.log(Object.getOwnPropertyDescriptor(item, "__v_isReactive"));
+      alt.log(isReactive(item) ? "reactive" : "raw");
+    }
+    // alt.Events.emit(ServerEvents.FromServer.EQUIP_ITEM, this, item);
   }
 };
 

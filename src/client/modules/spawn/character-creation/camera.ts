@@ -1,5 +1,5 @@
 import * as alt from "@altv/client";
-import game from "@altv/natives";
+import * as game from "@altv/natives";
 import { Bones } from "@shared/enums/bones";
 import { ClientEvents } from "@shared/events/client";
 import { loadSceneAtCoords } from "@/core/utility/scene";

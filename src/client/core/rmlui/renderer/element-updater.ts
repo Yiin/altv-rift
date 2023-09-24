@@ -1,5 +1,5 @@
 import * as alt from "@altv/client";
-import game from "@altv/natives";
+import * as game from "@altv/natives";
 import { computed } from "vue";
 import { focusableElements, registeredElements } from "./element-registry";
 import { notRenderedElements, visibleElementsHeap } from "./frame-state";

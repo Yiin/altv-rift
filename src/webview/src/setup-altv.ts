@@ -1,12 +1,15 @@
 import { deserialize } from "alpha-serializer";
 
+// @ts-ignore
+globalThis.deserialize = deserialize;
+
 if (!("alt" in globalThis)) {
   globalThis.alt = {
     emit() {},
     off() {},
     on() {},
     once() {},
-    getEventListeners: () => [],
+    listeners: {},
     getVersion: () => "0.0.0",
     getBranch: () => "dev",
     getLocale: () => "en",
@@ -25,7 +28,12 @@ if (!("alt" in globalThis)) {
 
   globalThis.alt.on = function (eventName: string, listener: (...args: any[]) => void) {
     function handler(...args: any[]) {
-      listener(...args.map((arg) => deserialize(arg)));
+      try {
+        listener(...args.map((arg) => deserialize(arg)));
+      } catch (e) {
+        console.error('alt.on', typeof eventName, eventName);
+        console.log('alt.on', JSON.stringify(args));
+      }
     }
     handlers.push({
       eventName,
@@ -44,7 +52,12 @@ if (!("alt" in globalThis)) {
         ),
         1
       );
-      listener(...args.map((arg) => deserialize(arg)));
+      try {
+        listener(...args.map((arg) => deserialize(arg)));
+      } catch (e) {
+        console.log('alt.once', args);
+        console.error('alt.once', eventName, e);
+      }
     }
     handlers.push({
       eventName,

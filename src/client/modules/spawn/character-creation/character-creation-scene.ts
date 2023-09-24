@@ -1,5 +1,5 @@
 import * as alt from "@altv/client";
-import game from "@altv/natives";
+import * as game from "@altv/natives";
 import { ClientEvents } from "@shared/events/client";
 import { Scene } from "@shared/enums/ui";
 import { CharacterPed } from "@/core/utility/character-ped";
@@ -7,12 +7,15 @@ import { getWebview, setScene } from "@/core/user-interface/webview";
 import { setupCharacterCreationScene } from "./setup-scene";
 import { cleanupCharacterCreationScene } from "./cleanup-scene";
 
+alt.log(0, typeof game.disableScreenblurFade);
+
 alt.Events.onServer(ClientEvents.FromServer.START_CHARACTER_CREATION_SCENE, async () => {
   await setupCharacterCreationScene();
 
   setScene(Scene.CREATE_CHARACTER, { hasCursor: true });
 
   game.doScreenFadeIn(1000);
+  alt.log(1, typeof game.disableScreenblurFade);
   game.disableScreenblurFade();
 
   getWebview().on(ClientEvents.FromWebview.UPDATE_CHARACTER_APPEARANCE, CharacterPed.apply);
@@ -29,6 +32,7 @@ function exitCharacterCreation() {
 }
 
 function startGame() {
+  alt.log(2, typeof game.disableScreenblurFade);
   game.disableScreenblurFade();
   game.doScreenFadeIn(1000);
   game.freezeEntityPosition(alt.Player.local, false);

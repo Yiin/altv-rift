@@ -1,5 +1,5 @@
 import * as alt from "@altv/client";
-import game from "@altv/natives";
+import * as game from "@altv/natives";
 import { watchEffect } from "vue";
 import { ClientFlags } from "@shared/store/client.store";
 import { PlayerFlags } from "@shared/store/game-state.store";

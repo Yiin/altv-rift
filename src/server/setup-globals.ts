@@ -11,6 +11,30 @@ process.chdir = () => {};
 
 alt.Events.rawEmitEnabled = true;
 
+// let timeoutId = 0;
+// const timeouts = new Map<number, any>();
+
+// // @ts-ignore
+// global.setTimeout = (callback, ms, ...args) => {
+//   timeoutId++;
+
+//   const timeout = alt.Timers.setTimeout(() => {
+//     timeouts.delete(timeoutId);
+//     callback(...args);
+//   }, ms);
+//   timeouts.set(timeoutId, timeout);
+
+//   return timeoutId;
+// };
+
+// global.clearTimeout = (id) => {
+//   const timeout = timeouts.get(id as number);
+//   if (timeout) {
+//     timeout.destroy();
+//     timeouts.delete(id as number);
+//   }
+// };
+
 // alt.Events.onEvent = function (eventName, listener) {
 //   alt.Events.on(eventName, ({ args }) => {
 //     // @ts-expect-error

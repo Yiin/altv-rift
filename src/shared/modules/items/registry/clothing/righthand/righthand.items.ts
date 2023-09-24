@@ -1,6 +1,7 @@
 import { Item, registerItem } from "@shared/modules/items";
 import { makeItemKeys } from "@shared/modules/items/lib/make-item-keys";
 import RIGHTHAND_ITEMS from "./righthand.json";
+import { RightHandMap } from "./righthand-map";
 
 export const RightHand = makeItemKeys<RightHandItemKey>()({
   MaleAquaHippyBracelet: "DLC_MP_SUM23_M_PRIGHT_WRIST_0_0",
@@ -149,14 +150,16 @@ export const righthand: Record<RightHandItemKey, RightHandItemInfo> = RIGHTHAND_
 >;
 
 /**
- * Register all melee weapons.
+ * Register all right hand items.
  */
-for (const [key, info] of Object.entries(righthand)) {
-  registerItem(key as RightHandItemKey, info);
+// console.log("Registering right hand items...");
+for (const key in righthand) {
+  registerItem(key as RightHandItemKey, righthand[key as RightHandItemKey]);
 }
+// console.log(`Registered ${Object.keys(righthand).length} right hand items.`);
 
 /**
- * Type guards for melee weapons
+ * Type guards for right hand items
  */
 export function isItemKeyRightHand(key: string): key is RightHandItemKey {
   return key in righthand;

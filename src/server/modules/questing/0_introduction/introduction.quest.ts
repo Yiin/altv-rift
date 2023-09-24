@@ -2,11 +2,9 @@ import * as alt from "@altv/server";
 import { ServerEvents } from "@shared/events/server";
 import { Quests } from "@shared/modules/quests";
 import { Consumable, createItem } from "@shared/modules/items";
-import { ServerEventsFromClient } from "@shared/events/server/from-client";
 import { isInGame } from "@/utility/assertions";
-import { useItem } from "@/modules/items-manager";
 
-alt.Events.onPlayer(ServerEventsFromClient.NOTIFY, (player, questFact) => {
+alt.Events.onPlayer(ServerEvents.FromClient.NOTIFY, (player, questFact) => {
   if (!isInGame(player)) {
     return;
   }

@@ -1,5 +1,5 @@
-import alt, { Enums } from "@altv/client";
-import game from "@altv/natives";
+import * as alt from "@altv/client";
+import * as game from "@altv/natives";
 import { serialize } from "alpha-serializer";
 import { ClientEvents } from "@shared/events/client";
 import { Scene, UIElement } from "@shared/enums/ui";
@@ -12,8 +12,16 @@ export const doesElementHaveCursor = createHookableFunction({
   defaultReturn: false,
 });
 
+declare module "@altv/client" {
+  export interface WebView {
+    originalEmit: WebView["emit"];
+  }
+}
+
+alt.WebView.prototype.originalEmit = alt.WebView.prototype.emit;
 alt.WebView.prototype.emit = function (eventName: string, ...args: unknown[]) {
-  this.emit(eventName, ...args.map((arg) => serialize(arg)));
+  const serializedArgs = args.map((arg) => serialize(arg));
+  this.originalEmit(eventName, ...serializedArgs);
 };
 
 let url!: string;
@@ -118,7 +126,7 @@ export function clearCursor() {
 
 let clearedCursors = 0;
 
-onKeyDown(Enums.KeyCode.Z, () => {
+onKeyDown(alt.Enums.KeyCode.Z, () => {
   if (alt.Cursor.visible) {
     clearedCursors = clearCursor();
   } else {
@@ -154,6 +162,7 @@ alt.Events.onServer(
     });
   }
 );
+
 alt.Events.onDisconnect(() => {
   webview && webview.valid && webview.destroy();
 });

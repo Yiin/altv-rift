@@ -1,5 +1,5 @@
 import * as alt from "@altv/client";
-import game from "@altv/natives";
+import * as game from "@altv/natives";
 import { LOS_FLAGS } from "@/core/constants/shapetest";
 import Raycast from "./raycast";
 

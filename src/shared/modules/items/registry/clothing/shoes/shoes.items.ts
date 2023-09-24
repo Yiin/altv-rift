@@ -2158,14 +2158,16 @@ export const shoes: Record<ShoesItemKey, ShoesItemInfo> = SHOES_ITEMS as Record<
 >;
 
 /**
- * Register all melee weapons.
+ * Register all shoes.
  */
-for (const [key, info] of Object.entries(shoes)) {
-  registerItem(key as ShoesItemKey, info);
+// console.log("Registering shoes...");
+for (const key in shoes) {
+  registerItem(key as ShoesItemKey, shoes[key as ShoesItemKey]);
 }
+// console.log(`Registered ${Object.keys(shoes).length} shoes.`);
 
 /**
- * Type guards for melee weapons
+ * Type guards for shoes
  */
 export function isItemKeyShoes(key: string): key is ShoesItemKey {
   return key in shoes;

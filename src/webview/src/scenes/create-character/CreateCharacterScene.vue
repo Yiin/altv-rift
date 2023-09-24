@@ -29,11 +29,11 @@ const createCharacter = useCreateCharacter();
 const screenRef = ref<InstanceType<typeof Screen> | null>(null);
 
 watch(createCharacter, () => {
-  alt.Events.emit(ClientEvents.FromWebview.UPDATE_CHARACTER_APPEARANCE, createCharacter.appearance);
+  alt.emit(ClientEvents.FromWebview.UPDATE_CHARACTER_APPEARANCE, createCharacter.appearance);
 });
 
 onMounted(() => {
-  alt.Events.emit(ClientEvents.FromWebview.UPDATE_CHARACTER_APPEARANCE, createCharacter.appearance);
+  alt.emit(ClientEvents.FromWebview.UPDATE_CHARACTER_APPEARANCE, createCharacter.appearance);
 });
 
 useEventListener("pointerdown", (e) => {
@@ -41,12 +41,12 @@ useEventListener("pointerdown", (e) => {
     e.target instanceof HTMLElement &&
     (e.target.classList.contains("v-main") || "screen" in e.target.dataset)
   ) {
-    alt.Events.emit(ClientEvents.FromWebview.CAMERA_MOVE_START);
+    alt.emit(ClientEvents.FromWebview.CAMERA_MOVE_START);
   }
 });
 
 useEventListener("pointerup", (e) => {
-  alt.Events.emit(ClientEvents.FromWebview.CAMERA_MOVE_END);
+  alt.emit(ClientEvents.FromWebview.CAMERA_MOVE_END);
 });
 
 function randomize() {
@@ -92,8 +92,7 @@ function randomize() {
 <template>
   <Screen ref="screenRef">
     <NameAndSex
-      class="absolute top-screen-1/10 left-1/2 -translate-x-1/2 flex flex-col justify-center items-center gap-6"
-    />
+      class="absolute top-screen-1/10 left-1/2 -translate-x-1/2 flex flex-col justify-center items-center gap-6" />
     <div class="absolute top-screen-1/10 left-screen-1/10 w-96 flex flex-col gap-8">
       <FaceShape />
       <Features />

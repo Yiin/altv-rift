@@ -1,4 +1,4 @@
-import alt from "alt-server";
+import * as alt from "@altv/server";
 import { createHookableFunction } from "@shared/hooks";
 import { Inventory, InventoryItemSource, ItemSource } from "@shared/interfaces";
 import { Item } from "@shared/modules/items";
@@ -69,7 +69,7 @@ export const useItem = createHookableFunction<(player: InGamePlayer, item: Item)
     defaultReturn: false,
     onResult(result, [player, item]) {
       if (result !== false) {
-        alt.emit(ServerEvents.FromServer.USE_ITEM, player, item);
+        alt.Events.emit(ServerEvents.FromServer.USE_ITEM, player, item);
       }
     },
   }

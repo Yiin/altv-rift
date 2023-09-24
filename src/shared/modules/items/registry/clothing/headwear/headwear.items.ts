@@ -3182,14 +3182,16 @@ export const headwears: Record<HeadwearItemKey, HeadwearItemInfo> = HEADWEAR_ITE
 >;
 
 /**
- * Register all melee weapons.
+ * Register all headwears.
  */
-for (const [key, info] of Object.entries(headwears)) {
-  registerItem(key as HeadwearItemKey, info);
+// console.log("Registering headwears...");
+for (const key in headwears) {
+  registerItem(key as HeadwearItemKey, headwears[key as HeadwearItemKey]);
 }
+// console.log(`Registered ${Object.keys(headwears).length} headwears.`);
 
 /**
- * Type guards for melee weapons
+ * Type guards for headwears
  */
 export function isItemKeyHeadwear(key: string): key is HeadwearItemKey {
   return key in headwears;

@@ -1,13 +1,12 @@
-import alt from "alt-client";
-import game from "natives";
+import * as alt from "@altv/client";
+import * as game from "@altv/natives";
 import { computed, ComputedRef, watch } from "vue";
-import { BlipColor, BlipSprite } from "altv-enums";
 import { NpcInteraction } from "@shared/modules/npc/interactions";
 import { IconName } from "@/core/rmlui/components/icon/icon";
 import { clientState } from "@/core/store/client.store";
 import { getNpcInteractions } from "./lib/register-npc-interactions";
 
-declare module "alt-client" {
+declare module "@altv/client" {
   export interface Ped {
     interactions: ComputedRef<NpcInteraction<IconName>[]>;
     blip?: alt.Blip["scriptID"];
@@ -15,14 +14,14 @@ declare module "alt-client" {
   }
 }
 
-alt.on("gameEntityCreate", (entity) => {
+alt.Events.onGameEntityCreate(({ entity }) => {
   if (!(entity instanceof alt.Ped)) {
     return;
   }
 
   entity.cleanupFns = [];
 
-  const key = entity.getStreamSyncedMeta("key");
+  const key = entity.streamSyncedMeta.key;
 
   if (!key) {
     return;
@@ -58,7 +57,7 @@ alt.on("gameEntityCreate", (entity) => {
       // Create the blip if one doesn't exist yet
       if (!entity.blip) {
         entity.blip = game.addBlipForEntity(entity.scriptID);
-        game.setBlipSprite(entity.blip, BlipSprite.FindersKeepers);
+        game.setBlipSprite(entity.blip, alt.Enums.BlipSprite.FINDERS_KEEPERS);
       }
 
       // Set the blip color based on if we are tracking the quest task this npc is responsible for
@@ -67,10 +66,10 @@ alt.on("gameEntityCreate", (entity) => {
       );
       if (trackingSameQuest) {
         alt.log("Setting yellow orange");
-        game.setBlipColour(entity.blip, BlipColor.YellowOrange);
+        game.setBlipColour(entity.blip, alt.Enums.BlipColor.YELLOW_ORANGE);
       } else {
         alt.log("Setting white");
-        game.setBlipColour(entity.blip, BlipColor.White);
+        game.setBlipColour(entity.blip, alt.Enums.BlipColor.WHITE);
       }
     }
   });
@@ -82,7 +81,7 @@ alt.on("gameEntityCreate", (entity) => {
   });
 });
 
-alt.on("gameEntityDestroy", (entity) => {
+alt.Events.onGameEntityDestroy(({ entity }) => {
   if (!(entity instanceof alt.Ped)) {
     return;
   }

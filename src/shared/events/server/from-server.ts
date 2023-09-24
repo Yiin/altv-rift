@@ -15,6 +15,7 @@ export const FromServer = {
 declare module "@altv/server" {
   namespace Events {
     interface CustomServerEvent {
+      [FromServer.USER_LOADED]: (player: alt.Player) => Promise<void> | void;
       [FromServer.MANUAL_DISCORD_AUTH_DONE]: (
         player: alt.Player,
         token: string

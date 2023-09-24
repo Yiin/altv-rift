@@ -1,10 +1,9 @@
-import alt from "alt-client";
-import { KeyCode } from "altv-enums";
+import * as alt from "@altv/client";
 import { UIElement } from "@shared/enums/ui";
 import { doesElementHaveCursor, toggleElement } from "../../webview";
 
-alt.on("keydown", (key) => {
-  if (key === KeyCode.Q) {
+alt.Events.onKeyDown(({ key }) => {
+  if (key === alt.Enums.KeyCode.Q) {
     toggleElement(UIElement.QUEST_MENU);
   }
 });

@@ -42,14 +42,16 @@ export const armors: Record<ArmorItemKey, ArmorItemInfo> = ARMOR_ITEMS as Record
 >;
 
 /**
- * Register all melee weapons.
+ * Register all armors.
  */
-for (const [key, info] of Object.entries(armors)) {
-  registerItem(key as ArmorItemKey, info);
+// console.log("Registering armors...");
+for (const key in armors) {
+  registerItem(key as ArmorItemKey, armors[key as ArmorItemKey]);
 }
+// console.log(`Registered ${Object.keys(armors).length} armors.`);
 
 /**
- * Type guards for melee weapons
+ * Type guards for armors
  */
 export function isItemKeyArmor(key: string): key is ArmorItemKey {
   return key in armors;

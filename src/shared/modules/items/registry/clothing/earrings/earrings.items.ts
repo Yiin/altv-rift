@@ -213,14 +213,16 @@ export const earrings: Record<EarringsItemKey, EarringsItemInfo> = EARRINGS_ITEM
 >;
 
 /**
- * Register all melee weapons.
+ * Register all earrings.
  */
-for (const [key, info] of Object.entries(earrings)) {
-  registerItem(key as EarringsItemKey, info);
+// console.log("Registering earrings...");
+for (const key in earrings) {
+  registerItem(key as EarringsItemKey, earrings[key as EarringsItemKey]);
 }
+// console.log(`Registered ${Object.keys(earrings).length} earrings.`);
 
 /**
- * Type guards for melee weapons
+ * Type guards for earrings
  */
 export function isItemKeyEarrings(key: string): key is EarringsItemKey {
   return key in earrings;

@@ -1,7 +1,6 @@
 import * as alt from "@altv/client";
-import game from "@altv/natives";
-import { ServerEventsFromClient } from "@shared/events/server/from-client";
-import { everyTick } from "@/core/utility/event-helpers";
+import * as game from "@altv/natives";
+import { ServerEvents } from "@shared/events/server";
 import { waitForUserInterface } from "@/core/user-interface/webview";
 
 alt.Events.onConnectionComplete(handleConnectionComplete);
@@ -14,21 +13,27 @@ async function handleConnectionComplete() {
   game.doScreenFadeOut(0);
   game.triggerScreenblurFadeIn(0);
 
-  alt.ConfigFlag.set(alt.Enums.ConfigFlag.DisableIdleCamera, true);
-  alt.ConfigFlag.set(alt.Enums.ConfigFlag.DisablePedPropKnockOff, true);
-  alt.ConfigFlag.set(alt.Enums.ConfigFlag.DisableAutoWeaponSwap, true);
+  alt.ConfigFlag.set(alt.Enums.ConfigFlag.DISABLE_IDLE_CAMERA, true);
+  alt.ConfigFlag.set(alt.Enums.ConfigFlag.DISABLE_PED_PROP_KNOCK_OFF, true);
+  alt.ConfigFlag.set(alt.Enums.ConfigFlag.DISABLE_AUTO_WEAPON_SWAP, true);
+
+  alt.log("Loading User Interface...");
 
   await waitForUserInterface();
 
+  alt.log("Loading World...");
+
   alt.Streaming.loadDefaultIpls();
 
-  alt.log("Connection Complete");
-  // Calls the login functionality
-  alt.Events.emitServer(ServerEventsFromClient.BEGIN_CONNECTION);
-  handleTick();
+  setupGameSettings();
+
+  alt.log("Connection complete, notifying server...");
+  alt.Events.emitServer(ServerEvents.FromClient.BEGIN_CONNECTION);
 }
 
-function handleTick() {
+function setupGameSettings() {
+  alt.log("Setting up game settings...");
+
   game.startAudioScene(`CHARACTER_CHANGE_IN_SKY_SCENE`);
   game.startAudioScene("FBI_HEIST_H5_MUTE_AMBIENCE_SCENE"); // Used to stop police sound in town
   game.cancelAllPoliceReports(); // Used to stop default police radio around/In police vehicle
@@ -42,11 +47,11 @@ function handleTick() {
   // game.setPedCanSwitchWeapon(alt.Player.local, false);
 }
 
-everyTick(() => {
-  game.hideHudComponentThisFrame(6); // Vehicle Name
-  if (alt.Player.local.vehicle) {
-    game.hideHudComponentThisFrame(7); // Area Name
-  }
-  game.hideHudComponentThisFrame(8); // Vehicle Class
-  game.hideHudComponentThisFrame(9); // Street Name
-});
+// everyTick(() => {
+//   game.hideHudComponentThisFrame(6); // Vehicle Name
+//   if (alt.Player.local.vehicle) {
+//     game.hideHudComponentThisFrame(7); // Area Name
+//   }
+//   game.hideHudComponentThisFrame(8); // Vehicle Class
+//   game.hideHudComponentThisFrame(9); // Street Name
+// });

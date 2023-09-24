@@ -34,10 +34,11 @@ export function createNpc<T extends { key?: string; name?: string; flags?: NpcFl
     npc.collision = false;
   }
 
-  for (let key in data) {
+  for (const key in data) {
     if (typeof data[key] === undefined) {
       continue;
     }
+    alt.log(`${data.key}: Setting ${key} to ${data[key]}`);
     npc.streamSyncedMeta[key] = data[key];
   }
 

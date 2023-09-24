@@ -1,19 +1,18 @@
-import alt from "alt-client";
-import { KeyCode } from "altv-enums";
+import * as alt from "@altv/client";
 import { closeActionMenu, openActionMenu } from "./api";
 
-alt.on("keydown", (key) => {
-  if (key === KeyCode.Alt) {
+alt.Events.onKeyDown(({ key }) => {
+  if (key === alt.Enums.KeyCode.ALT) {
     openActionMenu();
   }
 });
 
-alt.on("keyup", (key) => {
-  if (key === KeyCode.Alt) {
+alt.Events.onKeyUp(({ key }) => {
+  if (key === alt.Enums.KeyCode.ALT) {
     closeActionMenu();
   }
 });
 
-alt.on("windowFocusChange", () => {
+alt.Events.onWindowFocusChange(() => {
   closeActionMenu();
 });

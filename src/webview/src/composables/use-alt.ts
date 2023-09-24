@@ -8,13 +8,13 @@ export const useAlt = () => {
   const on = (eventName: string, listener: (...args: any[]) => void) => {
     onListeners.push({ eventName, listener });
     if (isMounted.value) {
-      alt.Events.on(eventName, listener);
+      alt.on(eventName, listener);
     }
   };
 
   onMounted(() => {
     for (const { eventName, listener } of onListeners) {
-      alt.Events.on(eventName, listener);
+      alt.on(eventName, listener);
     }
   });
 

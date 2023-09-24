@@ -1,7 +1,7 @@
 import * as alt from "@altv/client";
-import game from "@altv/natives";
+import * as game from "@altv/natives";
 import { ClientEvents } from "@shared/events/client";
-import { ServerEventsFromClient } from "@shared/events/server/from-client";
+import { ServerEvents } from "@shared/events/server";
 import { WebviewEvents } from "@shared/events/webview";
 import { ServerCall } from "@shared/calls/server";
 import { Scene } from "@shared/enums/ui";
@@ -21,26 +21,33 @@ declare module "@altv/client" {
 }
 
 async function beginAuth() {
+  alt.log("Beginning auth...");
+
   // Check for cached token
   if (alt.LocalStorage.has("token")) {
+    alt.log("Cached token found, trying it...");
     const success = await rpc.callServer(
       ServerCall.FromClient.TRY_CACHED_TOKEN,
       alt.LocalStorage.get("token")
     );
 
     if (success) {
+      alt.log("Cached token worked, auth done.");
       return;
     }
 
     alt.LocalStorage.remove("token");
+    alt.log("Cached token failed...");
   }
 
   try {
+    alt.log("Trying native discord auth...");
     // try native discord api (requires running discord client)
     const token = await alt.Discord.requestOAuth2Token(DISCORD_CLIENT_ID);
-    alt.Events.emitServer(ServerEventsFromClient.DISCORD_AUTH_DONE, token);
+    alt.Events.emitServer(ServerEvents.FromClient.DISCORD_AUTH_DONE, token);
     cacheAuthToken(token);
   } catch (e) {
+    alt.log("Native discord auth failed, falling back to manual auth...");
     // fallback to manual discord auth (opens browser)
     const url = await rpc.callServer(ServerCall.FromClient.GET_DISCORD_AUTH_URL);
 
@@ -51,6 +58,7 @@ async function beginAuth() {
 
     game.doScreenFadeIn(1000);
   }
+  alt.log("Auth done.");
 }
 alt.Events.onServer(ClientEvents.FromServer.BEGIN_NATIVE_DISCORD_AUTH, beginAuth);
 

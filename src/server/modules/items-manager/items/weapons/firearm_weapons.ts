@@ -13,7 +13,6 @@ import {
   isItemFirearmWeapon,
 } from "@shared/modules/items/registry/weapons/firearm-weapon.items";
 import { InventoryItemSource, ItemSource } from "@shared/interfaces";
-import { ServerEventsFromClient } from "@shared/events/server/from-client";
 import { InGamePlayer, isInGame } from "@/utility/assertions";
 import { findItem, findSourceInventory } from "../../api/hooks";
 import { removeItem, addItemToInventory } from "../../api/utils";
@@ -36,7 +35,7 @@ alt.Events.on(ServerEvents.FromServer.EQUIP_ITEM, (player, item) => {
   player.giveWeapon(itemInfo.hash, 0, true);
 });
 
-alt.Events.onPlayer(ServerEventsFromClient.WEAPON_SHOOT, (player) => {
+alt.Events.onPlayer(ServerEvents.FromClient.WEAPON_SHOOT, (player) => {
   if (!isInGame(player)) {
     return;
   }

@@ -22,7 +22,7 @@ function showNotification(type: NotificationType, title: string, text: string) {
   }, 5000);
 }
 
-alt.Events.on(WebviewEvents.FromClient.SHOW_NOTIFICATION, showNotification);
+alt.on(WebviewEvents.FromClient.SHOW_NOTIFICATION, showNotification);
 </script>
 
 <template>

@@ -7971,14 +7971,16 @@ export type TopItemInfo = {
 export const tops: Record<TopItemKey, TopItemInfo> = TOP_ITEMS as Record<TopItemKey, TopItemInfo>;
 
 /**
- * Register all melee weapons.
+ * Register all tops.
  */
-for (const [key, info] of Object.entries(tops)) {
-  registerItem(key as TopItemKey, info);
+// console.log("Registering tops...");
+for (const key in tops) {
+  registerItem(key as TopItemKey, tops[key as TopItemKey]);
 }
+// console.log(`Registered ${Object.keys(tops).length} tops.`);
 
 /**
- * Type guards for melee weapons
+ * Type guards for tops
  */
 export function isItemKeyTop(key: string): key is TopItemKey {
   return key in tops;

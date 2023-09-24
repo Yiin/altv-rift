@@ -2235,14 +2235,16 @@ export const pants: Record<PantsItemKey, PantsItemInfo> = PANTS_ITEMS as Record<
 >;
 
 /**
- * Register all melee weapons.
+ * Register all pants.
  */
-for (const [key, info] of Object.entries(pants)) {
-  registerItem(key as PantsItemKey, info);
+// console.log("Registering pants...");
+for (const key in pants) {
+  registerItem(key as PantsItemKey, pants[key as PantsItemKey]);
 }
+// console.log(`Registered ${Object.keys(pants).length} pants.`);
 
 /**
- * Type guards for melee weapons
+ * Type guards for pants
  */
 export function isItemKeyPants(key: string): key is PantsItemKey {
   return key in pants;

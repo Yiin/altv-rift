@@ -21,12 +21,12 @@ export const callClient = async <T extends keyof typeof ClientCall.FromWebview>(
   return new Promise<ReturnType<CallFromWebview[T]>>((resolve, reject) => {
     const payload = createPayload(name, args);
 
-    alt.Events.emit(CALL_CLIENT_FROM_WEBVIEW, payload);
+    alt.emit(CALL_CLIENT_FROM_WEBVIEW, payload);
     clientHandlers.set(payload.id, { resolve, reject });
   });
 };
 
-alt.Events.on(CALL_CLIENT_FROM_WEBVIEW_RESPONSE, (response) => {
+alt.on(CALL_CLIENT_FROM_WEBVIEW_RESPONSE, (response) => {
   const handler = clientHandlers.get(response.id);
   if (!handler) {
     return;
@@ -55,7 +55,7 @@ export const unregisterClient = <T extends keyof typeof WebviewCall.FromClient>(
   clientProcedures.delete(name);
 };
 
-alt.Events.on(CALL_WEBVIEW_FROM_CLIENT, async (payload) => {
+alt.on(CALL_WEBVIEW_FROM_CLIENT, async (payload) => {
   const { id, name, args } = payload;
   const callback = clientProcedures.get(name);
 
@@ -66,12 +66,12 @@ alt.Events.on(CALL_WEBVIEW_FROM_CLIENT, async (payload) => {
 
     const result = await callback(args);
 
-    alt.Events.emit(CALL_WEBVIEW_FROM_CLIENT_RESPONSE, {
+    alt.emit(CALL_WEBVIEW_FROM_CLIENT_RESPONSE, {
       id,
       result,
     });
   } catch (error) {
-    alt.Events.emit(CALL_WEBVIEW_FROM_CLIENT_RESPONSE, {
+    alt.emit(CALL_WEBVIEW_FROM_CLIENT_RESPONSE, {
       id,
       error,
     });
