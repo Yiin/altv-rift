@@ -14,14 +14,21 @@ export const doesElementHaveCursor = createHookableFunction({
 
 declare module "@altv/client" {
   export interface WebView {
-    originalEmit: WebView["emit"];
+    _emit: WebView["emit"];
+    _emitRaw: WebView["emitRaw"];
   }
 }
 
-alt.WebView.prototype.originalEmit = alt.WebView.prototype.emit;
+alt.WebView.prototype._emit = alt.WebView.prototype.emit;
+alt.WebView.prototype._emitRaw = alt.WebView.prototype.emitRaw;
+
 alt.WebView.prototype.emit = function (eventName: string, ...args: unknown[]) {
   const serializedArgs = args.map((arg) => serialize(arg));
-  this.originalEmit(eventName, ...serializedArgs);
+  this._emit(eventName, ...serializedArgs);
+};
+alt.WebView.prototype.emitRaw = function (eventName: string, ...args: unknown[]) {
+  const serializedArgs = args.map((arg) => serialize(arg));
+  this._emitRaw(eventName, ...serializedArgs);
 };
 
 let url!: string;

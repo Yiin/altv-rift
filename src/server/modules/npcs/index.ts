@@ -3,7 +3,7 @@ import { NpcFlags, PedType } from "@shared/modules/npc";
 import { Npc } from "@shared/modules/npc/list";
 import { createNpc } from "./registry";
 
-[
+const npcs = [
   {
     key: Npc.CAL_BURNETT,
     type: PedType.STATIC,
@@ -18,7 +18,7 @@ import { createNpc } from "./registry";
     flags: NpcFlags.Peaceful,
     model: "S_M_Y_Ranger_01",
     name: "Diego Moreira",
-    pos: new alt.Vector3({ x: 5067.843, y: -4634.284, z: 2.4321 }),
+    pos: new alt.Vector3({ x: 5067.843, y: -4634.284, z: 2.4428231716156006 }),
   },
   {
     key: Npc.FISHING_TUTOR,
@@ -54,6 +54,12 @@ import { createNpc } from "./registry";
     pos: new alt.Vector3({ x: 5067.4, y: -4591.48, z: 2.856 }),
     rot: -19.58,
   },
-].forEach(({ type, model, pos, rot, ...meta }) => {
-  createNpc(type, alt.hash(model), pos, rot ?? 0, meta);
+].map(({ type, model, pos, rot, ...meta }) =>
+  createNpc(type, alt.hash(model), pos, rot ?? 0, meta)
+);
+
+alt.Events.onResourceStop(() => {
+  npcs.forEach((ped) => {
+    ped.destroy();
+  });
 });

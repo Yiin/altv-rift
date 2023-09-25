@@ -16,44 +16,44 @@ const virtualTreeGroup = alt.VirtualEntityGroup.create({ maxEntitiesInStream: 30
 const virtualTreeById: Map<number, alt.VirtualEntity> = new Map();
 const playerHittingTree: WeakMap<InGamePlayer, number> = new WeakMap();
 
-console.log("Growing trees... Will take a while.");
+console.log("Growing trees...");
 
-// for (const type in trees) {
-//   const list = trees[type as keyof typeof trees];
+for (const type in trees) {
+  const list = trees[type as keyof typeof trees];
 
-//   for (const { Position } of list) {
-//     if (
-//       IGNORED_TREES.some(
-//         (tree) =>
-//           tree.pos.x === Position.X &&
-//           tree.pos.y === Position.Y &&
-//           tree.pos.z === Position.Z &&
-//           tree.type === type
-//       )
-//     ) {
-//       continue;
-//     }
-//     const position = {
-//       x: Position.X,
-//       y: Position.Y,
-//       z: Position.Z + 1.8,
-//     };
+  for (const { Position } of list) {
+    if (
+      IGNORED_TREES.some(
+        (tree) =>
+          tree.pos.x === Position.X &&
+          tree.pos.y === Position.Y &&
+          tree.pos.z === Position.Z &&
+          tree.type === type
+      )
+    ) {
+      continue;
+    }
+    const position = {
+      x: Position.X,
+      y: Position.Y,
+      z: Position.Z + 1.8,
+    };
 
-//     const tree = alt.VirtualEntity.create({
-//       group: virtualTreeGroup,
-//       pos: new alt.Vector3(position),
-//       streamingDistance: 30,
-//       data: {
-//         entityType: "tree",
-//         treeType: type,
-//         cooldownUntil: 0,
-//       },
-//     });
-//     refillTree(tree);
+    const tree = alt.VirtualEntity.create({
+      group: virtualTreeGroup,
+      pos: new alt.Vector3(position),
+      streamingDistance: 30,
+      data: {
+        entityType: "tree",
+        treeType: type,
+        cooldownUntil: 0,
+      },
+    });
+    refillTree(tree);
 
-//     virtualTreeById.set(tree.id, tree);
-//   }
-// }
+    virtualTreeById.set(tree.id, tree);
+  }
+}
 
 console.log("Trees grown.");
 

@@ -53,7 +53,7 @@ async function beginAuth() {
 
     setScene(Scene.DISCORD_AUTH, { hasCursor: true });
     getWebview((webview) => {
-      webview.emit(WebviewEvents.FromClient.SETUP_DISCORD_AUTH, url);
+      webview.emitRaw(WebviewEvents.FromClient.SETUP_DISCORD_AUTH, url);
     });
 
     game.doScreenFadeIn(1000);

@@ -26,7 +26,7 @@ export const callWebview = async <T extends keyof typeof WebviewCall.FromClient>
   return new Promise<ReturnType<CallFromClient[T]>>((resolve, reject) => {
     const payload = createPayload(name, serialize(args));
 
-    getWebview().emit(CALL_WEBVIEW_FROM_CLIENT, payload);
+    getWebview().emitRaw(CALL_WEBVIEW_FROM_CLIENT, payload);
     webviewHandlers.set(payload.id, { resolve, reject });
   });
 };
@@ -74,12 +74,12 @@ getWebview((webview) => {
         throw new Error(`CALL_CLIENT_FROM_WEBVIEW: Procedure ${name} does not exist`);
       }
       const result = await callback(...args);
-      webview.emit(CALL_CLIENT_FROM_WEBVIEW_RESPONSE, {
+      webview.emitRaw(CALL_CLIENT_FROM_WEBVIEW_RESPONSE, {
         id,
         result,
       });
     } catch (error: any) {
-      webview.emit(CALL_CLIENT_FROM_WEBVIEW_RESPONSE, {
+      webview.emitRaw(CALL_CLIENT_FROM_WEBVIEW_RESPONSE, {
         id,
         error: error.error,
       });

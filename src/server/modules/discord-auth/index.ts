@@ -29,7 +29,7 @@ alt.Events.onPlayerConnect(({ player }) => {
 alt.Events.onPlayer(ServerEvents.FromClient.BEGIN_CONNECTION, (player) => {
   checkForQuestionableActivity(player, isLoggedIn(player), "onBeginConnection");
 
-  player.emit(ClientEvents.FromServer.BEGIN_NATIVE_DISCORD_AUTH);
+  player.emitRaw(ClientEvents.FromServer.BEGIN_NATIVE_DISCORD_AUTH);
 });
 
 rpc.registerClient(ServerCall.FromClient.GET_DISCORD_AUTH_URL, (player) => {

@@ -21,7 +21,7 @@ export function createNpc<T extends { key?: string; name?: string; flags?: NpcFl
   heading: number,
   data: T
 ) {
-  const npc = alt.Ped.create({ model, pos, heading });
+  const npc = alt.Ped.create({ model, pos: new alt.Vector3(0, 0, 1).add(pos), heading });
 
   if (!npc) {
     throw new Error(`Failed to create NPC ${model}.`);

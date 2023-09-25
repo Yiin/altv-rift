@@ -38,6 +38,4 @@ function startGame() {
   game.freezeEntityPosition(alt.Player.local, false);
 
   setScene(Scene.IN_GAME, { hasCursor: false });
-
-  alt.Events.emit("gameStart");
 }

@@ -12,6 +12,6 @@ export class EventService {
   }
 
   public emitClient(player: alt.Player, eventName: string, ...args: any[]) {
-    player.emit(eventName, ...args);
+    player.emitRaw(eventName, ...args);
   }
 }

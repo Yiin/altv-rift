@@ -1341,11 +1341,29 @@ declare module "@altv/client" {
       ...args: unknown[]
     ): void;
 
+    export function emitRaw<E extends keyof CustomClientEvent>(
+      eventName: E,
+      ...args: Parameters<CustomClientEvent[E]>
+    ): void;
+    export function emitRaw<E extends string>(
+      eventName: Exclude<E, keyof CustomClientEvent>,
+      ...args: unknown[]
+    ): void;
+
     export function emitServer<E extends keyof altShared.Events.CustomPlayerToServerEvent>(
       eventName: E,
       ...args: Parameters<altShared.Events.CustomPlayerToServerEvent[E]>
     ): void;
     export function emitServer<E extends string>(
+      eventName: Exclude<E, keyof altShared.Events.CustomPlayerToServerEvent>,
+      ...args: unknown[]
+    ): void;
+
+    export function emitServerRaw<E extends keyof altShared.Events.CustomPlayerToServerEvent>(
+      eventName: E,
+      ...args: Parameters<altShared.Events.CustomPlayerToServerEvent[E]>
+    ): void;
+    export function emitServerRaw<E extends string>(
       eventName: Exclude<E, keyof altShared.Events.CustomPlayerToServerEvent>,
       ...args: unknown[]
     ): void;
@@ -1357,6 +1375,24 @@ declare module "@altv/client" {
       eventName: Exclude<E, keyof altShared.Events.CustomPlayerToServerEvent>,
       ...args: unknown[]
     ): void;
+
+    export function emitServerUnreliableRaw<
+      E extends keyof altShared.Events.CustomPlayerToServerEvent
+    >(eventName: E, ...args: Parameters<altShared.Events.CustomPlayerToServerEvent[E]>): void;
+    export function emitServerUnreliableRaw<E extends string>(
+      eventName: Exclude<E, keyof altShared.Events.CustomPlayerToServerEvent>,
+      ...args: unknown[]
+    ): void;
+
+    export function callServerRPC(eventName: string, ...args: unknown[]): void;
+
+    // RPC related
+    export function onServerScriptRPC(
+      callback: GenericEventCallback<ServerScriptRPC>
+    ): altShared.Events.EventHandler;
+    export function onceServerScriptRPC(
+      callback: GenericEventCallback<ServerScriptRPC>
+    ): altShared.Events.EventHandler;
 
     export function onKeyBoardEvent(
       callback: GenericEventCallback<KeyBoardEventParameters>
@@ -1840,6 +1876,12 @@ declare module "@altv/client" {
     }
 
     interface CustomClientEvent {}
+
+    interface ServerScriptRPC {
+      readonly answerID: number;
+      readonly answer: ReadonlyArray<unknown>;
+      readonly answerError: string;
+    }
 
     export type CustomEventCallback<T extends unknown[]> = (...params: T) => void | Promise<void>;
     export type GenericEventCallback<T = {}> = (params: T) => void | Promise<void>;

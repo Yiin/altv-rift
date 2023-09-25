@@ -9,8 +9,6 @@ global["__dirname"] = dirname(global["__filename"]);
 global.require = createRequire(import.meta.url);
 process.chdir = () => {};
 
-alt.Events.rawEmitEnabled = true;
-
 // let timeoutId = 0;
 // const timeouts = new Map<number, any>();
 

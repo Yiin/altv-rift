@@ -13,9 +13,9 @@ export const clientState = useClient(pinia);
 
 subscribeToStore(clientState, {
   onSetState: (state) => {
-    getWebview((webView) => webView.emit(WebviewEvents.FromClient.SET_CLIENT_STATE, state));
+    getWebview((webView) => webView.emitRaw(WebviewEvents.FromClient.SET_CLIENT_STATE, state));
   },
   onUpdateState: (payload) => {
-    getWebview((webView) => webView.emit(WebviewEvents.FromClient.UPDATE_CLIENT_STATE, payload));
+    getWebview((webView) => webView.emitRaw(WebviewEvents.FromClient.UPDATE_CLIENT_STATE, payload));
   },
 });

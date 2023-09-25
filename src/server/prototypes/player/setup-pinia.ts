@@ -31,20 +31,20 @@ alt.Player.prototype.setupUserStore = async function (user: User) {
 
   const unsubscribeUserStore = subscribeToStore(this.user, {
     onSetState: (state) => {
-      this.emit(ClientEvents.FromServer.SET_USER_STATE, state);
+      this.emitRaw(ClientEvents.FromServer.SET_USER_STATE, state);
     },
     onUpdateState: (payload) => {
-      this.emit(ClientEvents.FromServer.UPDATE_USER_STATE, payload);
+      this.emitRaw(ClientEvents.FromServer.UPDATE_USER_STATE, payload);
     },
   });
 
   // Server state
   const unsubscribeServerStore = subscribeToStore(serverStore, {
     onSetState: (state) => {
-      this.emit(ClientEvents.FromServer.SET_SERVER_STATE, state);
+      this.emitRaw(ClientEvents.FromServer.SET_SERVER_STATE, state);
     },
     onUpdateState: (payload) => {
-      this.emit(ClientEvents.FromServer.UPDATE_SERVER_STATE, payload);
+      this.emitRaw(ClientEvents.FromServer.UPDATE_SERVER_STATE, payload);
     },
   });
 
@@ -59,10 +59,10 @@ alt.Player.prototype.setupCharacterStore = async function (character: Character)
 
   const unsubscribeCharacterStore = subscribeToStore(this.character, {
     onSetState: (state) => {
-      this.emit(ClientEvents.FromServer.SET_CHARACTER_STATE, state);
+      this.emitRaw(ClientEvents.FromServer.SET_CHARACTER_STATE, state);
     },
     onUpdateState: (payload) => {
-      this.emit(ClientEvents.FromServer.UPDATE_CHARACTER_STATE, payload);
+      this.emitRaw(ClientEvents.FromServer.UPDATE_CHARACTER_STATE, payload);
     },
   });
 
@@ -73,12 +73,10 @@ alt.Player.prototype.setupCharacterStore = async function (character: Character)
 
   const unsubscribeGameStateStore = subscribeToStore(this.gameState, {
     onSetState: (state) => {
-      alt.log("Setting game state", state);
-      this.emit(ClientEvents.FromServer.SET_GAME_STATE, state);
+      this.emitRaw(ClientEvents.FromServer.SET_GAME_STATE, state);
     },
     onUpdateState: (payload) => {
-      alt.log("Updating game state", payload);
-      this.emit(ClientEvents.FromServer.UPDATE_GAME_STATE, payload);
+      this.emitRaw(ClientEvents.FromServer.UPDATE_GAME_STATE, payload);
     },
   });
 

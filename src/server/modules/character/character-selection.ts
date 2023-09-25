@@ -18,7 +18,7 @@ alt.Events.on(ServerEvents.FromServer.USER_LOADED, (player) => {
 
   if (charactersCount === 0) {
     alt.log("triggering client (start character creation scene)");
-    player.emit(ClientEvents.FromServer.START_CHARACTER_CREATION_SCENE);
+    player.emitRaw(ClientEvents.FromServer.START_CHARACTER_CREATION_SCENE);
     // Forward player to character creation scene because they have no characters
   } else {
     startGame(player, player.user.characters[0].id!);
@@ -88,5 +88,5 @@ async function startGame(player: LoggedInPlayer, characterId: string) {
   player.health = Math.max(character.health, 200);
   player.dimension = 0;
 
-  player.emit(ClientEvents.FromServer.START_GAME);
+  player.emitRaw(ClientEvents.FromServer.START_GAME);
 }

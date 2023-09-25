@@ -22,7 +22,7 @@ export class Screenshot {
    * @memberof AthenaScreenshot
    */
   static async takeScreenshot(player: alt.Player): Promise<string | null> {
-    player.emit(ClientEvents.FromServer.SCREENSHOT_CREATE);
+    player.emitRaw(ClientEvents.FromServer.SCREENSHOT_CREATE);
 
     return new Promise((resolve: Function) => {
       let tries = 0;

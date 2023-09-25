@@ -14,14 +14,14 @@ const useGameState = defineStore("game-state", {
 export const gameState = useGameState(pinia);
 
 alt.Events.onServer(ClientEvents.FromServer.UPDATE_GAME_STATE, (event: any) => {
-  getWebview().emit(WebviewEvents.FromClient.UPDATE_GAME_STATE, event);
+  getWebview().emitRaw(WebviewEvents.FromClient.UPDATE_GAME_STATE, event);
 
   alt.log("Updating game state", event, typeof event.target, event.target.constructor.name);
   updateStoreState(gameState, event);
 });
 
 alt.Events.onServer(ClientEvents.FromServer.SET_GAME_STATE, (state: any) => {
-  getWebview().emit(WebviewEvents.FromClient.SET_GAME_STATE, state);
+  getWebview().emitRaw(WebviewEvents.FromClient.SET_GAME_STATE, state);
 
   alt.log("Setting game state", state);
   gameState.$state = state;

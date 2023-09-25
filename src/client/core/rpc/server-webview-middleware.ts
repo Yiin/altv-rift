@@ -9,7 +9,7 @@ import { getWebview } from "@/core/user-interface/webview";
 
 alt.Events.onServer(CALL_WEBVIEW_FROM_SERVER, async (payload) => {
   getWebview((webview) => {
-    webview.emit(CALL_WEBVIEW_FROM_SERVER, payload);
+    webview.emitRaw(CALL_WEBVIEW_FROM_SERVER, payload);
   });
 });
 
@@ -25,6 +25,6 @@ getWebview((webview) => {
 
 alt.Events.onServer(CALL_SERVER_FROM_WEBVIEW_RESPONSE, (response) => {
   getWebview((webview) => {
-    webview.emit(CALL_SERVER_FROM_WEBVIEW_RESPONSE, response);
+    webview.emitRaw(CALL_SERVER_FROM_WEBVIEW_RESPONSE, response);
   });
 });

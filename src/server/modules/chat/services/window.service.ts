@@ -9,15 +9,15 @@ export class WindowService {
 
   public send(player: Player, message: string, type: MessageType = MessageType.Default) {
     if (!validateMessage(message, type)) return;
-    return () => player.emit("vchat:addMessage", message, type);
+    return () => player.emitRaw("vchat:addMessage", message, type);
   }
 
   public show(player: Player) {
-    return () => player.emit("vchat:toggleVisibility", true);
+    return () => player.emitRaw("vchat:toggleVisibility", true);
   }
 
   public hide(player: Player) {
-    return () => player.emit("vchat:toggleVisibility", false);
+    return () => player.emitRaw("vchat:toggleVisibility", false);
   }
 
   public mute(player: Player) {
@@ -33,23 +33,23 @@ export class WindowService {
   }
 
   public toggleFocusEnabled(player: Player, enabled: boolean) {
-    return () => player.emit("vchat:toggleFocusEnabled", enabled);
+    return () => player.emitRaw("vchat:toggleFocusEnabled", enabled);
   }
 
   public focus(player: Player) {
-    return () => player.emit("vchat:toggleFocus", true);
+    return () => player.emitRaw("vchat:toggleFocus", true);
   }
 
   public unfocus(player: Player) {
-    return () => player.emit("vchat:toggleFocus", false);
+    return () => player.emitRaw("vchat:toggleFocus", false);
   }
 
   public clearMessageHistory(player: Player) {
-    return () => player.emit("vchat:clearMessageHistory");
+    return () => player.emitRaw("vchat:clearMessageHistory");
   }
 
   public clearMessages(player: Player) {
-    return () => player.emit("vchat:clearMessages");
+    return () => player.emitRaw("vchat:clearMessages");
   }
 
   public updateOption(
@@ -57,10 +57,10 @@ export class WindowService {
     key: keyof (ClientOptions & WindowOptions),
     value: (ClientOptions & WindowOptions)[keyof (ClientOptions & WindowOptions)]
   ) {
-    return () => player.emit("vchat:updateOption", key, value);
+    return () => player.emitRaw("vchat:updateOption", key, value);
   }
 
   public updateOptions(player: Player, options: Partial<ClientOptions & WindowOptions>) {
-    return () => player.emit("vchat:updateOptions", options);
+    return () => player.emitRaw("vchat:updateOptions", options);
   }
 }

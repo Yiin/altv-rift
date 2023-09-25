@@ -35,7 +35,7 @@ export class WindowService {
 
   public focus() {
     if (!this.webView.visible || !this.focusEnabled) return;
-    this.webView.emit("vchat:focus", true);
+    this.webView.emitRaw("vchat:focus", true);
     this.webView.focused = true;
     isFocused = true;
     alt.setGameControlsActive(false);
@@ -44,7 +44,7 @@ export class WindowService {
 
   public unfocus() {
     if (!this.webView.visible || !this.focusEnabled) return;
-    this.webView.emit("vchat:focus", false);
+    this.webView.emitRaw("vchat:focus", false);
     this.webView.focused = true;
     isFocused = false;
     alt.setGameControlsActive(true);
@@ -69,31 +69,31 @@ export class WindowService {
   }
 
   public addMessage(message: string, type: MessageType = MessageType.Default) {
-    this.webView.emit("vchat:addMessage", message, type);
+    this.webView.emitRaw("vchat:addMessage", message, type);
   }
 
   public loadMessageHistory(messages: Array<Message>) {
-    this.webView.emit("vchat:loadMessageHistory", messages);
+    this.webView.emitRaw("vchat:loadMessageHistory", messages);
   }
 
   public clearMessages() {
-    this.webView.emit("vchat:clearMessages");
+    this.webView.emitRaw("vchat:clearMessages");
   }
 
   public addSuggestion(suggestion: CommandSuggestion | Array<CommandSuggestion>) {
-    this.webView.emit("vchat:addSuggestion", suggestion);
+    this.webView.emitRaw("vchat:addSuggestion", suggestion);
   }
 
   public removeSuggestions() {
-    this.webView.emit("vchat:removeSuggestions");
+    this.webView.emitRaw("vchat:removeSuggestions");
   }
 
   public syncSettings(options: WindowOptions, commandSuggestions: Array<CommandSuggestion>) {
-    this.webView.emit("vchat:syncSettings", options, commandSuggestions);
+    this.webView.emitRaw("vchat:syncSettings", options, commandSuggestions);
   }
 
   public updateOptions(options: WindowOptions) {
-    this.webView.emit("vchat:updateOptions", options);
+    this.webView.emitRaw("vchat:updateOptions", options);
   }
 
   public on(event: string, listener: (...args: any[]) => void) {

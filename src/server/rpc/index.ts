@@ -30,7 +30,7 @@ const callClient = (player: alt.Player, name: string, ...args: any[]) => {
   return new Promise((resolve, reject) => {
     const payload = createPayload(name, args);
 
-    player.emit(CALL_CLIENT_FROM_SERVER, payload);
+    player.emitRaw(CALL_CLIENT_FROM_SERVER, payload);
     clientHandlers.set(payload.id, { resolve, reject });
   });
 };
@@ -74,13 +74,13 @@ alt.Events.onPlayer(CALL_SERVER_FROM_CLIENT, async (player, payload) => {
     }
 
     const result = await callback(player, ...args);
-    player.emit(CALL_SERVER_FROM_CLIENT_RESPONSE, {
+    player.emitRaw(CALL_SERVER_FROM_CLIENT_RESPONSE, {
       id,
       result,
     });
   } catch (error) {
-    console.log(error);
-    player.emit(CALL_SERVER_FROM_CLIENT_RESPONSE, {
+    alt.logError(error);
+    player.emitRaw(CALL_SERVER_FROM_CLIENT_RESPONSE, {
       id,
       error,
     });
@@ -92,7 +92,7 @@ const callWebview = (player: alt.Player, name: string, ...args: any[]) => {
   return new Promise((resolve, reject) => {
     const payload = createPayload(name, args);
 
-    player.emit(CALL_WEBVIEW_FROM_SERVER, payload);
+    player.emitRaw(CALL_WEBVIEW_FROM_SERVER, payload);
     webviewHandlers.set(payload.id, { resolve, reject });
   });
 };
@@ -136,12 +136,12 @@ alt.Events.onPlayer(CALL_SERVER_FROM_WEBVIEW, async (player, payload) => {
     }
 
     const result = await callback(player, ...args);
-    player.emit(CALL_SERVER_FROM_WEBVIEW_RESPONSE, {
+    player.emitRaw(CALL_SERVER_FROM_WEBVIEW_RESPONSE, {
       id,
       result,
     });
   } catch (error) {
-    player.emit(CALL_SERVER_FROM_WEBVIEW_RESPONSE, {
+    player.emitRaw(CALL_SERVER_FROM_WEBVIEW_RESPONSE, {
       id,
       error,
     });

@@ -23,7 +23,7 @@ registerElement({
                 ped.scriptID,
                 Bones.SKEL_Head,
                 // adjust z position based on distance
-                Math.min((distance / 4) * 0.5 + 0.2, 0.5),
+                0.5, // Math.min((distance / 4) * 0.5 + 0.2, 0.5),
                 0,
                 0
               )
@@ -40,7 +40,22 @@ registerElement({
               transform: everyFrame(({ scale }) => `scale(${scale})`),
             },
           },
-          [nametag]
+          [
+            everyFrame(() => {
+              const { x, y } = alt.worldToScreen(
+                game.getPedBoneCoords(
+                  ped.scriptID,
+                  Bones.SKEL_Head,
+                  // adjust z position based on distance
+                  0.5, // Math.min((distance / 4) * 0.5 + 0.2, 0.5),
+                  0,
+                  0
+                )
+              );
+
+              return `${x} : ${y}`;
+            }),
+          ]
         ),
       ]
     );

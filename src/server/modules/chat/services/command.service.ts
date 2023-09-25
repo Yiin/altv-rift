@@ -32,10 +32,10 @@ export class CommandService {
     if (!Array.isArray(suggestion)) suggestion = [suggestion];
     const result = suggestion.some((s) => validateCommandSuggestion(s));
     if (!result) return;
-    return () => player.emit("vchat:addSuggestion", suggestion);
+    return () => player.emitRaw("vchat:addSuggestion", suggestion);
   }
 
   public removeSuggestions(player: alt.Player) {
-    return () => player.emit("vchat:removeSuggestions");
+    return () => player.emitRaw("vchat:removeSuggestions");
   }
 }

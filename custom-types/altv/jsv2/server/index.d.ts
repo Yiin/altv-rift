@@ -414,6 +414,15 @@ declare module "@altv/server" {
       ...args: unknown[]
     ): void;
 
+    emitUnreliableRaw<E extends keyof altShared.Events.CustomServerToPlayerEvent>(
+      event: E,
+      ...args: Parameters<altShared.Events.CustomServerToPlayerEvent[E]>
+    ): void;
+    emitUnreliableRaw<E extends string>(
+      event: Exclude<E, keyof altShared.Events.CustomServerToPlayerEvent>,
+      ...args: unknown[]
+    ): void;
+
     spawn(pos: altShared.IVector3, delay?: number): void;
     despawn(): void;
     setWeaponTintIndex(weaponHash: number | string, tintIndex: number): void;
@@ -889,6 +898,22 @@ declare module "@altv/server" {
       ...args: unknown[]
     ): void;
 
+    export function emitRaw<E extends keyof CustomServerEvent>(
+      event: E,
+      ...args: Parameters<CustomServerEvent[E]>
+    ): void;
+    export function emitRaw<E extends string>(
+      event: Exclude<E, keyof CustomServerEvent>,
+      ...args: unknown[]
+    ): void;
+
+    export function answerPlayerRPC(player: Player, answerId: number, ...args: unknown[]): void;
+    export function answerPlayerRPCWithError(
+      player: Player,
+      answerId: number,
+      errorMessage: string
+    ): void;
+
     export function emitPlayers<E extends keyof altShared.Events.CustomServerToPlayerEvent>(
       players: Player[],
       eventName: E,
@@ -922,6 +947,15 @@ declare module "@altv/server" {
       ...args: unknown[]
     ): void;
 
+    export function emitAllPlayersRaw<E extends keyof altShared.Events.CustomServerToPlayerEvent>(
+      eventName: E,
+      ...args: Parameters<altShared.Events.CustomServerToPlayerEvent[E]>
+    ): void;
+    export function emitAllPlayersRaw<E extends string>(
+      eventName: Exclude<E, keyof altShared.Events.CustomServerToPlayerEvent>,
+      ...args: unknown[]
+    ): void;
+
     export function emitAllPlayersUnreliable<
       E extends keyof altShared.Events.CustomServerToPlayerEvent
     >(eventName: E, ...args: Parameters<altShared.Events.CustomServerToPlayerEvent[E]>): void;
@@ -929,6 +963,22 @@ declare module "@altv/server" {
       eventName: Exclude<E, keyof altShared.Events.CustomServerToPlayerEvent>,
       ...args: unknown[]
     ): void;
+
+    export function emitAllPlayersUnreliableRaw<
+      E extends keyof altShared.Events.CustomServerToPlayerEvent
+    >(eventName: E, ...args: Parameters<altShared.Events.CustomServerToPlayerEvent[E]>): void;
+    export function emitAllPlayersUnreliableRaw<E extends string>(
+      eventName: Exclude<E, keyof altShared.Events.CustomServerToPlayerEvent>,
+      ...args: unknown[]
+    ): void;
+
+    // RPC related events
+    export function onPlayerScriptRPC<T extends Player>(
+      callback: GenericPlayerEventCallback<PlayerScriptRPCEvent, T>
+    ): altShared.Events.EventHandler;
+    export function oncePlayerScriptRPC<T extends Player>(
+      callback: GenericPlayerEventCallback<PlayerScriptRPCEvent, T>
+    ): altShared.Events.EventHandler;
 
     // Server related events
     export function onServerStarted(callback: GenericEventCallback): altShared.Events.EventHandler;
@@ -1592,6 +1642,17 @@ declare module "@altv/server" {
     }
 
     interface CustomServerEvent {}
+
+    interface PlayerScriptRPCEvent {
+      readonly name: string;
+      readonly args: ReadonlyArray<unknown>;
+      readonly answerID: number;
+
+      willAnswer(): boolean;
+
+      answer(...args: unknown[]): void;
+      answerWithError(errorMessage: string): boolean;
+    }
 
     export type EventContext = {
       readonly type: altShared.Enums.EventType;

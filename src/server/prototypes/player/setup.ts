@@ -29,8 +29,8 @@ alt.Player.prototype.setup = function () {
 
   // Setup Webview
   if (Config.getVueDebugMode()) {
-    this.emit(ClientEvents.FromServer.SETUP_WEBVIEW, Config.getViteServer());
+    this.emitRaw(ClientEvents.FromServer.SETUP_WEBVIEW, Config.getViteServer());
   } else {
-    this.emit(ClientEvents.FromServer.SETUP_WEBVIEW);
+    this.emitRaw(ClientEvents.FromServer.SETUP_WEBVIEW);
   }
 };

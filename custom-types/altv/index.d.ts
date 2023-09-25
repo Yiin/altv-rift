@@ -16,10 +16,6 @@ declare module "@altv/client" {
     PLAY_SOUND: IWebviewEventHandler;
   }
 
-  interface ICustomEmitEvent {
-    gameStart(): void | Promise<void>;
-  }
-
   export interface PedMeta {}
 }
 

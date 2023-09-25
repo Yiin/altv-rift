@@ -54,7 +54,7 @@ async function handleMainRedirect(req: Request, res: Response) {
     player,
     request.data.access_token
   );
-  player.emit(ClientEvents.FromServer.REMEMBER_AUTH_TOKEN, request.data.access_token);
+  player.emitRaw(ClientEvents.FromServer.REMEMBER_AUTH_TOKEN, request.data.access_token);
   res.sendFile(path.join(htmlPath, "/done.html"), (err) => {});
 }
 

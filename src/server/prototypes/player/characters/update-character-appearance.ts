@@ -134,7 +134,7 @@ alt.Player.prototype.updateCharacterAppearance = function (appearance: Appearanc
   }
 
   if (decorationsToSync.length >= 1) {
-    this.emit(ClientEvents.FromServer.SET_PLAYER_DECORATIONS, decorationsToSync);
+    this.emitRaw(ClientEvents.FromServer.SET_PLAYER_DECORATIONS, decorationsToSync);
   }
 
   // Hair

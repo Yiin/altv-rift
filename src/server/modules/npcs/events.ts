@@ -16,7 +16,7 @@ alt.Ped.prototype.taskTurnPedToFaceCoord = function (pos, duration) {
     return;
   }
 
-  this.netOwner.emit(
+  this.netOwner.emitRaw(
     ClientEvents.FromServer.CALL_NATIVE,
     "taskTurnPedToFaceCoord",
     this,
