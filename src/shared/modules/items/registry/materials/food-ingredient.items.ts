@@ -21,6 +21,11 @@ export const FoodIngredient = makeItemKeys<FoodIngredientItemKey>()({
 
 export type FoodIngredientItemKey = Brand<string, "FoodIngredientItemKey">;
 
+export type FoodIngredientItem = {
+  key: FoodIngredientItemKey;
+  amount: number;
+};
+
 export type FoodIngredientItemInfo = {
   key: FoodIngredientItemKey;
   name: string;

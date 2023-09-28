@@ -1,8 +1,8 @@
 import * as alt from "@altv/server";
 import { ServerEvents } from "@shared/events/server";
 import { ClientEvents } from "@shared/events/client";
-import { angleToFaceTarget } from "@/utility/vector";
-import { isInGame } from "@/utility/assertions";
+import { angleToFaceTarget } from "@/core/utility/vector";
+import { isInGame } from "@/core/utility/assertions";
 
 declare module "@altv/server" {
   interface Ped {

@@ -1,9 +1,9 @@
 import * as alt from "@altv/client";
 import * as game from "@altv/natives";
-import { serialize } from "alpha-serializer";
 import { ClientEvents } from "@shared/events/client";
 import { Scene, UIElement } from "@shared/enums/ui";
 import { createHookableFunction } from "@shared/hooks";
+import { serialize } from "@shared/utility/serializer";
 import { clientState } from "../store/client.store";
 import { onKeyDown } from "../utility/event-helpers";
 
@@ -14,21 +14,12 @@ export const doesElementHaveCursor = createHookableFunction({
 
 declare module "@altv/client" {
   export interface WebView {
-    _emit: WebView["emit"];
-    _emitRaw: WebView["emitRaw"];
+    emitRaw: WebView["emit"];
   }
 }
 
-alt.WebView.prototype._emit = alt.WebView.prototype.emit;
-alt.WebView.prototype._emitRaw = alt.WebView.prototype.emitRaw;
-
-alt.WebView.prototype.emit = function (eventName: string, ...args: unknown[]) {
-  const serializedArgs = args.map((arg) => serialize(arg));
-  this._emit(eventName, ...serializedArgs);
-};
 alt.WebView.prototype.emitRaw = function (eventName: string, ...args: unknown[]) {
-  const serializedArgs = args.map((arg) => serialize(arg));
-  this._emitRaw(eventName, ...serializedArgs);
+  return this.emit(eventName, serialize(args));
 };
 
 let url!: string;
@@ -63,6 +54,7 @@ export function getWebview(cb?: (webview: alt.WebView) => void): alt.WebView | v
 let sceneCursorState = false;
 
 export async function setScene(scene: Scene, { hasCursor }: { hasCursor: boolean }) {
+  alt.log(`Setting Scene: ${scene}`);
   if (clientState.ui.scene && sceneCursorState) {
     sceneCursorState = false;
     showCursor(false);

@@ -1,12 +1,12 @@
 import path from "path";
 import esbuild from "esbuild";
-import { altvEsbuild } from "altv-esbuild";
 import chokidar from "chokidar";
 import yamlPlugin from "./plugins/yaml-plugin.js";
-import { altvEsbuildOptions, esbuildOptions } from "./shared.js";
+import { esbuildOptions } from "./shared.js";
 import { copy, copyFile } from "./copy.js";
 import { filelocPlugin } from "./plugins/fileloc-plugin.js";
 import { rcssPlugin } from "./plugins/rcss-plugin.js";
+import { reloadResource } from "./reconnect.js";
 
 export const ASSETS_PATHS = [
   "src/resource.toml",
@@ -37,6 +37,32 @@ esbuild
         rootDir: "src",
       }),
       rcssPlugin(),
+      {
+        name: "copy-assets",
+        setup({ onEnd }) {
+          onEnd(() => {
+            // After esbuild finishes, copy .rml files
+            for (const assetsPath of ASSETS_PATHS) {
+              copy(assetsPath, "resources/main/");
+            }
+        
+            // Watch .rml files for changes
+            const watcher = chokidar.watch(ASSETS_PATHS);
+        
+            watcher.on("change", (filePath) => {
+              const relativePath = path.relative("src", filePath);
+              const destPath = path.join("resources/main", relativePath);
+              copyFile(filePath, destPath);
+            });
+          });
+        }
+      },
+      {
+        name: "auto-reconnect",
+        setup({ onEnd }) {
+          onEnd(reloadResource);
+        }
+      }
     ],
     define: {
       process: JSON.stringify({
@@ -45,19 +71,4 @@ esbuild
         },
       }),
     },
-  })
-  .then(() => {
-    // After esbuild finishes, copy .rml files
-    for (const assetsPath of ASSETS_PATHS) {
-      copy(assetsPath, "resources/main/");
-    }
-
-    // Watch .rml files for changes
-    const watcher = chokidar.watch(ASSETS_PATHS);
-
-    watcher.on("change", (filePath) => {
-      const relativePath = path.relative("src", filePath);
-      const destPath = path.join("resources/main", relativePath);
-      copyFile(filePath, destPath);
-    });
   });

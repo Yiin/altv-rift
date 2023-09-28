@@ -1,10 +1,10 @@
 import esbuild from "esbuild";
-import { altvEsbuild } from "altv-esbuild";
 import yamlPlugin from "./plugins/yaml-plugin.js";
-import { altvEsbuildOptions, esbuildOptions } from "./shared.js";
+import { esbuildOptions } from "./shared.js";
 import { filelocPlugin } from "./plugins/fileloc-plugin.js";
+import { reloadResource } from "./reconnect.js";
 
-esbuild.build({
+await esbuild.build({
   ...esbuildOptions,
   platform: "node",
   entryPoints: ["src/server/main.ts"],
@@ -18,5 +18,11 @@ esbuild.build({
     filelocPlugin({
       rootDir: "src",
     }),
+    {
+      name: "auto-reconnect",
+      setup({ onEnd }) {
+        onEnd(reloadResource);
+      }
+    }
   ],
 });

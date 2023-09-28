@@ -1,6 +1,6 @@
 import { Player } from "@altv/server";
 import { Item } from "@shared/modules/items";
-import { InGamePlayer } from "@/utility/assertions";
+import { InGamePlayer } from "@/core/utility/assertions";
 import { addItemToInventory } from "@/modules/items-manager";
 
 declare module "@altv/server" {

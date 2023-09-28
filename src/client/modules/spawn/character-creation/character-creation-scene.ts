@@ -7,8 +7,6 @@ import { getWebview, setScene } from "@/core/user-interface/webview";
 import { setupCharacterCreationScene } from "./setup-scene";
 import { cleanupCharacterCreationScene } from "./cleanup-scene";
 
-alt.log(0, typeof game.disableScreenblurFade);
-
 alt.Events.onServer(ClientEvents.FromServer.START_CHARACTER_CREATION_SCENE, async () => {
   await setupCharacterCreationScene();
 
@@ -27,12 +25,11 @@ alt.Events.onServer(ClientEvents.FromServer.START_GAME, exitCharacterCreation);
 function exitCharacterCreation() {
   cleanupCharacterCreationScene();
 
-  // alt.Events.emit(Events.Client.START_CHARACTER_SELECTION_SCENE);
+  // emit(Events.Client.START_CHARACTER_SELECTION_SCENE);
   startGame();
 }
 
 function startGame() {
-  alt.log(2, typeof game.disableScreenblurFade);
   game.disableScreenblurFade();
   game.doScreenFadeIn(1000);
   game.freezeEntityPosition(alt.Player.local, false);

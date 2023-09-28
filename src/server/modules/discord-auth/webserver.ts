@@ -5,6 +5,7 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import { ClientEvents } from "@shared/events/client";
 import { ServerEvents } from "@shared/events/server";
+import { emit } from "@/core/events/emit";
 
 const htmlPath = path.join(__dirname, "html");
 const stylesPath = path.join(__dirname, "html/styles");
@@ -49,11 +50,7 @@ async function handleMainRedirect(req: Request, res: Response) {
     return;
   }
 
-  alt.Events.emit(
-    ServerEvents.FromServer.MANUAL_DISCORD_AUTH_DONE,
-    player,
-    request.data.access_token
-  );
+  emit(ServerEvents.FromServer.MANUAL_DISCORD_AUTH_DONE, player, request.data.access_token);
   player.emitRaw(ClientEvents.FromServer.REMEMBER_AUTH_TOKEN, request.data.access_token);
   res.sendFile(path.join(htmlPath, "/done.html"), (err) => {});
 }

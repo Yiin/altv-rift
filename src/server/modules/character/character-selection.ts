@@ -3,13 +3,14 @@ import { ClientEvents } from "@shared/events/client";
 import { ServerCall } from "@shared/calls/server";
 import { ServerEvents } from "@shared/events/server";
 import { isValidItem } from "@shared/modules/items";
-import { isRequired, isUnique, validate } from "@/validator";
-import { rpc } from "@/rpc";
-import { LoggedInPlayer, isInGame, isLoggedIn, needsToBeLoggedIn } from "@/utility/assertions";
+import { isRequired, isUnique, validate } from "@/core/validator";
+import { rpc } from "@/core/rpc";
+import { LoggedInPlayer, isInGame, isLoggedIn, needsToBeLoggedIn } from "@/core/utility/assertions";
+import { on } from "@/core/events/emit";
 import { removeItemFromInventorySlot } from "../items-manager";
 import { getDefaultCharacterData } from "./character-data";
 
-alt.Events.on(ServerEvents.FromServer.USER_LOADED, (player) => {
+on(ServerEvents.FromServer.USER_LOAD, (player) => {
   if (!isLoggedIn(player)) {
     return;
   }
@@ -23,7 +24,7 @@ alt.Events.on(ServerEvents.FromServer.USER_LOADED, (player) => {
   } else {
     startGame(player, player.user.characters[0].id!);
     // alt.log("triggering client (start character selection scene)");
-    // void player.emit(Events.Client.START_CHARACTER_SELECTION_SCENE);
+    // void player.emitRaw(Events.Client.START_CHARACTER_SELECTION_SCENE);
     // Start character selection scene
   }
 });

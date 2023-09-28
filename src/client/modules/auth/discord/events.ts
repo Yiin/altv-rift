@@ -44,7 +44,7 @@ async function beginAuth() {
     alt.log("Trying native discord auth...");
     // try native discord api (requires running discord client)
     const token = await alt.Discord.requestOAuth2Token(DISCORD_CLIENT_ID);
-    alt.Events.emitServer(ServerEvents.FromClient.DISCORD_AUTH_DONE, token);
+    alt.Events.emitServerRaw(ServerEvents.FromClient.DISCORD_AUTH_DONE, token);
     cacheAuthToken(token);
   } catch (e) {
     alt.log("Native discord auth failed, falling back to manual auth...");

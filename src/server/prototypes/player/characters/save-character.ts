@@ -1,7 +1,7 @@
 import { Player } from "@altv/server";
 import { PrismaClient } from "@prisma/client";
 import { container } from "@shared/dependency-injection";
-import { InGamePlayer } from "@/utility/assertions";
+import { InGamePlayer } from "@/core/utility/assertions";
 
 const prisma = container.get(PrismaClient);
 

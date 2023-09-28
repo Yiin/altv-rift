@@ -13,23 +13,24 @@ import {
   isItemFirearmWeapon,
 } from "@shared/modules/items/registry/weapons/firearm-weapon.items";
 import { InventoryItemSource, ItemSource } from "@shared/interfaces";
-import { InGamePlayer, isInGame } from "@/utility/assertions";
+import { InGamePlayer, isInGame } from "@/core/utility/assertions";
+import { on } from "@/core/events/emit";
 import { findItem, findSourceInventory } from "../../api/hooks";
 import { removeItem, addItemToInventory } from "../../api/utils";
 
-alt.Events.on(ServerEvents.FromServer.EQUIP_ITEM, (player, item) => {
+on(ServerEvents.FromServer.ITEM_EQUIP, (player, item) => {
   if (!isItemFirearmWeapon(item)) {
     return;
   }
 
   const itemInfo = getItemInfoByKey(item.key);
 
-  if (player.currentWeapon === itemInfo.hash) {
-    return;
-  }
-
   if (item.ammo && item.ammo.clip + item.ammo.rest <= 0) {
     item.ammo = null;
+  }
+
+  if (player.currentWeapon === itemInfo.hash) {
+    return;
   }
 
   player.giveWeapon(itemInfo.hash, 0, true);

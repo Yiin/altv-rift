@@ -1,4 +1,4 @@
-export type NpcInteraction<T = string> = {
+export type PedInteraction<T = string> = {
   key: string;
   icon: T;
   label: string;

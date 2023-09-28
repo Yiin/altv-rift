@@ -1,4 +1,4 @@
-export const Npc = {
+export const PedKey = {
   CAL_BURNETT: "CAL_BURNETT",
   DIEGO_MOREIRA: "DIEGO_MOREIRA",
   FISHING_TUTOR: "GRACE_PORTER",
@@ -7,4 +7,4 @@ export const Npc = {
   CRAFTING_TUTOR: "SARA_MATTHEWS",
 } as const;
 
-export type Npc = (typeof Npc)[keyof typeof Npc];
+export type PedKey = (typeof PedKey)[keyof typeof PedKey];

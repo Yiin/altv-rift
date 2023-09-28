@@ -3,7 +3,7 @@ export enum PedType {
   DYNAMIC = 1,
 }
 
-export enum NpcFlags {
+export enum PedFlags {
   None = 0,
   Peaceful = 1 << 0,
 }

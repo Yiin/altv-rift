@@ -1,9 +1,9 @@
 import * as alt from "@altv/server";
 import { minutesToMilliseconds } from "date-fns";
 import { ClientEvents } from "@shared/events/client";
-import { Config } from "@/utility/config";
+import { Config } from "@/core/utility/config";
 import { clearMessageHistory, show } from "@/modules/chat";
-import { isInGame } from "@/utility/assertions";
+import { isInGame } from "@/core/utility/assertions";
 
 declare module "@altv/server" {
   export interface Player {

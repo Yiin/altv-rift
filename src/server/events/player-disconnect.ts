@@ -1,5 +1,5 @@
 import * as alt from "@altv/server";
-import { isInGame } from "@/utility/assertions";
+import { isInGame } from "@/core/utility/assertions";
 
 alt.Events.onPlayerDisconnect(async ({ player, reason }) => {
   alt.log(`Player ${player.name} disconnected. Reason: ${reason}`);

@@ -1,15 +1,16 @@
 import * as alt from "@altv/client";
-import * as game from "@altv/natives";
-import { Npc } from "@shared/modules/npc/list";
+import { PedKey } from "@shared/modules/ped/list";
 import { Quests } from "@shared/modules/quests";
 import { ServerEvents } from "@shared/events/server";
-import { NpcInteraction } from "@shared/modules/npc/interactions";
+import { PedInteraction } from "@shared/modules/ped/interactions";
 import { ConversationOption } from "@shared/interfaces/conversation";
+import { getInventoryItemByKey } from "@shared/modules/inventory";
+import { TreeLogs } from "@shared/modules/items";
 import { IconName } from "@/core/rmlui/components/icon/icon";
 import { useCharacter } from "@/core/store/character.store";
 import { whileEntityIsStreamedIn } from "@/core/game-state-hooks/entity-is-streamed-in.state";
 import { registerQuest } from "../../lib/register-quest";
-import { registerNpcInteractions } from "../../lib/register-npc-interactions";
+import { registerPedInteractions } from "../../lib/register-ped-interactions";
 import { startConversation } from "../../conversation";
 import CAL_INTRODUCTION from "./conversations/0_CAL_INTRODUCTION.yaml";
 import CAL_MEDKIT_HELP from "./conversations/1_0_CAL_MEDKIT_HELP.yaml";
@@ -24,6 +25,7 @@ import MINING_TUTOR_INTRO from "./conversations/8_MINING_TUTOR_INTRO.yaml";
 import FISHING_TUTOR_INTRO from "./conversations/9_FISHING_TUTOR_INTRO.yaml";
 import WOODCUTTING_TUTOR_INTRO from "./conversations/10_WOODCUTTING_TUTOR_INTRO.yaml";
 import CRAFTING_TUTOR_INTRO from "./conversations/11_CRAFTING_TUTOR_INTRO.yaml";
+import WOODCUTTING_TUTOR_COMPLETE from "./conversations/10_WOODCUTTING_TUTOR_COMPLETE.yaml";
 
 whileEntityIsStreamedIn(
   (entity): entity is alt.Ped => entity instanceof alt.Ped,
@@ -119,8 +121,8 @@ registerQuest(Quests.Introduction.Key, {
   ],
 });
 
-registerNpcInteractions(Npc.CAL_BURNETT, (ped) => {
-  const interactions: NpcInteraction<IconName>[] = [];
+registerPedInteractions(PedKey.CAL_BURNETT, (ped) => {
+  const interactions: PedInteraction<IconName>[] = [];
 
   const questFacts = useCharacter().questFacts ?? [];
 
@@ -140,7 +142,7 @@ registerNpcInteractions(Npc.CAL_BURNETT, (ped) => {
           ],
         }).then((option) => {
           if (option?.value === "accept") {
-            alt.Events.emitServer(
+            alt.Events.emitServerRaw(
               ServerEvents.FromClient.NOTIFY,
               Quests.Introduction.Facts.GOT_INTRODUCTION
             );
@@ -183,7 +185,7 @@ registerNpcInteractions(Npc.CAL_BURNETT, (ped) => {
           options: [{ value: "confirm", label: "Confirm", color: "primary" }, { label: "Cancel" }],
         }).then((option) => {
           if (option?.value === "confirm") {
-            alt.Events.emitServer(
+            alt.Events.emitServerRaw(
               ServerEvents.FromClient.NOTIFY,
               Quests.Introduction.Facts.GOT_DIRECTIONS
             );
@@ -196,8 +198,8 @@ registerNpcInteractions(Npc.CAL_BURNETT, (ped) => {
   return interactions;
 });
 
-registerNpcInteractions(Npc.DIEGO_MOREIRA, (ped) => {
-  const interactions: NpcInteraction<IconName>[] = [];
+registerPedInteractions(PedKey.DIEGO_MOREIRA, (ped) => {
+  const interactions: PedInteraction<IconName>[] = [];
 
   const questFacts = useCharacter().questFacts ?? [];
 
@@ -247,7 +249,7 @@ registerNpcInteractions(Npc.DIEGO_MOREIRA, (ped) => {
         options: [{ value: "complete", label: "Complete", color: "primary" }],
       }).then((option) => {
         if (option?.value === "complete") {
-          alt.Events.emitServer(ServerEvents.FromClient.NOTIFY, selectedOption.value);
+          alt.Events.emitServerRaw(ServerEvents.FromClient.NOTIFY, selectedOption.value);
         }
       });
     });
@@ -267,7 +269,7 @@ registerNpcInteractions(Npc.DIEGO_MOREIRA, (ped) => {
           topic: "Introduction",
           pages: DIEGO_ASSIGNMENTS.slice(0, DIEGO_ASSIGNMENTS.length - 1),
         }).then(() => {
-          alt.Events.emitServer(
+          alt.Events.emitServerRaw(
             ServerEvents.FromClient.NOTIFY,
             Quests.Introduction.Facts.DIEGO_INTRO
           );
@@ -307,7 +309,7 @@ registerNpcInteractions(Npc.DIEGO_MOREIRA, (ped) => {
                 { label: "Cancel" },
               ],
             }).then(() => {
-              alt.Events.emitServer(
+              alt.Events.emitServerRaw(
                 ServerEvents.FromClient.NOTIFY,
                 Quests.Introduction.Facts.COMPLETED_ALL
               );
@@ -321,8 +323,8 @@ registerNpcInteractions(Npc.DIEGO_MOREIRA, (ped) => {
   return interactions;
 });
 
-registerNpcInteractions(Npc.FISHING_TUTOR, (ped) => {
-  const interactions: NpcInteraction<IconName>[] = [];
+registerPedInteractions(PedKey.FISHING_TUTOR, (ped) => {
+  const interactions: PedInteraction<IconName>[] = [];
 
   const questFacts = useCharacter().questFacts ?? [];
 
@@ -341,7 +343,7 @@ registerNpcInteractions(Npc.FISHING_TUTOR, (ped) => {
           options: [{ value: "accept", label: "Accept", color: "primary" }],
         }).then((option) => {
           if (option?.value === "accept") {
-            alt.Events.emitServer(
+            alt.Events.emitServerRaw(
               ServerEvents.FromClient.NOTIFY,
               Quests.Introduction.Facts.STARTED_FISHING
             );
@@ -354,8 +356,8 @@ registerNpcInteractions(Npc.FISHING_TUTOR, (ped) => {
   return interactions;
 });
 
-registerNpcInteractions(Npc.MINING_TUTOR, (ped) => {
-  const interactions: NpcInteraction<IconName>[] = [];
+registerPedInteractions(PedKey.MINING_TUTOR, (ped) => {
+  const interactions: PedInteraction<IconName>[] = [];
 
   const questFacts = useCharacter().questFacts ?? [];
 
@@ -374,7 +376,7 @@ registerNpcInteractions(Npc.MINING_TUTOR, (ped) => {
           options: [{ value: "accept", label: "Accept", color: "primary" }],
         }).then((option) => {
           if (option?.value === "accept") {
-            alt.Events.emitServer(
+            alt.Events.emitServerRaw(
               ServerEvents.FromClient.NOTIFY,
               Quests.Introduction.Facts.STARTED_MINING
             );
@@ -387,8 +389,8 @@ registerNpcInteractions(Npc.MINING_TUTOR, (ped) => {
   return interactions;
 });
 
-registerNpcInteractions(Npc.WOODCUTTING_TUTOR, (ped) => {
-  const interactions: NpcInteraction<IconName>[] = [];
+registerPedInteractions(PedKey.WOODCUTTING_TUTOR, (ped) => {
+  const interactions: PedInteraction<IconName>[] = [];
 
   const questFacts = useCharacter().questFacts ?? [];
 
@@ -407,7 +409,7 @@ registerNpcInteractions(Npc.WOODCUTTING_TUTOR, (ped) => {
           options: [{ value: "accept", label: "Accept", color: "primary" }],
         }).then((option) => {
           if (option?.value === "accept") {
-            alt.Events.emitServer(
+            alt.Events.emitServerRaw(
               ServerEvents.FromClient.NOTIFY,
               Quests.Introduction.Facts.STARTED_WOODCUTTING
             );
@@ -417,11 +419,40 @@ registerNpcInteractions(Npc.WOODCUTTING_TUTOR, (ped) => {
     });
   }
 
+  if (
+    questFacts.includes(Quests.Introduction.Facts.STARTED_WOODCUTTING) &&
+    !questFacts.includes(Quests.Introduction.Facts.COMPLETED_WOODCUTTING)
+  ) {
+    const palmLogs = getInventoryItemByKey(useCharacter().inventory, TreeLogs.PALM_LOGS);
+
+    if (palmLogs && palmLogs.item.amount >= 50) {
+      interactions.push({
+        key: Quests.Introduction.Facts.COMPLETED_WOODCUTTING,
+        icon: "quest",
+        label: "Talk",
+        onSelect() {
+          startConversation(ped, {
+            topic: "Introduction",
+            pages: WOODCUTTING_TUTOR_COMPLETE,
+            options: [{ value: "complete", label: "Complete", color: "primary" }],
+          }).then((option) => {
+            if (option?.value === "complete") {
+              alt.Events.emitServerRaw(
+                ServerEvents.FromClient.NOTIFY,
+                Quests.Introduction.Facts.COMPLETED_WOODCUTTING
+              );
+            }
+          });
+        },
+      });
+    }
+  }
+
   return interactions;
 });
 
-registerNpcInteractions(Npc.CRAFTING_TUTOR, (ped) => {
-  const interactions: NpcInteraction<IconName>[] = [];
+registerPedInteractions(PedKey.CRAFTING_TUTOR, (ped) => {
+  const interactions: PedInteraction<IconName>[] = [];
 
   const questFacts = useCharacter().questFacts ?? [];
 
@@ -440,7 +471,7 @@ registerNpcInteractions(Npc.CRAFTING_TUTOR, (ped) => {
           options: [{ value: "accept", label: "Accept", color: "primary" }],
         }).then((option) => {
           if (option?.value === "accept") {
-            alt.Events.emitServer(
+            alt.Events.emitServerRaw(
               ServerEvents.FromClient.NOTIFY,
               Quests.Introduction.Facts.STARTED_CRAFTING
             );

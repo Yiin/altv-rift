@@ -3,7 +3,7 @@ export enum PlayerFlags {
   IsFishing = "IsFishing",
 }
 
-interface GameState {
+export interface GameState {
   isInGame: boolean;
   isLoggedIn: boolean;
   flags: Set<PlayerFlags>;

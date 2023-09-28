@@ -21,7 +21,7 @@ declare module "@altv/client" {
 
 declare module "@altv/shared" {
   export interface PedStreamSyncedMeta {
-    key?: import("../../src/shared/modules/npc/list").Npc;
+    key?: import("../../src/shared/modules/ped/list").PedKey;
     name?: string;
   }
 

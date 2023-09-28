@@ -13,6 +13,7 @@ import { ServerCall } from "@shared/calls/server";
 import { CallFromClient } from "@shared/calls/server/from-client";
 import { CallFromWebview, FromWebview } from "@shared/calls/server/from-webview";
 import { createPayload } from "@shared/utility/create-payload";
+import { serialize } from "@shared/utility/serializer";
 
 const clientProcedures = new Map<string, (player: alt.Player, ...args: any[]) => any>();
 const clientHandlers = new Map<
@@ -73,6 +74,7 @@ alt.Events.onPlayer(CALL_SERVER_FROM_CLIENT, async (player, payload) => {
       throw new Error(`CALL_SERVER_FROM_CLIENT: Procedure ${name} does not exist`);
     }
 
+    console.log("CALL_SERVER_FROM_CLIENT", name, args);
     const result = await callback(player, ...args);
     player.emitRaw(CALL_SERVER_FROM_CLIENT_RESPONSE, {
       id,

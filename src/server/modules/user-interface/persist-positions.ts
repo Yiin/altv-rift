@@ -1,7 +1,7 @@
 import { Interface } from "@prisma/client";
 import { ServerCall } from "@shared/calls/server";
-import { rpc } from "@/rpc";
-import { needsToBeLoggedIn } from "@/utility/assertions";
+import { rpc } from "@/core/rpc";
+import { needsToBeLoggedIn } from "@/core/utility/assertions";
 
 rpc.registerWebview(ServerCall.FromWebview.MOVE_WINDOW, (player, name, screen) => {
   needsToBeLoggedIn(player);

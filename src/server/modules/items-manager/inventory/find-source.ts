@@ -1,5 +1,5 @@
 import * as alt from "@altv/server";
-import { InGamePlayer } from "@/utility/assertions";
+import { InGamePlayer } from "@/core/utility/assertions";
 import { findSourceInventory } from "../api/hooks";
 
 findSourceInventory.hook((source) => {

@@ -9,8 +9,8 @@ import { CallFromWebview } from "@shared/calls/client/from-webview";
 import { WebviewCall } from "@shared/calls/webview";
 import { CallFromClient } from "@shared/calls/webview/from-client";
 import { createPayload } from "@shared/utility/create-payload";
+import { deserialize } from "@shared/utility/serializer";
 import { getWebview } from "@/core/user-interface/webview";
-import { deserialize, serialize } from "./serialization";
 
 const webviewProcedures = new Map<string, any>();
 const webviewHandlers = new Map<
@@ -24,7 +24,7 @@ export const callWebview = async <T extends keyof typeof WebviewCall.FromClient>
   ...args: Shift<Parameters<CallFromClient[T]>>
 ) => {
   return new Promise<ReturnType<CallFromClient[T]>>((resolve, reject) => {
-    const payload = createPayload(name, serialize(args));
+    const payload = createPayload(name, args);
 
     getWebview().emitRaw(CALL_WEBVIEW_FROM_CLIENT, payload);
     webviewHandlers.set(payload.id, { resolve, reject });
@@ -34,6 +34,8 @@ export const callWebview = async <T extends keyof typeof WebviewCall.FromClient>
 // get response from webview on client
 getWebview((webview) =>
   webview.on(CALL_WEBVIEW_FROM_CLIENT_RESPONSE, (response) => {
+    response = deserialize(response);
+
     const handler = webviewHandlers.get(response.id);
     if (!handler) {
       return;
@@ -44,7 +46,7 @@ getWebview((webview) =>
       handler.reject(response);
       return;
     }
-    handler.resolve(deserialize(response.result));
+    handler.resolve(response.result);
   })
 );
 
@@ -66,7 +68,7 @@ export const unregisterWebview = <T extends keyof typeof ClientCall.FromWebview>
 // handle call from webview on client
 getWebview((webview) => {
   webview.on(CALL_CLIENT_FROM_WEBVIEW, async (payload) => {
-    const { id, name, args } = payload;
+    const { id, name, args } = deserialize(payload);
     const callback = webviewProcedures.get(name);
 
     try {
@@ -78,10 +80,10 @@ getWebview((webview) => {
         id,
         result,
       });
-    } catch (error: any) {
+    } catch (error) {
       webview.emitRaw(CALL_CLIENT_FROM_WEBVIEW_RESPONSE, {
         id,
-        error: error.error,
+        error,
       });
     }
   });

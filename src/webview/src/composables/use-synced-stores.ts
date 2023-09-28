@@ -15,7 +15,8 @@ export function useSyncedStores() {
 
   on(WebviewEvents.FromClient.SET_CLIENT_STATE, (state: any) => {
     try {
-      clientStore.$state = state;
+      clientStore.$reset();
+      clientStore.$patch(state);
     } catch (e) {
       console.error('SET_CLIENT_STATE', e);
     }
@@ -46,7 +47,7 @@ export function useSyncedStores() {
       console.error('SET_USER_STATE', e);
     }
   });
-  on(WebviewEvents.FromClient.UPDATE_USER_STATE, (event: any) => {
+  on(WebviewEvents.FromClient.UPDATE_USER_STATE, (event) => {
     const userStore = useUser();
 
     try {
@@ -56,7 +57,7 @@ export function useSyncedStores() {
     }
   });
 
-  on(WebviewEvents.FromClient.SET_CHARACTER_STATE, (state: any) => {
+  on(WebviewEvents.FromClient.SET_CHARACTER_STATE, (state) => {
     const characterStore = useCharacter();
 
     if (characterStore) {

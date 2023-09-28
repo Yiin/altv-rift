@@ -1,21 +1,15 @@
 import * as alt from "@altv/server";
 import { toRaw } from "vue";
-import { isEqual } from "lodash";
 import { Inventory, InventoryItemSource } from "@shared/interfaces";
 import { Item, createItem, isStackable } from "@shared/modules/items";
+import { ServerEvents } from "@shared/events/server";
+import {
+  getInventoryItem,
+  getInventoryItemByKey,
+  getInventoryItemInSlot,
+} from "@shared/modules/inventory";
+import { emit } from "@/core/events/emit";
 import { findSourceInventory } from "./hooks";
-
-export function getInventoryItemInSlot(inventory: Inventory, slot: number) {
-  return inventory.items.find((item) => item.slot === slot);
-}
-
-export function getInventoryItem(inventory: Inventory, item: Item) {
-  return inventory.items.find((inventoryItem) => isEqual(inventoryItem.item, item));
-}
-
-export function getInventoryItemByKey(inventory: Inventory, key: string) {
-  return inventory.items.find((item) => item.item.key === key);
-}
 
 export function removeItem(source: InventoryItemSource, amount = 0): Item | null {
   const inventory = findSourceInventory.call(source);
@@ -74,6 +68,13 @@ export function addItemToInventory(inventory: Inventory, item: Item, slot?: numb
     if (existingItem) {
       if (isStackable(existingItem.item)) {
         existingItem.item.amount += item.amount;
+
+        emit(ServerEvents.FromServer.INVENTORY_ITEM_ADD, {
+          inventory,
+          item: existingItem.item,
+          slot: existingItem.slot,
+          amount: item.amount,
+        });
         return true;
       }
       // unreachable
@@ -91,6 +92,16 @@ export function addItemToInventory(inventory: Inventory, item: Item, slot?: numb
     slot: emptySlot,
     item: toRaw(item),
   });
+
+  const addedItem = getInventoryItemInSlot(inventory, emptySlot);
+
+  emit(ServerEvents.FromServer.INVENTORY_ITEM_ADD, {
+    inventory,
+    item: addedItem!.item,
+    slot: emptySlot,
+    amount: "amount" in item ? item.amount : 1,
+  });
+
   return true;
 }
 
@@ -126,10 +137,6 @@ export function swapItems(from: InventoryItemSource, to: InventoryItemSource) {
   }
 
   return true;
-}
-
-export function isInventoryFull(inventory: Inventory) {
-  return inventory.items.length >= inventory.size;
 }
 
 function findFreeInventorySlot(inventory: Inventory, slot?: number) {

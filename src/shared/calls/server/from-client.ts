@@ -35,5 +35,10 @@ export interface CallFromClient<
   [FromClient.RELOAD_WEAPON]: (player: P) => boolean;
   [FromClient.START_FISHING]: (player: P) => void;
   [FromClient.STOP_FISHING]: (player: P) => void;
-  [FromClient.TOGGLE_VEHICLE_DOOR]: (player: P, vehicleId: number, doorId: number) => void;
+  [FromClient.TOGGLE_VEHICLE_DOOR]: (
+    player: P,
+    vehicleId: number,
+    doorId: number,
+    shouldClose?: boolean
+  ) => void;
 }

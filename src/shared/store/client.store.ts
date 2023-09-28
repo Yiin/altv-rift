@@ -7,7 +7,6 @@
 
 import { Scene, UIElement } from "@shared/enums/ui";
 import { ConversationOption } from "@shared/interfaces/conversation";
-import { Quests } from "@shared/modules/quests";
 
 export type CurrentConversation = {
   with: string;
@@ -60,7 +59,7 @@ export type CurrentWindow = {
   interaction: null;
 };
 
-interface ClientState {
+export interface ClientState {
   ui: {
     scene: Scene | null;
     elements: Set<UIElement>;

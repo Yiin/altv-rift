@@ -1,6 +1,6 @@
 import * as alt from "@altv/server";
 import { Equipment } from "@shared/modules/items";
-import { InGamePlayer } from "@/utility/assertions";
+import { InGamePlayer } from "@/core/utility/assertions";
 
 declare module "@altv/server" {
   export interface Player {

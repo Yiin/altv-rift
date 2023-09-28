@@ -1,11 +1,12 @@
 import { onMounted, onUnmounted, reactive, ref } from "vue";
+import { EventFromClient } from "@shared/events/webview/from-client";
 
 export const useAlt = () => {
   const isMounted = ref(false);
 
   const onListeners = reactive<{ eventName: string; listener: (...args: any[]) => void }[]>([]);
 
-  const on = (eventName: string, listener: (...args: any[]) => void) => {
+  const on = <E extends keyof EventFromClient>(eventName: E, listener: EventFromClient[E]) => {
     onListeners.push({ eventName, listener });
     if (isMounted.value) {
       alt.on(eventName, listener);

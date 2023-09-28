@@ -7,7 +7,7 @@ import {
   isItemFishBait,
   isItemFishingRod,
 } from "@shared/modules/items";
-import { InGamePlayer } from "@/utility/assertions";
+import { InGamePlayer } from "@/core/utility/assertions";
 import { addItemToInventory, findItem, findSourceInventory, removeItem } from "../api";
 
 export function useFishBaitOnFishingRod(

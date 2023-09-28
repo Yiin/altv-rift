@@ -74,20 +74,27 @@ export function subscribeToStore<T extends Store>(
 
 export function updateStoreState<S extends Store>(
   store: S,
-  event: { type: string; target: any; key: string; newValue: any; path: string }
+  event: StoreUpdatePayload
 ) {
-  const { type, target, key, newValue, path } = event;
+  switch (event.type) {
+    case "add": {
+      const { path, target } = event;
 
-  switch (type) {
-    case "add":
       if (path) {
         set(store.$state, path, target);
       }
       break;
-    case "set":
+    }
+    case "set": {
+      const { path, key, newValue } = event;
+
       set(store.$state, `${path ? path + "." : ""}${key}`, newValue);
+      console.log(get(store, `${path ? path + "." : ""}${key}`));
       break;
-    case "delete":
+    }
+    case "delete": {
+      const { path, key } = event;
+
       if (path) {
         if (get(store.$state, path) instanceof Set) {
           get(store.$state, path)?.delete(key);
@@ -98,10 +105,14 @@ export function updateStoreState<S extends Store>(
         delete (store.$state as any)[key];
       }
       break;
-    case "clear":
+    }
+    case "clear": {
+      const { path } = event;
+
       if (path) {
         get(store.$state, path)?.clear();
       }
       break;
+    }
   }
 }

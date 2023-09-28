@@ -1,7 +1,7 @@
 import * as alt from "@altv/server";
 import { getItemInfoByKey } from "@shared/modules/items";
 import { isItemFirearmWeapon } from "@shared/modules/items/registry/weapons/firearm-weapon.items";
-import { InGamePlayer, isInGame } from "@/utility/assertions";
+import { InGamePlayer, isInGame } from "@/core/utility/assertions";
 
 declare module "@altv/server" {
   export interface Player {

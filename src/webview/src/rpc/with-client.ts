@@ -21,7 +21,7 @@ export const callClient = async <T extends keyof typeof ClientCall.FromWebview>(
   return new Promise<ReturnType<CallFromWebview[T]>>((resolve, reject) => {
     const payload = createPayload(name, args);
 
-    alt.emit(CALL_CLIENT_FROM_WEBVIEW, payload);
+    alt.emitRaw(CALL_CLIENT_FROM_WEBVIEW, payload);
     clientHandlers.set(payload.id, { resolve, reject });
   });
 };
@@ -66,12 +66,12 @@ alt.on(CALL_WEBVIEW_FROM_CLIENT, async (payload) => {
 
     const result = await callback(args);
 
-    alt.emit(CALL_WEBVIEW_FROM_CLIENT_RESPONSE, {
+    alt.emitRaw(CALL_WEBVIEW_FROM_CLIENT_RESPONSE, {
       id,
       result,
     });
   } catch (error) {
-    alt.emit(CALL_WEBVIEW_FROM_CLIENT_RESPONSE, {
+    alt.emitRaw(CALL_WEBVIEW_FROM_CLIENT_RESPONSE, {
       id,
       error,
     });

@@ -19,8 +19,9 @@ import { UIElement } from "@shared/enums/ui";
 const client = useClient();
 
 watchEffect(() => {
-  console.log([...client.ui.elements.values()].join(', '))
-})
+  console.log(client.ui.window);
+  console.log([...client.ui.elements.values()].join(', '));
+});
 </script>
 
 <template>

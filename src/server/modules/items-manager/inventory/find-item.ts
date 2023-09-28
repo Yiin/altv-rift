@@ -1,7 +1,7 @@
 import * as alt from "@altv/server";
 import { createItem } from "@shared/modules/items";
 import { isItemFirearmWeapon } from "@shared/modules/items/registry/weapons/firearm-weapon.items";
-import { InGamePlayer } from "@/utility/assertions";
+import { InGamePlayer } from "@/core/utility/assertions";
 import { findItem, getInventoryItemInSlot } from "../api";
 
 findItem.hook((itemSource, player) => {

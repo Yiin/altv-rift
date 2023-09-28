@@ -1,7 +1,7 @@
 import { ServerCall } from "@shared/calls/server";
 import { CombineType, getCombineType } from "@shared/modules/items";
-import { rpc } from "@/rpc";
-import { needsToBeInGame } from "@/utility/assertions";
+import { rpc } from "@/core/rpc";
+import { needsToBeInGame } from "@/core/utility/assertions";
 import { loadWeaponWithAmmo, unloadAmmoFromWeapon } from "../items/weapons/firearm_weapons";
 import { removeBaitFromFishingRod, useFishBaitOnFishingRod } from "../items/fishing-rod";
 import {

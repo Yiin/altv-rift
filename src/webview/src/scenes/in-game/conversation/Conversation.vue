@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import Screen from "@/components/Screen.vue";
 import { useClient } from "@/store/synced/client.store";
 import { computed } from "vue";
 

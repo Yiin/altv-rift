@@ -2,6 +2,7 @@ import * as alt from "@altv/server";
 import { ServerEvents } from "@shared/events/server";
 import { isItemClothing, getItemInfoByKey, getItemEquipmentSlot } from "@shared/modules/items";
 import { getTorsoForTop } from "@shared/modules/items/registry/clothing/get-correct-torso";
+import { on } from "@/core/events/emit";
 
 export function isComponentVariation(equipmentSlot: string) {
   return [
@@ -22,7 +23,7 @@ export function isProp(equipmentSlot: string) {
   return ["glasses", "headwear", "earrings", "lefthand", "righthand"].includes(equipmentSlot);
 }
 
-alt.Events.on(ServerEvents.FromServer.EQUIP_ITEM, (player, item) => {
+on(ServerEvents.FromServer.ITEM_EQUIP, (player, item) => {
   if (!isItemClothing(item)) {
     return;
   }
@@ -48,7 +49,7 @@ alt.Events.on(ServerEvents.FromServer.EQUIP_ITEM, (player, item) => {
   }
 });
 
-alt.Events.on(ServerEvents.FromServer.UNEQUIP_ITEM, (player, equipmentSlot) => {
+on(ServerEvents.FromServer.ITEM_UNEQUIP, (player, equipmentSlot) => {
   if (isComponentVariation(equipmentSlot)) {
     const componentId =
       {

@@ -14,7 +14,7 @@ export const CALL_CLIENT_FROM_WEBVIEW_RESPONSE = "r:cw";
 type CallPayload = {
   id: string;
   name: string;
-  args: any[];
+  args: any;
 };
 
 type CallResultPayload = {

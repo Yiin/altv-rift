@@ -1,7 +1,8 @@
 import * as alt from "@altv/server";
 import { ServerEvents } from "@shared/events/server";
 import { Equipment } from "@shared/modules/items";
-import { InGamePlayer, isInGame } from "@/utility/assertions";
+import { InGamePlayer, isInGame } from "@/core/utility/assertions";
+import { emit } from "@/core/events/emit";
 
 declare module "@altv/server" {
   export interface Player {
@@ -18,7 +19,7 @@ alt.Player.prototype.applyEquipment = function () {
       continue;
     }
 
-    alt.Events.emit(ServerEvents.FromServer.EQUIP_ITEM, this, item);
+    emit(ServerEvents.FromServer.ITEM_EQUIP, this, item);
   }
 };
 

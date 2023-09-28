@@ -46,7 +46,7 @@ declare module "@altv/server" {
     static getByID(type: altShared.Enums.BaseObjectType, id: number): BaseObject | null;
   }
 
-  interface SharedBlipCreateOptions {
+  export interface SharedBlipCreateOptions {
     global: boolean;
     targets?: Array<Entity>;
 
@@ -190,7 +190,7 @@ declare module "@altv/server" {
     readonly syncedMeta: altShared.ColShapeSyncedMeta;
   }
 
-  interface CheckpointCreateOptions {
+  export interface CheckpointCreateOptions {
     type: altShared.Enums.CheckpointType;
     pos: altShared.IVector3;
     radius: number;
@@ -268,7 +268,7 @@ declare module "@altv/server" {
     destroy(): void;
   }
 
-  interface ObjectCreateOptions {
+  export interface ObjectCreateOptions {
     model: number | string;
     pos: altShared.IVector3;
     rot?: altShared.IVector3; // default: { x: 0, y: 0, z: 0 }
@@ -294,7 +294,7 @@ declare module "@altv/server" {
     static readonly all: ReadonlyArray<Object>;
   }
 
-  interface PedCreateOptions {
+  export interface PedCreateOptions {
     model: number | string;
     pos: altShared.IVector3;
     heading: number;
@@ -550,7 +550,7 @@ declare module "@altv/server" {
     static restart(resourceName: string): void;
   }
 
-  interface VehicleCreateOptions {
+  export interface VehicleCreateOptions {
     model: number | string;
     pos: altShared.IVector3;
     rot?: altShared.IVector3; // default: { x: 0, y: 0, z: 0 }
@@ -614,7 +614,7 @@ declare module "@altv/server" {
     petrolTankHealth: number;
     bodyHealth: number;
     bodyAdditionalHealth: number;
-    manualEngineControl: number;
+    manualEngineControl: boolean;
     damageDataBase64: string;
     scriptDataBase64: string;
     gameStateDataBase64: string;
@@ -714,7 +714,7 @@ declare module "@altv/server" {
     static all: ReadonlyArray<Vehicle>;
   }
 
-  interface VirtualEntityCreateOptions {
+  export interface VirtualEntityCreateOptions {
     group: VirtualEntityGroup;
     pos: altShared.IVector3;
     streamingDistance: number;
@@ -742,7 +742,7 @@ declare module "@altv/server" {
     static create(opts: VirtualEntityCreateOptions): VirtualEntity;
   }
 
-  interface VoiceChannelCreateOptions {
+  export interface VoiceChannelCreateOptions {
     spatial: boolean;
     maxDistance?: number;
   }
@@ -905,13 +905,6 @@ declare module "@altv/server" {
     export function emitRaw<E extends string>(
       event: Exclude<E, keyof CustomServerEvent>,
       ...args: unknown[]
-    ): void;
-
-    export function answerPlayerRPC(player: Player, answerId: number, ...args: unknown[]): void;
-    export function answerPlayerRPCWithError(
-      player: Player,
-      answerId: number,
-      errorMessage: string
     ): void;
 
     export function emitPlayers<E extends keyof altShared.Events.CustomServerToPlayerEvent>(

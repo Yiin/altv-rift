@@ -28,7 +28,7 @@ async function handleConnectionComplete() {
   setupGameSettings();
 
   alt.log("Connection complete, notifying server...");
-  alt.Events.emitServer(ServerEvents.FromClient.BEGIN_CONNECTION);
+  alt.Events.emitServerRaw(ServerEvents.FromClient.BEGIN_CONNECTION);
 }
 
 function setupGameSettings() {

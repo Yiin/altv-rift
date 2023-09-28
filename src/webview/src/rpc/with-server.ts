@@ -9,6 +9,7 @@ import { CallFromWebview } from "@shared/calls/server/from-webview";
 import { WebviewCall } from "@shared/calls/webview";
 import { CallFromServer } from "@shared/calls/webview/from-server";
 import { createPayload } from "@shared/utility/create-payload";
+import { deserialize, serialize } from "@shared/utility/serializer";
 
 const serverProcedures = new Map<string, (args: any) => any>();
 const serverHandlers = new Map<string, { resolve: Function; reject: Function }>();
@@ -20,7 +21,7 @@ export const callServer = async <T extends keyof typeof ServerCall.FromWebview>(
   return new Promise<ReturnType<CallFromWebview[T]>>((resolve, reject) => {
     const payload = createPayload(name, args);
 
-    alt.emit(CALL_SERVER_FROM_WEBVIEW, payload);
+    alt.emitRaw(CALL_SERVER_FROM_WEBVIEW, payload);
     serverHandlers.set(payload.id, { resolve, reject });
   });
 };
@@ -33,10 +34,10 @@ alt.on(CALL_SERVER_FROM_WEBVIEW_RESPONSE, (response) => {
   serverHandlers.delete(response.id);
 
   if (response.error) {
-    handler.reject(response);
+    handler.reject(deserialize(response.error));
     return;
   }
-  handler.resolve(response.result);
+  handler.resolve(deserialize(response.result));
 });
 
 export const registerServer = <T extends keyof typeof WebviewCall.FromServer>(
@@ -64,12 +65,12 @@ alt.on(CALL_WEBVIEW_FROM_SERVER, async (payload) => {
 
     const result = await callback(args);
 
-    alt.emit(CALL_WEBVIEW_FROM_SERVER_RESPONSE, {
+    alt.emitRaw(CALL_WEBVIEW_FROM_SERVER_RESPONSE, {
       id,
       result,
     });
   } catch (error) {
-    alt.emit(CALL_WEBVIEW_FROM_SERVER_RESPONSE, {
+    alt.emitRaw(CALL_WEBVIEW_FROM_SERVER_RESPONSE, {
       id,
       error,
     });

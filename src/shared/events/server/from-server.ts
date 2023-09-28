@@ -1,32 +1,35 @@
 import * as alt from "@altv/server";
-import { EquipmentSlot } from "@shared/interfaces";
-import { Item } from "@shared/modules/items";
-import { InGamePlayer } from "../../../server/utility/assertions";
+import { EquipmentSlot, Inventory } from "@shared/interfaces";
+import { Item, TreeLogItem } from "@shared/modules/items";
+import { InGamePlayer } from "../../../server/core/utility/assertions";
 
 export const FromServer = {
-  USER_LOADED: "USER_LOADED",
+  USER_LOAD: "USER_LOAD",
   MANUAL_DISCORD_AUTH_DONE: "MANUAL_DISCORD_AUTH_DONE",
-  USE_ITEM: "USE_ITEM",
-  EQUIP_ITEM: "EQUIP_ITEM", // Handles equipment effects, not player equipment state
-  UNEQUIP_ITEM: "UNEQUIP_ITEM",
-  DROP_ITEM: "DROP_ITEM",
+  ITEM_USE: "ITEM_USE",
+  ITEM_EQUIP: "ITEM_EQUIP", // Handles equipment effects, not player equipment state
+  ITEM_UNEQUIP: "ITEM_UNEQUIP",
+  ITEM_DROP: "ITEM_DROP",
+  INVENTORY_ITEM_ADD: "INVENTORY_ITEM_ADD",
 } as const;
 
-declare module "@altv/server" {
-  namespace Events {
-    interface CustomServerEvent {
-      [FromServer.USER_LOADED]: (player: alt.Player) => Promise<void> | void;
-      [FromServer.MANUAL_DISCORD_AUTH_DONE]: (
-        player: alt.Player,
-        token: string
-      ) => Promise<void> | void;
-      [FromServer.USE_ITEM]: (player: InGamePlayer, item: Item) => Promise<void> | void;
-      [FromServer.EQUIP_ITEM]: (player: InGamePlayer, item: Item) => Promise<void> | void;
-      [FromServer.UNEQUIP_ITEM]: (
-        player: InGamePlayer,
-        equipmentSlot: EquipmentSlot
-      ) => Promise<void> | void;
-      [FromServer.DROP_ITEM]: (player: InGamePlayer, item: Item) => Promise<void> | void;
-    }
-  }
+export interface CustomServerEvent {
+  [FromServer.USER_LOAD]: (player: alt.Player) => Promise<void> | void;
+  [FromServer.MANUAL_DISCORD_AUTH_DONE]: (
+    player: alt.Player,
+    token: string
+  ) => Promise<void> | void;
+  [FromServer.ITEM_USE]: (player: InGamePlayer, item: Item) => Promise<void> | void;
+  [FromServer.ITEM_EQUIP]: (player: InGamePlayer, item: Item) => Promise<void> | void;
+  [FromServer.ITEM_UNEQUIP]: (
+    player: InGamePlayer,
+    equipmentSlot: EquipmentSlot
+  ) => Promise<void> | void;
+  [FromServer.ITEM_DROP]: (player: InGamePlayer, item: Item) => Promise<void> | void;
+  [FromServer.INVENTORY_ITEM_ADD]: (event: {
+    inventory: Inventory;
+    item: Item;
+    slot: number;
+    amount: number;
+  }) => Promise<void> | void;
 }

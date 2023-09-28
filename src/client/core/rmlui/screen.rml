@@ -1,6 +1,6 @@
 <rml>
   <head>
-    <title>NPC</title>
+    <title>RMLUI</title>
     <style>
       body {
         font-family: josefinsans-regular;
@@ -13,11 +13,11 @@
         display: none;
       }
     </style>
-    <link type="text/rcss" href="/client/core/rmlui/tree/tree.rcss"/>
-    <link type="text/rcss" href="/client/core/rmlui/vehicle/action.rcss"/>
-    <link type="text/rcss" href="/client/core/rmlui/npc/nametag.rcss"/>
-    <link type="text/rcss" href="/client/core/rmlui/npc/interaction.rcss"/>
-    <link type="text/rcss" href="/client/core/rmlui/components/icon/icon.rcss"/>
+    <link type="text/rcss" href="/client/core/rmlui/vehicle/action.rcss" />
+    <link type="text/rcss" href="/client/core/rmlui/ped/nametag.rcss" />
+    <link type="text/rcss" href="/client/core/rmlui/ped/interaction.rcss" />
+    <link type="text/rcss" href="/client/core/rmlui/tree/tree.rcss" />
+    <link type="text/rcss" href="/client/core/rmlui/components/icon/icon.rcss" />
   </head>
   <body id="container"></body>
 </rml>

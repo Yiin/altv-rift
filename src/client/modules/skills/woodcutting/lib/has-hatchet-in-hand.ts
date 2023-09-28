@@ -1,6 +1,12 @@
-import * as alt from "@altv/client";
-import { MeleeWeapon, getWeaponHash } from "@shared/modules/items";
+import { isItemKeyHatchet } from "@shared/modules/items";
+import { useCharacter } from "@/core/store/character.store";
 
 export function hasHatchetInHand() {
-  return alt.Player.local.currentWeapon === getWeaponHash(MeleeWeapon.HATCHET);
+  const currentTool = useCharacter().equipment.tool?.key;
+
+  if (!currentTool) {
+    return false;
+  }
+
+  return isItemKeyHatchet(currentTool);
 }

@@ -1,6 +1,6 @@
 import * as alt from "@altv/server";
 import { PlayerFlags } from "@shared/store/game-state.store";
-import { isInGame } from "@/utility/assertions";
+import { isInGame } from "@/core/utility/assertions";
 import WATER_ZONES from "./water-zones.json";
 
 declare module "@altv/server" {

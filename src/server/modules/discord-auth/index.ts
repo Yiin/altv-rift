@@ -6,9 +6,10 @@ import { ClientEvents } from "@shared/events/client";
 import { ServerCall } from "@shared/calls/server";
 import { container } from "@shared/dependency-injection";
 import { User } from "@shared/interfaces";
-import { checkForQuestionableActivity } from "@/utility/questionable-activity";
-import { LoggedInPlayer, isLoggedIn } from "@/utility/assertions";
-import { rpc } from "@/rpc";
+import { checkForQuestionableActivity } from "@/core/utility/questionable-activity";
+import { LoggedInPlayer, isLoggedIn } from "@/core/utility/assertions";
+import { emit, on } from "@/core/events/emit";
+import { rpc } from "@/core/rpc";
 import { getDiscordAuthUrl } from "./verify";
 import "./webserver";
 
@@ -49,7 +50,7 @@ rpc.registerClient(ServerCall.FromClient.TRY_CACHED_TOKEN, async (player, token)
 
 // native altv discord auth
 // webserver based discord auth
-alt.Events.on(ServerEvents.FromServer.MANUAL_DISCORD_AUTH_DONE, (player, token) =>
+on(ServerEvents.FromServer.MANUAL_DISCORD_AUTH_DONE, (player, token) =>
   onDiscordAuthDone(player, token)
 );
 
@@ -83,7 +84,7 @@ async function onDiscordAuthDone(player: alt.Player, token: string) {
 
   await player.loadUser(user);
 
-  alt.Events.emit(ServerEvents.FromServer.USER_LOADED, player as LoggedInPlayer);
+  emit(ServerEvents.FromServer.USER_LOAD, player as LoggedInPlayer);
 }
 
 async function getDiscordInfo(token: string) {

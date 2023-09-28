@@ -9,7 +9,7 @@ alt.Events.onServer(ClientEvents.FromServer.SCREENSHOT_CREATE, async () => {
   const totalLength = data.length;
 
   for (let i = 0; i < totalLength; i++) {
-    alt.Events.emitServer(ServerEvents.FromClient.SCREENSHOT_POPULATE_DATA, {
+    alt.Events.emitServerRaw(ServerEvents.FromClient.SCREENSHOT_POPULATE_DATA, {
       data: data[i],
       i,
       totalLength,

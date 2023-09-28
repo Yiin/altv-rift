@@ -8,8 +8,8 @@ import {
 } from "@shared/modules/items/registry/fish-bait.items";
 import { FishingRodItem, createItem, isItemFishingRod } from "@shared/modules/items";
 import { InventoryItem } from "@shared/interfaces";
-import { rpc } from "@/rpc";
-import { isInGame, needsToBeInGame } from "@/utility/assertions";
+import { rpc } from "@/core/rpc";
+import { isInGame, needsToBeInGame } from "@/core/utility/assertions";
 import { sendChatMessage } from "@/modules/chat";
 
 rpc.registerClient(ServerCall.FromClient.START_FISHING, (player: alt.Player) => {

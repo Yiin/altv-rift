@@ -1,14 +1,14 @@
 import * as alt from "@altv/client";
 import * as game from "@altv/natives";
 import { computed, ComputedRef, watch } from "vue";
-import { NpcInteraction } from "@shared/modules/npc/interactions";
+import { PedInteraction } from "@shared/modules/ped/interactions";
 import { IconName } from "@/core/rmlui/components/icon/icon";
 import { clientState } from "@/core/store/client.store";
-import { getNpcInteractions } from "./lib/register-npc-interactions";
+import { getPedInteractions } from "./lib/register-ped-interactions";
 
 declare module "@altv/client" {
   export interface Ped {
-    interactions: ComputedRef<NpcInteraction<IconName>[]>;
+    interactions: ComputedRef<PedInteraction<IconName>[]>;
     blip?: alt.Blip["scriptID"];
     cleanupFns: (() => void)[];
   }
@@ -28,12 +28,12 @@ alt.Events.onGameEntityCreate(({ entity }) => {
   }
 
   /**
-   * How can we interact with this npc?
+   * How can we interact with this ped?
    * USING MENU ITEMS
    * interactions are these menu items
    */
   entity.interactions = computed(() =>
-    getNpcInteractions(key)
+    getPedInteractions(key)
       .map((registration) => registration(entity))
       .flat()
   );
@@ -42,9 +42,9 @@ alt.Events.onGameEntityCreate(({ entity }) => {
   });
 
   /**
-   * How can we see interactable npcs on the map?
+   * How can we see interactable peds on the map?
    * USING BLIPS
-   * so we create the blips based on interactions of this npc
+   * so we create the blips based on interactions of this ped
    */
   const stopBlipWatch = watch([entity.interactions, clientState], ([interactions]) => {
     if (!interactions.length) {
@@ -60,7 +60,7 @@ alt.Events.onGameEntityCreate(({ entity }) => {
         game.setBlipSprite(entity.blip, alt.Enums.BlipSprite.FINDERS_KEEPERS);
       }
 
-      // Set the blip color based on if we are tracking the quest task this npc is responsible for
+      // Set the blip color based on if we are tracking the quest task this ped is responsible for
       const trackingSameQuest = interactions.some(
         (interaction) => interaction.key === clientState.trackingQuest
       );

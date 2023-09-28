@@ -1,4 +1,4 @@
-const DefaultViteServer = "192.168.68.104";
+const DefaultViteServer = "127.0.0.1";
 const DefaultVitePort = 5173;
 let isVueDebug = true;
 

@@ -3,9 +3,9 @@ import { Pinia, Store, createPinia, defineStore } from "pinia";
 import { ClientEvents } from "@shared/events/client";
 import { subscribeToStore } from "@shared/store/utils";
 import { Character, User } from "@shared/interfaces";
-import { serverStore } from "@/store/server.store";
-import { LoggedInPlayer } from "@/utility/assertions";
-import { useGameState } from "@/store/game-state.store";
+import { serverStore } from "@/core/store/server.store";
+import { LoggedInPlayer } from "@/core/utility/assertions";
+import { useGameState } from "@/core/store/game-state.store";
 
 declare module "@altv/server" {
   export interface Player {

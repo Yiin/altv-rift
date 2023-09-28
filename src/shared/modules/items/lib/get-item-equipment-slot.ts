@@ -17,7 +17,7 @@ import {
   isItemKeyShoes,
   isItemKeyTop,
 } from "../registry";
-import { isItemKeyTool } from "../registry/tool.items";
+import { isItemKeyTool } from "../registry/tools/tool.items";
 import { Item, ItemKey } from "../types";
 import { getItemInfoByKey } from "../items-registry";
 

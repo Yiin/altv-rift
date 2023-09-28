@@ -2,13 +2,14 @@ import * as alt from "@altv/server";
 import { EquipmentSlot, InventoryItemSource } from "@shared/interfaces";
 import { ServerEvents } from "@shared/events/server";
 import { Equipment } from "@shared/modules/items";
-import { InGamePlayer } from "@/utility/assertions";
+import { InGamePlayer } from "@/core/utility/assertions";
 import {
   addItemToInventory,
   findSourceInventory,
   unloadAmmoFromWeapon,
   unloadWeaponItemAmmo,
 } from "@/modules/items-manager";
+import { emit } from "@/core/events/emit";
 
 declare module "@altv/server" {
   export interface Player {
@@ -63,7 +64,7 @@ alt.Player.prototype.unequipItem = function (equipmentSlot, to) {
     this.character.equipment[slot] = null;
   }
 
-  alt.Events.emit(ServerEvents.FromServer.UNEQUIP_ITEM, this, equipmentSlot);
+  emit(ServerEvents.FromServer.ITEM_UNEQUIP, this, equipmentSlot);
   return true;
 };
 
@@ -88,6 +89,6 @@ alt.Player.prototype.removeEquipedItem = function (equipmentSlot) {
     this.character.equipment[slot] = null;
   }
 
-  alt.Events.emit(ServerEvents.FromServer.UNEQUIP_ITEM, this, equipmentSlot);
+  emit(ServerEvents.FromServer.ITEM_UNEQUIP, this, equipmentSlot);
   return true;
 };

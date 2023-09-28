@@ -37,7 +37,7 @@ function syncSettings(
 ) {
   setOptions(settings);
   setCommandSuggestions([...commandSuggestions.value, ..._commandSuggestions]);
-  window?.alt?.emit("vchat:mounted");
+  window?.alt?.emitRaw("vchat:mounted");
 }
 
 /**
@@ -58,7 +58,7 @@ onMounted(() => {
   window?.alt?.on("vchat:focus", toggleFocus);
   window?.alt?.on("vchat:syncSettings", syncSettings);
   window?.alt?.on("vchat:updateOptions", updateOptions);
-  window?.alt?.emit("vchat:requestSettings");
+  window?.alt?.emitRaw("vchat:requestSettings");
 });
 
 // Unmount ------------------------------------------------------

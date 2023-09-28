@@ -143,7 +143,13 @@ alt.Events.onKeyDown(({ key }) => {
       } as const
     )[part];
 
-    rpc.callServer(ServerCall.FromClient.TOGGLE_VEHICLE_DOOR, closestVehicle.remoteID, door);
+    const shouldClose = game.getVehicleDoorAngleRatio(closestVehicle.scriptID, door) !== 0;
+    rpc.callServer(
+      ServerCall.FromClient.TOGGLE_VEHICLE_DOOR,
+      closestVehicle.remoteID,
+      door,
+      shouldClose
+    );
   }
 });
 

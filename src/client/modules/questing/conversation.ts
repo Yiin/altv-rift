@@ -41,7 +41,7 @@ export async function startConversation(
 ) {
   currentPage = 0;
 
-  alt.Events.emitServer(ServerEvents.FromClient.CONVERSATION_STARTED, ped.remoteID);
+  alt.Events.emitServerRaw(ServerEvents.FromClient.CONVERSATION_STARTED, ped.remoteID);
   // game.taskTurnPedToFaceEntity(ped.scriptID, alt.Player.local.scriptID, 2000);
 
   clientState.conversation = {

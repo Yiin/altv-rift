@@ -1,6 +1,6 @@
 import * as alt from "@altv/client";
 import * as game from "@altv/natives";
-import { NpcFlags } from "@shared/modules/npc/constants";
+import { PedFlags } from "@shared/modules/ped/constants";
 import { waitUntil } from "@/core/utility/event-helpers";
 import { setupPeacefulPed } from "./setup-ped/setup-peaceful-ped";
 
@@ -9,9 +9,9 @@ alt.Events.onGameEntityCreate(async ({ entity }) => {
     await waitUntil(() => entity.visible);
     await waitUntil(() => game.isEntityVisibleToScript(entity));
 
-    const flags = entity.streamSyncedMeta.flags as NpcFlags;
+    const flags = entity.streamSyncedMeta.flags as PedFlags;
 
-    if (flags & NpcFlags.Peaceful) {
+    if (flags & PedFlags.Peaceful) {
       setupPeacefulPed(entity);
     }
   }

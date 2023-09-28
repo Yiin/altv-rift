@@ -58,7 +58,7 @@ whileInGame(() => {
    * so we can update the current ammo in the clip.
    */
   function onPlayerWeaponShoot() {
-    alt.Events.emitServer(ServerEvents.FromClient.WEAPON_SHOOT);
+    alt.Events.emitServerRaw(ServerEvents.FromClient.WEAPON_SHOOT);
   }
 
   /**

@@ -1,7 +1,7 @@
 // Setup
-// import "./sentry";
-import "./setup-globals";
-import "./database";
+// import "./core/sentry";
+import "./core/setup-globals";
+import "./core/database";
 
 // prototypes
 import "./prototypes/player";

@@ -1,10 +1,8 @@
-import * as validator from "validator";
 import { PrismaClient } from "@prisma/client";
 import { container } from "@shared/dependency-injection";
+import * as validator from "@/core/validator";
 
-type ValidationFunction<T = any> = (
-  value: T
-) => Promise<string | undefined> | string | undefined;
+type ValidationFunction<T = any> = (value: T) => Promise<string | undefined> | string | undefined;
 
 type Validators = Record<string, ValidationFunction[]>;
 type ValidationError = {
@@ -12,14 +10,9 @@ type ValidationError = {
   errors: Record<string, string>;
 };
 
-export function makeValidationError(
-  fieldOrErrors: string,
-  message: string
-): ValidationError;
+export function makeValidationError(fieldOrErrors: string, message: string): ValidationError;
 
-export function makeValidationError(
-  fieldOrErrors: Record<string, string>
-): ValidationError;
+export function makeValidationError(fieldOrErrors: Record<string, string>): ValidationError;
 
 export function makeValidationError(
   fieldOrErrors: string | Record<string, string>,
@@ -36,10 +29,7 @@ export function makeValidationError(
   };
 }
 
-export const validate = async (
-  values: Record<string, any>,
-  validators: Validators
-) => {
+export const validate = async (values: Record<string, any>, validators: Validators) => {
   const errors: Record<string, string> = {};
 
   for (const [field, rules] of Object.entries(validators)) {

@@ -10,7 +10,6 @@ import { CallFromServer } from "@shared/calls/client/from-server";
 import { ServerCall } from "@shared/calls/server";
 import { CallFromClient } from "@shared/calls/server/from-client";
 import { createPayload } from "@shared/utility/create-payload";
-import { deserialize, serialize } from "./serialization";
 
 const serverProcedures = new Map<string, (...args: any[]) => any>();
 const serverHandlers = new Map<
@@ -24,9 +23,9 @@ export const callServer = <T extends keyof typeof ServerCall.FromClient>(
   ...args: Shift<Parameters<CallFromClient[T]>>
 ) => {
   return new Promise<ReturnType<CallFromClient[T]>>((resolve, reject) => {
-    const payload = createPayload(name, serialize(args));
+    const payload = createPayload(name, args);
 
-    alt.Events.emitServer(CALL_SERVER_FROM_CLIENT, payload);
+    alt.Events.emitServerRaw(CALL_SERVER_FROM_CLIENT, payload);
     serverHandlers.set(payload.id, { resolve, reject });
   });
 };
@@ -43,7 +42,7 @@ alt.Events.onServer(CALL_SERVER_FROM_CLIENT_RESPONSE, (response) => {
     handler.reject(response);
     return;
   }
-  handler.resolve(deserialize(response.result));
+  handler.resolve(response.result);
 });
 
 // handle call from server on client
@@ -71,14 +70,14 @@ alt.Events.onServer(CALL_CLIENT_FROM_SERVER, async (payload) => {
       throw new Error(`CALL_CLIENT_FROM_SERVER: Procedure ${name} does not exist`);
     }
 
-    const result = await callback(...deserialize(args));
+    const result = await callback(...args);
 
-    alt.Events.emitServer(CALL_CLIENT_FROM_SERVER_RESPONSE, {
+    alt.Events.emitServerRaw(CALL_CLIENT_FROM_SERVER_RESPONSE, {
       id,
-      result: serialize(result),
+      result,
     });
   } catch (error) {
-    alt.Events.emitServer(CALL_CLIENT_FROM_SERVER_RESPONSE, {
+    alt.Events.emitServerRaw(CALL_CLIENT_FROM_SERVER_RESPONSE, {
       id,
       error,
     });

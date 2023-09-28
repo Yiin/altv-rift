@@ -1,7 +1,7 @@
 import * as alt from "@altv/server";
 import { Quests } from "@shared/modules/quests";
 import { ServerEvents } from "@shared/events/server";
-import { isInGame } from "@/utility/assertions";
+import { isInGame } from "@/core/utility/assertions";
 
 const allQuestFacts = Object.values(Quests).flatMap((quest) => Object.values<string>(quest.Facts));
 

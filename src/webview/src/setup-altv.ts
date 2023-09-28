@@ -1,4 +1,4 @@
-import { deserialize } from "alpha-serializer";
+import { deserialize, serialize } from "@shared/utility/serializer";
 
 // @ts-ignore
 globalThis.deserialize = deserialize;
@@ -6,6 +6,7 @@ globalThis.deserialize = deserialize;
 if (!("alt" in globalThis)) {
   globalThis.alt = {
     emit() {},
+    emitRaw() {},
     off() {},
     on() {},
     once() {},
@@ -19,6 +20,11 @@ if (!("alt" in globalThis)) {
   const on = globalThis.alt.on;
   const once = globalThis.alt.once;
   const off = globalThis.alt.off;
+  const emit = globalThis.alt.emit;
+
+  globalThis.alt.emitRaw = function (eventName: string, ...args: any[]) {
+    emit(eventName, serialize(args));
+  };
 
   const handlers: {
     eventName: string;
@@ -29,10 +35,11 @@ if (!("alt" in globalThis)) {
   globalThis.alt.on = function (eventName: string, listener: (...args: any[]) => void) {
     function handler(...args: any[]) {
       try {
-        listener(...args.map((arg) => deserialize(arg)));
+        const deserializedArgs = args.flatMap((arg) => deserialize(arg));
+        listener(...deserializedArgs);
       } catch (e) {
-        console.error('alt.on', typeof eventName, eventName);
-        console.log('alt.on', JSON.stringify(args));
+        console.error("alt.on", typeof eventName, eventName);
+        console.log("alt.on", JSON.stringify(args));
       }
     }
     handlers.push({
@@ -53,10 +60,10 @@ if (!("alt" in globalThis)) {
         1
       );
       try {
-        listener(...args.map((arg) => deserialize(arg)));
+        listener(...args.flatMap((arg) => deserialize(arg)));
       } catch (e) {
-        console.log('alt.once', args);
-        console.error('alt.once', eventName, e);
+        console.log("alt.once", args);
+        console.error("alt.once", eventName, e);
       }
     }
     handlers.push({
@@ -81,6 +88,10 @@ if (!("alt" in globalThis)) {
 
 declare global {
   var altMock: boolean;
+
+  interface Alt {
+    emitRaw: Alt["emit"];
+  }
 }
 
 export {};

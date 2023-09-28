@@ -7,9 +7,11 @@ import { getLevel } from "@shared/modules/experience/experience-table";
 import { getTreeLevel, getTreeLogs, getTreeLogXp } from "@shared/modules/woodcutting/functions";
 import { MessageType } from "@shared/modules/chat";
 import { createItem } from "@shared/modules/items";
-import { rpc } from "@/rpc";
+import { ServerEvents } from "@shared/events/server";
+import { rpc } from "@/core/rpc";
 import { sendChatMessage } from "@/modules/chat";
-import { InGamePlayer, needsToBeInGame } from "@/utility/assertions";
+import { InGamePlayer, needsToBeInGame } from "@/core/utility/assertions";
+import { emit } from "@/core/events/emit";
 
 const virtualTreeGroup = alt.VirtualEntityGroup.create({ maxEntitiesInStream: 30 });
 

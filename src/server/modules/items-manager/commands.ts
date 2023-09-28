@@ -1,5 +1,5 @@
 import { isValidItem, createItem } from "@shared/modules/items";
-import { needsToBeInGame } from "@/utility/assertions";
+import { needsToBeInGame } from "@/core/utility/assertions";
 import { registerCmd, sendChatMessage } from "../chat";
 
 registerCmd("additem", (player, [key, amount]) => {

@@ -10,11 +10,16 @@ import {
   ConsumableItemKey,
 } from "./registry/consumables/consumable.items";
 import {
-  MaterialItem,
-  MaterialItemInfo,
-  MaterialItemKey,
-} from "./registry/materials/material.items";
-import { FishingRodItem, FishingRodItemInfo, FishingRodItemKey } from "./registry";
+  FishingRodItem,
+  FishingRodItemInfo,
+  FishingRodItemKey,
+  FoodIngredientItem,
+  FoodIngredientItemInfo,
+  FoodIngredientItemKey,
+  TreeLogItem,
+  TreeLogItemInfo,
+  TreeLogItemKey,
+} from "./registry";
 import {
   FirearmWeaponItemKey,
   FirearmWeaponItem,
@@ -31,7 +36,7 @@ import {
   ThrowableWeaponItemInfo,
 } from "./registry/weapons/throwable-weapon.items";
 import { FishBaitItem, FishBaitItemInfo, FishBaitItemKey } from "./registry/fish-bait.items";
-import { ToolItem, ToolItemInfo, ToolItemKey } from "./registry/tool.items";
+import { ToolItem, ToolItemInfo, ToolItemKey } from "./registry/tools/tool.items";
 
 export type ItemKey =
   | FirearmWeaponItemKey
@@ -40,7 +45,8 @@ export type ItemKey =
   | AmmoItemKey
   | ClothingItemKey
   | ConsumableItemKey
-  | MaterialItemKey
+  | FoodIngredientItemKey
+  | TreeLogItemKey
   | FishBaitItemKey
   | ToolItemKey
   | FishingRodItemKey;
@@ -57,8 +63,10 @@ type ItemMapping<T> = T extends FirearmWeaponItemKey
   ? [ClothingItem, ClothingItemInfo]
   : T extends ConsumableItemKey
   ? [ConsumableItem, ConsumableItemInfo]
-  : T extends MaterialItemKey
-  ? [MaterialItem, MaterialItemInfo]
+  : T extends FoodIngredientItemKey
+  ? [FoodIngredientItem, FoodIngredientItemInfo]
+  : T extends TreeLogItemKey
+  ? [TreeLogItem, TreeLogItemInfo]
   : T extends FishBaitItemKey
   ? [FishBaitItem, FishBaitItemInfo]
   : T extends ToolItemKey

@@ -3,8 +3,8 @@ import { bind } from "@shared/decorators";
 
 @bind()
 export class EventService {
-  public emitServer(event: string, ...args: any[]) {
-    alt.Events.emitServer(event, ...args);
+  public emitServerRaw(event: string, ...args: any[]) {
+    alt.Events.emitServerRaw(event, ...args);
   }
 
   public onServer(event: string, listener: (...args: any[]) => void) {

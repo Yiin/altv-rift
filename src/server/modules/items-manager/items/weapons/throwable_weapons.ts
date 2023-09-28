@@ -2,10 +2,11 @@ import * as alt from "@altv/server";
 import { ServerEvents } from "@shared/events/server";
 import { getWeaponHash } from "@shared/modules/items";
 import { isItemThrowableWeapon } from "@shared/modules/items/registry/weapons/throwable-weapon.items";
-import { isInGame } from "@/utility/assertions";
+import { isInGame } from "@/core/utility/assertions";
+import { on } from "@/core/events/emit";
 import { removeItemFromInventory } from "../../api";
 
-alt.Events.on(ServerEvents.FromServer.EQUIP_ITEM, (player, item) => {
+on(ServerEvents.FromServer.ITEM_EQUIP, (player, item) => {
   if (!isItemThrowableWeapon(item)) {
     return;
   }

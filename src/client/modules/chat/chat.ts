@@ -106,18 +106,18 @@ export class Chat {
 
   public requestSettings() {
     this.windowService.loadMessageHistory(this.messageHistoryService.get());
-    this.eventService.emitServer("vchat:requestSettings");
+    this.eventService.emitServerRaw("vchat:requestSettings");
   }
 
   public markAsMounted() {
     this.optionsService.get("hideOnConnect")
       ? this.windowService.hide()
       : this.windowService.show();
-    this.eventService.emitServer("vchat:mounted", true);
+    this.eventService.emitServerRaw("vchat:mounted", true);
   }
 
   public sendMessageToServer(message: string) {
-    if (message.length > 0) this.eventService.emitServer("vchat:sendMessage", message);
+    if (message.length > 0) this.eventService.emitServerRaw("vchat:sendMessage", message);
     this.windowService.unfocus();
   }
 }

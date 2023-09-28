@@ -1,15 +1,22 @@
-import * as alt from "@altv/server";
 import { createHookableFunction } from "@shared/hooks";
-import { Inventory, InventoryItemSource, ItemSource } from "@shared/interfaces";
+import { Character, Inventory, InventoryItemSource, ItemSource } from "@shared/interfaces";
 import { Item } from "@shared/modules/items";
 import { ServerEvents } from "@shared/events/server";
-import { InGamePlayer } from "@/utility/assertions";
+import { InGamePlayer } from "@/core/utility/assertions";
+import { emit } from "@/core/events/emit";
 import { removeItem } from "./utils";
 
 export const findSourceInventory = createHookableFunction<
   (source: InventoryItemSource) => Inventory | null
 >({
   name: "findSourceInventory",
+  defaultReturn: null,
+});
+
+export const findInventorySource = createHookableFunction<
+  (inventory: Inventory) => Character | null
+>({
+  name: "findInventorySource",
   defaultReturn: null,
 });
 
@@ -69,7 +76,7 @@ export const useItem = createHookableFunction<(player: InGamePlayer, item: Item)
     defaultReturn: false,
     onResult(result, [player, item]) {
       if (result !== false) {
-        alt.Events.emit(ServerEvents.FromServer.USE_ITEM, player, item);
+        emit(ServerEvents.FromServer.ITEM_USE, player, item);
       }
     },
   }
