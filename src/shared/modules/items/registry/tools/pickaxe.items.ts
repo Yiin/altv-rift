@@ -1,9 +1,13 @@
 import { registerItem } from "../../items-registry";
-import { makeItemKeys } from "../../lib/make-item-keys";
+import { makeKeys } from "../../../../utility/make-keys";
 import { Item } from "../../types";
 
-export const Pickaxes = makeItemKeys<PickaxeItemKey>()({
+export const Pickaxe = makeKeys<PickaxeItemKey>()({
   BASIC_PICKAXE: "basic_pickaxe",
+  ADVANCED_PICKAXE: "advanced_pickaxe",
+  ELITE_PICKAXE: "elite_pickaxe",
+  MASTER_PICKAXE: "master_pickaxe",
+  EPIC_PICKAXE: "epic_pickaxe",
 });
 
 export type PickaxeItemKey = Brand<string, "PickaxeItemKey">;
@@ -18,23 +22,48 @@ export type PickaxeItemInfo = {
   description: string;
 };
 
-export const pickaxes: Record<PickaxeItemKey, PickaxeItemInfo> = {
-  [Pickaxes.BASIC_PICKAXE]: {
-    key: Pickaxes.BASIC_PICKAXE,
+export const pickaxes: PickaxeItemInfo[] = [
+  {
+    key: Pickaxe.BASIC_PICKAXE,
     name: "Basic Pickaxe",
-    description: "A basic pickaxe for mining.",
+    description:
+      "A simple, yet sturdy tool. Essential for beginners looking to mine and gather resources.",
   },
-} as Record<PickaxeItemKey, PickaxeItemInfo>;
+  {
+    key: Pickaxe.ADVANCED_PICKAXE,
+    name: "Advanced Pickaxe",
+    description:
+      "Enhanced with improved metal, this pickaxe digs deeper and lasts longer. Ideal for seasoned miners.",
+  },
+  {
+    key: Pickaxe.ELITE_PICKAXE,
+    name: "Elite Pickaxe",
+    description:
+      "Crafted with precision and designed for efficiency, this pickaxe is a testament to superior mining craftsmanship.",
+  },
+  {
+    key: Pickaxe.MASTER_PICKAXE,
+    name: "Master Pickaxe",
+    description:
+      "A culmination of tradition and advanced metallurgy, this pickaxe ensures maximum extraction with minimal effort.",
+  },
+  {
+    key: Pickaxe.EPIC_PICKAXE,
+    name: "Epic Pickaxe",
+    description:
+      "Forged from the rarest metals and honed to perfection, this pickaxe represents the pinnacle of mining excellence.",
+  },
+];
 
 /**
  * Register all pickaxes.
  */
-for (const [key, info] of Object.entries(pickaxes)) {
-  registerItem(key as PickaxeItemKey, info);
+for (const info of pickaxes) {
+  registerItem(info);
 }
 
 export function isItemKeyPickaxe(key: string): key is PickaxeItemKey {
-  return key in pickaxes;
+  return pickaxes.some((pickaxe) => pickaxe.key === key);
 }
 
 export function isItemPickaxe(item: Item): item is PickaxeItem {

@@ -13,7 +13,6 @@ alt.Events.onServer(ClientEvents.FromServer.START_CHARACTER_CREATION_SCENE, asyn
   setScene(Scene.CREATE_CHARACTER, { hasCursor: true });
 
   game.doScreenFadeIn(1000);
-  alt.log(1, typeof game.disableScreenblurFade);
   game.disableScreenblurFade();
 
   getWebview().on(ClientEvents.FromWebview.UPDATE_CHARACTER_APPEARANCE, CharacterPed.apply);

@@ -1,5 +1,5 @@
 // @index('./*', f => `export * from "${f.path}";`)
-export * from "./item-flags";
+export * from "./enums";
 export * from "./items-registry";
 export * from "./lib";
 export * from "./registry";

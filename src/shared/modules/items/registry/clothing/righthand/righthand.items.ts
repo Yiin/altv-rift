@@ -1,9 +1,9 @@
 import { Item, registerItem } from "@shared/modules/items";
-import { makeItemKeys } from "@shared/modules/items/lib/make-item-keys";
+import { makeKeys } from "@shared/utility/make-keys";
 import RIGHTHAND_ITEMS from "./righthand.json";
 import { RightHandMap } from "./righthand-map";
 
-export const RightHand = makeItemKeys<RightHandItemKey>()({
+export const RightHand = makeKeys<RightHandItemKey>()({
   MaleAquaHippyBracelet: "DLC_MP_SUM23_M_PRIGHT_WRIST_0_0",
   MaleMossHippyBracelet: "DLC_MP_SUM23_M_PRIGHT_WRIST_0_1",
   MaleSandHippyBracelet: "DLC_MP_SUM23_M_PRIGHT_WRIST_0_2",
@@ -144,17 +144,14 @@ export type RightHandItemInfo = {
   restrictionTags: string[] | null;
 };
 
-export const righthand: Record<RightHandItemKey, RightHandItemInfo> = RIGHTHAND_ITEMS as Record<
-  RightHandItemKey,
-  RightHandItemInfo
->;
+export const righthand = Object.values(RIGHTHAND_ITEMS) as any as RightHandItemInfo[];
 
 /**
  * Register all right hand items.
  */
 // console.log("Registering right hand items...");
-for (const key in righthand) {
-  registerItem(key as RightHandItemKey, righthand[key as RightHandItemKey]);
+for (const info of righthand) {
+  registerItem(info);
 }
 // console.log(`Registered ${Object.keys(righthand).length} right hand items.`);
 
@@ -162,7 +159,7 @@ for (const key in righthand) {
  * Type guards for right hand items
  */
 export function isItemKeyRightHand(key: string): key is RightHandItemKey {
-  return key in righthand;
+  return righthand.some((info) => info.key === key);
 }
 
 export function isItemRightHand(item: Item): item is RightHandItem {

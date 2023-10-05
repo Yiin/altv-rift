@@ -5,7 +5,7 @@ import { ServerEvents } from "@shared/events/server";
 import { PedInteraction } from "@shared/modules/ped/interactions";
 import { ConversationOption } from "@shared/interfaces/conversation";
 import { getInventoryItemByKey } from "@shared/modules/inventory";
-import { TreeLogs } from "@shared/modules/items";
+import { FoodIngredient, TreeLogs } from "@shared/modules/items";
 import { IconName } from "@/core/rmlui/components/icon/icon";
 import { useCharacter } from "@/core/store/character.store";
 import { whileEntityIsStreamedIn } from "@/core/game-state-hooks/entity-is-streamed-in.state";
@@ -25,7 +25,8 @@ import MINING_TUTOR_INTRO from "./conversations/8_MINING_TUTOR_INTRO.yaml";
 import FISHING_TUTOR_INTRO from "./conversations/9_FISHING_TUTOR_INTRO.yaml";
 import WOODCUTTING_TUTOR_INTRO from "./conversations/10_WOODCUTTING_TUTOR_INTRO.yaml";
 import CRAFTING_TUTOR_INTRO from "./conversations/11_CRAFTING_TUTOR_INTRO.yaml";
-import WOODCUTTING_TUTOR_COMPLETE from "./conversations/10_WOODCUTTING_TUTOR_COMPLETE.yaml";
+import WOODCUTTING_TUTOR_COMPLETE from "./conversations/12_WOODCUTTING_TUTOR_COMPLETE.yaml";
+import FISHING_TUTOR_COMPLETE from "./conversations/13_FISHING_TUTOR_COMPLETE.yaml";
 
 whileEntityIsStreamedIn(
   (entity): entity is alt.Ped => entity instanceof alt.Ped,
@@ -68,13 +69,13 @@ registerQuest(Quests.Introduction.Key, {
       visibleFact: Quests.Introduction.Facts.PICKED_MINING,
       completedFact: Quests.Introduction.Facts.STARTED_MINING,
       title: "Help with materials",
-      summary: "I need to talk with Sen-Lee to help in the mines.",
+      summary: "I need to talk with San-Lee to help in the mines.",
     },
     {
       visibleFact: Quests.Introduction.Facts.STARTED_MINING,
       completedFact: Quests.Introduction.Facts.COMPLETED_MINING,
       title: "Mining",
-      summary: "Mine 30 rocks of any kind and bring them back to Sen-Lee.",
+      summary: `Dig ${Quests.Introduction.Constants.SAND_BAGS_NEEDED} bags of sand and bring them back to San-Lee.`,
     },
     {
       visibleFact: Quests.Introduction.Facts.PICKED_FISHING,
@@ -86,7 +87,7 @@ registerQuest(Quests.Introduction.Key, {
       visibleFact: Quests.Introduction.Facts.STARTED_FISHING,
       completedFact: Quests.Introduction.Facts.COMPLETED_FISHING,
       title: "Fishing",
-      summary: "Catch 50 fishes of any kind and bring them back to Grace.",
+      summary: `Catch ${Quests.Introduction.Constants.RAW_TROUT_NEEDED} fishes of any kind and bring them back to Grace.`,
     },
     {
       visibleFact: Quests.Introduction.Facts.PICKED_WOODCUTTING,
@@ -98,7 +99,7 @@ registerQuest(Quests.Introduction.Key, {
       visibleFact: Quests.Introduction.Facts.STARTED_WOODCUTTING,
       completedFact: Quests.Introduction.Facts.COMPLETED_WOODCUTTING,
       title: "Woodcutting",
-      summary: "Chop 30 palm trees and bring them back to Nathan.",
+      summary: `Chop ${Quests.Introduction.Constants.PALM_LOGS_NEEDED} palm trees and bring them back to Nathan.`,
     },
     {
       visibleFact: Quests.Introduction.Facts.PICKED_CRAFTING,
@@ -110,7 +111,7 @@ registerQuest(Quests.Introduction.Key, {
       visibleFact: Quests.Introduction.Facts.STARTED_CRAFTING,
       completedFact: Quests.Introduction.Facts.COMPLETED_CRAFTING,
       title: "Crafting",
-      summary: "Craft 30 bags and bring them back to Sara.",
+      summary: `Craft ${Quests.Introduction.Constants.HANDGUN_AMMO_NEEDED} handgun ammo and bring them back to Sara.`,
     },
     {
       visibleFact: Quests.Introduction.Facts.COMPLETED_ALL,
@@ -353,6 +354,35 @@ registerPedInteractions(PedKey.FISHING_TUTOR, (ped) => {
     });
   }
 
+  if (
+    questFacts.includes(Quests.Introduction.Facts.STARTED_FISHING) &&
+    !questFacts.includes(Quests.Introduction.Facts.COMPLETED_FISHING)
+  ) {
+    const rawTrouts = getInventoryItemByKey(useCharacter().inventory, FoodIngredient.RAW_TROUT);
+
+    if (rawTrouts && rawTrouts.item.amount >= Quests.Introduction.Constants.RAW_TROUT_NEEDED) {
+      interactions.push({
+        key: Quests.Introduction.Facts.COMPLETED_FISHING,
+        icon: "quest",
+        label: "Talk",
+        onSelect() {
+          startConversation(ped, {
+            topic: "Introduction",
+            pages: FISHING_TUTOR_COMPLETE,
+            options: [{ value: "complete", label: "Complete", color: "primary" }],
+          }).then((option) => {
+            if (option?.value === "complete") {
+              alt.Events.emitServerRaw(
+                ServerEvents.FromClient.NOTIFY,
+                Quests.Introduction.Facts.COMPLETED_FISHING
+              );
+            }
+          });
+        },
+      });
+    }
+  }
+
   return interactions;
 });
 
@@ -425,7 +455,7 @@ registerPedInteractions(PedKey.WOODCUTTING_TUTOR, (ped) => {
   ) {
     const palmLogs = getInventoryItemByKey(useCharacter().inventory, TreeLogs.PALM_LOGS);
 
-    if (palmLogs && palmLogs.item.amount >= 50) {
+    if (palmLogs && palmLogs.item.amount >= Quests.Introduction.Constants.PALM_LOGS_NEEDED) {
       interactions.push({
         key: Quests.Introduction.Facts.COMPLETED_WOODCUTTING,
         icon: "quest",

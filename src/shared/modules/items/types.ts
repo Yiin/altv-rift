@@ -1,21 +1,54 @@
 import { AmmoItem, AmmoItemInfo, AmmoItemKey } from "./registry/ammo/ammo.items";
-import {
-  ClothingItem,
-  ClothingItemInfo,
-  ClothingItemKey,
-} from "./registry/clothing/clothing.items";
+import { ClothingItem, ClothingItemKey } from "./registry/clothing/clothing.items";
 import {
   ConsumableItem,
   ConsumableItemInfo,
   ConsumableItemKey,
 } from "./registry/consumables/consumable.items";
 import {
+  AccessoryItem,
+  AccessoryItemInfo,
+  AccessoryItemKey,
+  ArmorItem,
+  ArmorItemInfo,
+  ArmorItemKey,
+  EarringsItem,
+  EarringsItemInfo,
+  EarringsItemKey,
   FishingRodItem,
   FishingRodItemInfo,
   FishingRodItemKey,
   FoodIngredientItem,
   FoodIngredientItemInfo,
   FoodIngredientItemKey,
+  GlassesItem,
+  GlassesItemInfo,
+  GlassesItemKey,
+  GlovesItem,
+  GlovesItemInfo,
+  GlovesItemKey,
+  HeadwearItem,
+  HeadwearItemInfo,
+  HeadwearItemKey,
+  LeftHandItem,
+  LeftHandItemInfo,
+  LeftHandItemKey,
+  MaskItem,
+  MaskItemInfo,
+  MaskItemKey,
+  MaterialItemKey,
+  PantsItem,
+  PantsItemInfo,
+  PantsItemKey,
+  RightHandItem,
+  RightHandItemInfo,
+  RightHandItemKey,
+  ShoesItem,
+  ShoesItemInfo,
+  ShoesItemKey,
+  TopItem,
+  TopItemInfo,
+  TopItemKey,
   TreeLogItem,
   TreeLogItemInfo,
   TreeLogItemKey,
@@ -37,6 +70,8 @@ import {
 } from "./registry/weapons/throwable-weapon.items";
 import { FishBaitItem, FishBaitItemInfo, FishBaitItemKey } from "./registry/fish-bait.items";
 import { ToolItem, ToolItemInfo, ToolItemKey } from "./registry/tools/tool.items";
+import { WoodItemKey, WoodItem, WoodItemInfo } from "./registry/materials/wood.items";
+import { MetalItemKey, MetalItem, MetalItemInfo } from "./registry/materials/metal.items";
 
 export type ItemKey =
   | FirearmWeaponItemKey
@@ -45,8 +80,7 @@ export type ItemKey =
   | AmmoItemKey
   | ClothingItemKey
   | ConsumableItemKey
-  | FoodIngredientItemKey
-  | TreeLogItemKey
+  | MaterialItemKey
   | FishBaitItemKey
   | ToolItemKey
   | FishingRodItemKey;
@@ -59,14 +93,40 @@ type ItemMapping<T> = T extends FirearmWeaponItemKey
   ? [MeleeWeaponItem, MeleeWeaponItemInfo]
   : T extends AmmoItemKey
   ? [AmmoItem, AmmoItemInfo]
-  : T extends ClothingItemKey
-  ? [ClothingItem, ClothingItemInfo]
+  : T extends AccessoryItemKey
+  ? [AccessoryItem, AccessoryItemInfo]
+  : T extends ArmorItemKey
+  ? [ArmorItem, ArmorItemInfo]
+  : T extends EarringsItemKey
+  ? [EarringsItem, EarringsItemInfo]
+  : T extends GlassesItemKey
+  ? [GlassesItem, GlassesItemInfo]
+  : T extends GlovesItemKey
+  ? [GlovesItem, GlovesItemInfo]
+  : T extends HeadwearItemKey
+  ? [HeadwearItem, HeadwearItemInfo]
+  : T extends LeftHandItemKey
+  ? [LeftHandItem, LeftHandItemInfo]
+  : T extends MaskItemKey
+  ? [MaskItem, MaskItemInfo]
+  : T extends PantsItemKey
+  ? [PantsItem, PantsItemInfo]
+  : T extends RightHandItemKey
+  ? [RightHandItem, RightHandItemInfo]
+  : T extends ShoesItemKey
+  ? [ShoesItem, ShoesItemInfo]
+  : T extends TopItemKey
+  ? [TopItem, TopItemInfo]
   : T extends ConsumableItemKey
   ? [ConsumableItem, ConsumableItemInfo]
   : T extends FoodIngredientItemKey
   ? [FoodIngredientItem, FoodIngredientItemInfo]
   : T extends TreeLogItemKey
   ? [TreeLogItem, TreeLogItemInfo]
+  : T extends WoodItemKey
+  ? [WoodItem, WoodItemInfo]
+  : T extends MetalItemKey
+  ? [MetalItem, MetalItemInfo]
   : T extends FishBaitItemKey
   ? [FishBaitItem, FishBaitItemInfo]
   : T extends ToolItemKey

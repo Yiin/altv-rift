@@ -1,8 +1,8 @@
 import { Item, registerItem } from "@shared/modules/items";
-import { makeItemKeys } from "@shared/modules/items/lib/make-item-keys";
+import { makeKeys } from "@shared/utility/make-keys";
 import TOP_ITEMS from "./top.json";
 
-export const Top = makeItemKeys<TopItemKey>()({
+export const Top = makeKeys<TopItemKey>()({
   MaleCrewTshirt: "SP_M_JBIB_0_0",
   MaleYetiTshirt: "SP_M_JBIB_0_1",
   MaleErisTshirt: "SP_M_JBIB_0_11",
@@ -7968,14 +7968,14 @@ export type TopItemInfo = {
   restrictionTags: string[] | null;
 };
 
-export const tops: Record<TopItemKey, TopItemInfo> = TOP_ITEMS as Record<TopItemKey, TopItemInfo>;
+export const tops = Object.values(TOP_ITEMS) as any as TopItemInfo[];
 
 /**
  * Register all tops.
  */
 // console.log("Registering tops...");
-for (const key in tops) {
-  registerItem(key as TopItemKey, tops[key as TopItemKey]);
+for (const info of tops) {
+  registerItem(info);
 }
 // console.log(`Registered ${Object.keys(tops).length} tops.`);
 
@@ -7983,7 +7983,7 @@ for (const key in tops) {
  * Type guards for tops
  */
 export function isItemKeyTop(key: string): key is TopItemKey {
-  return key in tops;
+  return tops.some((info) => info.key === key);
 }
 
 export function isItemTop(item: Item): item is TopItem {

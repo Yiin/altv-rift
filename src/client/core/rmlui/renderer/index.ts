@@ -1,4 +1,5 @@
 import * as alt from "@altv/client";
+import { clientState } from "@/core/store/client.store";
 import { renderElement, markElementAsHidden } from "./element-renderer";
 import { prepareFrameForEntity } from "./element-updater";
 import { visibleElementsHeap, notRenderedElements } from "./frame-state";
@@ -8,6 +9,10 @@ import { setCurrentNode } from "./internals/current-node";
 import { streamedInEntities } from "./streamed-in-entities";
 
 alt.Timers.everyTick(() => {
+  if (clientState.ui.window) {
+    return;
+  }
+
   // Cleanup previous frame
   visibleElementsHeap.clear();
   notRenderedElements.clear();

@@ -5,11 +5,17 @@ import {
   FoodIngredientItemKey,
   isItemKeyFoodIngredient,
 } from "./food-ingredient.items";
+import { MetalItem, MetalItemInfo, MetalItemKey } from "./metal.items";
 import { TreeLogItem, TreeLogItemInfo, TreeLogItemKey, isItemKeyTreeLog } from "./tree-log.items";
+import { WoodItem, WoodItemInfo, WoodItemKey } from "./wood.items";
 
-export type MaterialItemKey = FoodIngredientItemKey | TreeLogItemKey;
-export type MaterialItemInfo = FoodIngredientItemInfo | TreeLogItemInfo;
-export type MaterialItem = FoodIngredientItem | TreeLogItem;
+export type MaterialItemKey = FoodIngredientItemKey | TreeLogItemKey | WoodItemKey | MetalItemKey;
+export type MaterialItemInfo =
+  | FoodIngredientItemInfo
+  | TreeLogItemInfo
+  | WoodItemInfo
+  | MetalItemInfo;
+export type MaterialItem = FoodIngredientItem | TreeLogItem | WoodItem | MetalItem;
 
 export function isItemKeyMaterial(key: ItemKey): key is MaterialItemKey {
   return isItemKeyFoodIngredient(key) || isItemKeyTreeLog(key);

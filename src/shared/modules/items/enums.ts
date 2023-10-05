@@ -5,3 +5,12 @@ export enum ItemFlags {
   IsUsable = 1 << 2,
   IsEdible = 1 << 3,
 }
+
+export enum ItemGrade {
+  D,
+  C,
+  B,
+  A,
+  S,
+  SS,
+}

@@ -60,7 +60,7 @@ esbuild
       {
         name: "auto-reconnect",
         setup({ onEnd }) {
-          onEnd(reloadResource);
+          onEnd(() => reloadResource('client'));
         }
       }
     ],

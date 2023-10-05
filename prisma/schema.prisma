@@ -61,6 +61,7 @@ model Character {
   equipment    Equipment
   questFacts   String[]
   skills       Skills
+  blueprints   String[]
 }
 
 type Skills {

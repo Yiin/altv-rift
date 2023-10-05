@@ -44,7 +44,11 @@ export function removeItemFromInventorySlot(
 
   const { item } = inventoryItem;
 
-  if (!isStackable(item) || item.amount - amount <= 0 || amount <= 0) {
+  if (isStackable(item) && item.amount - amount < 0) {
+    return null;
+  }
+
+  if (!isStackable(item) || item.amount - amount === 0 || amount <= 0) {
     inventory.items.splice(
       inventory.items.findIndex((item) => item.slot === slot),
       1

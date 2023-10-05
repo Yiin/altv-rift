@@ -1,8 +1,8 @@
 import { Item, registerItem } from "@shared/modules/items";
-import { makeItemKeys } from "@shared/modules/items/lib/make-item-keys";
+import { makeKeys } from "@shared/utility/make-keys";
 import SHOES_ITEMS from "./shoes.json";
 
-export const Shoes = makeItemKeys<ShoesItemKey>()({
+export const Shoes = makeKeys<ShoesItemKey>()({
   MaleProlapsGreenSneakers: "SP_M_FEET_0_0",
   MaleProlapsCyanSneakers: "SP_M_FEET_0_1",
   MaleErisBlackSneakers: "SP_M_FEET_0_10",
@@ -2152,17 +2152,14 @@ export type ShoesItemInfo = {
   restrictionTags: string[] | null;
 };
 
-export const shoes: Record<ShoesItemKey, ShoesItemInfo> = SHOES_ITEMS as Record<
-  ShoesItemKey,
-  ShoesItemInfo
->;
+export const shoes = Object.values(SHOES_ITEMS) as any as ShoesItemInfo[];
 
 /**
  * Register all shoes.
  */
 // console.log("Registering shoes...");
-for (const key in shoes) {
-  registerItem(key as ShoesItemKey, shoes[key as ShoesItemKey]);
+for (const info of shoes) {
+  registerItem(info);
 }
 // console.log(`Registered ${Object.keys(shoes).length} shoes.`);
 
@@ -2170,7 +2167,7 @@ for (const key in shoes) {
  * Type guards for shoes
  */
 export function isItemKeyShoes(key: string): key is ShoesItemKey {
-  return key in shoes;
+  return shoes.some((info) => info.key === key);
 }
 
 export function isItemShoes(item: Item): item is ShoesItem {

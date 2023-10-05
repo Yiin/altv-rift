@@ -8,6 +8,7 @@ import "./characters/save-character";
 import "./characters/update-character-appearance";
 import "./equipment/apply-equipment";
 import "./equipment/get-equiped-item-in-slot";
+import "./inventory/add-blueprint";
 import "./inventory/add-item";
 import "./inventory/equip-item";
 import "./inventory/get-inventory-item-in-slot";
@@ -16,6 +17,7 @@ import "./inventory/remove-item";
 import "./inventory/unequip-item";
 import "./inventory/weapons/reload-weapon";
 import "./load-user";
+import "./quests/is-near-ped";
 import "./setup-pinia";
 import "./setup";
 // @endindex

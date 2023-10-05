@@ -1,8 +1,8 @@
 import { Item, registerItem } from "@shared/modules/items";
-import { makeItemKeys } from "@shared/modules/items/lib/make-item-keys";
+import { makeKeys } from "@shared/utility/make-keys";
 import ARMOR_ITEMS from "./armor.json";
 
-export const Armor = makeItemKeys<ArmorItemKey>()({
+export const Armor = makeKeys<ArmorItemKey>()({
   FemaleTanUtilityVest: "DLC_MP_APA_F_SPECIAL2_1_0",
   FemaleKhakiUtilityVest: "DLC_MP_APA_F_SPECIAL2_1_1",
   FemaleBlackUtilityVest: "DLC_MP_APA_F_SPECIAL2_1_2",
@@ -36,17 +36,14 @@ export type ArmorItemInfo = {
   restrictionTags: string[] | null;
 };
 
-export const armors: Record<ArmorItemKey, ArmorItemInfo> = ARMOR_ITEMS as Record<
-  ArmorItemKey,
-  ArmorItemInfo
->;
+export const armors = Object.values(ARMOR_ITEMS) as any as ArmorItemInfo[];
 
 /**
  * Register all armors.
  */
 // console.log("Registering armors...");
-for (const key in armors) {
-  registerItem(key as ArmorItemKey, armors[key as ArmorItemKey]);
+for (const info of armors) {
+  registerItem(info);
 }
 // console.log(`Registered ${Object.keys(armors).length} armors.`);
 
@@ -54,7 +51,7 @@ for (const key in armors) {
  * Type guards for armors
  */
 export function isItemKeyArmor(key: string): key is ArmorItemKey {
-  return key in armors;
+  return armors.some((info) => info.key === key);
 }
 
 export function isItemArmor(item: Item): item is ArmorItem {

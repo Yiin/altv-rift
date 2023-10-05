@@ -1,8 +1,8 @@
-import { Item, registerItem } from "@shared/modules/items";
-import { makeItemKeys } from "@shared/modules/items/lib/make-item-keys";
+import { Item, ItemGrade, registerItem } from "@shared/modules/items";
+import { makeKeys } from "@shared/utility/make-keys";
 import LEFTHAND_ITEMS from "./lefthand.json";
 
-export const LeftHand = makeItemKeys<LeftHandItemKey>()({
+export const LeftHand = makeKeys<LeftHandItemKey>()({
   MaleDeepSeaWatch: "SP_M_LEFT_WRIST_0_0",
   MaleGoldWatch: "SP_M_LEFT_WRIST_0_1",
   MaleSilverWatch: "SP_M_LEFT_WRIST_0_2",
@@ -322,6 +322,7 @@ export type LeftHandItem = {
   key: LeftHandItemKey;
 
   customName?: string | null;
+  tier: ItemGrade;
 };
 
 export type LeftHandItemInfo = {
@@ -335,17 +336,14 @@ export type LeftHandItemInfo = {
   restrictionTags: string[] | null;
 };
 
-export const lefthand: Record<LeftHandItemKey, LeftHandItemInfo> = LEFTHAND_ITEMS as Record<
-  LeftHandItemKey,
-  LeftHandItemInfo
->;
+export const lefthand = Object.values(LEFTHAND_ITEMS) as any as LeftHandItemInfo[];
 
 /**
  * Register all left hand items.
  */
 // console.log("Registering left hand items...");
-for (const key in lefthand) {
-  registerItem(key as LeftHandItemKey, lefthand[key as LeftHandItemKey]);
+for (const info of lefthand) {
+  registerItem(info);
 }
 // console.log(`Registered ${Object.keys(lefthand).length} left hand items.`);
 
@@ -353,7 +351,7 @@ for (const key in lefthand) {
  * Type guards for left hand items
  */
 export function isItemKeyLeftHand(key: string): key is LeftHandItemKey {
-  return key in lefthand;
+  return lefthand.some((info) => info.key === key);
 }
 
 export function isItemLeftHand(item: Item): item is LeftHandItem {

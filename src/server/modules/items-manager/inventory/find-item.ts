@@ -1,8 +1,9 @@
 import * as alt from "@altv/server";
 import { createItem } from "@shared/modules/items";
 import { isItemFirearmWeapon } from "@shared/modules/items/registry/weapons/firearm-weapon.items";
+import { getInventoryItemInSlot } from "@shared/modules/inventory";
 import { InGamePlayer } from "@/core/utility/assertions";
-import { findItem, getInventoryItemInSlot } from "../api";
+import { findItem } from "../api";
 
 findItem.hook((itemSource, player) => {
   if (itemSource.source !== "character") {

@@ -14,7 +14,7 @@ import "./modules/chat";
 import "./modules/discord-auth";
 import "./modules/character";
 import "./modules/items-manager";
-import "./modules/npcs";
+import "./modules/peds";
 import "./modules/questing";
 import "./modules/skills";
 import "./modules/vehicles";

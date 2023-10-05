@@ -1,7 +1,8 @@
 import * as alt from "@altv/server";
 import { ItemKey } from "@shared/modules/items";
+import { getInventoryItemByKey } from "@shared/modules/inventory";
 import { InGamePlayer } from "@/core/utility/assertions";
-import { getInventoryItemByKey, removeItemFromInventorySlot } from "@/modules/items-manager";
+import { removeItemFromInventorySlot } from "@/modules/items-manager";
 
 declare module "@altv/server" {
   export interface Player {

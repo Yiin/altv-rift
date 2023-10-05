@@ -1,8 +1,8 @@
 import { Item, registerItem } from "@shared/modules/items";
-import { makeItemKeys } from "@shared/modules/items/lib/make-item-keys";
+import { makeKeys } from "@shared/utility/make-keys";
 import ACCESSORY_ITEMS from "./accessory.json";
 
-export const Accessory = makeItemKeys<AccessoryItemKey>()({
+export const Accessory = makeKeys<AccessoryItemKey>()({
   MaleNoTie: "SP_M_TEEF_0_0",
   MaleSilverChain: "SP_M_TEEF_1_0",
   MaleGoldChain: "SP_M_TEEF_1_1",
@@ -936,17 +936,14 @@ export type AccessoryItemInfo = {
   restrictionTags: string[] | null;
 };
 
-export const accessories: Record<AccessoryItemKey, AccessoryItemInfo> = ACCESSORY_ITEMS as Record<
-  AccessoryItemKey,
-  AccessoryItemInfo
->;
+export const accessories = Object.values(ACCESSORY_ITEMS) as any as AccessoryItemInfo[];
 
 /**
  * Register all accessories.
  */
 // console.log("Registering accessories...");
-for (const key in accessories) {
-  registerItem(key as AccessoryItemKey, accessories[key as AccessoryItemKey]);
+for (const info of accessories) {
+  registerItem(info);
 }
 // console.log(`Registered ${Object.keys(accessories).length} accessories.`);
 
@@ -954,7 +951,7 @@ for (const key in accessories) {
  * Type guards for accessories
  */
 export function isItemKeyAccessory(key: string): key is AccessoryItemKey {
-  return key in accessories;
+  return accessories.some((info) => info.key === key);
 }
 
 export function isItemAccessory(item: Item): item is AccessoryItem {

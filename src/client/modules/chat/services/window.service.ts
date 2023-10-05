@@ -2,6 +2,7 @@ import * as alt from "@altv/client";
 import { CommandSuggestion, MessageType, WindowOptions } from "@shared/modules/chat";
 import { bind } from "@shared/decorators";
 import { UIElement } from "@shared/enums/ui";
+import { deserialize } from "@shared/utility/serializer";
 import {
   doesElementHaveCursor,
   getWebview,
@@ -97,10 +98,12 @@ export class WindowService {
   }
 
   public on(event: string, listener: (...args: any[]) => void) {
-    getWebview((webview) => webview.on(event, listener));
+    getWebview((webview) => webview.on(event, (...args) => listener(...args.flatMap(deserialize))));
   }
 
   public once(event: string, listener: (...args: any[]) => void) {
-    getWebview((webview) => webview.once(event, listener));
+    getWebview((webview) =>
+      webview.once(event, (...args) => listener(...args.flatMap(deserialize)))
+    );
   }
 }

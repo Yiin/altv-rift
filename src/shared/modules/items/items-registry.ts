@@ -5,8 +5,8 @@ const ITEMS_REGISTRY: Map<ItemKey, ItemInfo> = new Map();
 /**
  * Register an item in the items registry so it's available for use.
  */
-export function registerItem(key: ItemKey, info: ItemInfo) {
-  ITEMS_REGISTRY.set(key, info);
+export function registerItem(info: ItemInfo) {
+  ITEMS_REGISTRY.set(info.key, info);
 }
 
 /**

@@ -21,4 +21,10 @@ export const Introduction = {
     COMPLETED_CRAFTING: `${Key}_completed_crafting`,
     COMPLETED_ALL: `${Key}_completed_all`,
   },
+  Constants: {
+    PALM_LOGS_NEEDED: 50,
+    RAW_TROUT_NEEDED: 50,
+    SAND_BAGS_NEEDED: 30,
+    HANDGUN_AMMO_NEEDED: 200,
+  },
 } as const;

@@ -1,8 +1,8 @@
 import { registerItem } from "../../items-registry";
-import { makeItemKeys } from "../../lib/make-item-keys";
+import { makeKeys } from "../../../../utility/make-keys";
 import { Item, ItemKey } from "../../types";
 
-export const TreeLogs = makeItemKeys<TreeLogItemKey>()({
+export const TreeLogs = makeKeys<TreeLogItemKey>()({
   HAWTHORN_LOGS: "hawthorn_logs",
   BEECH_LOGS: "beech_logs",
   BLACK_MANGROVE_LOGS: "black_mangrove_logs",
@@ -37,113 +37,113 @@ export type TreeLogItemInfo = {
   description: string;
 };
 
-export const treeLogs: Record<TreeLogItemKey, TreeLogItemInfo> = {
-  hawthorn_logs: {
-    key: "hawthorn_logs",
+export const treeLogs: TreeLogItemInfo[] = [
+  {
+    key: TreeLogs.HAWTHORN_LOGS,
     name: "Hawthorn Logs",
     description: "Logs from a Hawthorn Tree.",
   },
-  beech_logs: {
-    key: "beech_logs",
+  {
+    key: TreeLogs.BEECH_LOGS,
     name: "Large Beech Logs",
     description: "Logs from a Beech Tree.",
   },
-  black_mangrove_logs: {
-    key: "black_mangrove_logs",
+  {
+    key: TreeLogs.BLACK_MANGROVE_LOGS,
     name: "Black Mangrove Logs",
     description: "Logs from a Black Mangrove.",
   },
-  frangipani_logs: {
-    key: "frangipani_logs",
+  {
+    key: TreeLogs.FRANGIPANI_LOGS,
     name: "Frangipani Logs",
     description: "Logs from a Frangipani.",
   },
-  palm_fan_logs: {
-    key: "palm_fan_logs",
+  {
+    key: TreeLogs.PALM_FAN_LOGS,
     name: "Palm Fan Logs",
     description: "Logs from a Palm Fan Tree.",
   },
-  umbrella_logs: {
-    key: "umbrella_logs",
+  {
+    key: TreeLogs.UMBRELLA_LOGS,
     name: "Umbrella Logs",
     description: "Logs from an Umbrella Tree.",
   },
-  joshua_tree_logs: {
-    key: "joshua_tree_logs",
+  {
+    key: TreeLogs.JOSHUA_TREE_LOGS,
     name: "Joshua Tree Logs",
     description: "Logs from a Joshua Tree.",
   },
-  palm_logs: {
-    key: "palm_logs",
+  {
+    key: TreeLogs.PALM_LOGS,
     name: "Palm Logs",
     description: "Logs from a Palm Tree.",
   },
-  royal_palm_logs: {
-    key: "royal_palm_logs",
+  {
+    key: TreeLogs.ROYAL_PALM_LOGS,
     name: "Royal Palm Logs",
     description: "Logs from a Royal Palm Tree.",
   },
-  olive_logs: {
-    key: "olive_logs",
+  {
+    key: TreeLogs.OLIVE_LOGS,
     name: "Olive Logs",
     description: "Logs from an Olive tree.",
   },
-  birch_logs: {
-    key: "birch_logs",
+  {
+    key: TreeLogs.BIRCH_LOGS,
     name: "Birch Logs",
     description: "Logs from a Birch Tree.",
   },
-  cedar_logs: {
-    key: "cedar_logs",
+  {
+    key: TreeLogs.CEDAR_LOGS,
     name: "Cedar Logs",
     description: "Logs from a Cedar Tree.",
   },
-  eucalyptus_logs: {
-    key: "eucalyptus_logs",
+  {
+    key: TreeLogs.EUCALYPTUS_LOGS,
     name: "Eucalyptus Logs",
     description: "Logs from a Eucalyptus Tree.",
   },
-  jacada_logs: {
-    key: "jacada_logs",
+  {
+    key: TreeLogs.JACADA_LOGS,
     name: "Jacada Logs",
     description: "Logs from a Jacada Tree.",
   },
-  ficus_logs: {
-    key: "ficus_logs",
+  {
+    key: TreeLogs.FICUS_LOGS,
     name: "Ficus Logs",
     description: "Logs from a Ficus Tree.",
   },
-  maple_logs: {
-    key: "maple_logs",
+  {
+    key: TreeLogs.MAPLE_LOGS,
     name: "Maple Logs",
     description: "Logs from a Maple Tree.",
   },
-  mesquite_logs: {
-    key: "mesquite_logs",
+  {
+    key: TreeLogs.MESQUITE_LOGS,
     name: "Mesquite Logs",
     description: "Logs from a Mesquite Tree.",
   },
-  oak_logs: {
-    key: "oak_logs",
+  {
+    key: TreeLogs.OAK_LOGS,
     name: "Oak Logs",
     description: "Logs from an Oak Tree.",
   },
-  pine_logs: {
-    key: "pine_logs",
+  {
+    key: TreeLogs.PINE_LOGS,
     name: "Pine Logs",
     description: "Logs from a Pine Tree.",
   },
-} as Record<TreeLogItemKey, TreeLogItemInfo>;
+];
 
 /**
  * Register all tree logs.
  */
-for (const [key, info] of Object.entries(treeLogs)) {
-  registerItem(key as TreeLogItemKey, info);
+for (const info of treeLogs) {
+  registerItem(info);
 }
 
 export function isItemKeyTreeLog(key: ItemKey): key is TreeLogItemKey {
-  return key in treeLogs;
+  return treeLogs.some((log) => log.key === key);
 }
 
 export function isItemTreeLog(item: Item): item is TreeLogItem {

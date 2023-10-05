@@ -74,7 +74,6 @@ alt.Events.onPlayer(CALL_SERVER_FROM_CLIENT, async (player, payload) => {
       throw new Error(`CALL_SERVER_FROM_CLIENT: Procedure ${name} does not exist`);
     }
 
-    console.log("CALL_SERVER_FROM_CLIENT", name, args);
     const result = await callback(player, ...args);
     player.emitRaw(CALL_SERVER_FROM_CLIENT_RESPONSE, {
       id,

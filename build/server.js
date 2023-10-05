@@ -21,7 +21,7 @@ await esbuild.build({
     {
       name: "auto-reconnect",
       setup({ onEnd }) {
-        onEnd(reloadResource);
+        onEnd(() => reloadResource('server'));
       }
     }
   ],

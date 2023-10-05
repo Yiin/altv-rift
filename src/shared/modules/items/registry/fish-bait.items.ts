@@ -1,9 +1,9 @@
 import { registerItem } from "../items-registry";
-import { makeItemKeys } from "../lib/make-item-keys";
+import { makeKeys } from "../../../utility/make-keys";
 import { Item } from "../types";
 import { FoodIngredient } from "./materials/food-ingredient.items";
 
-export const FishBait = makeItemKeys<FishBaitItemKey>()({
+export const FishBait = makeKeys<FishBaitItemKey>()({
   WORMS: "worms",
   ROE: "roe",
   CRAWFISH: "crawfish",
@@ -34,93 +34,93 @@ export type FishBaitItemInfo = {
   description: string;
 };
 
-export const fishBaits: Record<FishBaitItemKey, FishBaitItemInfo> = {
-  worms: {
-    key: "worms",
+export const fishBaits: FishBaitItemInfo[] = [
+  {
+    key: FishBait.WORMS,
     name: "Worms",
     description: "Common bait for freshwater fishing.",
   },
-  roe: {
-    key: "roe",
+  {
+    key: FishBait.ROE,
     name: "Fish Roe",
     description: "Fish eggs ideal for catching salmon.",
   },
-  crawfish: {
-    key: "crawfish",
+  {
+    key: FishBait.CRAWFISH,
     name: "Crawfish",
     description: "Good for luring bass.",
   },
-  chickenliver: {
-    key: "chickenliver",
+  {
+    key: FishBait.CHICKEN_LIVER,
     name: "Chicken Liver",
     description: "Effective bait for catfish.",
   },
-  minnows: {
-    key: "minnows",
+  {
+    key: FishBait.MINNOWS,
     name: "Minnows",
     description: "Small fish that attract bigger fish like pike.",
   },
-  squid: {
-    key: "squid",
+  {
+    key: FishBait.SQUID,
     name: "Squid",
     description: "Saltwater bait for tuna.",
   },
-  cutmackerel: {
-    key: "cutmackerel",
+  {
+    key: FishBait.CUT_MACKEREL,
     name: "Cut Mackerel",
     description: "Great for catching mackerel and other saltwater fish.",
   },
-  sweetcorn: {
-    key: "sweetcorn",
+  {
+    key: FishBait.SWEET_CORN,
     name: "Sweet Corn",
     description: "Attracts carp.",
   },
-  shrimp: {
-    key: "shrimp",
+  {
+    key: FishBait.SHRIMP,
     name: "Shrimp",
     description: "Good for red snapper.",
   },
-  mackerelsteak: {
-    key: "mackerelsteak",
+  {
+    key: FishBait.MACKEREL_STEAK,
     name: "Mackerel Steak",
     description: "Effective bait for swordfish.",
   },
-  crabmeat: {
-    key: "crabmeat",
+  {
+    key: FishBait.CRAB_MEAT,
     name: "Crab Meat",
     description: "Effective for catching extreme sea creatures like octopus.",
   },
-  frogs: {
-    key: "frogs",
+  {
+    key: FishBait.FROGS,
     name: "Frogs",
     description: "Ideal for luring electric eels.",
   },
-  tunahead: {
-    key: "tunahead",
+  {
+    key: FishBait.TUNA_HEAD,
     name: "Tuna Head",
     description: "Perfect for catching hammerhead sharks.",
   },
-  smallfishbundle: {
-    key: "smallfishbundle",
+  {
+    key: FishBait.SMALL_FISH_BUNDLE,
     name: "Small Fish Bundle",
     description: "A bundle of small fish, used to catch giant squids.",
   },
-  goldenworms: {
-    key: "goldenworms",
+  {
+    key: FishBait.GOLDEN_WORMS,
     name: "Golden Worms",
     description: "Rare bait used to catch the mythical Golden Koi.",
   },
-} as Record<FishBaitItemKey, FishBaitItemInfo>;
+];
 
 /**
  * Register all fish baits.
  */
-for (const [key, value] of Object.entries(fishBaits)) {
-  registerItem(key as FishBaitItemKey, value);
+for (const info of fishBaits) {
+  registerItem(info);
 }
 
 export function isItemKeyFishBait(key: string): key is FishBaitItemKey {
-  return key in fishBaits;
+  return fishBaits.some((bait) => bait.key === key);
 }
 
 export function isItemFishBait(item: Item): item is FishBaitItem {

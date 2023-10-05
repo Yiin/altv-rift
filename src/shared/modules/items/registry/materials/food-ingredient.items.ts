@@ -1,7 +1,7 @@
 import { registerItem } from "../../items-registry";
-import { makeItemKeys } from "../../lib/make-item-keys";
+import { makeKeys } from "../../../../utility/make-keys";
 
-export const FoodIngredient = makeItemKeys<FoodIngredientItemKey>()({
+export const FoodIngredient = makeKeys<FoodIngredientItemKey>()({
   RAW_TROUT: "rawtrout",
   RAW_SALMON: "rawsalmon",
   RAW_BASS: "rawbass",
@@ -32,91 +32,91 @@ export type FoodIngredientItemInfo = {
   description: string;
 };
 
-export const foodIngredients: Record<FoodIngredientItemKey, FoodIngredientItemInfo> = {
-  rawtrout: {
-    key: "rawtrout",
+export const foodIngredients: FoodIngredientItemInfo[] = [
+  {
+    key: FoodIngredient.RAW_TROUT,
     name: "Raw Trout",
     description: "Raw fish, should be cooked before consuming.",
   },
-  rawsalmon: {
-    key: "rawsalmon",
+  {
+    key: FoodIngredient.RAW_SALMON,
     name: "Raw Salmon",
     description: "High in nutrients but best when cooked.",
   },
-  rawbass: {
-    key: "rawbass",
+  {
+    key: FoodIngredient.RAW_BASS,
     name: "Raw Bass",
     description: "Raw and should be cooked.",
   },
-  rawcatfish: {
-    key: "rawcatfish",
+  {
+    key: FoodIngredient.RAW_CATFISH,
     name: "Raw Catfish",
     description: "Raw and muddy, cook before eating.",
   },
-  rawpike: {
-    key: "rawpike",
+  {
+    key: FoodIngredient.RAW_PIKE,
     name: "Raw Pike",
     description: "A predatory freshwater fish. Best cooked before eating.",
   },
-  rawtuna: {
-    key: "rawtuna",
+  {
+    key: FoodIngredient.RAW_TUNA,
     name: "Raw Tuna",
     description: "High-quality fish, often used in sushi.",
   },
-  rawmackerel: {
-    key: "rawmackerel",
+  {
+    key: FoodIngredient.RAW_MACKEREL,
     name: "Raw Mackerel",
     description: "Oily fish that's rich in Omega-3. Best when cooked.",
   },
-  rawcarp: {
-    key: "rawcarp",
+  {
+    key: FoodIngredient.RAW_CARP,
     name: "Raw Carp",
     description: "Common freshwater fish. Should be cooked.",
   },
-  rawredsnapper: {
-    key: "rawredsnapper",
+  {
+    key: FoodIngredient.RAW_RED_SNAPPER,
     name: "Raw Red Snapper",
     description: "Popular saltwater fish, better when cooked.",
   },
-  rawswordfish: {
-    key: "rawswordfish",
+  {
+    key: FoodIngredient.RAW_SWORDFISH,
     name: "Raw Swordfish",
     description: "A large, meaty fish. Cook before eating.",
   },
-  rawoctopus: {
-    key: "rawoctopus",
+  {
+    key: FoodIngredient.RAW_OCTOPUS,
     name: "Raw Octopus",
     description: "An eight-armed sea creature. Cook to unlock its flavors.",
   },
-  rawelectriceel: {
-    key: "rawelectriceel",
+  {
+    key: FoodIngredient.RAW_ELECTRIC_EEL,
     name: "Raw Electric Eel",
     description: "Handle with care. Requires cooking.",
   },
-  rawhammerheadshark: {
-    key: "rawhammerheadshark",
+  {
+    key: FoodIngredient.RAW_HAMMERHEAD_SHARK,
     name: "Raw Hammerhead Shark",
     description: "A large predatory fish. Cook before consuming.",
   },
-  rawgiantsquid: {
-    key: "rawgiantsquid",
+  {
+    key: FoodIngredient.RAW_GIANT_SQUID,
     name: "Raw Giant Squid",
     description: "A deep-sea delicacy. Must be cooked.",
   },
-  rawgoldenkoi: {
-    key: "rawgoldenkoi",
+  {
+    key: FoodIngredient.RAW_GOLDEN_KOI,
     name: "Raw Golden Koi",
     description: "A mythical fish, beautiful and rare.",
   },
-} as Record<FoodIngredientItemKey, FoodIngredientItemInfo>;
+];
 
 /**
  * Register all food ingredients.
  */
-for (const [key, info] of Object.entries(foodIngredients)) {
-  registerItem(key as FoodIngredientItemKey, info);
+for (const info of foodIngredients) {
+  registerItem(info);
 }
 
 export function isItemKeyFoodIngredient(key: string): key is FoodIngredientItemKey {
-  return key in foodIngredients;
+  return foodIngredients.some((ingredient) => ingredient.key === key);
 }

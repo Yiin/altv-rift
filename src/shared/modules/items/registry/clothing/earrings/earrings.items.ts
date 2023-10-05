@@ -1,8 +1,8 @@
 import { Item, registerItem } from "@shared/modules/items";
-import { makeItemKeys } from "@shared/modules/items/lib/make-item-keys";
+import { makeKeys } from "@shared/utility/make-keys";
 import EARRINGS_ITEMS from "./earrings.json";
 
-export const Earrings = makeItemKeys<EarringsItemKey>()({
+export const Earrings = makeKeys<EarringsItemKey>()({
   FemaleGrayEarpiece: "DLC_MP_HEIST_F_EAR0_0",
   FemaleRedEarpiece: "DLC_MP_HEIST_F_EAR1_0",
   FemaleLcdEarpiece: "DLC_MP_HEIST_F_EAR2_0",
@@ -207,17 +207,14 @@ export type EarringsItemInfo = {
   restrictionTags: string[] | null;
 };
 
-export const earrings: Record<EarringsItemKey, EarringsItemInfo> = EARRINGS_ITEMS as Record<
-  EarringsItemKey,
-  EarringsItemInfo
->;
+export const earrings = Object.values(EARRINGS_ITEMS) as any as EarringsItemInfo[];
 
 /**
  * Register all earrings.
  */
 // console.log("Registering earrings...");
-for (const key in earrings) {
-  registerItem(key as EarringsItemKey, earrings[key as EarringsItemKey]);
+for (const info of earrings) {
+  registerItem(info);
 }
 // console.log(`Registered ${Object.keys(earrings).length} earrings.`);
 
@@ -225,7 +222,7 @@ for (const key in earrings) {
  * Type guards for earrings
  */
 export function isItemKeyEarrings(key: string): key is EarringsItemKey {
-  return key in earrings;
+  return earrings.some((info) => info.key === key);
 }
 
 export function isItemEarrings(item: Item): item is EarringsItem {

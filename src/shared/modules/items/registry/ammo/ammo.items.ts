@@ -2,9 +2,9 @@ import { AmmoGroup } from "../weapons/weapon-groups";
 import { Item, ItemKey } from "../../types";
 import { EquipedAmmo } from "../weapons/firearm-weapon.items";
 import { registerItem } from "../../items-registry";
-import { makeItemKeys } from "../../lib/make-item-keys";
+import { makeKeys } from "../../../../utility/make-keys";
 
-export const Ammo = makeItemKeys<AmmoItemKey>()({
+export const Ammo = makeKeys<AmmoItemKey>()({
   HANDGUN_AMMO: "handgunammo",
   SHOTGUN_AMMO: "shotgunshells",
   SNIPER_RIFLE_AMMO: "riflerounds",
@@ -36,125 +36,125 @@ export type AmmoItemInfo = {
   damagemultiplier: number;
 };
 
-export const ammo: Record<AmmoItemKey, AmmoItemInfo> = {
-  handgunammo: {
-    key: "handgunammo",
+export const ammo: AmmoItemInfo[] = [
+  {
+    key: Ammo.HANDGUN_AMMO,
     name: "Handgun ammo",
     description: "Ammo for handguns",
     group: AmmoGroup.HANDGUN,
     damagemultiplier: 1,
   },
-  shotgunshells: {
-    key: "shotgunshells",
+  {
+    key: Ammo.SHOTGUN_AMMO,
     name: "Shotgun shells",
     description: "Ammo for shotguns",
     group: AmmoGroup.SHOTGUN,
     damagemultiplier: 1,
   },
-  riflerounds: {
-    key: "riflerounds",
-    name: "Rifle rounds",
+  {
+    key: Ammo.SNIPER_RIFLE_AMMO,
+    name: "Sniper rifle rounds",
     description: "Ammo for sniper rifles",
     group: AmmoGroup.SNIPER_RIFLE,
     damagemultiplier: 1,
   },
-  assaultrifleammo: {
-    key: "assaultrifleammo",
+  {
+    key: Ammo.ASSAULT_RIFLE_AMMO,
     name: "Assault rifle ammo",
     description: "Ammo for assault rifles",
     group: AmmoGroup.ASSAULT_RIFLE,
     damagemultiplier: 1,
   },
-  machinegunammo: {
-    key: "machinegunammo",
+  {
+    key: Ammo.MACHINE_GUN_AMMO,
     name: "Machine gun ammo",
     description: "Ammo for machine guns",
     group: AmmoGroup.MACHINE_GUN,
     damagemultiplier: 1,
   },
-  heavyammo: {
-    key: "heavyammo",
+  {
+    key: Ammo.HEAVY_AMMO,
     name: "Heavy ammo",
     description: "Ammo for heavy weapons",
     group: AmmoGroup.HEAVY,
     damagemultiplier: 1,
   },
-  explosiveshells: {
-    key: "explosiveshells",
+  {
+    key: Ammo.EXPLOSIVE_SHOTGUN_AMMO,
     group: AmmoGroup.SHOTGUN,
     description: "Unleash a fiery blast with every shot using these explosive shotgun shells",
     name: "Explosive shells",
     damagemultiplier: 2,
   },
-  explosiveassaultrifleammo: {
-    key: "explosiveassaultrifleammo",
+  {
+    key: Ammo.EXPLOSIVE_ASSAULT_RIFLE_AMMO,
     group: AmmoGroup.ASSAULT_RIFLE,
     description:
       "Take down enemies with explosive force using these specially designed assault rifle rounds.",
     name: "Explosive assault rifle ammo",
     damagemultiplier: 2,
   },
-  rockets: {
-    key: "rockets",
+  {
+    key: Ammo.ROCKETS,
     group: AmmoGroup.ROCKET_LAUNCHER,
     description: "Ammo for rocket launchers",
     name: "Rockets",
     damagemultiplier: 10,
   },
-  fireworks: {
-    key: "fireworks",
+  {
+    key: Ammo.FIREWORKS,
     group: AmmoGroup.FIREWORK,
     description: "Ammo for firework launcher",
     name: "Firework",
     damagemultiplier: 0,
   },
-  grenades: {
-    key: "grenades",
+  {
+    key: Ammo.GRENADES,
     group: AmmoGroup.GRENADE_LAUNCHER,
     description: "Grenades for grenade launcher",
     name: "Grenades",
     damagemultiplier: 0,
   },
-  plasmarays: {
-    key: "plasmarays",
+  {
+    key: Ammo.PLASMA_RAYS,
     group: AmmoGroup.PLASMA_RAYS,
     description: "Ammo for rayguns",
     name: "Plasma rays",
     damagemultiplier: 3,
   },
-  fireextinguisherpowder: {
-    key: "fireextinguisherpowder",
+  {
+    key: Ammo.FIRE_EXTINGUISHER_POWDER,
     group: AmmoGroup.FIRE_EXTINGUISHER,
     description: "Powder for fire extinguisher",
     name: "Fire extinguisher powder",
     damagemultiplier: 0,
   },
-  smokegrenades: {
-    key: "smokegrenades",
+  {
+    key: Ammo.SMOKE_GRENADES,
     group: AmmoGroup.SMOKE_GRANADES,
     description: "Smoke grenades for smoke grenade launcher",
     name: "Smoke grenades",
     damagemultiplier: 0,
   },
-} as Record<AmmoItemKey, AmmoItemInfo>;
+];
 
 /**
  * Register all ammo items.
  */
-for (const [key, info] of Object.entries(ammo)) {
-  registerItem(key as AmmoItemKey, info);
+for (const info of ammo) {
+  registerItem(info);
 }
 
 export function isItemKeyAmmo(key: ItemKey): key is AmmoItemKey {
-  return key in ammo;
+  return ammo.some((item) => item.key === key);
 }
 
 export function isItemAmmo(item: Item): item is AmmoItem {
   return isItemKeyAmmo(item.key);
 }
 
-export function getAmmoKeyForAmmoGroup(group: AmmoGroup) {
-  return (Object.keys(ammo) as AmmoItemKey[]).find((key) => ammo[key].group === group)!;
+export function getAmmoKeyForAmmoGroup(ammoGroup: AmmoGroup) {
+  return ammo.find(({ group }) => group === ammoGroup)?.key!;
 }
 
 export function toEquipedAmmo(

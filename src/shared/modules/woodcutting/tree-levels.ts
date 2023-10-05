@@ -26,6 +26,9 @@ export const TreeLevels = {
   prop_tree_birch_03b: 20,
   prop_tree_birch_04: 20,
   prop_tree_birch_05: 20,
+  prop_bush_lrg_04b: 20,
+  prop_bush_lrg_04c: 20,
+  prop_bush_lrg_04d: 20,
   prop_tree_maple_02: 30,
   prop_tree_maple_03: 30,
   prop_tree_lficus_02: 25,
@@ -61,9 +64,6 @@ export const TreeLevels = {
   prop_joshua_tree_02c: 80,
   prop_joshua_tree_02d: 80,
   prop_joshua_tree_02e: 80,
-  prop_bush_lrg_04b: 20,
-  prop_bush_lrg_04c: 20,
-  prop_bush_lrg_04d: 20,
 } as const satisfies Record<keyof typeof TreeTypes, number>;
 
 export const TreeXPPerLog = {

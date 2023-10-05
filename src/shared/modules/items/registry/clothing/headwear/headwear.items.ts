@@ -1,8 +1,8 @@
-import { Item, registerItem } from "@shared/modules/items";
-import { makeItemKeys } from "@shared/modules/items/lib/make-item-keys";
+import { Item, ItemGrade, registerItem } from "@shared/modules/items";
+import { makeKeys } from "@shared/utility/make-keys";
 import HEADWEAR_ITEMS from "./headwear.json";
 
-export const Headwear = makeItemKeys<HeadwearItemKey>()({
+export const Headwear = makeKeys<HeadwearItemKey>()({
   MaleRedEarDefenders: "SP_M_HEAD_0_0_1",
   MaleBlueEarDefenders: "SP_M_HEAD_0_1",
   MaleGreenEarDefenders: "SP_M_HEAD_0_2",
@@ -3163,6 +3163,7 @@ export type HeadwearItem = {
   key: HeadwearItemKey;
 
   customName?: string | null;
+  tier: ItemGrade;
 };
 
 export type HeadwearItemInfo = {
@@ -3176,17 +3177,14 @@ export type HeadwearItemInfo = {
   restrictionTags: string[] | null;
 };
 
-export const headwears: Record<HeadwearItemKey, HeadwearItemInfo> = HEADWEAR_ITEMS as Record<
-  HeadwearItemKey,
-  HeadwearItemInfo
->;
+export const headwears = Object.values(HEADWEAR_ITEMS) as any as HeadwearItemInfo[];
 
 /**
  * Register all headwears.
  */
 // console.log("Registering headwears...");
-for (const key in headwears) {
-  registerItem(key as HeadwearItemKey, headwears[key as HeadwearItemKey]);
+for (const info of headwears) {
+  registerItem(info);
 }
 // console.log(`Registered ${Object.keys(headwears).length} headwears.`);
 
@@ -3194,7 +3192,7 @@ for (const key in headwears) {
  * Type guards for headwears
  */
 export function isItemKeyHeadwear(key: string): key is HeadwearItemKey {
-  return key in headwears;
+  return headwears.some((info) => info.key === key);
 }
 
 export function isItemHeadwear(item: Item): item is HeadwearItem {

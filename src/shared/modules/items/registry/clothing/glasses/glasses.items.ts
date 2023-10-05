@@ -1,8 +1,8 @@
 import { Item, registerItem } from "@shared/modules/items";
-import { makeItemKeys } from "@shared/modules/items/lib/make-item-keys";
+import { makeKeys } from "@shared/utility/make-keys";
 import GLASSES_ITEMS from "./glasses.json";
 
-export const Glasses = makeItemKeys<GlassesItemKey>()({
+export const Glasses = makeKeys<GlassesItemKey>()({
   MaleBlackWraparounds: "SP_M_EYES_1_1",
   MaleGoldBullEmic: "SP_M_EYES_10_0",
   MaleGrayBullEmic: "SP_M_EYES_10_1",
@@ -953,17 +953,14 @@ export type GlassesItemInfo = {
   restrictionTags: string[] | null;
 };
 
-export const glasses: Record<GlassesItemKey, GlassesItemInfo> = GLASSES_ITEMS as Record<
-  GlassesItemKey,
-  GlassesItemInfo
->;
+export const glasses = Object.values(GLASSES_ITEMS) as any as GlassesItemInfo[];
 
 /**
  * Register all glasses.
  */
 // console.log("Registering glasses...");
-for (const key in glasses) {
-  registerItem(key as GlassesItemKey, glasses[key as GlassesItemKey]);
+for (const info of glasses) {
+  registerItem(info);
 }
 // console.log(`Registered ${Object.keys(glasses).length} glasses.`);
 
@@ -971,7 +968,7 @@ for (const key in glasses) {
  * Type guards for glasses
  */
 export function isItemKeyGlasses(key: string): key is GlassesItemKey {
-  return key in glasses;
+  return glasses.some((info) => info.key === key);
 }
 
 export function isItemGlasses(item: Item): item is GlassesItem {
