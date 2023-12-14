@@ -1,4 +1,11 @@
-import { isItemKeyClothing, isItemKeyPants, isItemKeyTop } from "@shared/modules/items";
+import {
+  Character,
+  EquipmentSlot,
+  InventoryItem,
+  LocalPlayerEquipmentItemSource,
+  LocalPlayerInventoryItemSource,
+} from "@shared/interfaces";
+import { Item, isItemKeyClothing, isItemKeyPants, isItemKeyTop } from "@shared/modules/items";
 
 export const getItemImage = (item: { key: string }) => {
   if (isItemKeyClothing(item.key)) {
@@ -39,10 +46,29 @@ export function getItemIconPosition(item: { key: string }) {
   return "center";
 }
 
-
 export function getItemClasses(item: { key: string }) {
   if (isItemKeyClothing(item.key)) {
-    return 'brightness-125';
+    return "brightness-125";
   }
   return;
+}
+
+export function getLocalInventoryItem(item: InventoryItem) {
+  return {
+    item: item.item,
+    source: {
+      type: "inventory",
+      inventorySlot: item.slot,
+    } satisfies LocalPlayerInventoryItemSource,
+  } as const;
+}
+
+export function getLocalEquipmentItem(item: Item, equipmentSlot: EquipmentSlot) {
+  return {
+    item: item,
+    source: {
+      type: "equipment",
+      equipmentSlot,
+    } satisfies LocalPlayerEquipmentItemSource,
+  } as const;
 }

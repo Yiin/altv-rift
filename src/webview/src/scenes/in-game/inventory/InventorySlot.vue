@@ -3,7 +3,8 @@ import { computed, ref } from "vue";
 import { InteractionType, SlottedItem, isSameSource, useInventory } from "@/store/inventory.store";
 import InventoryItemIcon from "./InventoryItemIcon.vue";
 import { isItemUsable, isItemEquipable, getCombineType, CombineType } from "@shared/modules/items";
-import { LocalInventoryItemSource } from "@shared/interfaces";
+import { LocalPlayerInventoryItemSource } from "@shared/interfaces";
+import { isItemPreviewable } from "@shared/modules/items/lib/is-item-previewable";
 
 const props = defineProps<{
   slot: number;
@@ -15,7 +16,7 @@ const nodeRef = ref<HTMLDivElement>();
 
 const item = computed(() =>
   inventory.items.find(
-    (item): item is SlottedItem<LocalInventoryItemSource> =>
+    (item): item is SlottedItem<LocalPlayerInventoryItemSource> =>
       item.source.type === "inventory" && item.source.inventorySlot === props.slot
   )
 );
@@ -112,6 +113,8 @@ function useOrEquipItem() {
     inventory.useItem(item.value.source);
   } else if (isItemEquipable(item.value.item.key)) {
     inventory.equipItem(item.value.source);
+  } else if (isItemPreviewable(item.value.item.key)) {
+    inventory.previewingItem = item.value;
   }
 }
 

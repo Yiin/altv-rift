@@ -38,7 +38,7 @@ registerElement({
         style: {
           transform: everyFrame(() => {
             const { x, y } = alt.worldToScreen(
-              game.getPedBoneCoords(ped.scriptID, Bones.SKEL_Pelvis, 0, 0, 0.2)
+              game.getPedBoneCoords(ped, Bones.SKEL_Pelvis, 0, 0, 0.2)
             );
             return `translate(-50%, -50%) translate(${x}px, ${y}px)`;
           }),

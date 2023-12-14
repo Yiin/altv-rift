@@ -3,7 +3,7 @@ import { ClientEvents } from "@shared/events/client";
 import { ServerCall } from "@shared/calls/server";
 import { ServerEvents } from "@shared/events/server";
 import { isValidItem } from "@shared/modules/items";
-import { isRequired, isUnique, validate } from "@/core/validator";
+import { isRequired, isUnique, isValidCharacterName, validate } from "@/core/validator";
 import { rpc } from "@/core/rpc";
 import { LoggedInPlayer, isInGame, isLoggedIn, needsToBeLoggedIn } from "@/core/utility/assertions";
 import { on } from "@/core/events/emit";
@@ -19,7 +19,10 @@ on(ServerEvents.FromServer.USER_LOAD, (player) => {
 
   if (charactersCount === 0) {
     alt.log("triggering client (start character creation scene)");
-    player.emitRaw(ClientEvents.FromServer.START_CHARACTER_CREATION_SCENE);
+    alt.Timers.nextTick(() => {
+      // player.despawn();
+      player.emitRaw(ClientEvents.FromServer.START_CHARACTER_CREATION_SCENE);
+    });
     // Forward player to character creation scene because they have no characters
   } else {
     startGame(player, player.user.characters[0].id!);
@@ -31,6 +34,7 @@ on(ServerEvents.FromServer.USER_LOAD, (player) => {
 
 rpc.registerWebview(ServerCall.FromWebview.CREATE_CHARACTER, async (player, data) => {
   needsToBeLoggedIn(player);
+  canCreateNewCharacter(player);
 
   await validate(data, {
     name: [
@@ -39,30 +43,27 @@ rpc.registerWebview(ServerCall.FromWebview.CREATE_CHARACTER, async (player, data
         model: "character",
         field: "name",
       }),
+      isValidCharacterName(),
     ],
+    appearance: [isRequired("Please select an appearance")],
   });
 
   const { name, appearance } = data;
 
-  try {
-    const character = await player.createCharacter({
-      name,
-      appearance,
-      user: {
-        connect: {
-          id: player.user.id,
-        },
+  const character = await player.createCharacter({
+    name,
+    appearance,
+    user: {
+      connect: {
+        id: player.user.id,
       },
-      ...getDefaultCharacterData(),
-    });
+    },
+    ...getDefaultCharacterData(),
+  });
 
-    startGame(player, character.id);
+  startGame(player, character.id);
 
-    return true;
-  } catch (e) {
-    alt.logError(e);
-    throw e;
-  }
+  return true;
 });
 
 async function startGame(player: LoggedInPlayer, characterId: string) {
@@ -86,8 +87,15 @@ async function startGame(player: LoggedInPlayer, characterId: string) {
 
   player.spawn(character.lastPosition);
   player.rot = new alt.Vector3(character.rot);
-  player.health = Math.max(character.health, 200);
+  player.maxHealth = Math.max(character.health, 2000);
+  player.health = Math.max(character.health, 2000);
   player.dimension = 0;
 
   player.emitRaw(ClientEvents.FromServer.START_GAME);
+}
+
+export function canCreateNewCharacter(player: LoggedInPlayer) {
+  if (player.user.characters.length > 0) {
+    throw new Error("You already have a character.");
+  }
 }

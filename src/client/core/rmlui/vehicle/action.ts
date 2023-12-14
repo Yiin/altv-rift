@@ -28,7 +28,7 @@ function getVehiclePartPosition(vehicle: alt.Vehicle, part: (typeof PARTS)[numbe
 
   switch (part) {
     case VehicleBones.BONNET: {
-      const [, , front] = game.getVehicleSize(vehicle);
+      const [, front] = game.getVehicleSize(vehicle);
       const { z } = game.getWorldPositionOfEntityBone(
         vehicle,
         game.getEntityBoneIndexByName(vehicle, VehicleBones.BONNET)
@@ -37,7 +37,7 @@ function getVehiclePartPosition(vehicle: alt.Vehicle, part: (typeof PARTS)[numbe
       return new alt.Vector3(x, y, z);
     }
     case VehicleBones.BOOT: {
-      const [, back] = game.getVehicleSize(vehicle);
+      const [back] = game.getVehicleSize(vehicle);
       const { z } = game.getWorldPositionOfEntityBone(
         vehicle,
         game.getEntityBoneIndexByName(vehicle, VehicleBones.BOOT)
@@ -143,7 +143,7 @@ alt.Events.onKeyDown(({ key }) => {
       } as const
     )[part];
 
-    const shouldClose = game.getVehicleDoorAngleRatio(closestVehicle.scriptID, door) !== 0;
+    const shouldClose = game.getVehicleDoorAngleRatio(closestVehicle, door) !== 0;
     rpc.callServer(
       ServerCall.FromClient.TOGGLE_VEHICLE_DOOR,
       closestVehicle.remoteID,
@@ -173,7 +173,7 @@ registerElement({
       return null;
     }
 
-    const boneIndex = game.getEntityBoneIndexByName(vehicle.scriptID, part);
+    const boneIndex = game.getEntityBoneIndexByName(vehicle, part);
 
     if (boneIndex === -1) {
       return null;

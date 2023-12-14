@@ -5,7 +5,7 @@ import { ServerEvents } from "@shared/events/server";
 import { PedInteraction } from "@shared/modules/ped/interactions";
 import { ConversationOption } from "@shared/interfaces/conversation";
 import { getInventoryItemByKey } from "@shared/modules/inventory";
-import { FoodIngredient, TreeLogs } from "@shared/modules/items";
+import { FoodIngredient, Sand, TreeLogs } from "@shared/modules/items";
 import { IconName } from "@/core/rmlui/components/icon/icon";
 import { useCharacter } from "@/core/store/character.store";
 import { whileEntityIsStreamedIn } from "@/core/game-state-hooks/entity-is-streamed-in.state";
@@ -27,6 +27,7 @@ import WOODCUTTING_TUTOR_INTRO from "./conversations/10_WOODCUTTING_TUTOR_INTRO.
 import CRAFTING_TUTOR_INTRO from "./conversations/11_CRAFTING_TUTOR_INTRO.yaml";
 import WOODCUTTING_TUTOR_COMPLETE from "./conversations/12_WOODCUTTING_TUTOR_COMPLETE.yaml";
 import FISHING_TUTOR_COMPLETE from "./conversations/13_FISHING_TUTOR_COMPLETE.yaml";
+import MINING_TUTOR_COMPLETE from "./conversations/14_MINING_TUTOR_COMPLETE.yaml";
 
 whileEntityIsStreamedIn(
   (entity): entity is alt.Ped => entity instanceof alt.Ped,
@@ -75,7 +76,7 @@ registerQuest(Quests.Introduction.Key, {
       visibleFact: Quests.Introduction.Facts.STARTED_MINING,
       completedFact: Quests.Introduction.Facts.COMPLETED_MINING,
       title: "Mining",
-      summary: `Dig ${Quests.Introduction.Constants.SAND_BAGS_NEEDED} bags of sand and bring them back to San-Lee.`,
+      summary: `Dig ${Quests.Introduction.Constants.GRAVEL_NEEDED} bags of sand and bring them back to San-Lee.`,
     },
     {
       visibleFact: Quests.Introduction.Facts.PICKED_FISHING,
@@ -414,6 +415,35 @@ registerPedInteractions(PedKey.MINING_TUTOR, (ped) => {
         });
       },
     });
+  }
+
+  if (
+    questFacts.includes(Quests.Introduction.Facts.STARTED_MINING) &&
+    !questFacts.includes(Quests.Introduction.Facts.COMPLETED_MINING)
+  ) {
+    const palmLogs = getInventoryItemByKey(useCharacter().inventory, Sand.GRAVEL);
+
+    if (palmLogs && palmLogs.item.amount >= Quests.Introduction.Constants.GRAVEL_NEEDED) {
+      interactions.push({
+        key: Quests.Introduction.Facts.COMPLETED_MINING,
+        icon: "quest",
+        label: "Talk",
+        onSelect() {
+          startConversation(ped, {
+            topic: "Introduction",
+            pages: MINING_TUTOR_COMPLETE,
+            options: [{ value: "complete", label: "Complete", color: "primary" }],
+          }).then((option) => {
+            if (option?.value === "complete") {
+              alt.Events.emitServerRaw(
+                ServerEvents.FromClient.NOTIFY,
+                Quests.Introduction.Facts.COMPLETED_MINING
+              );
+            }
+          });
+        },
+      });
+    }
   }
 
   return interactions;

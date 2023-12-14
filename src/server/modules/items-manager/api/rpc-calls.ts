@@ -7,7 +7,7 @@ import { removeBaitFromFishingRod, useFishBaitOnFishingRod } from "../items/fish
 import {
   canDropItem,
   canEquipItem,
-  canInteractWithItem,
+  canInteractWithItemSource,
   findItem,
   useItemFromSource,
 } from "./hooks";
@@ -19,7 +19,7 @@ import { dropItemOnTheGround, removeItem, swapItems } from "./utils";
 rpc.registerWebview(ServerCall.FromWebview.USE_ITEM, (player, itemSource) => {
   needsToBeInGame(player);
 
-  if (!canInteractWithItem.call(player, itemSource)) {
+  if (!canInteractWithItemSource.call(player, itemSource)) {
     return false;
   }
 
@@ -42,7 +42,7 @@ rpc.registerWebview(ServerCall.FromWebview.EQUIP_ITEM, (player, itemSource) => {
     return false;
   }
 
-  if (!canInteractWithItem.call(player, itemSource)) {
+  if (!canInteractWithItemSource.call(player, itemSource)) {
     return false;
   }
 
@@ -65,7 +65,7 @@ rpc.registerWebview(ServerCall.FromWebview.UNEQUIP_ITEM, (player, equipmentSlot)
 rpc.registerWebview(ServerCall.FromWebview.COMBINE_ITEMS, (player, sourceA, sourceB) => {
   needsToBeInGame(player);
 
-  if (!canInteractWithItem.call(player, sourceA) || !canInteractWithItem.call(player, sourceB)) {
+  if (!canInteractWithItemSource.call(player, sourceA) || !canInteractWithItemSource.call(player, sourceB)) {
     return false;
   }
 
@@ -107,7 +107,7 @@ rpc.registerWebview(ServerCall.FromWebview.COMBINE_ITEMS, (player, sourceA, sour
 rpc.registerWebview(ServerCall.FromWebview.UNLOAD_AMMO, (player, itemSource) => {
   needsToBeInGame(player);
 
-  if (!canInteractWithItem.call(player, itemSource)) {
+  if (!canInteractWithItemSource.call(player, itemSource)) {
     return false;
   }
 
@@ -117,7 +117,7 @@ rpc.registerWebview(ServerCall.FromWebview.UNLOAD_AMMO, (player, itemSource) => 
 rpc.registerWebview(ServerCall.FromWebview.REMOVE_BAIT, (player, itemSource) => {
   needsToBeInGame(player);
 
-  if (!canInteractWithItem.call(player, itemSource)) {
+  if (!canInteractWithItemSource.call(player, itemSource)) {
     return false;
   }
 
@@ -164,7 +164,7 @@ rpc.registerWebview(ServerCall.FromWebview.DROP_ITEM, (player, itemSource) => {
 rpc.registerWebview(ServerCall.FromWebview.MOVE_ITEM, (player, from, to) => {
   needsToBeInGame(player);
 
-  if (!canInteractWithItem.call(player, from) || !canInteractWithItem.call(player, to)) {
+  if (!canInteractWithItemSource.call(player, from) || !canInteractWithItemSource.call(player, to)) {
     return false;
   }
 

@@ -113,7 +113,7 @@ const Minimap = {
   },
 
   getScreenResolution(): alt.IVector2 {
-    const [_, x, y] = game.getActualScreenResolution(0, 0);
+    const [x, y] = game.getActualScreenResolution(0, 0);
     return { x, y };
   },
 

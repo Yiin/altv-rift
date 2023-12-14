@@ -11,6 +11,7 @@ import {
 } from "@shared/modules/items";
 import { computed } from "vue";
 import { InteractionType, ItemActionMenu, useInventory } from "@/store/inventory.store";
+import { isItemPreviewable } from "@shared/modules/items/lib/is-item-previewable";
 
 const props = defineProps<ItemActionMenu>();
 
@@ -30,6 +31,7 @@ const isEquipable = computed(
 const isUnequipable = computed(() => itemSource.value.type === "equipment");
 const hasAmmo = computed(() => isItemFirearmWeapon(item.value) && !!item.value.ammo);
 const hasFishBait = computed(() => isItemFishingRod(item.value) && !!item.value.bait);
+const isPreviewable = computed(() => isItemPreviewable(item.value.key));
 
 const combine = computed(() => {
   if (itemSource.value.type !== "inventory") {
@@ -71,6 +73,9 @@ function executeAction(action: string) {
     case "equip":
       inventory.equipItem(source);
       break;
+    case "preview":
+      inventory.previewingItem = props.item;
+      break;
     case "unequip":
       if (source.type === "equipment") {
         inventory.unequipItem(source.equipmentSlot);
@@ -109,6 +114,12 @@ const actions = computed(() => [
     icon: "mdi-sword-cross",
     enabled: isEquipable.value,
     select: () => executeAction("equip"),
+  },
+  {
+    name: "Preview",
+    icon: "mdi-cursor-default-click-outline",
+    enabled: isPreviewable.value,
+    select: () => executeAction("preview"),
   },
   {
     name: "Unequip",

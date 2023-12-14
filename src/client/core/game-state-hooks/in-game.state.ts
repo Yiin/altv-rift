@@ -1,19 +1,18 @@
-import { computed, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { isCharacterStoreAvailable } from "@/core/store/character.store";
+import { isConnected } from "./connected.state";
 
-export const isInGame = computed(() => {
-  return isCharacterStoreAvailable.value;
-});
+export const isInGame = computed(() => isConnected.value && isCharacterStoreAvailable.value);
 
-let cleanup: (() => void) | void;
+export function whileInGame(fn: () => MaybePromise<(() => void) | void>) {
+  const cleanup = ref<(() => void) | void>();
 
-export function whileInGame(fn: () => (() => void) | void) {
-  watch(isInGame, (value) => {
+  watch(isInGame, async (value) => {
     if (value) {
-      cleanup = fn();
-    } else if (cleanup) {
-      cleanup();
-      cleanup = undefined;
+      cleanup.value = await fn();
+    } else if (cleanup.value) {
+      cleanup.value();
+      cleanup.value = undefined;
     }
   });
 }

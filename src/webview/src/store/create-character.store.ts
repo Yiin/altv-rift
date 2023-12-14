@@ -1,20 +1,28 @@
 import { defineStore } from "pinia";
 import { rpc } from "../rpc";
-import { featureNames } from "../scenes/create-character/data/features";
-import { blushColors } from "../scenes/create-character/data/aspects";
 import {
+  featureNames,
+  aspects,
+  blushColors,
+  getRandomHair,
   headOverlays,
   OverlayType,
-} from "../scenes/create-character/data/overlays";
+} from "@shared/modules/character/appearance-data";
 import { ServerCall } from "@shared/calls/server";
 import { Appearance } from ".prisma/client";
+import { pinia } from ".";
+import { watch } from "vue";
 
-export const useCreateCharacter = defineStore("create-character", {
-  state: () => ({
-    errors: {} as Record<string, string>,
-    name: "",
-    sex: 0 as 0 | 1,
-    faceFather: 0,
+const MALE = 0;
+const FEMALE = 1;
+
+function getDefaultAppearance(sex: 0 | 1) {
+  const hair = getRandomHair(sex);
+  const hairCollection = aspects(sex).Hair.options.get(hair)!.collection;
+  const hairOverlay = aspects(sex).Hair.options.get(hair)!.overlay;
+
+  return {
+    faceFather: sex === MALE ? 0 : 45,
     faceMother: 21,
     skinFather: 0,
     skinMother: 21,
@@ -27,44 +35,48 @@ export const useCreateCharacter = defineStore("create-character", {
           id,
           value: min,
           opacity: opacity?.min ?? null,
-          color1:
-            id === OverlayType.Blush
-              ? [...blushColors.keys()][0]
-              : color1?.min ?? null,
-          color2:
-            id === OverlayType.Blush
-              ? [...blushColors.keys()][0]
-              : color2?.min ?? null,
+          color1: id === OverlayType.Blush ? [...blushColors.keys()][0] : color1?.min ?? null,
+          color2: id === OverlayType.Blush ? [...blushColors.keys()][0] : color2?.min ?? null,
         }),
       new Map<OverlayType, Appearance["headOverlays"][number]>()
     ),
-    hair: 0,
-    hairCollection: "mpbeach_overlays",
-    hairOverlay: "FM_Hair_Fuzz",
+    hair,
+    hairCollection,
+    hairOverlay,
     hairDlc: 0,
     hairColor1: 0,
     hairColor2: 0,
     eyes: 0,
+  };
+}
+
+export const useCreateCharacter = defineStore("create-character", {
+  state: () => ({
+    errors: {} as Record<string, string>,
+    name: "",
+    sex: MALE as 0 | 1,
+    otherAppearance: getDefaultAppearance(FEMALE),
+    currentAppearance: getDefaultAppearance(MALE),
   }),
   getters: {
     appearance: (state) => {
       return {
         sex: state.sex,
-        skinMother: state.skinMother,
-        skinFather: state.skinFather,
-        skinMix: state.skinMix,
-        faceMother: state.faceMother,
-        faceFather: state.faceFather,
-        faceMix: state.faceMix,
-        hairColor1: state.hairColor1,
-        hairColor2: state.hairColor2,
-        features: [...state.features],
-        hair: state.hair,
-        hairCollection: state.hairCollection,
-        hairDlc: state.hairDlc,
-        hairOverlay: state.hairOverlay,
-        headOverlays: [...state.headOverlays.values()],
-        eyes: state.eyes,
+        skinMother: state.currentAppearance.skinMother,
+        skinFather: state.currentAppearance.skinFather,
+        skinMix: state.currentAppearance.skinMix,
+        faceMother: state.currentAppearance.faceMother,
+        faceFather: state.currentAppearance.faceFather,
+        faceMix: state.currentAppearance.faceMix,
+        hairColor1: state.currentAppearance.hairColor1,
+        hairColor2: state.currentAppearance.hairColor2,
+        features: [...state.currentAppearance.features],
+        hair: state.currentAppearance.hair,
+        hairCollection: state.currentAppearance.hairCollection,
+        hairDlc: state.currentAppearance.hairDlc,
+        hairOverlay: state.currentAppearance.hairOverlay,
+        headOverlays: [...state.currentAppearance.headOverlays.values()],
+        eyes: state.currentAppearance.eyes,
       };
     },
   },
@@ -77,3 +89,30 @@ export const useCreateCharacter = defineStore("create-character", {
     },
   },
 });
+
+watch(
+  () => useCreateCharacter(pinia).sex,
+  (current, previous) => {
+    if (current !== previous) {
+      const createCharacter = useCreateCharacter(pinia);
+      [createCharacter.currentAppearance, createCharacter.otherAppearance] = [
+        createCharacter.otherAppearance,
+        createCharacter.currentAppearance,
+      ];
+    }
+  }
+);
+
+watch(
+  () => useCreateCharacter(pinia).currentAppearance.hair,
+  (current) => {
+    const createCharacter = useCreateCharacter(pinia);
+
+    createCharacter.currentAppearance.hairCollection = aspects(
+      createCharacter.sex
+    ).Hair.options.get(current)!.collection;
+    createCharacter.currentAppearance.hairOverlay = aspects(createCharacter.sex).Hair.options.get(
+      current
+    )!.overlay;
+  }
+);

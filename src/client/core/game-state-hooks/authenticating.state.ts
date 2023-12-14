@@ -1,17 +1,18 @@
-import { computed, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { isUserStoreAvailable } from "@/core/store/user.store";
+import { isConnected } from "./connected.state";
 
-export const isAuthenticating = computed(() => !isUserStoreAvailable.value);
+export const isAuthenticating = computed(() => !isUserStoreAvailable.value && isConnected.value);
 
-let cleanup: (() => void) | void;
+export function whileAuthenticating(fn: () => MaybePromise<(() => void) | void>) {
+  const cleanup = ref<(() => void) | void>();
 
-export function whileAuthenticating(fn: () => (() => void) | void) {
-  watch(isAuthenticating, (value) => {
+  watch(isAuthenticating, async (value) => {
     if (value) {
-      cleanup = fn();
-    } else if (cleanup) {
-      cleanup();
-      cleanup = undefined;
+      cleanup.value = await fn();
+    } else if (cleanup.value) {
+      cleanup.value();
+      cleanup.value = undefined;
     }
   });
 }

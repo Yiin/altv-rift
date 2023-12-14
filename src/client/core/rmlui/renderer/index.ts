@@ -8,17 +8,28 @@ import { updateMenu } from "./hooks/use-menu";
 import { setCurrentNode } from "./internals/current-node";
 import { streamedInEntities } from "./streamed-in-entities";
 
-alt.Timers.everyTick(() => {
-  if (clientState.ui.window) {
-    return;
+alt.Events.onConsoleCommand(({ command }) => {
+  if (command === "win") {
+    alt.log(clientState.ui.window);
   }
+});
 
+alt.Timers.everyTick(() => {
   // Cleanup previous frame
   visibleElementsHeap.clear();
   notRenderedElements.clear();
   resetFocusedEntity();
 
   streamedInEntities.forEach(prepareFrameForEntity);
+
+  if (clientState.ui.window) {
+    // Reset the current node
+    setCurrentNode(null);
+
+    // Hide elements that are not shown because of the limit
+    notRenderedElements.forEach(markElementAsHidden);
+    return;
+  }
 
   updateMenu();
 

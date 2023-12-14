@@ -14,19 +14,15 @@ import { MaterialItem, isItemKeyMaterial } from "../registry/materials/material.
 import { AmmoItem, isItemKeyAmmo } from "../registry/ammo/ammo.items";
 import {
   FishBaitItem,
-  FishingRodItem,
-  ToolItem,
   isItemKeyFishBait,
-  isItemKeyFishingRod,
-  isItemKeyTool,
 } from "../registry";
-import { isItemKeyStackable } from "./is-stackable";
+import { isItemKeyStackable } from "./get-item-flags";
 
 export function createItem<T extends ItemKey, D = ItemByKey<T>>(
   key: T,
   data?: Omit<Partial<D>, "key">
 ) {
-  // TODO: Better item structure validation
+  // Delete amount if item is not stackable
   if (!isItemKeyStackable(key) && data && "amount" in data) {
     delete data.amount;
   }
@@ -74,14 +70,10 @@ export function getItemDefaultData(key: ItemKey) {
     return {
       amount: 1,
     } satisfies Partial<MaterialItem>;
-  } else if (isItemKeyFishingRod(key)) {
-    return {} satisfies Partial<FishingRodItem>;
   } else if (isItemKeyFishBait(key)) {
     return {
       amount: 1,
     } satisfies Partial<FishBaitItem>;
-  } else if (isItemKeyTool(key)) {
-    return {} satisfies Partial<ToolItem>;
   }
-  throw new Error(`Invalid item key: ${key}`);
+  return {};
 }

@@ -9,7 +9,7 @@ const LerpObject = {
   /**
    * Lerp an object with an ID from one point to another.
    */
-  async lerp(id: number, to: alt.IVector3, speed = 0.1) {
+  async lerp(id: alt.LocalObject, to: alt.IVector3, speed = 0.1) {
     let runTimer = 0;
     let dist = 0;
     game.freezeEntityPosition(id, true);
@@ -40,7 +40,14 @@ const LerpObject = {
     const hash = alt.hash(model);
     await loadModel(hash);
 
-    const object = game.createObjectNoOffset(hash, start.x, start.y, start.z, false, false, false);
+    const object = alt.LocalObject.create({
+      model: hash,
+      pos: new alt.Vector3(start),
+      rot: alt.Vector3.zero,
+      dynamic: false,
+      noOffset: true,
+      useStreaming: false,
+    });
 
     await sleep(50);
 

@@ -30,19 +30,16 @@ alt.Events.onServer(ClientEvents.FromServer.UPDATE_USER_STATE, (event: any) => {
 });
 
 alt.Events.onServer(ClientEvents.FromServer.SET_USER_STATE, (state: any) => {
-  getWebview().emitRaw(WebviewEvents.FromClient.SET_USER_STATE, event);
+  getWebview().emitRaw(WebviewEvents.FromClient.SET_USER_STATE, state);
 
   if (userStore) {
     const user = useUser();
-    user.$dispose();
-    delete pinia.state.value[user.$id];
-    isUserStoreAvailable.value = false;
-  }
-
-  if (state) {
+    user.$state = state;
+  } else {
     userStore = defineStore("user", {
       state: () => state,
     });
     isUserStoreAvailable.value = true;
+    alt.log("User store is now available.");
   }
 });

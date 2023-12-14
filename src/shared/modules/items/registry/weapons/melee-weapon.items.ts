@@ -41,7 +41,6 @@ export type MeleeWeaponItemInfo = {
   hash: number;
   name: string;
   description: string;
-  flags: ItemFlags;
   group: typeof WeaponGroup.MELEE;
   price: number;
   stats: {
@@ -58,7 +57,6 @@ export const meleeWeapons: MeleeWeaponItemInfo[] = [
     hash: 3756226112,
     name: getWeaponData(3756226112).Name,
     description: getWeaponData(3756226112).Description,
-    flags: ItemFlags.IsEquippable,
     group: WeaponGroup.MELEE,
     price: 1950,
     stats: {
@@ -73,7 +71,6 @@ export const meleeWeapons: MeleeWeaponItemInfo[] = [
     hash: 940833800,
     name: getWeaponData(940833800).Name,
     description: getWeaponData(940833800).Description,
-    flags: ItemFlags.IsEquippable,
     group: WeaponGroup.MELEE,
     price: 25000,
     stats: {
@@ -88,7 +85,6 @@ export const meleeWeapons: MeleeWeaponItemInfo[] = [
     hash: 2484171525,
     name: getWeaponData(2484171525).Name,
     description: getWeaponData(2484171525).Description,
-    flags: ItemFlags.IsEquippable,
     group: WeaponGroup.MELEE,
     price: 6250,
     stats: {
@@ -103,7 +99,6 @@ export const meleeWeapons: MeleeWeaponItemInfo[] = [
     hash: 419712736,
     name: getWeaponData(419712736).Name,
     description: getWeaponData(419712736).Description,
-    flags: ItemFlags.IsEquippable,
     group: WeaponGroup.MELEE,
     price: 7150,
     stats: {
@@ -118,7 +113,6 @@ export const meleeWeapons: MeleeWeaponItemInfo[] = [
     hash: 1737195953,
     name: getWeaponData(1737195953).Name,
     description: getWeaponData(1737195953).Description,
-    flags: ItemFlags.IsEquippable,
     group: WeaponGroup.MELEE,
     price: 400,
     stats: {
@@ -133,7 +127,6 @@ export const meleeWeapons: MeleeWeaponItemInfo[] = [
     hash: 2578778090,
     name: getWeaponData(2578778090).Name,
     description: getWeaponData(2578778090).Description,
-    flags: ItemFlags.IsEquippable,
     group: WeaponGroup.MELEE,
     price: 400,
     stats: {
@@ -148,7 +141,6 @@ export const meleeWeapons: MeleeWeaponItemInfo[] = [
     hash: 3638508604,
     name: getWeaponData(3638508604).Name,
     description: getWeaponData(3638508604).Description,
-    flags: ItemFlags.IsEquippable,
     group: WeaponGroup.MELEE,
     price: 7500,
     stats: {
@@ -163,7 +155,6 @@ export const meleeWeapons: MeleeWeaponItemInfo[] = [
     hash: 3713923289,
     name: getWeaponData(3713923289).Name,
     description: getWeaponData(3713923289).Description,
-    flags: ItemFlags.IsEquippable,
     group: WeaponGroup.MELEE,
     price: 8900,
     stats: {
@@ -178,7 +169,6 @@ export const meleeWeapons: MeleeWeaponItemInfo[] = [
     hash: 1317494643,
     name: getWeaponData(1317494643).Name,
     description: getWeaponData(1317494643).Description,
-    flags: ItemFlags.IsEquippable,
     group: WeaponGroup.MELEE,
     price: 500,
     stats: {
@@ -193,7 +183,6 @@ export const meleeWeapons: MeleeWeaponItemInfo[] = [
     hash: 4191993645,
     name: getWeaponData(4191993645).Name,
     description: getWeaponData(4191993645).Description,
-    flags: ItemFlags.IsEquippable,
     group: WeaponGroup.MELEE,
     price: 750,
     stats: {
@@ -208,7 +197,6 @@ export const meleeWeapons: MeleeWeaponItemInfo[] = [
     hash: 2343591895,
     name: getWeaponData(2343591895).Name,
     description: getWeaponData(2343591895).Description,
-    flags: ItemFlags.IsEquippable,
     group: WeaponGroup.MELEE,
     price: 250,
     stats: {
@@ -223,7 +211,6 @@ export const meleeWeapons: MeleeWeaponItemInfo[] = [
     hash: 1141786504,
     name: getWeaponData(1141786504).Name,
     description: getWeaponData(1141786504).Description,
-    flags: ItemFlags.IsEquippable,
     group: WeaponGroup.MELEE,
     price: 125,
     stats: {
@@ -238,7 +225,6 @@ export const meleeWeapons: MeleeWeaponItemInfo[] = [
     hash: 2227010557,
     name: getWeaponData(2227010557).Name,
     description: getWeaponData(2227010557).Description,
-    flags: ItemFlags.IsEquippable,
     group: WeaponGroup.MELEE,
     price: 55,
     stats: {
@@ -253,7 +239,6 @@ export const meleeWeapons: MeleeWeaponItemInfo[] = [
     hash: 2460120199,
     name: getWeaponData(2460120199).Name,
     description: getWeaponData(2460120199).Description,
-    flags: ItemFlags.IsEquippable,
     group: WeaponGroup.MELEE,
     price: 2000,
     stats: {
@@ -268,7 +253,6 @@ export const meleeWeapons: MeleeWeaponItemInfo[] = [
     hash: 2508868239,
     name: getWeaponData(2508868239).Name,
     description: getWeaponData(2508868239).Description,
-    flags: ItemFlags.IsEquippable,
     group: WeaponGroup.MELEE,
     price: 100,
     stats: {
@@ -283,7 +267,6 @@ export const meleeWeapons: MeleeWeaponItemInfo[] = [
     hash: 3441901897,
     name: getWeaponData(3441901897).Name,
     description: getWeaponData(3441901897).Description,
-    flags: ItemFlags.IsEquippable,
     group: WeaponGroup.MELEE,
     price: 300,
     stats: {
@@ -298,7 +281,6 @@ export const meleeWeapons: MeleeWeaponItemInfo[] = [
     hash: 4192643659,
     name: getWeaponData(4192643659).Name,
     description: getWeaponData(4192643659).Description,
-    flags: ItemFlags.IsEquippable,
     group: WeaponGroup.MELEE,
     price: 8,
     stats: {

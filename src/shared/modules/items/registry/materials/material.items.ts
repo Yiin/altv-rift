@@ -5,20 +5,33 @@ import {
   FoodIngredientItemKey,
   isItemKeyFoodIngredient,
 } from "./food-ingredient.items";
-import { MetalItem, MetalItemInfo, MetalItemKey } from "./metal.items";
+import { MetalItem, MetalItemInfo, MetalItemKey, isItemKeyMetal } from "./metal.items";
+import { SandItem, SandItemInfo, SandItemKey, isItemKeySand } from "./sand.items";
 import { TreeLogItem, TreeLogItemInfo, TreeLogItemKey, isItemKeyTreeLog } from "./tree-log.items";
-import { WoodItem, WoodItemInfo, WoodItemKey } from "./wood.items";
+import { WoodItem, WoodItemInfo, WoodItemKey, isItemKeyWood } from "./wood.items";
 
-export type MaterialItemKey = FoodIngredientItemKey | TreeLogItemKey | WoodItemKey | MetalItemKey;
+export type MaterialItemKey =
+  | FoodIngredientItemKey
+  | TreeLogItemKey
+  | WoodItemKey
+  | MetalItemKey
+  | SandItemKey;
 export type MaterialItemInfo =
   | FoodIngredientItemInfo
   | TreeLogItemInfo
   | WoodItemInfo
-  | MetalItemInfo;
-export type MaterialItem = FoodIngredientItem | TreeLogItem | WoodItem | MetalItem;
+  | MetalItemInfo
+  | SandItemInfo;
+export type MaterialItem = FoodIngredientItem | TreeLogItem | WoodItem | MetalItem | SandItem;
 
 export function isItemKeyMaterial(key: ItemKey): key is MaterialItemKey {
-  return isItemKeyFoodIngredient(key) || isItemKeyTreeLog(key);
+  return (
+    isItemKeyFoodIngredient(key) ||
+    isItemKeyTreeLog(key) ||
+    isItemKeyWood(key) ||
+    isItemKeyMetal(key) ||
+    isItemKeySand(key)
+  );
 }
 
 export function isItemMaterial(item: Item): item is MaterialItem {

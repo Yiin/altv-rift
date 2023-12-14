@@ -33,12 +33,12 @@ export interface QuestInfo {
 
 export enum ClientFlags {
   CanFish = "CanFish",
+  CanDig = "CanDig",
 }
 
 export enum ActionType {
   FISHING = "fishing",
-  ENGINE = "engine",
-  TRUNK = "trunk",
+  DIGGING = "digging",
 }
 
 export type ActionItem = {
@@ -55,8 +55,7 @@ export type TargetAction = {
 };
 
 export type CurrentWindow = {
-  type: "playerInventory";
-  interaction: null;
+  type: "playerInventory" | "shop";
 };
 
 export interface ClientState {
@@ -77,7 +76,9 @@ export const getDefaultClientStoreState = (): ClientState => ({
   ui: {
     scene: null,
     elements: new Set(),
-    window: null,
+    window: {
+      type: "playerInventory",
+    },
   },
   conversation: null,
   trackingQuest: null,

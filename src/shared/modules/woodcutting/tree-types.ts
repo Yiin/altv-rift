@@ -8,22 +8,22 @@ export const TreeTypes = {
   },
   h4_prop_tree_blk_mgrv_lrg_01: {
     key: "h4_prop_tree_blk_mgrv_lrg_01",
-    name: "Black Mangrove (Large)",
+    name: "Black Mangrove", // (Large)
     logs: TreeLogs.BLACK_MANGROVE_LOGS,
   },
   h4_prop_tree_blk_mgrv_lrg_02: {
     key: "h4_prop_tree_blk_mgrv_lrg_02",
-    name: "Black Mangrove (Large)",
+    name: "Black Mangrove", // (Large)
     logs: TreeLogs.BLACK_MANGROVE_LOGS,
   },
   h4_prop_tree_blk_mgrv_med_01: {
     key: "h4_prop_tree_blk_mgrv_med_01",
-    name: "Black Mangrove (Medium)",
+    name: "Black Mangrove", // (Medium)
     logs: TreeLogs.BLACK_MANGROVE_LOGS,
   },
   h4_prop_tree_frangipani_lrg_01: {
     key: "h4_prop_tree_frangipani_lrg_01",
-    name: "Frangipani (Large)",
+    name: "Frangipani", // (Large)
     logs: TreeLogs.FRANGIPANI_LOGS,
   },
   h4_prop_tree_palm_fan_bea_03b: {
@@ -33,12 +33,12 @@ export const TreeTypes = {
   },
   h4_prop_tree_umbrella_med_01: {
     key: "h4_prop_tree_umbrella_med_01",
-    name: "Umbrella Tree (Medium)",
+    name: "Umbrella Tree", // (Medium)
     logs: TreeLogs.UMBRELLA_LOGS,
   },
   h4_prop_tree_umbrella_sml_01: {
     key: "h4_prop_tree_umbrella_sml_01",
-    name: "Umbrella Tree (Small)",
+    name: "Umbrella Tree", // (Small)
     logs: TreeLogs.UMBRELLA_LOGS,
   },
   prop_joshua_tree_01a: {
@@ -93,32 +93,32 @@ export const TreeTypes = {
   },
   prop_palm_med_01a: {
     key: "prop_palm_med_01a",
-    name: "Palm Tree (Medium)",
+    name: "Palm Tree", // (Medium)
     logs: TreeLogs.PALM_LOGS,
   },
   prop_palm_sm_01a: {
     key: "prop_palm_sm_01a",
-    name: "Palm Tree (Small)",
+    name: "Palm Tree", // (Small)
     logs: TreeLogs.PALM_LOGS,
   },
   prop_palm_sm_01d: {
     key: "prop_palm_sm_01d",
-    name: "Palm Tree (Small)",
+    name: "Palm Tree", // (Small)
     logs: TreeLogs.PALM_LOGS,
   },
   prop_palm_sm_01e: {
     key: "prop_palm_sm_01e",
-    name: "Palm Tree (Medium)",
+    name: "Palm Tree", // (Medium)
     logs: TreeLogs.PALM_LOGS,
   },
   prop_palm_sm_01f: {
     key: "prop_palm_sm_01f",
-    name: "Palm Tree (Small)",
+    name: "Palm Tree", // (Small)
     logs: TreeLogs.PALM_LOGS,
   },
   prop_rus_olive_wint: {
     key: "prop_rus_olive_wint",
-    name: "Olive (Winter)",
+    name: "Winter Olive",
     logs: TreeLogs.OLIVE_LOGS,
   },
   prop_s_pine_dead_01: {
@@ -173,12 +173,12 @@ export const TreeTypes = {
   },
   prop_tree_cedar_s_01: {
     key: "prop_tree_cedar_s_01",
-    name: "Cedar Tree (Small)",
+    name: "Cedar Tree", // (Small)
     logs: TreeLogs.CEDAR_LOGS,
   },
   prop_tree_cedar_s_02: {
     key: "prop_tree_cedar_s_02",
-    name: "Cedar Tree (Small)",
+    name: "Cedar Tree", // (Small)
     logs: TreeLogs.CEDAR_LOGS,
   },
   prop_tree_eng_oak_01: {
@@ -283,32 +283,32 @@ export const TreeTypes = {
   },
   prop_palm_huge_01a: {
     key: "prop_palm_huge_01a",
-    name: "Palm Tree (Giant)",
+    name: "Palm Tree", // (Giant)
     logs: TreeLogs.PALM_LOGS,
   },
   prop_palm_huge_01b: {
     key: "prop_palm_huge_01b",
-    name: "Palm Tree (Giant)",
+    name: "Palm Tree", // (Giant)
     logs: TreeLogs.PALM_LOGS,
   },
   prop_palm_med_01b: {
     key: "prop_palm_med_01b",
-    name: "Royal Palm Tree (Medium)",
+    name: "Royal Palm Tree", // (Medium)
     logs: TreeLogs.ROYAL_PALM_LOGS,
   },
   prop_palm_med_01c: {
     key: "prop_palm_med_01c",
-    name: "Palm Tree (Medium)",
+    name: "Palm Tree", // (Medium)
     logs: TreeLogs.PALM_LOGS,
   },
   prop_palm_med_01d: {
     key: "prop_palm_med_01d",
-    name: "Palm Tree (Medium)",
+    name: "Palm Tree", // (Medium)
     logs: TreeLogs.PALM_LOGS,
   },
   prop_plant_palm_01b: {
     key: "prop_plant_palm_01b",
-    name: "Palm Tree (Giant)",
+    name: "Palm Tree", // (Giant)
     logs: TreeLogs.PALM_LOGS,
   },
   prop_rus_olive: {

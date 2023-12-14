@@ -1,4 +1,4 @@
-import { isValidItem, createItem } from "@shared/modules/items";
+import { isValidItem, createItem, getItemName } from "@shared/modules/items";
 import { needsToBeInGame } from "@/core/utility/assertions";
 import { registerCmd, sendChatMessage } from "../chat";
 
@@ -17,5 +17,6 @@ registerCmd("additem", (player, [key, amount]) => {
     return;
   }
 
+  sendChatMessage(player, `+${amount ? +amount : 1} ${getItemName(key)}`);
   player.addItem(item);
 });

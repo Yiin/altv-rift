@@ -1,0 +1,6 @@
+files = [
+    'stream/proxyworld_female.rpf/*'
+]
+
+[meta]
+'stream/mp_f_freemode_01_mp_f_proxyworld.meta' = 'SHOP_PED_APPAREL_META_FILE'

@@ -5,8 +5,8 @@ import { Item } from "../../types";
 export const Pickaxe = makeKeys<PickaxeItemKey>()({
   BASIC_PICKAXE: "basic_pickaxe",
   ADVANCED_PICKAXE: "advanced_pickaxe",
+  EXPERT_PICKAXE: "expert_pickaxe",
   ELITE_PICKAXE: "elite_pickaxe",
-  MASTER_PICKAXE: "master_pickaxe",
   EPIC_PICKAXE: "epic_pickaxe",
 });
 
@@ -36,14 +36,14 @@ export const pickaxes: PickaxeItemInfo[] = [
       "Enhanced with improved metal, this pickaxe digs deeper and lasts longer. Ideal for seasoned miners.",
   },
   {
-    key: Pickaxe.ELITE_PICKAXE,
-    name: "Elite Pickaxe",
+    key: Pickaxe.EXPERT_PICKAXE,
+    name: "Expert Pickaxe",
     description:
       "Crafted with precision and designed for efficiency, this pickaxe is a testament to superior mining craftsmanship.",
   },
   {
-    key: Pickaxe.MASTER_PICKAXE,
-    name: "Master Pickaxe",
+    key: Pickaxe.ELITE_PICKAXE,
+    name: "Elite Pickaxe",
     description:
       "A culmination of tradition and advanced metallurgy, this pickaxe ensures maximum extraction with minimal effort.",
   },

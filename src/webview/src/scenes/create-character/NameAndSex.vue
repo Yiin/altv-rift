@@ -1,12 +1,17 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
 import { useCreateCharacter } from "../../store/create-character.store";
+import { useEventListener } from "@/composables/use-event-listener";
 
 const createCharacter = useCreateCharacter();
 
 const nameInputRef = ref<HTMLInputElement>();
 const nameInputWidthRef = ref<HTMLSpanElement>();
 const nameInputWidth = ref(0);
+
+useEventListener("pointerup", (e) => {
+  nameInputRef.value?.focus();
+});
 
 watch(
   () => createCharacter.name,

@@ -33,9 +33,9 @@ export const findItem = createHookableFunction<
 });
 
 /**
- * Can player do anything with the item?
+ * Can player do anything with the items in this source?
  */
-export const canInteractWithItem = createHookableFunction<
+export const canInteractWithItemSource = createHookableFunction<
   (player: InGamePlayer, source: ItemSource) => boolean
 >({
   name: "canInteractWithItem",

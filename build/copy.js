@@ -5,12 +5,7 @@ import glob from "glob";
 export const copyFile = (source, dest) => {
   fs.mkdirSync(path.dirname(dest), { recursive: true });
 
-  fs.copyFile(source, dest, (err) => {
-    if (err) {
-      console.error("Failed to copy", source, "err:", err);
-      process.exit(-1);
-    }
-  });
+  fs.copyFileSync(source, dest);
 };
 
 export const copy = async (globPattern, dest) => {

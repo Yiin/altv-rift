@@ -80,7 +80,7 @@ on(ServerEvents.FromServer.ITEM_UNEQUIP, (player, equipmentSlot) => {
       }[equipmentSlot as string] ?? -1;
 
     if (componentId !== -1) {
-      player.clearProps(componentId);
+      player.clearProp(componentId);
     }
   }
 });

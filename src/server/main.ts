@@ -19,3 +19,4 @@ import "./modules/questing";
 import "./modules/skills";
 import "./modules/vehicles";
 import "./modules/user-interface";
+import "./modules/thugs";

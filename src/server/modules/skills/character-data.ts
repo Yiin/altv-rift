@@ -5,6 +5,7 @@ registerCharacterData({
     set: {
       woodcutting: 0,
       fishing: 0,
+      mining: 0,
     },
   },
 });

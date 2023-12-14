@@ -23,33 +23,36 @@ on(ServerEvents.FromServer.ITEM_EQUIP, (player, item) => {
   player.giveWeapon(getWeaponHash(item.key), item.amount, true);
 });
 
-alt.Events.onProjectileStart(({ player, weaponHash }) => {
+alt.Events.onProjectileStart(({ player, weaponHash, cancel }) => {
   if (!isInGame(player)) {
+    cancel();
     return;
   }
 
   const equipedWeapon = player.character.equipment.weapon;
 
   if (!equipedWeapon) {
+    cancel();
     return;
   }
 
   if (getWeaponHash(equipedWeapon.key) !== weaponHash) {
+    cancel();
     return;
   }
 
   if (!isItemThrowableWeapon(equipedWeapon)) {
+    cancel();
     return;
   }
 
   if (equipedWeapon.amount <= 0) {
     player.removeEquipedItem("weapon");
+    cancel();
     return;
   }
 
   if ((equipedWeapon.amount -= 1) <= 0) {
     player.removeEquipedItem("weapon");
   }
-
-  return;
 });

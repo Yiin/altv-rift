@@ -6,12 +6,12 @@ import { InGamePlayer } from "@/core/utility/assertions";
 import { findItem } from "../api";
 
 findItem.hook((itemSource, player) => {
-  if (itemSource.source !== "character") {
+  if (itemSource.origin !== "character") {
     return;
   }
 
   const sourcePlayer = alt.Player.all.find(
-    (p): p is InGamePlayer => p.character?.id === itemSource.sourceId
+    (p): p is InGamePlayer => p.character?.id === itemSource.originId
   );
 
   if (!sourcePlayer) {

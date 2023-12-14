@@ -52,8 +52,8 @@ alt.Player.prototype.equipItem = function (source) {
         {
           type: "equipment",
           equipmentSlot: "weapon",
-          source: "character",
-          sourceId: this.character.id,
+          origin: "character",
+          originId: this.character.id,
         },
         source
       )
@@ -66,8 +66,8 @@ alt.Player.prototype.equipItem = function (source) {
         {
           type: "equipment",
           equipmentSlot: "tool",
-          source: "character",
-          sourceId: this.character.id,
+          origin: "character",
+          originId: this.character.id,
         },
         source
       )
@@ -102,8 +102,8 @@ alt.Player.prototype.equipItem = function (source) {
           this.equipItem({
             type: "inventory",
             inventorySlot: ammo.slot,
-            source: "character",
-            sourceId: this.character.id,
+            origin: "character",
+            originId: this.character.id,
           });
         }
       }

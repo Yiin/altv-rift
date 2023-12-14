@@ -59,6 +59,9 @@ export const PedAppearance = {
       try {
         const collection = alt.hash(appearance.hairCollection);
         const overlay = alt.hash(appearance.hairOverlay);
+        alt.log(
+          `Adding ped decoration. ${appearance.hairCollection} (${collection}), ${appearance.hairOverlay} (${overlay})`
+        );
         game.addPedDecorationFromHashes(ped, collection, overlay);
       } catch {
         alt.log(`Error adding ped decoration. Hair: `, appearance.hair);
@@ -95,7 +98,7 @@ export const PedAppearance = {
         continue;
       }
 
-      alt.setDlcClothes(ped, 0, i, defaults[0], defaults[1]);
+      alt.setDlcClothes(ped, i, defaults[0], defaults[1]);
     }
 
     if (!components || !Array.isArray(components)) {
@@ -125,11 +128,11 @@ export const PedAppearance = {
               continue;
             }
 
-            alt.setDlcProps(ped, dlc, id, drawable, texture);
+            alt.setDlcProps(ped, id, drawable, texture, dlc);
             continue;
           }
 
-          alt.setDlcClothes(ped, dlc, id, drawable, texture, 0);
+          alt.setDlcClothes(ped, id, drawable, texture, 0, dlc);
           continue;
         }
 

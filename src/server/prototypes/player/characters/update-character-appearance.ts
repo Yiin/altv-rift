@@ -141,7 +141,7 @@ alt.Player.prototype.updateCharacterAppearance = function (appearance: Appearanc
   if (typeof appearance.hairDlc === "undefined" || appearance.hairDlc === 0) {
     this.setClothes(2, appearance.hair, 0, 0);
   } else {
-    this.setDlcClothes(appearance.hairDlc, 2, appearance.hair, 0, 0);
+    this.setDlcClothes(2, appearance.hair, 0, 2, appearance.hairDlc);
   }
 
   this.hairColor = appearance.hairColor1;

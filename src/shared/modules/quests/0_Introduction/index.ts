@@ -24,7 +24,7 @@ export const Introduction = {
   Constants: {
     PALM_LOGS_NEEDED: 50,
     RAW_TROUT_NEEDED: 50,
-    SAND_BAGS_NEEDED: 30,
+    GRAVEL_NEEDED: 30,
     HANDGUN_AMMO_NEEDED: 200,
   },
 } as const;

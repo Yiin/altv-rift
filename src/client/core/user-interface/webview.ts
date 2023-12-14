@@ -24,6 +24,7 @@ alt.WebView.prototype.emitRaw = function (eventName: string, ...args: unknown[])
 
 let url!: string;
 let webview!: alt.WebView;
+let cursors = 0;
 
 // Make sure the webview is ready before we do anything with it.
 let markWebViewAsReady!: () => void;
@@ -74,6 +75,8 @@ export function toggleElement(element: UIElement, state?: boolean) {
     return;
   }
 
+  alt.log(`Toggling Element: ${element}, State: ${state}`);
+
   if (typeof state === "undefined") {
     toggleElement(element, !clientState.ui.elements.has(element));
   } else if (state) {
@@ -91,25 +94,32 @@ export function toggleElement(element: UIElement, state?: boolean) {
   }
 }
 
-export function showCursor(state: boolean) {
+export function showCursor(state?: boolean) {
   try {
-    alt.Cursor.visible = state;
+    if (typeof state !== "undefined") {
+      alt.Cursor.visible = state;
+      cursors = Math.max(0, state ? cursors + 1 : cursors - 1);
+    }
   } catch {}
 
   alt.Timers.nextTick(() => {
-    if (alt.Cursor.visible) {
+    if (cursors) {
+      if (!alt.Cursor.visible) {
+        for (let i = 0; i < cursors; i++) {
+          alt.Cursor.visible = true;
+        }
+      }
       webview.focused = true;
       alt.setGameControlsActive(false);
     } else {
-      alt.setGameControlsActive(true);
-      webview.focused = false;
+      clearCursor();
     }
   });
 }
 
 export function clearCursor() {
   let cursorCount = 0;
-  while (true) {
+  while (alt.Cursor.visible) {
     try {
       alt.Cursor.visible = false;
       cursorCount++;
@@ -120,19 +130,25 @@ export function clearCursor() {
 
   alt.setGameControlsActive(true);
   webview.focused = false;
+  cursors = 0;
   return cursorCount;
 }
 
 let clearedCursors = 0;
 
 onKeyDown(alt.Enums.KeyCode.Z, () => {
-  if (alt.Cursor.visible) {
+  if (cursors) {
     clearedCursors = clearCursor();
   } else {
     for (let i = 0; i < clearedCursors; i++) {
       alt.Cursor.visible = true;
     }
   }
+});
+
+alt.Events.onWindowFocusChange(({ state }) => {
+  alt.log(`Window Focus: ${state}, Cursors: ${cursors}`);
+  showCursor();
 });
 
 alt.Events.onServer(

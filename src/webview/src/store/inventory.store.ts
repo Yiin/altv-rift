@@ -2,11 +2,14 @@ import { defineStore } from "pinia";
 import { rpc } from "@/rpc";
 import {
   EquipmentSlot,
-  LocalEquipmentItemSource,
+  LocalPlayerEquipmentItemSource,
   InventoryItem,
-  LocalInventoryItemSource,
+  LocalPlayerInventoryItemSource,
+  LocalPlayerItemSource,
+  InteractionInventoryItemSource,
   LocalItemSource,
   ItemSource,
+  InventoryItemSource,
 } from "@shared/interfaces";
 import { ServerCall } from "@shared/calls/server";
 import { ComponentPublicInstance, markRaw, reactive } from "vue";
@@ -21,7 +24,8 @@ import {
   isItemFirearmWeapon,
 } from "@shared/modules/items";
 
-import { useCharacter } from "./synced/character.store";
+import { isCharacterStoreAvailable, useCharacter } from "./synced/character.store";
+import { getLocalEquipmentItem, getLocalInventoryItem } from "@/utils/items";
 import { useGameState } from "./synced/game-state.store";
 
 const MOCK_ITEMS = reactive([
@@ -115,7 +119,10 @@ export type SlottedItem<S = LocalItemSource, T = Item> = {
 };
 
 export type SlottedEquipment = {
-  [K in keyof Equipment]: SlottedItem<LocalEquipmentItemSource, NonNullable<Equipment[K]>> | null;
+  [K in keyof Equipment]: SlottedItem<
+    LocalPlayerEquipmentItemSource,
+    NonNullable<Equipment[K]>
+  > | null;
 };
 
 export function isSameSource(a: LocalItemSource, b: LocalItemSource) {
@@ -126,9 +133,14 @@ export function isSameSource(a: LocalItemSource, b: LocalItemSource) {
   if (a.type !== b.type) {
     return false;
   }
+
   return (
-    (a.type === "inventory" && a.inventorySlot === (b as LocalInventoryItemSource).inventorySlot) ||
-    (a.type === "equipment" && a.equipmentSlot === (b as LocalEquipmentItemSource).equipmentSlot)
+    (a.type === "inventory" &&
+      a.inventorySlot === (b as LocalPlayerInventoryItemSource).inventorySlot) ||
+    (a.type === "equipment" &&
+      a.equipmentSlot === (b as LocalPlayerEquipmentItemSource).equipmentSlot) ||
+    (a.type === "interaction" &&
+      a.inventorySlot === (b as InteractionInventoryItemSource).inventorySlot)
   );
 }
 
@@ -140,6 +152,7 @@ interface State {
   currentInteraction: ItemInteraction;
   selectedItem?: SlottedItem;
   draggingItemThisFrame: boolean;
+  previewingItem?: SlottedItem;
 }
 
 export const useInventory = defineStore("inventory", {
@@ -149,6 +162,7 @@ export const useInventory = defineStore("inventory", {
     currentInteraction: IDLE,
     draggingItemThisFrame: false,
     selectedItem: undefined,
+    previewingItem: undefined,
   }),
   getters: {
     character: () => {
@@ -157,13 +171,16 @@ export const useInventory = defineStore("inventory", {
     playerId(): string {
       return this.character.id;
     },
+    interaction: () => {
+      return useGameState().interaction;
+    },
     size(): number {
       return this.character.inventory.size ?? 30;
     },
     items(): SlottedItem[] {
       const items: SlottedItem[] = reactive([]);
 
-      if (!("altMock" in globalThis) && !useGameState().isInGame) {
+      if (!("altMock" in globalThis) && !isCharacterStoreAvailable()) {
         return items;
       }
 
@@ -172,38 +189,49 @@ export const useInventory = defineStore("inventory", {
         inventoryItems.push(...MOCK_ITEMS);
       }
       for (const inventoryItem of inventoryItems) {
-        items.push({
-          item: inventoryItem.item,
-          source: {
-            type: "inventory",
-            inventorySlot: inventoryItem.slot,
-          },
-        });
+        items.push(getLocalInventoryItem(inventoryItem));
       }
 
       const equipmentItems = Object.entries(this.character.equipment ?? {}).filter(
         ([, item]) => !!item
       ) as [EquipmentSlot, Item][];
+
       for (const [equipmentSlot, item] of equipmentItems) {
-        items.push({
-          item,
-          source: {
-            type: "equipment",
-            equipmentSlot,
-          },
-        });
+        items.push(getLocalEquipmentItem(item, equipmentSlot));
+      }
+
+      if (this.interaction) {
+        const interactionItems = this.interaction.items;
+
+        for (const interactionItem of interactionItems) {
+          items.push({
+            item: interactionItem.item,
+            source: {
+              type: "interaction",
+              inventorySlot: interactionItem.slot,
+            },
+          });
+        }
       }
 
       return items;
     },
-    inventoryItems(): SlottedItem<LocalInventoryItemSource>[] {
+    inventoryItems(): SlottedItem<LocalPlayerInventoryItemSource>[] {
       return this.items.filter(
-        (item): item is SlottedItem<LocalInventoryItemSource> => item.source.type === "inventory"
+        (item): item is SlottedItem<LocalPlayerInventoryItemSource> =>
+          item.source.type === "inventory"
       );
     },
-    equipmentItems(): SlottedItem<LocalEquipmentItemSource>[] {
+    equipmentItems(): SlottedItem<LocalPlayerEquipmentItemSource>[] {
       return this.items.filter(
-        (item): item is SlottedItem<LocalEquipmentItemSource> => item.source.type === "equipment"
+        (item): item is SlottedItem<LocalPlayerEquipmentItemSource> =>
+          item.source.type === "equipment"
+      );
+    },
+    interactionItems(): SlottedItem<InteractionInventoryItemSource>[] {
+      return this.items.filter(
+        (item): item is SlottedItem<InteractionInventoryItemSource> =>
+          item.source.type === "interaction"
       );
     },
     equipment(): SlottedEquipment {
@@ -241,24 +269,37 @@ export const useInventory = defineStore("inventory", {
     registerItemSlot(slot: ItemSlot) {
       this.itemSlots.push(markRaw(slot));
     },
-    toCharacterItemSource<T>(source: T) {
+    toItemSource<T extends LocalItemSource>(source: T) {
+      if (source.type === "interaction") {
+        return {
+          inventorySlot: source.inventorySlot,
+          ...this.interaction!.source,
+        } as InventoryItemSource;
+      }
+
       return {
         ...source,
-        source: "character",
-        sourceId: this.playerId,
-      } as const;
+        origin: "character",
+        originId: this.playerId,
+      } as ItemSource;
     },
     useItem(source: LocalItemSource) {
       if (source.type === "equipment") {
         return;
       }
-      return rpc.callServer(ServerCall.FromWebview.USE_ITEM, this.toCharacterItemSource(source));
+      return rpc.callServer(
+        ServerCall.FromWebview.USE_ITEM,
+        this.toItemSource(source) as InventoryItemSource
+      );
     },
     equipItem(source: LocalItemSource) {
       if (source.type === "equipment") {
         return;
       }
-      return rpc.callServer(ServerCall.FromWebview.EQUIP_ITEM, this.toCharacterItemSource(source));
+      return rpc.callServer(
+        ServerCall.FromWebview.EQUIP_ITEM,
+        this.toItemSource(source) as InventoryItemSource
+      );
     },
     unequipItem(equipmentSlot: EquipmentSlot) {
       return rpc.callServer(ServerCall.FromWebview.UNEQUIP_ITEM, equipmentSlot);
@@ -267,20 +308,20 @@ export const useInventory = defineStore("inventory", {
       if (window.altMock) {
         return Promise.resolve(true);
       }
-      return rpc.callServer(ServerCall.FromWebview.DROP_ITEM, this.toCharacterItemSource(source));
+      return rpc.callServer(ServerCall.FromWebview.DROP_ITEM, this.toItemSource(source));
     },
     combineItems(weaponSource: LocalItemSource, ammoSource: LocalItemSource) {
       return rpc.callServer(
         ServerCall.FromWebview.COMBINE_ITEMS,
-        this.toCharacterItemSource(weaponSource),
-        this.toCharacterItemSource(ammoSource)
+        this.toItemSource(weaponSource),
+        this.toItemSource(ammoSource)
       );
     },
     unloadAmmo(source: LocalItemSource) {
-      return rpc.callServer(ServerCall.FromWebview.UNLOAD_AMMO, this.toCharacterItemSource(source));
+      return rpc.callServer(ServerCall.FromWebview.UNLOAD_AMMO, this.toItemSource(source));
     },
     removeBait(source: LocalItemSource) {
-      return rpc.callServer(ServerCall.FromWebview.REMOVE_BAIT, this.toCharacterItemSource(source));
+      return rpc.callServer(ServerCall.FromWebview.REMOVE_BAIT, this.toItemSource(source));
     },
     async moveItem(from: LocalItemSource, to: LocalItemSource, local: boolean = false) {
       const itemInSlotFrom = this.items.find(({ source }) => isSameSource(source, from));
@@ -289,6 +330,7 @@ export const useInventory = defineStore("inventory", {
       if (itemInSlotFrom && itemInSlotTo) {
         [itemInSlotFrom.source, itemInSlotTo.source] = [itemInSlotTo.source, itemInSlotFrom.source];
       } else if (itemInSlotFrom) {
+        console.log(itemInSlotFrom.source, to);
         itemInSlotFrom.source = to;
       } else if (itemInSlotTo) {
         itemInSlotTo.source = from;
@@ -300,8 +342,8 @@ export const useInventory = defineStore("inventory", {
 
       const ok = await rpc.callServer(
         ServerCall.FromWebview.MOVE_ITEM,
-        this.toCharacterItemSource(from),
-        this.toCharacterItemSource(to)
+        this.toItemSource(from),
+        this.toItemSource(to)
       );
 
       if (!ok) {
@@ -317,12 +359,14 @@ export const useInventory = defineStore("inventory", {
       const source = this.getItemSource(e.clientX, e.clientY);
 
       if (!source) {
+        console.log("no source");
         return;
       }
 
       const item = this.items.find((item) => isSameSource(item.source, source));
 
       if (!item) {
+        console.log("no item", source, this.items);
         return;
       }
 
@@ -414,6 +458,14 @@ export const useInventory = defineStore("inventory", {
     async handleMouseUp(e: MouseEvent) {
       if (this.currentInteraction.type === InteractionType.Dragging) {
         if (this.currentInteraction.maybe) {
+          this.currentInteraction = IDLE;
+          return;
+        }
+
+        if (
+          this.currentInteraction.state.item.source.type === "interaction" &&
+          !this.interaction?.isOwned
+        ) {
           this.currentInteraction = IDLE;
           return;
         }
@@ -535,7 +587,7 @@ export const useInventory = defineStore("inventory", {
         this.currentInteraction = IDLE;
       }
     },
-    dropFromMenu(source: LocalItemSource) {
+    dropFromMenu(source: LocalPlayerItemSource) {
       const position = this.getItemSourceScreenPosition(source);
       const item = this.items.find((item) => isSameSource(item.source, source));
 

@@ -4,7 +4,7 @@ import { InteractionType, SlottedItem, useInventory, isSameSource } from "@/stor
 import ItemIcon from "../ItemIcon.vue";
 import { px } from "@/composables/use-pixel";
 
-import { LocalEquipmentItemSource } from "@shared/interfaces";
+import { LocalPlayerEquipmentItemSource } from "@shared/interfaces";
 import { AmmoItem, getItemEquipmentSlot, isItemFirearmWeapon } from "@shared/modules/items";
 
 const equipmentSlots = {
@@ -136,7 +136,7 @@ const item = computed(() => {
           type: "equipment",
           equipmentSlot: "ammo",
         },
-      } as SlottedItem<LocalEquipmentItemSource, AmmoItem>;
+      } as SlottedItem<LocalPlayerEquipmentItemSource, AmmoItem>;
     }
     return null;
   }

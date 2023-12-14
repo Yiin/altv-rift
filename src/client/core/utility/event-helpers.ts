@@ -89,7 +89,7 @@ export function onKeyDown(key: alt.Enums.KeyCode, callback: () => void) {
   }
   registeredKeyDownKeys?.add(key);
 
-  alt.Events.onKeyDown(({ key: keyPressed }) => {
+  const handler = alt.Events.onKeyDown(({ key: keyPressed }) => {
     if (inputFocused) {
       return;
     }
@@ -97,6 +97,14 @@ export function onKeyDown(key: alt.Enums.KeyCode, callback: () => void) {
       callback();
     }
   });
+
+  return {
+    ...handler,
+    destroy() {
+      registeredKeyDownKeys?.delete(key);
+      handler.destroy();
+    },
+  };
 }
 
 alt.Timers.nextTick(() => {

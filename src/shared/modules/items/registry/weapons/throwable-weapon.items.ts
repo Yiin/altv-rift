@@ -33,7 +33,6 @@ export type ThrowableWeaponItemInfo = {
   hash: number;
   name: string;
   description: string;
-  flags: ItemFlags;
   group: typeof WeaponGroup.THROWABLE;
   price: number;
   stats: {
@@ -51,7 +50,6 @@ export const throwableWeapons: ThrowableWeaponItemInfo[] = [
     hash: 3125143736,
     name: getWeaponData(3125143736).Name,
     description: getWeaponData(3125143736).Description,
-    flags: ItemFlags.IsEquippable,
     group: WeaponGroup.THROWABLE,
     price: 50000,
     stats: {
@@ -67,7 +65,6 @@ export const throwableWeapons: ThrowableWeaponItemInfo[] = [
     hash: 2874559379,
     name: getWeaponData(2874559379).Name,
     description: getWeaponData(2874559379).Description,
-    flags: ItemFlags.IsEquippable,
     group: WeaponGroup.THROWABLE,
     price: 1000,
     stats: {
@@ -83,7 +80,6 @@ export const throwableWeapons: ThrowableWeaponItemInfo[] = [
     hash: 2481070269,
     name: getWeaponData(2481070269).Name,
     description: getWeaponData(2481070269).Description,
-    flags: ItemFlags.IsEquippable,
     group: WeaponGroup.THROWABLE,
     price: 2500,
     stats: {
@@ -99,7 +95,6 @@ export const throwableWeapons: ThrowableWeaponItemInfo[] = [
     hash: 741814745,
     name: getWeaponData(741814745).Name,
     description: getWeaponData(741814745).Description,
-    flags: ItemFlags.IsEquippable,
     group: WeaponGroup.THROWABLE,
     price: 60000,
     stats: {
@@ -115,7 +110,6 @@ export const throwableWeapons: ThrowableWeaponItemInfo[] = [
     hash: 126349499,
     name: getWeaponData(126349499).Name,
     description: getWeaponData(126349499).Description,
-    flags: ItemFlags.IsEquippable,
     group: WeaponGroup.THROWABLE,
     price: 5,
     stats: {
@@ -131,7 +125,6 @@ export const throwableWeapons: ThrowableWeaponItemInfo[] = [
     hash: 4256991824,
     name: getWeaponData(4256991824).Name,
     description: getWeaponData(4256991824).Description,
-    flags: ItemFlags.IsEquippable,
     group: WeaponGroup.THROWABLE,
     price: 800,
     stats: {
@@ -147,7 +140,6 @@ export const throwableWeapons: ThrowableWeaponItemInfo[] = [
     hash: 883325847,
     name: getWeaponData(883325847).Name,
     description: getWeaponData(883325847).Description,
-    flags: ItemFlags.IsEquippable,
     group: WeaponGroup.THROWABLE,
     price: 100,
     stats: {
@@ -163,7 +155,6 @@ export const throwableWeapons: ThrowableWeaponItemInfo[] = [
     hash: 615608432,
     name: getWeaponData(615608432).Name,
     description: getWeaponData(615608432).Description,
-    flags: ItemFlags.IsEquippable,
     group: WeaponGroup.THROWABLE,
     price: 200,
     stats: {
@@ -179,7 +170,6 @@ export const throwableWeapons: ThrowableWeaponItemInfo[] = [
     hash: 3126027122,
     name: getWeaponData(3126027122).Name,
     description: getWeaponData(3126027122).Description,
-    flags: ItemFlags.IsEquippable,
     group: WeaponGroup.THROWABLE,
     price: 100,
     stats: {
@@ -195,7 +185,6 @@ export const throwableWeapons: ThrowableWeaponItemInfo[] = [
     hash: 600439132,
     name: getWeaponData(600439132).Name,
     description: getWeaponData(600439132).Description,
-    flags: ItemFlags.IsEquippable,
     group: WeaponGroup.THROWABLE,
     price: 10,
     stats: {
@@ -211,7 +200,6 @@ export const throwableWeapons: ThrowableWeaponItemInfo[] = [
     hash: 2694266206,
     name: getWeaponData(2694266206).Name,
     description: getWeaponData(2694266206).Description,
-    flags: ItemFlags.IsEquippable,
     group: WeaponGroup.THROWABLE,
     price: 150,
     stats: {
@@ -227,7 +215,6 @@ export const throwableWeapons: ThrowableWeaponItemInfo[] = [
     hash: 1233104067,
     name: getWeaponData(1233104067).Name,
     description: getWeaponData(1233104067).Description,
-    flags: ItemFlags.IsEquippable,
     group: WeaponGroup.THROWABLE,
     price: 50,
     stats: {

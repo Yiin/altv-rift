@@ -117,7 +117,6 @@ export class Chat {
   }
 
   public sendMessageToServer(message: string) {
-    console.log("debug", Array.isArray(message), typeof message, message);
     if (message.length > 0) this.eventService.emitServerRaw("vchat:sendMessage", message);
     this.windowService.unfocus();
   }

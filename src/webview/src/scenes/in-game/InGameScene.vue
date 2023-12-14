@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { useAlt } from "@/composables/use-alt";
-import { WebviewEvents } from "@shared/events/webview";
-import { computed, reactive, watchEffect } from "vue";
 import Screen from "@/components/Screen.vue";
 import ChatBox from "./chat-box/ChatBox.vue";
 import Inventory from "./inventory/Inventory.vue";
@@ -17,11 +14,6 @@ import { useClient } from "@/store/synced/client.store";
 import { UIElement } from "@shared/enums/ui";
 
 const client = useClient();
-
-watchEffect(() => {
-  console.log(client.ui.window);
-  console.log([...client.ui.elements.values()].join(', '));
-});
 </script>
 
 <template>

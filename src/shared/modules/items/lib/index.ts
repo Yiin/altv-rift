@@ -2,8 +2,7 @@
 export * from "./create-item";
 export * from "./get-combine-type";
 export * from "./get-item-equipment-slot";
+export * from "./get-item-flags";
 export * from "./get-item-name";
-export * from "./is-item-equipable";
-export * from "./is-item-usable";
-export * from "./is-stackable";
+export * from "./is-item-previewable";
 // @endindex

@@ -3,17 +3,17 @@ import { onMounted, ref, watch } from "vue";
 import { useCreateCharacter } from "@/store/create-character.store";
 import {
   getRandomHair,
-  aspects,
   getRandomHairColor,
   getRandomHairHighlightColor,
   getRandomOverlayItemValue,
   getRandomOverlayItemOpacity,
   getRandomOverlayColor,
-} from "./data/aspects";
-import { getRandomFeatureValue } from "./data/features";
-import { notRandomizableOverlaysForGender } from "./data/head-overlays";
-import { headOverlays } from "./data/overlays";
-import { getRandomParent, getRandomResemblance } from "./data/parents";
+  getRandomFeatureValue,
+  notRandomizableOverlaysForGender,
+  headOverlays,
+  getRandomParent,
+  getRandomResemblance
+} from "@shared/modules/character/appearance-data";
 import NameAndSex from "./NameAndSex.vue";
 import Features from "./Features.vue";
 import Appearance from "./Appearance.vue";
@@ -29,6 +29,7 @@ const createCharacter = useCreateCharacter();
 const screenRef = ref<InstanceType<typeof Screen> | null>(null);
 
 watch(createCharacter, () => {
+  console.log("sending appearance");
   alt.emit(ClientEvents.FromWebview.UPDATE_CHARACTER_APPEARANCE, createCharacter.appearance);
 });
 
@@ -50,28 +51,22 @@ useEventListener("pointerup", (e) => {
 });
 
 function randomize() {
-  createCharacter.faceMother = getRandomParent(createCharacter.sex);
-  createCharacter.faceFather = getRandomParent(createCharacter.sex);
-  createCharacter.skinMother = getRandomParent(createCharacter.sex);
-  createCharacter.skinFather = getRandomParent();
-  createCharacter.faceMix = getRandomResemblance(createCharacter.sex);
-  createCharacter.skinMix = getRandomResemblance(createCharacter.sex);
+  createCharacter.currentAppearance.faceMother = getRandomParent(createCharacter.sex);
+  createCharacter.currentAppearance.faceFather = getRandomParent(createCharacter.sex);
+  createCharacter.currentAppearance.skinMother = getRandomParent(createCharacter.sex);
+  createCharacter.currentAppearance.skinFather = getRandomParent();
+  createCharacter.currentAppearance.faceMix = getRandomResemblance(createCharacter.sex);
+  createCharacter.currentAppearance.skinMix = getRandomResemblance(createCharacter.sex);
 
-  for (const idx in createCharacter.features) {
-    createCharacter.features[idx] = getRandomFeatureValue();
+  for (const idx in createCharacter.currentAppearance.features) {
+    createCharacter.currentAppearance.features[idx] = getRandomFeatureValue();
   }
 
-  createCharacter.hair = getRandomHair(createCharacter.sex);
-  createCharacter.hairCollection = aspects(createCharacter.sex).Hair.options.get(
-    createCharacter.hair
-  )!.collection;
-  createCharacter.hairOverlay = aspects(createCharacter.sex).Hair.options.get(
-    createCharacter.hair
-  )!.overlay;
-  createCharacter.hairColor1 = getRandomHairColor();
-  createCharacter.hairColor2 = getRandomHairHighlightColor();
+  createCharacter.currentAppearance.hair = getRandomHair(createCharacter.sex);
+  createCharacter.currentAppearance.hairColor1 = getRandomHairColor();
+  createCharacter.currentAppearance.hairColor2 = getRandomHairHighlightColor();
 
-  for (const [key, overlay] of createCharacter.headOverlays.entries()) {
+  for (const [key, overlay] of createCharacter.currentAppearance.headOverlays.entries()) {
     if (notRandomizableOverlaysForGender(createCharacter.sex).includes(key)) {
       continue;
     }

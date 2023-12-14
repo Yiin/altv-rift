@@ -6,19 +6,26 @@ import {
   FishBait,
   FoodIngredient,
   Hatchet,
+  Sand,
   TreeLogs,
   createItem,
 } from "@shared/modules/items";
-import { HatchetBlueprint } from "@shared/modules/production/blueprints/hatchet.blueprints";
+import {
+  HatchetBlueprint,
+  FishingRodBlueprint,
+  PickaxeBlueprint,
+} from "@shared/modules/production";
 import { PedKey } from "@shared/modules/ped/list";
-import { FishingRodBlueprint } from "@shared/modules/production/blueprints/fishing-rod.blueprints";
 import { isInGame } from "@/core/utility/assertions";
 import { on } from "@/core/events/emit";
+import { Note } from "@shared/modules/items/registry/note.items";
 
 alt.Events.onPlayer(ServerEvents.FromClient.NOTIFY, (player, questFact) => {
   if (!isInGame(player)) {
     return;
   }
+
+  alt.log(questFact);
 
   switch (questFact) {
     case Quests.Introduction.Facts.GOT_INTRODUCTION: {
@@ -29,7 +36,15 @@ alt.Events.onPlayer(ServerEvents.FromClient.NOTIFY, (player, questFact) => {
           })
         );
       } else {
-        alt.log(`${player.name} is abusing quest facts...`);
+        reportAbuse(player);
+      }
+      break;
+    }
+    case Quests.Introduction.Facts.GOT_DIRECTIONS: {
+      if (player.isNearPed(PedKey.CAL_BURNETT)) {
+        player.addItem(createItem(Note.INTRODUCTION_MAP));
+      } else {
+        reportAbuse(player);
       }
       break;
     }
@@ -37,7 +52,7 @@ alt.Events.onPlayer(ServerEvents.FromClient.NOTIFY, (player, questFact) => {
       if (player.isNearPed(PedKey.WOODCUTTING_TUTOR)) {
         player.addItem(createItem(Hatchet.BASIC_HATCHET));
       } else {
-        alt.log(`${player.name} is abusing quest facts...`);
+        reportAbuse(player);
       }
       break;
     }
@@ -51,7 +66,7 @@ alt.Events.onPlayer(ServerEvents.FromClient.NOTIFY, (player, questFact) => {
       ) {
         player.addBlueprint(HatchetBlueprint.ADVANCED_HATCHET);
       } else {
-        alt.log(`${player.name} is abusing quest facts...`);
+        reportAbuse(player);
       }
       break;
     }
@@ -59,7 +74,7 @@ alt.Events.onPlayer(ServerEvents.FromClient.NOTIFY, (player, questFact) => {
       if (player.isNearPed(PedKey.FISHING_TUTOR)) {
         player.addItem(createItem(FishBait.WORMS, { amount: 500 }));
       } else {
-        alt.log(`${player.name} is abusing quest facts...`);
+        reportAbuse(player);
       }
       break;
     }
@@ -73,7 +88,17 @@ alt.Events.onPlayer(ServerEvents.FromClient.NOTIFY, (player, questFact) => {
       ) {
         player.addBlueprint(FishingRodBlueprint.ADVANCED_FISHING_ROD);
       } else {
-        alt.log(`${player.name} is abusing quest facts...`);
+        reportAbuse(player);
+      }
+    }
+    case Quests.Introduction.Facts.COMPLETED_MINING: {
+      if (
+        player.isNearPed(PedKey.MINING_TUTOR) &&
+        player.removeInventoryItemByKey(Sand.GRAVEL, Quests.Introduction.Constants.GRAVEL_NEEDED)
+      ) {
+        player.addBlueprint(PickaxeBlueprint.BASIC_PICKAXE);
+      } else {
+        reportAbuse(player);
       }
     }
   }
@@ -90,3 +115,7 @@ on(ServerEvents.FromServer.ITEM_USE, (player, item) => {
     questFacts.push(Quests.Introduction.Facts.USED_MEDKIT);
   }
 });
+
+function reportAbuse(player: alt.Player) {
+  alt.log(`${player.name} is abusing quest facts...`);
+}

@@ -16,7 +16,7 @@ export const gameState = useGameState(pinia);
 alt.Events.onServer(ClientEvents.FromServer.UPDATE_GAME_STATE, (event: any) => {
   getWebview().emitRaw(WebviewEvents.FromClient.UPDATE_GAME_STATE, event);
 
-  alt.log("Updating game state", event, typeof event.target, event.target.constructor.name);
+  alt.log("Updating game state", event);
   updateStoreState(gameState, event);
 });
 

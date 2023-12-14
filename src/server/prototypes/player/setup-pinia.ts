@@ -68,8 +68,6 @@ alt.Player.prototype.setupCharacterStore = async function (character: Character)
 
   // In-Game state
   this.gameState = useGameState(this.pinia);
-  this.gameState.isLoggedIn = true;
-  this.gameState.isInGame = true;
 
   const unsubscribeGameStateStore = subscribeToStore(this.gameState, {
     onSetState: (state) => {

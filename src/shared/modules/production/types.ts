@@ -1,6 +1,7 @@
 import { Item, ItemGrade, ItemKey } from "@shared/modules/items";
 import { HatchetBlueprintKey } from "./blueprints/hatchet.blueprints";
 import { FishingRodBlueprintKey } from "./blueprints/fishing-rod.blueprints";
+import { PickaxeBlueprintKey } from "./blueprints/pickaxe.blueprints";
 
 export type BlueprintPart = {
   key: ItemKey;
@@ -14,4 +15,4 @@ export type Blueprint = {
   parts: BlueprintPart[];
 };
 
-export type BlueprintKey = HatchetBlueprintKey | FishingRodBlueprintKey;
+export type BlueprintKey = HatchetBlueprintKey | FishingRodBlueprintKey | PickaxeBlueprintKey;

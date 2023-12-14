@@ -9,14 +9,21 @@ export function setCharacterStore(store: CharacterStore) {
   characterStore = store;
 }
 
-export const useCharacter = () => 'altMock' in globalThis ? {
-  id: '0x',
-  appearance: {
-    sex: 1,
-  },
-  equipment: {},
-  inventory: {
-    size: 30,
-    items: [],
-  }
-} as any as Store<"character", Character, {}, {}> : characterStore?.();
+export function isCharacterStoreAvailable() {
+  return !!characterStore;
+}
+
+export const useCharacter = () =>
+  "altMock" in globalThis
+    ? ({
+        id: "0x",
+        appearance: {
+          sex: 1,
+        },
+        equipment: {},
+        inventory: {
+          size: 30,
+          items: [],
+        },
+      } as any as Store<"character", Character, {}, {}>)
+    : characterStore?.();

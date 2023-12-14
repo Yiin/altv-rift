@@ -8,7 +8,7 @@ ipc.config.silent = true;
 export const reloadResource = debounce(async (side) => {
   ipc.connectTo('watcher', () => {
     ipc.of.watcher.on('connect', () => {
-      ipc.of.watcher.emit('restart-server', side);
+      ipc.of.watcher?.emit('restart-server', side);
       ipc.disconnect('watcher');
     });
   });

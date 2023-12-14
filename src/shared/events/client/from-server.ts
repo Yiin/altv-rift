@@ -33,6 +33,7 @@ export const FromServer = {
   SET_SERVER_STATE: "SET_SERVER_STATE",
   UPDATE_SERVER_STATE: "UPDATE_SERVER_STATE",
   CALL_NATIVE: "CALL_NATIVE",
+  DISPLAY_DAMAGE_HIT: "DISPLAY_DAMAGE_HIT",
 } as const;
 
 declare module "@altv/shared" {
@@ -75,6 +76,12 @@ declare module "@altv/shared" {
       [FromServer.SET_SERVER_STATE]: (state: any) => void;
       [FromServer.UPDATE_SERVER_STATE]: (payload: StoreUpdatePayload) => void;
       [FromServer.CALL_NATIVE]: (name: string, ...args: unknown[]) => void;
+      [FromServer.DISPLAY_DAMAGE_HIT]: (
+        entityType: number,
+        entityRemoteID: number,
+        damage: number,
+        type: "health" | "armor"
+      ) => void;
     }
   }
 }

@@ -32,17 +32,15 @@ alt.Events.onServer(ClientEvents.FromServer.UPDATE_CHARACTER_STATE, (event: any)
 alt.Events.onServer(ClientEvents.FromServer.SET_CHARACTER_STATE, (state: any) => {
   getWebview().emitRaw(WebviewEvents.FromClient.SET_CHARACTER_STATE, state);
 
+  console.log("setting character state: start");
   if (characterStore) {
     const character = useCharacter();
-    character.$dispose();
-    delete pinia.state.value[character.$id];
-    isCharacterStoreAvailable.value = false;
-  }
-
-  if (state) {
+    character.$state = state;
+  } else {
     characterStore = defineStore("character", {
       state: () => state,
     });
     isCharacterStoreAvailable.value = true;
   }
+  console.log("setting character state: end");
 });

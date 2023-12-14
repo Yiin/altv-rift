@@ -1,4 +1,5 @@
 import * as alt from "@altv/client";
+import * as game from "@altv/natives";
 import { getLevel } from "@shared/modules/experience/experience-table";
 import { getTreeLevel, getTreeName } from "@shared/modules/woodcutting";
 import { useCharacter } from "@/core/store/character.store";
@@ -6,10 +7,11 @@ import { br, div } from "../renderer/rml-tags";
 import { AnchorType } from "../renderer/anchors";
 import { registerElement } from "../renderer/element-registry";
 import { everyFrame } from "../renderer/hooks/every-frame";
+import { Icon } from "../components/icon/icon";
 
 registerElement({
   key: "treename",
-  renderDistance: 6,
+  renderDistance: 5,
   anchorType: AnchorType.Tree,
   render({ entity: tree }) {
     const character = useCharacter();
@@ -27,17 +29,31 @@ registerElement({
             const { x, y } = alt.worldToScreen(tree.pos);
             return `translate(-50%, -50%) translate(${x}px, ${y}px)`;
           }),
-        },
+        }, //
       },
       [
         div(
           {
             className: "tree",
             style: {
-              color: isUnavailable ? "gray" : isOnCooldown ? "silver" : "#88CC00",
+              color: isUnavailable ? "gray" : isOnCooldown ? "silver" : "white",
+              "text-align": "left",
             },
           },
-          [div([name]), br([]), div([`Level ${level}`])]
+          [
+            div({ style: { position: "absolute", transform: "translate(-30px, -25px)" } }, [
+              isUnavailable || isOnCooldown ? Icon("axe-cooldown") : Icon("axe"),
+            ]),
+            div({ style: { "text-align": "left", width: "400px" } }, [
+              div({ style: { "font-size": "9pt", "margin-top": "-20px", "margin-left": "30px" } }, [
+                isUnavailable ? "Level too low" : isOnCooldown ? "On cooldown" : "Ready to cut",
+              ]),
+              br([]),
+              div([name]),
+              br([]),
+              div({ style: { "font-size": "10pt" } }, [`Level ${level}`]),
+            ]),
+          ]
         ),
       ]
     );

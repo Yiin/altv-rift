@@ -18,14 +18,14 @@ export function useSyncedStores() {
       clientStore.$reset();
       clientStore.$patch(state);
     } catch (e) {
-      console.error('SET_CLIENT_STATE', e);
+      console.error("SET_CLIENT_STATE", e);
     }
   });
   on(WebviewEvents.FromClient.UPDATE_CLIENT_STATE, (event: any) => {
     try {
       updateStoreState(clientStore, event);
     } catch (e) {
-      console.error('UPDATE_CLIENT_STATE', e);
+      console.error("UPDATE_CLIENT_STATE", e);
     }
   });
 
@@ -44,7 +44,7 @@ export function useSyncedStores() {
         })
       );
     } catch (e) {
-      console.error('SET_USER_STATE', e);
+      console.error("SET_USER_STATE", e);
     }
   });
   on(WebviewEvents.FromClient.UPDATE_USER_STATE, (event) => {
@@ -53,7 +53,7 @@ export function useSyncedStores() {
     try {
       updateStoreState(userStore, event);
     } catch (e) {
-      console.error('UPDATE_USER_STATE', e);
+      console.error("UPDATE_USER_STATE", e);
     }
   });
 
@@ -72,7 +72,7 @@ export function useSyncedStores() {
         })
       );
     } catch (e) {
-      console.error('SET_CHARACTER_STATE', e);
+      console.error("SET_CHARACTER_STATE", e);
     }
   });
   on(WebviewEvents.FromClient.UPDATE_CHARACTER_STATE, (event: any) => {
@@ -81,7 +81,7 @@ export function useSyncedStores() {
     try {
       updateStoreState(characterStore, event);
     } catch (e) {
-      console.error('UPDATE_CHARACTER_STATE', e);
+      console.error("UPDATE_CHARACTER_STATE", e);
     }
   });
 
@@ -89,14 +89,14 @@ export function useSyncedStores() {
     try {
       gameStateStore.$state = state;
     } catch (e) {
-      console.error('SET_GAME_STATE', e);
+      console.error("SET_GAME_STATE", e);
     }
   });
   on(WebviewEvents.FromClient.UPDATE_GAME_STATE, (event: any) => {
     try {
       updateStoreState(gameStateStore, event);
     } catch (e) {
-      console.error('UPDATE_GAME_STATE', e);
+      console.error("UPDATE_GAME_STATE", e);
     }
   });
 }

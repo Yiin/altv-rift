@@ -19,7 +19,7 @@ export async function getGroundPos(
 
       alt.FocusData.focusOverridePos = point;
 
-      if (destPos.z < -500) throw new Error("failed to get ground pos");
+      if (destPos.z < -500) return false;
 
       const raycast = Raycast.performRaycast(startPos, destPos, flags);
 
@@ -51,7 +51,7 @@ export async function getGroundPos(
     } catch {}
 
     if (foundZ == null) {
-      groundPos = startPos;
+      groundPos = point.sub(0, 0, 1);
     } else {
       groundPos = new alt.Vector3(point.x, point.y, foundZ);
     }

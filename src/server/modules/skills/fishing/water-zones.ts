@@ -38,6 +38,9 @@ export function getWaterZones() {
 
 alt.Events.onEntityColShapeEnter(({ colShape, entity }) => {
   if (entity instanceof alt.Player && isInGame(entity) && colShape.meta.isWaterZone) {
+    if (entity.gameState.flags.has(PlayerFlags.InFishingArea)) {
+      return;
+    }
     alt.log(`Player entered water zone.`);
     entity.gameState.flags.add(PlayerFlags.InFishingArea);
   }

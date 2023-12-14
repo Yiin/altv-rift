@@ -20,8 +20,8 @@ for (const assetsPath of ASSETS_PATHS) {
   await copy(assetsPath, "resources/main");
 }
 
-esbuild
-  .build({
+const context = await esbuild
+  .context({
     ...esbuildOptions,
     platform: "node",
     entryPoints: ["src/client/main.ts"],
@@ -39,8 +39,8 @@ esbuild
       rcssPlugin(),
       {
         name: "copy-assets",
-        setup({ onEnd }) {
-          onEnd(() => {
+        setup(build) {
+          build.onEnd(() => {
             // After esbuild finishes, copy .rml files
             for (const assetsPath of ASSETS_PATHS) {
               copy(assetsPath, "resources/main/");
@@ -59,8 +59,8 @@ esbuild
       },
       {
         name: "auto-reconnect",
-        setup({ onEnd }) {
-          onEnd(() => reloadResource('client'));
+        setup(build) {
+          build.onEnd(() => reloadResource('client'));
         }
       }
     ],
@@ -72,3 +72,6 @@ esbuild
       }),
     },
   });
+
+await context.watch();
+// await context.dispose();

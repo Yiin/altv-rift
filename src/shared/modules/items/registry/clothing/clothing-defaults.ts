@@ -23,7 +23,7 @@ export function getDefaultClothing(isMale: boolean, component: number) {
       8: [14, 0],
       9: [0, 0],
       10: [0, 0],
-      11: [18, 0],
+      11: [5, 0],
     }[component];
   }
 }

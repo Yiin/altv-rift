@@ -35,8 +35,8 @@ rpc.registerClient(ServerCall.FromClient.START_FISHING, (player: alt.Player) => 
     if (
       !player.equipItem({
         type: "inventory",
-        source: "character",
-        sourceId: player.character.id,
+        origin: "character",
+        originId: player.character.id,
         inventorySlot: bestFishingRod.slot,
       })
     ) {
@@ -65,8 +65,8 @@ rpc.registerClient(ServerCall.FromClient.START_FISHING, (player: alt.Player) => 
     if (
       !player.equipItem({
         type: "inventory",
-        source: "character",
-        sourceId: player.character.id,
+        origin: "character",
+        originId: player.character.id,
         inventorySlot: firstBait.slot,
       })
     ) {

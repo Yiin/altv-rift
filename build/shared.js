@@ -6,9 +6,8 @@ export const esbuildOptions = {
   format: "esm",
   target: "esnext",
   logLevel: "info",
-  watch: dev,
-  sourcemap: dev ? "both" : false,
-  minify: false,
+  sourcemap: false,
+  minify: dev,
   keepNames: dev,
 };
 

@@ -18,7 +18,7 @@ export function drawTexture2D(
 
   const identifier = `${dictionary}${name}`;
   if (!textureData[identifier]) {
-    const [_, width, height] = game.getActualScreenResolution(0, 0);
+    const [width, height] = game.getActualScreenResolution(0, 0);
     const resolution = game.getTextureResolution(dictionary, name);
     textureData[identifier] = {
       x: resolution.x / width,
@@ -64,7 +64,7 @@ export function drawTexture(
 
   const identifier = `${dictionary}${name}`;
   if (!textureData[identifier]) {
-    const [_, width, height] = game.getActualScreenResolution(0, 0);
+    const [width, height] = game.getActualScreenResolution(0, 0);
     const resolution = game.getTextureResolution(dictionary, name);
     textureData[identifier] = {
       x: resolution.x / width,

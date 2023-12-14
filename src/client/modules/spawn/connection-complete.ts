@@ -2,6 +2,9 @@ import * as alt from "@altv/client";
 import * as game from "@altv/natives";
 import { ServerEvents } from "@shared/events/server";
 import { waitForUserInterface } from "@/core/user-interface/webview";
+import { PED_CONFIG_FLAG } from "@/core/constants/ped-flags";
+import { whileInGame } from "@/core/game-state-hooks/in-game.state";
+import { whileInVehicle } from "@/core/game-state-hooks/in-vehicle.state";
 
 alt.Events.onConnectionComplete(handleConnectionComplete);
 alt.setWatermarkPosition(4);
@@ -47,11 +50,15 @@ function setupGameSettings() {
   // game.setPedCanSwitchWeapon(alt.Player.local, false);
 }
 
-// everyTick(() => {
-//   game.hideHudComponentThisFrame(6); // Vehicle Name
-//   if (alt.Player.local.vehicle) {
-//     game.hideHudComponentThisFrame(7); // Area Name
-//   }
-//   game.hideHudComponentThisFrame(8); // Vehicle Class
-//   game.hideHudComponentThisFrame(9); // Street Name
-// });
+alt.Events.onSpawned(() => {
+  game.setPedConfigFlag(alt.Player.local, PED_CONFIG_FLAG.UseHelmet, false);
+});
+
+alt.Timers.everyTick(() => {
+  game.hideHudComponentThisFrame(6); // Vehicle Name
+  if (alt.Player.local.vehicle) {
+    game.hideHudComponentThisFrame(7); // Area Name
+  }
+  game.hideHudComponentThisFrame(8); // Vehicle Class
+  game.hideHudComponentThisFrame(9); // Street Name
+});

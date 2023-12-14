@@ -69,7 +69,7 @@ export function getItemKeyEquipmentSlot(key: ItemKey): EquipmentSlot | undefined
       return "top";
     }
   }
-  if (isItemKeyTool(key) || isItemKeyFishingRod(key)) {
+  if (isItemKeyTool(key)) {
     return "tool";
   }
   return;

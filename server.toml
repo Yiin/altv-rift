@@ -1,8 +1,8 @@
 name = "yolo"
 
-modules = ['js-module-v2', 'js-module']
+modules = ['js-module-v2']
 
-resources = ["resource-control", "main", "qa-tools"]
+resources = ["resource-control", "main", "clothes", "dlc-chameleoncolor", "dlc-licenseplates", "dlc-btr80", "dlc-brm"]
 
 debug = true
 
@@ -11,12 +11,6 @@ host = '0.0.0.0'
 port = 8888
 
 [js-module]
-extra-cli-args = [
-  # resource restart in js module needs more memory
-  "--max-old-space-size=8192",
-]
-
-[js-module-v2]
 extra-cli-args = [
   # resource restart in js module needs more memory
   "--max-old-space-size=8192",

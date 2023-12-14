@@ -51,7 +51,7 @@ export function removeBaitFromFishingRod(source: ItemSource) {
   // Fishing rod is equipped
   if (source.type === "equipment") {
     const player = alt.Player.all.find(
-      (player): player is InGamePlayer => player.character?.id === source.sourceId
+      (player): player is InGamePlayer => player.character?.id === source.originId
     );
 
     if (!player) {

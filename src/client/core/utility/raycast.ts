@@ -6,7 +6,7 @@ const Raycast = {
   performRaycast(
     start: alt.IVector3,
     end: alt.IVector3,
-    flags = 99999,
+    flags = 524287,
     radius: number = 5,
     useShapeTest = false
   ) {
@@ -51,7 +51,13 @@ const Raycast = {
 
     const [didComplete, didHit, position, surfaceNormal, entityHit] =
       game.getShapeTestResult(raycast);
-    return { didComplete, didHit, position, surfaceNormal, entityHit };
+    return {
+      didComplete,
+      didHit,
+      position,
+      surfaceNormal,
+      entityHit: typeof entityHit === "number" ? entityHit : entityHit.scriptID,
+    };
   },
 
   /**
@@ -121,7 +127,12 @@ const Raycast = {
       return { didComplete: false };
     }
 
-    return { didComplete: true, didHit, position, entityHit };
+    return {
+      didComplete: true,
+      didHit,
+      position,
+      entityHit,
+    };
   },
 
   /**
@@ -158,7 +169,12 @@ const Raycast = {
       return { didComplete: false };
     }
 
-    return { didComplete: true, didHit, position, entityHit };
+    return {
+      didComplete: true,
+      didHit,
+      position,
+      entityHit,
+    };
   },
 
   /**

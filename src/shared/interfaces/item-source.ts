@@ -1,24 +1,32 @@
 import { EquipmentSlot } from "./equipment";
 
-export type LocalInventoryItemSource = {
+export type LocalPlayerInventoryItemSource = {
   type: "inventory";
   inventorySlot: number;
 };
 
-export type InventoryItemSource = LocalInventoryItemSource & {
-  source: "character" | "vehicle";
-  sourceId: any;
+export type InventorySource = {
+  origin: "character" | "vehicle" | "shop" | "trade";
+  originId: any;
 };
 
-export type LocalEquipmentItemSource = {
+export type InventoryItemSource = LocalPlayerInventoryItemSource & InventorySource;
+
+export type LocalPlayerEquipmentItemSource = {
   type: "equipment";
   equipmentSlot: EquipmentSlot;
 };
 
-export type EquipmentItemSource = LocalEquipmentItemSource & {
-  source: "character";
-  sourceId: any;
+export type EquipmentItemSource = LocalPlayerEquipmentItemSource & {
+  origin: "character";
+  originId: any;
 };
 
-export type LocalItemSource = LocalInventoryItemSource | LocalEquipmentItemSource;
+export type InteractionInventoryItemSource = {
+  type: "interaction";
+  inventorySlot: number;
+};
+
+export type LocalPlayerItemSource = LocalPlayerInventoryItemSource | LocalPlayerEquipmentItemSource;
+export type LocalItemSource = LocalPlayerItemSource | InteractionInventoryItemSource;
 export type ItemSource = InventoryItemSource | EquipmentItemSource;

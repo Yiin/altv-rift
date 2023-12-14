@@ -81,15 +81,15 @@ function renderParsedNode(
   let currentChildren = rmlNode.childNodes;
   const parsedChildren = parsedElement.children;
 
-  if (currentChildren.length !== parsedChildren.length) {
-    // If the number of children has changed, we need to re-render the whole thing
-    currentChildren = [];
+  // if (currentChildren.length !== parsedChildren.length) {
+  //   // If the number of children has changed, we need to re-render the whole thing
+  //   currentChildren = [];
 
-    for (const child of rmlNode.childNodes) {
-      rmlNode.removeChild(child);
-      child.destroy();
-    }
-  }
+  //   for (const child of rmlNode.childNodes) {
+  //     rmlNode.removeChild(child);
+  //     child.destroy();
+  //   }
+  // }
 
   // Diff children
   for (let i = 0; i < parsedChildren.length; i++) {
@@ -107,6 +107,7 @@ function renderParsedNode(
         const result = child.compute(...args);
         if (!result) {
           rmlNode.removeChild(currentChildren[i]);
+          currentChildren[i].destroy();
         } else {
           renderParsedNode(
             rmlNode.childNodes[i],
@@ -211,12 +212,12 @@ function applyClassesAndAttrs(node: alt.RmlElement, parsedNode: ParsedNode) {
   for (const key in parsedNode.props) {
     const value = parsedNode.props[key];
     if (key.startsWith("on")) {
-      const eventName = key.slice(2);
-      const listeners = node.listeners[eventName];
-      if (!listeners.includes(value)) {
-        listeners.forEach((listener) => node.off(eventName, listener));
-        node.on(eventName, value);
-      }
+      // const eventName = key.slice(2);
+      // const listeners = node.listeners[eventName];
+      // if (!listeners.includes(value)) {
+      //   listeners.forEach((listener) => node.off(eventName, listener));
+      //   node.on(eventName, value);
+      // }
     } else if (key === "style") {
       for (const rule in value) {
         if (

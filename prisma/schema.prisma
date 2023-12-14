@@ -67,6 +67,7 @@ model Character {
 type Skills {
   woodcutting Int @default(0)
   fishing     Int @default(0)
+  mining      Int @default(0)
 }
 
 type Inventory {

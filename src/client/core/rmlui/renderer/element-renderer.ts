@@ -23,6 +23,10 @@ export const renderer = createRenderer(document);
  * Tries to render the element
  */
 export function renderElement(node: alt.RmlElement) {
+  if (!node.valid) {
+    return;
+  }
+
   const registeredElement = registeredElements.get(node.key);
 
   if (!registeredElement) {
@@ -67,7 +71,7 @@ export function calculateElementScale(camDistToPed: number) {
   // Now the scaleFactor combines both the inverse distance and the perspective projection
   const scaleFactor = inverseDistanceFactor * 3;
 
-  // Calculate the scale of of font size
+  // Calculate the scale of font size
   return Math.min(1, scaleFactor * aspectRatio) * scale;
 }
 

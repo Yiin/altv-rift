@@ -34,7 +34,6 @@ export type ConsumableItemInfo = {
   key: ConsumableItemKey;
   name: string;
   description: string;
-  flags: ItemFlags;
 };
 
 export const consumables: ConsumableItemInfo[] = [
@@ -43,97 +42,81 @@ export const consumables: ConsumableItemInfo[] = [
     name: "Basic Survival Medkit",
     description:
       "A compact bundle of medical essentials. This no-frills kit holds just enough to patch up small injuries and stave off infection. It may not seem like much, but in this desperate landscape, it could spell the difference between life and death.",
-    flags: ItemFlags.IsUsable,
   },
   {
     key: Consumable.COOKED_TROUT,
     name: "Cooked Trout",
     description: "Delicious and nutritious when cooked.",
-    flags: ItemFlags.IsEdible,
   },
   {
     key: Consumable.COOKED_SALMON,
     name: "Cooked Salmon",
     description: "Rich in flavor and healthy fats.",
-    flags: ItemFlags.IsEdible,
   },
   {
     key: Consumable.COOKED_BASS,
     name: "Cooked Bass",
     description: "Tasty and fulfilling.",
-    flags: ItemFlags.IsEdible,
   },
   {
     key: Consumable.COOKED_CATFISH,
     name: "Cooked Catfish",
     description: "Mild and flaky when cooked.",
-    flags: ItemFlags.IsEdible,
   },
   {
     key: Consumable.COOKED_PIKE,
     name: "Cooked Pike",
     description: "Firm and lean, a filling meal.",
-    flags: ItemFlags.IsEdible,
   },
   {
     key: Consumable.COOKED_TUNA,
     name: "Cooked Tuna",
     description: "Lean and rich in protein.",
-    flags: ItemFlags.IsEdible,
   },
   {
     key: Consumable.COOKED_MACKEREL,
     name: "Cooked Mackerel",
     description: "Flavorful and nutritious.",
-    flags: ItemFlags.IsEdible,
   },
   {
     key: Consumable.COOKED_CARP,
     name: "Cooked Carp",
     description: "Firm and satisfying.",
-    flags: ItemFlags.IsEdible,
   },
   {
     key: Consumable.COOKED_RED_SNAPPER,
     name: "Cooked Red Snapper",
     description: "Tender and flavorful.",
-    flags: ItemFlags.IsEdible,
   },
   {
     key: Consumable.COOKED_SWORDFISH,
     name: "Cooked Swordfish",
     description: "Hearty and filling.",
-    flags: ItemFlags.IsEdible,
   },
   {
     key: Consumable.COOKED_OCTOPUS,
     name: "Cooked Octopus",
     description: "Tender and delicious when cooked.",
-    flags: ItemFlags.IsEdible,
   },
   {
     key: Consumable.COOKED_ELECTRIC_EEL,
     name: "Cooked Electric Eel",
     description: "Delicacy when prepared correctly.",
-    flags: ItemFlags.IsEdible,
   },
   {
     key: Consumable.COOKED_HAMMERHEAD_SHARK,
     name: "Cooked Hammerhead Shark",
     description: "Filling and rich in nutrients.",
-    flags: ItemFlags.IsEdible,
   },
   {
     key: Consumable.COOKED_GIANT_SQUID,
     name: "Cooked Giant Squid",
     description: "A rare and delicious treat.",
-    flags: ItemFlags.IsEdible,
   },
   {
     key: Consumable.COOKED_GOLDEN_KOI,
     name: "Cooked Golden Koi",
     description: "Grants special benefits when consumed.",
-    flags: ItemFlags.IsEdible,
   },
 ];
 

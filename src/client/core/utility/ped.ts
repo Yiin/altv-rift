@@ -27,7 +27,7 @@ export function isPedUnderVehicle(ped: number): boolean {
   if (!closestVehicle.vehicle) {
     return false;
   }
-  const [, back, front] = game.getModelDimensions(closestVehicle.vehicle.model);
+  const [back, front] = game.getModelDimensions(closestVehicle.vehicle.model);
   const frontPos = game.getOffsetFromEntityInWorldCoords(
     closestVehicle.vehicle,
     front.x,

@@ -9,13 +9,6 @@ let treeHitPos: alt.Vector3;
 export function isNextToTree() {
   const nearbyTrees = getNearbyTrees({ distance: 5 });
 
-  try {
-    console.log("streamed in peds:", alt.Ped.streamedIn.length);
-    console.log("streamed in:", alt.VirtualEntity.streamedIn.length);
-  } catch (e) {
-    console.error(e);
-  }
-
   const tree = getClosest(alt.Player.local.pos, nearbyTrees);
   if (tree) {
     const hitPos = raycastTreeEdge(alt.Player.local.pos, tree.pos, 0.2);

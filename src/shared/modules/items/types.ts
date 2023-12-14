@@ -72,6 +72,10 @@ import { FishBaitItem, FishBaitItemInfo, FishBaitItemKey } from "./registry/fish
 import { ToolItem, ToolItemInfo, ToolItemKey } from "./registry/tools/tool.items";
 import { WoodItemKey, WoodItem, WoodItemInfo } from "./registry/materials/wood.items";
 import { MetalItemKey, MetalItem, MetalItemInfo } from "./registry/materials/metal.items";
+import { NoteItemKey, NoteItem, NoteItemInfo } from "./registry/note.items";
+import { SandItem, SandItemInfo, SandItemKey } from "./registry/materials/sand.items";
+
+export type StackableItem = Extract<Item, { amount: number }>;
 
 export type ItemKey =
   | FirearmWeaponItemKey
@@ -83,7 +87,32 @@ export type ItemKey =
   | MaterialItemKey
   | FishBaitItemKey
   | ToolItemKey
-  | FishingRodItemKey;
+  | FishingRodItemKey
+  | NoteItemKey;
+
+export type NarrowedItemKey<T extends ItemKey> = T extends FirearmWeaponItemKey
+  ? FirearmWeaponItemKey
+  : T extends ThrowableWeaponItemKey
+  ? ThrowableWeaponItemKey
+  : T extends MeleeWeaponItemKey
+  ? MeleeWeaponItemKey
+  : T extends AmmoItemKey
+  ? AmmoItemKey
+  : T extends ClothingItemKey
+  ? ClothingItemKey
+  : T extends ConsumableItemKey
+  ? ConsumableItemKey
+  : T extends MaterialItemKey
+  ? MaterialItemKey
+  : T extends FishBaitItemKey
+  ? FishBaitItemKey
+  : T extends ToolItemKey
+  ? ToolItemKey
+  : T extends FishingRodItemKey
+  ? FishingRodItemKey
+  : T extends NoteItemKey
+  ? NoteItemKey
+  : never;
 
 type ItemMapping<T> = T extends FirearmWeaponItemKey
   ? [FirearmWeaponItem, FirearmWeaponItemInfo]
@@ -127,19 +156,25 @@ type ItemMapping<T> = T extends FirearmWeaponItemKey
   ? [WoodItem, WoodItemInfo]
   : T extends MetalItemKey
   ? [MetalItem, MetalItemInfo]
+  : T extends SandItemKey
+  ? [SandItem, SandItemInfo]
   : T extends FishBaitItemKey
   ? [FishBaitItem, FishBaitItemInfo]
   : T extends ToolItemKey
   ? [ToolItem, ToolItemInfo]
   : T extends FishingRodItemKey
   ? [FishingRodItem, FishingRodItemInfo]
+  : T extends NoteItemKey
+  ? [NoteItem, NoteItemInfo]
   : never;
 
 type MappedItemKeys = { [K in ItemKey]: ItemMapping<K> extends never ? K : never };
 type MissingKeys = MappedItemKeys[MappedItemKeys[keyof MappedItemKeys]];
-type ItemMappingValidation = MissingKeys extends never ? unknown : MissingKeys;
+type ExtractBrand<T> = T extends string & { [brand]: infer U } ? U : never;
+type ExtractMissingKeys<T> = T extends any ? ExtractBrand<T> : never;
+type ItemMappingValidation = MissingKeys extends never ? null : ExtractMissingKeys<MissingKeys>;
 
-const ITEM_MAPPING_VALIDATION: ItemMappingValidation = {};
+const MISSING_ITEM_KEYS: ItemMappingValidation = null;
 
 export type Item = ItemMapping<ItemKey>[0];
 export type ItemInfo = ItemMapping<ItemKey>[1];

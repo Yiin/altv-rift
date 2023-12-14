@@ -1,6 +1,6 @@
 import * as alt from "@altv/server";
 import { EquipmentSlot, Inventory } from "@shared/interfaces";
-import { Item, TreeLogItem } from "@shared/modules/items";
+import { Item } from "@shared/modules/items";
 import { InGamePlayer } from "../../../server/core/utility/assertions";
 
 export const FromServer = {

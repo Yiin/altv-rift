@@ -49,3 +49,5 @@ type NullableKeys<T> = {
 }[keyof T];
 type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
 type OptionalNullable<T> = Optional<T, NullableKeys<T>>;
+
+type MaybePromise<T> = T | Promise<T>;

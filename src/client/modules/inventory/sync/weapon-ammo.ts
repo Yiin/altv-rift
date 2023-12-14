@@ -67,7 +67,9 @@ whileInGame(() => {
   function onPlayerWeaponChange() {
     alt.Utils.waitFor(
       () =>
-        !game.isPedSwitchingWeapon(player) && game.getAmmoInClip(player, player.currentWeapon, 0)[0] // [hasClip, ammoInClip]
+        !game.isPedSwitchingWeapon(player) &&
+        game.getAmmoInClip(player, player.currentWeapon, 0)[0], // [hasClip, ammoInClip]
+      3000
     ).finally(updateAmmo);
   }
 
@@ -95,10 +97,7 @@ whileInGame(() => {
     const hash = getWeaponHash(weapon.key);
 
     try {
-      alt.log(`game.getAmmoInClip(${player.scriptID}, ${hash})`);
       const [, gameClip] = game.getAmmoInClip(player, hash);
-
-      alt.log(`Game clip: ${gameClip}, clip: ${clip}`);
 
       if ((gameClip <= 3 && clip > 0) || gameClip > clip) {
         game.setAmmoInClip(player, hash, clip);

@@ -35,8 +35,8 @@ alt.Player.prototype.unequipItem = function (equipmentSlot, to) {
       !unloadAmmoFromWeapon({
         type: "equipment",
         equipmentSlot: "weapon",
-        source: "character",
-        sourceId: this.character.id,
+        origin: "character",
+        originId: this.character.id,
       })
     ) {
       return false;

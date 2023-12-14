@@ -35,7 +35,7 @@ module.exports = {
           },
           {
             group: 'builtin',
-            pattern: 'natives',
+            pattern: '@altv/natives',
             position: 'after',
           },
           {

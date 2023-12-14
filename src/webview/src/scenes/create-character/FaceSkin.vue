@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useCreateCharacter } from "../../store/create-character.store";
-import { parents, getRandomParent, getRandomResemblance } from "./data/parents";
+import { parents, getRandomParent, getRandomResemblance } from "@shared/modules/character/appearance-data";
 import SlideOption from "../../components/SlideOption.vue";
 import XSelection from "../../components/XSelection.vue";
 import { px } from "@/composables/use-pixel";
@@ -8,9 +8,9 @@ import { px } from "@/composables/use-pixel";
 const createCharacter = useCreateCharacter();
 
 const randomSkin = () => {
-  createCharacter.skinMother = getRandomParent(createCharacter.sex);
-  createCharacter.skinFather = getRandomParent();
-  createCharacter.skinMix = getRandomResemblance(createCharacter.sex);
+  createCharacter.currentAppearance.skinMother = getRandomParent(createCharacter.sex);
+  createCharacter.currentAppearance.skinFather = getRandomParent();
+  createCharacter.currentAppearance.skinMix = getRandomResemblance(createCharacter.sex);
 };
 </script>
 
@@ -25,22 +25,23 @@ const randomSkin = () => {
       </div>
       <div class="flex justify-center items-end pointer-events-none">
         <v-img transition="parent-fade" class="-mr-10 flex z-10 parent-image" :height="px(150)"
-          :src="`./assets/faces/${createCharacter.skinMother}.png`" />
+          :src="`./assets/faces/${createCharacter.currentAppearance.skinMother}.png`" />
         <v-img class="parent-image" transition="parent-fade" :height="px(150)"
-          :src="`./assets/faces/${createCharacter.skinFather}.png`" />
+          :src="`./assets/faces/${createCharacter.currentAppearance.skinFather}.png`" />
       </div>
       <div class="p-2 pt-0">
-        <XSelection :size="300" :min="0" :max="1" v-model="createCharacter.skinMix" no-padding class="mb-2" />
+        <XSelection :size="300" :min="0" :max="1" v-model="createCharacter.currentAppearance.skinMix" no-padding
+          class="mb-2" />
         <v-row align="center">
           <v-col cols="6">
-            <SlideOption v-model="createCharacter.skinMother" :options="Array.from(parents.keys()).filter(
-              (parent) => parent !== createCharacter.skinFather
+            <SlideOption v-model="createCharacter.currentAppearance.skinMother" :options="Array.from(parents.keys()).filter(
+              (parent) => parent !== createCharacter.currentAppearance.skinFather
             )
               " :value-text="(value) => parents[value]" />
           </v-col>
           <v-col cols="6">
-            <SlideOption v-model="createCharacter.skinFather" :options="Array.from(parents.keys()).filter(
-              (parent) => parent !== createCharacter.skinMother
+            <SlideOption v-model="createCharacter.currentAppearance.skinFather" :options="Array.from(parents.keys()).filter(
+              (parent) => parent !== createCharacter.currentAppearance.skinMother
             )
               " :value-text="(value) => parents[value]" />
           </v-col>

@@ -2,15 +2,17 @@ import { div, img } from "../../renderer/rml-tags";
 
 export type IconName =
   // @index(['./assets/*.png'], (f, _, e) => `| '${f.name.replace('icon-', '')}'`)
-  | 'car-bonnet'
-  | 'car-door'
-  | 'car-trunk'
-  | 'dialog'
-  | 'options'
-  | 'quest'
-  | 'shop'
-  | 'trade'
-  // @endindex
+  | "axe-cooldown"
+  | "axe"
+  | "car-bonnet"
+  | "car-door"
+  | "car-trunk"
+  | "dialog"
+  | "options"
+  | "quest"
+  | "shop"
+  | "trade";
+// @endindex
 
 export function Icon(name: IconName) {
   return img({

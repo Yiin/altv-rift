@@ -2,6 +2,9 @@
 import EquipmentSlot from "./EquipmentSlot.vue";
 import { onMounted, onUnmounted } from "vue";
 import { ClientEvents } from "@shared/events/client";
+import { useGameState } from "@/store/synced/game-state.store";
+
+const gameState = useGameState();
 
 onMounted(() => {
   alt.emit(ClientEvents.FromWebview.TOGGLE_PLAYER_PREVIEW, true);
@@ -13,7 +16,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div>
+  <div v-if="!gameState.interaction">
     <div class="text-xl font-semibold crisp-shadow text-white uppercase tracking-wide p-1">
       Equipment
     </div>

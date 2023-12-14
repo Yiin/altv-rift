@@ -1,3 +1,5 @@
+import { PedFlags } from "../../src/shared/modules/ped";
+
 declare module "@altv/server" {
   export interface Player {
     hasFullySpawned: boolean;
@@ -22,7 +24,9 @@ declare module "@altv/client" {
 declare module "@altv/shared" {
   export interface PedStreamSyncedMeta {
     key?: import("../../src/shared/modules/ped/list").PedKey;
+    flags?: PedFlags;
     name?: string;
+    weapon?: number;
   }
 
   export interface VirtualEntityStreamSyncedMeta {

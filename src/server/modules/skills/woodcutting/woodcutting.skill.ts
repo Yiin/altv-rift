@@ -1,4 +1,5 @@
 import * as alt from "@altv/server";
+import { vec3, quat } from "gl-matrix";
 import { minutesToMilliseconds } from "date-fns";
 import { ServerCall } from "@shared/calls/server";
 import * as trees from "@shared/modules/woodcutting/trees";
@@ -20,10 +21,12 @@ const playerHittingTree: WeakMap<InGamePlayer, number> = new WeakMap();
 
 console.log("Growing trees...");
 
+let skippedTrees = 0;
+
 for (const type in trees) {
   const list = trees[type as keyof typeof trees];
 
-  for (const { Position } of list) {
+  for (const { Position, Quaternion } of list) {
     if (
       IGNORED_TREES.some(
         (tree) =>
@@ -33,13 +36,15 @@ for (const type in trees) {
           tree.type === type
       )
     ) {
+      skippedTrees++;
       continue;
     }
     const position = {
       x: Position.X,
       y: Position.Y,
-      z: Position.Z + 1.8,
+      z: Position.Z + 1.4,
     };
+    //getUpPosition({ Position, Quaternion });
 
     const tree = alt.VirtualEntity.create({
       group: virtualTreeGroup,
@@ -58,6 +63,74 @@ for (const type in trees) {
 }
 
 console.log("Trees grown.");
+console.log("Skipped trees:", skippedTrees);
+
+function getUpPosition(data: {
+  Position: { X: number; Y: number; Z: number };
+  Quaternion: { X: number; Y: number; Z: number; W: number };
+}): alt.Vector3 {
+  // Extract quaternion from the data
+  const q = quat.fromValues(
+    data.Quaternion.X,
+    data.Quaternion.Y,
+    data.Quaternion.Z,
+    data.Quaternion.W
+  );
+
+  // 'up' vector
+  const v = vec3.fromValues(0, 0, 1);
+
+  // Rotate the up vector using the given quaternion
+  const v_rotated = vec3.transformQuat(vec3.create(), v, q);
+
+  // Scale
+  const offset = vec3.scale(vec3.create(), v_rotated, 1);
+
+  // Calculate the final position
+  const position = vec3.add(
+    vec3.create(),
+    vec3.fromValues(data.Position.X, data.Position.Y, data.Position.Z),
+    offset
+  );
+
+  return new alt.Vector3(position[0], position[1], position[2]);
+}
+
+alt.Events.onPlayer("ignoretree", (player, treeId) => {
+  const tree = virtualTreeById.get(treeId as number);
+
+  if (!tree) {
+    return;
+  }
+
+  const treeType = tree.streamSyncedMeta.treeType!;
+
+  const closestMatch = trees[treeType].find((match) => {
+    const position = {
+      x: match.Position.X,
+      y: match.Position.Y,
+      z: match.Position.Z + 1.8,
+    };
+
+    const dist = new alt.Vector3(position).distanceTo(tree.pos);
+
+    return dist < 1;
+  });
+
+  if (closestMatch) {
+    const position = {
+      x: closestMatch.Position.X,
+      y: closestMatch.Position.Y,
+      z: closestMatch.Position.Z,
+    };
+    console.log(
+      JSON.stringify({
+        pos: position,
+        type: treeType,
+      })
+    );
+  }
+});
 
 rpc.registerClient(ServerCall.FromClient.BEGIN_TREE_HIT, (player, virtualTreeId) => {
   needsToBeInGame(player);

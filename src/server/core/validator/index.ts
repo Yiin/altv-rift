@@ -1,6 +1,6 @@
+import { z } from "zod";
 import { PrismaClient } from "@prisma/client";
 import { container } from "@shared/dependency-injection";
-import * as validator from "@/core/validator";
 
 type ValidationFunction<T = any> = (value: T) => Promise<string | undefined> | string | undefined;
 
@@ -58,15 +58,17 @@ export const isRequired =
     return undefined;
   };
 
-export const isEmail =
-  (message: string): ValidationFunction =>
-  (value: string) => {
-    if (!validator.isEmail(value)) {
-      return message;
-    }
-
+export const isEmail = (): ValidationFunction => (value: string) => {
+  try {
+    z.string().email().parse(value);
     return undefined;
-  };
+  } catch (e) {
+    if (e instanceof z.ZodError) {
+      return e.errors[0].message;
+    }
+    return "Invalid email address";
+  }
+};
 
 export const isUnique =
   <T extends keyof PrismaModels>(
@@ -118,3 +120,20 @@ export const exists =
       return message;
     }
   };
+
+export const isValidCharacterName = (): ValidationFunction => async (value: string) => {
+  try {
+    z.string()
+      .min(3)
+      .max(20)
+      .regex(/^[a-zA-Z]/, { message: "Character name must start with a letter" })
+      .regex(/[a-zA-Z0-9 ]+$/, { message: "Valid characters are a-z, A-Z, 0-9 and space" })
+      .parse(value);
+    return undefined;
+  } catch (e) {
+    if (e instanceof z.ZodError) {
+      return e.errors[0].message;
+    }
+    return "Invalid character name";
+  }
+};

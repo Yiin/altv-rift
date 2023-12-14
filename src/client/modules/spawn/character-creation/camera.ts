@@ -3,10 +3,12 @@ import * as game from "@altv/natives";
 import { Bones } from "@shared/enums/bones";
 import { ClientEvents } from "@shared/events/client";
 import { loadSceneAtCoords } from "@/core/utility/scene";
-import { CharacterPed } from "@/core/utility/character-ped";
 import { Control, ControlType } from "@/core/constants/controls";
 import { everyTickWhile } from "@/core/utility/event-helpers";
 import { getWebview } from "@/core/user-interface/webview";
+import { whileEntityIsStreamedIn } from "@/core/game-state-hooks/entity-is-streamed-in.state";
+import { getCharacterCreationPed } from "./character-ped";
+import { vec3ToArr } from "@/core/utility/vectors";
 
 const cameraPositionBaseline = new alt.Vector3(1508.8, -1731.9, 79.3);
 let cameraHorizontalOffset = 0;
@@ -15,160 +17,174 @@ let zoom = 1;
 let camera: number | undefined;
 let pedPosition: alt.Vector3;
 let cameraControlInterval: alt.Timers.EveryTick | undefined;
+let unfocusPed = () => {};
 
-export const CharacterCreationCamera = {
-  async create(scriptID: number) {
-    pedPosition = game.getEntityCoords(scriptID, false);
+export function createCharacterCreationCamera(ped: alt.LocalPed) {
+  const fov = 60;
+  const startCamPosition = cameraPositionBaseline;
 
-    // Set Focus in the Area
-    game.requestCollisionAtCoord(pedPosition.x, pedPosition.y, pedPosition.z);
-    game.setFocusPosAndVel(pedPosition.x, pedPosition.y, pedPosition.z, 0, 0, 0);
-    await loadSceneAtCoords(pedPosition);
+  camera = game.createCamWithParams(
+    "DEFAULT_SCRIPTED_CAMERA",
+    ...vec3ToArr(startCamPosition),
+    ...vec3ToArr(alt.Vector3.zero),
+    fov,
+    true,
+    0
+  );
 
-    const fov = 60;
-    const startCamPosition = cameraPositionBaseline;
+  game.setCamActive(camera, true);
+  game.renderScriptCams(true, false, 0, true, false, 0);
 
-    camera = game.createCamWithParams(
-      "DEFAULT_SCRIPTED_CAMERA",
-      startCamPosition.x,
-      startCamPosition.y,
-      startCamPosition.z,
-      0,
-      0,
-      0,
-      fov,
-      true,
-      0
-    );
+  alt.log(`Camera: ${camera}, ped: ${ped.scriptID}`);
 
-    alt.log(`Camera: ${camera}`);
-
-    game.setCamActive(camera, true);
-    game.renderScriptCams(true, false, 0, true, false, 0);
-
-    CharacterCreationCamera.updateCamera();
-
-    const front = game.getOffsetFromEntityInWorldCoords(scriptID, 0, 1.5, 0);
-    const back = game.getOffsetFromEntityInWorldCoords(scriptID, 0, -1.5, 0);
-
-    everyTickWhile(
-      () => camera !== undefined,
-      () => {
-        game.drawLightWithRange(front.x, front.y, front.z, 255, 234, 207, 5, 2);
-        game.drawLightWithRange(back.x, back.y, back.z, 255, 234, 207, 5, 2);
+  unfocusPed = whileEntityIsStreamedIn(
+    (entity): entity is alt.LocalPed => {
+      return entity === getCharacterCreationPed();
+    },
+    async (ped) => {
+      if (!camera) {
+        alt.log("no camera");
+        return;
       }
-    );
 
-    everyTickWhile(
-      () => camera !== undefined,
-      () => {
-        if (
-          game.isControlJustPressed(ControlType.PLAYER_CONTROL, Control.INPUT_WEAPON_WHEEL_PREV)
-        ) {
-          zoom = Math.max(0.35, zoom - 0.05);
+      await ped.waitForSpawn();
+
+      alt.log("focusing ped", ped.scriptID);
+
+      game.pointCamAtPedBone(
+        camera,
+        ped,
+        Bones.SKEL_Head,
+        0, // -Math.cos(cameraHorizontalOffset) / 3,
+        0, // -Math.sin(cameraHorizontalOffset) / 3,
+        0.1,
+        true
+      );
+
+      pedPosition = ped.pos;
+
+      // Set Focus in the Area
+      game.requestCollisionAtCoord(pedPosition.x, pedPosition.y, pedPosition.z);
+      game.setFocusPosAndVel(pedPosition.x, pedPosition.y, pedPosition.z, 0, 0, 0);
+
+      alt.log("loading scene", pedPosition);
+      loadSceneAtCoords(pedPosition);
+
+      const front = game.getOffsetFromEntityInWorldCoords(ped, 0, 1.5, 0);
+      const back = game.getOffsetFromEntityInWorldCoords(ped, 0, -1.5, 0);
+
+      everyTickWhile(
+        () => camera !== undefined,
+        () => {
+          game.drawLightWithRange(front.x, front.y, front.z, 255, 234, 207, 5, 2);
+          game.drawLightWithRange(back.x, back.y, back.z, 255, 234, 207, 5, 2);
         }
-        if (
-          game.isControlJustPressed(ControlType.PLAYER_CONTROL, Control.INPUT_WEAPON_WHEEL_NEXT)
-        ) {
-          zoom = Math.min(1.5, zoom + 0.05);
+      );
+
+      everyTickWhile(
+        () => camera !== undefined,
+        () => {
+          if (
+            game.isDisabledControlJustPressed(
+              ControlType.PLAYER_CONTROL,
+              Control.INPUT_WEAPON_WHEEL_PREV
+            )
+          ) {
+            zoom = Math.max(0.35, zoom - 0.05);
+          }
+          if (
+            game.isDisabledControlJustPressed(
+              ControlType.PLAYER_CONTROL,
+              Control.INPUT_WEAPON_WHEEL_NEXT
+            )
+          ) {
+            zoom = Math.min(1.5, zoom + 0.05);
+          }
+          updateCharacterCreationCameraPosition();
         }
-        CharacterCreationCamera.updateCamera();
-      }
-    );
-
-    getWebview().on(ClientEvents.FromWebview.CAMERA_MOVE_START, () => {
-      if (cameraControlInterval) {
-        cameraControlInterval.destroy();
-        cameraControlInterval = undefined;
-      }
-      cameraControlInterval = alt.Timers.everyTick(this.updateCameraMove);
-    });
-
-    getWebview().on(ClientEvents.FromWebview.CAMERA_MOVE_END, () => {
-      if (cameraControlInterval) {
-        cameraControlInterval.destroy();
-        cameraControlInterval = undefined;
-      }
-    });
-  },
-
-  async updateCameraMove() {
-    if (!camera) {
-      return;
+      );
     }
+  );
 
-    const inputs = {
-      InputLookUp: [
-        game.isControlPressed(ControlType.PLAYER_CONTROL, Control.INPUT_LOOK_UP_ONLY),
-        Math.abs(
-          game.getControlValue(ControlType.PLAYER_CONTROL, Control.INPUT_LOOK_UP_ONLY) - 127
-        ),
-      ],
-      InputLookDown: [
-        game.isControlPressed(ControlType.PLAYER_CONTROL, Control.INPUT_LOOK_DOWN_ONLY),
-        Math.abs(
-          game.getControlValue(ControlType.PLAYER_CONTROL, Control.INPUT_LOOK_DOWN_ONLY) - 127
-        ),
-      ],
-      InputLookLeft: [
-        game.isControlPressed(ControlType.PLAYER_CONTROL, Control.INPUT_LOOK_LEFT_ONLY),
-        Math.abs(
-          game.getControlValue(ControlType.PLAYER_CONTROL, Control.INPUT_LOOK_LEFT_ONLY) - 127
-        ),
-      ],
-      InputLookRight: [
-        game.isControlPressed(ControlType.PLAYER_CONTROL, Control.INPUT_LOOK_RIGHT_ONLY),
-        Math.abs(
-          game.getControlValue(ControlType.PLAYER_CONTROL, Control.INPUT_LOOK_RIGHT_ONLY) - 127
-        ),
-      ],
-    } as const;
-
-    const slowdown = 500;
-
-    cameraHorizontalOffset +=
-      inputs.InputLookLeft[1] / (slowdown * (inputs.InputLookLeft[0] ? 10 : 1)) -
-      inputs.InputLookRight[1] / (slowdown * (inputs.InputLookRight[0] ? 10 : 1));
-    cameraVerticalOffset -=
-      inputs.InputLookUp[1] / (slowdown * (inputs.InputLookUp[0] ? 10 : 1)) -
-      inputs.InputLookDown[1] / (slowdown * (inputs.InputLookDown[0] ? 10 : 1));
-
-    cameraVerticalOffset = Math.max(-0.6, Math.min(0.8, cameraVerticalOffset));
-  },
-
-  async updateCamera() {
-    if (!camera) {
-      return;
+  getWebview().on(ClientEvents.FromWebview.CAMERA_MOVE_START, () => {
+    if (cameraControlInterval) {
+      cameraControlInterval.destroy();
+      cameraControlInterval = undefined;
     }
+    mouseStartPos = alt.Cursor.pos;
+    cameraControlInterval = alt.Timers.everyTick(moveCharacterCreationCamera);
+  });
 
-    const x1 = pedPosition.x + Math.cos(cameraHorizontalOffset) * zoom;
-    const y1 = pedPosition.y + Math.sin(cameraHorizontalOffset) * zoom;
-    const z = cameraPositionBaseline.z + Math.tan(cameraVerticalOffset);
+  getWebview().on(ClientEvents.FromWebview.CAMERA_MOVE_END, () => {
+    if (cameraControlInterval) {
+      cameraControlInterval.destroy();
+      cameraControlInterval = undefined;
+    }
+  });
+}
 
-    game.setCamCoord(camera, x1, y1, z);
+let mouseStartPos: alt.Vector2 | undefined;
+
+export async function moveCharacterCreationCamera() {
+  if (!camera) {
+    return;
+  }
+
+  if (mouseStartPos) {
+    const mousePos = alt.Cursor.pos;
+    const mouseDiff = {
+      x: mouseStartPos.x - mousePos.x,
+      y: mouseStartPos.y - mousePos.y,
+    };
+
+    cameraHorizontalOffset += mouseDiff.x / 1000;
+    cameraVerticalOffset -= mouseDiff.y / 1000;
+
+    mouseStartPos = mousePos;
+  }
+
+  cameraVerticalOffset = Math.max(-0.6, Math.min(0.8, cameraVerticalOffset));
+}
+
+export function updateCharacterCreationCameraPosition() {
+  if (!camera) {
+    alt.logWarning("no camera");
+    return;
+  }
+
+  const x1 = pedPosition.x + Math.cos(cameraHorizontalOffset) * zoom;
+  const y1 = pedPosition.y + Math.sin(cameraHorizontalOffset) * zoom;
+  const z = cameraPositionBaseline.z + Math.tan(cameraVerticalOffset);
+
+  game.setCamCoord(camera, x1, y1, z);
+
+  const ped = getCharacterCreationPed();
+  if (ped && ped.valid && ped.scriptID) {
     game.pointCamAtPedBone(
       camera,
-      CharacterPed.get(),
+      ped,
       Bones.SKEL_Head,
       0, // -Math.cos(cameraHorizontalOffset) / 3,
       0, // -Math.sin(cameraHorizontalOffset) / 3,
       0.1,
       true
     );
-  },
+  }
+}
 
-  destroy() {
-    if (cameraControlInterval) {
-      cameraControlInterval.destroy();
-      cameraControlInterval = undefined;
-    }
+export function destroyCharacterCreationCamera() {
+  if (cameraControlInterval) {
+    cameraControlInterval.destroy();
+    cameraControlInterval = undefined;
+  }
 
-    game.clearFocus();
-    game.destroyAllCams(true);
-    game.renderScriptCams(false, false, 0, false, false, 0);
+  unfocusPed();
+  game.clearFocus();
+  game.destroyAllCams(true);
+  game.renderScriptCams(false, false, 0, false, false, 0);
 
-    cameraHorizontalOffset = 0;
-    cameraVerticalOffset = 0;
-    camera = undefined;
-  },
-};
+  unfocusPed = () => {};
+  cameraHorizontalOffset = 0;
+  cameraVerticalOffset = 0;
+  camera = undefined;
+}

@@ -1,9 +1,9 @@
-import { canInteractWithItem } from "../api/hooks";
+import { canInteractWithItemSource as canInteractWithSource } from "../api/hooks";
 
-canInteractWithItem.hook((player, itemSource) => {
-  if (itemSource.source !== "character") {
+canInteractWithSource.hook((player, itemSource) => {
+  if (itemSource.origin !== "character") {
     return;
   }
 
-  return player.character.id === itemSource.sourceId;
+  return player.character.id === itemSource.originId;
 });

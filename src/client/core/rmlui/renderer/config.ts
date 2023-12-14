@@ -1,1 +1,1 @@
-export const MAX_RENDERED_ELEMENTS = 20;
+export const MAX_RENDERED_ELEMENTS = 50;

@@ -8,7 +8,7 @@ import path from "path";
 export default defineConfig({
   base: "/client/webview/",
   build: {
-    outDir: "../../resources/main/client/webview",
+    // outDir: "../../resources/main/client/webview",
     emptyOutDir: true,
   },
   server: {

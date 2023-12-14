@@ -3,6 +3,8 @@ import * as game from "@altv/natives";
 
 export function loadSceneAtCoords(pos: alt.IVector3): Promise<boolean> {
   let timerHandle: alt.Timers.Interval;
+  const start = Date.now();
+
   return new Promise<boolean>((resolve) => {
     game.newLoadSceneStartSphere(
       pos.x,
@@ -18,6 +20,10 @@ export function loadSceneAtCoords(pos: alt.IVector3): Promise<boolean> {
       }
 
       if (!game.isNewLoadSceneLoaded()) {
+        if (Date.now() - start > 10000) {
+          alt.logError("Failed to load scene");
+          return resolve(false);
+        }
         return;
       }
 

@@ -4,7 +4,7 @@ import { esbuildOptions } from "./shared.js";
 import { filelocPlugin } from "./plugins/fileloc-plugin.js";
 import { reloadResource } from "./reconnect.js";
 
-await esbuild.build({
+const context = await esbuild.context({
   ...esbuildOptions,
   platform: "node",
   entryPoints: ["src/server/main.ts"],
@@ -26,3 +26,6 @@ await esbuild.build({
     }
   ],
 });
+
+await context.watch();
+// await context.dispose();

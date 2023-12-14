@@ -16,7 +16,8 @@ import "./webserver";
 const prisma = container.get(PrismaClient);
 
 alt.Events.onPlayerConnect(({ player }) => {
-  player.dimension = player.id + 1;
+  player.dimension = player.id;
+  player.spawn(alt.Vector3.zero);
   player.setup();
 });
 
@@ -46,6 +47,10 @@ rpc.registerClient(ServerCall.FromClient.TRY_CACHED_TOKEN, async (player, token)
 
   await onDiscordAuthDone(player, token);
   return true;
+});
+
+alt.Events.onPlayer(ServerEvents.FromClient.DISCORD_AUTH_DONE, (player, token) => {
+  onDiscordAuthDone(player, token);
 });
 
 // native altv discord auth

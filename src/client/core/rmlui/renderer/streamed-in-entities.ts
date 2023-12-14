@@ -1,5 +1,5 @@
 import * as alt from "@altv/client";
-import { getAnchorType } from "./element-updater";
+import { isValidAnchor } from "./element-updater";
 import { AnchorEntity } from "./types";
 import { elements } from "./rml-renderer";
 import { notRenderedElements } from "./frame-state";
@@ -8,10 +8,9 @@ import { container } from "./element-renderer";
 export const streamedInEntities = new Set<AnchorEntity>();
 
 alt.Events.onGameEntityCreate(({ entity }) => {
-  try {
-    getAnchorType(entity as AnchorEntity);
-    streamedInEntities.add(entity as AnchorEntity);
-  } catch {}
+  if (isValidAnchor(entity)) {
+    streamedInEntities.add(entity);
+  }
 });
 
 alt.Events.onGameEntityDestroy(({ entity }) => {
@@ -19,10 +18,9 @@ alt.Events.onGameEntityDestroy(({ entity }) => {
 });
 
 alt.Events.onWorldObjectStreamIn(({ object }) => {
-  try {
-    getAnchorType(object as AnchorEntity);
-    streamedInEntities.add(object as AnchorEntity);
-  } catch {}
+  if (isValidAnchor(object)) {
+    streamedInEntities.add(object);
+  }
 });
 
 alt.Events.onWorldObjectStreamOut(({ object }) => {

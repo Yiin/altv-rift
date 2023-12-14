@@ -8,6 +8,7 @@ import { elements } from "./rml-renderer";
 import { AnchorEntity, FrameData } from "./types";
 import { updateFocusedEntity } from "./hooks/focused-entity";
 import { AnchorType } from "./anchors";
+import Raycast from "@/core/utility/raycast";
 
 export const frameDataMap = new Map<AnchorEntity, FrameData>();
 
@@ -20,19 +21,28 @@ alt.Events.onWindowResolutionChange(() => {
   screenRes = alt.getScreenResolution().div(2.2, 2);
 });
 
-export function getAnchorType(entity: AnchorEntity) {
+export function isValidAnchor(entity: alt.BaseObject): entity is AnchorEntity {
+  try {
+    getAnchorType(entity);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export function getAnchorType(entity: alt.BaseObject) {
   if (entity.valid) {
-    if (entity instanceof alt.Ped) {
+    if (entity.type === alt.Enums.BaseObjectType.PED) {
       return AnchorType.Ped;
     }
-    if (entity instanceof alt.Player) {
+    if (entity.type === alt.Enums.BaseObjectType.PLAYER) {
       return AnchorType.Player;
     }
-    if (entity instanceof alt.Vehicle) {
+    if (entity.type === alt.Enums.BaseObjectType.VEHICLE) {
       return AnchorType.Vehicle;
     }
-    if (entity instanceof alt.VirtualEntity) {
-      if (entity.streamSyncedMeta.entityType === "tree") {
+    if (entity.type === alt.Enums.BaseObjectType.VIRTUAL_ENTITY) {
+      if ((entity as alt.VirtualEntity).streamSyncedMeta.entityType === "tree") {
         return AnchorType.Tree;
       }
     }
@@ -43,8 +53,9 @@ export function getAnchorType(entity: AnchorEntity) {
 export function prepareFrameForEntity(entity: AnchorEntity) {
   const isVisible =
     alt.isPointOnScreen(entity.pos) &&
-    (entity instanceof alt.VirtualEntity ||
-      game.hasEntityClearLosToEntity(alt.Player.local, entity, 17));
+    (entity instanceof alt.Entity
+      ? game.hasEntityClearLosToEntity(alt.Player.local, entity, 17)
+      : game.isSphereVisible(entity.pos.x, entity.pos.y, entity.pos.z, 0.0099999998));
 
   if (isVisible) {
     const screenPosition = alt.worldToScreen(entity.pos);

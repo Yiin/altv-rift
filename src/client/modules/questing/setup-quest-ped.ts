@@ -19,13 +19,18 @@ alt.Events.onGameEntityCreate(({ entity }) => {
     return;
   }
 
+  alt.log("Ped created", entity.id);
+
   entity.cleanupFns = [];
 
   const key = entity.streamSyncedMeta.key;
 
   if (!key) {
+    alt.log("Ped has no key");
     return;
   }
+
+  alt.log("Registering interactions for ped", key);
 
   /**
    * How can we interact with this ped?
@@ -56,8 +61,8 @@ alt.Events.onGameEntityCreate(({ entity }) => {
     } else {
       // Create the blip if one doesn't exist yet
       if (!entity.blip) {
-        entity.blip = game.addBlipForEntity(entity.scriptID);
-        game.setBlipSprite(entity.blip, alt.Enums.BlipSprite.FINDERS_KEEPERS);
+        entity.blip = game.addBlipForEntity(entity);
+        game.setBlipSprite(entity.blip, 456); // alt.Enums.BlipSprite.FINDERS_KEEPERS
       }
 
       // Set the blip color based on if we are tracking the quest task this ped is responsible for
@@ -65,10 +70,8 @@ alt.Events.onGameEntityCreate(({ entity }) => {
         (interaction) => interaction.key === clientState.trackingQuest
       );
       if (trackingSameQuest) {
-        alt.log("Setting yellow orange");
         game.setBlipColour(entity.blip, alt.Enums.BlipColor.YELLOW_ORANGE);
       } else {
-        alt.log("Setting white");
         game.setBlipColour(entity.blip, alt.Enums.BlipColor.WHITE);
       }
     }

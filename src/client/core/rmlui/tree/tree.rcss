@@ -3,14 +3,13 @@
  */
 .tree-wrapper {
   position: absolute;
-  text-align: center;
 }
 
 .tree {
+  font-family: josefinsans-semibold;
   font-effect: outline(2px black);
-  font-style: normal;
-  font-size: 15pt;
-  font-transform: uppercase;
+  font-size: 13pt;
+  text-transform: uppercase;
   color: #ffffffff;
   transform-origin: center center;
 }

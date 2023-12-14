@@ -3,6 +3,7 @@ import { Item, ItemKey } from "../../types";
 import { EquipedAmmo } from "../weapons/firearm-weapon.items";
 import { registerItem } from "../../items-registry";
 import { makeKeys } from "../../../../utility/make-keys";
+import { ItemFlags } from "../../enums";
 
 export const Ammo = makeKeys<AmmoItemKey>()({
   HANDGUN_AMMO: "handgunammo",

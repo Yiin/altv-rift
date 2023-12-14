@@ -15,19 +15,23 @@ ipc.serve(() => {
 });
 ipc.server.start();
 
-const serverWatcher = new Watcher(['./src/server', './src/shared'], { recursive: true, renameDetection: true });
-const clientWatcher = new Watcher(['./src/client', './src/shared'], { recursive: true, renameDetection: true });
+const serverWatcher = new Watcher(['./src/server/**/*.ts', './src/shared/**/*.ts'], { recursive: true, renameDetection: true });
+const clientWatcher = new Watcher(['./src/client/**/*.ts', './src/shared/**/*.ts'], { recursive: true, renameDetection: true });
+const assetsWatcher = new Watcher(['./src/client/**/*.rcss'], { recursive: true, renameDetection: true });
 
 const building = new Set();
 
-serverWatcher.on('change', (filepath) => {
-  console.log(filepath, "changed");
+serverWatcher.on('change', () => {
   building.add('server');
 });
 
-clientWatcher.on('change', (filepath) => {
-  console.log(filepath, "changed");
+clientWatcher.on('change', () => {
   building.add('client');
+});
+
+assetsWatcher.on('change', () => {
+  console.log("Assets changed");
+  restartServer('client');
 });
 
 const DEBUG_PORT = 9223;
@@ -40,6 +44,8 @@ const disconnectFromAltvServerIpc = debounce(() => {
 
 function kickAllPlayers() {
   return new Promise(resolve => {
+    setTimeout(resolve, 5000);
+
     ipc.connectTo('altvServer', () => {
       ipc.of.altvServer.on('connect', () => {
         if (ipc.of.altvServer) {
@@ -53,7 +59,6 @@ function kickAllPlayers() {
 }
 
 async function restartServer(side) {
-  console.log('restartServer', side, 'changed');
   building.delete(side);
 
   // if (building.size > 0) {
@@ -69,12 +74,12 @@ async function restartServer(side) {
     console.log("Killing old server process");
     try {
       await fkill(':8888');
-    } catch {}
+    } catch { }
 
     if (!childProcess.killed) {
       try {
         childProcess.kill();
-      } catch {}
+      } catch { }
     }
   }
 
@@ -117,4 +122,15 @@ function wait(ms) {
   return new Promise((resolve) => {
     setTimeout(resolve, ms);
   });
+}
+
+process.on('exit', exitHandler);
+process.on('beforeExit', exitHandler);
+process.on('SIGINT', exitHandler);
+process.on('SIGTERM', exitHandler);
+process.on('SIGUSR2', exitHandler);
+
+async function exitHandler() {
+  childProcess.kill();
+  process.exit();
 }
