@@ -1,0 +1,42 @@
+MVP Development Plan:
+
+✔ Core Gameplay Mechanics:
+  ✔ NPC Interaction Menu @done
+  ☐ Simplified Quest System
+  ☐ Main Quests - Heists, Races, Bounties
+  ☐ Skill System - Driving, Shooting, Stealth
+  ✔ Basic Personal Inventory System @done
+    ✔ Weapons, Health Kits, Special Items @done
+
+✔ Engagement Features:
+  ✔ Daily Challenges System @done
+  ✔ Random NPC Tasks @done
+  ✔ Limited Professions - Mercenary, Driver @done
+
+✔ PvP and Team Play:
+  ✔ Basic Territory Control System @done
+  ✔ Simple Raid Events @done
+
+✔ Economy and Progression:
+  ✔ Basic Trade System @done
+  ✔ Simple Upgrade System for Vehicles and Weapons @done
+  ✔ Clear Rewards and Progression Path @done
+
+✔ Social and Community Elements:
+  ✔ Player Interaction Mechanisms @done
+  ✔ Regular Community Events and Competitions @done
+
+✔ Technical Aspects:
+  ✔ Server Stability and Performance Optimization @done
+  ✔ Player Feedback System @done
+
+☐ Launch Preparation:
+  ☐ Final Testing and Debugging
+  ☐ Marketing and Promotion Strategy
+  ☐ Player Guides and Tutorials
+  ☐ Launch Date Announcement
+
+Post-Launch:
+  ☐ Monitor Server Performance
+  ☐ Collect and Analyze Player Feedback
+  ☐ Plan for Post-Launch Updates and Features

@@ -1,62 +1,119 @@
 Questing:
   ✔ NPC interaction menu @done
-  ✔ Quest progress tracking @done 
+    ✔ Design @done
+    ✔ UI @done
+  ✔ Quest progress tracking @done
+    ☐ Design
+    ✔ UI @done
   ✔ Quest list menu @done
+    ☐ Design
+    ✔ UI @done
   ✔ Multiple concurrent quests @done
   ☐ Quest rewards
+    ☐ Design
+    ☐ UI
   ☐ Quest failure states
+    ☐ Design
+    ☐ UI
   Main quests:
-    ☐ Tutorial quest
-      ✔ Heal yourself @done
-      ✘ Get some food for others @cancelled
-      ✔ Pick a task @done
-      ☐ Talk to townsfolk and do the task
-      ☐ Make a deal with ferry captain to transport goods
+    ☐ Tutorial quest @started
 
 Skills:
-  ✔ Woodcutting @done
-  ✔ Fishing @done
+  ☐ Woodcutting
+    ☐ Design
+    ☐ UI
+    ✔ Most of the trees on the map are available for cutting. @done
+    ✔ Woodcutting skill is increased by cutting trees. @done
+    ✔ Woodcutting skill is used to determine the amount of wood collected from a tree. @done
+    ✔ Woodcutting speed depends on woodcutting skill level @done
+    ✔ Hatchet item is required for woodcutting @done
+    ☐ Hatchet item needs to appear in hand while woodcutting animation is playing
+  ☐ Fishing
+    ☐ Design
+    ☐ UI
+    ✔ Most of the water on the map is available for fishing. @done
+    ✔ Fishing skill is increased by fishing. @done
+    ☐ Fishing skill is used to determine the amount of fish collected from a fishing spot.
+    ☐ Fishing speed depends on fishing skill level
+    ✔ Fishing rod item is required for fishing. @done
+    ✔ Fishing rod item needs to appear in hand while fishing animation is playing @done
+    ☐ Fishing rod needs to disappear from hand when fishing animation is finished
+  ☐ Digging (Mining)
+    ☐ Design
+    ☐ UI
+    ☐ Define digging spots @started
+    ✔ Digging skill is increased by digging @done
+    ☐ Digging skill is used to determine the amount of sand collected from a digging spot
+    ☐ Digging speed depends on digging skill level
+    ☐ Shovel item is required for digging
+    ☐ Shovel item needs to appear in hand while digging animation is playing
+    ☐ Shovel needs to disappear from hand when digging animation is finished
   ☐ Mining
+    ☐ Design
+    ☐ UI
+    ☐ Define mining spots
+    ☐ Mining skill is increased by mining
+    ☐ Mining skill is used to determine the amount of ore collected from a mining spot
+    ☐ Mining speed depends on mining skill level
+    ☐ Pickaxe item is required for mining
+    ☐ Pickaxe item needs to appear in hand while mining animation is playing
+    ☐ Pickaxe needs to disappear from hand when mining animation is finished
   ☐ Crafting
+    ☐ Design
+    ☐ UI
+    ✔ Blueprint definitions @done
+    ☐ Crafting skill is increased by crafting
+    ☐ Crafting skill increases the chance of crafting success
+  ☐ Cooking
+    ☐ Design
+    ☐ UI
+    ☐ Cooking skill is increased by cooking
+    ☐ Cooking skill increases the chance of cooking success
+    ☐ Food types
+      ☐ Fish
+      ☐ Meats
+      ☐ Meals
+      ☐ Fruits
+      ☐ Vegetables
 
 Inventory:
   ✔ Personal inventory system @done
     ✔ Weight and size limits @done
-    ☐ Item categorization
+    ✘ Item categorization? @cancelled
       ✔ Backend @done
-      ☐ UI
+      ✘ UI @cancelled
   ☐ Vehicle trunk inventory
+    ☐ Design
+    ☐ UI
   ☐ Home storage system
-    ☐ Storage limits
-    ☐ UI for home storage
+    ☐ Design
+    ☐ UI
   ✔ Equippable items @done
     ✔ Weapons @done
+    ✔ Ammo @done
     ✔ Clothing @done
+    ✔ Tools @done
   ✔ Consumable items @done
-    ✔ Bullets @done
-    ✔ Medical supplies @done
+    ✔ Medicine @done
+    ☐ Food
+    ☐ Drugs
 
 Shops:
   ☐ Shop types
     ☐ Weapons store
+      ☐ Design
+      ☐ UI
     ☐ Clothing store
+      ☐ Design
+      ☐ UI
     ☐ General store
+      ☐ Design
+      ☐ UI
+    ☐ Vehicle store
+      ☐ Design
+      ☐ UI
+  ☐ Selling
   ☐ Management of stores
-  ☐ Selling mechanics
-
-Collection of Materials:
-  ✔ Tool types @done(23-12-11 23:57)
-    ✔ Axes for wood @done
-    ✔ Picks for mining @done
-    ✔ Fishing rods for fishing @done
-  ☐ Material types
-    ✔ Wood @done
-    ☐ Sand
-    ☐ Stone
-    ☐ Metals
-    ☐ Food
-      ✔ Fish @done(23-12-11 23:57)
-  ☐ Collection efficiency factors (time, skill, gear)
 
 Materials Processing:
   ☐ Processing stations
@@ -65,18 +122,11 @@ Materials Processing:
   ☐ Time-based processing
   ☐ Optional mini-games for processing
 
-Production:
-  ✔ Recipe types @done(23-12-11 23:57)
-  ✔ Material requirements @done(23-12-11 23:57)
-  ☐ Crafting locations
-    ☐ Workbench
-    ☐ Factory
-
 Tasks:
-  ☐ Daily global tasks (per-user)
-    # Play 1 hour
-    Consult GPT
-  ☐ Random npc tasks (per-user)
+  ☐ Daily global tasks (per-user, class specific)
+    Generic:
+      ☐ Get a kill with specific weapon
+      ☐ Get X amount of experience
     # Generate different recurring tasks for NPCs and activate them for each user based on some seed (e.g. user id + date?) 
     Consult GPT
  
@@ -166,54 +216,6 @@ Player House:
   ☐ House types
   ☐ Interior customization
   ☐ Workstations
-
-
-
-NPC Sync:
-  ✔ Stream range & streamed npc owner @done(23-03-03 17:43)
-  ✘ Simulate npc behaviour on server (Idle actions) @started(23-03-09 23:24) @cancelled(23-08-03 05:48) @wasted(20w6d5h24m31s)
-  Create npc on server with following parameters:
-    ✔ Position @done(23-03-03 17:43)
-    ✔ Rotation @done(23-03-03 17:43)
-    ✔ Health @done(23-03-03 17:43)
-    ✔ Appearance @done(23-03-03 17:43)
-    ✔ Weapon @done(23-03-09 23:24)
-  Npcs can have following states:
-    ✔ Friendly (unkillable, unshootable, static) @done(23-03-03 17:43)
-    ✔ Enemy (killable, shootable, dynamic) @done(23-03-03 17:43)
-
-  Client data:
-    ✔ Player.sync.npcs.streamedIn: List of npcs that are streamed in for player (Array<new NPC>) @done(23-03-03 17:43)
-    ✔ Player.sync.npcs.netOwnerOf: List of npcs that player is net owner of (Array<NpcId>) @done(23-03-03 17:43)
-  Server data:
-    ✔ Npcs: List of all npcs on server (Array<new NPC>) @done(23-03-03 17:43)
-    ✔ Net owners: List of npcs that have net owners (Map<NpcId, PlayerId>) @done(23-03-03 17:43)
-    ✔ Player.sync.npcs.streamedIn: List of npcs that are streamed in for player (Array<new NPC>) @done(23-03-03 17:43)
-    ✔ Player.sync.npcs.netOwnerOf: List of npcs that player is net owner of (Array<NpcId>) @done(23-03-03 17:43)
-  States:
-    Static:
-      ✔ Position @done(23-03-03 17:43)
-      ✔ Rotation @done(23-03-03 17:43)
-      ✔ Health @done(23-03-03 17:43)
-      ✔ Appearance @done(23-03-03 17:43)
-      ✔ Weapon @done(23-03-09 23:23)
-    Dynamic:
-      ✔ Walking/running @done(23-03-03 17:43)
-      ✘ Reload @cancelled(23-08-03 05:48)
-      ✔ Ragdoll @done(23-03-08 05:47)
-      ✔ Aim at @done(23-03-26 16:48)
-      ✔ Shoot At @done(23-03-26 16:48)
-      ✔ Killed @done(23-03-03 17:43)
-      ✘ Sounds? @cancelled(23-08-03 05:48)
-  Actions:
-    ✔ Idle @done(23-03-03 17:44)
-    ✔ Walk to @done(23-03-03 17:44)
-    ✔ Run to @done(23-03-08 05:47)
-    ✔ Aim at @done(23-03-26 16:48)
-    ✔ Shoot at @done(23-03-26 16:48)
-    ✘ Cover? @cancelled(23-08-03 05:48)
-    ✘ Play animation @cancelled(23-08-03 05:48)
-    ✘ Play sound? @cancelled(23-08-03 05:48)
 
 Reset flags:
     ExtraLongWeaponRange
