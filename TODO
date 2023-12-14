@@ -1,7 +1,7 @@
 Questing:
   ✔ NPC interaction menu @done
-  ✔ Quest progress tracking 
-  ✔ Quest list menu @started
+  ✔ Quest progress tracking @done 
+  ✔ Quest list menu @done
   ✔ Multiple concurrent quests @done
   ☐ Quest rewards
   ☐ Quest failure states
@@ -15,7 +15,7 @@ Questing:
 
 Skills:
   ✔ Woodcutting @done
-  ✔ Fishing @started @done
+  ✔ Fishing @done
   ☐ Mining
   ☐ Crafting
 
@@ -31,7 +31,7 @@ Inventory:
     ☐ UI for home storage
   ✔ Equippable items @done
     ✔ Weapons @done
-    ☐ Clothing
+    ✔ Clothing @done
   ✔ Consumable items @done
     ✔ Bullets @done
     ✔ Medical supplies @done
@@ -40,20 +40,22 @@ Shops:
   ☐ Shop types
     ☐ Weapons store
     ☐ Clothing store
-  ☐ Inventory update algorithm
+    ☐ General store
+  ☐ Management of stores
   ☐ Selling mechanics
-  ☐ Shop-specific UI
 
 Collection of Materials:
-  ☐ Tool types
-    ☐ Axes for wood
-    ☐ Picks for mining
-    ☐ Fishing rods for fishing
+  ✔ Tool types @done(23-12-11 23:57)
+    ✔ Axes for wood @done
+    ✔ Picks for mining @done
+    ✔ Fishing rods for fishing @done
   ☐ Material types
-    ✔ Wood @done(23-08-29 03:09)
+    ✔ Wood @done
+    ☐ Sand
     ☐ Stone
     ☐ Metals
     ☐ Food
+      ✔ Fish @done(23-12-11 23:57)
   ☐ Collection efficiency factors (time, skill, gear)
 
 Materials Processing:
@@ -64,31 +66,62 @@ Materials Processing:
   ☐ Optional mini-games for processing
 
 Production:
-  ☐ Recipe types
-  ☐ Material requirements
+  ✔ Recipe types @done(23-12-11 23:57)
+  ✔ Material requirements @done(23-12-11 23:57)
   ☐ Crafting locations
     ☐ Workbench
     ☐ Factory
 
 Tasks:
-  ☐ Daily tasks
-  ☐ Global tasks
-  ☐ Random tasks
-
+  ☐ Daily global tasks (per-user)
+    # Play 1 hour
+    Consult GPT
+  ☐ Random npc tasks (per-user)
+    # Generate different recurring tasks for NPCs and activate them for each user based on some seed (e.g. user id + date?) 
+    Consult GPT
+ 
 Temporary Jobs:
   ☐ Job types
-    ☐ Transport
-    ☐ Security
+    ☐ Processing wood
+      ☐ Workstation
+        ☐ UI
+        ☐ Processing
+      ☐ On-foot
+        ☐ UI
+        ☐ Processing
+    ☐ Processing ores
+    ☐ Cooking food?
   ☐ Job experience tracking
   ☐ Job-related bonuses
 
 Professions:
-  ☐ Skill tree or progression system
   ☐ Profession types
-    ☐ Blacksmith
+  ☐ Mercenary
+      ☐ Skill tree
+      ☐ Bounty hunter skill?
+      Requires wanted mechanic
+    ☐ Medic
+      ☐ Skill tree
+        Consult GPT
+      ☐ Gathering mechanic
+      Herbs, etc for crafting medicine
+        ☐ UI
+        ☐ Types of materials to gather
+        ☐ Locations by type
+      ☐ Revive mechanic?
+        ☐ UI
+        ☐ Detection & action
+        ☐ Animations
     ☐ Engineer
+      ☐ Skill tree
+      ☐ Building menu?
+    ☐ Transporter
+      ☐ Skill tree
+      ☐ A to B transportation tasks
+      Requires collection & delivery points
 
 Control of Territories:
+  ☐ Define controllable territories
   ☐ Territory contestation time-frame
   ☐ Territory management system
     ☐ Maintenance
@@ -98,14 +131,14 @@ Improving Things:
   ☐ Item upgrade system
     ☐ Damage upgrades
     ☐ Protection upgrades
+    ☐ Utility? (running speed, endurance, recoil?)
 
 Trade:
-  ☐ Player-set prices
-  ☐ Auction house system
+  ☐ Auction house system?
   ☐ Live exchanges (1-on-1)
 
-Raid Bosses:
-  ☐ Boss types
+Raid Events:
+  ☐ Event types
   ☐ Teamwork mechanics
   ☐ Raid rewards
     ☐ Rare items
@@ -120,6 +153,7 @@ Vehicles:
   ☐ Vehicle types
     ☐ Cars
     ☐ Boats
+    ☐ Planes/Heli
   ☐ Upgrade system
   ☐ Garage/parking system
 
