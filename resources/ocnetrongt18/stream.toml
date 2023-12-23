@@ -1,0 +1,11 @@
+files = [ 'stream/*' ]
+
+[gxt]
+0x206DD983 = 'e-tron GT'
+0x406DC176 = 'Audi'
+
+[meta]
+'stream/carcols.meta' = 'CARCOLS_FILE'
+'stream/carvariations.meta' = 'VEHICLE_VARIATION_FILE'
+'stream/handling.meta' = 'HANDLING_FILE'
+'stream/vehicles.meta' = 'VEHICLE_METADATA_FILE'

@@ -1,0 +1,7 @@
+client-files = [ 'dist/*' ]
+client-main = 'dist/client.js'
+main = 'dist/server.js'
+type = 'jsv2'
+
+[js-module-v2]
+compatibilityEnabled = true
