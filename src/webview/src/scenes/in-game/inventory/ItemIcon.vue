@@ -16,17 +16,6 @@ const inventory = useInventory();
 const itemDetails = useItemDetails(item);
 const noImage = ref(false);
 
-const isHovering = computed(() => {
-  if (inventory.currentInteraction.type !== InteractionType.Hovering) {
-    return false;
-  }
-
-  if (inventory.currentInteraction.state.item.item !== item.value) {
-    return false;
-  }
-  return true;
-});
-
 watch(
   () => item,
   () => {

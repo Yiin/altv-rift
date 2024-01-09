@@ -27,6 +27,23 @@ rpc.registerWebview(ServerCall.FromWebview.USE_ITEM, (player, itemSource) => {
 });
 
 /**
+ * Player tries to buy an item.
+ */
+rpc.registerWebview(ServerCall.FromWebview.BUY_ITEM, (player, itemSource) => {
+  needsToBeInGame(player);
+
+  if (itemSource.origin !== "shop") {
+    return false;
+  }
+
+  if (!canInteractWithItemSource.call(player, itemSource)) {
+    return false;
+  }
+
+  return player.buyItem(itemSource);
+});
+
+/**
  * Player tries to equip an item.
  */
 rpc.registerWebview(ServerCall.FromWebview.EQUIP_ITEM, (player, itemSource) => {

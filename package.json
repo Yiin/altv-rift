@@ -68,10 +68,10 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@altv/client": "^0.0.8",
-    "@altv/natives": "^0.0.2",
-    "@altv/server": "^0.0.12",
-    "@altv/shared": "^0.0.5",
+    "@altv/client": "^0.0.19",
+    "@altv/natives": "^0.0.8",
+    "@altv/server": "^0.0.24",
+    "@altv/shared": "^0.0.9",
     "@altv/types-webview": "^15.0.2-dev",
     "@babel/types": "^7.20.7",
     "@rollup/plugin-commonjs": "^24.0.1",

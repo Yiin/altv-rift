@@ -1,13 +1,10 @@
 <script setup lang="ts">
-import { useInventoryGrid } from "@/composables/use-inventory-grid";
-import { LocalPlayerInventoryItemSource } from "@shared/interfaces";
 import { computed } from "vue";
-import { InteractionType, SlottedItem, isSameSource, useInventory } from "@/store/inventory.store";
+import { InteractionType, SlottedPlayerInventoryItem, isSameSource, useInventory } from "@/store/inventory.store";
 import ItemIcon from "./ItemIcon.vue";
-import { px } from "@/composables/use-pixel";
 
 const props = defineProps<{
-  item: SlottedItem<LocalPlayerInventoryItemSource>;
+  item: SlottedPlayerInventoryItem;
 }>();
 
 const inventory = useInventory();
@@ -27,7 +24,7 @@ const shouldShow = computed(
 
 const draggingStyle = computed(() => {
   const interaction = inventory.currentInteraction;
-  const slotPositionInGrid = inventory.getItemSourceRelativePosition(slottedItem.value.source);
+  const slotPositionInGrid = inventory.getItemRelativeScreenPositionFromSource(slottedItem.value.source);
 
   if (!slotPositionInGrid.x && !slotPositionInGrid.y) {
     return {};

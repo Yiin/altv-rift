@@ -12,6 +12,7 @@ import {
 import { computed } from "vue";
 import { InteractionType, ItemActionMenu, useInventory } from "@/store/inventory.store";
 import { isItemPreviewable } from "@shared/modules/items/lib/is-item-previewable";
+import { LocalPlayerItemSource } from "@shared/interfaces";
 
 const props = defineProps<ItemActionMenu>();
 
@@ -20,18 +21,22 @@ const inventory = useInventory();
 const item = computed(() => props.item.item);
 const itemSource = computed(() => props.item.source);
 
+const isInShop = computed(() => inventory.interaction?.source.origin === "shop");
 const visible = computed(() => inventory.currentInteraction.type === InteractionType.ContextMenu);
 const itemName = computed(() => getItemName(item.value.key));
 const isUsable = computed(
-  () => itemSource.value.type === "inventory" && isItemUsable(item.value.key)
+  () => !isInShop.value && itemSource.value.type === "inventory" && isItemUsable(item.value.key)
 );
+const isBuyable = computed(() => isInShop.value && itemSource.value.type === "interaction");
+const isSellable = computed(() => isInShop.value && itemSource.value.type === "inventory");
 const isEquipable = computed(
-  () => itemSource.value.type === "inventory" && isItemEquipable(item.value.key)
+  () => !isInShop.value && itemSource.value.type === "inventory" && isItemEquipable(item.value.key)
 );
 const isUnequipable = computed(() => itemSource.value.type === "equipment");
-const hasAmmo = computed(() => isItemFirearmWeapon(item.value) && !!item.value.ammo);
-const hasFishBait = computed(() => isItemFishingRod(item.value) && !!item.value.bait);
-const isPreviewable = computed(() => isItemPreviewable(item.value.key));
+const isDroppable = computed(() => !isInShop.value && itemSource.value.type === "inventory");
+const hasAmmo = computed(() => !isInShop.value && isItemFirearmWeapon(item.value) && !!item.value.ammo);
+const hasFishBait = computed(() => !isInShop.value && isItemFishingRod(item.value) && !!item.value.bait);
+const isPreviewable = computed(() => !isInShop.value && isItemPreviewable(item.value.key));
 
 const combine = computed(() => {
   if (itemSource.value.type !== "inventory") {
@@ -82,7 +87,7 @@ function executeAction(action: string) {
       }
       break;
     case "drop":
-      inventory.dropFromMenu(source);
+      inventory.dropFromMenu(source as LocalPlayerItemSource);
       break;
     case "load-ammo":
       if (inventory.selectedItem) {
@@ -103,6 +108,18 @@ function executeAction(action: string) {
 }
 
 const actions = computed(() => [
+  {
+    name: "Buy",
+    icon: "mdi-currency-eur",
+    enabled: isBuyable.value,
+    select: () => executeAction("buy"),
+  },
+  {
+    name: "Sell",
+    icon: "mdi-currency-eur",
+    enabled: isSellable.value,
+    select: () => executeAction("sell"),
+  },
   {
     name: "Use",
     icon: "mdi-cursor-default-click-outline",
@@ -148,6 +165,7 @@ const actions = computed(() => [
   {
     name: "Drop",
     icon: "mdi-place-item",
+    enabled: isDroppable.value,
     select: () => executeAction("drop"),
   },
 ]);

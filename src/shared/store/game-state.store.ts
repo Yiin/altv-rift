@@ -1,5 +1,5 @@
 import { InventoryItem, InventorySource } from "@shared/interfaces";
-import { FirearmWeapon, ItemGrade } from "@shared/modules/items";
+import { Ammo, FirearmWeapon, ItemGrade } from "@shared/modules/items";
 
 export enum PlayerFlags {
   InFishingArea = "InFishingArea",
@@ -25,18 +25,16 @@ export const getDefaultGameState = (): GameState => ({
       origin: "shop",
       originId: 1,
     },
-    isOwned: true,
+    isOwned: false,
     size: 10,
     items: [
       {
         item: {
-          key: FirearmWeapon.HEAVYSNIPER,
-          durability: 100,
-          tier: ItemGrade.A,
-          components: [],
-          tint: 0,
+          key: Ammo.ASSAULT_RIFLE_AMMO,
+          amount: 100000
         },
         slot: 0,
+        price: 20,
       },
     ],
   },

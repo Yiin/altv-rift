@@ -1,5 +1,30 @@
 MVP Development Plan:
 
+
+Introduction MVP:
+  ☐ Gather materials - explain what to do with them
+    ☐ Scrapping minigames to gather materials (5)
+    ☐ Different scrapping points for different materials (8 hours)
+  Weapon:
+    ☐ Craft basic weapon
+      ☐ Crafting menu (just basic UI, no design)
+    ☐ Use items on zombie boar - 3 hits to kill
+    ☐ Upgrade weapon with fire ammo as a gift - omg
+    ☐ Use upgraded on more zombie boars - 1 hit + effect to kill
+  Food:
+    ☐ Fish for food
+    ☐ Hunt rabbit for food
+    ☐ Cook food
+    ☐ Eat food - observe health bar
+  Finish:
+    ☐ Talk to captain, get a quest to deliver a package, sail for free to Main Island
+Next steps (Base game MVP):
+  ☐ Deliver package to NPC
+  ☐ NPC gives you a basic transport
+  ☐ Give map to player with defined areas to explore
+  ☐ Random raids
+  ☐ 
+
 ✔ Core Gameplay Mechanics:
   ✔ NPC Interaction Menu @done
   ☐ Simplified Quest System
@@ -9,9 +34,10 @@ MVP Development Plan:
     ✔ Weapons, Health Kits, Special Items @done
 
 ✔ Engagement Features:
-  ✔ Daily Challenges System @done
-  ✔ Random NPC Tasks @done
-  ✔ Limited Professions - Mercenary, Driver @done
+  ☐ Daily Challenges System
+  ☐ Random NPC Tasks
+  ☐ Limited Professions
+
 
 ✔ PvP and Team Play:
   ✔ Basic Territory Control System @done

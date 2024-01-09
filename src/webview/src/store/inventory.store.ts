@@ -10,6 +10,8 @@ import {
   LocalItemSource,
   ItemSource,
   InventoryItemSource,
+  ShopSource,
+  LocalInventoryItemSource,
 } from "@shared/interfaces";
 import { ServerCall } from "@shared/calls/server";
 import { ComponentPublicInstance, markRaw, reactive } from "vue";
@@ -25,8 +27,9 @@ import {
 } from "@shared/modules/items";
 
 import { isCharacterStoreAvailable, useCharacter } from "./synced/character.store";
-import { getLocalEquipmentItem, getLocalInventoryItem } from "@/utils/items";
+import { getLocalEquipmentItem, getLocalInventoryItem, getInteractionInventoryItem } from "@/utils/items";
 import { useGameState } from "./synced/game-state.store";
+import { useShop } from "./shop.store";
 
 const MOCK_ITEMS = reactive([
   {
@@ -94,29 +97,42 @@ export enum InteractionType {
 export type ItemInteraction =
   | { type: InteractionType.None }
   | {
-      type: InteractionType.Dragging;
-      maybe: boolean;
-      state: Dragging;
-    }
+    type: InteractionType.Dragging;
+    maybe: boolean;
+    state: Dragging;
+  }
   | {
-      type: InteractionType.Dropping;
-      state: Dropping;
-    }
+    type: InteractionType.Dropping;
+    state: Dropping;
+  }
   | {
-      type: InteractionType.Hovering;
-      state: Hovering;
-    }
+    type: InteractionType.Hovering;
+    state: Hovering;
+  }
   | {
-      type: InteractionType.ContextMenu;
-      state: ItemActionMenu;
-    };
+    type: InteractionType.ContextMenu;
+    state: ItemActionMenu;
+  };
 
 const IDLE = { type: InteractionType.None } as const;
 
-export type SlottedItem<S = LocalItemSource, T = Item> = {
+export type SlottedInventoryItem<T = Item> = {
   item: T;
-  source: S;
+  source: LocalInventoryItemSource;
+  price: number | null;
 };
+
+export type SlottedEquipmentItem<T = Item> = {
+  item: T;
+  source: LocalPlayerEquipmentItemSource;
+};
+
+export type SlottedPlayerInventoryItem<T = Item> = {
+  item: T;
+  source: LocalPlayerInventoryItemSource;
+};
+
+export type SlottedItem<S = LocalItemSource, T = Item> = S extends LocalInventoryItemSource ? SlottedInventoryItem<T> : SlottedEquipmentItem<T>;
 
 export type SlottedEquipment = {
   [K in keyof Equipment]: SlottedItem<
@@ -203,14 +219,8 @@ export const useInventory = defineStore("inventory", {
       if (this.interaction) {
         const interactionItems = this.interaction.items;
 
-        for (const interactionItem of interactionItems) {
-          items.push({
-            item: interactionItem.item,
-            source: {
-              type: "interaction",
-              inventorySlot: interactionItem.slot,
-            },
-          });
+        for (const item of interactionItems) {
+          items.push(getInteractionInventoryItem(item));
         }
       }
 
@@ -272,16 +282,17 @@ export const useInventory = defineStore("inventory", {
     toItemSource<T extends LocalItemSource>(source: T) {
       if (source.type === "interaction") {
         return {
+          type: "inventory",
           inventorySlot: source.inventorySlot,
           ...this.interaction!.source,
-        } as InventoryItemSource;
+        } satisfies InventoryItemSource;
       }
 
       return {
         ...source,
         origin: "character",
         originId: this.playerId,
-      } as ItemSource;
+      } satisfies ItemSource;
     },
     useItem(source: LocalItemSource) {
       if (source.type === "equipment") {
@@ -323,31 +334,49 @@ export const useInventory = defineStore("inventory", {
     removeBait(source: LocalItemSource) {
       return rpc.callServer(ServerCall.FromWebview.REMOVE_BAIT, this.toItemSource(source));
     },
-    async moveItem(from: LocalItemSource, to: LocalItemSource, local: boolean = false) {
+    swapLocally(from: SlottedItem | undefined, to: SlottedItem | LocalItemSource) {
+      if (from && 'source' in to) {
+        [from.source, to.source] = [to.source, from.source];
+      } else if (from) {
+        from.source = 'source' in to ? to.source : to;
+      }
+    },
+    async moveItem(from: LocalItemSource, to: LocalItemSource, options: { local?: boolean; amount?: number } = {}) {
       const itemInSlotFrom = this.items.find(({ source }) => isSameSource(source, from));
       const itemInSlotTo = this.items.find(({ source }) => isSameSource(source, to));
 
-      if (itemInSlotFrom && itemInSlotTo) {
-        [itemInSlotFrom.source, itemInSlotTo.source] = [itemInSlotTo.source, itemInSlotFrom.source];
-      } else if (itemInSlotFrom) {
-        console.log(itemInSlotFrom.source, to);
-        itemInSlotFrom.source = to;
-      } else if (itemInSlotTo) {
-        itemInSlotTo.source = from;
-      }
-
-      if (local) {
+      if (options.local) {
+        this.swapLocally(itemInSlotFrom, itemInSlotTo || to);
         return true;
       }
 
+      const sourceFrom = this.toItemSource(from);
+      const sourceTo = this.toItemSource(to);
+
+      console.log("move item", sourceFrom, sourceTo);
+
+      if (sourceFrom.origin === "shop" && sourceTo.origin === "character" && sourceTo.type === "inventory") {
+        const shop = useShop();
+
+        shop.initiateBuying(from);
+        return;
+      } else if (sourceTo.origin === "shop" && sourceFrom.origin === "character" && sourceFrom.type === "inventory") {
+        const shop = useShop();
+
+        shop.initiateSelling(from);
+        return;
+      }
+
+      this.swapLocally(itemInSlotFrom, itemInSlotTo || to);
+
       const ok = await rpc.callServer(
         ServerCall.FromWebview.MOVE_ITEM,
-        this.toItemSource(from),
-        this.toItemSource(to)
+        sourceFrom,
+        sourceTo
       );
 
       if (!ok) {
-        this.moveItem(to, from, true);
+        this.moveItem(to, from, { local: true, amount: options.amount });
       }
       return ok;
     },
@@ -356,14 +385,14 @@ export const useInventory = defineStore("inventory", {
         return;
       }
 
-      const source = this.getItemSource(e.clientX, e.clientY);
+      const source = this.getItemSourceFromScreenPos(e.clientX, e.clientY);
 
       if (!source) {
         console.log("no source");
         return;
       }
 
-      const item = this.items.find((item) => isSameSource(item.source, source));
+      const item = this.getItemFromSource(source);
 
       if (!item) {
         console.log("no item", source, this.items);
@@ -404,7 +433,7 @@ export const useInventory = defineStore("inventory", {
           return;
         case InteractionType.Hovering:
         case InteractionType.None:
-          const source = this.getItemSource(e.clientX, e.clientY);
+          const source = this.getItemSourceFromScreenPos(e.clientX, e.clientY);
 
           if (!source) {
             this.currentInteraction = IDLE;
@@ -421,25 +450,25 @@ export const useInventory = defineStore("inventory", {
           const itemInSlot =
             source.type === "equipment" && source.equipmentSlot === "ammo"
               ? (() => {
-                  const weapon = this.items.find((item) =>
-                    isSameSource(item.source, {
-                      type: "equipment",
-                      equipmentSlot: "weapon",
-                    })
-                  )?.item;
+                const weapon = this.items.find((item) =>
+                  isSameSource(item.source, {
+                    type: "equipment",
+                    equipmentSlot: "weapon",
+                  })
+                )?.item;
 
-                  const ammo = weapon && isItemFirearmWeapon(weapon) && weapon.ammo;
+                const ammo = weapon && isItemFirearmWeapon(weapon) && weapon.ammo;
 
-                  return (
-                    ammo && {
-                      source,
-                      item: createItem(ammo.key, {
-                        amount: ammo.clip + ammo.rest,
-                      }),
-                    }
-                  );
-                })()
-              : this.items.find((item) => isSameSource(item.source, source));
+                return (
+                  ammo && {
+                    source,
+                    item: createItem(ammo.key, {
+                      amount: ammo.clip + ammo.rest,
+                    }),
+                  }
+                );
+              })()
+              : this.getItemFromSource(source);
 
           if (!itemInSlot) {
             this.currentInteraction = IDLE;
@@ -462,15 +491,14 @@ export const useInventory = defineStore("inventory", {
           return;
         }
 
-        if (
-          this.currentInteraction.state.item.source.type === "interaction" &&
-          !this.interaction?.isOwned
-        ) {
-          this.currentInteraction = IDLE;
-          return;
-        }
+        // if (
+        //   this.currentInteraction.state.item.source.type === "interaction"
+        // ) {
+        //   this.currentInteraction = IDLE;
+        //   return;
+        // }
 
-        const source = this.getItemSource(e.clientX, e.clientY);
+        const source = this.getItemSourceFromScreenPos(e.clientX, e.clientY);
 
         // If the item is dropped outside of the inventory
         if (!source) {
@@ -522,13 +550,13 @@ export const useInventory = defineStore("inventory", {
         return;
       }
 
-      const source = this.getItemSource(e.clientX, e.clientY);
+      const source = this.getItemSourceFromScreenPos(e.clientX, e.clientY);
 
       if (!source) {
         return;
       }
 
-      const itemInSlot = this.items.find((item) => isSameSource(item.source, source));
+      const itemInSlot = this.getItemFromSource(source);
 
       if (!itemInSlot) {
         if (this.selectedItem) {
@@ -589,7 +617,7 @@ export const useInventory = defineStore("inventory", {
     },
     dropFromMenu(source: LocalPlayerItemSource) {
       const position = this.getItemSourceScreenPosition(source);
-      const item = this.items.find((item) => isSameSource(item.source, source));
+      const item = this.getItemFromSource(source);
 
       if (!item) {
         return;
@@ -627,7 +655,10 @@ export const useInventory = defineStore("inventory", {
         this.selectedItem = undefined;
       }
     },
-    getItemSource(x: number, y: number) {
+    getItemFromSource<T extends LocalItemSource>(source: T) {
+      return this.items.find((item): item is T extends LocalInventoryItemSource ? SlottedInventoryItem : SlottedEquipmentItem => isSameSource(item.source, source));
+    },
+    getItemSourceFromScreenPos(x: number, y: number) {
       const result = this.itemSlots
         .map(
           (slot) =>
@@ -648,7 +679,7 @@ export const useInventory = defineStore("inventory", {
 
       return result[0];
     },
-    getItemSourceNode(source: LocalItemSource) {
+    getItemNodeFromSource(source: LocalItemSource) {
       return this.itemSlots.find((slot) => isSameSource(slot.source, source))?.node.value;
     },
     getItemSourceScreenPosition(source: LocalItemSource) {
@@ -662,8 +693,8 @@ export const useInventory = defineStore("inventory", {
 
       return { x: rect.x, y: rect.y };
     },
-    getItemSourceRelativePosition(source: LocalItemSource) {
-      const node = this.getItemSourceNode(source);
+    getItemRelativeScreenPositionFromSource(source: LocalItemSource) {
+      const node = this.getItemNodeFromSource(source);
 
       if (!node) {
         return { x: 0, y: 0 };

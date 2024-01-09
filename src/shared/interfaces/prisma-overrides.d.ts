@@ -25,6 +25,16 @@ export type Character = Override<
   }
 >;
 
-export type User = Prisma.User & {
-  characters: Character[];
-};
+export type User = Override<
+  Prisma.User,
+  {
+    characters: Character[];
+  }
+>;
+
+export type Shop = Override<
+  Prisma.Shop,
+  {
+    inventory: Inventory;
+  }
+>;

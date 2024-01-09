@@ -54,8 +54,13 @@ export type TargetAction = {
   text: string;
 };
 
+export enum WindowType {
+  PLAYER_INVENTORY,
+  SHOP,
+}
+
 export type CurrentWindow = {
-  type: "playerInventory" | "shop";
+  type: WindowType;
 };
 
 export interface ClientState {
@@ -77,7 +82,7 @@ export const getDefaultClientStoreState = (): ClientState => ({
     scene: null,
     elements: new Set(),
     window: {
-      type: "playerInventory",
+      type: WindowType.PLAYER_INVENTORY,
     },
   },
   conversation: null,

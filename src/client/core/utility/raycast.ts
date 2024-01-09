@@ -49,13 +49,14 @@ const Raycast = {
       game.setEntityCollision(alt.Player.local.vehicle, true, true);
     }
 
-    const [didComplete, didHit, position, surfaceNormal, entityHit] =
-      game.getShapeTestResult(raycast);
+    const [status, didHit, position, surfaceNormal, entityHit] = game.getShapeTestResult(raycast);
+    console.log(typeof entityHit);
     return {
-      didComplete,
+      didComplete: [0, 2].includes(status),
       didHit,
       position,
       surfaceNormal,
+      // @ts-expect-error
       entityHit: typeof entityHit === "number" ? entityHit : entityHit.scriptID,
     };
   },

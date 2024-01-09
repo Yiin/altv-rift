@@ -1,8 +1,12 @@
 <script setup lang="ts">
-import { SlottedItem, useInventory } from "@/store/inventory.store";
+import { useInventory } from "@/store/inventory.store";
 import Window from "@/components/Window.vue";
 
-defineProps<SlottedItem>();
+defineProps<{
+  item: {
+    key: string;
+  };
+}>();
 
 const inventory = useInventory();
 
@@ -15,7 +19,8 @@ const hh = window.innerHeight / 2 - 400;
 </script>
 
 <template>
-  <Window v-click-outside="closePreview" :x="hw" :y="hh" :w="800" :h="800" name="item-preview" :is-active="false" :sticks="[]">
+  <Window v-click-outside="closePreview" :x="hw" :y="hh" :w="800" :h="800" name="item-preview" :is-active="false"
+    :sticks="[]">
     <img :src="`./assets/item-previews/${item.key}.png`" class="w-full h-full" />
   </Window>
 </template>

@@ -3,12 +3,21 @@ import { computed } from "vue";
 import { useItemDetails } from "@/composables/use-item-details";
 import { CombineType, getCombineType, getItemName, isItemFirearmWeapon, isItemFishingRod } from "@shared/modules/items";
 import { Hovering, useInventory } from "@/store/inventory.store";
+import { getRandomDescription } from "@/utils/items";
 
 const props = defineProps<Hovering>();
 
 const inventory = useInventory();
 
 const item = computed(() => props.item.item);
+const price = computed(() => {
+  const item = inventory.getItemFromSource(props.item.source);
+
+  if (item && 'price' in item) {
+    return item.price;
+  }
+  return null;
+});
 
 const details = useItemDetails(item);
 
@@ -42,14 +51,30 @@ const combination = computed(() => {
     <div v-if="combination" class="text-yellow-500 font-bold mb-2">
       {{ combination }}
     </div>
+
+    <!-- 
+      Name and description
+     -->
     <div>
-      <div class="text-lg font-bold mb-2">{{ details.customName ?? details.name }}</div>
+      <div class="text-lg font-bold mb-2 flex justify-between">
+        {{ details.customName ?? details.name }}
+
+        <!-- 
+          Shop price
+        -->
+        <div v-if="typeof price === 'number'" class="text-xl font-bold text-yellow-300">
+          €{{ price }}
+        </div>
+      </div>
       <div class="text-sm">
-        {{ details.description }}
+        {{ details.description || getRandomDescription(details.name) }}
       </div>
     </div>
 
-    <div class="d-flex py-3 justify-space-between">
+    <div class="d-flex justify-space-between">
+      <!-- 
+        Custom name
+       -->
       <div v-if="details.customName">
         <v-icon icon="mdi-rename-outline" />
         <div class="font-bold">
@@ -57,6 +82,9 @@ const combination = computed(() => {
         </div>
       </div>
 
+      <!--
+        Firearm weapon info
+      -->
       <div v-if="isItemFirearmWeapon(item) && item.ammo" class="flex items-center gap-1">
         <v-icon icon="mdi-ammunition" />
         <div>
@@ -72,6 +100,10 @@ const combination = computed(() => {
           </div>
         </div>
       </div>
+
+      <!-- 
+        Fishing rod info
+       -->
       <div v-else-if="isItemFishingRod(item) && item.bait" class="flex items-center gap-1">
         <v-icon icon="mdi-chart-bubble" />
         <div>

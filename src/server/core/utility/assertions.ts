@@ -1,8 +1,3 @@
-/**
- * If you get a TS error in this file while compiling for client,
- * see @/shared/events/server/from-client.ts
- */
-
 import * as alt from "@altv/server";
 
 export type LoggedInPlayer = alt.Player & {

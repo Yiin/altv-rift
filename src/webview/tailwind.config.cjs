@@ -6,6 +6,12 @@ module.exports = {
       borderWidth: {
         1: "1px",
       },
+      dropShadow: {
+        glow: [
+          "0 0px 2px rgba(255,255, 255, 0.35)",
+          "0 0px 6px rgba(255, 255,255, 0.2)"
+        ]
+      },
       minWidth: (utils) => utils.theme("spacing"),
       spacing: {
         22: "5.5rem",
@@ -41,11 +47,11 @@ module.exports = {
           const newVars =
             typeof value === "string"
               ? {
-                  [`--color${colorGroup}-${colorKey}`]: value,
-                  ...(colorKey === "500" && {
-                    [`--color${colorGroup}`]: value,
-                  }),
-                }
+                [`--color${colorGroup}-${colorKey}`]: value,
+                ...(colorKey === "500" && {
+                  [`--color${colorGroup}`]: value,
+                }),
+              }
               : extractColorVars(value, `-${colorKey}`);
 
           return { ...vars, ...newVars };

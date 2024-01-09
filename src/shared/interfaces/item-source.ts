@@ -6,8 +6,18 @@ export type LocalPlayerInventoryItemSource = {
 };
 
 export type InventorySource = {
-  origin: "character" | "vehicle" | "shop" | "trade";
+  origin: "character" | "vehicle" | "shop" | "trade" | "storage";
   originId: any;
+};
+
+export type ShopSource = {
+  origin: "shop";
+  originId: string;
+};
+
+export type StorageSource = {
+  origin: "storage";
+  originId: string;
 };
 
 export type InventoryItemSource = LocalPlayerInventoryItemSource & InventorySource;
@@ -28,5 +38,6 @@ export type InteractionInventoryItemSource = {
 };
 
 export type LocalPlayerItemSource = LocalPlayerInventoryItemSource | LocalPlayerEquipmentItemSource;
-export type LocalItemSource = LocalPlayerItemSource | InteractionInventoryItemSource;
+export type LocalInventoryItemSource = LocalPlayerInventoryItemSource | InteractionInventoryItemSource;
+export type LocalItemSource = LocalInventoryItemSource | LocalPlayerEquipmentItemSource;
 export type ItemSource = InventoryItemSource | EquipmentItemSource;

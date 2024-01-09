@@ -2,9 +2,10 @@
 import EquipmentSlot from "./EquipmentSlot.vue";
 import { onMounted, onUnmounted } from "vue";
 import { ClientEvents } from "@shared/events/client";
-import { useGameState } from "@/store/synced/game-state.store";
+import { useClient } from "@/store/synced/client.store";
+import { WindowType } from "@shared/store/client.store";
 
-const gameState = useGameState();
+const client = useClient();
 
 onMounted(() => {
   alt.emit(ClientEvents.FromWebview.TOGGLE_PLAYER_PREVIEW, true);
@@ -16,7 +17,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div v-if="!gameState.interaction">
+  <div v-if="client.ui.window?.type === WindowType.PLAYER_INVENTORY">
     <div class="text-xl font-semibold crisp-shadow text-white uppercase tracking-wide p-1">
       Equipment
     </div>

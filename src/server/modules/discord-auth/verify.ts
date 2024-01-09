@@ -8,7 +8,7 @@ export function getDiscordAuthUrl(player: alt.Player) {
   let hashBytes = sjcl.hash.sha256.hash(JSON.stringify(player.ip) + ~~(Math.random() * 900000000));
   const playerToken = sjcl.codec.hex.fromBits(hashBytes);
 
-  player.syncedMeta.discordToken = playerToken;
+  player.meta.discordToken = playerToken;
 
   return `${url}&state=${playerToken}`;
 }

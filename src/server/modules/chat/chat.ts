@@ -24,7 +24,7 @@ export class Chat {
     @inject(EventService) private readonly eventService: EventService,
     @inject(LoggerService) private readonly loggerService: LoggerService,
     @inject(OptionsService) private readonly optionsService: OptionsService
-  ) {}
+  ) { }
 
   public start() {
     this.eventService.onPlayer("vchat:sendMessage", this.onChatMessage.bind(this));
@@ -69,9 +69,7 @@ export class Chat {
         return;
       }
 
-      let syncedPlayerName = player.syncedMeta[CHAT_PLAYER_NAME_METADATA] as string;
-      syncedPlayerName =
-        syncedPlayerName && typeof syncedPlayerName === "string" ? syncedPlayerName : player.name;
+      let syncedPlayerName = player.name;
 
       if (this.optionsService.getOption("logPlayerMessages"))
         this.loggerService.log(`[message] ${syncedPlayerName}: ${message}`);

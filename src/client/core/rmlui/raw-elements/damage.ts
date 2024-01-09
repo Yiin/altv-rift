@@ -1,8 +1,8 @@
 import * as alt from "@altv/client";
 import * as game from "@altv/natives";
 import { ClientEvents } from "@shared/events/client";
-import { document } from "../renderer/element-renderer";
 import { everyTickWhile } from "@/core/utility/event-helpers";
+import { document } from "../renderer/element-renderer";
 
 const damageContainer = document.createElement("div");
 document.body.appendChild(damageContainer);

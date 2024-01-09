@@ -1,6 +1,7 @@
+import { User } from "@shared/interfaces";
 import { StoreDefinition } from "pinia";
 
-type UserStore = StoreDefinition<"user", LoadedUser, {}, {}>;
+type UserStore = StoreDefinition<"user", User, {}, {}>;
 
 let userStore: UserStore;
 

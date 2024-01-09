@@ -31,10 +31,3 @@ export function sendChatMessage(
 export function broadcast(message: string, type: MessageType = MessageType.Default) {
   Player.all.forEach((player) => sendChatMessage(player, message, type));
 }
-
-/**
- * Sets the player's name in the chat.
- */
-export function setPlayerName(player: Player, name: string) {
-  player.syncedMeta[CHAT_PLAYER_NAME_METADATA] = name;
-}

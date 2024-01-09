@@ -64,6 +64,19 @@ model Character {
   blueprints   String[]
 }
 
+model Shop {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  inventory Inventory
+  ped       Ped
+}
+
+type Ped {
+  model   String
+  pos     Position
+  heading Float
+}
+
 type Skills {
   woodcutting Int @default(0)
   fishing     Int @default(0)
@@ -76,8 +89,9 @@ type Inventory {
 }
 
 type InventoryItem {
-  slot Int
-  item Json
+  slot  Int
+  item  Json
+  price Int?
 }
 
 type Equipment {

@@ -10,7 +10,9 @@ let equipmentPed: number | null = null;
 let previousHudColor: alt.RGBA | null = null;
 
 export function updatePlayerPedPreview() {
-  game.clonePedToTargetAlt(alt.Player.local, equipmentPed, true);
+  if (equipmentPed) {
+    game.clonePedToTargetAlt(alt.Player.local, equipmentPed, true);
+  }
 }
 
 const isPreviewingPlayer = ref(false);

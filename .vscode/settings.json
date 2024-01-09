@@ -3,5 +3,16 @@
   "evenBetterToml.schema.associations": {
     "server-(.*).toml": "https://raw.githubusercontent.com/xxshady/altv-config-schemas/main/server-config.schema.json?v=awdassdw"
   },
-  "prisma.import.exclude": ["**/prisma/schema.prisma", "**/prisma/schema.prisma.backup"],
+  // "html.format.wrapLineLength": 100,
+  "editor.tabSize": 2,
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  "html.format.wrapAttributes": "preserve",
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
+  },
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "eslint.validate": ["javascript", "typescript"]
 }

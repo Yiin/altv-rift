@@ -7,15 +7,15 @@ export const esbuildOptions = {
   target: "esnext",
   logLevel: "info",
   sourcemap: false,
-  minify: dev,
-  keepNames: dev,
+  minify: false,
+  keepNames: true,
 };
 
 export const altvEsbuildOptions = {
   dev: dev
     ? {
-        enhancedRestartCommand: true,
-      }
+      enhancedRestartCommand: true,
+    }
     : false,
   altvEnums: true,
 };

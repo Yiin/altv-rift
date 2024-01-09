@@ -1,6 +1,7 @@
 import {
   Character,
   EquipmentSlot,
+  InteractionInventoryItemSource,
   InventoryItem,
   LocalPlayerEquipmentItemSource,
   LocalPlayerInventoryItemSource,
@@ -56,6 +57,7 @@ export function getItemClasses(item: { key: string }) {
 export function getLocalInventoryItem(item: InventoryItem) {
   return {
     item: item.item,
+    price: item.price,
     source: {
       type: "inventory",
       inventorySlot: item.slot,
@@ -71,4 +73,41 @@ export function getLocalEquipmentItem(item: Item, equipmentSlot: EquipmentSlot) 
       equipmentSlot,
     } satisfies LocalPlayerEquipmentItemSource,
   } as const;
+}
+
+export function getInteractionInventoryItem(item: InventoryItem) {
+  return {
+    item: item.item,
+    price: item.price,
+    source: {
+      type: "interaction",
+      inventorySlot: item.slot,
+    } satisfies InteractionInventoryItemSource,
+  } as const;
+}
+
+export function getRandomDescription(itemName: string) {
+  const descriptions = [
+    "Just what it says on the tin.",
+    "Exactly as advertised.",
+    "Mystery-free, guaranteed.",
+    "No frills, just function.",
+    "It is what it is.",
+    "Uncomplicated and straightforward.",
+    "Plain, simple, and effective.",
+    "What you see is what you get.",
+    "No backstory, just utility.",
+    "As basic as it gets.",
+    "Straight to the point.",
+    "Description not needed.",
+    "Function over form.",
+    "Simplicity is its charm.",
+    "No bells and whistles.",
+    "Practicality at its finest.",
+    "Elegantly minimalistic.",
+    "All name, no fluff."
+  ];
+  const hash = [...itemName].reduce((hash, char) => ((hash << 5) - hash) + char.charCodeAt(0) | 0, 0);
+  const index = Math.abs(hash % descriptions.length);
+  return descriptions[index];
 }

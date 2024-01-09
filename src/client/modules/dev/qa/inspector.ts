@@ -138,6 +138,7 @@ export default class ModelInspectorController {
     }
 
     this._currentObject = {
+      // @ts-expect-error
       id: typeof entityHit === "number" ? entityHit : entityHit.scriptID,
       model,
       coord: hasDrawable

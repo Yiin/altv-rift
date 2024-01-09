@@ -9,13 +9,13 @@ whileInGame(() => {
     isInVehicle.value = true;
   }
 
-  const onPlayerEnterVehicle = alt.Events.onPlayerEnterVehicle(({ player }) => {
+  const onPlayerEnterVehicle = alt.Events.onPlayerVehicleEntered(({ player }) => {
     if (player === alt.Player.local) {
       isInVehicle.value = true;
     }
   });
 
-  const onPlayerLeaveVehicle = alt.Events.onPlayerLeaveVehicle(({ player }) => {
+  const onPlayerLeaveVehicle = alt.Events.onPlayerVehicleLeft(({ player }) => {
     if (player === alt.Player.local) {
       isInVehicle.value = false;
     }

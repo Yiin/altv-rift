@@ -56,7 +56,7 @@ const LerpObject = {
 
     await LerpObject.lerp(object, end, speed);
 
-    game.deleteObject(object);
+    game.deleteObject(object.scriptID);
   },
 };
 
