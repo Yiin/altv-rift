@@ -1,7 +1,219 @@
+@tailwind base;
+@tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Akrobat";
+  src: url("/fonts/Akrobat-Thin.eot");
+  src: url("/fonts/Akrobat-Thin.eot?#iefix") format("embedded-opentype"),
+    url("/fonts/Akrobat-Thin.woff2") format("woff2"),
+    url("/fonts/Akrobat-Thin.woff") format("woff"),
+    url("/fonts/Akrobat-Thin.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 100;
+}
+
+@font-face {
+  font-family: "Akrobat";
+  src: url("/fonts/Akrobat-ExtraLight.eot");
+  src: url("/fonts/Akrobat-ExtraLight.eot?#iefix") format("embedded-opentype"),
+    url("/fonts/Akrobat-ExtraLight.woff2") format("woff2"),
+    url("/fonts/Akrobat-ExtraLight.woff") format("woff"),
+    url("/fonts/Akrobat-ExtraLight.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 200;
+}
+
+@font-face {
+  font-family: "Akrobat";
+  src: url("/fonts/Akrobat-Light.eot");
+  src: url("/fonts/Akrobat-Light.eot?#iefix") format("embedded-opentype"),
+    url("/fonts/Akrobat-Light.woff2") format("woff2"),
+    url("/fonts/Akrobat-Light.woff") format("woff"),
+    url("/fonts/Akrobat-Light.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: "Akrobat";
+  src: url("/fonts/Akrobat-Regular.eot");
+  src: url("/fonts/Akrobat-Regular.eot?#iefix") format("embedded-opentype"),
+    url("/fonts/Akrobat-Regular.woff2") format("woff2"),
+    url("/fonts/Akrobat-Regular.woff") format("woff"),
+    url("/fonts/Akrobat-Regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Akrobat";
+  src: url("/fonts/Akrobat-SemiBold.eot");
+  src: url("/fonts/Akrobat-SemiBold.eot?#iefix") format("embedded-opentype"),
+    url("/fonts/Akrobat-SemiBold.woff2") format("woff2"),
+    url("/fonts/Akrobat-SemiBold.woff") format("woff"),
+    url("/fonts/Akrobat-SemiBold.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "Akrobat";
+  src: url("/fonts/Akrobat-Bold.eot");
+  src: url("/fonts/Akrobat-Bold.eot?#iefix") format("embedded-opentype"),
+    url("/fonts/Akrobat-Bold.woff2") format("woff2"),
+    url("/fonts/Akrobat-Bold.woff") format("woff"),
+    url("/fonts/Akrobat-Bold.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "Akrobat";
+  src: url("/fonts/Akrobat-Black.eot");
+  src: url("/fonts/Akrobat-Black.eot?#iefix") format("embedded-opentype"),
+    url("/fonts/Akrobat-Black.woff2") format("woff2"),
+    url("/fonts/Akrobat-Black.woff") format("woff"),
+    url("/fonts/Akrobat-Black.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 900;
+}
+
+::-webkit-scrollbar {
+  @apply w-1 h-1;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-white rounded-md;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-white/[0.03] rounded-md;
+}
+
+.clothes::-webkit-scrollbar-thumb {
+  @apply bg-sunriseYellow;
+}
+
+.scrollbar-left {
+  direction: rtl;
+}
+
+.dltr {
+  direction: ltr;
+}
+
+.yellow-gradient-border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+  border-image: linear-gradient(to bottom, #ffda57, transparent) 1;
+  z-index: -1;
+}
+
+.yellow-border-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 2px;
+  width: 100%;
+  height: 1px;
+  background-color: rgba(102, 86, 41, 0.5);
+  rotate: -10deg;
+  transform-origin: 0 0;
+  z-index: -1;
+}
+
+.blue-gradient-border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+  border-image: linear-gradient(to bottom, #4850ff, transparent) 1;
+  z-index: -1;
+}
+
+.blue-border-bottom {
+  position: absolute;
+  top: 3rem;
+  left: 1px;
+  width: 100%;
+  height: 1px;
+  background-color: #4850ff;
+  rotate: -10deg;
+  transform-origin: 0 0;
+  z-index: -1;
+}
+
+.green-gradient-border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+  border-image: linear-gradient(to bottom, #95c82a, transparent) 1;
+  z-index: -1;
+}
+
+.cyan-gradient-border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+  border-image: linear-gradient(to bottom, #51c3c3, transparent) 1;
+  z-index: -1;
+}
+
+.crimson-gradient-border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+  border-image: linear-gradient(to bottom, #ff4a4a, transparent) 1;
+  z-index: -1;
+}
+
+.softwhite-gradient-border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+  border-image: linear-gradient(to bottom, #ffffff6d, transparent) 1;
+  z-index: -1;
+}
+
+.white-gradient-border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+  border-image: linear-gradient(to bottom, #fff, transparent) 1;
+  z-index: -1;
+}
+
 :root {
-  font-size: max(12px, 1.2vh);
+  font-size: max(10px, 1.2vh);
 }
 
 :main {
@@ -14,6 +226,7 @@ body {
 }
 
 body {
+  @apply font-sans scroll-smooth;
   margin: 0;
   /* background: #111; */
   /* background-image: url(https://news-cdn.softpedia.com/images/news2/GTA-5-Gets-New-Gorgeous-4K-Screenshots-on-PC-478043-23.jpg); */

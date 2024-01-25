@@ -3,8 +3,8 @@ import { EquipmentSlot, InventoryItemSource, ItemSource, ShopSource } from "../.
 
 export const FromWebview = {
   CREATE_CHARACTER: "CREATE_CHARACTER",
-  MOVE_ITEM: "MOVE_ITEM",
   MOVE_WINDOW: "MOVE_WINDOW",
+  MOVE_ITEM: "MOVE_ITEM",
   USE_ITEM: "USE_ITEM",
   EQUIP_ITEM: "EQUIP_ITEM",
   UNEQUIP_ITEM: "UNEQUIP_ITEM",
@@ -26,20 +26,21 @@ export interface CallFromWebview<
       appearance: Appearance;
     }
   ) => boolean;
-  [FromWebview.MOVE_ITEM]: (
-    player: import("@altv/server").Player,
-    from: ItemSource,
-    toSlot: ItemSource
-  ) => boolean;
   [FromWebview.MOVE_WINDOW]: (
     player: import("@altv/server").Player,
     name: string,
     screen: ScreenPosition
   ) => void;
-  [FromWebview.USE_ITEM]: (player: P, source: InventoryItemSource) => boolean;
-  [FromWebview.EQUIP_ITEM]: (player: P, source: InventoryItemSource) => boolean;
+  [FromWebview.MOVE_ITEM]: (
+    player: import("@altv/server").Player,
+    from: ItemSource,
+    toSlot: ItemSource,
+    amount?: number
+  ) => boolean;
+  [FromWebview.USE_ITEM]: (player: P, source: ItemSource) => boolean;
+  [FromWebview.EQUIP_ITEM]: (player: P, source: ItemSource) => boolean;
   [FromWebview.UNEQUIP_ITEM]: (player: P, equipmentSlot: EquipmentSlot) => boolean;
-  [FromWebview.DROP_ITEM]: (player: P, source: ItemSource) => boolean;
+  [FromWebview.DROP_ITEM]: (player: P, source: ItemSource, amount: number) => boolean;
   [FromWebview.COMBINE_ITEMS]: (player: P, sourceA: ItemSource, sourceB: ItemSource) => boolean;
   [FromWebview.UNLOAD_AMMO]: (player: P, source: ItemSource) => boolean;
   [FromWebview.REMOVE_BAIT]: (player: P, source: ItemSource) => boolean;

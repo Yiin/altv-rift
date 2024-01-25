@@ -199,4 +199,8 @@ export type Equipment = {
   shoes?: ClothingItem | null;
   phone?: null;
   tool?: ToolItem | FishingRodItem | null;
+  quick1?: ConsumableItem | null;
+  quick2?: ConsumableItem | null;
+  quick3?: ConsumableItem | null;
+  quick4?: ConsumableItem | null;
 };

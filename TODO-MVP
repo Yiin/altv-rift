@@ -1,6 +1,5 @@
 MVP Development Plan:
 
-
 Introduction MVP:
   ☐ Gather materials - explain what to do with them
     ☐ Scrapping minigames to gather materials (5)
@@ -23,14 +22,22 @@ Next steps (Base game MVP):
   ☐ NPC gives you a basic transport
   ☐ Give map to player with defined areas to explore
   ☐ Random raids
-  ☐ 
+
+------------------------------------------------------------------------------------------------------------------------
+
+Notes:
+  logic on the server for dropping items/picking up items is done,
+  but ui still needs confirmation modal w/ amount selection for dropping
+  and amount selection for picking up
+
+------------------------------------------------------------------------------------------------------------------------
 
 ✔ Core Gameplay Mechanics:
   ✔ NPC Interaction Menu @done
   ☐ Simplified Quest System
   ☐ Main Quests - Heists, Races, Bounties
   ☐ Skill System - Driving, Shooting, Stealth
-  ✔ Basic Personal Inventory System @done
+  ✔ Personal Inventory System @done
     ✔ Weapons, Health Kits, Special Items @done
 
 ✔ Engagement Features:
@@ -39,22 +46,22 @@ Next steps (Base game MVP):
   ☐ Limited Professions
 
 
-✔ PvP and Team Play:
-  ✔ Basic Territory Control System @done
-  ✔ Simple Raid Events @done
+☐ PvP and Team Play:
+  ☐ Basic Territory Control System
+  ☐ Simple Raid Events
 
-✔ Economy and Progression:
-  ✔ Basic Trade System @done
-  ✔ Simple Upgrade System for Vehicles and Weapons @done
-  ✔ Clear Rewards and Progression Path @done
+☐ Economy and Progression:
+  ☐ Basic Trade System
+  ☐ Simple Upgrade System for Vehicles and Weapons
+  ☐ Clear Rewards and Progression Path
 
-✔ Social and Community Elements:
-  ✔ Player Interaction Mechanisms @done
-  ✔ Regular Community Events and Competitions @done
+☐ Social and Community Elements:
+  ☐ Player Interaction Mechanisms
+  ☐ Regular Community Events and Competitions
 
-✔ Technical Aspects:
-  ✔ Server Stability and Performance Optimization @done
-  ✔ Player Feedback System @done
+☐ Technical Aspects:
+  ☐ Server Stability and Performance Optimization
+  ☐ Player Feedback System
 
 ☐ Launch Preparation:
   ☐ Final Testing and Debugging

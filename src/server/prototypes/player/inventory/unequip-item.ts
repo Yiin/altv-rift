@@ -1,5 +1,5 @@
 import * as alt from "@altv/server";
-import { EquipmentSlot, InventoryItemSource } from "@shared/interfaces";
+import { EquipmentSlot, InventoryItemSource, ItemSourceOrigin, ItemSourceType } from "@shared/interfaces";
 import { ServerEvents } from "@shared/events/server";
 import { Equipment } from "@shared/modules/items";
 import { InGamePlayer } from "@/core/utility/assertions";
@@ -33,9 +33,9 @@ alt.Player.prototype.unequipItem = function (equipmentSlot, to) {
   if (equipmentSlot === "ammo") {
     if (
       !unloadAmmoFromWeapon({
-        type: "equipment",
+        type: ItemSourceType.PlayerEquipment,
         equipmentSlot: "weapon",
-        origin: "character",
+        origin: ItemSourceOrigin.Character,
         originId: this.character.id,
       })
     ) {

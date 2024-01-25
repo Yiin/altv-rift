@@ -1,6 +1,7 @@
 import * as alt from "@altv/client";
 import * as game from "@altv/natives";
 import { watch } from "vue";
+import { WindowType } from "@shared/store/client.store";
 import { onKeyDown } from "@/core/utility/event-helpers";
 import { clientState } from "@/core/store/client.store";
 import { showCursor } from "@/core/user-interface/webview";
@@ -25,8 +26,8 @@ whileInGame(() => {
           "weapon",
           "gloves",
           "lefthand",
-          "pants",
           "righthand",
+          "pants",
           "backpack",
           "shoes",
         ] as const
@@ -47,12 +48,12 @@ export function togglePlayerInventory() {
   if (!clientState.ui.window) {
     showCursor(true);
     clientState.ui.window = {
-      type: "playerInventory",
+      type: WindowType.PLAYER_INVENTORY,
     };
     game.triggerScreenblurFadeIn(100);
   }
   // Hide the inventory if there is no other interaction opened (i.e. shop or storage or trade window)
-  else if (clientState.ui.window.type === "playerInventory") {
+  else if (clientState.ui.window.type === WindowType.PLAYER_INVENTORY) {
     showCursor(false);
     clientState.ui.window = null;
     game.triggerScreenblurFadeOut(100);

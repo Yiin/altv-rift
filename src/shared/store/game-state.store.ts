@@ -20,7 +20,7 @@ export interface GameState {
 
 export const getDefaultGameState = (): GameState => ({
   flags: new Set(),
-  interaction: {
+  interaction: null && {
     source: {
       origin: "shop",
       originId: 1,

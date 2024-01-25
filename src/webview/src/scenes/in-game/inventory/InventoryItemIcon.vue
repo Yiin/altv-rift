@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { InteractionType, SlottedPlayerInventoryItem, isSameSource, useInventory } from "@/store/inventory.store";
+import { InteractionType, SlottedInventoryItem, isSameSource, useInventory } from "@/store/inventory.store";
 import ItemIcon from "./ItemIcon.vue";
 
 const props = defineProps<{
-  item: SlottedPlayerInventoryItem;
+  item: SlottedInventoryItem;
 }>();
 
 const inventory = useInventory();
@@ -24,11 +24,6 @@ const shouldShow = computed(
 
 const draggingStyle = computed(() => {
   const interaction = inventory.currentInteraction;
-  const slotPositionInGrid = inventory.getItemRelativeScreenPositionFromSource(slottedItem.value.source);
-
-  if (!slotPositionInGrid.x && !slotPositionInGrid.y) {
-    return {};
-  }
 
   if (
     interaction.type === InteractionType.Dragging &&
@@ -36,12 +31,10 @@ const draggingStyle = computed(() => {
   ) {
     const x =
       interaction.state.currentPosition.x -
-      interaction.state.startPosition.x +
-      slotPositionInGrid.x;
+      interaction.state.startPosition.x;
     const y =
       interaction.state.currentPosition.y -
-      interaction.state.startPosition.y +
-      slotPositionInGrid.y;
+      interaction.state.startPosition.y;
 
     // We're currently dragging this item
     return {
@@ -51,7 +44,6 @@ const draggingStyle = computed(() => {
   } else {
     // Item is chilling in its slot
     return {
-      transform: `translate(${slotPositionInGrid.x}px, ${slotPositionInGrid.y}px)`,
       zIndex: 10,
     };
   }

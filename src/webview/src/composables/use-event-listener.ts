@@ -4,12 +4,12 @@ type Options = boolean | AddEventListenerOptions | undefined;
 
 export const useEventListener = <K extends keyof WindowEventMap>(
   type: K,
-  inputHandler: (event: WindowEventMap[K]) => void,
+  eventHandler: (event: WindowEventMap[K]) => void,
   options?: Options
 ) => {
-  // keydown event handler
+  // event handler
   const handler = (event: WindowEventMap[K]) => {
-    inputHandler(event);
+    eventHandler(event);
   };
 
   // add event listener

@@ -7,7 +7,7 @@ import {
   isItemFishBait,
 } from "@shared/modules/items/registry/fish-bait.items";
 import { FishingRodItem, createItem, isItemFishingRod } from "@shared/modules/items";
-import { InventoryItem } from "@shared/interfaces";
+import { InventoryItem, ItemSourceOrigin, ItemSourceType } from "@shared/interfaces";
 import { rpc } from "@/core/rpc";
 import { isInGame, needsToBeInGame } from "@/core/utility/assertions";
 import { sendChatMessage } from "@/modules/chat";
@@ -34,8 +34,8 @@ rpc.registerClient(ServerCall.FromClient.START_FISHING, (player: alt.Player) => 
 
     if (
       !player.equipItem({
-        type: "inventory",
-        origin: "character",
+        type: ItemSourceType.PlayerInventory,
+        origin: ItemSourceOrigin.Character,
         originId: player.character.id,
         inventorySlot: bestFishingRod.slot,
       })
@@ -64,8 +64,8 @@ rpc.registerClient(ServerCall.FromClient.START_FISHING, (player: alt.Player) => 
 
     if (
       !player.equipItem({
-        type: "inventory",
-        origin: "character",
+        type: ItemSourceType.PlayerInventory,
+        origin: ItemSourceOrigin.Character,
         originId: player.character.id,
         inventorySlot: firstBait.slot,
       })

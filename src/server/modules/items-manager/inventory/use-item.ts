@@ -1,13 +1,9 @@
 import { findItem, useItem, useItemFromSource } from "../api/hooks";
 
 /**
- * Can player use item from the inventory?
+ * We probably can move this hook to normal function
  */
 useItemFromSource.hook((player, itemSource) => {
-  if (itemSource.type !== "inventory") {
-    return;
-  }
-
   const item = findItem.call(itemSource, player);
 
   if (!item) {

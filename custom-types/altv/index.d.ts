@@ -18,7 +18,7 @@ declare module "@altv/client" {
     PLAY_SOUND: IWebviewEventHandler;
   }
 
-  export interface PedMeta {}
+  export interface PedMeta { }
 }
 
 declare module "@altv/shared" {
@@ -30,8 +30,9 @@ declare module "@altv/shared" {
   }
 
   export interface VirtualEntityStreamSyncedMeta {
-    entityType: "tree";
+    entityType: "tree" | "item";
     treeType?: import("../../src/shared/modules/woodcutting/interfaces").TreeType;
     cooldownUntil?: number;
+    item?: import("../../src/shared/modules/items").Item;
   }
 }

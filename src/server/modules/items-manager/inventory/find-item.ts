@@ -2,11 +2,12 @@ import * as alt from "@altv/server";
 import { createItem } from "@shared/modules/items";
 import { isItemFirearmWeapon } from "@shared/modules/items/registry/weapons/firearm-weapon.items";
 import { getInventoryItemInSlot } from "@shared/modules/inventory";
+import { ItemSourceOrigin, ItemSourceType } from "@shared/interfaces";
 import { InGamePlayer } from "@/core/utility/assertions";
 import { findItem } from "../api";
 
 findItem.hook((itemSource, player) => {
-  if (itemSource.origin !== "character") {
+  if (itemSource.origin !== ItemSourceOrigin.Character) {
     return;
   }
 
@@ -22,7 +23,7 @@ findItem.hook((itemSource, player) => {
     return null;
   }
 
-  if (itemSource.type === "equipment") {
+  if (itemSource.type === ItemSourceType.PlayerEquipment) {
     if (itemSource.equipmentSlot === "ammo") {
       const weapon = sourcePlayer.character.equipment.weapon;
 

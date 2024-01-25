@@ -16,6 +16,10 @@ export const document = alt.RmlDocument.create({
 // Container we render to
 export const container = document.getElementByID("container")!;
 
+if (!container) {
+  throw new Error("RML is not working");
+}
+
 // Global renderer
 export const renderer = createRenderer(document);
 

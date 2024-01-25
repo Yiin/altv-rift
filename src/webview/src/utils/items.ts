@@ -1,8 +1,11 @@
+import { SlottedEquipmentItem, SlottedGlobalItem, SlottedInventoryItem } from "@/store/inventory.store";
 import {
-  Character,
   EquipmentSlot,
+  GlobalItemSource,
   InteractionInventoryItemSource,
   InventoryItem,
+  ItemSourceType,
+  LocalGlobalItemSource,
   LocalPlayerEquipmentItemSource,
   LocalPlayerInventoryItemSource,
 } from "@shared/interfaces";
@@ -54,33 +57,44 @@ export function getItemClasses(item: { key: string }) {
   return;
 }
 
-export function getLocalInventoryItem(item: InventoryItem) {
+export function getLocalInventoryItem(item: InventoryItem): SlottedInventoryItem {
   return {
     item: item.item,
     price: item.price,
     source: {
-      type: "inventory",
+      type: ItemSourceType.PlayerInventory,
       inventorySlot: item.slot,
     } satisfies LocalPlayerInventoryItemSource,
   } as const;
 }
 
-export function getLocalEquipmentItem(item: Item, equipmentSlot: EquipmentSlot) {
+export function getLocalEquipmentItem(item: Item, equipmentSlot: EquipmentSlot): SlottedEquipmentItem {
   return {
     item: item,
     source: {
-      type: "equipment",
+      type: ItemSourceType.PlayerEquipment,
       equipmentSlot,
     } satisfies LocalPlayerEquipmentItemSource,
   } as const;
 }
 
-export function getInteractionInventoryItem(item: InventoryItem) {
+export function getLocalGlobalItem({ item, source }: { item: Item, source: GlobalItemSource }, index: number): SlottedGlobalItem {
+  return {
+    item: item,
+    source: {
+      type: ItemSourceType.Global,
+      inventorySlot: index,
+      originId: source.originId,
+    } satisfies LocalGlobalItemSource,
+  } as const;
+}
+
+export function getInteractionInventoryItem(item: InventoryItem): SlottedInventoryItem {
   return {
     item: item.item,
     price: item.price,
     source: {
-      type: "interaction",
+      type: ItemSourceType.InteractionInventory,
       inventorySlot: item.slot,
     } satisfies InteractionInventoryItemSource,
   } as const;

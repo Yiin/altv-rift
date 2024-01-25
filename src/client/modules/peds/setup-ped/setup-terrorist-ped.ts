@@ -1,9 +1,9 @@
 import * as alt from "@altv/client";
 import * as game from "@altv/natives";
 import { RAGDOLL_BLOCKING_FLAGS } from "@shared/enums/ragdoll-blocking-flags";
+import { PedFlags } from "@shared/modules/ped";
 import { everyTickWhile } from "@/core/utility/event-helpers";
 import { COMBAT_ATTRIBUTE, PED_CONFIG_FLAG, PED_RESET_FLAG } from "@/core/constants/ped-flags";
-import { PedFlags } from "@shared/modules/ped";
 
 game.addRelationshipGroup("Friendly", alt.hash("Friendly"));
 game.addRelationshipGroup("Enemy", alt.hash("Enemy"));
@@ -68,11 +68,11 @@ export async function setupTerroristPed(ped: alt.Ped) {
   game.setPedConfigFlag(ped, PED_CONFIG_FLAG.NoCriticalHits, true);
   game.setPedConfigFlag(ped, PED_CONFIG_FLAG.DisableGoToWritheWhenInjured, true);
   game.setPedConfigFlag(ped, PED_CONFIG_FLAG.TreatNonFriendlyAsHateWhenInCombat, true);
-  game.setPedCombatAttributes(ped, COMBAT_ATTRIBUTE.CA_AGGRESSIVE, true);
-  game.setPedCombatAttributes(ped, COMBAT_ATTRIBUTE.CA_ALWAYS_FIGHT, true);
-  game.setPedCombatAttributes(ped, COMBAT_ATTRIBUTE.CA_DISABLE_BULLET_REACTIONS, true);
-  game.setPedCombatAttributes(ped, COMBAT_ATTRIBUTE.CA_USE_COVER, Math.random() > 0.5);
-  game.setPedCombatAttributes(ped, COMBAT_ATTRIBUTE.CA_SWITCH_TO_ADVANCE_IF_CANT_FIND_COVER, true);
+  game.setPedCombatAttributes(ped, COMBAT_ATTRIBUTE.Aggressive, true);
+  game.setPedCombatAttributes(ped, COMBAT_ATTRIBUTE.AlwaysFight, true);
+  game.setPedCombatAttributes(ped, COMBAT_ATTRIBUTE.DisableBulletReactions, true);
+  game.setPedCombatAttributes(ped, COMBAT_ATTRIBUTE.UseCover, Math.random() > 0.5);
+  game.setPedCombatAttributes(ped, COMBAT_ATTRIBUTE.SwitchToAdvanceIfCantFindCover, true);
 
   game.taskGuardAssignedDefensiveArea(
     ped,

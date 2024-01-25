@@ -4,111 +4,90 @@ import { InteractionType, SlottedItem, useInventory, isSameSource } from "@/stor
 import ItemIcon from "../ItemIcon.vue";
 import { px } from "@/composables/use-pixel";
 
-import { LocalPlayerEquipmentItemSource } from "@shared/interfaces";
-import { AmmoItem, getItemEquipmentSlot, isItemFirearmWeapon } from "@shared/modules/items";
+import { ItemSourceType, LocalPlayerEquipmentItemSource } from "@shared/interfaces";
+import { AmmoItem, isItemFirearmWeapon } from "@shared/modules/items";
+import { useCombinableItem } from "@/composables/use-combinable-item";
 
 const equipmentSlots = {
   headwear: {
     label: "Headwear",
     image: "./assets/inventory/headwear.png",
-    x: px(0),
-    y: px(0),
   },
   mask: {
     label: "Mask",
     image: "./assets/inventory/mask.png",
-    x: px(90),
-    y: px(0),
   },
   glasses: {
     label: "Glasses",
     image: "./assets/inventory/glasses.png",
-    x: px(180),
-    y: px(0),
   },
   backpack: {
     label: "Backpack",
     image: "./assets/inventory/backpack.png",
-    x: px(0),
-    y: px(90),
   },
   earrings: {
     label: "Earrings",
     image: "./assets/inventory/earrings.png",
-    x: px(90),
-    y: px(90),
   },
   accessory: {
     label: "Accessories",
     image: "./assets/inventory/bowtie.png",
-    x: px(180),
-    y: px(90),
   },
   top: {
     label: "Top",
     image: "./assets/inventory/top.png",
-    x: px(0),
-    y: px(180),
   },
   armor: {
     label: "Armor",
     image: "./assets/inventory/armor.png",
-    x: px(90),
-    y: px(180),
   },
   gloves: {
     label: "Gloves",
     image: "./assets/inventory/gloves.png",
-    x: px(0),
-    y: px(270),
   },
   weapon: {
     label: "Weapon",
     image: "./assets/inventory/weapon.png",
-    x: px(90),
-    y: px(270),
   },
   ammo: {
     label: "Ammo",
     image: "./assets/inventory/ammo.png",
-    x: px(180),
-    y: px(270),
   },
   pants: {
     label: "Pants",
     image: "./assets/inventory/pants.png",
-    x: px(0),
-    y: px(360),
   },
   lefthand: {
     label: "Left hand",
     image: "./assets/inventory/watch.png",
-    x: px(90),
-    y: px(360),
   },
   righthand: {
     label: "Right hand",
     image: "./assets/inventory/bracelet.png",
-    x: px(180),
-    y: px(360),
   },
   shoes: {
     label: "Shoes",
     image: "./assets/inventory/shoes.png",
-    x: px(0),
-    y: px(450),
   },
   phone: {
     label: "Phone",
     image: "./assets/inventory/phone.png",
-    x: px(90),
-    y: px(450),
   },
   tool: {
     label: "Tool",
-    image: "./assets/inventory/gloves.png",
-    x: px(180),
-    y: px(450),
+    image: "./assets/inventory/tool.png",
+  },
+  quick1: {
+    label: "Num 1",
+  },
+  quick2: {
+    label: "Num 2",
+  },
+  quick3: {
+    label: "Num 3",
+  },
+  quick4: {
+    label: "Num 4",
   },
 };
 
@@ -119,6 +98,8 @@ const props = defineProps<{
 }>();
 
 const inventory = useInventory();
+
+const slot = computed(() => equipmentSlots[props.name]);
 
 const item = computed(() => {
   if (props.name === "ammo") {
@@ -133,7 +114,7 @@ const item = computed(() => {
           amount: equipedAmmo.clip + equipedAmmo.rest,
         },
         source: {
-          type: "equipment",
+          type: ItemSourceType.PlayerEquipment,
           equipmentSlot: "ammo",
         },
       } as SlottedItem<LocalPlayerEquipmentItemSource, AmmoItem>;
@@ -142,34 +123,8 @@ const item = computed(() => {
   }
   return inventory.equipment[props.name] ?? null;
 });
-const slot = computed(() => equipmentSlots[props.name]);
 
-const draggingOver = computed(() => {
-  const interaction = inventory.currentInteraction;
-
-  if (interaction.type === InteractionType.Dragging) {
-    const currentCursorPos = interaction.state.currentPosition;
-
-    const nodeRect = nodeRef.value?.getBoundingClientRect();
-
-    if (!nodeRect) {
-      return false;
-    }
-
-    if (getItemEquipmentSlot(interaction.state.item.item) !== props.name) {
-      return false;
-    }
-
-    return (
-      currentCursorPos.x >= nodeRect.left &&
-      currentCursorPos.x <= nodeRect.right &&
-      currentCursorPos.y >= nodeRect.top &&
-      currentCursorPos.y <= nodeRect.bottom
-    );
-  }
-
-  return false;
-});
+const { combinableWithHoveredItem, combinableWithOtherItems } = useCombinableItem(item);
 
 const draggingStyle = computed(() => {
   if (!item.value) {
@@ -183,12 +138,10 @@ const draggingStyle = computed(() => {
   ) {
     const x =
       interaction.state.currentPosition.x -
-      interaction.state.startPosition.x +
-      slot.value.x;
+      interaction.state.startPosition.x;
     const y =
       interaction.state.currentPosition.y -
-      interaction.state.startPosition.y +
-      slot.value.y;
+      interaction.state.startPosition.y;
 
     // We're currently dragging this item
     return {
@@ -198,7 +151,6 @@ const draggingStyle = computed(() => {
   } else {
     // Item is chilling in its slot
     return {
-      transform: `translate(${slot.value.x}px, ${slot.value.y}px)`,
       zIndex: 10,
     };
   }
@@ -212,7 +164,7 @@ const nodeRef = ref<HTMLDivElement>();
 
 inventory.registerItemSlot({
   source: {
-    type: "equipment",
+    type: ItemSourceType.PlayerEquipment,
     equipmentSlot: props.name,
   },
   node: nodeRef,
@@ -220,18 +172,20 @@ inventory.registerItemSlot({
 </script>
 
 <template>
-  <div ref="nodeRef" class="absolute top-0 left-0 w-20 h-20 bg-black/80 item-slot text-white"
-    :class="[(draggingOver || item) && 'drop-shadow-[2px_4px_6px_black]']" :style="{
-      transform: `translate(${slot.x}px, ${slot.y}px)`,
+  <div
+    ref="nodeRef"
+    class="flex flex-col relative items-center h-21 w-21 justify-between bg-silverCloud/[0.01] border border-solid border-white/[0.03] flex-basis-21"
+    :class="{
+      'bg-silverCloud/5': combinableWithHoveredItem || combinableWithOtherItems
     }">
-    <div v-if="!item" class="absolute w-full h-full bg-[center_35%] text-center pt-12 text-xs" :style="{
-      backgroundImage: `url(${slot.image})`,
+    <div v-if="!item" class="w-full h-full bg-[center_35%] text-center pt-14 text-xs" :style="{
+      backgroundImage: 'image' in slot ? `url(${slot.image})` : undefined,
       backgroundSize: `30%`,
       filter: `contrast(0) opacity(0.9)`,
     }">
       {{ slot.label }}
     </div>
+    <ItemIcon v-else="item" :item="item.item" :style="draggingStyle" @mousedown="inventory.handleMouseDown"
+      @dblclick="unequipItem" @contextmenu.prevent="(e) => item && inventory.openContextMenu(item, e)" />
   </div>
-  <ItemIcon v-if="item" :item="item.item" :style="draggingStyle" @mousedown="inventory.handleMouseDown"
-    @dblclick="unequipItem" @contextmenu.prevent="(e) => item && inventory.openContextMenu(item, e)" />
 </template>

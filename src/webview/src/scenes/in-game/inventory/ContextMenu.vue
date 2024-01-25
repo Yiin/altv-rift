@@ -12,7 +12,7 @@ import {
 import { computed } from "vue";
 import { InteractionType, ItemActionMenu, useInventory } from "@/store/inventory.store";
 import { isItemPreviewable } from "@shared/modules/items/lib/is-item-previewable";
-import { LocalPlayerItemSource } from "@shared/interfaces";
+import { ItemSourceType, LocalPlayerItemSource } from "@shared/interfaces";
 
 const props = defineProps<ItemActionMenu>();
 
@@ -25,21 +25,21 @@ const isInShop = computed(() => inventory.interaction?.source.origin === "shop")
 const visible = computed(() => inventory.currentInteraction.type === InteractionType.ContextMenu);
 const itemName = computed(() => getItemName(item.value.key));
 const isUsable = computed(
-  () => !isInShop.value && itemSource.value.type === "inventory" && isItemUsable(item.value.key)
+  () => !isInShop.value && itemSource.value.type === ItemSourceType.PlayerInventory && isItemUsable(item.value.key)
 );
-const isBuyable = computed(() => isInShop.value && itemSource.value.type === "interaction");
-const isSellable = computed(() => isInShop.value && itemSource.value.type === "inventory");
+const isBuyable = computed(() => isInShop.value && itemSource.value.type === ItemSourceType.InteractionInventory);
+const isSellable = computed(() => isInShop.value && itemSource.value.type === ItemSourceType.PlayerInventory);
 const isEquipable = computed(
-  () => !isInShop.value && itemSource.value.type === "inventory" && isItemEquipable(item.value.key)
+  () => !isInShop.value && itemSource.value.type === ItemSourceType.PlayerInventory && isItemEquipable(item.value.key)
 );
-const isUnequipable = computed(() => itemSource.value.type === "equipment");
-const isDroppable = computed(() => !isInShop.value && itemSource.value.type === "inventory");
+const isUnequipable = computed(() => itemSource.value.type === ItemSourceType.PlayerEquipment);
+const isDroppable = computed(() => !isInShop.value && itemSource.value.type === ItemSourceType.PlayerInventory);
 const hasAmmo = computed(() => !isInShop.value && isItemFirearmWeapon(item.value) && !!item.value.ammo);
 const hasFishBait = computed(() => !isInShop.value && isItemFishingRod(item.value) && !!item.value.bait);
 const isPreviewable = computed(() => !isInShop.value && isItemPreviewable(item.value.key));
 
 const combine = computed(() => {
-  if (itemSource.value.type !== "inventory") {
+  if (itemSource.value.type !== ItemSourceType.PlayerInventory) {
     return {
       type: CombineType.None,
       reverse: false,
@@ -82,7 +82,7 @@ function executeAction(action: string) {
       inventory.previewingItem = props.item;
       break;
     case "unequip":
-      if (source.type === "equipment") {
+      if (source.type === ItemSourceType.PlayerEquipment) {
         inventory.unequipItem(source.equipmentSlot);
       }
       break;
@@ -172,15 +172,16 @@ const actions = computed(() => [
 </script>
 
 <template>
-  <div v-if="visible" :key="ts" class="absolute flex justify-start" v-click-outside="inventory.closeActionMenu">
-    <Window v-bind="{ x, y }" :is-active="false" @mousedown.stop>
+  <div v-if="visible" :key="ts" class="absolute top-0 left-0 flex justify-start"
+    v-click-outside="inventory.closeActionMenu">
+    <Window v-bind="{ x, y, h: 'auto' }" :is-active="false" :is-draggable="false" @mousedown.stop>
       <ul class="flex flex-col space-y-2 bg-neutral-800 rounded-lg overflow-hidden shadow-lg">
         <li>
           <strong class="py-3 px-4 block text-sm font-medium uppercase text-neutral-400">
             {{ itemName }}
           </strong>
           <ul>
-            <template v-for="action in actions">
+            <template v-for=" action  in  actions ">
               <li v-if="'enabled' in action === false || action.enabled" @mousedown.stop="action.select"
                 class="border-t border-t-neutral-700">
                 <div

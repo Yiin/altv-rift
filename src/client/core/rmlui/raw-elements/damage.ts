@@ -5,6 +5,7 @@ import { everyTickWhile } from "@/core/utility/event-helpers";
 import { document } from "../renderer/element-renderer";
 
 const damageContainer = document.createElement("div");
+
 document.body.appendChild(damageContainer);
 
 function displayHit(position: alt.Vector3, damage: number, type: "health" | "armor") {

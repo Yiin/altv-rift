@@ -12,11 +12,12 @@ import {
   FirearmWeaponItem,
   isItemFirearmWeapon,
 } from "@shared/modules/items/registry/weapons/firearm-weapon.items";
-import { InventoryItemSource, ItemSource } from "@shared/interfaces";
+import { GlobalItemSource, InventoryItemSource, ItemSource, ItemSourceOrigin, ItemSourceType } from "@shared/interfaces";
 import { InGamePlayer, isInGame } from "@/core/utility/assertions";
 import { on } from "@/core/events/emit";
 import { findItem, findSourceInventory } from "../../api/hooks";
 import { removeItem, addItemToInventory } from "../../api/utils";
+import { dropItemOnTheGround, droppedItems } from "../../api/dropped-items";
 
 on(ServerEvents.FromServer.ITEM_EQUIP, (player, item) => {
   if (!isItemFirearmWeapon(item)) {
@@ -77,13 +78,13 @@ alt.Events.onPlayer(ServerEvents.FromClient.WEAPON_SHOOT, (player) => {
  */
 export function loadWeaponWithAmmo(
   weaponSource: ItemSource,
-  ammoSource: InventoryItemSource
+  ammoSource: InventoryItemSource | GlobalItemSource
 ): boolean {
   const weapon = findItem.call(weaponSource);
   const ammo = findItem.call(ammoSource);
-  const ammoInventory = findSourceInventory.call(ammoSource);
+  const ammoInventory = ammoSource.origin === ItemSourceOrigin.Global ? null : findSourceInventory.call(ammoSource);
 
-  if (!weapon || !ammo || !ammoInventory) {
+  if (!weapon || !ammo || (ammoSource.origin !== ItemSourceOrigin.Global && !ammoInventory)) {
     return false;
   }
 
@@ -91,13 +92,19 @@ export function loadWeaponWithAmmo(
     return false;
   }
 
+  const pos = droppedItems.get(ammoSource.originId)?.pos;
+
   // remove ammo from inventory
   removeItem(ammoSource);
 
   const previousAmmo = loadWeaponItemWithAmmoItem(weapon, ammo);
 
   if (previousAmmo) {
-    addItemToInventory(ammoInventory, previousAmmo);
+    if (ammoInventory) {
+      addItemToInventory(ammoInventory, previousAmmo);
+    } else if (pos) {
+      dropItemOnTheGround(previousAmmo, pos);
+    }
   }
   return true;
 }
@@ -116,8 +123,28 @@ export function unloadAmmoFromWeapon(source: ItemSource) {
     return false;
   }
 
+  if (source.origin === ItemSourceOrigin.Global) {
+    const droppedItemVE = droppedItems.get(source.originId);
+
+    if (!droppedItemVE) {
+      return false;
+    }
+
+    const ammo = unloadWeaponItemAmmo(weapon);
+
+    if (!ammo) {
+      return false;
+    }
+
+    droppedItemVE.streamSyncedMeta.item = weapon;
+
+    dropItemOnTheGround(ammo, droppedItemVE.pos);
+
+    return true;
+  }
+
   // Weapon is equipped
-  if (source.type === "equipment") {
+  if (source.type === ItemSourceType.PlayerEquipment) {
     const player = alt.Player.all.find(
       (player): player is InGamePlayer => player.character?.id === source.originId
     );

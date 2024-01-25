@@ -1,6 +1,6 @@
 import * as alt from "@altv/server";
 import { toRaw } from "vue";
-import { InventoryItemSource, ItemSource } from "@shared/interfaces";
+import { GlobalItemSource, InventoryItemSource, ItemSource, ItemSourceOrigin, ItemSourceType, PlayerItemSource } from "@shared/interfaces";
 import {
   FishBaitItem,
   FishingRodItem,
@@ -9,16 +9,17 @@ import {
 } from "@shared/modules/items";
 import { InGamePlayer } from "@/core/utility/assertions";
 import { addItemToInventory, findItem, findSourceInventory, removeItem } from "../api";
+import { dropItemOnTheGround, droppedItems } from "../api/dropped-items";
 
 export function useFishBaitOnFishingRod(
   fishingRodSource: ItemSource,
-  fishBaitSource: InventoryItemSource
+  fishBaitSource: InventoryItemSource | GlobalItemSource
 ) {
   const fishingRod = findItem.call(fishingRodSource);
   const fishBait = findItem.call(fishBaitSource);
-  const fishBaitInventory = findSourceInventory.call(fishBaitSource);
+  const fishBaitInventory = fishBaitSource.origin === ItemSourceOrigin.Global ? null : findSourceInventory.call(fishBaitSource);
 
-  if (!fishingRod || !fishBait || !fishBaitInventory) {
+  if (!fishingRod || !fishBait || (fishBaitSource.origin !== ItemSourceOrigin.Global && !fishBaitInventory)) {
     return false;
   }
 
@@ -26,12 +27,18 @@ export function useFishBaitOnFishingRod(
     return false;
   }
 
+  const droppedItemPos = droppedItems.get(fishBaitSource.originId)?.pos;
+
   removeItem(fishBaitSource);
 
   const previousBait = useFishBaitItemOnFishingRoadItem(fishingRod, fishBait);
 
   if (previousBait) {
-    addItemToInventory(fishBaitInventory, previousBait);
+    if (fishBaitInventory) {
+      addItemToInventory(fishBaitInventory, previousBait);
+    } else if (droppedItemPos) {
+      dropItemOnTheGround(previousBait, droppedItemPos);
+    }
   }
 
   return true;
@@ -48,8 +55,27 @@ export function removeBaitFromFishingRod(source: ItemSource) {
     return false;
   }
 
+  if (source.origin === ItemSourceOrigin.Global) {
+    const droppedItemVE = droppedItems.get(source.originId);
+
+    if (!droppedItemVE) {
+      return false;
+    }
+
+    const bait = removeBaitFromFishingRodItem(fishingRod);
+
+    if (!bait) {
+      return false;
+    }
+
+    droppedItemVE.streamSyncedMeta.item = fishingRod;
+    dropItemOnTheGround(bait, droppedItemVE.pos);
+
+    return true;
+  }
+
   // Fishing rod is equipped
-  if (source.type === "equipment") {
+  if (source.type === ItemSourceType.PlayerEquipment) {
     const player = alt.Player.all.find(
       (player): player is InGamePlayer => player.character?.id === source.originId
     );

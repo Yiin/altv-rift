@@ -15,7 +15,7 @@ const app = createApp(App).use(router).use(pinia).use(vuetify);
 
 // Dynamically import and register all components in the @/components/icons folder
 // const registerIcons = async () => {
-//   const components = import.meta.glob("@/components/icons/*.vue");
+//   const components = import.meta.glob("@/components/Icon/*.vue");
 
 //   for (const path in components) {
 //     const componentConfig = (await components[path]()!) as { default: DefineComponent };

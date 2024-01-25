@@ -6,7 +6,9 @@
  */
 
 import { Scene, UIElement } from "@shared/enums/ui";
+import { GlobalItemSource } from "@shared/interfaces";
 import { ConversationOption } from "@shared/interfaces/conversation";
+import { Item } from "@shared/modules/items";
 
 export type CurrentConversation = {
   with: string;
@@ -75,6 +77,10 @@ export interface ClientState {
   flags: Set<ClientFlags>;
   actionMenu: ActionItem[];
   targetAction: TargetAction | null;
+  nearbyItems: {
+    item: Item;
+    source: GlobalItemSource;
+  }[];
 }
 
 export const getDefaultClientStoreState = (): ClientState => ({
@@ -91,4 +97,5 @@ export const getDefaultClientStoreState = (): ClientState => ({
   flags: new Set(),
   actionMenu: [],
   targetAction: null,
+  nearbyItems: [],
 });

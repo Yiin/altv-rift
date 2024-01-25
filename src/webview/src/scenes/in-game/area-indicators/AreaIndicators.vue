@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useClient } from "@/store/synced/client.store";
 import { ClientFlags } from "@shared/store/client.store";
-import FishingIcon from "@/components/icons/FishingIcon.vue";
-import DiggingIcon from "@/components/icons/DiggingIcon.vue";
+import FishingIcon from "@/components/Icon/FishingIcon.vue";
+import DiggingIcon from "@/components/Icon/DiggingIcon.vue";
 
 const client = useClient();
 </script>

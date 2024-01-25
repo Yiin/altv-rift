@@ -23,8 +23,7 @@ const props = defineProps({
       success: props.type === MessageType.Success,
       warning: props.type === MessageType.Warning,
       error: props.type === MessageType.Error,
-    }"
-  >
+    }">
     <InfoIcon v-if="props.type === MessageType.Info" />
     <SuccessIcon v-else-if="props.type === MessageType.Success" />
     <WarningIcon v-else-if="props.type === MessageType.Warning" />

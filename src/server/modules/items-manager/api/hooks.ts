@@ -1,5 +1,5 @@
 import { createHookableFunction } from "@shared/hooks";
-import { Character, Inventory, InventoryItemSource, ItemSource } from "@shared/interfaces";
+import { Character, GlobalItemSource, Inventory, InventoryItemSource, ItemSource } from "@shared/interfaces";
 import { Item } from "@shared/modules/items";
 import { ServerEvents } from "@shared/events/server";
 import { InGamePlayer } from "@/core/utility/assertions";
@@ -56,7 +56,7 @@ export const canDropItem = createHookableFunction<
  * Tries to use the item from the soruce. If none of the sources return true, it won't be used.
  */
 export const useItemFromSource = createHookableFunction<
-  (player: InGamePlayer, source: InventoryItemSource) => number | false
+  (player: InGamePlayer, source: InventoryItemSource | GlobalItemSource) => number | false
 >({
   name: "useItemFromSource",
   defaultReturn: false,
@@ -83,12 +83,12 @@ export const useItem = createHookableFunction<(player: InGamePlayer, item: Item)
 );
 
 /**
- * Can player equip the item? E.g. if player is dying or immobilized, he can't equip anything.
+ * Can player equip items? E.g. if player is dying or immobilized, he can't equip anything.
  */
-export const canEquipItem = createHookableFunction<
-  (player: InGamePlayer, source: ItemSource) => boolean
+export const canEquipItems = createHookableFunction<
+  (player: InGamePlayer) => boolean
 >({
-  name: "canEquipItem",
+  name: "canEquipItems",
   defaultReturn: true,
 });
 

@@ -1,6 +1,6 @@
 import * as alt from "@altv/server";
 import { toRaw } from "vue";
-import { Inventory, InventoryItemSource } from "@shared/interfaces";
+import { GlobalItemSource, Inventory, InventoryItemSource, ItemSourceOrigin, ItemSourceType, PlayerItemSource } from "@shared/interfaces";
 import { Item, createItem, isStackable } from "@shared/modules/items";
 import { ServerEvents } from "@shared/events/server";
 import {
@@ -9,9 +9,39 @@ import {
   getInventoryItemInSlot,
 } from "@shared/modules/inventory";
 import { emit } from "@/core/events/emit";
-import { findSourceInventory } from "./hooks";
+import { InGamePlayer } from "@/core/utility/assertions";
+import { findItem, findSourceInventory } from "./hooks";
+import { cleanupDroppedItem, dropItemOnTheGround, droppedItems } from "./dropped-items";
 
-export function removeItem(source: InventoryItemSource, amount = 0): Item | null {
+export function removeItem(source: InventoryItemSource | GlobalItemSource, amount = 0): Item | null {
+  if (source.origin === ItemSourceOrigin.Global) {
+    const droppedItemVE = droppedItems.get(source.originId);
+
+    if (!droppedItemVE) {
+      return null;
+    }
+
+    const item = droppedItemVE.streamSyncedMeta.item;
+
+    if (!item) {
+      return null;
+    }
+
+    if (isStackable(item) && item.amount - amount < 0) {
+      return null;
+    }
+
+    if (!isStackable(item) || item.amount - amount === 0 || amount <= 0) {
+      cleanupDroppedItem(droppedItemVE.id);
+      return item;
+    }
+
+    item.amount -= amount;
+    droppedItemVE.streamSyncedMeta.item = item;
+
+    return createItem(item.key, { ...item, amount });
+  }
+
   const inventory = findSourceInventory.call(source);
 
   if (!inventory) {
@@ -61,8 +91,29 @@ export function removeItemFromInventorySlot(
   return createItem(item.key, { ...item, amount });
 }
 
-export function dropItemOnTheGround(item: Item, position: alt.IVector3) {
-  //
+export function dropItem(player: InGamePlayer, source: PlayerItemSource, pos: alt.IVector3) {
+  if (source.type === ItemSourceType.PlayerEquipment) {
+    const item = findItem.call(source, player);
+
+    if (!item) {
+      return false;
+    }
+
+    player.removeEquipedItem(source.equipmentSlot);
+
+    dropItemOnTheGround(item, player.pos);
+    return true;
+  }
+
+  const item = removeItem(source);
+
+  if (!item) {
+    return false;
+  }
+
+  dropItemOnTheGround(item, player.pos);
+
+  return true;
 }
 
 export function addItemToInventory(inventory: Inventory, item: Item, slot?: number) {
@@ -95,6 +146,7 @@ export function addItemToInventory(inventory: Inventory, item: Item, slot?: numb
   inventory.items.push({
     slot: emptySlot,
     item: toRaw(item),
+    price: null,
   });
 
   const addedItem = getInventoryItemInSlot(inventory, emptySlot);
@@ -148,11 +200,10 @@ function findFreeInventorySlot(inventory: Inventory, slot?: number) {
     if (!inventory.items.some((item) => item.slot === slot)) {
       return slot;
     }
-  } else {
-    for (let i = 0; i < inventory.size; i++) {
-      if (!inventory.items.some((item) => item.slot === i)) {
-        return i;
-      }
+  }
+  for (let i = 0; i < inventory.size; i++) {
+    if (!inventory.items.some((item) => item.slot === i)) {
+      return i;
     }
   }
   return -1;
