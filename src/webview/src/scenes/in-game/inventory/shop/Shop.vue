@@ -2,7 +2,6 @@
 import ShopSlot from "./ShopSlot.vue";
 import { useShop } from "@/store/shop.store";
 import { useInventory } from "@/store/inventory.store";
-import WeaponShop from "./weapon-shop/WeaponShop.vue";
 
 const shop = useShop();
 </script>

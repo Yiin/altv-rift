@@ -1,5 +1,5 @@
 import { Appearance, ScreenPosition } from "@prisma/client/edge";
-import { EquipmentSlot, InventoryItemSource, ItemSource, ShopSource } from "../../interfaces";
+import { EquipmentSlot, InteractionInventoryItemSource, InteractionInventorySource, ItemSource, PlayerInventoryItemSource } from "../../interfaces";
 
 export const FromWebview = {
   CREATE_CHARACTER: "CREATE_CHARACTER",
@@ -44,6 +44,6 @@ export interface CallFromWebview<
   [FromWebview.COMBINE_ITEMS]: (player: P, sourceA: ItemSource, sourceB: ItemSource) => boolean;
   [FromWebview.UNLOAD_AMMO]: (player: P, source: ItemSource) => boolean;
   [FromWebview.REMOVE_BAIT]: (player: P, source: ItemSource) => boolean;
-  [FromWebview.BUY_ITEM]: (player: P, source: InventoryItemSource, amount: number) => boolean;
-  [FromWebview.SELL_ITEM]: (player: P, shopSource: ShopSource, itemSource: InventoryItemSource, amount: number) => boolean;
+  [FromWebview.BUY_ITEM]: (player: P, source: InteractionInventoryItemSource, amount: number) => boolean;
+  [FromWebview.SELL_ITEM]: (player: P, shopSource: InteractionInventorySource, itemSource: PlayerInventoryItemSource, amount: number) => boolean;
 }

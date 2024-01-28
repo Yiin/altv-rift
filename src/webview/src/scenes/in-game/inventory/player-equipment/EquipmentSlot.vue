@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { InteractionType, SlottedItem, useInventory, isSameSource } from "@/store/inventory.store";
+import { InteractionType, SlottedItem, useInventory, isSameItemSource } from "@/store/inventory.store";
 import ItemIcon from "../ItemIcon.vue";
 import { px } from "@/composables/use-pixel";
 
-import { ItemSourceType, LocalPlayerEquipmentItemSource } from "@shared/interfaces";
+import { ItemSourceOrigin, PlayerEquipmentItemSource } from "@shared/interfaces";
 import { AmmoItem, isItemFirearmWeapon } from "@shared/modules/items";
 import { useCombinableItem } from "@/composables/use-combinable-item";
 
@@ -114,10 +114,11 @@ const item = computed(() => {
           amount: equipedAmmo.clip + equipedAmmo.rest,
         },
         source: {
-          type: ItemSourceType.PlayerEquipment,
+          origin: ItemSourceOrigin.PlayerEquipment,
+          originId: inventory.playerId,
           equipmentSlot: "ammo",
         },
-      } as SlottedItem<LocalPlayerEquipmentItemSource, AmmoItem>;
+      } as SlottedItem<PlayerEquipmentItemSource, AmmoItem>;
     }
     return null;
   }
@@ -134,7 +135,7 @@ const draggingStyle = computed(() => {
 
   if (
     interaction.type === InteractionType.Dragging &&
-    isSameSource(interaction.state.item.source, item.value.source)
+    isSameItemSource(interaction.state.item.source, item.value.source)
   ) {
     const x =
       interaction.state.currentPosition.x -
@@ -164,7 +165,8 @@ const nodeRef = ref<HTMLDivElement>();
 
 inventory.registerItemSlot({
   source: {
-    type: ItemSourceType.PlayerEquipment,
+    origin: ItemSourceOrigin.PlayerEquipment,
+    originId: inventory.playerId,
     equipmentSlot: props.name,
   },
   node: nodeRef,

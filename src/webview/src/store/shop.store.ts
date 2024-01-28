@@ -1,16 +1,17 @@
-import { InventoryItemSource, LocalItemSource, ShopSource } from "@shared/interfaces";
+import { InteractionInventoryItemSource, InventoryItemSource, ItemSourceOrigin, PlayerInventoryItemSource } from "@shared/interfaces";
 import { defineStore } from "pinia";
 import { useGameState } from "./synced/game-state.store";
-import { SlottedInventoryItem, useInventory } from "./inventory.store";
+import { useInventory } from "./inventory.store";
 import { rpc } from "@/rpc";
 import { ServerCall } from "@shared/calls/server";
+import { InteractionInventoryType } from "@shared/store/game-state.store";
 
 type State = {
   action: null;
   itemSource: null;
 } | {
   action: "buy" | "sell";
-  itemSource: LocalItemSource;
+  itemSource: PlayerInventoryItemSource | InteractionInventoryItemSource;
 };
 
 export const useShop = defineStore("shop", {
@@ -19,43 +20,25 @@ export const useShop = defineStore("shop", {
     itemSource: null,
   }),
   getters: {
+    isInShop(): boolean {
+      return this.interaction !== null;
+    },
     interaction() {
       const gameState = useGameState();
-      return gameState.interaction?.source.origin === "shop" ? gameState.interaction : null;
+      return gameState.interactionInventory?.type === InteractionInventoryType.Shop ? gameState.interactionInventory : null;
     },
-    item(): SlottedInventoryItem | null {
-      if (!this.itemSource) {
-        console.log("no item source");
-        return null;
-      }
-
-      if (this.itemSource.type === "equipment") {
-        console.log("equipment");
-        return null;
-      }
-
-      const inventory = useInventory();
-      const item = inventory.getItemFromSource(this.itemSource);
-
-      if (!item) {
-        console.log("no item", this.itemSource);
-        return null;
-      }
-
-      return item;
-    }
   },
   actions: {
-    initiateBuying(itemSource: LocalItemSource) {
+    initiateBuying(itemSource: InteractionInventoryItemSource) {
       this.action = "buy";
       this.itemSource = itemSource;
     },
-    initiateSelling(itemSource: LocalItemSource) {
+    initiateSelling(itemSource: PlayerInventoryItemSource) {
       this.action = "sell";
       this.itemSource = itemSource;
     },
     submit(amount: number) {
-      if (this.interaction?.source.origin !== "shop") {
+      if (!this.interaction) {
         return;
       }
 
@@ -65,17 +48,17 @@ export const useShop = defineStore("shop", {
 
       const inventory = useInventory();
 
-      if (this.itemSource.type === "interaction") {
+      if (this.itemSource.origin === ItemSourceOrigin.InteractionInventory) {
         return rpc.callServer(
           ServerCall.FromWebview.BUY_ITEM,
-          inventory.toItemSource(this.itemSource) as InventoryItemSource,
+          this.itemSource,
           amount,
         );
-      } else if (this.itemSource.type === "inventory") {
+      } else if (this.itemSource.origin === ItemSourceOrigin.PlayerInventory) {
         return rpc.callServer(
           ServerCall.FromWebview.SELL_ITEM,
-          this.interaction.source as ShopSource,
-          inventory.toItemSource(this.itemSource) as InventoryItemSource,
+          this.interaction.source,
+          this.itemSource,
           amount,
         );
       }

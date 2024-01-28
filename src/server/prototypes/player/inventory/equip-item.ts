@@ -1,5 +1,5 @@
 import * as alt from "@altv/server";
-import { GlobalItemSource, InventoryItemSource, ItemSourceOrigin, ItemSourceType } from "@shared/interfaces";
+import { GroundItemSource, InventoryItemSource, ItemSourceOrigin } from "@shared/interfaces";
 import { ServerEvents } from "@shared/events/server";
 import { getItemEquipmentSlot, getItemInfoByKey, isItemAmmo } from "@shared/modules/items";
 import { isItemFirearmWeapon } from "@shared/modules/items/registry/weapons/firearm-weapon.items";
@@ -8,7 +8,7 @@ import { InGamePlayer } from "@/core/utility/assertions";
 import {
   addItemToInventory,
   findItem,
-  findSourceInventory,
+  findInventoryByItemSource,
   loadWeaponWithAmmo,
   removeItem,
 } from "@/modules/items-manager";
@@ -18,7 +18,7 @@ import { dropItemOnTheGround } from "@/modules/items-manager/api/dropped-items";
 
 declare module "@altv/server" {
   export interface Player {
-    equipItem(this: InGamePlayer, source: InventoryItemSource | GlobalItemSource): boolean;
+    equipItem(this: InGamePlayer, source: InventoryItemSource | GroundItemSource): boolean;
   }
 }
 
@@ -29,7 +29,7 @@ declare module "@altv/server" {
  *   This method doesn't check if the source is available for the player.
  */
 alt.Player.prototype.equipItem = function (source) {
-  const item = findItem.call(source, this);
+  const item = findItem(source, this);
 
   if (!item) {
     return false;
@@ -41,9 +41,9 @@ alt.Player.prototype.equipItem = function (source) {
     return false;
   }
 
-  const inventory = source.origin === ItemSourceOrigin.Global ? null : findSourceInventory.call(source);
+  const inventory = source.origin === ItemSourceOrigin.Ground ? null : findInventoryByItemSource(source);
 
-  if (source.origin !== ItemSourceOrigin.Global && !inventory) {
+  if (source.origin !== ItemSourceOrigin.Ground && !inventory) {
     return false;
   }
 
@@ -51,9 +51,8 @@ alt.Player.prototype.equipItem = function (source) {
     if (
       !loadWeaponWithAmmo(
         {
-          type: ItemSourceType.PlayerEquipment,
           equipmentSlot: "weapon",
-          origin: ItemSourceOrigin.Character,
+          origin: ItemSourceOrigin.PlayerEquipment,
           originId: this.character.id,
         },
         source
@@ -65,9 +64,8 @@ alt.Player.prototype.equipItem = function (source) {
     if (
       !useFishBaitOnFishingRod(
         {
-          type: ItemSourceType.PlayerEquipment,
           equipmentSlot: "tool",
-          origin: ItemSourceOrigin.Character,
+          origin: ItemSourceOrigin.PlayerEquipment,
           originId: this.character.id,
         },
         source
@@ -107,9 +105,8 @@ alt.Player.prototype.equipItem = function (source) {
 
         if (ammo) {
           this.equipItem({
-            type: ItemSourceType.PlayerInventory,
             inventorySlot: ammo.slot,
-            origin: ItemSourceOrigin.Character,
+            origin: ItemSourceOrigin.PlayerInventory,
             originId: this.character.id,
           });
         }

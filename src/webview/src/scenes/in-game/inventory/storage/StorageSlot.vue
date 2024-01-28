@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, effect, ref } from "vue";
-import { useInventory, InteractionType, isSameSource } from "@/store/inventory.store";
+import { useInventory, InteractionType, isSameItemSource } from "@/store/inventory.store";
 import { InventoryItem, InventorySource } from "@shared/interfaces";
 import ItemIcon from "../ItemIcon.vue";
 
@@ -20,7 +20,7 @@ const nodeRef = ref<HTMLDivElement>();
 const item = computed(() =>
   inventory.items.find(
     (item) =>
-      isSameSource(item.source, {
+      isSameItemSource(item.source, {
         type: "interaction",
         inventorySlot: props.slot,
         ...props.shop.source,
@@ -50,7 +50,7 @@ const draggingStyle = computed(() => {
 
   if (
     interaction.type === InteractionType.Dragging &&
-    isSameSource(interaction.state.item.source, item.value.source)
+    isSameItemSource(interaction.state.item.source, item.value.source)
   ) {
     const x =
       interaction.state.currentPosition.x -

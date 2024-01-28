@@ -37,9 +37,7 @@ export function createHookableFunction<F extends (...args: any) => any>(
       const result = handler(...args);
       if (typeof result !== "undefined") {
         console.log(
-          `[HookableFunction] ${options.name} hook returned ${
-            options.name !== "findSourceInventory" ? JSON.stringify(result) : "inventory"
-          }`
+          `[HookableFunction] ${options.name} hook returned ${JSON.stringify(result)}`
         );
         options.onResult?.(result, args);
         return result;

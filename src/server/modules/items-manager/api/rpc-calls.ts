@@ -1,18 +1,12 @@
 import { ServerCall } from "@shared/calls/server";
 import { CombineType, createItem, getCombineType } from "@shared/modules/items";
-import { ItemSourceOrigin, ItemSourceType } from "@shared/interfaces";
+import { ItemSourceOrigin } from "@shared/interfaces";
 import { rpc } from "@/core/rpc";
 import { needsToBeInGame } from "@/core/utility/assertions";
 import { loadWeaponWithAmmo, unloadAmmoFromWeapon } from "../items/weapons/firearm_weapons";
 import { removeBaitFromFishingRod, useFishBaitOnFishingRod } from "../items/fishing-rod";
-import {
-  canDropItem,
-  canEquipItems,
-  canInteractWithItemSource,
-  findItem,
-  useItemFromSource,
-} from "./hooks";
-import { dropItem, removeItem, swapItems } from "./utils";
+import { canDropItem, canEquipItems } from "./hooks";
+import { dropItem, removeItem, swapItems, canInteractWithItemSource, findItem, useItemFromSource } from "./utils";
 
 /**
  * Player tries to use an item.
@@ -20,15 +14,15 @@ import { dropItem, removeItem, swapItems } from "./utils";
 rpc.registerWebview(ServerCall.FromWebview.USE_ITEM, (player, itemSource) => {
   needsToBeInGame(player);
 
-  if (!canInteractWithItemSource.call(player, itemSource)) {
+  if (!canInteractWithItemSource(player, itemSource)) {
     return false;
   }
 
-  if (itemSource.origin === ItemSourceOrigin.Character && itemSource.type === ItemSourceType.PlayerEquipment) {
+  if (itemSource.origin === ItemSourceOrigin.PlayerEquipment) {
     return false;
   }
 
-  return useItemFromSource.call(player, itemSource) !== false;
+  return useItemFromSource(player, itemSource) !== false;
 });
 
 /**
@@ -37,13 +31,17 @@ rpc.registerWebview(ServerCall.FromWebview.USE_ITEM, (player, itemSource) => {
 rpc.registerWebview(ServerCall.FromWebview.BUY_ITEM, (player, itemSource) => {
   needsToBeInGame(player);
 
-  if (itemSource.origin !== ItemSourceOrigin.Shop) {
+  if (itemSource.origin !== ItemSourceOrigin.InteractionInventory) {
     return false;
   }
 
-  if (!canInteractWithItemSource.call(player, itemSource)) {
+  if (!canInteractWithItemSource(player, itemSource)) {
     return false;
   }
+
+  // find source
+  // check if shop
+
   return false;
 
   // return player.buyItem(itemSource);
@@ -55,17 +53,17 @@ rpc.registerWebview(ServerCall.FromWebview.BUY_ITEM, (player, itemSource) => {
 rpc.registerWebview(ServerCall.FromWebview.EQUIP_ITEM, (player, itemSource) => {
   needsToBeInGame(player);
 
-  if (itemSource.origin !== ItemSourceOrigin.Global && itemSource.type !== ItemSourceType.PlayerInventory) {
+  if (itemSource.origin !== ItemSourceOrigin.Ground && itemSource.origin !== ItemSourceOrigin.PlayerInventory) {
     return false;
   }
 
-  const item = findItem.call(itemSource, player);
+  const item = findItem(itemSource, player);
 
   if (!item) {
     return false;
   }
 
-  if (!canInteractWithItemSource.call(player, itemSource)) {
+  if (!canInteractWithItemSource(player, itemSource)) {
     return false;
   }
 
@@ -88,17 +86,17 @@ rpc.registerWebview(ServerCall.FromWebview.UNEQUIP_ITEM, (player, equipmentSlot)
 rpc.registerWebview(ServerCall.FromWebview.COMBINE_ITEMS, (player, sourceA, sourceB) => {
   needsToBeInGame(player);
 
-  if (sourceA.origin === ItemSourceOrigin.Global || sourceB.origin === ItemSourceOrigin.Global) {
+  if (sourceA.origin === ItemSourceOrigin.Ground || sourceB.origin === ItemSourceOrigin.Ground) {
     // can't use items on the ground for combinations
     return false;
   }
 
-  if (!canInteractWithItemSource.call(player, sourceA) || !canInteractWithItemSource.call(player, sourceB)) {
+  if (!canInteractWithItemSource(player, sourceA) || !canInteractWithItemSource(player, sourceB)) {
     return false;
   }
 
-  const itemA = findItem.call(sourceA, player);
-  const itemB = findItem.call(sourceB, player);
+  const itemA = findItem(sourceA, player);
+  const itemB = findItem(sourceB, player);
 
   if (!itemA || !itemB) {
     return false;
@@ -112,7 +110,7 @@ rpc.registerWebview(ServerCall.FromWebview.COMBINE_ITEMS, (player, sourceA, sour
 
       // Do not support equiping already equiped ammo
       // Player should first unload ammo from the weapon before loading it into another weapon
-      if (ammoSource.type === ItemSourceType.PlayerEquipment) {
+      if (ammoSource.origin === ItemSourceOrigin.PlayerEquipment) {
         return false;
       }
 
@@ -121,7 +119,7 @@ rpc.registerWebview(ServerCall.FromWebview.COMBINE_ITEMS, (player, sourceA, sour
     case CombineType.EquipFishBait: {
       const [fishingRodSource, baitSource] = reverse ? [sourceB, sourceA] : [sourceA, sourceB];
 
-      if (baitSource.type === ItemSourceType.PlayerEquipment) {
+      if (baitSource.origin === ItemSourceOrigin.PlayerEquipment) {
         // Should never happen
         return false;
       }
@@ -135,7 +133,7 @@ rpc.registerWebview(ServerCall.FromWebview.COMBINE_ITEMS, (player, sourceA, sour
 rpc.registerWebview(ServerCall.FromWebview.UNLOAD_AMMO, (player, itemSource) => {
   needsToBeInGame(player);
 
-  if (!canInteractWithItemSource.call(player, itemSource)) {
+  if (!canInteractWithItemSource(player, itemSource)) {
     return false;
   }
 
@@ -145,7 +143,7 @@ rpc.registerWebview(ServerCall.FromWebview.UNLOAD_AMMO, (player, itemSource) => 
 rpc.registerWebview(ServerCall.FromWebview.REMOVE_BAIT, (player, itemSource) => {
   needsToBeInGame(player);
 
-  if (!canInteractWithItemSource.call(player, itemSource)) {
+  if (!canInteractWithItemSource(player, itemSource)) {
     return false;
   }
 
@@ -161,8 +159,8 @@ rpc.registerClient(ServerCall.FromClient.RELOAD_WEAPON, (player) => {
 rpc.registerWebview(ServerCall.FromWebview.DROP_ITEM, (player, itemSource) => {
   needsToBeInGame(player);
 
-  if (itemSource.origin === ItemSourceOrigin.Global) {
-    // can't drop item that's already on the ground
+  if (itemSource.origin !== ItemSourceOrigin.PlayerInventory && itemSource.origin !== ItemSourceOrigin.PlayerEquipment) {
+    // we can only drop items that we have on the player
     return false;
   }
 
@@ -176,13 +174,13 @@ rpc.registerWebview(ServerCall.FromWebview.DROP_ITEM, (player, itemSource) => {
 rpc.registerWebview(ServerCall.FromWebview.MOVE_ITEM, (player, from, to, amount = 1) => {
   needsToBeInGame(player);
 
-  if (!canInteractWithItemSource.call(player, from) || !canInteractWithItemSource.call(player, to)) {
+  if (!canInteractWithItemSource(player, from) || !canInteractWithItemSource(player, to)) {
     return false;
   }
 
-  if (to.origin === ItemSourceOrigin.Global) {
-    if (from.origin === ItemSourceOrigin.Global) {
-      // can't drop item that's already on the ground
+  if (to.origin === ItemSourceOrigin.Ground) {
+    if (from.origin !== ItemSourceOrigin.PlayerInventory && from.origin !== ItemSourceOrigin.PlayerEquipment) {
+      // can't drop item that's not on the player
       return false;
     }
 
@@ -192,8 +190,8 @@ rpc.registerWebview(ServerCall.FromWebview.MOVE_ITEM, (player, from, to, amount 
   /**
    * Pick up item from the ground
    */
-  if (from.origin === ItemSourceOrigin.Global) {
-    const item = findItem.call(from);
+  if (from.origin === ItemSourceOrigin.Ground) {
+    const item = findItem(from);
 
     if (!item) {
       return false;
@@ -202,7 +200,7 @@ rpc.registerWebview(ServerCall.FromWebview.MOVE_ITEM, (player, from, to, amount 
     /**
      * From ground to equipment
      */
-    if (to.type === ItemSourceType.PlayerEquipment) {
+    if (to.origin === ItemSourceOrigin.PlayerEquipment) {
       if (!canEquipItems.call(player)) {
         return false;
       }
@@ -213,7 +211,7 @@ rpc.registerWebview(ServerCall.FromWebview.MOVE_ITEM, (player, from, to, amount 
     /**
      * From ground to inventory
      */
-    if (to.type === ItemSourceType.PlayerInventory) {
+    if (to.origin === ItemSourceOrigin.PlayerInventory) {
       const itemToAdd = createItem(item.key, { ...item, amount });
 
       if (player.addItem(itemToAdd, to.inventorySlot)) {
@@ -228,7 +226,7 @@ rpc.registerWebview(ServerCall.FromWebview.MOVE_ITEM, (player, from, to, amount 
   /**
    * Between equipment slots
    */
-  if (from.type === ItemSourceType.PlayerEquipment && to.type === ItemSourceType.PlayerEquipment) {
+  if (from.origin === ItemSourceOrigin.PlayerEquipment && to.origin === ItemSourceOrigin.PlayerEquipment) {
     // There is no reason to move item between equipment slots
     return false;
   }
@@ -236,7 +234,7 @@ rpc.registerWebview(ServerCall.FromWebview.MOVE_ITEM, (player, from, to, amount 
   /**
    * From inventory to equipment
    */
-  if (from.type === ItemSourceType.PlayerInventory && to.type === ItemSourceType.PlayerEquipment) {
+  if (from.origin === ItemSourceOrigin.PlayerInventory && to.origin === ItemSourceOrigin.PlayerEquipment) {
     if (!canEquipItems.call(player)) {
       return false;
     }
@@ -247,14 +245,14 @@ rpc.registerWebview(ServerCall.FromWebview.MOVE_ITEM, (player, from, to, amount 
   /**
    * From equipment to inventory
    */
-  if (from.type === ItemSourceType.PlayerEquipment && to.type === ItemSourceType.PlayerInventory) {
+  if (from.origin === ItemSourceOrigin.PlayerEquipment && to.origin === ItemSourceOrigin.PlayerInventory) {
     return player.unequipItem(from.equipmentSlot, to);
   }
 
   /**
    * Between inventory slots
    */
-  if (from.type === ItemSourceType.PlayerInventory && to.type === ItemSourceType.PlayerInventory) {
+  if (from.origin === ItemSourceOrigin.PlayerInventory && to.origin === ItemSourceOrigin.PlayerInventory) {
     return swapItems(from, to);
   }
 

@@ -12,34 +12,36 @@ import {
 import { computed } from "vue";
 import { InteractionType, ItemActionMenu, useInventory } from "@/store/inventory.store";
 import { isItemPreviewable } from "@shared/modules/items/lib/is-item-previewable";
-import { ItemSourceType, LocalPlayerItemSource } from "@shared/interfaces";
+import { InteractionInventoryItemSource, ItemSourceOrigin, PlayerInventoryItemSource, PlayerItemSource } from "@shared/interfaces";
+import { useShop } from "@/store/shop.store";
 
 const props = defineProps<ItemActionMenu>();
 
 const inventory = useInventory();
+const shop = useShop();
 
 const item = computed(() => props.item.item);
 const itemSource = computed(() => props.item.source);
 
-const isInShop = computed(() => inventory.interaction?.source.origin === "shop");
+const isInShop = computed(() => shop.isInShop);
 const visible = computed(() => inventory.currentInteraction.type === InteractionType.ContextMenu);
 const itemName = computed(() => getItemName(item.value.key));
 const isUsable = computed(
-  () => !isInShop.value && itemSource.value.type === ItemSourceType.PlayerInventory && isItemUsable(item.value.key)
+  () => !isInShop.value && [ItemSourceOrigin.PlayerInventory, ItemSourceOrigin.InteractionInventory].includes(itemSource.value.origin) && isItemUsable(item.value.key)
 );
-const isBuyable = computed(() => isInShop.value && itemSource.value.type === ItemSourceType.InteractionInventory);
-const isSellable = computed(() => isInShop.value && itemSource.value.type === ItemSourceType.PlayerInventory);
+const isBuyable = computed(() => isInShop.value && itemSource.value.origin === ItemSourceOrigin.InteractionInventory);
+const isSellable = computed(() => isInShop.value && itemSource.value.origin === ItemSourceOrigin.PlayerInventory);
 const isEquipable = computed(
-  () => !isInShop.value && itemSource.value.type === ItemSourceType.PlayerInventory && isItemEquipable(item.value.key)
+  () => !isInShop.value && [ItemSourceOrigin.PlayerInventory, ItemSourceOrigin.InteractionInventory].includes(itemSource.value.origin) && isItemEquipable(item.value.key)
 );
-const isUnequipable = computed(() => itemSource.value.type === ItemSourceType.PlayerEquipment);
-const isDroppable = computed(() => !isInShop.value && itemSource.value.type === ItemSourceType.PlayerInventory);
+const isUnequipable = computed(() => itemSource.value.origin === ItemSourceOrigin.PlayerEquipment);
+const isDroppable = computed(() => !isInShop.value && [ItemSourceOrigin.PlayerInventory, ItemSourceOrigin.PlayerEquipment].includes(itemSource.value.origin));
 const hasAmmo = computed(() => !isInShop.value && isItemFirearmWeapon(item.value) && !!item.value.ammo);
 const hasFishBait = computed(() => !isInShop.value && isItemFishingRod(item.value) && !!item.value.bait);
 const isPreviewable = computed(() => !isInShop.value && isItemPreviewable(item.value.key));
 
 const combine = computed(() => {
-  if (itemSource.value.type !== ItemSourceType.PlayerInventory) {
+  if ([ItemSourceOrigin.PlayerInventory, ItemSourceOrigin.InteractionInventory].includes(itemSource.value.origin)) {
     return {
       type: CombineType.None,
       reverse: false,
@@ -73,21 +75,28 @@ function executeAction(action: string) {
 
   switch (action) {
     case "use":
+      if (source.origin !== ItemSourceOrigin.PlayerInventory) {
+        return;
+      }
       inventory.useItem(source);
       break;
     case "equip":
-      inventory.equipItem(source);
+      if ([ItemSourceOrigin.PlayerInventory, ItemSourceOrigin.InteractionInventory].includes(itemSource.value.origin)) {
+        return;
+      }
+      inventory.equipItem(source as PlayerInventoryItemSource | InteractionInventoryItemSource);
       break;
     case "preview":
       inventory.previewingItem = props.item;
       break;
     case "unequip":
-      if (source.type === ItemSourceType.PlayerEquipment) {
-        inventory.unequipItem(source.equipmentSlot);
+      if (source.origin !== ItemSourceOrigin.PlayerEquipment) {
+        return;
       }
+      inventory.unequipItem(source.equipmentSlot);
       break;
     case "drop":
-      inventory.dropFromMenu(source as LocalPlayerItemSource);
+      inventory.dropFromMenu(source as PlayerItemSource);
       break;
     case "load-ammo":
       if (inventory.selectedItem) {

@@ -1,5 +1,5 @@
 import { ComputedRef, Ref, computed } from "vue";
-import { InteractionType, isSameSource, useInventory, SlottedItem } from "@/store/inventory.store";
+import { InteractionType, isSameItemSource, useInventory, SlottedItem } from "@/store/inventory.store";
 import { getCombineType, CombineType } from "@shared/modules/items";
 
 export function useCombinableItem(item: Ref<SlottedItem | undefined> | ComputedRef<SlottedItem | undefined | null>) {
@@ -25,7 +25,7 @@ export function useCombinableItem(item: Ref<SlottedItem | undefined> | ComputedR
       return false;
     }
 
-    if (isSameSource(hoveredItem.value.source, item.value.source)) {
+    if (isSameItemSource(hoveredItem.value.source, item.value.source)) {
       return false;
     }
 
@@ -43,7 +43,7 @@ export function useCombinableItem(item: Ref<SlottedItem | undefined> | ComputedR
       return false;
     }
 
-    if (!isSameSource(hoveredItem.value.source, item.value.source)) {
+    if (!isSameItemSource(hoveredItem.value.source, item.value.source)) {
       return false;
     }
 

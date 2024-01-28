@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { InteractionType, SlottedItem, isSameSource, useInventory } from "@/store/inventory.store";
+import { InteractionType, SlottedItem, isSameItemSource, useInventory } from "@/store/inventory.store";
 import InventoryItemIcon from "./InventoryItemIcon.vue";
 import { isItemUsable, isItemEquipable } from "@shared/modules/items";
-import { ItemSourceType, LocalInventoryItemSource, LocalPlayerInventoryItemSource } from "@shared/interfaces";
 import { isItemPreviewable } from "@shared/modules/items/lib/is-item-previewable";
 import { useCombinableItem } from "@/composables/use-combinable-item";
+import { InventoryItemSource } from "@shared/interfaces";
 
 const props = defineProps<{
-  source: LocalInventoryItemSource;
+  source: InventoryItemSource;
 }>();
 
 const inventory = useInventory();
@@ -17,7 +17,7 @@ const nodeRef = ref<HTMLDivElement>();
 
 const item = computed(() =>
   inventory.items.find(
-    (item): item is SlottedItem<LocalPlayerInventoryItemSource> => isSameSource(item.source, props.source)
+    (item): item is SlottedItem<InventoryItemSource> => isSameItemSource(item.source, props.source)
   )
 );
 
@@ -26,12 +26,12 @@ const { combinableWithHoveredItem, combinableWithOtherItems } = useCombinableIte
 const dragging = computed(
   () =>
     inventory.currentInteraction.type === InteractionType.Dragging &&
-    isSameSource(inventory.currentInteraction.state.item.source, props.source)
+    isSameItemSource(inventory.currentInteraction.state.item.source, props.source)
 );
 
 const selected = computed(
   () =>
-    isSameSource(inventory.selectedItem?.source, props.source)
+    isSameItemSource(inventory.selectedItem?.source, props.source)
 );
 
 const draggingOver = computed(() => {

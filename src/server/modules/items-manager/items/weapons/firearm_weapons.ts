@@ -12,11 +12,10 @@ import {
   FirearmWeaponItem,
   isItemFirearmWeapon,
 } from "@shared/modules/items/registry/weapons/firearm-weapon.items";
-import { GlobalItemSource, InventoryItemSource, ItemSource, ItemSourceOrigin, ItemSourceType } from "@shared/interfaces";
+import { GroundItemSource, InventoryItemSource, ItemSource, ItemSourceOrigin } from "@shared/interfaces";
 import { InGamePlayer, isInGame } from "@/core/utility/assertions";
 import { on } from "@/core/events/emit";
-import { findItem, findSourceInventory } from "../../api/hooks";
-import { removeItem, addItemToInventory } from "../../api/utils";
+import { removeItem, addItemToInventory, findInventoryByItemSource, findItem } from "../../api/utils";
 import { dropItemOnTheGround, droppedItems } from "../../api/dropped-items";
 
 on(ServerEvents.FromServer.ITEM_EQUIP, (player, item) => {
@@ -78,13 +77,13 @@ alt.Events.onPlayer(ServerEvents.FromClient.WEAPON_SHOOT, (player) => {
  */
 export function loadWeaponWithAmmo(
   weaponSource: ItemSource,
-  ammoSource: InventoryItemSource | GlobalItemSource
+  ammoSource: InventoryItemSource | GroundItemSource
 ): boolean {
-  const weapon = findItem.call(weaponSource);
-  const ammo = findItem.call(ammoSource);
-  const ammoInventory = ammoSource.origin === ItemSourceOrigin.Global ? null : findSourceInventory.call(ammoSource);
+  const weapon = findItem(weaponSource);
+  const ammo = findItem(ammoSource);
+  const ammoInventory = ammoSource.origin === ItemSourceOrigin.Ground ? null : findInventoryByItemSource(ammoSource);
 
-  if (!weapon || !ammo || (ammoSource.origin !== ItemSourceOrigin.Global && !ammoInventory)) {
+  if (!weapon || !ammo || (ammoSource.origin !== ItemSourceOrigin.Ground && !ammoInventory)) {
     return false;
   }
 
@@ -92,7 +91,7 @@ export function loadWeaponWithAmmo(
     return false;
   }
 
-  const pos = droppedItems.get(ammoSource.originId)?.pos;
+  const pos = ammoSource.origin === ItemSourceOrigin.Ground ? droppedItems.get(ammoSource.originId)?.pos : null;
 
   // remove ammo from inventory
   removeItem(ammoSource);
@@ -113,7 +112,7 @@ export function loadWeaponWithAmmo(
  * Unloads ammo from weapon to its inventory (or players inventory if equiped).
  */
 export function unloadAmmoFromWeapon(source: ItemSource) {
-  const weapon = findItem.call(source);
+  const weapon = findItem(source);
 
   if (!weapon) {
     return false;
@@ -123,7 +122,7 @@ export function unloadAmmoFromWeapon(source: ItemSource) {
     return false;
   }
 
-  if (source.origin === ItemSourceOrigin.Global) {
+  if (source.origin === ItemSourceOrigin.Ground) {
     const droppedItemVE = droppedItems.get(source.originId);
 
     if (!droppedItemVE) {
@@ -144,7 +143,7 @@ export function unloadAmmoFromWeapon(source: ItemSource) {
   }
 
   // Weapon is equipped
-  if (source.type === ItemSourceType.PlayerEquipment) {
+  if (source.origin === ItemSourceOrigin.PlayerEquipment) {
     const player = alt.Player.all.find(
       (player): player is InGamePlayer => player.character?.id === source.originId
     );
@@ -174,7 +173,7 @@ export function unloadAmmoFromWeapon(source: ItemSource) {
     return false;
   }
 
-  const inventory = findSourceInventory.call(source);
+  const inventory = findInventoryByItemSource(source);
 
   if (!inventory) {
     return false;

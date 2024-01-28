@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { InteractionType, SlottedInventoryItem, isSameSource, useInventory } from "@/store/inventory.store";
+import { InteractionType, SlottedGroundItem, SlottedInteractionInventoryItem, SlottedPlayerInventoryItem, isSameItemSource, useInventory } from "@/store/inventory.store";
 import ItemIcon from "./ItemIcon.vue";
 
 const props = defineProps<{
-  item: SlottedInventoryItem;
+  item: SlottedPlayerInventoryItem | SlottedInteractionInventoryItem | SlottedGroundItem;
 }>();
 
 const inventory = useInventory();
@@ -19,7 +19,7 @@ const shouldShow = computed(
   () =>
     inventory.currentInteraction.type !== InteractionType.Dropping ||
     !inventory.currentInteraction.state.outside ||
-    !isSameSource(slottedItem.value.source, inventory.currentInteraction.state.item.source)
+    !isSameItemSource(slottedItem.value.source, inventory.currentInteraction.state.item.source)
 );
 
 const draggingStyle = computed(() => {
@@ -27,7 +27,7 @@ const draggingStyle = computed(() => {
 
   if (
     interaction.type === InteractionType.Dragging &&
-    isSameSource(interaction.state.item.source, slottedItem.value.source)
+    isSameItemSource(interaction.state.item.source, slottedItem.value.source)
   ) {
     const x =
       interaction.state.currentPosition.x -

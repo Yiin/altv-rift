@@ -1,6 +1,6 @@
 import * as alt from "@altv/server";
 import { toRaw } from "vue";
-import { GlobalItemSource, InventoryItemSource, ItemSource, ItemSourceOrigin, ItemSourceType, PlayerItemSource } from "@shared/interfaces";
+import { GroundItemSource, InventoryItemSource, ItemSource, ItemSourceOrigin } from "@shared/interfaces";
 import {
   FishBaitItem,
   FishingRodItem,
@@ -8,18 +8,18 @@ import {
   isItemFishingRod,
 } from "@shared/modules/items";
 import { InGamePlayer } from "@/core/utility/assertions";
-import { addItemToInventory, findItem, findSourceInventory, removeItem } from "../api";
+import { addItemToInventory, findInventoryByItemSource, findItem, removeItem } from "../api";
 import { dropItemOnTheGround, droppedItems } from "../api/dropped-items";
 
 export function useFishBaitOnFishingRod(
   fishingRodSource: ItemSource,
-  fishBaitSource: InventoryItemSource | GlobalItemSource
+  fishBaitSource: InventoryItemSource | GroundItemSource
 ) {
-  const fishingRod = findItem.call(fishingRodSource);
-  const fishBait = findItem.call(fishBaitSource);
-  const fishBaitInventory = fishBaitSource.origin === ItemSourceOrigin.Global ? null : findSourceInventory.call(fishBaitSource);
+  const fishingRod = findItem(fishingRodSource);
+  const fishBait = findItem(fishBaitSource);
+  const fishBaitInventory = fishBaitSource.origin === ItemSourceOrigin.Ground ? null : findInventoryByItemSource(fishBaitSource);
 
-  if (!fishingRod || !fishBait || (fishBaitSource.origin !== ItemSourceOrigin.Global && !fishBaitInventory)) {
+  if (!fishingRod || !fishBait || (fishBaitSource.origin !== ItemSourceOrigin.Ground && !fishBaitInventory)) {
     return false;
   }
 
@@ -27,7 +27,7 @@ export function useFishBaitOnFishingRod(
     return false;
   }
 
-  const droppedItemPos = droppedItems.get(fishBaitSource.originId)?.pos;
+  const droppedItemPos = fishBaitSource.origin === ItemSourceOrigin.Ground ? droppedItems.get(fishBaitSource.originId)?.pos : null;
 
   removeItem(fishBaitSource);
 
@@ -45,7 +45,7 @@ export function useFishBaitOnFishingRod(
 }
 
 export function removeBaitFromFishingRod(source: ItemSource) {
-  const fishingRod = findItem.call(source);
+  const fishingRod = findItem(source);
 
   if (!fishingRod) {
     return false;
@@ -55,7 +55,7 @@ export function removeBaitFromFishingRod(source: ItemSource) {
     return false;
   }
 
-  if (source.origin === ItemSourceOrigin.Global) {
+  if (source.origin === ItemSourceOrigin.Ground) {
     const droppedItemVE = droppedItems.get(source.originId);
 
     if (!droppedItemVE) {
@@ -75,7 +75,7 @@ export function removeBaitFromFishingRod(source: ItemSource) {
   }
 
   // Fishing rod is equipped
-  if (source.type === ItemSourceType.PlayerEquipment) {
+  if (source.origin === ItemSourceOrigin.PlayerEquipment) {
     const player = alt.Player.all.find(
       (player): player is InGamePlayer => player.character?.id === source.originId
     );
@@ -105,7 +105,7 @@ export function removeBaitFromFishingRod(source: ItemSource) {
     return false;
   }
 
-  const inventory = findSourceInventory.call(source);
+  const inventory = findInventoryByItemSource(source);
 
   if (!inventory) {
     return false;

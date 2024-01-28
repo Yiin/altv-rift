@@ -16,7 +16,7 @@ import Confirmation from "./shop/Confirmation.vue";
 import ItemPreview from "./item-preview/ItemPreview.vue";
 import { useShop } from "@/store/shop.store";
 import { useGapSize } from "@/composables/use-gap-size";
-import { ItemSourceType } from "@shared/interfaces";
+import { ItemSourceOrigin } from "@shared/interfaces";
 
 const inventory = useInventory();
 const shop = useShop();
@@ -114,7 +114,7 @@ onUnmounted(() => {
         <div class="uppercase text-base text-deepGray">items</div>
         <div class="inline-grid grid-cols-6 grid-rows-5 gap-2.5 mt-5">
           <InventorySlot v-for="(_, slot) in 24"
-            :source="{ type: ItemSourceType.PlayerInventory, inventorySlot: slot }" />
+            :source="{ origin: ItemSourceOrigin.PlayerInventory, originId: inventory.playerId, inventorySlot: slot }" />
         </div>
       </div>
       <div class="-mb-52">

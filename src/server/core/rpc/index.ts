@@ -13,7 +13,6 @@ import { ServerCall } from "@shared/calls/server";
 import { CallFromClient } from "@shared/calls/server/from-client";
 import { CallFromWebview, FromWebview } from "@shared/calls/server/from-webview";
 import { createPayload } from "@shared/utility/create-payload";
-import { serialize } from "@shared/utility/serializer";
 
 const clientProcedures = new Map<string, (player: alt.Player, ...args: any[]) => any>();
 const clientHandlers = new Map<

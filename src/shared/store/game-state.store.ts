@@ -1,4 +1,4 @@
-import { InventoryItem, InventorySource } from "@shared/interfaces";
+import { InventoryItem, InteractionInventorySource } from "@shared/interfaces";
 import { Ammo, FirearmWeapon, ItemGrade } from "@shared/modules/items";
 
 export enum PlayerFlags {
@@ -8,11 +8,17 @@ export enum PlayerFlags {
   IsDigging = "IsDigging",
 }
 
+export enum InteractionInventoryType {
+  Shop = "Shop",
+  Storage = "Storage",
+}
+
 export interface GameState {
   flags: Set<PlayerFlags>;
-  interaction: {
-    source: InventorySource;
-    isOwned: boolean;
+  interactionInventory: {
+    type: InteractionInventoryType;
+    label: string;
+    source: InteractionInventorySource;
     size: number;
     items: InventoryItem[];
   } | null;
@@ -20,12 +26,13 @@ export interface GameState {
 
 export const getDefaultGameState = (): GameState => ({
   flags: new Set(),
-  interaction: null && {
+  interactionInventory: null && {
+    type: InteractionInventoryType.Shop,
+    label: "Grocery Shop",
     source: {
       origin: "shop",
       originId: 1,
     },
-    isOwned: false,
     size: 10,
     items: [
       {
