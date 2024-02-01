@@ -1,3 +1,5 @@
+import * as alt from "@altv/client";
+import { z } from "zod";
 import {
   CALL_CLIENT_FROM_WEBVIEW,
   CALL_CLIENT_FROM_WEBVIEW_RESPONSE,
@@ -15,7 +17,7 @@ import { getWebview } from "@/core/user-interface/webview";
 const webviewProcedures = new Map<string, any>();
 const webviewHandlers = new Map<
   string,
-  { resolve: (result: any) => void; reject: (err: any) => void }
+  { name: string; resolve: (result: any) => void; reject: (err: any) => void }
 >();
 
 // call webview from client
@@ -27,7 +29,7 @@ export const callWebview = async <T extends keyof typeof WebviewCall.FromClient>
     const payload = createPayload(name, args);
 
     getWebview().emitRaw(CALL_WEBVIEW_FROM_CLIENT, payload);
-    webviewHandlers.set(payload.id, { resolve, reject });
+    webviewHandlers.set(payload.id, { name, resolve, reject });
   });
 };
 
@@ -46,6 +48,23 @@ getWebview((webview) =>
       handler.reject(response);
       return;
     }
+
+    if (handler.name in WebviewCall.FromClientValidation) {
+      const schema = WebviewCall.FromClientValidation[handler.name as keyof typeof WebviewCall.FromClientValidation];
+
+      if ('returns' in schema) {
+        // @ts-expect-error remove this comment if needed
+        const result = schema.returns.safeParse(response.result);
+
+        if (!result.success) {
+          alt.logError(`CALL_WEBVIEW_FROM_CLIENT_RESPONSE: Validation error in ${handler.name}:`, result.error);
+          handler.reject(result.error);
+        }
+      }
+    } else {
+      alt.logWarning(`CALL_WEBVIEW_FROM_CLIENT_RESPONSE: No validation schema for ${handler.name}`);
+    }
+
     handler.resolve(response.result);
   })
 );
@@ -75,6 +94,17 @@ getWebview((webview) => {
       if (!callback) {
         throw new Error(`CALL_CLIENT_FROM_WEBVIEW: Procedure ${name} does not exist`);
       }
+
+      if (name in ClientCall.FromWebviewValidation) {
+        const schema = ClientCall.FromWebviewValidation[name as keyof typeof ClientCall.FromWebviewValidation];
+
+        if ('args' in schema) {
+          z.tuple(schema).parse(args);
+        }
+      } else {
+        alt.logWarning(`CALL_SERVER_FROM_WEBVIEW: No validation schema for ${name}`);
+      }
+
       const result = await callback(...args);
       webview.emitRaw(CALL_CLIENT_FROM_WEBVIEW_RESPONSE, {
         id,

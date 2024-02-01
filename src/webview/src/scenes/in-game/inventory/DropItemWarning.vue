@@ -23,8 +23,7 @@ const details = useItemDetails(item);
       top: `${position.y}px`,
     }"
     @mousedown.stop
-    v-click-outside="inventory.cancelDropping"
-  >
+    v-click-outside="inventory.cancelDropping">
     <v-card-item title="Drop item">
       <template v-slot:subtitle>
         <v-icon icon="mdi-alert" size="18" color="error" class="me-1 pb-1"></v-icon>
@@ -41,8 +40,7 @@ const details = useItemDetails(item);
           :src="details.image"
           :style="{
             transform: `scale(${details.imageScale})`,
-          }"
-        />
+          }" />
       </div>
     </v-card-text>
 
@@ -56,8 +54,7 @@ const details = useItemDetails(item);
       <v-list-item
         v-if="isItemFirearmWeapon(item) && item.ammo"
         density="compact"
-        prepend-icon="mdi-ammunition"
-      >
+        prepend-icon="mdi-ammunition">
         <v-list-item-subtitle class="flex items-end gap-1">
           <span class="font-bold">{{ getItemName(item.ammo.key) }}</span>
           <v-icon icon="mdi-close" size="12" />

@@ -2,6 +2,7 @@ import * as alt from "@altv/server";
 import { ServerEvents } from "@shared/events/server";
 import { getWeaponHash } from "@shared/modules/items";
 import { isItemThrowableWeapon } from "@shared/modules/items/registry/weapons/throwable-weapon.items";
+import { EquipmentSlot } from "@shared/interfaces";
 import { isInGame } from "@/core/utility/assertions";
 import { on } from "@/core/events/emit";
 import { removeItemFromInventory } from "../../api";
@@ -47,12 +48,12 @@ alt.Events.onProjectileStart(({ player, weaponHash, cancel }) => {
   }
 
   if (equipedWeapon.amount <= 0) {
-    player.removeEquipedItem("weapon");
+    player.removeEquipedItem(EquipmentSlot.Weapon);
     cancel();
     return;
   }
 
   if ((equipedWeapon.amount -= 1) <= 0) {
-    player.removeEquipedItem("weapon");
+    player.removeEquipedItem(EquipmentSlot.Weapon);
   }
 });

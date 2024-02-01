@@ -2,7 +2,6 @@ import { EquipmentSlot } from "@shared/interfaces";
 import {
   isItemKeyAmmo,
   isItemKeyClothing,
-  isItemKeyFishingRod,
   isItemKeyWeapon,
   isItemKeyAccessory,
   isItemKeyArmor,
@@ -16,61 +15,60 @@ import {
   isItemKeyRightHand,
   isItemKeyShoes,
   isItemKeyTop,
+  isItemKeyTool,
 } from "../registry";
-import { isItemKeyTool } from "../registry/tools/tool.items";
 import { Item, ItemKey } from "../types";
-import { getItemInfoByKey } from "../items-registry";
 
 /**
  * Determines the equipment slot suitable for the given item,
  */
 export function getItemKeyEquipmentSlot(key: ItemKey): EquipmentSlot | undefined {
   if (isItemKeyAmmo(key)) {
-    return "ammo";
+    return EquipmentSlot.Ammo;
   }
   if (isItemKeyWeapon(key)) {
-    return "weapon";
+    return EquipmentSlot.Weapon;
   }
   if (isItemKeyClothing(key)) {
     if (isItemKeyAccessory(key)) {
-      return "accessory";
+      return EquipmentSlot.Accessory;
     }
     if (isItemKeyArmor(key)) {
-      return "armor";
+      return EquipmentSlot.Armor;
     }
     if (isItemKeyEarrings(key)) {
-      return "earrings";
+      return EquipmentSlot.Earrings;
     }
     if (isItemKeyGlasses(key)) {
-      return "glasses";
+      return EquipmentSlot.Glasses;
     }
     if (isItemKeyGloves(key)) {
-      return "gloves";
+      return EquipmentSlot.Gloves;
     }
     if (isItemKeyHeadwear(key)) {
-      return "headwear";
+      return EquipmentSlot.Headwear;
     }
     if (isItemKeyLeftHand(key)) {
-      return "lefthand";
+      return EquipmentSlot.LeftHand;
     }
     if (isItemKeyMask(key)) {
-      return "mask";
+      return EquipmentSlot.Mask;
     }
     if (isItemKeyPants(key)) {
-      return "pants";
+      return EquipmentSlot.Pants;
     }
     if (isItemKeyRightHand(key)) {
-      return "righthand";
+      return EquipmentSlot.RightHand;
     }
     if (isItemKeyShoes(key)) {
-      return "shoes";
+      return EquipmentSlot.Shoes;
     }
     if (isItemKeyTop(key)) {
-      return "top";
+      return EquipmentSlot.Top;
     }
   }
   if (isItemKeyTool(key)) {
-    return "tool";
+    return EquipmentSlot.Tool;
   }
   return;
 }

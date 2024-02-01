@@ -87,9 +87,7 @@ export const getDefaultClientStoreState = (): ClientState => ({
   ui: {
     scene: null,
     elements: new Set(),
-    window: {
-      type: WindowType.PLAYER_INVENTORY,
-    },
+    window: null,
   },
   conversation: null,
   trackingQuest: null,

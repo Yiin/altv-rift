@@ -502,7 +502,7 @@ export const useInventory = defineStore("inventory", {
                   isSameItemSource(item.source, {
                     origin: ItemSourceOrigin.PlayerEquipment,
                     originId: this.playerId,
-                    equipmentSlot: "weapon",
+                    equipmentSlot: EquipmentSlot.Weapon,
                   })
                 )?.item;
 
@@ -582,6 +582,7 @@ export const useInventory = defineStore("inventory", {
           });
         } else {
           // @ts-expect-error TODO: Ask for amount
+          foo = 4;
 
           // Move the item or swap with another item
           this.moveItem(this.currentInteraction.state.item.source, source);

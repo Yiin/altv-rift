@@ -2,10 +2,11 @@
 import Window from "@/components/Window.vue";
 import SkillProgressBar from "./SkillProgressBar.vue";
 import { useCharacter } from "@/store/synced/character.store";
+import { computed } from "vue";
 
 const character = useCharacter();
 
-const skills = [
+const skills = computed(() => [
     {
         name: "Woodcutting",
         xp: character.skills.woodcutting,
@@ -26,7 +27,7 @@ const skills = [
         xp: 0,
         color: "bg-orange-600",
     },
-]
+]);
 </script>
 
 <template>

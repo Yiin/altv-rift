@@ -30,6 +30,18 @@ Notes:
   but ui still needs confirmation modal w/ amount selection for dropping
   and amount selection for picking up
 
+  move:
+    - inventory to ground, ground to inventory
+  drop:
+    - inventory to ground
+  move:
+    - shop to inventory, inventory to shop
+    - storage to inventory, inventory to storage
+
+storage inventory:
+  - storage
+  - shop
+
 ------------------------------------------------------------------------------------------------------------------------
 
 ✔ Core Gameplay Mechanics:

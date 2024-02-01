@@ -12,7 +12,7 @@ import { createPayload } from "@shared/utility/create-payload";
 import { deserialize, serialize } from "@shared/utility/serializer";
 
 const serverProcedures = new Map<string, (args: any) => any>();
-const serverHandlers = new Map<string, { resolve: Function; reject: Function }>();
+const serverHandlers = new Map<string, { name: string; resolve: Function; reject: Function }>();
 
 export const callServer = async <T extends keyof typeof ServerCall.FromWebview>(
   name: T,
@@ -22,7 +22,7 @@ export const callServer = async <T extends keyof typeof ServerCall.FromWebview>(
     const payload = createPayload(name, args);
 
     alt.emitRaw(CALL_SERVER_FROM_WEBVIEW, payload);
-    serverHandlers.set(payload.id, { resolve, reject });
+    serverHandlers.set(payload.id, { name, resolve, reject });
   });
 };
 
@@ -37,6 +37,22 @@ alt.on(CALL_SERVER_FROM_WEBVIEW_RESPONSE, (response) => {
     handler.reject(deserialize(response.error));
     return;
   }
+
+  if (handler.name in ServerCall.FromWebviewValidation) {
+    const schema = ServerCall.FromWebviewValidation[handler.name as keyof typeof ServerCall.FromWebviewValidation];
+
+    if ('returns' in schema) {
+      const result = schema.returns.safeParse(response.result);
+
+      if (!result.success) {
+        console.warn(`CALL_SERVER_FROM_WEBVIEW_RESPONSE: Validation error in ${handler.name}:`, result.error);
+        handler.reject(result.error);
+      }
+    }
+  } else {
+    console.warn(`CALL_SERVER_FROM_WEBVIEW_RESPONSE: No validation schema for ${handler.name}`);
+  }
+
   handler.resolve(deserialize(response.result));
 });
 
@@ -61,6 +77,17 @@ alt.on(CALL_WEBVIEW_FROM_SERVER, async (payload) => {
   try {
     if (!callback) {
       throw new Error(`CALL_WEBVIEW_FROM_SERVER: Procedure ${name} does not exist`);
+    }
+
+    if (name in WebviewCall.FromServerValidation) {
+      const schema = WebviewCall.FromServerValidation[name as keyof typeof WebviewCall.FromServerValidation];
+
+      if ('args' in schema) {
+        // @ts-expect-error remove this comment if needed
+        schema.args.safeParse(args);
+      }
+    } else {
+      console.warn(`CALL_WEBVIEW_FROM_SERVER: No validation schema for ${name}`);
     }
 
     const result = await callback(args);

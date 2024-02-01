@@ -1,7 +1,9 @@
-import { FromServer } from "./from-server";
-import { FromWebview } from "./from-webview";
+import { FromServer, FromServerValidation } from "./from-server";
+import { FromWebview, FromWebviewValidation } from "./from-webview";
 
 export const ClientCall = {
   FromServer,
+  FromServerValidation,
   FromWebview,
+  FromWebviewValidation,
 };

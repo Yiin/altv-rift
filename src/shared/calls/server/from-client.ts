@@ -1,7 +1,8 @@
+import { z } from "zod";
+
 export const FromClient = {
   GET_DISCORD_AUTH_URL: "GET_DISCORD_AUTH_URL",
   TRY_CACHED_TOKEN: "TRY_CACHED_TOKEN",
-  GET_ENTITY_ACTIONS: "GET_ENTITY_ACTIONS",
   START_CONVERSATION: "START_CONVERSATION",
   BEGIN_TREE_HIT: "BEGIN_TREE_HIT",
   TREE_HIT: "TREE_HIT",
@@ -14,35 +15,69 @@ export const FromClient = {
 } as const;
 
 export interface CallFromClient<
-  P extends import("@altv/server").Player = import("@altv/server").Player
+  Player extends import("@altv/server").Player = import("@altv/server").Player
 > {
-  [FromClient.GET_DISCORD_AUTH_URL]: (player: P) => string;
-  [FromClient.TRY_CACHED_TOKEN]: (player: P, token: string) => boolean;
-  [FromClient.GET_ENTITY_ACTIONS]: (
-    player: P,
-    entityId: number
-  ) => { label: string; key: string }[];
+  [FromClient.GET_DISCORD_AUTH_URL]: (player: Player) => string;
+  [FromClient.TRY_CACHED_TOKEN]: (player: Player, token: string) => boolean;
   [FromClient.START_CONVERSATION]: (
-    player: P,
+    player: Player,
     pedId: import("@altv/server").Ped["id"]
   ) => {
     type: "quest";
     pages: string[];
   };
-  [FromClient.BEGIN_TREE_HIT]: (player: P, virtualTreeId: number) => number;
+  [FromClient.BEGIN_TREE_HIT]: (player: Player, virtualTreeId: number) => number;
   [FromClient.TREE_HIT]: (
-    player: P,
+    player: Player,
     virtualTreeId: number
   ) => import("@shared/modules/woodcutting/interfaces").TreeHitResult;
-  [FromClient.RELOAD_WEAPON]: (player: P) => boolean;
-  [FromClient.START_FISHING]: (player: P) => void;
-  [FromClient.STOP_FISHING]: (player: P) => void;
-  [FromClient.START_DIGGING]: (player: P) => void;
-  [FromClient.STOP_DIGGING]: (player: P) => void;
+  [FromClient.RELOAD_WEAPON]: (player: Player) => boolean;
+  [FromClient.START_FISHING]: (player: Player) => void;
+  [FromClient.STOP_FISHING]: (player: Player) => void;
+  [FromClient.START_DIGGING]: (player: Player) => void;
+  [FromClient.STOP_DIGGING]: (player: Player) => void;
   [FromClient.TOGGLE_VEHICLE_DOOR]: (
-    player: P,
+    player: Player,
     vehicleId: number,
     doorId: number,
     shouldClose?: boolean
   ) => void;
 }
+
+export const FromClientValidation = {
+  [FromClient.GET_DISCORD_AUTH_URL]: {
+    returns: z.string(),
+  },
+  [FromClient.TRY_CACHED_TOKEN]: {
+    args: [z.string()],
+    returns: z.boolean(),
+  },
+  [FromClient.START_CONVERSATION]: {
+    args: [z.number()],
+    returns: z.object({
+      type: z.literal("quest"),
+      pages: z.array(z.string()),
+    }),
+  },
+  [FromClient.BEGIN_TREE_HIT]: {
+    args: [z.number()],
+    returns: z.number(),
+  },
+  [FromClient.TREE_HIT]: {
+    args: [z.number()],
+    returns: z.object({
+      success: z.boolean(),
+      logs: z.number(),
+    }),
+  },
+  [FromClient.RELOAD_WEAPON]: {
+    returns: z.boolean(),
+  },
+  [FromClient.START_FISHING]: {},
+  [FromClient.STOP_FISHING]: {},
+  [FromClient.START_DIGGING]: {},
+  [FromClient.STOP_DIGGING]: {},
+  [FromClient.TOGGLE_VEHICLE_DOOR]: {
+    args: [z.number(), z.number(), z.boolean().optional()],
+  },
+} satisfies Record<keyof typeof FromClient, { args?: [z.ZodTypeAny, ...z.ZodTypeAny[]], returns?: z.ZodTypeAny }>;

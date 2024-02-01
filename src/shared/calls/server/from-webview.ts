@@ -1,5 +1,7 @@
 import { Appearance, ScreenPosition } from "@prisma/client/edge";
+import { z } from "zod";
 import { EquipmentSlot, InteractionInventoryItemSource, InteractionInventorySource, ItemSource, PlayerInventoryItemSource } from "../../interfaces";
+import { schema } from "../validation";
 
 export const FromWebview = {
   CREATE_CHARACTER: "CREATE_CHARACTER",
@@ -47,3 +49,53 @@ export interface CallFromWebview<
   [FromWebview.BUY_ITEM]: (player: P, source: InteractionInventoryItemSource, amount: number) => boolean;
   [FromWebview.SELL_ITEM]: (player: P, shopSource: InteractionInventorySource, itemSource: PlayerInventoryItemSource, amount: number) => boolean;
 }
+
+export const FromWebviewValidation = {
+  [FromWebview.CREATE_CHARACTER]: {
+    args: [z.object({ name: z.string().min(1, "Required"), appearance: schema.appearance })],
+    returns: z.boolean(),
+  },
+  [FromWebview.MOVE_WINDOW]: {
+    args: [z.string(), z.object({ x: z.number(), y: z.number(), w: z.number(), h: z.number() })],
+  },
+  [FromWebview.MOVE_ITEM]: {
+    args: [schema.itemSource, schema.itemSource, z.number().optional().default(() => 1)],
+    returns: z.boolean(),
+  },
+  [FromWebview.USE_ITEM]: {
+    args: [schema.itemSource],
+    returns: z.boolean(),
+  },
+  [FromWebview.EQUIP_ITEM]: {
+    args: [schema.itemSource],
+    returns: z.boolean(),
+  },
+  [FromWebview.UNEQUIP_ITEM]: {
+    args: [schema.equipmentSlot],
+    returns: z.boolean(),
+  },
+  [FromWebview.DROP_ITEM]: {
+    args: [schema.itemSource, z.number()],
+    returns: z.boolean(),
+  },
+  [FromWebview.COMBINE_ITEMS]: {
+    args: [schema.itemSource, schema.itemSource],
+    returns: z.boolean(),
+  },
+  [FromWebview.UNLOAD_AMMO]: {
+    args: [schema.itemSource],
+    returns: z.boolean(),
+  },
+  [FromWebview.REMOVE_BAIT]: {
+    args: [schema.itemSource],
+    returns: z.boolean(),
+  },
+  [FromWebview.BUY_ITEM]: {
+    args: [schema.interactionInventoryItemSource, z.number()],
+    returns: z.boolean(),
+  },
+  [FromWebview.SELL_ITEM]: {
+    args: [schema.interactionInventorySource, schema.playerInventoryItemSource, z.number()],
+    returns: z.boolean(),
+  },
+} satisfies Record<keyof typeof FromWebview, { args?: [z.ZodTypeAny, ...z.ZodTypeAny[]], returns?: z.ZodTypeAny }>;

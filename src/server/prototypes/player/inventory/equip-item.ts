@@ -1,5 +1,5 @@
 import * as alt from "@altv/server";
-import { GroundItemSource, InventoryItemSource, ItemSourceOrigin } from "@shared/interfaces";
+import { EquipmentSlot, GroundItemSource, InventoryItemSource, ItemSourceOrigin } from "@shared/interfaces";
 import { ServerEvents } from "@shared/events/server";
 import { getItemEquipmentSlot, getItemInfoByKey, isItemAmmo } from "@shared/modules/items";
 import { isItemFirearmWeapon } from "@shared/modules/items/registry/weapons/firearm-weapon.items";
@@ -51,7 +51,7 @@ alt.Player.prototype.equipItem = function (source) {
     if (
       !loadWeaponWithAmmo(
         {
-          equipmentSlot: "weapon",
+          equipmentSlot: EquipmentSlot.Weapon,
           origin: ItemSourceOrigin.PlayerEquipment,
           originId: this.character.id,
         },
@@ -64,7 +64,7 @@ alt.Player.prototype.equipItem = function (source) {
     if (
       !useFishBaitOnFishingRod(
         {
-          equipmentSlot: "tool",
+          equipmentSlot: EquipmentSlot.Tool,
           origin: ItemSourceOrigin.PlayerEquipment,
           originId: this.character.id,
         },

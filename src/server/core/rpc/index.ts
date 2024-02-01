@@ -1,4 +1,5 @@
 import * as alt from "@altv/server";
+import { z } from "zod";
 import {
   CALL_CLIENT_FROM_SERVER,
   CALL_CLIENT_FROM_SERVER_RESPONSE,
@@ -13,16 +14,18 @@ import { ServerCall } from "@shared/calls/server";
 import { CallFromClient } from "@shared/calls/server/from-client";
 import { CallFromWebview, FromWebview } from "@shared/calls/server/from-webview";
 import { createPayload } from "@shared/utility/create-payload";
+import { ClientCall } from "@shared/calls/client";
+import { WebviewCall } from "@shared/calls/webview";
 
 const clientProcedures = new Map<string, (player: alt.Player, ...args: any[]) => any>();
 const clientHandlers = new Map<
   string,
-  { resolve: (result: any) => void; reject: (err: any) => void }
+  { name: string, resolve: (result: any) => void; reject: (err: any) => void }
 >();
 const webviewProcedures = new Map<string, (...args: any[]) => any>();
 const webviewHandlers = new Map<
   string,
-  { resolve: (result: any) => void; reject: (err: any) => void }
+  { name: string, resolve: (result: any) => void; reject: (err: any) => void }
 >();
 
 // call client from server
@@ -31,7 +34,7 @@ const callClient = (player: alt.Player, name: string, ...args: any[]) => {
     const payload = createPayload(name, args);
 
     player.emitRaw(CALL_CLIENT_FROM_SERVER, payload);
-    clientHandlers.set(payload.id, { resolve, reject });
+    clientHandlers.set(payload.id, { name, resolve, reject });
   });
 };
 
@@ -46,6 +49,22 @@ alt.Events.onPlayer(CALL_CLIENT_FROM_SERVER_RESPONSE, (_, response) => {
     handler.reject(response);
     return;
   }
+
+  if (handler.name in ClientCall.FromServerValidation) {
+    const schema = ClientCall.FromServerValidation[handler.name as keyof typeof ClientCall.FromServerValidation];
+
+    if ('returns' in schema) {
+      const result = schema.returns.safeParse(response.result);
+
+      if (!result.success) {
+        alt.logError(`CALL_CLIENT_FROM_SERVER_RESPONSE: Validation error in ${handler.name}:`, result.error);
+        handler.reject(result.error);
+      }
+    }
+  } else {
+    alt.logWarning(`CALL_CLIENT_FROM_SERVER_RESPONSE: No validation schema for ${handler.name}`);
+  }
+
   handler.resolve(response.result);
 });
 
@@ -73,6 +92,16 @@ alt.Events.onPlayer(CALL_SERVER_FROM_CLIENT, async (player, payload) => {
       throw new Error(`CALL_SERVER_FROM_CLIENT: Procedure ${name} does not exist`);
     }
 
+    if (name in ServerCall.FromClientValidation) {
+      const schema = ServerCall.FromClientValidation[name as keyof typeof ServerCall.FromClientValidation];
+
+      if ('args' in schema) {
+        z.tuple(schema.args).parse(args);
+      }
+    } else {
+      alt.logWarning(`CALL_SERVER_FROM_WEBVIEW: No validation schema for ${name}`);
+    }
+
     const result = await callback(player, ...args);
     player.emitRaw(CALL_SERVER_FROM_CLIENT_RESPONSE, {
       id,
@@ -93,7 +122,7 @@ const callWebview = (player: alt.Player, name: string, ...args: any[]) => {
     const payload = createPayload(name, args);
 
     player.emitRaw(CALL_WEBVIEW_FROM_SERVER, payload);
-    webviewHandlers.set(payload.id, { resolve, reject });
+    webviewHandlers.set(payload.id, { name, resolve, reject });
   });
 };
 
@@ -108,6 +137,23 @@ alt.Events.onPlayer(CALL_WEBVIEW_FROM_SERVER_RESPONSE, (_, response) => {
     handler.reject(response);
     return;
   }
+
+  if (handler.name in WebviewCall.FromServerValidation) {
+    const schema = WebviewCall.FromServerValidation[handler.name as keyof typeof WebviewCall.FromServerValidation];
+
+    if ('returns' in schema) {
+      // @ts-expect-error remove this comment if needed
+      const result = schema.returns.safeParse(response.result);
+
+      if (!result.success) {
+        alt.logError(`CALL_WEBVIEW_FROM_SERVER_RESPONSE: Validation error in ${handler.name}:`, result.error);
+        handler.reject(result.error);
+      }
+    }
+  } else {
+    alt.logWarning(`CALL_WEBVIEW_FROM_SERVER_RESPONSE: No validation schema for ${handler.name}`);
+  }
+
   handler.resolve(response.result);
 });
 
@@ -135,6 +181,16 @@ alt.Events.onPlayer(CALL_SERVER_FROM_WEBVIEW, async (player, payload) => {
       throw new Error(`CALL_SERVER_FROM_WEBVIEW: Procedure ${name} does not exist`);
     }
 
+    if (name in ServerCall.FromWebviewValidation) {
+      const schema = ServerCall.FromWebviewValidation[name as keyof typeof ServerCall.FromWebviewValidation];
+
+      if ('args' in schema) {
+        z.tuple(schema.args).parse(args);
+      }
+    } else {
+      alt.logWarning(`CALL_SERVER_FROM_WEBVIEW: No validation schema for ${name}`);
+    }
+
     const result = await callback(player, ...args);
     player.emitRaw(CALL_SERVER_FROM_WEBVIEW_RESPONSE, {
       id,
@@ -143,7 +199,7 @@ alt.Events.onPlayer(CALL_SERVER_FROM_WEBVIEW, async (player, payload) => {
   } catch (error) {
     player.emitRaw(CALL_SERVER_FROM_WEBVIEW_RESPONSE, {
       id,
-      error,
+      error: error instanceof z.ZodError ? error.issues.map(issue => issue.message) : error,
     });
   }
 });

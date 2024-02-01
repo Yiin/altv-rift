@@ -8,7 +8,6 @@ import { InteractionType, useInventory } from "@/store/inventory.store";
 import { useEventListener } from "@/composables/use-event-listener";
 import PlayerEquipment from "./player-equipment/PlayerEquipment.vue";
 import EquipmentSlot from "./player-equipment/EquipmentSlot.vue";
-import PlayerInventory from "./player-inventory/PlayerInventory.vue";
 import InventorySlot from "./InventorySlot.vue";
 import Shop from "./shop/Shop.vue";
 import Storage from "./storage/Storage.vue";
@@ -38,7 +37,7 @@ onUnmounted(() => {
   <div class="relative w-full px-10 lg:px-1/8 lg:py-16">
     <div class="fixed inset-0 -z-10">
       <div class="bg-darkRadialGradient absolute inset-0 opacity-95"></div>
-      <div class="bg-black/95 blur-sm absolute inset-0"></div>
+      <!-- <div class="bg-black/85 blur-sm absolute inset-0"></div> -->
     </div>
     <div :style="{ padding: `2rem ${gapSize}px 7rem` }" class="flex w-full mx-auto justify-between items-center gap-7">
       <div>
