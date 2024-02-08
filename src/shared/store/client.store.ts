@@ -8,7 +8,7 @@
 import { Scene, UIElement } from "@shared/enums/ui";
 import { GroundItemSource } from "@shared/interfaces";
 import { ConversationOption } from "@shared/interfaces/conversation";
-import { Item } from "@shared/modules/items";
+import { Ammo, FirearmWeapon, Item, TreeLogs, createItem } from "@shared/modules/items";
 
 export type CurrentConversation = {
   with: string;
@@ -59,10 +59,14 @@ export type TargetAction = {
 export enum WindowType {
   PLAYER_INVENTORY,
   SHOP,
+  LOOT_BOX,
 }
 
 export type CurrentWindow = {
-  type: WindowType;
+  type: WindowType.PLAYER_INVENTORY;
+} | {
+  type: WindowType.LOOT_BOX,
+  items: Item[]
 };
 
 export interface ClientState {
@@ -79,7 +83,7 @@ export interface ClientState {
   targetAction: TargetAction | null;
   nearbyItems: {
     item: Item;
-    source: GroundItemSource;
+    id: GroundItemSource["originId"];
   }[];
 }
 
@@ -87,7 +91,14 @@ export const getDefaultClientStoreState = (): ClientState => ({
   ui: {
     scene: null,
     elements: new Set(),
-    window: null,
+    window: {
+      type: WindowType.LOOT_BOX,
+      items: [
+        createItem(FirearmWeapon.CARBINERIFLE),
+        createItem(FirearmWeapon.MARKSMANPISTOL),
+        createItem(Ammo.ASSAULT_RIFLE_AMMO, { amount: 600 })
+      ]
+    },
   },
   conversation: null,
   trackingQuest: null,

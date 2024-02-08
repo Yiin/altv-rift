@@ -12,13 +12,13 @@ import InventorySlot from "./InventorySlot.vue";
 import Shop from "./shop/Shop.vue";
 import Storage from "./storage/Storage.vue";
 import Confirmation from "./shop/Confirmation.vue";
+import AmountTransfer from "./AmountTransfer.vue";
 import ItemPreview from "./item-preview/ItemPreview.vue";
 import { useShop } from "@/store/shop.store";
 import { useGapSize } from "@/composables/use-gap-size";
 import { ItemSourceOrigin } from "@shared/interfaces";
 
 const inventory = useInventory();
-const shop = useShop();
 
 const containerRef = ref<HTMLDivElement>();
 const { gapSize, widths } = useGapSize(containerRef);
@@ -52,7 +52,7 @@ onUnmounted(() => {
                 class="flex justify-center items-center border border-solid border-white/10 p-3">
                 <Icon name="health" class="fill-white" :size="1.5" />
               </div>
-              <div class="">
+              <div>
                 <p class="text-sm text-white mb-1">
                   {{ 100 }} <span class="text-deepGray">/ {{ 100 }}</span>
                 </p>
@@ -67,7 +67,7 @@ onUnmounted(() => {
                 class="flex justify-center items-center border border-solid border-white/10 p-3">
                 <Icon name="stamina" class="fill-white" :size="1.5" />
               </div>
-              <div class="">
+              <div>
                 <p class="text-sm text-white mb-1">
                   {{ 60 }} <span class="text-deepGray">/ {{ 200 }}</span>
                 </p>
@@ -120,9 +120,12 @@ onUnmounted(() => {
         <h2 class="uppercase text-white text-2xl font-bold">global</h2>
         <div class="uppercase text-base text-deepGray">items on the floor or around you</div>
         <div class="inline-grid grid-cols-4 gap-2.5 mt-5">
-          <div v-for="(_, slot) in 24"
-            class="flex flex-col items-start fbasis-21 h-21 w-21 bg-silverCloud/[0.01] border border-solid border-white/[0.03] p-2 relative">
-          </div>
+          <InventorySlot v-for="item of inventory.groundItems"
+            :key="item.source.originId"
+            :source="item.source" />
+          <InventorySlot v-for="(_, slot) in 24 - inventory.groundItems.length"
+            :key="`slot-${inventory.groundItems.length + slot}`"
+            :source="{ origin: ItemSourceOrigin.Ground, originId: -1 }" />
         </div>
       </div>
     </div>
@@ -162,11 +165,13 @@ onUnmounted(() => {
 
   <ContextMenu v-if="inventory.currentInteraction.type === InteractionType.ContextMenu"
     v-bind="inventory.currentInteraction.state" />
-  <DropItemWarning v-if="inventory.currentInteraction.type === InteractionType.Dropping"
-    v-bind="inventory.currentInteraction.state" />
+  <!-- <DropItemWarning v-if="inventory.currentInteraction.type === InteractionType.Dropping"
+    v-bind="inventory.currentInteraction.state" /> -->
   <ItemInfo v-if="inventory.currentInteraction.type === InteractionType.Hovering"
     :key="JSON.stringify(inventory.currentInteraction.state.item.source)" v-bind="inventory.currentInteraction.state" />
   <ItemPreview v-if="inventory.previewingItem" :key="JSON.stringify(inventory.previewingItem.source)"
     v-bind="inventory.previewingItem" />
-  <!-- <Confirmation v-if="shop.interaction && shop.action" /> -->
+  <AmountTransfer v-if="inventory.currentInteraction.type === InteractionType.TransferingAmount"
+    v-bind="inventory.currentInteraction.state" />
+  <!-- <Confirmation v-if="inventory.transfer" /> -->
 </template>

@@ -2,6 +2,7 @@
 import Screen from "@/components/Screen.vue";
 import ChatBox from "./chat-box/ChatBox.vue";
 import Inventory from "./inventory/Inventory.vue";
+import LootBox from "./loot-box/LootBox.vue";
 import Conversation from "./conversation/Conversation.vue";
 import QuestMenu from "./quest-menu/QuestMenu.vue";
 import SkillMenu from "./skill-menu/SkillMenu.vue";
@@ -22,6 +23,7 @@ const client = useClient();
     <ChatBox v-if="client.ui.elements.has(UIElement.CHAT)" />
     <template v-if="client.ui.window">
       <Inventory v-if="[WindowType.PLAYER_INVENTORY, WindowType.SHOP].includes(client.ui.window.type)" />
+      <LootBox v-if="client.ui.window.type === WindowType.LOOT_BOX" :items="client.ui.window.items" />
     </template>
     <ActionMenu v-else-if="client.ui.elements.has(UIElement.ACTION_MENU)" />
     <template v-else>

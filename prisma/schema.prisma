@@ -71,6 +71,13 @@ model Shop {
   ped       Ped
 }
 
+model DroppedItem {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  item      Json
+  pos       Position
+  createdAt DateTime @default(now())
+}
+
 type Ped {
   model   String
   pos     Position

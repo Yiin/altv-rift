@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useItemDetails } from "@/composables/use-item-details";
 import { getItemIconScale, getItemImage, getItemIconPosition, getItemClasses } from "@/utils/items";
-import { InteractionType, useInventory } from "@/store/inventory.store";
 import { computed, ref, watch } from "vue";
 import LogIcon from "./dynamic-icons/LogIcon.vue";
 import { Item, TreeLogItemKey } from "@shared/modules/items";
@@ -11,7 +10,6 @@ const props = defineProps<{
 }>();
 
 const item = computed(() => props.item);
-const inventory = useInventory();
 
 const itemDetails = useItemDetails(item);
 const noImage = ref(false);
@@ -50,16 +48,3 @@ watch(
     </div>
   </div>
 </template>
-
-<style scoped>
-.image-shadow::before {
-  content: "";
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  background: inherit;
-  background-position: center center;
-  filter: drop-shadow(0px 0px 3px rgba(0, 0, 0, 1)) blur(11px);
-  z-index: -1;
-}
-</style>

@@ -6,7 +6,8 @@ declare module "@altv/server" {
   }
 
   export interface BaseObjectMeta {
-    capacity?: number;
+    capacity?: number; // tree
+    databaseId?: string; // item
   }
 }
 

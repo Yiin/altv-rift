@@ -11,11 +11,11 @@ import {
   createItem,
   getCombineType,
   isItemFirearmWeapon,
+  isStackable,
 } from "@shared/modules/items";
 
 import { isCharacterStoreAvailable, useCharacter } from "./synced/character.store";
 import { useGameState } from "./synced/game-state.store";
-import { useShop } from "./shop.store";
 import { useClient } from "./synced/client.store";
 import {
   EquipmentSlot,
@@ -68,8 +68,11 @@ export type Dragging = {
   };
 };
 
-export type Dropping = {
+export type TransferingAmount = {
   item: SlottedItem;
+  to?: ItemSource | null;
+  resolve: (amount: number) => void;
+  reject: () => void;
   position: {
     x: number;
     y: number;
@@ -95,7 +98,7 @@ export type ItemActionMenu = {
 export enum InteractionType {
   None = "None",
   Dragging = "Dragging",
-  Dropping = "Dropping",
+  TransferingAmount = "TransferingAmount",
   Hovering = "Hovering",
   ContextMenu = "ContextMenu",
 }
@@ -108,8 +111,8 @@ export type ItemInteraction =
     state: Dragging;
   }
   | {
-    type: InteractionType.Dropping;
-    state: Dropping;
+    type: InteractionType.TransferingAmount;
+    state: TransferingAmount;
   }
   | {
     type: InteractionType.Hovering;
@@ -162,32 +165,36 @@ export type SlottedEquipment = {
   [K in keyof Equipment]: SlottedItem<PlayerEquipmentItemSource, NonNullable<Equipment[K]>> | null;
 };
 
-export function isSameItemSource<A extends ItemSource, B extends ItemSource>(
-  a?: A,
-  b?: B
-): a is A & B {
+export function fromItemSource(source: ItemSource) {
+  switch (source.origin) {
+    case ItemSourceOrigin.Ground:
+      return {
+
+      };
+    default:
+      return source;
+  }
+}
+
+export function isSameSourceOrigin<A extends ItemSource, B extends ItemSource>(a: A, b: B): boolean {
+  return a.origin === b.origin && a.originId === b.originId;
+}
+
+export function isSameItemSource<A extends ItemSource, B extends ItemSource>(a?: A, b?: B): boolean;
+export function isSameItemSource<A extends ItemSource, B extends Partial<ItemSource>>(a?: A, b?: B): a is A & B;
+export function isSameItemSource<A extends ItemSource, B extends PlayerInventoryItemSource>(a?: A, b?: B): a is A & B;
+export function isSameItemSource<A extends ItemSource, B extends PlayerEquipmentItemSource>(a?: A, b?: B): a is A & B;
+export function isSameItemSource<A extends ItemSource, B extends InteractionInventoryItemSource>(a?: A, b?: B): a is A & B;
+export function isSameItemSource<A extends ItemSource, B extends GroundItemSource>(a?: A, b?: B): a is A & B;
+export function isSameItemSource(
+  a?: ItemSource,
+  b?: ItemSource
+): boolean {
   if (!a || !b) {
     return false;
   }
 
-  if (a.origin !== b.origin) {
-    return false;
-  }
-
-  if (a.originId !== b.originId) {
-    return false;
-  }
-
-  return (
-    (a.origin === ItemSourceOrigin.PlayerInventory &&
-      a.inventorySlot === (b as PlayerInventoryItemSource).inventorySlot) ||
-    (a.origin === ItemSourceOrigin.PlayerEquipment &&
-      a.equipmentSlot === (b as PlayerEquipmentItemSource).equipmentSlot) ||
-    a.origin === ItemSourceOrigin.Ground ||
-    (a.origin === ItemSourceOrigin.InteractionInventory &&
-      b.origin === ItemSourceOrigin.InteractionInventory &&
-      a.inventorySlot === (b as InteractionInventoryItemSource).inventorySlot)
-  );
+  return Object.entries(b).every(([key, value]) => a[key as keyof ItemSource] === value);
 }
 
 type ItemNode = { source: ItemSource; node: { value: HTMLElement | undefined } };
@@ -220,13 +227,19 @@ export const useInventory = defineStore("inventory", {
     interaction: () => {
       return useGameState().interactionInventory;
     },
-    nearbyItems: () => {
-      return useClient().nearbyItems;
+    droppedItems: () => {
+      /**
+       * .filter(Boolean) doesn't really makes sense from the first glance,
+       * but it's a workaround for a bug where the item after being picked up
+       * would end up being undefined in the array for a brief moment. Idk don't ask.
+       */
+      return useClient().droppedItems.filter(Boolean);
     },
     size(): number {
       return this.character.inventory.size ?? 30;
     },
     items(): SlottedItem[] {
+      console.log("items start");
       const items: SlottedItem[] = reactive([]);
 
       if (!("altMock" in globalThis) && !isCharacterStoreAvailable()) {
@@ -291,9 +304,18 @@ export const useInventory = defineStore("inventory", {
       /**
        * Nearby items
        */
-      for (const groundItem of this.nearbyItems) {
-        items.push(groundItem);
+      for (const groundItem of this.droppedItems) {
+        console.log(groundItem);
+        items.push({
+          item: groundItem.item,
+          source: {
+            origin: ItemSourceOrigin.Ground,
+            originId: groundItem.id,
+          } satisfies GroundItemSource,
+        });
       }
+
+      console.log("items end");
 
       return items;
     },
@@ -314,6 +336,11 @@ export const useInventory = defineStore("inventory", {
         (item): item is SlottedItem<InteractionInventoryItemSource> =>
           item.source.origin === ItemSourceOrigin.InteractionInventory
       );
+    },
+    groundItems(): SlottedGroundItem[] {
+      return this.items.filter(
+        (item): item is SlottedGroundItem => item.source.origin === ItemSourceOrigin.Ground
+      ).slice(0, 24);
     },
     equipment(): SlottedEquipment {
       const equipment: SlottedEquipment = {
@@ -350,10 +377,10 @@ export const useInventory = defineStore("inventory", {
     registerItemSlot(slot: ItemNode) {
       this.itemNodes.push(markRaw(slot));
     },
-    useItem(source: InventoryItemSource) {
+    useItem(source: InventoryItemSource | GroundItemSource) {
       return rpc.callServer(ServerCall.FromWebview.USE_ITEM, source);
     },
-    equipItem(source: InventoryItemSource) {
+    equipItem(source: InventoryItemSource | GroundItemSource) {
       return rpc.callServer(ServerCall.FromWebview.EQUIP_ITEM, source);
     },
     unequipItem(equipmentSlot: EquipmentSlot) {
@@ -377,9 +404,74 @@ export const useInventory = defineStore("inventory", {
     },
     swapLocally(from: SlottedItem | undefined, to: SlottedItem | ItemSource) {
       if (from && "source" in to) {
+        if (from.source.origin === ItemSourceOrigin.Ground || to.source.origin === ItemSourceOrigin.Ground) {
+          return;
+        }
         [from.source, to.source] = [to.source, from.source];
       } else if (from) {
-        from.source = "source" in to ? to.source : to;
+        if ("source" in to) {
+          if (from.source.origin === ItemSourceOrigin.Ground || to.source.origin === ItemSourceOrigin.Ground) {
+            return;
+          }
+          from.source = to.source;
+        } else {
+          if (from.source.origin === ItemSourceOrigin.Ground || to.origin === ItemSourceOrigin.Ground) {
+            return;
+          }
+          from.source = to;
+        }
+      }
+    },
+    transferAmount(from: ItemSource, to: ItemSource | null, position: { x: number; y: number }) {
+      return new Promise<number>((resolve, reject) => {
+        if (to && isSameSourceOrigin(from, to)) {
+          return reject("Cannot transfer to the same source origin");
+        }
+
+        const fromItem = this.getItemFromSource(from);
+
+        if (!fromItem) {
+          return reject("No item in source");
+        }
+
+        if (isStackable(fromItem.item)) {
+          if (fromItem.item.amount <= 1) {
+            return resolve(0);
+          }
+        } else {
+          return resolve(1);
+        }
+
+        this.currentInteraction = { type: InteractionType.TransferingAmount, state: { item: fromItem, to, resolve, reject, position } };
+        return true;
+      });
+    },
+    confirmAmountTransfer(amount: number) {
+      if (this.currentInteraction.type !== InteractionType.TransferingAmount) {
+        return;
+      }
+
+      const slottedItem = this.currentInteraction.state.item;
+
+      if (!slottedItem) {
+        this.currentInteraction.state.reject();
+        return;
+      }
+
+      if (amount <= 0) {
+        return;
+      }
+
+      if (isStackable(slottedItem.item) && amount > slottedItem.item.amount) {
+        amount = slottedItem.item.amount;
+      }
+
+      this.currentInteraction.state.resolve(amount);
+    },
+    cancelAmountTransfer() {
+      if (this.currentInteraction.type === InteractionType.TransferingAmount) {
+        this.currentInteraction.state.reject();
+        this.currentInteraction = IDLE;
       }
     },
     async moveItem(
@@ -396,28 +488,6 @@ export const useInventory = defineStore("inventory", {
       }
 
       console.log("move item", from, to, options.amount ?? 1);
-
-      const isInShop = useShop().isInShop;
-
-      if (isInShop) {
-        if (
-          from.origin === ItemSourceOrigin.InteractionInventory &&
-          to.origin === ItemSourceOrigin.PlayerInventory
-        ) {
-          const shop = useShop();
-
-          shop.initiateBuying(from);
-          return;
-        } else if (
-          from.origin === ItemSourceOrigin.PlayerInventory &&
-          to.origin === ItemSourceOrigin.InteractionInventory
-        ) {
-          const shop = useShop();
-
-          shop.initiateSelling(from);
-          return;
-        }
-      }
 
       this.swapLocally(itemInSlotFrom, itemInSlotTo || to);
 
@@ -547,53 +617,41 @@ export const useInventory = defineStore("inventory", {
         //   return;
         // }
 
-        const source = this.getItemSourceFromScreenPos(e.clientX, e.clientY);
+        const slottedItem = this.currentInteraction.state.item;
+        const from = slottedItem.source;
+        const to = this.getItemSourceFromScreenPos(e.clientX, e.clientY);
 
-        // If the item is dropped outside of the inventory
-        if (!source) {
-          this.currentInteraction = {
-            type: InteractionType.Dropping,
-            state: {
-              item: this.currentInteraction.state.item,
-              position: {
-                x: window.innerWidth,
-                y: window.innerHeight,
-              },
-              outside: true,
-            },
-          };
+        try {
+          const amount = (to && isSameSourceOrigin(from, to)) || (!to && from.origin === ItemSourceOrigin.Ground)
+            ? (isStackable(slottedItem.item) ? slottedItem.item.amount : 1)
+            : await this.transferAmount(from, to, { x: e.clientX, y: e.clientY });
 
-          /**
-           * Wait for the next frame to get the correct size of the drop item warning,
-           * so we can position it correctly
-           */
-          requestAnimationFrame(() => {
-            // Sanity check to make sure nothing changed in the span of 1 frame
-            if (this.currentInteraction.type !== InteractionType.Dropping) {
-              return;
+          console.log(`transfer amount: ${amount}`);
+
+          if (!to || to.origin === ItemSourceOrigin.Ground) {
+            console.log("trying to drop item", from, amount);
+            if ([ItemSourceOrigin.PlayerInventory, ItemSourceOrigin.PlayerEquipment].includes(from.origin)) {
+              console.log("yup");
+              this.dropItem(from as PlayerItemSource, amount);
+            } else {
+              console.log("nope");
+              throw new Error("Cannot drop item from this source");
             }
-
-            const rects = this.dropItemWarningRef?.$el.getBoundingClientRect();
-
-            this.currentInteraction.state.position = {
-              x: e.clientX - (rects?.width ?? 0) / 2,
-              y: e.clientY - (rects?.height ?? 0) / 2,
-            };
-          });
-        } else {
-          // @ts-expect-error TODO: Ask for amount
-          foo = 4;
-
-          // Move the item or swap with another item
-          this.moveItem(this.currentInteraction.state.item.source, source);
-
-          this.currentInteraction = IDLE;
-
-          this.draggingItemThisFrame = true;
-          requestAnimationFrame(() => {
-            this.draggingItemThisFrame = false;
-          });
+          } else {
+            console.log("trying to move item", from, to, { amount })
+            // Move the item or swap with another item
+            this.moveItem(from, to, { amount });
+          }
+        } catch (e) {
+          console.log("failed to transfer amount", e);
         }
+
+        this.currentInteraction = IDLE;
+
+        this.draggingItemThisFrame = true;
+        requestAnimationFrame(() => {
+          this.draggingItemThisFrame = false;
+        });
       }
     },
     handleClick(e: MouseEvent) {
@@ -649,7 +707,7 @@ export const useInventory = defineStore("inventory", {
       this.selectedItem = itemInSlot;
     },
     async completeDropping(amount: number) {
-      if (this.currentInteraction.type !== InteractionType.Dropping) {
+      if (this.currentInteraction.type !== InteractionType.TransferingAmount) {
         return;
       }
 
@@ -671,7 +729,7 @@ export const useInventory = defineStore("inventory", {
       }
 
       setTimeout(() => {
-        if (this.currentInteraction?.type === InteractionType.Dropping) {
+        if (this.currentInteraction?.type === InteractionType.TransferingAmount) {
           this.currentInteraction = IDLE;
         }
       }, 100);
@@ -685,9 +743,17 @@ export const useInventory = defineStore("inventory", {
       }
 
       this.currentInteraction = {
-        type: InteractionType.Dropping,
+        type: InteractionType.TransferingAmount,
         state: {
           item,
+          to: null,
+          resolve: (amount) => {
+            this.dropItem(source, amount);
+            this.currentInteraction = IDLE;
+          },
+          reject: () => {
+            this.currentInteraction = IDLE;
+          },
           position: {
             x: position.x,
             y: position.y,
@@ -696,12 +762,12 @@ export const useInventory = defineStore("inventory", {
       };
     },
     cancelDropping() {
-      if (this.currentInteraction.type === InteractionType.Dropping) {
+      if (this.currentInteraction.type === InteractionType.TransferingAmount) {
         this.currentInteraction = IDLE;
       }
     },
     openContextMenu(item: SlottedItem, event: PointerEvent | MouseEvent) {
-      if ([InteractionType.Dropping]?.includes(this.currentInteraction.type)) {
+      if ([InteractionType.TransferingAmount]?.includes(this.currentInteraction.type)) {
         return;
       }
 

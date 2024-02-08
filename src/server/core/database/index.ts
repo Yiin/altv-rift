@@ -36,11 +36,11 @@ async function fillMissingCharacterFieldsWithDefaultData() {
   }
 }
 
-prisma.$on("beforeExit", async () => {
-  if (!connected) {
-    console.error("Couldn't connect to the database. `$ npm run mongo`?");
-    alt.stopServer();
-  }
-});
+// prisma.$on("beforeExit", async () => {
+//   if (!connected) {
+//     console.error("Couldn't connect to the database. `$ npm run mongo`?");
+//     alt.stopServer();
+//   }
+// });
 
 container.bind(PrismaClient).toConstantValue(prisma);

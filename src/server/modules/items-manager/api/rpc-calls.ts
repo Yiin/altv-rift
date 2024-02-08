@@ -156,7 +156,7 @@ rpc.registerClient(ServerCall.FromClient.RELOAD_WEAPON, (player) => {
   return player.reloadWeapon();
 });
 
-rpc.registerWebview(ServerCall.FromWebview.DROP_ITEM, (player, itemSource) => {
+rpc.registerWebview(ServerCall.FromWebview.DROP_ITEM, (player, itemSource, amount) => {
   needsToBeInGame(player);
 
   if (itemSource.origin !== ItemSourceOrigin.PlayerInventory && itemSource.origin !== ItemSourceOrigin.PlayerEquipment) {
@@ -168,13 +168,15 @@ rpc.registerWebview(ServerCall.FromWebview.DROP_ITEM, (player, itemSource) => {
     return false;
   }
 
-  return dropItem(player, itemSource, player.pos);
+  return dropItem(player, itemSource, { amount });
 });
 
 rpc.registerWebview(ServerCall.FromWebview.MOVE_ITEM, (player, from, to, amount = 1) => {
   needsToBeInGame(player);
 
+  console.log(from, to);
   if (!canInteractWithItemSource(player, from) || !canInteractWithItemSource(player, to)) {
+    console.log('cant interact with item source');
     return false;
   }
 
@@ -184,7 +186,7 @@ rpc.registerWebview(ServerCall.FromWebview.MOVE_ITEM, (player, from, to, amount 
       return false;
     }
 
-    return dropItem(player, from, player.pos);
+    return dropItem(player, from, { amount });
   }
 
   /**
@@ -194,6 +196,7 @@ rpc.registerWebview(ServerCall.FromWebview.MOVE_ITEM, (player, from, to, amount 
     const item = findItem(from);
 
     if (!item) {
+      console.log('cant find item');
       return false;
     }
 
@@ -202,6 +205,7 @@ rpc.registerWebview(ServerCall.FromWebview.MOVE_ITEM, (player, from, to, amount 
      */
     if (to.origin === ItemSourceOrigin.PlayerEquipment) {
       if (!canEquipItems.call(player)) {
+        console.log('cant equip items');
         return false;
       }
 
@@ -219,7 +223,9 @@ rpc.registerWebview(ServerCall.FromWebview.MOVE_ITEM, (player, from, to, amount 
 
         return true;
       }
+      console.log('cant add item to inventory');
     }
+    console.log('cant move item from ground');
     return false;
   }
 

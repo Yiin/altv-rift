@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { InteractionType, SlottedItem, isSameItemSource, useInventory } from "@/store/inventory.store";
+import { InteractionType, SlottedGroundItem, SlottedInteractionInventoryItem, SlottedPlayerInventoryItem, isSameItemSource, useInventory } from "@/store/inventory.store";
 import InventoryItemIcon from "./InventoryItemIcon.vue";
 import { isItemUsable, isItemEquipable } from "@shared/modules/items";
 import { isItemPreviewable } from "@shared/modules/items/lib/is-item-previewable";
 import { useCombinableItem } from "@/composables/use-combinable-item";
-import { InventoryItemSource } from "@shared/interfaces";
+import { GroundItemSource, InventoryItemSource } from "@shared/interfaces";
 
 const props = defineProps<{
-  source: InventoryItemSource;
+  source: InventoryItemSource | GroundItemSource;
 }>();
 
 const inventory = useInventory();
@@ -17,7 +17,8 @@ const nodeRef = ref<HTMLDivElement>();
 
 const item = computed(() =>
   inventory.items.find(
-    (item): item is SlottedItem<InventoryItemSource> => isSameItemSource(item.source, props.source)
+    (item): item is SlottedPlayerInventoryItem | SlottedInteractionInventoryItem | SlottedGroundItem =>
+      isSameItemSource(item.source, props.source)
   )
 );
 
@@ -77,7 +78,7 @@ inventory.registerItemSlot({
 </script>
 
 <template>
-  <div :key="props.source.inventorySlot"
+  <div
     class="node-anchor h-21 w-21 border border-solid border-white/[0.03] relative" :class="[
       combinableWithHoveredItem || combinableWithOtherItems ? `bg-silverCloud/5` : `bg-silverCloud/[0.01]`,
     ]">

@@ -5,7 +5,7 @@ import { dropItemOnTheGround } from "../dropped-items";
 import { findItem } from "./find-item";
 import { removeItem } from "./remove-item";
 
-export function dropItem(player: InGamePlayer, source: PlayerItemSource, pos?: alt.IVector3) {
+export function dropItem(player: InGamePlayer, source: PlayerItemSource, options: { pos?: alt.IVector3, amount?: number } = {}) {
   if (source.origin === ItemSourceOrigin.PlayerEquipment) {
     const item = findItem(source, player);
 
@@ -15,17 +15,17 @@ export function dropItem(player: InGamePlayer, source: PlayerItemSource, pos?: a
 
     player.removeEquipedItem(source.equipmentSlot);
 
-    dropItemOnTheGround(item, pos ?? player.pos);
+    dropItemOnTheGround(item, options.pos ?? player.pos.sub(0, 0, 1.5));
     return true;
   }
 
-  const item = removeItem(source);
+  const item = removeItem(source, options.amount ?? 1);
 
   if (!item) {
     return false;
   }
 
-  dropItemOnTheGround(item, pos ?? player.pos);
+  dropItemOnTheGround(item, options.pos ?? player.pos.sub(0, 0, 1.5));
 
   return true;
 }

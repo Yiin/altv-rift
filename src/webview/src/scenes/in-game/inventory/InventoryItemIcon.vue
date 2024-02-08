@@ -12,12 +12,12 @@ const inventory = useInventory();
 const slottedItem = computed(() => props.item);
 
 const isDraggingOrDropping = computed(() =>
-  [InteractionType.Dragging, InteractionType.Dropping].includes(inventory.currentInteraction.type)
+  [InteractionType.Dragging, InteractionType.TransferingAmount].includes(inventory.currentInteraction.type)
 );
 
 const shouldShow = computed(
   () =>
-    inventory.currentInteraction.type !== InteractionType.Dropping ||
+    inventory.currentInteraction.type !== InteractionType.TransferingAmount ||
     !inventory.currentInteraction.state.outside ||
     !isSameItemSource(slottedItem.value.source, inventory.currentInteraction.state.item.source)
 );

@@ -35,5 +35,11 @@ export const useClient = defineStore("client", {
       }
       return quests;
     },
+    droppedItems(state) {
+      return state.nearbyItems.map((item, index) => ({
+        ...item,
+        inventorySlot: index,
+      }));
+    }
   },
 });

@@ -1,5 +1,6 @@
 import * as alt from '@altv/server';
 import { toRaw } from 'vue';
+import { hoursToMilliseconds } from 'date-fns';
 import { Item } from '@shared/modules/items';
 
 export const droppedItemsGroup = alt.VirtualEntityGroup.create({ maxEntitiesInStream: 50 });
@@ -17,6 +18,10 @@ export function dropItemOnTheGround(item: Item, position: alt.IVector3) {
   });
 
   droppedItems.set(ve.id, ve);
+
+  setTimeout(() => {
+    cleanupDroppedItem(ve.id);
+  }, hoursToMilliseconds(1));
 
   return ve;
 }

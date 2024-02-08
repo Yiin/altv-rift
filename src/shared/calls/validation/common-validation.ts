@@ -1,23 +1,23 @@
 import { z } from "zod";
 import { EquipmentSlot, ItemSourceOrigin } from "@shared/interfaces";
-import { OverlayType } from "@shared/modules/character/appearance-data";
+import { MAX_EYE_COLOR, MAX_HAIR_COLOR, OverlayType, featureNames, isValidHair, parents } from "@shared/modules/character/appearance-data";
 
 export const appearance = z.object({
-  sex: z.number(),
-  faceFather: z.number(),
-  faceMother: z.number(),
-  skinFather: z.number(),
-  skinMother: z.number(),
-  faceMix: z.number(),
-  skinMix: z.number(),
-  features: z.array(z.number()),
-  hair: z.number(),
-  hairCollection: z.string(),
-  hairOverlay: z.string(),
-  hairDlc: z.number(),
-  hairColor1: z.number(),
-  hairColor2: z.number(),
-  eyes: z.number(),
+  sex: z.union([z.literal(0), z.literal(1)]),
+  faceFather: z.number().min(0).max(parents.length - 1).step(1),
+  faceMother: z.number().min(0).max(parents.length - 1).step(1),
+  skinFather: z.number().min(0).max(parents.length - 1).step(1),
+  skinMother: z.number().min(0).max(parents.length - 1).step(1),
+  faceMix: z.number().min(0).max(1),
+  skinMix: z.number().min(0).max(1),
+  features: z.array(z.number().min(-1).max(1)).length(featureNames.length),
+  hair: z.number(), // Validated in the refine, below
+  hairCollection: z.string(), // same
+  hairOverlay: z.string(), // same
+  hairDlc: z.literal(0),
+  hairColor1: z.number().min(0).max(MAX_HAIR_COLOR - 1).step(1),
+  hairColor2: z.number().min(0).max(MAX_HAIR_COLOR - 1).step(1),
+  eyes: z.number().min(0).max(MAX_EYE_COLOR - 1).step(1),
   headOverlays: z.array(
     z.union([
       z.object({
@@ -92,6 +92,8 @@ export const appearance = z.object({
       }),
     ])
   ),
+}).refine((data) => isValidHair(data.sex, data.hair, data.hairCollection, data.hairOverlay), {
+  message: "Invalid hair",
 });
 
 export const equipmentSlot = z.nativeEnum(EquipmentSlot);
