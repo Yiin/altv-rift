@@ -4,7 +4,6 @@ import { ref, watch } from "vue";
 import { ClientEvents } from "@shared/events/client";
 import { everyTickWhile } from "@/core/utility/event-helpers";
 import { getWebview } from "@/core/user-interface/webview";
-import { isConnected } from "@/core/game-state-hooks/connected.state";
 
 let equipmentPed: number | null = null;
 let previousHudColor: alt.RGBA | null = null;
@@ -115,7 +114,7 @@ async function clearPedPreview() {
 }
 
 watch(
-  () => isConnected.value && isPreviewingPlayer.value,
+  () => isPreviewingPlayer.value,
   async (value) => {
     if (value) {
       createPedPreview();

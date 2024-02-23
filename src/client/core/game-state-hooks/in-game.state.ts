@@ -1,8 +1,7 @@
 import { computed, ref, watch } from "vue";
 import { isCharacterStoreAvailable } from "@/core/store/character.store";
-import { isConnected } from "./connected.state";
 
-export const isInGame = computed(() => isConnected.value && isCharacterStoreAvailable.value);
+export const isInGame = computed(() => isCharacterStoreAvailable.value);
 
 export function whileInGame(fn: () => MaybePromise<(() => void) | void>) {
   const cleanup = ref<(() => void) | void>();

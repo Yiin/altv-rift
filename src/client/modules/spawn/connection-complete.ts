@@ -28,6 +28,7 @@ async function handleConnectionComplete() {
 
   alt.Streaming.loadDefaultIpls();
 
+  alt.log("Setting up game settings...");
   setupGameSettings();
 
   alt.log("Connection complete, notifying server...");
@@ -35,9 +36,6 @@ async function handleConnectionComplete() {
 }
 
 function setupGameSettings() {
-  alt.log("Setting up game settings...");
-
-  game.startAudioScene(`CHARACTER_CHANGE_IN_SKY_SCENE`);
   game.startAudioScene("FBI_HEIST_H5_MUTE_AMBIENCE_SCENE"); // Used to stop police sound in town
   game.cancelAllPoliceReports(); // Used to stop default police radio around/In police vehicle
   game.clearAmbientZoneState("AZ_COUNTRYSIDE_PRISON_01_ANNOUNCER_GENERAL", false); // Turn off prison sound
@@ -47,11 +45,12 @@ function setupGameSettings() {
   game.clearAmbientZoneState("AZ_DISTANT_SASQUATCH", false);
   game.setAudioFlag("LoadMPData", true);
   game.setAudioFlag("DisableFlightMusic", true);
-  // game.setPedCanSwitchWeapon(alt.Player.local, false);
+  game.setPedCanSwitchWeapon(alt.Player.local, false);
+  game.setPedConfigFlag(alt.Player.local, PED_CONFIG_FLAG.UseHelmet, false);
 }
 
 alt.Events.onSpawned(() => {
-  game.setPedConfigFlag(alt.Player.local, PED_CONFIG_FLAG.UseHelmet, false);
+  setupGameSettings()
 });
 
 alt.Timers.everyTick(() => {

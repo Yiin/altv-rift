@@ -4,6 +4,7 @@ import { addMinutes } from 'date-fns';
 import { Inventory, ItemSourceOrigin } from '@shared/interfaces';
 import { StorageType } from '@shared/store/game-state.store';
 import { Ammo, createItem } from '@shared/modules/items';
+import { ServerEvents } from '@shared/events/server';
 import { InGamePlayer } from '@/core/utility/assertions';
 import { addItemToInventory, removeItemFromInventorySlot } from './api';
 
@@ -100,9 +101,7 @@ export function openStorage(player: InGamePlayer, storageId: alt.VirtualEntity['
 }
 
 export function closeStorage(player: InGamePlayer): void {
-  if (player.gameState.openedStorage?.type !== StorageType.Storage) {
-    return;
-  }
-
   player.gameState.openedStorage = null;
 }
+
+alt.Events.onPlayer(ServerEvents.FromClient.CLOSE_WINDOW, closeStorage);

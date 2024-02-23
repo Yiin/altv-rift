@@ -315,7 +315,7 @@ rpc.registerWebview(ServerCall.FromWebview.TAKE_ITEM, (player, itemSource) => {
   }
 });
 
-rpc.registerWebview(ServerCall.FromWebview.TAKE_ALL_ITEMS, (player, storageSource) => {
+rpc.registerWebview(ServerCall.FromWebview.TAKE_ALL_ITEMS, async (player, storageSource) => {
   needsToBeInGame(player);
 
   if (storageSource.origin !== ItemSourceOrigin.Storage) {
@@ -338,7 +338,7 @@ rpc.registerWebview(ServerCall.FromWebview.TAKE_ALL_ITEMS, (player, storageSourc
     return;
   }
 
-  const items = storageInventory.items;
+  const items = [...storageInventory.items];
 
   for (const item of items) {
     if (player.addItem(item.item)) {

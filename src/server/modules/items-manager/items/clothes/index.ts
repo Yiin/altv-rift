@@ -1,23 +1,8 @@
 import alt from "@altv/server";
 import { ServerEvents } from "@shared/events/server";
-import { isItemClothing, getItemInfoByKey, getItemEquipmentSlot, isFemaleClothing, ClothingItemKey, isUnisexClothing, isMaleClothing } from "@shared/modules/items";
+import { isItemClothing, getItemInfoByKey, getItemEquipmentSlot, isFemaleClothing, ClothingItemKey, isUnisexClothing, isMaleClothing, isComponentVariation } from "@shared/modules/items";
 import { getTorsoForTop } from "@shared/modules/items/registry/clothing/get-correct-torso";
 import { on } from "@/core/events/emit";
-
-export function isComponentVariation(equipmentSlot: string) {
-  return [
-    "mask",
-    "top",
-    "armor",
-    "accessory",
-    "gloves",
-    "pants",
-    "backpack",
-    "shoes",
-    "phone",
-    "tool",
-  ].includes(equipmentSlot);
-}
 
 function applyGenderClothing(player: alt.Player, key: ClothingItemKey): ClothingItemKey {
   if (player.model === alt.hash("mp_f_freemode_01")) {

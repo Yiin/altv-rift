@@ -94,13 +94,18 @@ whileInGame(() => {
 
     const { clip } = weapon.ammo ?? { clip: 0 };
 
+    if (clip === 0) {
+      reloadWeapon();
+      return;
+    }
+
     const hash = getWeaponHash(weapon.key);
 
     try {
       const [, gameClip] = game.getAmmoInClip(player, hash);
 
       if ((gameClip <= 3 && clip > 0) || gameClip > clip) {
-        game.setAmmoInClip(player, hash, clip);
+        game.setAmmoInClip(player, hash, clip + 3);
       }
     } catch (e) {
       alt.log(`Failed to update ammo in clip for weapon ${weapon.key}`);

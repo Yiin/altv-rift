@@ -1,7 +1,7 @@
 import { Inventory } from "@shared/interfaces";
 
 export function findFreeInventorySlot(inventory: Inventory, slot?: number) {
-  if (slot) {
+  if (typeof slot !== "undefined") {
     if (!inventory.items.some((item) => item.slot === slot)) {
       return slot;
     }
@@ -11,5 +11,6 @@ export function findFreeInventorySlot(inventory: Inventory, slot?: number) {
       return i;
     }
   }
+  console.log("no free slot", inventory.size, inventory.items.length);
   return -1;
 }

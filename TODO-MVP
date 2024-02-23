@@ -28,10 +28,14 @@ Next steps (Base game MVP):
 Workbench:
   ped sync is questionable, lets' focus on pvp & crafting for now
   ✔ Damage modifiers for weapons @done
-  ☐ Loot boxes for items & materials
+  ☐ Airdrops for items & materials
     ✔ UI @done
     ☐ Random loot tables
     ☐ Drop points
+    ☐ Add airdrop icon to the map
+  ✔ Make airdrop available only after it's landed @done
+  ✔ Take all items for some reason doesn't take all items @done
+  ✔ Closing the storage window should clear currently open storage @done
   ✔ After we close the window, the cursor doesn't disappear @done
   ✔ After taking the items from the storage, the UI doesn't update(??) @done
   ✔ Can't drop single items @done
@@ -39,8 +43,10 @@ Workbench:
   ✔ Need to separate male and female clothing @done
     ✔ Add labels in UI @done
     ✔ Add checks in equipment system @done
-  ☐ Can't equip glasses (??)
-  ☐ Crafting system for weapons
+  ✔ Can't equip glasses @done
+  ✔ Weapons are fucked, we should allow automatic reload @done
+  ✔ Disable weapon wheel and keep only quick access slots available @done
+  ☐ Crafting UI for weapons
 
 ------------------------------------------------------------------------------------------------------------------------
 

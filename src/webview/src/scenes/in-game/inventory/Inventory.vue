@@ -109,7 +109,7 @@ onUnmounted(() => {
         <h2 class="uppercase text-white text-2xl font-bold">inventory</h2>
         <div class="uppercase text-base text-deepGray">items</div>
         <div class="inline-grid grid-cols-6 grid-rows-5 gap-2.5 mt-5">
-          <InventorySlot v-for="(_, slot) in 24"
+          <InventorySlot v-for="(_, slot) in inventory.size"
             :source="{ origin: ItemSourceOrigin.PlayerInventory, originId: inventory.playerId, inventorySlot: slot }" />
         </div>
       </div>

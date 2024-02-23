@@ -82,7 +82,7 @@ function getDropPosition(entity: alt.VirtualEntity) {
   return entity.pos.sub(0, 0, 0.3);
 }
 
-function isAirDropInPosition(entity: alt.VirtualEntity) {
+export function isAirDropInPosition(entity: alt.VirtualEntity) {
   const { streamSyncedMeta: { interpolate } } = entity;
 
   if (!interpolate) {

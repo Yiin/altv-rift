@@ -236,7 +236,7 @@ export const useInventory = defineStore("inventory", {
       return useClient().droppedItems.filter(Boolean);
     },
     size(): number {
-      return this.character.inventory.size ?? 30;
+      return this.character.inventory.size ?? 24;
     },
     items(): SlottedItem[] {
       console.log("items start");

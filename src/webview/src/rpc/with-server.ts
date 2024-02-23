@@ -9,7 +9,7 @@ import { CallFromWebview } from "@shared/calls/server/from-webview";
 import { WebviewCall } from "@shared/calls/webview";
 import { CallFromServer } from "@shared/calls/webview/from-server";
 import { createPayload } from "@shared/utility/create-payload";
-import { deserialize, serialize } from "@shared/utility/serializer";
+import { deserialize } from "@shared/utility/serializer";
 
 const serverProcedures = new Map<string, (args: any) => any>();
 const serverHandlers = new Map<string, { name: string; resolve: Function; reject: Function }>();
@@ -53,7 +53,7 @@ alt.on(CALL_SERVER_FROM_WEBVIEW_RESPONSE, (response) => {
     console.warn(`CALL_SERVER_FROM_WEBVIEW_RESPONSE: No validation schema for ${handler.name}`);
   }
 
-  handler.resolve(deserialize(response.result));
+  handler.resolve(response.result && deserialize(response.result));
 });
 
 export const registerServer = <T extends keyof typeof WebviewCall.FromServer>(

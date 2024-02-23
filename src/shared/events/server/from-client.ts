@@ -5,6 +5,7 @@ export const FromClient = {
   NOTIFY: "NOTIFY",
   WEAPON_SHOOT: "WEAPON_SHOOT",
   CONVERSATION_STARTED: "CONVERSATION_STARTED",
+  CLOSE_WINDOW: "CLOSE_WINDOW",
 } as const;
 
 declare module "@altv/shared" {
@@ -20,6 +21,7 @@ declare module "@altv/shared" {
       [FromClient.NOTIFY]: (notification: string) => void;
       [FromClient.WEAPON_SHOOT]: () => void;
       [FromClient.CONVERSATION_STARTED]: (pedRemoteId: number) => void;
+      [FromClient.CLOSE_WINDOW]: () => void;
     }
   }
 }

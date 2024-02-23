@@ -31,7 +31,7 @@ const weapon = computed(() => {
 </script>
 
 <template>
-  <div v-if="weapon" class="text-lg text-white">
+  <div v-if="weapon" class="m-10 text-3xl text-white font-bold crisp-shadow">
     <div class="flex items-center">
       <span class="ml-2">{{ weapon.name }}</span>
     </div>

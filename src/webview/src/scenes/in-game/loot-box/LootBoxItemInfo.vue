@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { useItemDetails } from "@/composables/use-item-details";
-import { Item, getItemName, getWeaponStats, isItemFirearmWeapon, isItemFishingRod, isItemWeapon } from "@shared/modules/items";
+import { Item, getItemName, getWeaponStats, isItemFirearmWeapon, isItemFishingRod, isItemWeapon, isItemClothing, isUnisexClothing, isFemaleClothing } from "@shared/modules/items";
 import { getRandomDescription } from "@/utils/items";
 import { useEventListener } from "@/composables/use-event-listener";
 
@@ -36,7 +36,18 @@ useEventListener("mousemove", (event: MouseEvent) => {
      -->
     <div>
       <div class="text-lg font-bold mb-2 flex justify-between">
-        <div>
+        <div class="flex gap-2">
+          <div v-if="isItemClothing(item)">
+            <span v-if="isUnisexClothing(item.key)">
+              <span class="font-bold text-gray-500">U</span>
+            </span>
+            <span v-else-if="isFemaleClothing(item.key)" class="font-bold text-pink-400">
+              F
+            </span>
+            <span v-else class="font-bold text-gray-500">
+              M
+            </span>
+          </div>
           {{ details.name }}
         </div>
         <div v-if="'grade' in props.item">{{ props.item.grade }}</div>

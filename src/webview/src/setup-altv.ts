@@ -5,11 +5,11 @@ globalThis.deserialize = deserialize;
 
 if (!("alt" in globalThis)) {
   globalThis.alt = {
-    emit() {},
-    emitRaw() {},
-    off() {},
-    on() {},
-    once() {},
+    emit() { },
+    emitRaw() { },
+    off() { },
+    on() { },
+    once() { },
     listeners: {},
     getVersion: () => "0.0.0",
     getBranch: () => "dev",
@@ -38,11 +38,10 @@ if (!("alt" in globalThis)) {
   globalThis.alt.on = function (eventName: string, listener: (...args: any[]) => void) {
     function handler(...args: any[]) {
       try {
-        const deserializedArgs = args.flatMap((arg) => deserialize(arg));
+        const deserializedArgs = args.flatMap((arg) => arg && deserialize(arg));
         listener(...deserializedArgs);
       } catch (e) {
-        console.error("alt.on", typeof eventName, eventName);
-        console.log("alt.on", JSON.stringify(args));
+        console.error("err", eventName, e);
       }
     }
     handlers.push({
@@ -63,7 +62,7 @@ if (!("alt" in globalThis)) {
         1
       );
       try {
-        listener(...args.flatMap((arg) => deserialize(arg)));
+        listener(...args.flatMap((arg) => arg && deserialize(arg)));
       } catch (e) {
         console.log("alt.once", args);
         console.error("alt.once", eventName, e);
@@ -97,4 +96,4 @@ declare global {
   }
 }
 
-export {};
+export { };

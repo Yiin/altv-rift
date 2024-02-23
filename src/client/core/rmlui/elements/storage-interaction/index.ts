@@ -5,6 +5,7 @@ import { ServerCall } from "@shared/calls/server";
 import { clientState } from "@/core/store/client.store";
 import { rpc } from "@/core/rpc";
 import { openWindow } from "@/core/user-interface/webview";
+import { isAirDropInPosition } from "@/modules/inventory";
 import { registerElement } from "../../renderer/element-registry";
 import { div, span } from "../../renderer/rml-tags";
 import { AnchorType } from "../../renderer/anchors";
@@ -51,6 +52,7 @@ registerElement({
             const { x, y } = alt.worldToScreen(pos);
             return `translate(-50%, -50%) translate(${x}px, ${y}px)`;
           }),
+          display: everyFrame(() => isAirDropInPosition(ve) ? "block" : "none"),
         },
       },
       [

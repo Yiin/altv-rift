@@ -1,14 +1,12 @@
 import { computed, ref, watch } from "vue";
 import { isUserStoreAvailable, useUser } from "@/core/store/user.store";
 import { isCharacterStoreAvailable } from "@/core/store/character.store";
-import { isConnected } from "./connected.state";
 
 export const isCreatingCharacter = computed(() => {
   return (
     isUserStoreAvailable.value &&
     !isCharacterStoreAvailable.value &&
-    useUser().characters.length === 0 &&
-    isConnected.value
+    useUser().characters.length === 0
   );
 });
 

@@ -129,7 +129,3 @@ alt.Player.prototype.equipItem = function (source) {
   emit(ServerEvents.FromServer.ITEM_EQUIP, this, item);
   return true;
 };
-function isUniSexClothing(key: import("@shared/modules/items").FirearmWeaponItemKey | import("@shared/modules/items").AmmoItemKey | import("@shared/modules/items").MeleeWeaponItemKey | import("@shared/modules/items").ThrowableWeaponItemKey | import("@shared/modules/items").AccessoryItemKey | import("@shared/modules/items").ArmorItemKey | import("@shared/modules/items").EarringsItemKey | import("@shared/modules/items").GlassesItemKey | import("@shared/modules/items").GlovesItemKey | import("@shared/modules/items").HeadwearItemKey | import("@shared/modules/items").LeftHandItemKey | import("@shared/modules/items").MaskItemKey | import("@shared/modules/items").PantsItemKey | import("@shared/modules/items").RightHandItemKey | import("@shared/modules/items").ShoesItemKey | import("@shared/modules/items").TopItemKey | import("@shared/modules/items").ConsumableItemKey | import("@shared/modules/items").FoodIngredientItemKey | import("@shared/modules/items").TreeLogItemKey | import("@shared/modules/items").WoodItemKey | import("@shared/modules/items").MetalItemKey | import("@shared/modules/items").SandItemKey | import("@shared/modules/items").FishBaitItemKey | import("@shared/modules/items").HatchetItemKey | import("@shared/modules/items").PickaxeItemKey | import("@shared/modules/items").FishingRodItemKey | import("@shared/modules/items").NoteItemKey) {
-  throw new Error("Function not implemented.");
-}
-

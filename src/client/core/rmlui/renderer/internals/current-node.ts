@@ -6,6 +6,10 @@ export function setCurrentNode(node: alt.RmlElement | null) {
   currentNode = node;
 }
 
+export function hasCurrentNode() {
+  return currentNode !== null;
+}
+
 export function getCurrentNode() {
   if (!currentNode) {
     throw new Error("getCurrentNode should only be called inside a render");

@@ -1,9 +1,11 @@
 import alt from "@altv/client";
 import game from "@altv/natives";
 import { ref } from "vue";
+import { StorageType } from "@shared/store/game-state.store";
 import { Control, ControlType } from "@/core/constants/controls";
 import { isInConversation } from "@/modules/questing/conversation";
-import { getCurrentNode } from "../internals/current-node";
+import { isAirDropInPosition } from "@/modules/inventory";
+import { getCurrentNode, hasCurrentNode } from "../internals/current-node";
 import { AnchorEntity } from "../types";
 import { getFocusedEntity } from "./focused-entity";
 
@@ -118,9 +120,21 @@ const menuControls: MenuControls<any> = {
   },
 
   get isActive() {
-    if (currentEntity !== getCurrentNode().entity) {
+    if (hasCurrentNode() && currentEntity !== getCurrentNode().entity) {
       return false;
     }
+
+    if (!currentEntity) {
+      return false;
+    }
+
+    // Air drops are special cases, they need to be in position before we can interact with them.
+    if (currentEntity instanceof alt.VirtualEntity && currentEntity.streamSyncedMeta.storageType === StorageType.AirDrop) {
+      if (!isAirDropInPosition(currentEntity)) {
+        return false;
+      }
+    }
+
     const currentMenu = registeredMenus.get(currentEntity);
 
     if (!currentMenu) {
@@ -143,6 +157,10 @@ alt.Timers.everyTick(() => {
   }
 
   if (!currentMenu.node.valid || !currentMenu.node.isVisible) {
+    return;
+  }
+
+  if (!menuControls.isActive) {
     return;
   }
 

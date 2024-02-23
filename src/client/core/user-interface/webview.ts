@@ -5,6 +5,7 @@ import { Scene, UIElement } from "@shared/enums/ui";
 import { createHookableFunction } from "@shared/hooks";
 import { serialize } from "@shared/utility/serializer";
 import { WindowType } from "@shared/store/client.store";
+import { ServerEvents } from "@shared/events/server";
 import { clientState } from "../store/client.store";
 import { onKeyDown } from "../utility/event-helpers";
 
@@ -143,6 +144,8 @@ export function openWindow(windowType: WindowType) {
 export function closeWindow() {
   clientState.ui.window = null;
   showCursor(false);
+
+  alt.Events.emitServer(ServerEvents.FromClient.CLOSE_WINDOW);
 }
 
 let clearedCursors = 0;

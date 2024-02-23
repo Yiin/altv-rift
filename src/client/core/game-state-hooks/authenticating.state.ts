@@ -1,8 +1,7 @@
 import { computed, ref, watch } from "vue";
 import { isUserStoreAvailable } from "@/core/store/user.store";
-import { isConnected } from "./connected.state";
 
-export const isAuthenticating = computed(() => !isUserStoreAvailable.value && isConnected.value);
+export const isAuthenticating = computed(() => !isUserStoreAvailable.value);
 
 export function whileAuthenticating(fn: () => MaybePromise<(() => void) | void>) {
   const cleanup = ref<(() => void) | void>();

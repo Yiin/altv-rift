@@ -1,5 +1,6 @@
 import { getItemInfoByKey } from "../../items-registry";
-import { Item, ItemKey } from "../../types";
+import { getItemKeyEquipmentSlot } from "../../lib";
+import { Item } from "../../types";
 import {
   AccessoryItem,
   AccessoryItemInfo,
@@ -121,5 +122,22 @@ export function isMaleClothing(key: ClothingItemKey): boolean {
 export function isUnisexClothing(key: ClothingItemKey) {
   const info = getItemInfoByKey(key);
 
-  return [1, 5].includes(info.componentId);
+  const slot = getItemKeyEquipmentSlot(key);
+
+  return slot && isComponentVariation(slot) && [1, 5].includes(info.componentId);
+}
+
+export function isComponentVariation(equipmentSlot: string) {
+  return [
+    "mask",
+    "top",
+    "armor",
+    "accessory",
+    "gloves",
+    "pants",
+    "backpack",
+    "shoes",
+    "phone",
+    "tool",
+  ].includes(equipmentSlot);
 }

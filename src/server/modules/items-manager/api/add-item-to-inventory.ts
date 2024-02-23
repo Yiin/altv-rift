@@ -22,14 +22,16 @@ export function addItemToInventory(inventory: Inventory, item: Item, slot?: numb
         });
         return true;
       }
+      console.log("unreachable");
       // unreachable
-      throw new Error("Existing item is not stackable??");
+      return false;
     }
   }
 
   const emptySlot = findFreeInventorySlot(inventory, slot);
 
   if (emptySlot === -1) {
+    console.log("no empty slot");
     return false;
   }
 
