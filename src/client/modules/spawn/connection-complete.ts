@@ -1,5 +1,5 @@
-import * as alt from "@altv/client";
-import * as game from "@altv/natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 import { ServerEvents } from "@shared/events/server";
 import { waitForUserInterface } from "@/core/user-interface/webview";
 import { PED_CONFIG_FLAG } from "@/core/constants/ped-flags";

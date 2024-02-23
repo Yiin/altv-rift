@@ -1,5 +1,5 @@
-import * as alt from "@altv/client";
-import * as game from "@altv/natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 import { drawRectangle2D, drawText2D } from "./text";
 
 interface TextProperties {

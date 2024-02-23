@@ -1,4 +1,4 @@
-import * as alt from "@altv/server";
+import alt from "@altv/server";
 import { BlueprintKey } from "@shared/modules/production/types";
 import { InGamePlayer } from "@/core/utility/assertions";
 

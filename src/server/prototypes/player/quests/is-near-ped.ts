@@ -1,4 +1,4 @@
-import * as alt from "@altv/server";
+import alt from "@altv/server";
 import { PedKey } from "@shared/modules/ped/list";
 import { InGamePlayer } from "@/core/utility/assertions";
 import { getPedByKey } from "@/modules/peds/registry";

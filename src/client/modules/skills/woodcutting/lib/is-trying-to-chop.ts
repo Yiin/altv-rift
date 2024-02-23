@@ -1,5 +1,5 @@
-import * as alt from "@altv/client";
-import * as game from "@altv/natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 import { ControlType, Control } from "@/core/constants/controls";
 import { isChoppingTree } from "./is-chopping-tree";
 

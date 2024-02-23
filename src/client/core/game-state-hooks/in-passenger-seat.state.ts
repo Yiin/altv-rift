@@ -1,4 +1,4 @@
-import * as alt from "@altv/client";
+import alt from "@altv/client";
 import { computed, ref, watch } from "vue";
 import { isInVehicle } from "./in-vehicle.state";
 

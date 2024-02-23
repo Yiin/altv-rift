@@ -1,7 +1,7 @@
-import * as alt from "@altv/client";
+import alt from "@altv/client";
 import { PedKey } from "@shared/modules/ped/list";
 import { PedInteraction } from "@shared/modules/ped/interactions";
-import { IconName } from "@/core/rmlui/components/icon/icon";
+import { IconName } from "@/core/rmlui/components/icon";
 
 export type PedInteractionRegistration = (ped: alt.Ped) => PedInteraction<IconName>[];
 

@@ -1,4 +1,4 @@
-import * as alt from "@altv/client";
+import alt from "@altv/client";
 import { ClientEvents } from "@shared/events/client";
 import { ServerEvents } from "@shared/events/server";
 import { StringBuffer } from "@shared/utility/buffer";

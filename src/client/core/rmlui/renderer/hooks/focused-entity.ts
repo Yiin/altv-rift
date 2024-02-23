@@ -1,5 +1,5 @@
-import * as alt from "@altv/client";
-import * as game from "@altv/natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 import { Raw, markRaw, ref, watch } from "vue";
 import { getScreenResolution } from "@/core/utility/screen-resolution";
 import { AnchorEntity } from "../types";

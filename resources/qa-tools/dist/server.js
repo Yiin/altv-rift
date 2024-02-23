@@ -138,7 +138,7 @@ var require_implementation = __commonJS({
       }
       var args = slice.call(arguments, 1);
       var bound;
-      var binder = function() {
+      var binder = function () {
         if (this instanceof bound) {
           var result = target.apply(this, args.concat(slice.call(arguments)));
           if (Object(result) === result) {
@@ -196,7 +196,7 @@ var require_get_intrinsic = __commonJS({
     var $SyntaxError = SyntaxError;
     var $Function = Function;
     var $TypeError = TypeError;
-    var getEvalledConstructor = function(expressionSyntax) {
+    var getEvalledConstructor = function (expressionSyntax) {
       try {
         return $Function('"use strict"; return (' + expressionSyntax + ").constructor;")();
       } catch (e) {
@@ -210,10 +210,10 @@ var require_get_intrinsic = __commonJS({
         $gOPD = null;
       }
     }
-    var throwTypeError = function() {
+    var throwTypeError = function () {
       throw new $TypeError();
     };
-    var ThrowTypeError = $gOPD ? function() {
+    var ThrowTypeError = $gOPD ? function () {
       try {
         arguments.callee;
         return throwTypeError;
@@ -226,7 +226,7 @@ var require_get_intrinsic = __commonJS({
       }
     }() : throwTypeError;
     var hasSymbols = require_has_symbols()();
-    var getProto = Object.getPrototypeOf || function(x) {
+    var getProto = Object.getPrototypeOf || function (x) {
       return x.__proto__;
     };
     var needsEval = {};
@@ -389,7 +389,7 @@ var require_get_intrinsic = __commonJS({
         throw new $SyntaxError("invalid intrinsic syntax, expected opening `%`");
       }
       var result = [];
-      $replace(string, rePropName, function(match, number, quote, subString) {
+      $replace(string, rePropName, function (match, number, quote, subString) {
         result[result.length] = quote ? $replace(subString, reEscapeChar, "$1") : number || match;
       });
       return result;
@@ -557,7 +557,7 @@ var require_is_arguments = __commonJS({
       }
       return value !== null && typeof value === "object" && typeof value.length === "number" && value.length >= 0 && $toString(value) !== "[object Array]" && $toString(value.callee) === "[object Function]";
     };
-    var supportsStandardArguments = function() {
+    var supportsStandardArguments = function () {
       return isStandardArguments(arguments);
     }();
     isStandardArguments.isLegacyArguments = isLegacyArguments;
@@ -575,7 +575,7 @@ var require_is_generator_function = __commonJS({
     var isFnRegex = /^\s*(?:function)?\*/;
     var hasToStringTag = require_shams2()();
     var getProto = Object.getPrototypeOf;
-    var getGeneratorFunc = function() {
+    var getGeneratorFunc = function () {
       if (!hasToStringTag) {
         return false;
       }
@@ -708,7 +708,7 @@ var require_is_typed_array = __commonJS({
     var gOPD = require_getOwnPropertyDescriptor();
     var getPrototypeOf = Object.getPrototypeOf;
     if (hasToStringTag && gOPD && getPrototypeOf) {
-      forEach(typedArrays, function(typedArray) {
+      forEach(typedArrays, function (typedArray) {
         var arr = new g[typedArray]();
         if (Symbol.toStringTag in arr) {
           var proto = getPrototypeOf(arr);
@@ -723,7 +723,7 @@ var require_is_typed_array = __commonJS({
     }
     var tryTypedArrays = function tryAllTypedArrays(value) {
       var anyTrue = false;
-      forEach(toStrTags, function(getter, typedArray) {
+      forEach(toStrTags, function (getter, typedArray) {
         if (!anyTrue) {
           try {
             anyTrue = getter.call(value) === typedArray;
@@ -766,7 +766,7 @@ var require_which_typed_array = __commonJS({
     var gOPD = require_getOwnPropertyDescriptor();
     var getPrototypeOf = Object.getPrototypeOf;
     if (hasToStringTag && gOPD && getPrototypeOf) {
-      forEach(typedArrays, function(typedArray) {
+      forEach(typedArrays, function (typedArray) {
         if (typeof g[typedArray] === "function") {
           var arr = new g[typedArray]();
           if (Symbol.toStringTag in arr) {
@@ -783,7 +783,7 @@ var require_which_typed_array = __commonJS({
     }
     var tryTypedArrays = function tryAllTypedArrays(value) {
       var foundName = false;
-      forEach(toStrTags, function(getter, typedArray) {
+      forEach(toStrTags, function (getter, typedArray) {
         if (!foundName) {
           try {
             var name = getter.call(value);
@@ -1029,10 +1029,10 @@ var require_types = __commonJS({
       return typeof Uint8Array !== "undefined" && (isArrayBuffer(value) || isSharedArrayBuffer(value));
     }
     exports.isAnyArrayBuffer = isAnyArrayBuffer;
-    ["isProxy", "isExternal", "isModuleNamespaceObject"].forEach(function(method) {
+    ["isProxy", "isExternal", "isModuleNamespaceObject"].forEach(function (method) {
       Object.defineProperty(exports, method, {
         enumerable: false,
-        value: function() {
+        value: function () {
           throw new Error(method + " is not supported in userland");
         }
       });
@@ -1072,7 +1072,7 @@ var require_inherits_browser = __commonJS({
       module.exports = function inherits(ctor, superCtor) {
         if (superCtor) {
           ctor.super_ = superCtor;
-          var TempCtor = function() {
+          var TempCtor = function () {
           };
           TempCtor.prototype = superCtor.prototype;
           ctor.prototype = new TempCtor();
@@ -1096,7 +1096,7 @@ var require_util = __commonJS({
       return descriptors;
     };
     var formatRegExp = /%[sdj%]/g;
-    exports.format = function(f) {
+    exports.format = function (f) {
       if (!isString(f)) {
         var objects = [];
         for (var i = 0; i < arguments.length; i++) {
@@ -1107,7 +1107,7 @@ var require_util = __commonJS({
       var i = 1;
       var args = arguments;
       var len = args.length;
-      var str = String(f).replace(formatRegExp, function(x2) {
+      var str = String(f).replace(formatRegExp, function (x2) {
         if (x2 === "%%")
           return "%";
         if (i >= len)
@@ -1136,12 +1136,12 @@ var require_util = __commonJS({
       }
       return str;
     };
-    exports.deprecate = function(fn, msg) {
+    exports.deprecate = function (fn, msg) {
       if (typeof define_process_default !== "undefined" && define_process_default.noDeprecation === true) {
         return fn;
       }
       if (typeof define_process_default === "undefined") {
-        return function() {
+        return function () {
           return exports.deprecate(fn, msg).apply(this, arguments);
         };
       }
@@ -1169,17 +1169,17 @@ var require_util = __commonJS({
       debugEnvRegex = new RegExp("^" + debugEnv + "$", "i");
     }
     var debugEnv;
-    exports.debuglog = function(set) {
+    exports.debuglog = function (set) {
       set = set.toUpperCase();
       if (!debugs[set]) {
         if (debugEnvRegex.test(set)) {
           var pid = define_process_default.pid;
-          debugs[set] = function() {
+          debugs[set] = function () {
             var msg = exports.format.apply(exports, arguments);
             console.error("%s %d: %s", set, pid, msg);
           };
         } else {
-          debugs[set] = function() {
+          debugs[set] = function () {
           };
         }
       }
@@ -1250,7 +1250,7 @@ var require_util = __commonJS({
     }
     function arrayToHash(array) {
       var hash = {};
-      array.forEach(function(val, idx) {
+      array.forEach(function (val, idx) {
         hash[val] = true;
       });
       return hash;
@@ -1323,7 +1323,7 @@ var require_util = __commonJS({
       if (array) {
         output = formatArray(ctx, value, recurseTimes, visibleKeys, keys);
       } else {
-        output = keys.map(function(key) {
+        output = keys.map(function (key) {
           return formatProperty(ctx, value, recurseTimes, visibleKeys, key, array);
         });
       }
@@ -1356,7 +1356,7 @@ var require_util = __commonJS({
           output.push("");
         }
       }
-      keys.forEach(function(key) {
+      keys.forEach(function (key) {
         if (!key.match(/^\d+$/)) {
           output.push(formatProperty(ctx, value, recurseTimes, visibleKeys, key, true));
         }
@@ -1389,11 +1389,11 @@ var require_util = __commonJS({
           }
           if (str.indexOf("\n") > -1) {
             if (array) {
-              str = str.split("\n").map(function(line) {
+              str = str.split("\n").map(function (line) {
                 return "  " + line;
               }).join("\n").substr(2);
             } else {
-              str = "\n" + str.split("\n").map(function(line) {
+              str = "\n" + str.split("\n").map(function (line) {
                 return "   " + line;
               }).join("\n");
             }
@@ -1419,7 +1419,7 @@ var require_util = __commonJS({
     }
     function reduceToSingleString(output, base, braces) {
       var numLinesEst = 0;
-      var length = output.reduce(function(prev, cur) {
+      var length = output.reduce(function (prev, cur) {
         numLinesEst++;
         if (cur.indexOf("\n") >= 0)
           numLinesEst++;
@@ -1520,11 +1520,11 @@ var require_util = __commonJS({
       ].join(":");
       return [d.getDate(), months[d.getMonth()], time].join(" ");
     }
-    exports.log = function() {
+    exports.log = function () {
       console.log("%s - %s", timestamp(), exports.format.apply(exports, arguments));
     };
     exports.inherits = require_inherits_browser();
-    exports._extend = function(origin, add) {
+    exports._extend = function (origin, add) {
       if (!add || !isObject(add))
         return origin;
       var keys = Object.keys(add);
@@ -1556,7 +1556,7 @@ var require_util = __commonJS({
       }
       function fn() {
         var promiseResolve, promiseReject;
-        var promise = new Promise(function(resolve, reject) {
+        var promise = new Promise(function (resolve, reject) {
           promiseResolve = resolve;
           promiseReject = reject;
         });
@@ -1564,7 +1564,7 @@ var require_util = __commonJS({
         for (var i = 0; i < arguments.length; i++) {
           args.push(arguments[i]);
         }
-        args.push(function(err, value) {
+        args.push(function (err, value) {
           if (err) {
             promiseReject(err);
           } else {
@@ -1611,12 +1611,12 @@ var require_util = __commonJS({
           throw new TypeError("The last argument must be of type Function");
         }
         var self = this;
-        var cb = function() {
+        var cb = function () {
           return maybeCb.apply(self, arguments);
         };
-        original.apply(this, args).then(function(ret) {
+        original.apply(this, args).then(function (ret) {
           define_process_default.nextTick(cb.bind(null, null, ret));
-        }, function(rej) {
+        }, function (rej) {
           define_process_default.nextTick(callbackifyOnRejected.bind(null, rej, cb));
         });
       }
@@ -1643,7 +1643,7 @@ var codeHelpers = {
 var colorizeError = (text) => "[31;1m[Error] " + text + "[0m";
 var colorizeWarning = (text) => "[33;1m[Warning] " + text + "[0m";
 var colorizeInfo = (text) => "[36;1m[Info] " + text + "[0m";
-var AsyncFunction = Object.getPrototypeOf(async function() {
+var AsyncFunction = Object.getPrototypeOf(async function () {
 }).constructor;
 var inspectSettings = {
   colors: true,

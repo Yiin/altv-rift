@@ -14,8 +14,7 @@ export const registerElement = <T extends AnchorType, X>(
     const focusableElementForAnchorType = focusableElements.get(registration.anchorType);
     if (focusableElementForAnchorType) {
       throw new Error(
-        `Can't register ${registration.key} as focusable element because ${
-          focusableElementForAnchorType.key
+        `Can't register ${registration.key} as focusable element because ${focusableElementForAnchorType.key
         } is already registered as focusable element for ${AnchorType[registration.anchorType]}`
       );
     }

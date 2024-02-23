@@ -1,18 +1,17 @@
 <script setup lang="ts">
-import ShopSlot from "./StorageSlot.vue";
-import { useStorage } from "@/store/storage.store";
-import { useInventory } from "@/store/inventory.store";
+import { useGameState } from "@/store/synced/game-state.store";
+import InventorySlot from "../InventorySlot.vue";
 
-const storage = useStorage();
+const gameState = useGameState();
 </script>
 
 <template>
-  <div v-if="storage.interaction" class="flex flex-col">
-    <div class="text-xl font-semibold crisp-shadow text-white uppercase tracking-wide p-1">
-      Storage
+  <template v-if="gameState.storage">
+    <h2 class="uppercase text-white text-2xl font-bold">{{ gameState.storage.label }}</h2>
+    <div class="uppercase text-base text-deepGray"></div>
+    <div class="inline-grid grid-cols-4 gap-2.5 mt-5" @mousedown.stop @touchstart.stop>
+      <InventorySlot v-for="(_, slot) in gameState.storage.size"
+        :source="{ ...gameState.storage.source, inventorySlot: slot }" />
     </div>
-    <div @mousedown.stop @touchstart.stop class="relative grid grid-cols-7 px-1 py-1 bg-black/80">
-      <StorageSlot v-for="i in storage.interaction.size" :storage="storage.interaction" :key="i" :slot="i - 1" />
-    </div>
-  </div>
+  </template>
 </template>

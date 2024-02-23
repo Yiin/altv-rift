@@ -1,5 +1,5 @@
-import * as alt from "@altv/client";
-import * as game from "@altv/natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 import { ClientEvents } from "@shared/events/client";
 
 alt.Events.onServer(ClientEvents.FromServer.CALL_NATIVE, (native, ...args) => {
@@ -16,5 +16,5 @@ alt.Events.onServer(ClientEvents.FromServer.CALL_NATIVE, (native, ...args) => {
 
     // @ts-expect-error
     game[native](...nativeArgs);
-  } catch {}
+  } catch { }
 });

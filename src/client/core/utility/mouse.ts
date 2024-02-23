@@ -1,5 +1,5 @@
-import * as alt from "@altv/client";
-import * as game from "@altv/natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 
 export function getScaledCursorPosition(): alt.IVector2 {
   const cursor = alt.Cursor.pos;

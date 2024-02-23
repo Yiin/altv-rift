@@ -1,4 +1,4 @@
-import * as alt from "@altv/client";
+import alt from "@altv/client";
 import { closeActionMenu, openActionMenu } from "./api";
 import { whileInGame } from "@/core/game-state-hooks/in-game.state";
 

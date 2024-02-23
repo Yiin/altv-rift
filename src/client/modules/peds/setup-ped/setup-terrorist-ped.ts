@@ -1,5 +1,5 @@
-import * as alt from "@altv/client";
-import * as game from "@altv/natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 import { RAGDOLL_BLOCKING_FLAGS } from "@shared/enums/ragdoll-blocking-flags";
 import { PedFlags } from "@shared/modules/ped";
 import { everyTickWhile } from "@/core/utility/event-helpers";
@@ -63,13 +63,22 @@ export async function setupTerroristPed(ped: alt.Ped) {
   });
 
   game.setPedAsEnemy(ped, true);
+  game.setEntityAsMissionEntity(ped, true, true);
 
   game.setRagdollBlockingFlags(ped, RAGDOLL_BLOCKING_FLAGS.RBF_ALL);
   game.setPedConfigFlag(ped, PED_CONFIG_FLAG.NoCriticalHits, true);
+  game.setPedConfigFlag(ped, PED_CONFIG_FLAG.ForceDieIfInjured, false);
   game.setPedConfigFlag(ped, PED_CONFIG_FLAG.DisableGoToWritheWhenInjured, true);
   game.setPedConfigFlag(ped, PED_CONFIG_FLAG.TreatNonFriendlyAsHateWhenInCombat, true);
   game.setPedCombatAttributes(ped, COMBAT_ATTRIBUTE.Aggressive, true);
+  game.setPedCombatAttributes(ped, COMBAT_ATTRIBUTE.RequiresLosToAim, true);
+  game.setPedCombatAttributes(ped, COMBAT_ATTRIBUTE.RequiresLosToShoot, true);
   game.setPedCombatAttributes(ped, COMBAT_ATTRIBUTE.AlwaysFight, true);
+  game.setPedCombatAttributes(ped, COMBAT_ATTRIBUTE.CanCharge, true);
+  game.setPedCombatAttributes(ped, COMBAT_ATTRIBUTE.PermitChargeBeyondDefensiveArea, false);
+  game.setPedCombatAttributes(ped, COMBAT_ATTRIBUTE.CanChaseTargetOnFoot, false);
+  game.setPedCombatAttributes(ped, COMBAT_ATTRIBUTE.CanFightArmedPedsWhenNotArmed, true);
+  game.setPedCombatAttributes(ped, COMBAT_ATTRIBUTE.DisableAllRandomsFlee, true);
   game.setPedCombatAttributes(ped, COMBAT_ATTRIBUTE.DisableBulletReactions, true);
   game.setPedCombatAttributes(ped, COMBAT_ATTRIBUTE.UseCover, Math.random() > 0.5);
   game.setPedCombatAttributes(ped, COMBAT_ATTRIBUTE.SwitchToAdvanceIfCantFindCover, true);
@@ -94,6 +103,7 @@ export async function setupTerroristPed(ped: alt.Ped) {
       game.setPedResetFlag(ped, PED_RESET_FLAG.BlockFallTaskFromExplosionDamage, true);
       game.setPedResetFlag(ped, PED_RESET_FLAG.BlockWeaponReactionsUnlessDead, true);
       game.setPedResetFlag(ped, PED_RESET_FLAG.DisablePotentialBlastReactions, true);
+      game.setPedResetFlag(ped, PED_RESET_FLAG.PreventAllMeleeTakedowns, true);
     }
   );
 }

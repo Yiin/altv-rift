@@ -1,4 +1,4 @@
-import * as alt from "@altv/client";
+import alt from "@altv/client";
 
 /**
  * Sleep the code for a certain duration.

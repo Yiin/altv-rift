@@ -1,4 +1,4 @@
-import * as alt from "@altv/server";
+import alt from "@altv/server";
 import { isInGame } from "@/core/utility/assertions";
 
 alt.Events.onPlayerDisconnect(async ({ player, reason }) => {

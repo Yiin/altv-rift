@@ -1,4 +1,4 @@
-import * as alt from "@altv/client";
+import alt from "@altv/client";
 import { ref } from "vue";
 
 export function whileEntityIsStreamedIn<T extends alt.Entity>(

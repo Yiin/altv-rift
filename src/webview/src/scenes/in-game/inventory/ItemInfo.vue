@@ -1,27 +1,33 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useItemDetails } from "@/composables/use-item-details";
-import { CombineType, getCombineType, getItemName, isItemFirearmWeapon, isItemFishingRod } from "@shared/modules/items";
+import { CombineType, getCombineType, getItemName, isItemClothing, isUnisexClothing, isFemaleClothing, getWeaponStats, isItemFirearmWeapon, isItemFishingRod, isItemWeapon } from "@shared/modules/items";
 import { Hovering, useInventory } from "@/store/inventory.store";
 import { getRandomDescription } from "@/utils/items";
 
 const props = defineProps<Hovering>();
 
-const inventory = useInventory();
-
 const item = computed(() => props.item.item);
-const price = computed(() => {
-  const item = inventory.getItemFromSource(props.item.source);
 
-  if (item && 'price' in item) {
-    return item.price;
+const price = computed(() => {
+  if (props.item && 'price' in props.item) {
+    return props.item.price;
   }
   return null;
 });
 
 const details = useItemDetails(item);
 
+const weaponStats = computed(() => {
+  if (isItemWeapon(item.value)) {
+    return getWeaponStats(item.value.key);
+  }
+  return null;
+});
+
 const combination = computed(() => {
+  const inventory = useInventory();
+
   if (!inventory.selectedItem) {
     return null;
   }
@@ -44,7 +50,7 @@ const combination = computed(() => {
 </script>
 
 <template>
-  <div class="mx-auto absolute top-0 left-0 pointer-events-none select-none z-max w-72 bg-neutral-950/70 text-white p-4"
+  <div class="mx-auto absolute top-0 left-0 pointer-events-none select-none z-max w-72 bg-white text-black p-4"
     theme="light"
     :style="{
       transform: `translate(${position.x}px, ${position.y}px)`,
@@ -58,7 +64,20 @@ const combination = computed(() => {
      -->
     <div>
       <div class="text-lg font-bold mb-2 flex justify-between">
-        {{ details.customName ?? details.name }}
+        <div class="flex gap-2">
+          <div v-if="isItemClothing(item)">
+            <span v-if="isUnisexClothing(item.key)">
+              <span class="font-bold text-gray-500">U</span>
+            </span>
+            <span v-else-if="isFemaleClothing(item.key)" class="font-bold text-pink-400">
+              F
+            </span>
+            <span v-else class="font-bold text-gray-500">
+              M
+            </span>
+          </div>
+          {{ details.customName ?? details.name }}
+        </div>
 
         <!-- 
           Shop price
@@ -97,6 +116,63 @@ const combination = computed(() => {
             <div class="font-bold text-yellow-500">
               {{ item.ammo.clip }}
               <span class="text-xs">/ {{ item.ammo.rest }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--
+        Weapon stats
+      -->
+      <div v-if="weaponStats" class="flex flex-col gap-1 mt-2">
+        <div v-if="weaponStats.damage" class="flex align-center justify-between gap-2">
+          <div class="text-md font-bold">
+            DPS
+          </div>
+          <div class="flex align-center gap-2 w-1/2">
+            <div class="font-semibold">
+              {{ (weaponStats.damage * (1 / weaponStats.timeBetweenShots)).toFixed(1) }}
+            </div>
+          </div>
+        </div>
+        <div v-if="weaponStats.damage" class="flex align-center justify-between gap-2">
+          <div class="text-md font-bold">
+            Damage
+          </div>
+          <div class="flex align-center gap-2 w-1/2">
+            <div class="font-semibold">
+              {{ (weaponStats.damage * weaponStats.playerDamageModifier).toFixed(0) }}
+            </div>
+          </div>
+        </div>
+        <div class="flex align-center justify-between gap-2">
+          <div class="text-md font-bold">
+            Rate (per second)
+          </div>
+          <div class="flex align-center gap-2 w-1/2">
+            <div class="font-semibold">
+              {{ (weaponStats.timeBetweenShots ? (1 / weaponStats.timeBetweenShots) : (1 /
+                weaponStats.animReloadRate)).toFixed(2) }}
+            </div>
+          </div>
+        </div>
+        <div v-if="weaponStats.accuracySpread" class="flex align-center justify-between gap-2">
+          <div class="text-md font-bold">
+            Accuracy spread
+          </div>
+          <div class="flex align-center gap-2 w-1/2">
+            <div class="font-semibold">
+              {{ weaponStats.accuracySpread.toFixed(1).replace('.0', '') }}
+            </div>
+          </div>
+        </div>
+        <div class="flex align-center justify-between gap-2">
+          <div class="text-md font-bold">
+            Range
+          </div>
+          <div class="flex align-center gap-2 w-1/2">
+            <div class="font-semibold">
+              {{ weaponStats.range.toFixed(1).replace('.0', '') }}
             </div>
           </div>
         </div>

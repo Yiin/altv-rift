@@ -14,6 +14,9 @@ if (!("alt" in globalThis)) {
     getVersion: () => "0.0.0",
     getBranch: () => "dev",
     getLocale: () => "en",
+    getEventListeners() {
+      return [];
+    },
   };
   globalThis.altMock = true;
 } else {

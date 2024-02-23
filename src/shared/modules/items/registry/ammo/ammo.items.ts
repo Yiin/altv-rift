@@ -3,7 +3,7 @@ import { Item, ItemKey } from "../../types";
 import { EquipedAmmo } from "../weapons/firearm-weapon.items";
 import { registerItem } from "../../items-registry";
 import { makeKeys } from "../../../../utility/make-keys";
-import { ItemFlags } from "../../enums";
+import { ItemFlags, ItemGrade } from "../../enums";
 
 export const Ammo = makeKeys<AmmoItemKey>()({
   HANDGUN_AMMO: "handgunammo",
@@ -156,6 +156,10 @@ export function isItemAmmo(item: Item): item is AmmoItem {
 
 export function getAmmoKeyForAmmoGroup(ammoGroup: AmmoGroup) {
   return ammo.find(({ group }) => group === ammoGroup)?.key!;
+}
+
+export function getAmmoDamageMultiplier(ammoKey: AmmoItemKey) {
+  return ammo.find(({ key }) => key === ammoKey)!.damagemultiplier;
 }
 
 export function toEquipedAmmo(

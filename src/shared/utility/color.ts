@@ -1,4 +1,4 @@
-import * as alt from "@altv/shared";
+import alt from "@altv/shared";
 
 export function rgbaToHexAlpha(color: alt.RGBA): string {
   let r = color.r.toString(16);

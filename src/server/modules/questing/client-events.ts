@@ -1,4 +1,4 @@
-import * as alt from "@altv/server";
+import alt from "@altv/server";
 import { Quests } from "@shared/modules/quests";
 import { ServerEvents } from "@shared/events/server";
 import { isInGame } from "@/core/utility/assertions";

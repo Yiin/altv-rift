@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { InteractionType, SlottedGroundItem, SlottedInteractionInventoryItem, SlottedPlayerInventoryItem, isSameItemSource, useInventory } from "@/store/inventory.store";
+import { InteractionType, SlottedGroundItem, SlottedStorageItem, SlottedPlayerInventoryItem, isSameItemSource, useInventory } from "@/store/inventory.store";
 import ItemIcon from "./ItemIcon.vue";
 
 const props = defineProps<{
-  item: SlottedPlayerInventoryItem | SlottedInteractionInventoryItem | SlottedGroundItem;
+  item: SlottedPlayerInventoryItem | SlottedStorageItem | SlottedGroundItem;
 }>();
 
 const inventory = useInventory();

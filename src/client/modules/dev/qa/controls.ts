@@ -1,9 +1,9 @@
-import * as alt from "@altv/client";
+import alt from "@altv/client";
 
 export default class ControlsController {
   static readonly instance = new ControlsController();
 
-  private constructor() {}
+  private constructor() { }
 
   private _blockers: string[] = [];
 

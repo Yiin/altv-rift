@@ -1,5 +1,5 @@
-import * as alt from "@altv/client";
-import * as game from "@altv/natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 import { computed } from "vue";
 import { focusableElements, registeredElements } from "./element-registry";
 import { notRenderedElements, visibleElementsHeap } from "./frame-state";
@@ -8,7 +8,6 @@ import { elements } from "./rml-renderer";
 import { AnchorEntity, FrameData } from "./types";
 import { updateFocusedEntity } from "./hooks/focused-entity";
 import { AnchorType } from "./anchors";
-import Raycast from "@/core/utility/raycast";
 
 export const frameDataMap = new Map<AnchorEntity, FrameData>();
 
@@ -17,17 +16,12 @@ let screenRes = alt.getScreenResolution().div(
   2
 );
 
-alt.Events.onWindowResolutionChange(() => {
-  screenRes = alt.getScreenResolution().div(2.2, 2);
+alt.Events.onWindowResolutionChange(({ newResolution }) => {
+  screenRes = newResolution.div(2.2, 2);
 });
 
 export function isValidAnchor(entity: alt.BaseObject): entity is AnchorEntity {
-  try {
-    getAnchorType(entity);
-    return true;
-  } catch {
-    return false;
-  }
+  return getAnchorType(entity) !== null;
 }
 
 export function getAnchorType(entity: alt.BaseObject) {
@@ -45,9 +39,12 @@ export function getAnchorType(entity: alt.BaseObject) {
       if ((entity as alt.VirtualEntity).streamSyncedMeta.entityType === "tree") {
         return AnchorType.Tree;
       }
+      if ((entity as alt.VirtualEntity).streamSyncedMeta.entityType === "storage") {
+        return AnchorType.Storage;
+      }
     }
   }
-  throw new Error("Unknown anchor type");
+  return null;
 }
 
 export function prepareFrameForEntity(entity: AnchorEntity) {
@@ -61,7 +58,13 @@ export function prepareFrameForEntity(entity: AnchorEntity) {
     const screenPosition = alt.worldToScreen(entity.pos);
     const zIndex = ~~(screenPosition.z * 100000);
 
-    const focusableElement = focusableElements.get(getAnchorType(entity));
+    const anchorType = getAnchorType(entity);
+
+    if (!anchorType) {
+      return;
+    }
+
+    const focusableElement = focusableElements.get(anchorType);
 
     if (focusableElement) {
       if (alt.Player.local.pos.distanceTo(entity.pos) <= focusableElement.renderDistance) {

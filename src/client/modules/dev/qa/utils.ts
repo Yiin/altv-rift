@@ -1,4 +1,4 @@
-import * as alt from "@altv/client";
+import alt from "@altv/client";
 import * as natives from "@altv/natives";
 
 namespace Utils {

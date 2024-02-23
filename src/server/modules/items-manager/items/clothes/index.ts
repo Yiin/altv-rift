@@ -1,6 +1,6 @@
-import * as alt from "@altv/server";
+import alt from "@altv/server";
 import { ServerEvents } from "@shared/events/server";
-import { isItemClothing, getItemInfoByKey, getItemEquipmentSlot } from "@shared/modules/items";
+import { isItemClothing, getItemInfoByKey, getItemEquipmentSlot, isFemaleClothing, ClothingItemKey, isUnisexClothing, isMaleClothing } from "@shared/modules/items";
 import { getTorsoForTop } from "@shared/modules/items/registry/clothing/get-correct-torso";
 import { on } from "@/core/events/emit";
 
@@ -19,6 +19,25 @@ export function isComponentVariation(equipmentSlot: string) {
   ].includes(equipmentSlot);
 }
 
+function applyGenderClothing(player: alt.Player, key: ClothingItemKey): ClothingItemKey {
+  if (player.model === alt.hash("mp_f_freemode_01")) {
+    if (isFemaleClothing(key)) {
+      return key;
+    }
+    if (isUnisexClothing(key)) {
+      return key.replace("f_", "m_") as ClothingItemKey;
+    }
+  } else {
+    if (isMaleClothing(key)) {
+      return key;
+    }
+    if (isUnisexClothing(key)) {
+      return key.replace("m_", "f_") as ClothingItemKey;
+    }
+  }
+  return key;
+}
+
 export function isProp(equipmentSlot: string) {
   return ["glasses", "headwear", "earrings", "lefthand", "righthand"].includes(equipmentSlot);
 }
@@ -29,7 +48,7 @@ on(ServerEvents.FromServer.ITEM_EQUIP, (player, item) => {
   }
 
   const equipmentSlot = getItemEquipmentSlot(item)!;
-  const itemInfo = getItemInfoByKey(item.key);
+  const itemInfo = getItemInfoByKey(applyGenderClothing(player, item.key));
 
   if (isComponentVariation(equipmentSlot)) {
     player.setClothes(itemInfo.componentId, itemInfo.drawableId, itemInfo.textureId, 2);
@@ -44,7 +63,6 @@ on(ServerEvents.FromServer.ITEM_EQUIP, (player, item) => {
       }
     }
   } else if (isProp(equipmentSlot)) {
-    alt.log("Setting prop", itemInfo.componentId, itemInfo.drawableId, itemInfo.textureId);
     player.setProp(itemInfo.componentId, itemInfo.drawableId, itemInfo.textureId);
   }
 });
@@ -64,7 +82,10 @@ on(ServerEvents.FromServer.ITEM_UNEQUIP, (player, equipmentSlot) => {
       }[equipmentSlot as string] ?? -1;
 
     if (componentId !== -1) {
+      console.log("resetting clothes", componentId, equipmentSlot);
       player.resetClothes(componentId);
+    } else {
+      console.log("no componentId", equipmentSlot);
     }
     return;
   }

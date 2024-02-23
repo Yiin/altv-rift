@@ -1,5 +1,5 @@
-import * as alt from "@altv/client";
-import * as game from "@altv/natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 import { ref, watch } from "vue";
 import { ClientEvents } from "@shared/events/client";
 import { everyTickWhile } from "@/core/utility/event-helpers";
@@ -93,17 +93,13 @@ async function createPedPreview() {
 
 async function clearPedPreview() {
   if (isCreatingPedPreview) {
-    alt.log("Waiting for ped preview to finish");
     await alt.Utils.waitFor(() => !isCreatingPedPreview);
   }
-
-  alt.log("Clearing ped preview");
 
   game.clearPedInPauseMenu();
   game.setFrontendActive(false);
 
   if (previousHudColor) {
-    alt.log("Restoring hud color");
     game.replaceHudColourWithRgba(
       117,
       previousHudColor.r,
@@ -113,7 +109,6 @@ async function clearPedPreview() {
     );
   }
   if (equipmentPed) {
-    alt.log("Deleting equipment ped");
     game.deleteEntity(equipmentPed);
     equipmentPed = null;
   }

@@ -1,4 +1,4 @@
-import * as alt from "@altv/client";
+import alt from "@altv/client";
 import { StoreDefinition, defineStore } from "pinia";
 import { ref } from "vue";
 import { updateStoreState } from "@shared/store/utils";

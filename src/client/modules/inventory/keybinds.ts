@@ -1,10 +1,10 @@
-import * as alt from "@altv/client";
-import * as game from "@altv/natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 import { watch } from "vue";
 import { WindowType } from "@shared/store/client.store";
 import { onKeyDown } from "@/core/utility/event-helpers";
 import { clientState } from "@/core/store/client.store";
-import { showCursor } from "@/core/user-interface/webview";
+import { closeWindow, openWindow, showCursor } from "@/core/user-interface/webview";
 import { whileInGame } from "@/core/game-state-hooks/in-game.state";
 import { useCharacter } from "@/core/store/character.store";
 import { updatePlayerPedPreview } from "./player-ped-preview";
@@ -46,16 +46,12 @@ whileInGame(() => {
 export function togglePlayerInventory() {
   // Show inventory only if there is no other window opened
   if (!clientState.ui.window) {
-    showCursor(true);
-    clientState.ui.window = {
-      type: WindowType.PLAYER_INVENTORY,
-    };
+    openWindow(WindowType.PLAYER_INVENTORY);
     game.triggerScreenblurFadeIn(100);
   }
   // Hide the inventory if there is no other interaction opened (i.e. shop or storage or trade window)
   else if (clientState.ui.window.type === WindowType.PLAYER_INVENTORY) {
-    showCursor(false);
-    clientState.ui.window = null;
+    closeWindow();
     game.triggerScreenblurFadeOut(100);
   }
 }

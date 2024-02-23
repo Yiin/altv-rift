@@ -31,7 +31,7 @@ export function getWeaponData(hash: string | number | WeaponHash) {
 }
 
 export function getWeaponDataByItemKey(key: WeaponItemKey) {
-  return WEAPON_DATA[getItemInfoByKey(key).hash.toString() as WeaponHash];
+  return WEAPON_DATA[getWeaponHash(key).toString() as WeaponHash];
 }
 
 export function getWeaponComponents(key: WeaponItemKey) {
@@ -40,6 +40,10 @@ export function getWeaponComponents(key: WeaponItemKey) {
 
 export function getWeaponTints(key: WeaponItemKey) {
   return getWeaponDataByItemKey(key)?.Tints;
+}
+
+export function getWeaponStats(key: WeaponItemKey) {
+  return getWeaponDataByItemKey(key)?.Stats;
 }
 
 export function getWeaponHash(key: WeaponItemKey) {

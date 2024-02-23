@@ -1,5 +1,5 @@
-import * as alt from "@altv/client";
-import * as game from "@altv/natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 import { Bones } from "@shared/enums/bones";
 import { ClientEvents } from "@shared/events/client";
 import { loadSceneAtCoords } from "@/core/utility/scene";
@@ -17,7 +17,7 @@ let zoom = 1;
 let camera: number | undefined;
 let pedPosition: alt.Vector3;
 let cameraControlInterval: alt.Timers.EveryTick | undefined;
-let unfocusPed = () => {};
+let unfocusPed = () => { };
 
 export function createCharacterCreationCamera(ped: alt.LocalPed) {
   const fov = 60;
@@ -183,7 +183,7 @@ export function destroyCharacterCreationCamera() {
   game.destroyAllCams(true);
   game.renderScriptCams(false, false, 0, false, false, 0);
 
-  unfocusPed = () => {};
+  unfocusPed = () => { };
   cameraHorizontalOffset = 0;
   cameraVerticalOffset = 0;
   camera = undefined;

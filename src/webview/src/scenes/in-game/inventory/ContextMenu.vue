@@ -12,7 +12,7 @@ import {
 import { computed } from "vue";
 import { InteractionType, ItemActionMenu, useInventory } from "@/store/inventory.store";
 import { isItemPreviewable } from "@shared/modules/items/lib/is-item-previewable";
-import { InteractionInventoryItemSource, ItemSourceOrigin, PlayerInventoryItemSource, PlayerItemSource } from "@shared/interfaces";
+import { StorageItemSource, ItemSourceOrigin, PlayerInventoryItemSource, PlayerItemSource } from "@shared/interfaces";
 import { useShop } from "@/store/shop.store";
 
 const props = defineProps<ItemActionMenu>();
@@ -27,12 +27,12 @@ const isInShop = computed(() => shop.isInShop);
 const visible = computed(() => inventory.currentInteraction.type === InteractionType.ContextMenu);
 const itemName = computed(() => getItemName(item.value.key));
 const isUsable = computed(
-  () => !isInShop.value && [ItemSourceOrigin.PlayerInventory, ItemSourceOrigin.InteractionInventory].includes(itemSource.value.origin) && isItemUsable(item.value.key)
+  () => !isInShop.value && [ItemSourceOrigin.PlayerInventory, ItemSourceOrigin.Storage].includes(itemSource.value.origin) && isItemUsable(item.value.key)
 );
-const isBuyable = computed(() => isInShop.value && itemSource.value.origin === ItemSourceOrigin.InteractionInventory);
+const isBuyable = computed(() => isInShop.value && itemSource.value.origin === ItemSourceOrigin.Storage);
 const isSellable = computed(() => isInShop.value && itemSource.value.origin === ItemSourceOrigin.PlayerInventory);
 const isEquipable = computed(
-  () => !isInShop.value && [ItemSourceOrigin.PlayerInventory, ItemSourceOrigin.InteractionInventory].includes(itemSource.value.origin) && isItemEquipable(item.value.key)
+  () => !isInShop.value && [ItemSourceOrigin.PlayerInventory, ItemSourceOrigin.Storage].includes(itemSource.value.origin) && isItemEquipable(item.value.key)
 );
 const isUnequipable = computed(() => itemSource.value.origin === ItemSourceOrigin.PlayerEquipment);
 const isDroppable = computed(() => !isInShop.value && [ItemSourceOrigin.PlayerInventory, ItemSourceOrigin.PlayerEquipment].includes(itemSource.value.origin));
@@ -41,7 +41,7 @@ const hasFishBait = computed(() => !isInShop.value && isItemFishingRod(item.valu
 const isPreviewable = computed(() => !isInShop.value && isItemPreviewable(item.value.key));
 
 const combine = computed(() => {
-  if ([ItemSourceOrigin.PlayerInventory, ItemSourceOrigin.InteractionInventory].includes(itemSource.value.origin)) {
+  if ([ItemSourceOrigin.PlayerInventory, ItemSourceOrigin.Storage].includes(itemSource.value.origin)) {
     return {
       type: CombineType.None,
       reverse: false,
@@ -81,10 +81,10 @@ function executeAction(action: string) {
       inventory.useItem(source);
       break;
     case "equip":
-      if ([ItemSourceOrigin.PlayerInventory, ItemSourceOrigin.InteractionInventory].includes(itemSource.value.origin)) {
+      if ([ItemSourceOrigin.PlayerInventory, ItemSourceOrigin.Storage].includes(itemSource.value.origin)) {
         return;
       }
-      inventory.equipItem(source as PlayerInventoryItemSource | InteractionInventoryItemSource);
+      inventory.equipItem(source as PlayerInventoryItemSource | StorageItemSource);
       break;
     case "preview":
       inventory.previewingItem = props.item;

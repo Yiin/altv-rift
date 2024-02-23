@@ -1,5 +1,5 @@
-import * as alt from "@altv/client";
-import * as game from "@altv/natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 import { distance, vectorLerp } from "@shared/utility/vector";
 import { ClientEvents } from "@shared/events/client";
 import { loadModel } from "./model";

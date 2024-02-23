@@ -1,6 +1,7 @@
 export function getDefaultClothing(isMale: boolean, component: number) {
   if (isMale) {
     return {
+      1: [0, 0],
       2: [0, 0],
       3: [15, 0],
       4: [61, 0],
@@ -14,6 +15,7 @@ export function getDefaultClothing(isMale: boolean, component: number) {
     }[component];
   } else {
     return {
+      1: [0, 0],
       2: [0, 0],
       3: [15, 0],
       4: [19, 0],

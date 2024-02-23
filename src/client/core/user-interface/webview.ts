@@ -1,9 +1,10 @@
-import * as alt from "@altv/client";
-import * as game from "@altv/natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 import { ClientEvents } from "@shared/events/client";
 import { Scene, UIElement } from "@shared/enums/ui";
 import { createHookableFunction } from "@shared/hooks";
 import { serialize } from "@shared/utility/serializer";
+import { WindowType } from "@shared/store/client.store";
 import { clientState } from "../store/client.store";
 import { onKeyDown } from "../utility/event-helpers";
 
@@ -75,8 +76,6 @@ export function toggleElement(element: UIElement, state?: boolean) {
     return;
   }
 
-  alt.log(`Toggling Element: ${element}, State: ${state}`);
-
   if (typeof state === "undefined") {
     toggleElement(element, !clientState.ui.elements.has(element));
   } else if (state) {
@@ -100,7 +99,7 @@ export function showCursor(state?: boolean) {
       alt.Cursor.visible = state;
       cursors = Math.max(0, state ? cursors + 1 : cursors - 1);
     }
-  } catch {}
+  } catch { }
 
   alt.Timers.nextTick(() => {
     if (cursors) {
@@ -132,6 +131,18 @@ export function clearCursor() {
   webview.focused = false;
   cursors = 0;
   return cursorCount;
+}
+
+export function openWindow(windowType: WindowType) {
+  clientState.ui.window = {
+    type: windowType,
+  };
+  showCursor(true);
+}
+
+export function closeWindow() {
+  clientState.ui.window = null;
+  showCursor(false);
 }
 
 let clearedCursors = 0;
@@ -175,6 +186,7 @@ alt.Events.onServer(
     webview.on(ClientEvents.FromWebview.PLAY_SOUND, (audioName: string, ref: string) => {
       game.playSoundFrontend(-1, audioName, ref, true);
     });
+    webview.on(ClientEvents.FromWebview.CLOSE_WINDOW, closeWindow);
   }
 );
 

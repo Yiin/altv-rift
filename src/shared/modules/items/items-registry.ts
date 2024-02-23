@@ -1,6 +1,6 @@
 import { ItemInfo, ItemInfoByKey, ItemKey } from "./types";
 
-const ITEMS_REGISTRY: Map<ItemKey, ItemInfo> = new Map();
+export const ITEMS_REGISTRY: Map<ItemKey, ItemInfo> = new Map();
 
 /**
  * Register an item in the items registry so it's available for use.

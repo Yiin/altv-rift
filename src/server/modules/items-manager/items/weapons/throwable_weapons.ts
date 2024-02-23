@@ -1,4 +1,4 @@
-import * as alt from "@altv/server";
+import alt from "@altv/server";
 import { ServerEvents } from "@shared/events/server";
 import { getWeaponHash } from "@shared/modules/items";
 import { isItemThrowableWeapon } from "@shared/modules/items/registry/weapons/throwable-weapon.items";

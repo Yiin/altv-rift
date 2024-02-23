@@ -1,5 +1,6 @@
-import * as alt from "@altv/server";
-import { vec3, quat } from "gl-matrix";
+import fs from "fs";
+import path from "path";
+import alt from "@altv/server";
 import { minutesToMilliseconds } from "date-fns";
 import { ServerCall } from "@shared/calls/server";
 import * as trees from "@shared/modules/woodcutting/trees";
@@ -8,11 +9,9 @@ import { getLevel } from "@shared/modules/experience/experience-table";
 import { getTreeLevel, getTreeLogs, getTreeLogXp } from "@shared/modules/woodcutting/functions";
 import { MessageType } from "@shared/modules/chat";
 import { createItem } from "@shared/modules/items";
-import { ServerEvents } from "@shared/events/server";
 import { rpc } from "@/core/rpc";
 import { sendChatMessage } from "@/modules/chat";
 import { InGamePlayer, needsToBeInGame } from "@/core/utility/assertions";
-import { emit } from "@/core/events/emit";
 
 const virtualTreeGroup = alt.VirtualEntityGroup.create({ maxEntitiesInStream: 30 });
 
@@ -21,80 +20,55 @@ const playerHittingTree: WeakMap<InGamePlayer, number> = new WeakMap();
 
 console.log("Growing trees...");
 
-let skippedTrees = 0;
+async function growTrees() {
+  let skippedTrees = 0;
+  let validTrees = 0;
 
-for (const type in trees) {
-  const list = trees[type as keyof typeof trees];
+  for (const type in trees) {
+    const list = trees[type as keyof typeof trees];
 
-  for (const { Position, Quaternion } of list) {
-    if (
-      IGNORED_TREES.some(
-        (tree) =>
-          tree.pos.x === Position.X &&
-          tree.pos.y === Position.Y &&
-          tree.pos.z === Position.Z &&
-          tree.type === type
-      )
-    ) {
-      skippedTrees++;
-      continue;
+    for (const { Position, Quaternion } of list) {
+      if (
+        IGNORED_TREES.some(
+          (tree) =>
+            tree.pos.x === Position.X &&
+            tree.pos.y === Position.Y &&
+            tree.pos.z === Position.Z &&
+            tree.type === type
+        )
+      ) {
+        skippedTrees++;
+        continue;
+      }
+      const position = {
+        x: Position.X,
+        y: Position.Y,
+        z: Position.Z + 1.4,
+      };
+      //getUpPosition({ Position, Quaternion });
+
+      const tree = alt.VirtualEntity.create({
+        group: virtualTreeGroup,
+        pos: new alt.Vector3(position),
+        streamingDistance: 30,
+        data: {
+          entityType: "tree",
+          treeType: type as keyof typeof trees,
+          cooldownUntil: 0,
+        },
+      });
+      refillTree(tree);
+
+      virtualTreeById.set(tree.id, tree);
+      validTrees++;
     }
-    const position = {
-      x: Position.X,
-      y: Position.Y,
-      z: Position.Z + 1.4,
-    };
-    //getUpPosition({ Position, Quaternion });
-
-    const tree = alt.VirtualEntity.create({
-      group: virtualTreeGroup,
-      pos: new alt.Vector3(position),
-      streamingDistance: 30,
-      data: {
-        entityType: "tree",
-        treeType: type,
-        cooldownUntil: 0,
-      },
-    });
-    refillTree(tree);
-
-    virtualTreeById.set(tree.id, tree);
+    await alt.Utils.waitForNextTick();
   }
+
+  alt.log(`Finished growing trees. Total: ${validTrees}, skipped: ${skippedTrees}`);
 }
 
-console.log("Trees grown.");
-console.log("Skipped trees:", skippedTrees);
-
-function getUpPosition(data: {
-  Position: { X: number; Y: number; Z: number };
-  Quaternion: { X: number; Y: number; Z: number; W: number };
-}): alt.Vector3 {
-  // Extract quaternion from the data
-  const q = quat.fromValues(
-    data.Quaternion.X,
-    data.Quaternion.Y,
-    data.Quaternion.Z,
-    data.Quaternion.W
-  );
-
-  // 'up' vector
-  const v = vec3.fromValues(0, 0, 1);
-
-  // Rotate the up vector using the given quaternion
-  const v_rotated = vec3.transformQuat(vec3.create(), v, q);
-
-  // Scale
-  const offset = vec3.scale(vec3.create(), v_rotated, 1);
-
-  // Calculate the final position
-  const position = vec3.add(
-    vec3.create(),
-    vec3.fromValues(data.Position.X, data.Position.Y, data.Position.Z),
-    offset
-  );
-
-  return new alt.Vector3(position[0], position[1], position[2]);
-}
+growTrees();
 
 alt.Events.onPlayer("ignoretree", (player, treeId) => {
   const tree = virtualTreeById.get(treeId as number);
@@ -123,11 +97,13 @@ alt.Events.onPlayer("ignoretree", (player, treeId) => {
       y: closestMatch.Position.Y,
       z: closestMatch.Position.Z,
     };
-    console.log(
-      JSON.stringify({
-        pos: position,
-        type: treeType,
-      })
+
+    IGNORED_TREES.push({ pos: position, type: treeType });
+
+    // save to file as well
+    fs.writeFileSync(
+      path.join(__dirname, "../../src/shared/modules/woodcutting/trees-to-ignore.json"),
+      JSON.stringify(IGNORED_TREES, null, 2)
     );
   }
 });

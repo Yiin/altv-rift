@@ -1,4 +1,4 @@
-import * as alt from "@altv/client";
+import alt from "@altv/client";
 import { UIElement } from "@shared/enums/ui";
 import { doesElementHaveCursor, toggleElement } from "../../webview";
 

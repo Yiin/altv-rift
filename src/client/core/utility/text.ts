@@ -1,5 +1,5 @@
-import * as alt from "@altv/client";
-import * as game from "@altv/natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 
 const temporaryText: {
   identifier: string;
@@ -105,7 +105,7 @@ export function addTemporaryText(
     try {
       temporaryText[index].timeout?.destroy();
       temporaryText[index].timeout = null;
-    } catch (err) {}
+    } catch (err) { }
 
     temporaryText.splice(index, 1);
   }

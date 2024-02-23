@@ -1,5 +1,5 @@
 import { IVector3 } from "@altv/shared";
-import * as alt from "@altv/server";
+import alt from "@altv/server";
 import { getClosestOfType } from "@shared/utility/closest";
 import { InGamePlayer, isInGame } from "./assertions";
 

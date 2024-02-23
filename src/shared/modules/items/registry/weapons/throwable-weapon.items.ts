@@ -1,5 +1,5 @@
 import { registerItem } from "@shared/modules/items";
-import { ItemFlags } from "../../enums";
+import { ItemFlags, ItemGrade } from "../../enums";
 import { Item } from "../../types";
 import { makeKeys } from "../../../../utility/make-keys";
 import { WeaponGroup } from "./weapon-groups";
@@ -26,6 +26,7 @@ export type ThrowableWeaponItem = {
   key: ThrowableWeaponItemKey;
 
   amount: number;
+  grade: ItemGrade;
 };
 
 export type ThrowableWeaponItemInfo = {
@@ -35,7 +36,7 @@ export type ThrowableWeaponItemInfo = {
   description: string;
   group: typeof WeaponGroup.THROWABLE;
   price: number;
-  stats: {
+  comparisonStats: {
     damage: number;
     rate: number;
     accuracy: number;
@@ -52,7 +53,7 @@ export const throwableWeapons: ThrowableWeaponItemInfo[] = [
     description: getWeaponData(3125143736).Description,
     group: WeaponGroup.THROWABLE,
     price: 50000,
-    stats: {
+    comparisonStats: {
       damage: 85,
       rate: 10,
       accuracy: 35,
@@ -67,7 +68,7 @@ export const throwableWeapons: ThrowableWeaponItemInfo[] = [
     description: getWeaponData(2874559379).Description,
     group: WeaponGroup.THROWABLE,
     price: 1000,
-    stats: {
+    comparisonStats: {
       damage: 90,
       rate: 10,
       accuracy: 30,
@@ -82,7 +83,7 @@ export const throwableWeapons: ThrowableWeaponItemInfo[] = [
     description: getWeaponData(2481070269).Description,
     group: WeaponGroup.THROWABLE,
     price: 2500,
-    stats: {
+    comparisonStats: {
       damage: 95,
       rate: 20,
       accuracy: 10,
@@ -97,7 +98,7 @@ export const throwableWeapons: ThrowableWeaponItemInfo[] = [
     description: getWeaponData(741814745).Description,
     group: WeaponGroup.THROWABLE,
     price: 60000,
-    stats: {
+    comparisonStats: {
       damage: 95,
       rate: 10,
       accuracy: 30,
@@ -112,7 +113,7 @@ export const throwableWeapons: ThrowableWeaponItemInfo[] = [
     description: getWeaponData(126349499).Description,
     group: WeaponGroup.THROWABLE,
     price: 5,
-    stats: {
+    comparisonStats: {
       damage: 1,
       rate: 10,
       accuracy: 10,
@@ -127,7 +128,7 @@ export const throwableWeapons: ThrowableWeaponItemInfo[] = [
     description: getWeaponData(4256991824).Description,
     group: WeaponGroup.THROWABLE,
     price: 800,
-    stats: {
+    comparisonStats: {
       damage: 10,
       rate: 10,
       accuracy: 10,
@@ -142,7 +143,7 @@ export const throwableWeapons: ThrowableWeaponItemInfo[] = [
     description: getWeaponData(883325847).Description,
     group: WeaponGroup.THROWABLE,
     price: 100,
-    stats: {
+    comparisonStats: {
       damage: 0,
       rate: 10,
       accuracy: 30,
@@ -157,7 +158,7 @@ export const throwableWeapons: ThrowableWeaponItemInfo[] = [
     description: getWeaponData(615608432).Description,
     group: WeaponGroup.THROWABLE,
     price: 200,
-    stats: {
+    comparisonStats: {
       damage: 50,
       rate: 20,
       accuracy: 20,
@@ -172,7 +173,7 @@ export const throwableWeapons: ThrowableWeaponItemInfo[] = [
     description: getWeaponData(3126027122).Description,
     group: WeaponGroup.THROWABLE,
     price: 100,
-    stats: {
+    comparisonStats: {
       damage: 0,
       rate: 10,
       accuracy: 30,
@@ -187,7 +188,7 @@ export const throwableWeapons: ThrowableWeaponItemInfo[] = [
     description: getWeaponData(600439132).Description,
     group: WeaponGroup.THROWABLE,
     price: 10,
-    stats: {
+    comparisonStats: {
       damage: 0,
       rate: 10,
       accuracy: 10,
@@ -202,7 +203,7 @@ export const throwableWeapons: ThrowableWeaponItemInfo[] = [
     description: getWeaponData(2694266206).Description,
     group: WeaponGroup.THROWABLE,
     price: 150,
-    stats: {
+    comparisonStats: {
       damage: 10,
       rate: 20,
       accuracy: 10,
@@ -217,7 +218,7 @@ export const throwableWeapons: ThrowableWeaponItemInfo[] = [
     description: getWeaponData(1233104067).Description,
     group: WeaponGroup.THROWABLE,
     price: 50,
-    stats: {
+    comparisonStats: {
       damage: 0,
       rate: 10,
       accuracy: 10,

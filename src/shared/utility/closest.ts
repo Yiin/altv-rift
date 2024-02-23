@@ -1,4 +1,4 @@
-import * as alt from "@altv/shared";
+import alt from "@altv/shared";
 import { distance } from "./vector";
 
 const DEFAULT_START_DISTANCE = 100;

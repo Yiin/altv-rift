@@ -1,4 +1,4 @@
-import * as game from "@altv/natives";
+import game from "@altv/natives";
 
 export function drawBar(
   value: number,

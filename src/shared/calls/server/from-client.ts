@@ -12,6 +12,7 @@ export const FromClient = {
   START_DIGGING: "START_DIGGING",
   STOP_DIGGING: "STOP_DIGGING",
   TOGGLE_VEHICLE_DOOR: "TOGGLE_VEHICLE_DOOR",
+  OPEN_STORAGE: "OPEN_STORAGE",
 } as const;
 
 export interface CallFromClient<
@@ -42,6 +43,7 @@ export interface CallFromClient<
     doorId: number,
     shouldClose?: boolean
   ) => void;
+  [FromClient.OPEN_STORAGE]: (player: Player, storageId: number) => boolean;
 }
 
 export const FromClientValidation = {
@@ -65,10 +67,7 @@ export const FromClientValidation = {
   },
   [FromClient.TREE_HIT]: {
     args: [z.number()],
-    returns: z.object({
-      success: z.boolean(),
-      logs: z.number(),
-    }),
+    returns: z.number(),
   },
   [FromClient.RELOAD_WEAPON]: {
     returns: z.boolean(),
@@ -79,5 +78,9 @@ export const FromClientValidation = {
   [FromClient.STOP_DIGGING]: {},
   [FromClient.TOGGLE_VEHICLE_DOOR]: {
     args: [z.number(), z.number(), z.boolean().optional()],
+  },
+  [FromClient.OPEN_STORAGE]: {
+    args: [z.number()],
+    returns: z.boolean(),
   },
 } satisfies Record<keyof typeof FromClient, { args?: [z.ZodTypeAny, ...z.ZodTypeAny[]], returns?: z.ZodTypeAny }>;

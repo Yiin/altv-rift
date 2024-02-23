@@ -1,4 +1,4 @@
-import * as alt from "@altv/server";
+import alt from "@altv/server";
 import { type Appearance } from "@prisma/client";
 import { ClientEvents } from "@shared/events/client";
 import { getTorsoForTop } from "@shared/modules/items/registry/clothing/get-correct-torso";

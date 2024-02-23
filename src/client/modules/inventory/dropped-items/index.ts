@@ -1,4 +1,4 @@
-import * as alt from "@altv/client";
+import alt from "@altv/client";
 import _ from "lodash";
 import { getItemName, isStackable } from "@shared/modules/items";
 import { clientState } from "@/core/store/client.store";
@@ -18,18 +18,19 @@ alt.Timers.everyTick(() => {
   });
 });
 
+// Update the nearby items periodically, so the ordering by distance is updated
 alt.Timers.setInterval(updateNearbyItems, 2000);
 
-alt.Events.onWorldObjectStreamIn((entity) => {
-  if (!(entity instanceof alt.VirtualEntity) || entity.streamSyncedMeta.entityType !== "item") {
+alt.Events.onWorldObjectStreamIn(({ object }) => {
+  if (!(object instanceof alt.VirtualEntity) || object.streamSyncedMeta.entityType !== "item") {
     return;
   }
 
   updateNearbyItems();
 });
 
-alt.Events.onWorldObjectStreamOut((entity) => {
-  if (!(entity instanceof alt.VirtualEntity) || entity.streamSyncedMeta.entityType !== "item") {
+alt.Events.onWorldObjectStreamOut(({ object }) => {
+  if (!(object instanceof alt.VirtualEntity) || object.streamSyncedMeta.entityType !== "item") {
     return;
   }
 
@@ -37,17 +38,18 @@ alt.Events.onWorldObjectStreamOut((entity) => {
 });
 
 function updateNearbyItems() {
-  // Use a Set for efficient lookup of currently processed item IDs
   const processedItemIDs = new Set();
 
-  // Filter and update for items within 5 units of distance
+  const DISTANCE_TO_REACH = 5;
+
+  // Filter and update for items within the distance
   alt.VirtualEntity.streamedIn.forEach((entity) => {
     if (entity.streamSyncedMeta.entityType !== "item") {
       return;
     }
 
     const distance = entity.pos.distanceTo(alt.Player.local.pos);
-    const isWithinRange = distance <= 5;
+    const isWithinRange = distance <= DISTANCE_TO_REACH;
     const itemID = entity.remoteID;
     const alreadyListed = clientState.nearbyItems.some(item => item.id === itemID);
 
@@ -65,7 +67,6 @@ function updateNearbyItems() {
       }
     }
 
-    // Mark this item ID as processed
     processedItemIDs.add(itemID);
   });
 

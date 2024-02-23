@@ -1,4 +1,4 @@
-import * as alt from "@altv/client";
+import alt from "@altv/client";
 import { ClientEvents } from "@shared/events/client";
 import { getWebview } from "../user-interface/webview";
 
@@ -69,7 +69,7 @@ export function waitUntil(condition: () => boolean, timeoutMS = 10000) {
       try {
         timeout.destroy();
         tick.destroy();
-      } catch {}
+      } catch { }
       ticks.splice(ticks.indexOf(tick), 1);
       resolve();
     });

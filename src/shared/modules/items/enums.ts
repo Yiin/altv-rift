@@ -8,10 +8,9 @@ export enum ItemFlags {
 }
 
 export enum ItemGrade {
-  D,
-  C,
-  B,
-  A,
-  S,
-  SS,
+  BASE = '',
+  ONE = '+',
+  TWO = '++',
+  THREE = '+++',
+  FOUR = '++++',
 }

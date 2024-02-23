@@ -1,4 +1,5 @@
 import { PedFlags } from "../../src/shared/modules/ped";
+import { StorageType } from "../../src/shared/store/game-state.store";
 
 declare module "@altv/server" {
   export interface Player {
@@ -31,9 +32,15 @@ declare module "@altv/shared" {
   }
 
   export interface VirtualEntityStreamSyncedMeta {
-    entityType: "tree" | "item";
-    treeType?: import("../../src/shared/modules/woodcutting/interfaces").TreeType;
-    cooldownUntil?: number;
-    item?: import("../../src/shared/modules/items").Item;
+    entityType: "tree" | "item" | "storage";
+    treeType?: import("../../src/shared/modules/woodcutting/interfaces").TreeType; // entityType: tree
+    cooldownUntil?: number; // entityType: tree
+    item?: import("../../src/shared/modules/items").Item; // entityType: item
+    storageType?: StorageType; // entityType: storage
+    interpolate?: {
+      ts: number;
+      from: alt.Vector3;
+      speed: number;
+    }; // entityType: storage & storageType: AirDrop
   }
 }

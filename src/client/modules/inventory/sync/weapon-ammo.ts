@@ -1,5 +1,5 @@
-import * as alt from "@altv/client";
-import * as game from "@altv/natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 import { computed, watchEffect } from "vue";
 import { ServerEvents } from "@shared/events/server";
 import { ServerCall } from "@shared/calls/server";
@@ -120,11 +120,9 @@ whileInGame(() => {
     }
 
     const disableMeleeAttackLight_R = alt.Timers.everyTick(() => {
-      game.disableControlAction(
-        ControlType.PLAYER_CONTROL,
-        Control.INPUT_MELEE_ATTACK_LIGHT,
-        false
-      );
+      game.disableControlAction(ControlType.PLAYER_CONTROL, Control.INPUT_MELEE_ATTACK_LIGHT, true);
+      game.disableControlAction(ControlType.PLAYER_CONTROL, Control.INPUT_MELEE_ATTACK_HEAVY, true);
+      game.disableControlAction(ControlType.PLAYER_CONTROL, Control.INPUT_MELEE_ATTACK_ALTERNATE, true);
     });
 
     try {

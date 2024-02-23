@@ -7,6 +7,17 @@ module.exports = {
         sans: ["Akrobat", "sans-serif"],
       },
       colors: {
+        main: {
+          100: "#ffab45",
+          200: "#ff943b",
+          300: "#ff8334",
+          400: "#fa7730",
+          500: "#EF722E",
+          600: "#d76629",
+          700: "#b35522",
+          800: "#8f441b",
+          900: "#6b3314",
+        },
         primaryGreen: "#95C82A",
         accentRed: "#FF2431",
         aquaBlue: "#45F0D1",

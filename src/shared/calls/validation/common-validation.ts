@@ -108,7 +108,7 @@ export const itemSource = z.union([
     originId: z.string(),
   }),
   z.object({
-    origin: z.literal(ItemSourceOrigin.InteractionInventory),
+    origin: z.literal(ItemSourceOrigin.Storage),
     originId: z.number(),
   }),
   z.object({
@@ -124,8 +124,8 @@ export const PlayerEquipmentSource = z.object({
   origin: z.literal(ItemSourceOrigin.PlayerEquipment),
   originId: z.string(),
 });
-export const interactionInventorySource = z.object({
-  origin: z.literal(ItemSourceOrigin.InteractionInventory),
+export const storageSource = z.object({
+  origin: z.literal(ItemSourceOrigin.Storage),
   originId: z.number(),
 });
 export const playerInventoryItemSource = playerInventorySource.extend({
@@ -134,7 +134,7 @@ export const playerInventoryItemSource = playerInventorySource.extend({
 export const playerEquipmentItemSource = PlayerEquipmentSource.extend({
   equipmentSlot: equipmentSlot,
 });
-export const interactionInventoryItemSource = interactionInventorySource.extend({
+export const storageItemSource = storageSource.extend({
   inventorySlot: z.number(),
 });
 export const groundItemSource = z.object({

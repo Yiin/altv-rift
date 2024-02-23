@@ -1,4 +1,4 @@
-import * as alt from "@altv/server";
+import alt from "@altv/server";
 import { minutesToMilliseconds } from "date-fns";
 import { ClientEvents } from "@shared/events/client";
 import { Config } from "@/core/utility/config";

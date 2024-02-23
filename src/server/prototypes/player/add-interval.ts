@@ -1,4 +1,4 @@
-import * as alt from "@altv/server";
+import alt from "@altv/server";
 
 declare module "@altv/server" {
   export interface Player {

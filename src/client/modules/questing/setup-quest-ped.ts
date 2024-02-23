@@ -1,8 +1,8 @@
-import * as alt from "@altv/client";
-import * as game from "@altv/natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 import { computed, ComputedRef, watch } from "vue";
 import { PedInteraction } from "@shared/modules/ped/interactions";
-import { IconName } from "@/core/rmlui/components/icon/icon";
+import { IconName } from "@/core/rmlui/components/icon";
 import { clientState } from "@/core/store/client.store";
 import { getPedInteractions } from "./lib/register-ped-interactions";
 

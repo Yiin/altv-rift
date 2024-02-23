@@ -1,4 +1,4 @@
-import * as alt from "@altv/server";
+import alt from "@altv/server";
 import { inject } from "inversify";
 import { MessageType } from "@shared/modules/chat";
 import { bind } from "@shared/decorators";

@@ -76,7 +76,7 @@
     url("/fonts/Akrobat-Black.woff") format("woff"),
     url("/fonts/Akrobat-Black.ttf") format("truetype");
   font-style: normal;
-  font-weight: 900;
+  font-weight: 800;
 }
 
 ::-webkit-scrollbar {

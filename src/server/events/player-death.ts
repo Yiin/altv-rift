@@ -1,4 +1,4 @@
-import * as alt from "@altv/server";
+import alt from "@altv/server";
 
 alt.Events.onPlayerDeath(({ player }) => {
   alt.Timers.setTimeout(() => {
@@ -9,3 +9,5 @@ alt.Events.onPlayerDeath(({ player }) => {
     player.spawn(player.pos, 0);
   }, 2000);
 });
+
+alt.Events.onPlayerHeal(({ }) => { })

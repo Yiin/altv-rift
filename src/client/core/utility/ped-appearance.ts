@@ -1,5 +1,5 @@
-import * as alt from "@altv/client";
-import * as game from "@altv/natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 import { Appearance } from "@prisma/client";
 import { ClothingComponent } from "@shared/interfaces/clothing";
 import { Pants, Shoes, Top, getItemInfoByKey } from "@shared/modules/items";

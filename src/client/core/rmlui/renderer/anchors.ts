@@ -1,10 +1,11 @@
-import * as alt from "@altv/client";
+import alt from "@altv/client";
 
 export enum AnchorType {
-  Ped,
+  Ped = 1,
   Player,
   Vehicle,
   Tree,
+  Storage,
 }
 
 export type AnchorEntityMap = {
@@ -12,4 +13,5 @@ export type AnchorEntityMap = {
   [AnchorType.Player]: alt.Player;
   [AnchorType.Vehicle]: alt.Vehicle;
   [AnchorType.Tree]: alt.VirtualEntity;
+  [AnchorType.Storage]: alt.VirtualEntity;
 };

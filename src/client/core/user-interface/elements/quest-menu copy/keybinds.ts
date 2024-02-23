@@ -1,6 +1,6 @@
-import * as alt from "@altv/client";
-import { doesElementHaveCursor, toggleElement } from "../../webview";
+import alt from "@altv/client";
 import { UIElement } from "@shared/enums/ui";
+import { doesElementHaveCursor, toggleElement } from "../../webview";
 
 alt.Events.onKeyDown(({ key }) => {
   if (key === alt.Enums.KeyCode.O) {

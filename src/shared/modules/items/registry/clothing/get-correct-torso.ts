@@ -1,10 +1,11 @@
-import * as alt from "@altv/shared";
+import alt from "@altv/shared";
 import TORSO_MALE from "./torso_male.json";
 import TORSO_FEMALE from "./torso_female.json";
 
 function getTorso(obj: any, drawableId: number, textureId: number) {
   if (obj[drawableId] === undefined || obj[drawableId][textureId] === undefined) {
-    throw new Error(`Invalid top: ${drawableId} ${textureId}`);
+    console.error(`Invalid top: ${drawableId} ${textureId}`);
+    return null;
   } else {
     // player.setClothes(11, drawable, texture, 2);
     if (obj[drawableId][textureId].BestTorsoDrawable != -1) {
@@ -19,8 +20,14 @@ function getTorso(obj: any, drawableId: number, textureId: number) {
 
 export function getTorsoForTop(model: number, topDrawableId: number, topTextureId: number) {
   if (alt.hash("mp_m_freemode_01") === model) {
-    return getTorso(TORSO_MALE, topDrawableId, topTextureId);
+    return getTorso(TORSO_MALE, topDrawableId, topTextureId) || {
+      drawableId: 15,
+      textureId: 0,
+    };
   } else {
-    return getTorso(TORSO_FEMALE, topDrawableId, topTextureId);
+    return getTorso(TORSO_FEMALE, topDrawableId, topTextureId) || {
+      drawableId: 4,
+      textureId: 0,
+    };
   }
 }

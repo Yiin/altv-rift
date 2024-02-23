@@ -1,24 +1,22 @@
 <script setup lang="ts">
-import { effect, onUnmounted, ref } from "vue";
+import { onUnmounted, ref } from "vue";
 import Icon from "../../../components/Icon/Icon.vue";
-import DropItemWarning from "./DropItemWarning.vue";
 import ContextMenu from "./ContextMenu.vue";
 import ItemInfo from "./ItemInfo.vue";
 import { InteractionType, useInventory } from "@/store/inventory.store";
 import { useEventListener } from "@/composables/use-event-listener";
-import PlayerEquipment from "./player-equipment/PlayerEquipment.vue";
 import EquipmentSlot from "./player-equipment/EquipmentSlot.vue";
 import InventorySlot from "./InventorySlot.vue";
-import Shop from "./shop/Shop.vue";
-import Storage from "./storage/Storage.vue";
-import Confirmation from "./shop/Confirmation.vue";
+import StorageItems from "./storage/Storage.vue";
+import GroundItems from "./ground/Ground.vue";
 import AmountTransfer from "./AmountTransfer.vue";
 import ItemPreview from "./item-preview/ItemPreview.vue";
-import { useShop } from "@/store/shop.store";
 import { useGapSize } from "@/composables/use-gap-size";
 import { ItemSourceOrigin } from "@shared/interfaces";
+import { useGameState } from "@/store/synced/game-state.store";
 
 const inventory = useInventory();
+const gameState = useGameState();
 
 const containerRef = ref<HTMLDivElement>();
 const { gapSize, widths } = useGapSize(containerRef);
@@ -37,7 +35,6 @@ onUnmounted(() => {
   <div class="relative w-full px-10 lg:px-1/8 lg:py-16">
     <div class="fixed inset-0 -z-10">
       <div class="bg-darkRadialGradient absolute inset-0 opacity-95"></div>
-      <!-- <div class="bg-black/85 blur-sm absolute inset-0"></div> -->
     </div>
     <div :style="{ padding: `2rem ${gapSize}px 7rem` }" class="flex w-full mx-auto justify-between items-center gap-7">
       <div>
@@ -117,16 +114,8 @@ onUnmounted(() => {
         </div>
       </div>
       <div class="-mb-52">
-        <h2 class="uppercase text-white text-2xl font-bold">global</h2>
-        <div class="uppercase text-base text-deepGray">items on the floor or around you</div>
-        <div class="inline-grid grid-cols-4 gap-2.5 mt-5">
-          <InventorySlot v-for="item of inventory.groundItems"
-            :key="item.source.originId"
-            :source="item.source" />
-          <InventorySlot v-for="(_, slot) in 24 - inventory.groundItems.length"
-            :key="`slot-${inventory.groundItems.length + slot}`"
-            :source="{ origin: ItemSourceOrigin.Ground, originId: -1 }" />
-        </div>
+        <StorageItems v-if="gameState.openedStorage" />
+        <GroundItems v-else />
       </div>
     </div>
     <div :style="{ padding: `2rem ${gapSize}px` }" class="flex w-full justify-between">
@@ -157,16 +146,8 @@ onUnmounted(() => {
     </div>
   </div>
 
-  <!-- <TradeWindow class="absolute" :style="{ transform: `translate(35vw, 30vh)` }" /> -->
-  <!-- <Shop class="absolute" :style="{ transform: `translate(30vw, 30vh)` }" /> -->
-  <!-- <Storage class="absolute" :style="{ transform: `translate(30vw, 30vh)` }" /> -->
-  <!-- <PlayerEquipment class="absolute" :style="{ transform: `translate(20vw, 30vh)` }" />
-  <PlayerInventory class="absolute" :style="{ transform: `translate(62vw, 30vh)` }" /> -->
-
   <ContextMenu v-if="inventory.currentInteraction.type === InteractionType.ContextMenu"
     v-bind="inventory.currentInteraction.state" />
-  <!-- <DropItemWarning v-if="inventory.currentInteraction.type === InteractionType.Dropping"
-    v-bind="inventory.currentInteraction.state" /> -->
   <ItemInfo v-if="inventory.currentInteraction.type === InteractionType.Hovering"
     :key="JSON.stringify(inventory.currentInteraction.state.item.source)" v-bind="inventory.currentInteraction.state" />
   <ItemPreview v-if="inventory.previewingItem" :key="JSON.stringify(inventory.previewingItem.source)"

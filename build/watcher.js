@@ -58,14 +58,7 @@ function kickAllPlayers() {
   })
 }
 
-async function restartServer(side) {
-  building.delete(side);
-
-  // if (building.size > 0) {
-  //   console.log(`waiting for ${[...building.values()].join(' & ')} to finish building`);
-  //   return;
-  // }
-
+async function restartServer() {
   if (childProcess) {
     console.log("Kicking all players");
     await kickAllPlayers();

@@ -1,7 +1,7 @@
-import * as alt from "@altv/server";
+import alt from "@altv/server";
 import { EquipmentSlot, GroundItemSource, InventoryItemSource, ItemSourceOrigin } from "@shared/interfaces";
 import { ServerEvents } from "@shared/events/server";
-import { getItemEquipmentSlot, getItemInfoByKey, isItemAmmo } from "@shared/modules/items";
+import { getItemEquipmentSlot, getItemInfoByKey, isItemAmmo, isItemKeyClothing, isMaleClothing, isUnisexClothing } from "@shared/modules/items";
 import { isItemFirearmWeapon } from "@shared/modules/items/registry/weapons/firearm-weapon.items";
 import { isItemFishBait } from "@shared/modules/items/registry/fish-bait.items";
 import { InGamePlayer } from "@/core/utility/assertions";
@@ -14,7 +14,7 @@ import {
 } from "@/modules/items-manager";
 import { useFishBaitOnFishingRod } from "@/modules/items-manager/items/fishing-rod";
 import { emit } from "@/core/events/emit";
-import { dropItemOnTheGround } from "@/modules/items-manager/api/dropped-items";
+import { dropItemOnTheGround } from "@/modules/items-manager/dropped-items";
 
 declare module "@altv/server" {
   export interface Player {
@@ -76,6 +76,18 @@ alt.Player.prototype.equipItem = function (source) {
   }
   // Normal flow
   else {
+    if (
+      isItemKeyClothing(item.key)
+      // If player gender doesn't match with clothing gender, don't equip
+      && (
+        (this.model === alt.hash("mp_f_freemode_01") && isMaleClothing(item.key) && !isUnisexClothing(item.key))
+        ||
+        (this.model === alt.hash("mp_m_freemode_01") && !isMaleClothing(item.key) && !isUnisexClothing(item.key))
+      )
+    ) {
+      return false;
+    }
+
     removeItem(source);
 
     const unequippedItem = this.character.equipment[equipmentSlot];
@@ -117,3 +129,7 @@ alt.Player.prototype.equipItem = function (source) {
   emit(ServerEvents.FromServer.ITEM_EQUIP, this, item);
   return true;
 };
+function isUniSexClothing(key: import("@shared/modules/items").FirearmWeaponItemKey | import("@shared/modules/items").AmmoItemKey | import("@shared/modules/items").MeleeWeaponItemKey | import("@shared/modules/items").ThrowableWeaponItemKey | import("@shared/modules/items").AccessoryItemKey | import("@shared/modules/items").ArmorItemKey | import("@shared/modules/items").EarringsItemKey | import("@shared/modules/items").GlassesItemKey | import("@shared/modules/items").GlovesItemKey | import("@shared/modules/items").HeadwearItemKey | import("@shared/modules/items").LeftHandItemKey | import("@shared/modules/items").MaskItemKey | import("@shared/modules/items").PantsItemKey | import("@shared/modules/items").RightHandItemKey | import("@shared/modules/items").ShoesItemKey | import("@shared/modules/items").TopItemKey | import("@shared/modules/items").ConsumableItemKey | import("@shared/modules/items").FoodIngredientItemKey | import("@shared/modules/items").TreeLogItemKey | import("@shared/modules/items").WoodItemKey | import("@shared/modules/items").MetalItemKey | import("@shared/modules/items").SandItemKey | import("@shared/modules/items").FishBaitItemKey | import("@shared/modules/items").HatchetItemKey | import("@shared/modules/items").PickaxeItemKey | import("@shared/modules/items").FishingRodItemKey | import("@shared/modules/items").NoteItemKey) {
+  throw new Error("Function not implemented.");
+}
+

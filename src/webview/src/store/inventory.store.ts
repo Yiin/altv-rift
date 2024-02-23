@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { rpc } from "@/rpc";
 import { ServerCall } from "@shared/calls/server";
-import { ComponentPublicInstance, markRaw, reactive } from "vue";
+import { ComponentPublicInstance, markRaw, reactive, toRaw } from "vue";
 import DropItemWarning from "@/scenes/in-game/inventory/DropItemWarning.vue";
 import { ClientEvents } from "@shared/events/client";
 import {
@@ -20,7 +20,7 @@ import { useClient } from "./synced/client.store";
 import {
   EquipmentSlot,
   GroundItemSource,
-  InteractionInventoryItemSource,
+  StorageItemSource,
   InventoryItem,
   InventoryItemSource,
   ItemSource,
@@ -140,9 +140,9 @@ export type SlottedGroundItem<T = Item> = {
   source: GroundItemSource;
 };
 
-export type SlottedInteractionInventoryItem<T = Item> = {
+export type SlottedStorageItem<T = Item> = {
   item: T;
-  source: InteractionInventoryItemSource;
+  source: StorageItemSource;
   price: number | null;
 };
 
@@ -157,8 +157,8 @@ export type SlottedItem<S = ItemSource, T = Item> =
   S extends GroundItemSource
   ? SlottedGroundItem<T>
   : // opened storage
-  S extends InteractionInventoryItemSource
-  ? SlottedInteractionInventoryItem<T>
+  S extends StorageItemSource
+  ? SlottedStorageItem<T>
   : never;
 
 export type SlottedEquipment = {
@@ -184,7 +184,7 @@ export function isSameItemSource<A extends ItemSource, B extends ItemSource>(a?:
 export function isSameItemSource<A extends ItemSource, B extends Partial<ItemSource>>(a?: A, b?: B): a is A & B;
 export function isSameItemSource<A extends ItemSource, B extends PlayerInventoryItemSource>(a?: A, b?: B): a is A & B;
 export function isSameItemSource<A extends ItemSource, B extends PlayerEquipmentItemSource>(a?: A, b?: B): a is A & B;
-export function isSameItemSource<A extends ItemSource, B extends InteractionInventoryItemSource>(a?: A, b?: B): a is A & B;
+export function isSameItemSource<A extends ItemSource, B extends StorageItemSource>(a?: A, b?: B): a is A & B;
 export function isSameItemSource<A extends ItemSource, B extends GroundItemSource>(a?: A, b?: B): a is A & B;
 export function isSameItemSource(
   a?: ItemSource,
@@ -224,8 +224,8 @@ export const useInventory = defineStore("inventory", {
     playerId(): string {
       return this.character.id;
     },
-    interaction: () => {
-      return useGameState().interactionInventory;
+    storage: () => {
+      return useGameState().openedStorage;
     },
     droppedItems: () => {
       /**
@@ -286,17 +286,17 @@ export const useInventory = defineStore("inventory", {
       /**
        * Opened storage inventory
        */
-      if (this.interaction) {
-        const interactionItems = this.interaction.items;
+      if (this.storage) {
+        const storageItems = this.storage.inventory.items;
 
-        for (const item of interactionItems) {
+        for (const item of storageItems) {
           items.push({
             item: item.item,
             price: item.price,
             source: {
-              ...this.interaction.source,
+              ...this.storage.source,
               inventorySlot: item.slot,
-            } satisfies InteractionInventoryItemSource,
+            } satisfies StorageItemSource,
           });
         }
       }
@@ -331,10 +331,10 @@ export const useInventory = defineStore("inventory", {
           item.source.origin === ItemSourceOrigin.PlayerEquipment
       );
     },
-    interactionItems(): SlottedItem<InteractionInventoryItemSource>[] {
+    interactionItems(): SlottedItem<StorageItemSource>[] {
       return this.items.filter(
-        (item): item is SlottedItem<InteractionInventoryItemSource> =>
-          item.source.origin === ItemSourceOrigin.InteractionInventory
+        (item): item is SlottedItem<StorageItemSource> =>
+          item.source.origin === ItemSourceOrigin.Storage
       );
     },
     groundItems(): SlottedGroundItem[] {
@@ -425,23 +425,18 @@ export const useInventory = defineStore("inventory", {
     transferAmount(from: ItemSource, to: ItemSource | null, position: { x: number; y: number }) {
       return new Promise<number>((resolve, reject) => {
         if (to && isSameSourceOrigin(from, to)) {
+          console.log("cannot transfer to the same source origin");
           return reject("Cannot transfer to the same source origin");
         }
 
         const fromItem = this.getItemFromSource(from);
 
         if (!fromItem) {
+          console.log("no item in source");
           return reject("No item in source");
         }
 
-        if (isStackable(fromItem.item)) {
-          if (fromItem.item.amount <= 1) {
-            return resolve(0);
-          }
-        } else {
-          return resolve(1);
-        }
-
+        console.log("transfer amount", from, to, position);
         this.currentInteraction = { type: InteractionType.TransferingAmount, state: { item: fromItem, to, resolve, reject, position } };
         return true;
       });
@@ -622,29 +617,42 @@ export const useInventory = defineStore("inventory", {
         const to = this.getItemSourceFromScreenPos(e.clientX, e.clientY);
 
         try {
-          const amount = (to && isSameSourceOrigin(from, to)) || (!to && from.origin === ItemSourceOrigin.Ground)
+          if (from.origin === ItemSourceOrigin.Ground && !to) {
+            console.log("Cannot move item from ground to ground");
+            throw new Error("Cannot move item from ground to ground");
+          }
+
+          const isSameOrigin = to && isSameSourceOrigin(from, to);
+
+          console.log("isSameOrigin", toRaw(isSameOrigin), toRaw(from), toRaw(to));
+
+          const amount = isSameOrigin
+            // move full amount because we don't split items in the same origin
             ? (isStackable(slottedItem.item) ? slottedItem.item.amount : 1)
+            // ask for amount to move
             : await this.transferAmount(from, to, { x: e.clientX, y: e.clientY });
 
-          console.log(`transfer amount: ${amount}`);
+          console.log("amount", toRaw(amount));
 
+          // if we're dropping the item
           if (!to || to.origin === ItemSourceOrigin.Ground) {
-            console.log("trying to drop item", from, amount);
+            // we can drop it only from either inventory or equipment
             if ([ItemSourceOrigin.PlayerInventory, ItemSourceOrigin.PlayerEquipment].includes(from.origin)) {
-              console.log("yup");
               this.dropItem(from as PlayerItemSource, amount);
             } else {
-              console.log("nope");
+              console.log("Cannot drop item from this source");
               throw new Error("Cannot drop item from this source");
             }
           } else {
-            console.log("trying to move item", from, to, { amount })
+            console.log("wtf");
             // Move the item or swap with another item
             this.moveItem(from, to, { amount });
           }
         } catch (e) {
           console.log("failed to transfer amount", e);
         }
+
+        console.log("????");
 
         this.currentInteraction = IDLE;
 

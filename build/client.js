@@ -29,7 +29,10 @@ const context = await esbuild
     external: [
       "@altv/shared",
       "@altv/client",
-      "@altv/natives"
+      "@altv/natives",
+      "alt-server",
+      "alt-client",
+      "natives"
     ],
     plugins: [
       yamlPlugin,
@@ -45,10 +48,10 @@ const context = await esbuild
             for (const assetsPath of ASSETS_PATHS) {
               copy(assetsPath, "resources/main/");
             }
-        
+
             // Watch .rml files for changes
             const watcher = chokidar.watch(ASSETS_PATHS);
-        
+
             watcher.on("change", (filePath) => {
               const relativePath = path.relative("src", filePath);
               const destPath = path.join("resources/main", relativePath);

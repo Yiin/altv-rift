@@ -1,4 +1,4 @@
-import * as alt from "@altv/client";
+import alt from "@altv/client";
 import ControlsController from "./controls";
 
 export default class MouseController {

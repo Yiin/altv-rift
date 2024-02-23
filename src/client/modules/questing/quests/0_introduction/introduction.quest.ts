@@ -1,4 +1,4 @@
-import * as alt from "@altv/client";
+import alt from "@altv/client";
 import { PedKey } from "@shared/modules/ped/list";
 import { Quests } from "@shared/modules/quests";
 import { ServerEvents } from "@shared/events/server";
@@ -6,7 +6,7 @@ import { PedInteraction } from "@shared/modules/ped/interactions";
 import { ConversationOption } from "@shared/interfaces/conversation";
 import { getInventoryItemByKey } from "@shared/modules/inventory";
 import { FoodIngredient, Sand, TreeLogs } from "@shared/modules/items";
-import { IconName } from "@/core/rmlui/components/icon/icon";
+import { IconName } from "@/core/rmlui/components/icon";
 import { useCharacter } from "@/core/store/character.store";
 import { whileEntityIsStreamedIn } from "@/core/game-state-hooks/entity-is-streamed-in.state";
 import { registerQuest } from "../../lib/register-quest";
@@ -32,7 +32,7 @@ import MINING_TUTOR_COMPLETE from "./conversations/14_MINING_TUTOR_COMPLETE.yaml
 whileEntityIsStreamedIn(
   (entity): entity is alt.Ped => entity instanceof alt.Ped,
   (entity) => {
-    return () => {};
+    return () => { };
   }
 );
 

@@ -52,6 +52,7 @@ import {
   TreeLogItem,
   TreeLogItemInfo,
   TreeLogItemKey,
+  WeaponItemKey,
 } from "./registry";
 import {
   FirearmWeaponItemKey,

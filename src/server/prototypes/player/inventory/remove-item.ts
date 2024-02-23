@@ -1,4 +1,4 @@
-import * as alt from "@altv/server";
+import alt from "@altv/server";
 import { ItemKey } from "@shared/modules/items";
 import { getInventoryItemByKey } from "@shared/modules/inventory";
 import { InGamePlayer } from "@/core/utility/assertions";

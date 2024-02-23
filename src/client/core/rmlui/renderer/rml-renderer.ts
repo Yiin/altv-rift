@@ -1,4 +1,4 @@
-import * as alt from "@altv/client";
+import alt from "@altv/client";
 import { AnchorEntityMap } from "./anchors";
 import { EveryFrameHook, ParsedElement, ParsedNode } from "./types";
 import { getCurrentNode } from "./internals/current-node";
@@ -137,8 +137,8 @@ function parseElement(
     typeof props.className === "string"
       ? [props.className]
       : Array.isArray(props.className)
-      ? props.className.filter(Boolean)
-      : [];
+        ? props.className.filter(Boolean)
+        : [];
 
   delete props.className;
 

@@ -1,4 +1,4 @@
-import * as alt from "@altv/server";
+import alt from "@altv/server";
 import { EquipmentSlot, InventoryItemSource, ItemSourceOrigin } from "@shared/interfaces";
 import { ServerEvents } from "@shared/events/server";
 import { Equipment, Item } from "@shared/modules/items";

@@ -1,4 +1,4 @@
-import * as alt from "@altv/server";
+import alt from "@altv/server";
 import axios from "axios";
 import { PrismaClient } from "@prisma/client";
 import { ServerEvents } from "@shared/events/server";

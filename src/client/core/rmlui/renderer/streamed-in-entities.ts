@@ -1,4 +1,4 @@
-import * as alt from "@altv/client";
+import alt from "@altv/client";
 import { isValidAnchor } from "./element-updater";
 import { AnchorEntity } from "./types";
 import { elements } from "./rml-renderer";

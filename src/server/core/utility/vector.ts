@@ -1,4 +1,4 @@
-import * as alt from "@altv/server";
+import alt from "@altv/server";
 import { distance } from "@shared/utility/vector";
 
 /**

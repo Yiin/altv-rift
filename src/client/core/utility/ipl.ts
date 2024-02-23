@@ -1,5 +1,5 @@
-import * as alt from "@altv/client";
-import * as game from "@altv/natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 import { ClientEvents } from "@shared/events/client";
 
 alt.Events.onServer(ClientEvents.FromServer.IPL_LOAD, (name: string) => {

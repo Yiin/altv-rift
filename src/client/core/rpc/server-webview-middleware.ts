@@ -1,4 +1,4 @@
-import * as alt from "@altv/client";
+import alt from "@altv/client";
 import {
   CALL_SERVER_FROM_WEBVIEW,
   CALL_SERVER_FROM_WEBVIEW_RESPONSE,

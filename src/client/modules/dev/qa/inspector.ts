@@ -1,4 +1,4 @@
-import * as alt from "@altv/client";
+import alt from "@altv/client";
 import * as natives from "@altv/natives";
 import Utils from "./utils";
 import MouseController from "./mouse";

@@ -1,4 +1,4 @@
-import * as alt from "@altv/client";
+import alt from "@altv/client";
 import { defineStore } from "pinia";
 import { updateStoreState } from "@shared/store/utils";
 import { ClientEvents } from "@shared/events/client";

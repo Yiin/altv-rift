@@ -22,7 +22,8 @@ import "./modules/peds";
 import "./modules/questing";
 import "./modules/skills";
 
-import * as alt from "@altv/client";
+import alt from "@altv/client";
+import _ from "lodash";
 import { useUser } from "./core/store/user.store";
 import { useCharacter } from "./core/store/character.store";
 import { gameState } from "./core/store/game-state.store";
@@ -37,5 +38,24 @@ alt.Events.onConsoleCommand(({ command }) => {
     alt.log(JSON.stringify(gameState.$state), null, 2);
   } else if (command === "client") {
     alt.log(JSON.stringify(clientState.$state), null, 2);
+  } else if (command === "weapondata") {
+    _.chunk(alt.WeaponData.all.map((x) => ({
+      [x.nameHash]: {
+        recoilShakeAmplitude: x.recoilShakeAmplitude,
+        recoilAccuracyMax: x.recoilAccuracyMax,
+        recoilAccuracyToAllowHeadshotPlayer: x.recoilAccuracyToAllowHeadshotPlayer,
+        recoilRecoveryRate: x.recoilRecoveryRate,
+        animReloadRate: x.animReloadRate,
+        vehicleReloadTime: x.vehicleReloadTime,
+        lockOnRange: x.lockOnRange,
+        accuracySpread: x.accuracySpread,
+        range: x.range,
+        damage: x.damage,
+        clipSize: x.clipSize,
+        timeBetweenShots: x.timeBetweenShots,
+        headshotDamageModifier: x.headshotDamageModifier,
+        playerDamageModifier: x.playerDamageModifier,
+      }
+    })), 10).map((x) => alt.log(JSON.stringify(x)));
   }
 });

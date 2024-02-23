@@ -1,5 +1,4 @@
-import * as alt from "@altv/server";
-import { FirearmWeapon, getWeaponHash } from "@shared/modules/items";
+import alt from "@altv/server";
 import { PedFlags } from "@shared/modules/ped/constants";
 import { PedKey } from "@shared/modules/ped/list";
 
@@ -42,14 +41,16 @@ export function createStaticPed<T extends { name?: string; flags?: PedFlags }>(
 
 export function createTerroristPed(
   options: alt.PedCreateOptions,
-  data: { name?: string; flags?: PedFlags; weapon: number }
+  data: { name?: string; flags?: PedFlags; weapon: number, health?: number }
 ) {
   const ped = alt.Ped.create(options);
 
-  Object.assign(ped.streamSyncedMeta, data);
+  const { health, ...meta } = data;
 
-  ped.maxHealth = 1000;
-  ped.health = 1000;
+  Object.assign(ped.streamSyncedMeta, meta);
+
+  ped.maxHealth = health ?? 100;
+  ped.health = ped.maxHealth;
 
   return ped;
 }

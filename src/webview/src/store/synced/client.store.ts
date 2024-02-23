@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { getDefaultClientStoreState, QuestInfo } from "@shared/store/client.store";
+import { ClientEvents } from "@shared/events/client";
 import { useCharacter } from "./character.store";
 
 export const useClient = defineStore("client", {
@@ -42,4 +43,9 @@ export const useClient = defineStore("client", {
       }));
     }
   },
+  actions: {
+    closeWindow() {
+      alt.emit(ClientEvents.FromWebview.CLOSE_WINDOW);
+    }
+  }
 });

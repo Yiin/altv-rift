@@ -1,4 +1,5 @@
-import { Item } from "../../types";
+import { getItemInfoByKey } from "../../items-registry";
+import { Item, ItemKey } from "../../types";
 import {
   AccessoryItem,
   AccessoryItemInfo,
@@ -103,4 +104,22 @@ export function isItemKeyClothing(key: string): key is ClothingItemKey {
 
 export function isItemClothing(item: Item): item is ClothingItem {
   return isItemKeyClothing(item.key);
+}
+
+export function isFemaleClothing(key: ClothingItemKey): boolean {
+  const info = getItemInfoByKey(key);
+
+  return info.ped === "mp_f_freemode_01";
+}
+
+export function isMaleClothing(key: ClothingItemKey): boolean {
+  const info = getItemInfoByKey(key);
+
+  return info.ped === "mp_m_freemode_01";
+}
+
+export function isUnisexClothing(key: ClothingItemKey) {
+  const info = getItemInfoByKey(key);
+
+  return [1, 5].includes(info.componentId);
 }

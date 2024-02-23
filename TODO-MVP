@@ -25,22 +25,22 @@ Next steps (Base game MVP):
 
 ------------------------------------------------------------------------------------------------------------------------
 
-Notes:
-  logic on the server for dropping items/picking up items is done,
-  but ui still needs confirmation modal w/ amount selection for dropping
-  and amount selection for picking up
-
-  move:
-    - inventory to ground, ground to inventory
-  drop:
-    - inventory to ground
-  move:
-    - shop to inventory, inventory to shop
-    - storage to inventory, inventory to storage
-
-storage inventory:
-  - storage
-  - shop
+Workbench:
+  ped sync is questionable, lets' focus on pvp & crafting for now
+  ✔ Damage modifiers for weapons @done
+  ☐ Loot boxes for items & materials
+    ✔ UI @done
+    ☐ Random loot tables
+    ☐ Drop points
+  ✔ After we close the window, the cursor doesn't disappear @done
+  ✔ After taking the items from the storage, the UI doesn't update(??) @done
+  ✔ Can't drop single items @done
+  ✔ Mask doesn't disappear after unequiping @done
+  ✔ Need to separate male and female clothing @done
+    ✔ Add labels in UI @done
+    ✔ Add checks in equipment system @done
+  ☐ Can't equip glasses (??)
+  ☐ Crafting system for weapons
 
 ------------------------------------------------------------------------------------------------------------------------
 

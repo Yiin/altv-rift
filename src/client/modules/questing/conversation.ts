@@ -1,5 +1,5 @@
-import * as alt from "@altv/client";
-import * as game from "@altv/natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 import { ConversationOption } from "@shared/interfaces/conversation";
 import { ServerEvents } from "@shared/events/server";
 import { Control, ControlType } from "@/core/constants/controls";

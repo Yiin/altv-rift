@@ -1,5 +1,5 @@
-import * as alt from "@altv/client";
-import * as game from "@altv/natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 import { reactive, ref, watchEffect } from "vue";
 import { TargetAction } from "@shared/store/client.store";
 import { UIElement } from "@shared/enums/ui";
@@ -99,7 +99,7 @@ function searchForAction() {
                   text: "Open trunk",
                   screenPos: { x: x * getScreenResolution().x, y: y * getScreenResolution().y },
                 },
-                onAction() {},
+                onAction() { },
               };
               return;
             }

@@ -7,8 +7,8 @@ import { Character } from "./prisma-overrides";
 export enum ItemSourceOrigin {
   PlayerInventory = "PlayerInventory",
   PlayerEquipment = "PlayerEquipment",
+  Storage = "Storage",
   Ground = "Ground",
-  InteractionInventory = "InteractionInventory",
 }
 
 /**
@@ -24,12 +24,12 @@ export type PlayerEquipmentSource = {
   originId: Character['id'];
 };
 
-export type InteractionInventorySource = {
-  origin: ItemSourceOrigin.InteractionInventory;
+export type StorageSource = {
+  origin: ItemSourceOrigin.Storage;
   originId: number; // VirtualEntity["id"]
 };
 
-export type InventorySource = PlayerInventorySource | InteractionInventorySource;
+export type InventorySource = PlayerInventorySource | StorageSource;
 
 /**
  * Item source types
@@ -42,16 +42,16 @@ export type PlayerEquipmentItemSource = {
   equipmentSlot: EquipmentSlot;
 } & PlayerEquipmentSource;
 
+export type StorageItemSource = {
+  inventorySlot: number;
+} & StorageSource;
+
 export type GroundItemSource = {
   origin: ItemSourceOrigin.Ground;
   originId: number; // VirtualEntity["id"]
 };
 
-export type InteractionInventoryItemSource = {
-  inventorySlot: number;
-} & InteractionInventorySource;
-
-export type InventoryItemSource = PlayerInventoryItemSource | InteractionInventoryItemSource;
+export type InventoryItemSource = PlayerInventoryItemSource | StorageItemSource;
 
 export type PlayerItemSource = PlayerInventoryItemSource | PlayerEquipmentItemSource;
-export type ItemSource = PlayerInventoryItemSource | PlayerEquipmentItemSource | GroundItemSource | InteractionInventoryItemSource;
+export type ItemSource = PlayerInventoryItemSource | PlayerEquipmentItemSource | GroundItemSource | StorageItemSource;

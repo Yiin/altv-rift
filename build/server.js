@@ -11,7 +11,9 @@ const context = await esbuild.context({
   outfile: "resources/main/server.js",
   external: [
     "@altv/shared",
-    "@altv/server"
+    "@altv/server",
+    'alt-shared',
+    'alt-server'
   ],
   plugins: [
     yamlPlugin,

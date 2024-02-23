@@ -1,8 +1,8 @@
-import { SlottedEquipmentItem, SlottedGroundItem, SlottedInteractionInventoryItem } from "@/store/inventory.store";
+import { SlottedEquipmentItem, SlottedGroundItem, SlottedStorageItem } from "@/store/inventory.store";
 import {
   EquipmentSlot,
   GroundItemSource,
-  InteractionInventoryItemSource,
+  StorageItemSource,
   InventoryItem,
   ItemSourceOrigin,
   PlayerInventoryItemSource,

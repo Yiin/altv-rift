@@ -1,4 +1,4 @@
-import * as game from "@altv/natives";
+import game from "@altv/natives";
 import { SCREEN_EFFECTS } from "@shared/modules/game/ui/screen-effects";
 
 /**

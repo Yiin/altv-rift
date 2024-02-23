@@ -1,4 +1,4 @@
-import * as alt from "@altv/client";
+import alt from "@altv/client";
 
 export function screenToWorld() {
   const cursorPos = alt.Cursor.pos;

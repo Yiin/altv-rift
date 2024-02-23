@@ -1,4 +1,4 @@
-import * as alt from "@altv/client";
+import alt from "@altv/client";
 import { clientState } from "@/core/store/client.store";
 import { renderElement, markElementAsHidden } from "./element-renderer";
 import { prepareFrameForEntity } from "./element-updater";

@@ -1,5 +1,5 @@
 import { registerItem } from "@shared/modules/items";
-import { ItemFlags } from "../../enums";
+import { ItemFlags, ItemGrade } from "../../enums";
 import { Item } from "../../types";
 import { makeKeys } from "../../../../utility/make-keys";
 import { WeaponGroup } from "./weapon-groups";
@@ -34,6 +34,7 @@ export type MeleeWeaponItem = {
   durability: number;
   tint: number;
   components: number[];
+  grade: ItemGrade;
 };
 
 export type MeleeWeaponItemInfo = {
@@ -43,7 +44,7 @@ export type MeleeWeaponItemInfo = {
   description: string;
   group: typeof WeaponGroup.MELEE;
   price: number;
-  stats: {
+  comparisonStats: {
     damage: number;
     rate: number;
     range: number;
@@ -59,7 +60,7 @@ export const meleeWeapons: MeleeWeaponItemInfo[] = [
     description: getWeaponData(3756226112).Description,
     group: WeaponGroup.MELEE,
     price: 1950,
-    stats: {
+    comparisonStats: {
       damage: 76,
       rate: 20,
       range: 0,
@@ -73,7 +74,7 @@ export const meleeWeapons: MeleeWeaponItemInfo[] = [
     description: getWeaponData(940833800).Description,
     group: WeaponGroup.MELEE,
     price: 25000,
-    stats: {
+    comparisonStats: {
       damage: 30,
       rate: 15,
       range: 0,
@@ -87,7 +88,7 @@ export const meleeWeapons: MeleeWeaponItemInfo[] = [
     description: getWeaponData(2484171525).Description,
     group: WeaponGroup.MELEE,
     price: 6250,
-    stats: {
+    comparisonStats: {
       damage: 20,
       rate: 10,
       range: 0,
@@ -101,7 +102,7 @@ export const meleeWeapons: MeleeWeaponItemInfo[] = [
     description: getWeaponData(419712736).Description,
     group: WeaponGroup.MELEE,
     price: 7150,
-    stats: {
+    comparisonStats: {
       damage: 10,
       rate: 15,
       range: 0,
@@ -115,7 +116,7 @@ export const meleeWeapons: MeleeWeaponItemInfo[] = [
     description: getWeaponData(1737195953).Description,
     group: WeaponGroup.MELEE,
     price: 400,
-    stats: {
+    comparisonStats: {
       damage: 10,
       rate: 15,
       range: 1,
@@ -129,7 +130,7 @@ export const meleeWeapons: MeleeWeaponItemInfo[] = [
     description: getWeaponData(2578778090).Description,
     group: WeaponGroup.MELEE,
     price: 400,
-    stats: {
+    comparisonStats: {
       damage: 76,
       rate: 20,
       range: 1,
@@ -143,7 +144,7 @@ export const meleeWeapons: MeleeWeaponItemInfo[] = [
     description: getWeaponData(3638508604).Description,
     group: WeaponGroup.MELEE,
     price: 7500,
-    stats: {
+    comparisonStats: {
       damage: 10,
       rate: 20,
       range: 1,
@@ -157,7 +158,7 @@ export const meleeWeapons: MeleeWeaponItemInfo[] = [
     description: getWeaponData(3713923289).Description,
     group: WeaponGroup.MELEE,
     price: 8900,
-    stats: {
+    comparisonStats: {
       damage: 76,
       rate: 15,
       range: 0,
@@ -171,7 +172,7 @@ export const meleeWeapons: MeleeWeaponItemInfo[] = [
     description: getWeaponData(1317494643).Description,
     group: WeaponGroup.MELEE,
     price: 500,
-    stats: {
+    comparisonStats: {
       damage: 10,
       rate: 15,
       range: 1,
@@ -185,7 +186,7 @@ export const meleeWeapons: MeleeWeaponItemInfo[] = [
     description: getWeaponData(4191993645).Description,
     group: WeaponGroup.MELEE,
     price: 750,
-    stats: {
+    comparisonStats: {
       damage: 76,
       rate: 15,
       range: 0,
@@ -199,7 +200,7 @@ export const meleeWeapons: MeleeWeaponItemInfo[] = [
     description: getWeaponData(2343591895).Description,
     group: WeaponGroup.MELEE,
     price: 250,
-    stats: {
+    comparisonStats: {
       damage: 10,
       rate: 15,
       range: 0,
@@ -213,7 +214,7 @@ export const meleeWeapons: MeleeWeaponItemInfo[] = [
     description: getWeaponData(1141786504).Description,
     group: WeaponGroup.MELEE,
     price: 125,
-    stats: {
+    comparisonStats: {
       damage: 20,
       rate: 10,
       range: 1,
@@ -227,7 +228,7 @@ export const meleeWeapons: MeleeWeaponItemInfo[] = [
     description: getWeaponData(2227010557).Description,
     group: WeaponGroup.MELEE,
     price: 55,
-    stats: {
+    comparisonStats: {
       damage: 10,
       rate: 15,
       range: 1,
@@ -241,7 +242,7 @@ export const meleeWeapons: MeleeWeaponItemInfo[] = [
     description: getWeaponData(2460120199).Description,
     group: WeaponGroup.MELEE,
     price: 2000,
-    stats: {
+    comparisonStats: {
       damage: 20,
       rate: 20,
       range: 2,
@@ -255,7 +256,7 @@ export const meleeWeapons: MeleeWeaponItemInfo[] = [
     description: getWeaponData(2508868239).Description,
     group: WeaponGroup.MELEE,
     price: 100,
-    stats: {
+    comparisonStats: {
       damage: 20,
       rate: 10,
       range: 1,
@@ -269,7 +270,7 @@ export const meleeWeapons: MeleeWeaponItemInfo[] = [
     description: getWeaponData(3441901897).Description,
     group: WeaponGroup.MELEE,
     price: 300,
-    stats: {
+    comparisonStats: {
       damage: 76,
       rate: 15,
       range: 0,
@@ -283,7 +284,7 @@ export const meleeWeapons: MeleeWeaponItemInfo[] = [
     description: getWeaponData(4192643659).Description,
     group: WeaponGroup.MELEE,
     price: 8,
-    stats: {
+    comparisonStats: {
       damage: 20,
       rate: 15,
       range: 1,

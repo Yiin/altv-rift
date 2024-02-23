@@ -1,7 +1,7 @@
-import * as alt from "@altv/server";
-import { createTerroristPed } from "../peds/registry";
-import { FirearmWeapon, getWeaponComponents, getWeaponHash } from "@shared/modules/items";
+import alt from "@altv/server";
 import { minutesToMilliseconds } from "date-fns";
+import { FirearmWeapon, MeleeWeapon, ThrowableWeapon, getWeaponHash } from "@shared/modules/items";
+import { createTerroristPed } from "../peds/registry";
 
 const positions = [
   { x: 4842.56591796875, y: -5174.89892578125, z: 2.2929341793060303 },
@@ -47,10 +47,11 @@ const models = [
 ];
 
 const weapons = [
-  FirearmWeapon.COMBATMG,
-  FirearmWeapon.COMBATPISTOL,
-  FirearmWeapon.MICROSMG,
-  FirearmWeapon.SMG,
+  MeleeWeapon.BAT,
+  // FirearmWeapon.COMBATMG,
+  // FirearmWeapon.COMBATPISTOL,
+  // FirearmWeapon.MICROSMG,
+  // FirearmWeapon.SMG,
 ];
 
 const thugs = new Set<alt.Ped>();
@@ -71,7 +72,7 @@ function setupThugs() {
     const weaponIndex = ~~(Math.random() * weapons.length);
     const weapon = getWeaponHash(weapons[weaponIndex]);
 
-    const thug = createTerroristPed({ model, pos, heading: 0 }, { weapon });
+    const thug = createTerroristPed({ model, pos, heading: 0 }, { weapon, health: 300 });
     thugs.add(thug);
   }
 }

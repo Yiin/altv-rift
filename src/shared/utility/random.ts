@@ -1,4 +1,4 @@
-import * as alt from "@altv/shared";
+import alt from "@altv/shared";
 import earcut from "earcut";
 
 /**

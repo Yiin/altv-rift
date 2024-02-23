@@ -16,6 +16,7 @@ import {
   FishBaitItem,
   isItemKeyFishBait,
 } from "../registry";
+import { ItemGrade } from "../enums";
 import { isItemKeyStackable } from "./get-item-flags";
 
 export function createItem<T extends ItemKey, D = ItemByKey<T>>(
@@ -42,10 +43,12 @@ export function getItemDefaultData(key: ItemKey) {
       ammo: null,
       components: [],
       tint: 0,
+      grade: ItemGrade.BASE
     } satisfies Partial<FirearmWeaponItem>;
   } else if (isItemKeyThrowableWeapon(key)) {
     return {
       amount: 1,
+      grade: ItemGrade.BASE
     } satisfies Partial<ThrowableWeaponItem>;
   } else if (isItemKeyMeleeWeapon(key)) {
     return {
@@ -53,6 +56,7 @@ export function getItemDefaultData(key: ItemKey) {
       customName: null,
       components: [],
       tint: 0,
+      grade: ItemGrade.BASE
     } satisfies Partial<MeleeWeaponItem>;
   } else if (isItemKeyAmmo(key)) {
     return {

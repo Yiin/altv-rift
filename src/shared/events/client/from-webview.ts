@@ -8,6 +8,7 @@ export const FromWebview = {
   ACTION_MENU_SELECT: "ACTION_MENU_SELECT",
   TOGGLE_PLAYER_PREVIEW: "TOGGLE_PLAYER_PREVIEW",
   TRACK_QUEST: "TRACK_QUEST",
+  CLOSE_WINDOW: "CLOSE_WINDOW",
 } as const;
 
 declare module "@altv/shared" {
@@ -24,6 +25,7 @@ declare module "@altv/shared" {
       [FromWebview.ACTION_MENU_SELECT]: (key: string) => void;
       [FromWebview.TOGGLE_PLAYER_PREVIEW]: (show: boolean) => void;
       [FromWebview.TRACK_QUEST]: (key: string) => void;
+      [FromWebview.CLOSE_WINDOW]: () => void;
     }
   }
 }

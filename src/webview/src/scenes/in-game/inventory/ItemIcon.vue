@@ -3,7 +3,7 @@ import { useItemDetails } from "@/composables/use-item-details";
 import { getItemIconScale, getItemImage, getItemIconPosition, getItemClasses } from "@/utils/items";
 import { computed, ref, watch } from "vue";
 import LogIcon from "./dynamic-icons/LogIcon.vue";
-import { Item, TreeLogItemKey } from "@shared/modules/items";
+import { Item, ItemGrade, TreeLogItemKey } from "@shared/modules/items";
 
 const props = defineProps<{
   item: Item;
@@ -30,7 +30,7 @@ watch(
 </script>
 
 <template>
-  <div class="w-20 h-20 text-white flex items-center justify-center cursor-pointer p-2">
+  <div class="w-20 h-20 text-white flex items-center justify-center p-2">
     <template v-if="noImage">
       <LogIcon v-if="item.key.endsWith(`_logs`)" :item-key="(item.key as TreeLogItemKey)" />
       <div v-else class="text-center text-sm tracking-wider font-bold">
@@ -42,7 +42,13 @@ watch(
       backgroundSize: getItemIconScale(item),
       backgroundPosition: getItemIconPosition(item),
     }" />
-    <p class="absolute uppercase text-xs text-purple-400 w-full top-2 left-2">epic</p>
+    <p v-if="'grade' in item && item.grade"
+      class="absolute uppercase text-lg font-extrabold font-mono w-full top-1 left-2" :class="{
+        [ItemGrade.ONE]: `text-gray-300`,
+        [ItemGrade.TWO]: `text-yellow-400`,
+        [ItemGrade.THREE]: `text-main-500`,
+        [ItemGrade.FOUR]: `text-red-500`,
+      }[item.grade]">{{ item.grade }}</p>
     <div v-if="`amount` in item" class="absolute bottom-1 right-1 font-bold shadow-sm">
       {{ item.amount }}
     </div>

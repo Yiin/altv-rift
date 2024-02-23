@@ -1,4 +1,4 @@
-import * as alt from "@altv/client";
+import alt from "@altv/client";
 import { PedAppearance } from "@/core/utility/ped-appearance";
 import { setupPeacefulPed } from "@/modules/peds/setup-ped/setup-peaceful-ped";
 import { Appearance } from "@prisma/client/edge";

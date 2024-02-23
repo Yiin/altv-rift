@@ -1,4 +1,4 @@
-import * as alt from "@altv/server";
+import alt from "@altv/server";
 import { CustomServerEvent } from "@shared/events/server/from-server";
 
 const eventHandlers = new Map<string, Function[]>();

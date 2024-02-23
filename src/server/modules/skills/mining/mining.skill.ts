@@ -1,4 +1,4 @@
-import * as alt from "@altv/server";
+import alt from "@altv/server";
 import { ServerCall } from "@shared/calls/server";
 import { PlayerFlags } from "@shared/store/game-state.store";
 import { Sand, createItem } from "@shared/modules/items";

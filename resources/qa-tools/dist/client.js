@@ -4,53 +4,24 @@ var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
 var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __defNormalProp = (obj, key, value) =>
-  key in obj
-    ? __defProp(obj, key, {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value,
-      })
-    : (obj[key] = value);
-var __markAsModule = (target) =>
-  __defProp(target, "__esModule", { value: true });
-var __esm = (fn, res) =>
-  function __init() {
-    return fn && (res = (0, fn[Object.keys(fn)[0]])((fn = 0))), res;
-  };
-var __commonJS = (cb, mod) =>
-  function __require() {
-    return (
-      mod || (0, cb[Object.keys(cb)[0]])((mod = { exports: {} }).exports, mod),
-      mod.exports
-    );
-  };
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __markAsModule = (target) => __defProp(target, "__esModule", { value: true });
+var __esm = (fn, res) => function __init() {
+  return fn && (res = (0, fn[Object.keys(fn)[0]])(fn = 0)), res;
+};
+var __commonJS = (cb, mod) => function __require() {
+  return mod || (0, cb[Object.keys(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+};
 var __reExport = (target, module, desc) => {
-  if ((module && typeof module === "object") || typeof module === "function") {
+  if (module && typeof module === "object" || typeof module === "function") {
     for (let key of __getOwnPropNames(module))
       if (!__hasOwnProp.call(target, key) && key !== "default")
-        __defProp(target, key, {
-          get: () => module[key],
-          enumerable:
-            !(desc = __getOwnPropDesc(module, key)) || desc.enumerable,
-        });
+        __defProp(target, key, { get: () => module[key], enumerable: !(desc = __getOwnPropDesc(module, key)) || desc.enumerable });
   }
   return target;
 };
 var __toModule = (module) => {
-  return __reExport(
-    __markAsModule(
-      __defProp(
-        module != null ? __create(__getProtoOf(module)) : {},
-        "default",
-        module && module.__esModule && "default" in module
-          ? { get: () => module.default, enumerable: true }
-          : { value: module, enumerable: true }
-      )
-    ),
-    module
-  );
+  return __reExport(__markAsModule(__defProp(module != null ? __create(__getProtoOf(module)) : {}, "default", module && module.__esModule && "default" in module ? { get: () => module.default, enumerable: true } : { value: module, enumerable: true })), module);
 };
 var __publicField = (obj, key, value) => {
   __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
@@ -72,10 +43,7 @@ var __async = (__this, __arguments, generator) => {
         reject(e);
       }
     };
-    var step = (x) =>
-      x.done
-        ? resolve(x.value)
-        : Promise.resolve(x.value).then(fulfilled, rejected);
+    var step = (x) => x.done ? resolve(x.value) : Promise.resolve(x.value).then(fulfilled, rejected);
     step((generator = generator.apply(__this, __arguments)).next());
   });
 };
@@ -86,19 +54,16 @@ var init_define_process = __esm({
   "<define:process>"() {
     env = {};
     define_process_default = { env };
-  },
+  }
 });
 
 // ../node_modules/has-symbols/shams.js
 var require_shams = __commonJS({
   "../node_modules/has-symbols/shams.js"(exports, module) {
     init_define_process();
-    ("use strict");
+    "use strict";
     module.exports = function hasSymbols() {
-      if (
-        typeof Symbol !== "function" ||
-        typeof Object.getOwnPropertySymbols !== "function"
-      ) {
+      if (typeof Symbol !== "function" || typeof Object.getOwnPropertySymbols !== "function") {
         return false;
       }
       if (typeof Symbol.iterator === "symbol") {
@@ -124,10 +89,7 @@ var require_shams = __commonJS({
       if (typeof Object.keys === "function" && Object.keys(obj).length !== 0) {
         return false;
       }
-      if (
-        typeof Object.getOwnPropertyNames === "function" &&
-        Object.getOwnPropertyNames(obj).length !== 0
-      ) {
+      if (typeof Object.getOwnPropertyNames === "function" && Object.getOwnPropertyNames(obj).length !== 0) {
         return false;
       }
       var syms = Object.getOwnPropertySymbols(obj);
@@ -145,26 +107,26 @@ var require_shams = __commonJS({
       }
       return true;
     };
-  },
+  }
 });
 
 // ../node_modules/has-tostringtag/shams.js
 var require_shams2 = __commonJS({
   "../node_modules/has-tostringtag/shams.js"(exports, module) {
     init_define_process();
-    ("use strict");
+    "use strict";
     var hasSymbols = require_shams();
     module.exports = function hasToStringTagShams() {
       return hasSymbols() && !!Symbol.toStringTag;
     };
-  },
+  }
 });
 
 // ../node_modules/has-symbols/index.js
 var require_has_symbols = __commonJS({
   "../node_modules/has-symbols/index.js"(exports, module) {
     init_define_process();
-    ("use strict");
+    "use strict";
     var origSymbol = typeof Symbol !== "undefined" && Symbol;
     var hasSymbolSham = require_shams();
     module.exports = function hasNativeSymbols() {
@@ -182,14 +144,14 @@ var require_has_symbols = __commonJS({
       }
       return hasSymbolSham();
     };
-  },
+  }
 });
 
 // ../node_modules/function-bind/implementation.js
 var require_implementation = __commonJS({
   "../node_modules/function-bind/implementation.js"(exports, module) {
     init_define_process();
-    ("use strict");
+    "use strict";
     var ERROR_MESSAGE = "Function.prototype.bind called on incompatible ";
     var slice = Array.prototype.slice;
     var toStr = Object.prototype.toString;
@@ -217,58 +179,53 @@ var require_implementation = __commonJS({
       for (var i = 0; i < boundLength; i++) {
         boundArgs.push("$" + i);
       }
-      bound = Function(
-        "binder",
-        "return function (" +
-          boundArgs.join(",") +
-          "){ return binder.apply(this,arguments); }"
-      )(binder);
+      bound = Function("binder", "return function (" + boundArgs.join(",") + "){ return binder.apply(this,arguments); }")(binder);
       if (target.prototype) {
-        var Empty = function Empty2() {};
+        var Empty = function Empty2() {
+        };
         Empty.prototype = target.prototype;
         bound.prototype = new Empty();
         Empty.prototype = null;
       }
       return bound;
     };
-  },
+  }
 });
 
 // ../node_modules/function-bind/index.js
 var require_function_bind = __commonJS({
   "../node_modules/function-bind/index.js"(exports, module) {
     init_define_process();
-    ("use strict");
+    "use strict";
     var implementation = require_implementation();
     module.exports = Function.prototype.bind || implementation;
-  },
+  }
 });
 
 // ../node_modules/has/src/index.js
 var require_src = __commonJS({
   "../node_modules/has/src/index.js"(exports, module) {
     init_define_process();
-    ("use strict");
+    "use strict";
     var bind = require_function_bind();
     module.exports = bind.call(Function.call, Object.prototype.hasOwnProperty);
-  },
+  }
 });
 
 // ../node_modules/get-intrinsic/index.js
 var require_get_intrinsic = __commonJS({
   "../node_modules/get-intrinsic/index.js"(exports, module) {
     init_define_process();
-    ("use strict");
+    "use strict";
     var undefined2;
     var $SyntaxError = SyntaxError;
     var $Function = Function;
     var $TypeError = TypeError;
     var getEvalledConstructor = function (expressionSyntax) {
       try {
-        return $Function(
-          '"use strict"; return (' + expressionSyntax + ").constructor;"
-        )();
-      } catch (e) {}
+        return $Function('"use strict"; return (' + expressionSyntax + ").constructor;")();
+      } catch (e) {
+      }
     };
     var $gOPD = Object.getOwnPropertyDescriptor;
     if ($gOPD) {
@@ -281,38 +238,29 @@ var require_get_intrinsic = __commonJS({
     var throwTypeError = function () {
       throw new $TypeError();
     };
-    var ThrowTypeError = $gOPD
-      ? (function () {
-          try {
-            arguments.callee;
-            return throwTypeError;
-          } catch (calleeThrows) {
-            try {
-              return $gOPD(arguments, "callee").get;
-            } catch (gOPDthrows) {
-              return throwTypeError;
-            }
-          }
-        })()
-      : throwTypeError;
+    var ThrowTypeError = $gOPD ? function () {
+      try {
+        arguments.callee;
+        return throwTypeError;
+      } catch (calleeThrows) {
+        try {
+          return $gOPD(arguments, "callee").get;
+        } catch (gOPDthrows) {
+          return throwTypeError;
+        }
+      }
+    }() : throwTypeError;
     var hasSymbols = require_has_symbols()();
-    var getProto =
-      Object.getPrototypeOf ||
-      function (x) {
-        return x.__proto__;
-      };
+    var getProto = Object.getPrototypeOf || function (x) {
+      return x.__proto__;
+    };
     var needsEval = {};
-    var TypedArray =
-      typeof Uint8Array === "undefined" ? undefined2 : getProto(Uint8Array);
+    var TypedArray = typeof Uint8Array === "undefined" ? undefined2 : getProto(Uint8Array);
     var INTRINSICS = {
-      "%AggregateError%":
-        typeof AggregateError === "undefined" ? undefined2 : AggregateError,
+      "%AggregateError%": typeof AggregateError === "undefined" ? undefined2 : AggregateError,
       "%Array%": Array,
-      "%ArrayBuffer%":
-        typeof ArrayBuffer === "undefined" ? undefined2 : ArrayBuffer,
-      "%ArrayIteratorPrototype%": hasSymbols
-        ? getProto([][Symbol.iterator]())
-        : undefined2,
+      "%ArrayBuffer%": typeof ArrayBuffer === "undefined" ? undefined2 : ArrayBuffer,
+      "%ArrayIteratorPrototype%": hasSymbols ? getProto([][Symbol.iterator]()) : undefined2,
       "%AsyncFromSyncIteratorPrototype%": undefined2,
       "%AsyncFunction%": needsEval,
       "%AsyncGenerator%": needsEval,
@@ -330,32 +278,20 @@ var require_get_intrinsic = __commonJS({
       "%Error%": Error,
       "%eval%": eval,
       "%EvalError%": EvalError,
-      "%Float32Array%":
-        typeof Float32Array === "undefined" ? undefined2 : Float32Array,
-      "%Float64Array%":
-        typeof Float64Array === "undefined" ? undefined2 : Float64Array,
-      "%FinalizationRegistry%":
-        typeof FinalizationRegistry === "undefined"
-          ? undefined2
-          : FinalizationRegistry,
+      "%Float32Array%": typeof Float32Array === "undefined" ? undefined2 : Float32Array,
+      "%Float64Array%": typeof Float64Array === "undefined" ? undefined2 : Float64Array,
+      "%FinalizationRegistry%": typeof FinalizationRegistry === "undefined" ? undefined2 : FinalizationRegistry,
       "%Function%": $Function,
       "%GeneratorFunction%": needsEval,
       "%Int8Array%": typeof Int8Array === "undefined" ? undefined2 : Int8Array,
-      "%Int16Array%":
-        typeof Int16Array === "undefined" ? undefined2 : Int16Array,
-      "%Int32Array%":
-        typeof Int32Array === "undefined" ? undefined2 : Int32Array,
+      "%Int16Array%": typeof Int16Array === "undefined" ? undefined2 : Int16Array,
+      "%Int32Array%": typeof Int32Array === "undefined" ? undefined2 : Int32Array,
       "%isFinite%": isFinite,
       "%isNaN%": isNaN,
-      "%IteratorPrototype%": hasSymbols
-        ? getProto(getProto([][Symbol.iterator]()))
-        : undefined2,
+      "%IteratorPrototype%": hasSymbols ? getProto(getProto([][Symbol.iterator]())) : undefined2,
       "%JSON%": typeof JSON === "object" ? JSON : undefined2,
       "%Map%": typeof Map === "undefined" ? undefined2 : Map,
-      "%MapIteratorPrototype%":
-        typeof Map === "undefined" || !hasSymbols
-          ? undefined2
-          : getProto(new Map()[Symbol.iterator]()),
+      "%MapIteratorPrototype%": typeof Map === "undefined" || !hasSymbols ? undefined2 : getProto(new Map()[Symbol.iterator]()),
       "%Math%": Math,
       "%Number%": Number,
       "%Object%": Object,
@@ -368,37 +304,23 @@ var require_get_intrinsic = __commonJS({
       "%Reflect%": typeof Reflect === "undefined" ? undefined2 : Reflect,
       "%RegExp%": RegExp,
       "%Set%": typeof Set === "undefined" ? undefined2 : Set,
-      "%SetIteratorPrototype%":
-        typeof Set === "undefined" || !hasSymbols
-          ? undefined2
-          : getProto(new Set()[Symbol.iterator]()),
-      "%SharedArrayBuffer%":
-        typeof SharedArrayBuffer === "undefined"
-          ? undefined2
-          : SharedArrayBuffer,
+      "%SetIteratorPrototype%": typeof Set === "undefined" || !hasSymbols ? undefined2 : getProto(new Set()[Symbol.iterator]()),
+      "%SharedArrayBuffer%": typeof SharedArrayBuffer === "undefined" ? undefined2 : SharedArrayBuffer,
       "%String%": String,
-      "%StringIteratorPrototype%": hasSymbols
-        ? getProto(""[Symbol.iterator]())
-        : undefined2,
+      "%StringIteratorPrototype%": hasSymbols ? getProto(""[Symbol.iterator]()) : undefined2,
       "%Symbol%": hasSymbols ? Symbol : undefined2,
       "%SyntaxError%": $SyntaxError,
       "%ThrowTypeError%": ThrowTypeError,
       "%TypedArray%": TypedArray,
       "%TypeError%": $TypeError,
-      "%Uint8Array%":
-        typeof Uint8Array === "undefined" ? undefined2 : Uint8Array,
-      "%Uint8ClampedArray%":
-        typeof Uint8ClampedArray === "undefined"
-          ? undefined2
-          : Uint8ClampedArray,
-      "%Uint16Array%":
-        typeof Uint16Array === "undefined" ? undefined2 : Uint16Array,
-      "%Uint32Array%":
-        typeof Uint32Array === "undefined" ? undefined2 : Uint32Array,
+      "%Uint8Array%": typeof Uint8Array === "undefined" ? undefined2 : Uint8Array,
+      "%Uint8ClampedArray%": typeof Uint8ClampedArray === "undefined" ? undefined2 : Uint8ClampedArray,
+      "%Uint16Array%": typeof Uint16Array === "undefined" ? undefined2 : Uint16Array,
+      "%Uint32Array%": typeof Uint32Array === "undefined" ? undefined2 : Uint32Array,
       "%URIError%": URIError,
       "%WeakMap%": typeof WeakMap === "undefined" ? undefined2 : WeakMap,
       "%WeakRef%": typeof WeakRef === "undefined" ? undefined2 : WeakRef,
-      "%WeakSet%": typeof WeakSet === "undefined" ? undefined2 : WeakSet,
+      "%WeakSet%": typeof WeakSet === "undefined" ? undefined2 : WeakSet
     };
     var doEval = function doEval2(name) {
       var value;
@@ -431,11 +353,7 @@ var require_get_intrinsic = __commonJS({
       "%ArrayProto_values%": ["Array", "prototype", "values"],
       "%AsyncFunctionPrototype%": ["AsyncFunction", "prototype"],
       "%AsyncGenerator%": ["AsyncGeneratorFunction", "prototype"],
-      "%AsyncGeneratorPrototype%": [
-        "AsyncGeneratorFunction",
-        "prototype",
-        "prototype",
-      ],
+      "%AsyncGeneratorPrototype%": ["AsyncGeneratorFunction", "prototype", "prototype"],
       "%BooleanPrototype%": ["Boolean", "prototype"],
       "%DataViewPrototype%": ["DataView", "prototype"],
       "%DatePrototype%": ["Date", "prototype"],
@@ -477,7 +395,7 @@ var require_get_intrinsic = __commonJS({
       "%Uint32ArrayPrototype%": ["Uint32Array", "prototype"],
       "%URIErrorPrototype%": ["URIError", "prototype"],
       "%WeakMapPrototype%": ["WeakMap", "prototype"],
-      "%WeakSetPrototype%": ["WeakSet", "prototype"],
+      "%WeakSetPrototype%": ["WeakSet", "prototype"]
     };
     var bind = require_function_bind();
     var hasOwn = require_src();
@@ -485,26 +403,19 @@ var require_get_intrinsic = __commonJS({
     var $spliceApply = bind.call(Function.apply, Array.prototype.splice);
     var $replace = bind.call(Function.call, String.prototype.replace);
     var $strSlice = bind.call(Function.call, String.prototype.slice);
-    var rePropName =
-      /[^%.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|%$))/g;
+    var rePropName = /[^%.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|%$))/g;
     var reEscapeChar = /\\(\\)?/g;
     var stringToPath = function stringToPath2(string) {
       var first = $strSlice(string, 0, 1);
       var last = $strSlice(string, -1);
       if (first === "%" && last !== "%") {
-        throw new $SyntaxError(
-          "invalid intrinsic syntax, expected closing `%`"
-        );
+        throw new $SyntaxError("invalid intrinsic syntax, expected closing `%`");
       } else if (last === "%" && first !== "%") {
-        throw new $SyntaxError(
-          "invalid intrinsic syntax, expected opening `%`"
-        );
+        throw new $SyntaxError("invalid intrinsic syntax, expected opening `%`");
       }
       var result = [];
       $replace(string, rePropName, function (match, number, quote, subString) {
-        result[result.length] = quote
-          ? $replace(subString, reEscapeChar, "$1")
-          : number || match;
+        result[result.length] = quote ? $replace(subString, reEscapeChar, "$1") : number || match;
       });
       return result;
     };
@@ -521,16 +432,12 @@ var require_get_intrinsic = __commonJS({
           value = doEval(intrinsicName);
         }
         if (typeof value === "undefined" && !allowMissing) {
-          throw new $TypeError(
-            "intrinsic " +
-              name +
-              " exists, but is not available. Please file an issue!"
-          );
+          throw new $TypeError("intrinsic " + name + " exists, but is not available. Please file an issue!");
         }
         return {
           alias,
           name: intrinsicName,
-          value,
+          value
         };
       }
       throw new $SyntaxError("intrinsic " + name + " does not exist!");
@@ -544,10 +451,7 @@ var require_get_intrinsic = __commonJS({
       }
       var parts = stringToPath(name);
       var intrinsicBaseName = parts.length > 0 ? parts[0] : "";
-      var intrinsic = getBaseIntrinsic(
-        "%" + intrinsicBaseName + "%",
-        allowMissing
-      );
+      var intrinsic = getBaseIntrinsic("%" + intrinsicBaseName + "%", allowMissing);
       var intrinsicRealName = intrinsic.name;
       var value = intrinsic.value;
       var skipFurtherCaching = false;
@@ -560,18 +464,8 @@ var require_get_intrinsic = __commonJS({
         var part = parts[i];
         var first = $strSlice(part, 0, 1);
         var last = $strSlice(part, -1);
-        if (
-          (first === '"' ||
-            first === "'" ||
-            first === "`" ||
-            last === '"' ||
-            last === "'" ||
-            last === "`") &&
-          first !== last
-        ) {
-          throw new $SyntaxError(
-            "property names with quotes must have matching quotes"
-          );
+        if ((first === '"' || first === "'" || first === "`" || (last === '"' || last === "'" || last === "`")) && first !== last) {
+          throw new $SyntaxError("property names with quotes must have matching quotes");
         }
         if (part === "constructor" || !isOwn) {
           skipFurtherCaching = true;
@@ -583,11 +477,7 @@ var require_get_intrinsic = __commonJS({
         } else if (value != null) {
           if (!(part in value)) {
             if (!allowMissing) {
-              throw new $TypeError(
-                "base intrinsic for " +
-                  name +
-                  " exists, but the property is not available."
-              );
+              throw new $TypeError("base intrinsic for " + name + " exists, but the property is not available.");
             }
             return void 0;
           }
@@ -610,20 +500,19 @@ var require_get_intrinsic = __commonJS({
       }
       return value;
     };
-  },
+  }
 });
 
 // ../node_modules/call-bind/index.js
 var require_call_bind = __commonJS({
   "../node_modules/call-bind/index.js"(exports, module) {
     init_define_process();
-    ("use strict");
+    "use strict";
     var bind = require_function_bind();
     var GetIntrinsic = require_get_intrinsic();
     var $apply = GetIntrinsic("%Function.prototype.apply%");
     var $call = GetIntrinsic("%Function.prototype.call%");
-    var $reflectApply =
-      GetIntrinsic("%Reflect.apply%", true) || bind.call($call, $apply);
+    var $reflectApply = GetIntrinsic("%Reflect.apply%", true) || bind.call($call, $apply);
     var $gOPD = GetIntrinsic("%Object.getOwnPropertyDescriptor%", true);
     var $defineProperty = GetIntrinsic("%Object.defineProperty%", true);
     var $max = GetIntrinsic("%Math.max%");
@@ -639,10 +528,7 @@ var require_call_bind = __commonJS({
       if ($gOPD && $defineProperty) {
         var desc = $gOPD(func, "length");
         if (desc.configurable) {
-          $defineProperty(func, "length", {
-            value:
-              1 + $max(0, originalFunction.length - (arguments.length - 1)),
-          });
+          $defineProperty(func, "length", { value: 1 + $max(0, originalFunction.length - (arguments.length - 1)) });
         }
       }
       return func;
@@ -655,45 +541,37 @@ var require_call_bind = __commonJS({
     } else {
       module.exports.apply = applyBind;
     }
-  },
+  }
 });
 
 // ../node_modules/call-bind/callBound.js
 var require_callBound = __commonJS({
   "../node_modules/call-bind/callBound.js"(exports, module) {
     init_define_process();
-    ("use strict");
+    "use strict";
     var GetIntrinsic = require_get_intrinsic();
     var callBind = require_call_bind();
     var $indexOf = callBind(GetIntrinsic("String.prototype.indexOf"));
     module.exports = function callBoundIntrinsic(name, allowMissing) {
       var intrinsic = GetIntrinsic(name, !!allowMissing);
-      if (
-        typeof intrinsic === "function" &&
-        $indexOf(name, ".prototype.") > -1
-      ) {
+      if (typeof intrinsic === "function" && $indexOf(name, ".prototype.") > -1) {
         return callBind(intrinsic);
       }
       return intrinsic;
     };
-  },
+  }
 });
 
 // ../node_modules/is-arguments/index.js
 var require_is_arguments = __commonJS({
   "../node_modules/is-arguments/index.js"(exports, module) {
     init_define_process();
-    ("use strict");
+    "use strict";
     var hasToStringTag = require_shams2()();
     var callBound = require_callBound();
     var $toString = callBound("Object.prototype.toString");
     var isStandardArguments = function isArguments(value) {
-      if (
-        hasToStringTag &&
-        value &&
-        typeof value === "object" &&
-        Symbol.toStringTag in value
-      ) {
+      if (hasToStringTag && value && typeof value === "object" && Symbol.toStringTag in value) {
         return false;
       }
       return $toString(value) === "[object Arguments]";
@@ -702,30 +580,21 @@ var require_is_arguments = __commonJS({
       if (isStandardArguments(value)) {
         return true;
       }
-      return (
-        value !== null &&
-        typeof value === "object" &&
-        typeof value.length === "number" &&
-        value.length >= 0 &&
-        $toString(value) !== "[object Array]" &&
-        $toString(value.callee) === "[object Function]"
-      );
+      return value !== null && typeof value === "object" && typeof value.length === "number" && value.length >= 0 && $toString(value) !== "[object Array]" && $toString(value.callee) === "[object Function]";
     };
-    var supportsStandardArguments = (function () {
+    var supportsStandardArguments = function () {
       return isStandardArguments(arguments);
-    })();
+    }();
     isStandardArguments.isLegacyArguments = isLegacyArguments;
-    module.exports = supportsStandardArguments
-      ? isStandardArguments
-      : isLegacyArguments;
-  },
+    module.exports = supportsStandardArguments ? isStandardArguments : isLegacyArguments;
+  }
 });
 
 // ../node_modules/is-generator-function/index.js
 var require_is_generator_function = __commonJS({
   "../node_modules/is-generator-function/index.js"(exports, module) {
     init_define_process();
-    ("use strict");
+    "use strict";
     var toStr = Object.prototype.toString;
     var fnToStr = Function.prototype.toString;
     var isFnRegex = /^\s*(?:function)?\*/;
@@ -737,7 +606,8 @@ var require_is_generator_function = __commonJS({
       }
       try {
         return Function("return function*() {}")();
-      } catch (e) {}
+      } catch (e) {
+      }
     };
     var GeneratorFunction;
     module.exports = function isGeneratorFunction(fn) {
@@ -760,7 +630,7 @@ var require_is_generator_function = __commonJS({
       }
       return getProto(fn) === GeneratorFunction;
     };
-  },
+  }
 });
 
 // ../node_modules/foreach/index.js
@@ -786,14 +656,14 @@ var require_foreach = __commonJS({
         }
       }
     };
-  },
+  }
 });
 
 // ../node_modules/available-typed-arrays/index.js
 var require_available_typed_arrays = __commonJS({
   "../node_modules/available-typed-arrays/index.js"(exports, module) {
     init_define_process();
-    ("use strict");
+    "use strict";
     var possibleNames = [
       "BigInt64Array",
       "BigUint64Array",
@@ -805,7 +675,7 @@ var require_available_typed_arrays = __commonJS({
       "Uint16Array",
       "Uint32Array",
       "Uint8Array",
-      "Uint8ClampedArray",
+      "Uint8ClampedArray"
     ];
     var g = typeof globalThis === "undefined" ? global : globalThis;
     module.exports = function availableTypedArrays() {
@@ -817,17 +687,14 @@ var require_available_typed_arrays = __commonJS({
       }
       return out;
     };
-  },
+  }
 });
 
 // ../node_modules/es-abstract/helpers/getOwnPropertyDescriptor.js
 var require_getOwnPropertyDescriptor = __commonJS({
-  "../node_modules/es-abstract/helpers/getOwnPropertyDescriptor.js"(
-    exports,
-    module
-  ) {
+  "../node_modules/es-abstract/helpers/getOwnPropertyDescriptor.js"(exports, module) {
     init_define_process();
-    ("use strict");
+    "use strict";
     var GetIntrinsic = require_get_intrinsic();
     var $gOPD = GetIntrinsic("%Object.getOwnPropertyDescriptor%", true);
     if ($gOPD) {
@@ -838,14 +705,14 @@ var require_getOwnPropertyDescriptor = __commonJS({
       }
     }
     module.exports = $gOPD;
-  },
+  }
 });
 
 // ../node_modules/is-typed-array/index.js
 var require_is_typed_array = __commonJS({
   "../node_modules/is-typed-array/index.js"(exports, module) {
     init_define_process();
-    ("use strict");
+    "use strict";
     var forEach = require_foreach();
     var availableTypedArrays = require_available_typed_arrays();
     var callBound = require_callBound();
@@ -853,16 +720,14 @@ var require_is_typed_array = __commonJS({
     var hasToStringTag = require_shams2()();
     var g = typeof globalThis === "undefined" ? global : globalThis;
     var typedArrays = availableTypedArrays();
-    var $indexOf =
-      callBound("Array.prototype.indexOf", true) ||
-      function indexOf(array, value) {
-        for (var i = 0; i < array.length; i += 1) {
-          if (array[i] === value) {
-            return i;
-          }
+    var $indexOf = callBound("Array.prototype.indexOf", true) || function indexOf(array, value) {
+      for (var i = 0; i < array.length; i += 1) {
+        if (array[i] === value) {
+          return i;
         }
-        return -1;
-      };
+      }
+      return -1;
+    };
     var $slice = callBound("String.prototype.slice");
     var toStrTags = {};
     var gOPD = require_getOwnPropertyDescriptor();
@@ -887,7 +752,8 @@ var require_is_typed_array = __commonJS({
         if (!anyTrue) {
           try {
             anyTrue = getter.call(value) === typedArray;
-          } catch (e) {}
+          } catch (e) {
+          }
         }
       });
       return anyTrue;
@@ -905,14 +771,14 @@ var require_is_typed_array = __commonJS({
       }
       return tryTypedArrays(value);
     };
-  },
+  }
 });
 
 // ../node_modules/which-typed-array/index.js
 var require_which_typed_array = __commonJS({
   "../node_modules/which-typed-array/index.js"(exports, module) {
     init_define_process();
-    ("use strict");
+    "use strict";
     var forEach = require_foreach();
     var availableTypedArrays = require_available_typed_arrays();
     var callBound = require_callBound();
@@ -949,7 +815,8 @@ var require_which_typed_array = __commonJS({
             if (name === typedArray) {
               foundName = name;
             }
-          } catch (e) {}
+          } catch (e) {
+          }
         }
       });
       return foundName;
@@ -964,14 +831,14 @@ var require_which_typed_array = __commonJS({
       }
       return tryTypedArrays(value);
     };
-  },
+  }
 });
 
 // ../node_modules/util/support/types.js
 var require_types = __commonJS({
   "../node_modules/util/support/types.js"(exports) {
     init_define_process();
-    ("use strict");
+    "use strict";
     var isArgumentsObject = require_is_arguments();
     var isGeneratorFunction = require_is_generator_function();
     var whichTypedArray = require_which_typed_array();
@@ -1008,13 +875,7 @@ var require_types = __commonJS({
     exports.isGeneratorFunction = isGeneratorFunction;
     exports.isTypedArray = isTypedArray;
     function isPromise(input) {
-      return (
-        (typeof Promise !== "undefined" && input instanceof Promise) ||
-        (input !== null &&
-          typeof input === "object" &&
-          typeof input.then === "function" &&
-          typeof input.catch === "function")
-      );
+      return typeof Promise !== "undefined" && input instanceof Promise || input !== null && typeof input === "object" && typeof input.then === "function" && typeof input.catch === "function";
     }
     exports.isPromise = isPromise;
     function isArrayBufferView(value) {
@@ -1071,50 +932,40 @@ var require_types = __commonJS({
     function isMapToString(value) {
       return ObjectToString(value) === "[object Map]";
     }
-    isMapToString.working =
-      typeof Map !== "undefined" && isMapToString(new Map());
+    isMapToString.working = typeof Map !== "undefined" && isMapToString(new Map());
     function isMap(value) {
       if (typeof Map === "undefined") {
         return false;
       }
-      return isMapToString.working
-        ? isMapToString(value)
-        : value instanceof Map;
+      return isMapToString.working ? isMapToString(value) : value instanceof Map;
     }
     exports.isMap = isMap;
     function isSetToString(value) {
       return ObjectToString(value) === "[object Set]";
     }
-    isSetToString.working =
-      typeof Set !== "undefined" && isSetToString(new Set());
+    isSetToString.working = typeof Set !== "undefined" && isSetToString(new Set());
     function isSet(value) {
       if (typeof Set === "undefined") {
         return false;
       }
-      return isSetToString.working
-        ? isSetToString(value)
-        : value instanceof Set;
+      return isSetToString.working ? isSetToString(value) : value instanceof Set;
     }
     exports.isSet = isSet;
     function isWeakMapToString(value) {
       return ObjectToString(value) === "[object WeakMap]";
     }
-    isWeakMapToString.working =
-      typeof WeakMap !== "undefined" && isWeakMapToString(new WeakMap());
+    isWeakMapToString.working = typeof WeakMap !== "undefined" && isWeakMapToString(new WeakMap());
     function isWeakMap(value) {
       if (typeof WeakMap === "undefined") {
         return false;
       }
-      return isWeakMapToString.working
-        ? isWeakMapToString(value)
-        : value instanceof WeakMap;
+      return isWeakMapToString.working ? isWeakMapToString(value) : value instanceof WeakMap;
     }
     exports.isWeakMap = isWeakMap;
     function isWeakSetToString(value) {
       return ObjectToString(value) === "[object WeakSet]";
     }
-    isWeakSetToString.working =
-      typeof WeakSet !== "undefined" && isWeakSetToString(new WeakSet());
+    isWeakSetToString.working = typeof WeakSet !== "undefined" && isWeakSetToString(new WeakSet());
     function isWeakSet(value) {
       return isWeakSetToString(value);
     }
@@ -1122,36 +973,26 @@ var require_types = __commonJS({
     function isArrayBufferToString(value) {
       return ObjectToString(value) === "[object ArrayBuffer]";
     }
-    isArrayBufferToString.working =
-      typeof ArrayBuffer !== "undefined" &&
-      isArrayBufferToString(new ArrayBuffer());
+    isArrayBufferToString.working = typeof ArrayBuffer !== "undefined" && isArrayBufferToString(new ArrayBuffer());
     function isArrayBuffer(value) {
       if (typeof ArrayBuffer === "undefined") {
         return false;
       }
-      return isArrayBufferToString.working
-        ? isArrayBufferToString(value)
-        : value instanceof ArrayBuffer;
+      return isArrayBufferToString.working ? isArrayBufferToString(value) : value instanceof ArrayBuffer;
     }
     exports.isArrayBuffer = isArrayBuffer;
     function isDataViewToString(value) {
       return ObjectToString(value) === "[object DataView]";
     }
-    isDataViewToString.working =
-      typeof ArrayBuffer !== "undefined" &&
-      typeof DataView !== "undefined" &&
-      isDataViewToString(new DataView(new ArrayBuffer(1), 0, 1));
+    isDataViewToString.working = typeof ArrayBuffer !== "undefined" && typeof DataView !== "undefined" && isDataViewToString(new DataView(new ArrayBuffer(1), 0, 1));
     function isDataView(value) {
       if (typeof DataView === "undefined") {
         return false;
       }
-      return isDataViewToString.working
-        ? isDataViewToString(value)
-        : value instanceof DataView;
+      return isDataViewToString.working ? isDataViewToString(value) : value instanceof DataView;
     }
     exports.isDataView = isDataView;
-    var SharedArrayBufferCopy =
-      typeof SharedArrayBuffer !== "undefined" ? SharedArrayBuffer : void 0;
+    var SharedArrayBufferCopy = typeof SharedArrayBuffer !== "undefined" ? SharedArrayBuffer : void 0;
     function isSharedArrayBufferToString(value) {
       return ObjectToString(value) === "[object SharedArrayBuffer]";
     }
@@ -1160,13 +1001,9 @@ var require_types = __commonJS({
         return false;
       }
       if (typeof isSharedArrayBufferToString.working === "undefined") {
-        isSharedArrayBufferToString.working = isSharedArrayBufferToString(
-          new SharedArrayBufferCopy()
-        );
+        isSharedArrayBufferToString.working = isSharedArrayBufferToString(new SharedArrayBufferCopy());
       }
-      return isSharedArrayBufferToString.working
-        ? isSharedArrayBufferToString(value)
-        : value instanceof SharedArrayBufferCopy;
+      return isSharedArrayBufferToString.working ? isSharedArrayBufferToString(value) : value instanceof SharedArrayBufferCopy;
     }
     exports.isSharedArrayBuffer = isSharedArrayBuffer;
     function isAsyncFunction(value) {
@@ -1210,33 +1047,22 @@ var require_types = __commonJS({
     }
     exports.isSymbolObject = isSymbolObject;
     function isBoxedPrimitive(value) {
-      return (
-        isNumberObject(value) ||
-        isStringObject(value) ||
-        isBooleanObject(value) ||
-        isBigIntObject(value) ||
-        isSymbolObject(value)
-      );
+      return isNumberObject(value) || isStringObject(value) || isBooleanObject(value) || isBigIntObject(value) || isSymbolObject(value);
     }
     exports.isBoxedPrimitive = isBoxedPrimitive;
     function isAnyArrayBuffer(value) {
-      return (
-        typeof Uint8Array !== "undefined" &&
-        (isArrayBuffer(value) || isSharedArrayBuffer(value))
-      );
+      return typeof Uint8Array !== "undefined" && (isArrayBuffer(value) || isSharedArrayBuffer(value));
     }
     exports.isAnyArrayBuffer = isAnyArrayBuffer;
-    ["isProxy", "isExternal", "isModuleNamespaceObject"].forEach(function (
-      method
-    ) {
+    ["isProxy", "isExternal", "isModuleNamespaceObject"].forEach(function (method) {
       Object.defineProperty(exports, method, {
         enumerable: false,
         value: function () {
           throw new Error(method + " is not supported in userland");
-        },
+        }
       });
     });
-  },
+  }
 });
 
 // ../node_modules/util/support/isBufferBrowser.js
@@ -1244,15 +1070,9 @@ var require_isBufferBrowser = __commonJS({
   "../node_modules/util/support/isBufferBrowser.js"(exports, module) {
     init_define_process();
     module.exports = function isBuffer(arg) {
-      return (
-        arg &&
-        typeof arg === "object" &&
-        typeof arg.copy === "function" &&
-        typeof arg.fill === "function" &&
-        typeof arg.readUInt8 === "function"
-      );
+      return arg && typeof arg === "object" && typeof arg.copy === "function" && typeof arg.fill === "function" && typeof arg.readUInt8 === "function";
     };
-  },
+  }
 });
 
 // ../node_modules/inherits/inherits_browser.js
@@ -1268,8 +1088,8 @@ var require_inherits_browser = __commonJS({
               value: ctor,
               enumerable: false,
               writable: true,
-              configurable: true,
-            },
+              configurable: true
+            }
           });
         }
       };
@@ -1277,30 +1097,29 @@ var require_inherits_browser = __commonJS({
       module.exports = function inherits(ctor, superCtor) {
         if (superCtor) {
           ctor.super_ = superCtor;
-          var TempCtor = function () {};
+          var TempCtor = function () {
+          };
           TempCtor.prototype = superCtor.prototype;
           ctor.prototype = new TempCtor();
           ctor.prototype.constructor = ctor;
         }
       };
     }
-  },
+  }
 });
 
 // ../node_modules/util/util.js
 var require_util = __commonJS({
   "../node_modules/util/util.js"(exports) {
     init_define_process();
-    var getOwnPropertyDescriptors =
-      Object.getOwnPropertyDescriptors ||
-      function getOwnPropertyDescriptors2(obj) {
-        var keys = Object.keys(obj);
-        var descriptors = {};
-        for (var i = 0; i < keys.length; i++) {
-          descriptors[keys[i]] = Object.getOwnPropertyDescriptor(obj, keys[i]);
-        }
-        return descriptors;
-      };
+    var getOwnPropertyDescriptors = Object.getOwnPropertyDescriptors || function getOwnPropertyDescriptors2(obj) {
+      var keys = Object.keys(obj);
+      var descriptors = {};
+      for (var i = 0; i < keys.length; i++) {
+        descriptors[keys[i]] = Object.getOwnPropertyDescriptor(obj, keys[i]);
+      }
+      return descriptors;
+    };
     var formatRegExp = /%[sdj%]/g;
     exports.format = function (f) {
       if (!isString(f)) {
@@ -1314,8 +1133,10 @@ var require_util = __commonJS({
       var args = arguments;
       var len = args.length;
       var str = String(f).replace(formatRegExp, function (x2) {
-        if (x2 === "%%") return "%";
-        if (i >= len) return x2;
+        if (x2 === "%%")
+          return "%";
+        if (i >= len)
+          return x2;
         switch (x2) {
           case "%s":
             return String(args[i++]);
@@ -1341,10 +1162,7 @@ var require_util = __commonJS({
       return str;
     };
     exports.deprecate = function (fn, msg) {
-      if (
-        typeof define_process_default !== "undefined" &&
-        define_process_default.noDeprecation === true
-      ) {
+      if (typeof define_process_default !== "undefined" && define_process_default.noDeprecation === true) {
         return fn;
       }
       if (typeof define_process_default === "undefined") {
@@ -1372,11 +1190,7 @@ var require_util = __commonJS({
     var debugEnvRegex = /^$/;
     if (define_process_default.env.NODE_DEBUG) {
       debugEnv = define_process_default.env.NODE_DEBUG;
-      debugEnv = debugEnv
-        .replace(/[|\\{}()[\]^$+?.]/g, "\\$&")
-        .replace(/\*/g, ".*")
-        .replace(/,/g, "$|^")
-        .toUpperCase();
+      debugEnv = debugEnv.replace(/[|\\{}()[\]^$+?.]/g, "\\$&").replace(/\*/g, ".*").replace(/,/g, "$|^").toUpperCase();
       debugEnvRegex = new RegExp("^" + debugEnv + "$", "i");
     }
     var debugEnv;
@@ -1390,7 +1204,8 @@ var require_util = __commonJS({
             console.error("%s %d: %s", set, pid, msg);
           };
         } else {
-          debugs[set] = function () {};
+          debugs[set] = function () {
+          };
         }
       }
       return debugs[set];
@@ -1398,60 +1213,59 @@ var require_util = __commonJS({
     function inspect(obj, opts) {
       var ctx = {
         seen: [],
-        stylize: stylizeNoColor,
+        stylize: stylizeNoColor
       };
-      if (arguments.length >= 3) ctx.depth = arguments[2];
-      if (arguments.length >= 4) ctx.colors = arguments[3];
+      if (arguments.length >= 3)
+        ctx.depth = arguments[2];
+      if (arguments.length >= 4)
+        ctx.colors = arguments[3];
       if (isBoolean(opts)) {
         ctx.showHidden = opts;
       } else if (opts) {
         exports._extend(ctx, opts);
       }
-      if (isUndefined(ctx.showHidden)) ctx.showHidden = false;
-      if (isUndefined(ctx.depth)) ctx.depth = 2;
-      if (isUndefined(ctx.colors)) ctx.colors = false;
-      if (isUndefined(ctx.customInspect)) ctx.customInspect = true;
-      if (ctx.colors) ctx.stylize = stylizeWithColor;
+      if (isUndefined(ctx.showHidden))
+        ctx.showHidden = false;
+      if (isUndefined(ctx.depth))
+        ctx.depth = 2;
+      if (isUndefined(ctx.colors))
+        ctx.colors = false;
+      if (isUndefined(ctx.customInspect))
+        ctx.customInspect = true;
+      if (ctx.colors)
+        ctx.stylize = stylizeWithColor;
       return formatValue(ctx, obj, ctx.depth);
     }
     exports.inspect = inspect;
     inspect.colors = {
-      bold: [1, 22],
-      italic: [3, 23],
-      underline: [4, 24],
-      inverse: [7, 27],
-      white: [37, 39],
-      grey: [90, 39],
-      black: [30, 39],
-      blue: [34, 39],
-      cyan: [36, 39],
-      green: [32, 39],
-      magenta: [35, 39],
-      red: [31, 39],
-      yellow: [33, 39],
+      "bold": [1, 22],
+      "italic": [3, 23],
+      "underline": [4, 24],
+      "inverse": [7, 27],
+      "white": [37, 39],
+      "grey": [90, 39],
+      "black": [30, 39],
+      "blue": [34, 39],
+      "cyan": [36, 39],
+      "green": [32, 39],
+      "magenta": [35, 39],
+      "red": [31, 39],
+      "yellow": [33, 39]
     };
     inspect.styles = {
-      special: "cyan",
-      number: "yellow",
-      boolean: "yellow",
-      undefined: "grey",
-      null: "bold",
-      string: "green",
-      date: "magenta",
-      regexp: "red",
+      "special": "cyan",
+      "number": "yellow",
+      "boolean": "yellow",
+      "undefined": "grey",
+      "null": "bold",
+      "string": "green",
+      "date": "magenta",
+      "regexp": "red"
     };
     function stylizeWithColor(str, styleType) {
       var style = inspect.styles[styleType];
       if (style) {
-        return (
-          "[" +
-          inspect.colors[style][0] +
-          "m" +
-          str +
-          "[" +
-          inspect.colors[style][1] +
-          "m"
-        );
+        return "[" + inspect.colors[style][0] + "m" + str + "[" + inspect.colors[style][1] + "m";
       } else {
         return str;
       }
@@ -1467,13 +1281,7 @@ var require_util = __commonJS({
       return hash;
     }
     function formatValue(ctx, value, recurseTimes) {
-      if (
-        ctx.customInspect &&
-        value &&
-        isFunction(value.inspect) &&
-        value.inspect !== exports.inspect &&
-        !(value.constructor && value.constructor.prototype === value)
-      ) {
+      if (ctx.customInspect && value && isFunction(value.inspect) && value.inspect !== exports.inspect && !(value.constructor && value.constructor.prototype === value)) {
         var ret = value.inspect(recurseTimes, ctx);
         if (!isString(ret)) {
           ret = formatValue(ctx, ret, recurseTimes);
@@ -1489,10 +1297,7 @@ var require_util = __commonJS({
       if (ctx.showHidden) {
         keys = Object.getOwnPropertyNames(value);
       }
-      if (
-        isError(value) &&
-        (keys.indexOf("message") >= 0 || keys.indexOf("description") >= 0)
-      ) {
+      if (isError(value) && (keys.indexOf("message") >= 0 || keys.indexOf("description") >= 0)) {
         return formatError(value);
       }
       if (keys.length === 0) {
@@ -1510,9 +1315,7 @@ var require_util = __commonJS({
           return formatError(value);
         }
       }
-      var base = "",
-        array = false,
-        braces = ["{", "}"];
+      var base = "", array = false, braces = ["{", "}"];
       if (isArray(value)) {
         array = true;
         braces = ["[", "]"];
@@ -1546,34 +1349,25 @@ var require_util = __commonJS({
         output = formatArray(ctx, value, recurseTimes, visibleKeys, keys);
       } else {
         output = keys.map(function (key) {
-          return formatProperty(
-            ctx,
-            value,
-            recurseTimes,
-            visibleKeys,
-            key,
-            array
-          );
+          return formatProperty(ctx, value, recurseTimes, visibleKeys, key, array);
         });
       }
       ctx.seen.pop();
       return reduceToSingleString(output, base, braces);
     }
     function formatPrimitive(ctx, value) {
-      if (isUndefined(value)) return ctx.stylize("undefined", "undefined");
+      if (isUndefined(value))
+        return ctx.stylize("undefined", "undefined");
       if (isString(value)) {
-        var simple =
-          "'" +
-          JSON.stringify(value)
-            .replace(/^"|"$/g, "")
-            .replace(/'/g, "\\'")
-            .replace(/\\"/g, '"') +
-          "'";
+        var simple = "'" + JSON.stringify(value).replace(/^"|"$/g, "").replace(/'/g, "\\'").replace(/\\"/g, '"') + "'";
         return ctx.stylize(simple, "string");
       }
-      if (isNumber(value)) return ctx.stylize("" + value, "number");
-      if (isBoolean(value)) return ctx.stylize("" + value, "boolean");
-      if (isNull(value)) return ctx.stylize("null", "null");
+      if (isNumber(value))
+        return ctx.stylize("" + value, "number");
+      if (isBoolean(value))
+        return ctx.stylize("" + value, "boolean");
+      if (isNull(value))
+        return ctx.stylize("null", "null");
     }
     function formatError(value) {
       return "[" + Error.prototype.toString.call(value) + "]";
@@ -1582,34 +1376,21 @@ var require_util = __commonJS({
       var output = [];
       for (var i = 0, l = value.length; i < l; ++i) {
         if (hasOwnProperty(value, String(i))) {
-          output.push(
-            formatProperty(
-              ctx,
-              value,
-              recurseTimes,
-              visibleKeys,
-              String(i),
-              true
-            )
-          );
+          output.push(formatProperty(ctx, value, recurseTimes, visibleKeys, String(i), true));
         } else {
           output.push("");
         }
       }
       keys.forEach(function (key) {
         if (!key.match(/^\d+$/)) {
-          output.push(
-            formatProperty(ctx, value, recurseTimes, visibleKeys, key, true)
-          );
+          output.push(formatProperty(ctx, value, recurseTimes, visibleKeys, key, true));
         }
       });
       return output;
     }
     function formatProperty(ctx, value, recurseTimes, visibleKeys, key, array) {
       var name, str, desc;
-      desc = Object.getOwnPropertyDescriptor(value, key) || {
-        value: value[key],
-      };
+      desc = Object.getOwnPropertyDescriptor(value, key) || { value: value[key] };
       if (desc.get) {
         if (desc.set) {
           str = ctx.stylize("[Getter/Setter]", "special");
@@ -1633,22 +1414,13 @@ var require_util = __commonJS({
           }
           if (str.indexOf("\n") > -1) {
             if (array) {
-              str = str
-                .split("\n")
-                .map(function (line) {
-                  return "  " + line;
-                })
-                .join("\n")
-                .substr(2);
+              str = str.split("\n").map(function (line) {
+                return "  " + line;
+              }).join("\n").substr(2);
             } else {
-              str =
-                "\n" +
-                str
-                  .split("\n")
-                  .map(function (line) {
-                    return "   " + line;
-                  })
-                  .join("\n");
+              str = "\n" + str.split("\n").map(function (line) {
+                return "   " + line;
+              }).join("\n");
             }
           }
         } else {
@@ -1664,10 +1436,7 @@ var require_util = __commonJS({
           name = name.substr(1, name.length - 2);
           name = ctx.stylize(name, "name");
         } else {
-          name = name
-            .replace(/'/g, "\\'")
-            .replace(/\\"/g, '"')
-            .replace(/(^"|"$)/g, "'");
+          name = name.replace(/'/g, "\\'").replace(/\\"/g, '"').replace(/(^"|"$)/g, "'");
           name = ctx.stylize(name, "string");
         }
       }
@@ -1677,18 +1446,12 @@ var require_util = __commonJS({
       var numLinesEst = 0;
       var length = output.reduce(function (prev, cur) {
         numLinesEst++;
-        if (cur.indexOf("\n") >= 0) numLinesEst++;
+        if (cur.indexOf("\n") >= 0)
+          numLinesEst++;
         return prev + cur.replace(/\u001b\[\d\d?m/g, "").length + 1;
       }, 0);
       if (length > 60) {
-        return (
-          braces[0] +
-          (base === "" ? "" : base + "\n ") +
-          " " +
-          output.join(",\n  ") +
-          " " +
-          braces[1]
-        );
+        return braces[0] + (base === "" ? "" : base + "\n ") + " " + output.join(",\n  ") + " " + braces[1];
       }
       return braces[0] + base + " " + output.join(", ") + " " + braces[1];
     }
@@ -1740,10 +1503,7 @@ var require_util = __commonJS({
     exports.isDate = isDate;
     exports.types.isDate = isDate;
     function isError(e) {
-      return (
-        isObject(e) &&
-        (objectToString(e) === "[object Error]" || e instanceof Error)
-      );
+      return isObject(e) && (objectToString(e) === "[object Error]" || e instanceof Error);
     }
     exports.isError = isError;
     exports.types.isNativeError = isError;
@@ -1752,14 +1512,7 @@ var require_util = __commonJS({
     }
     exports.isFunction = isFunction;
     function isPrimitive(arg) {
-      return (
-        arg === null ||
-        typeof arg === "boolean" ||
-        typeof arg === "number" ||
-        typeof arg === "string" ||
-        typeof arg === "symbol" ||
-        typeof arg === "undefined"
-      );
+      return arg === null || typeof arg === "boolean" || typeof arg === "number" || typeof arg === "string" || typeof arg === "symbol" || typeof arg === "undefined";
     }
     exports.isPrimitive = isPrimitive;
     exports.isBuffer = require_isBufferBrowser();
@@ -1781,27 +1534,24 @@ var require_util = __commonJS({
       "Sep",
       "Oct",
       "Nov",
-      "Dec",
+      "Dec"
     ];
     function timestamp() {
       var d = new Date();
       var time = [
         pad(d.getHours()),
         pad(d.getMinutes()),
-        pad(d.getSeconds()),
+        pad(d.getSeconds())
       ].join(":");
       return [d.getDate(), months[d.getMonth()], time].join(" ");
     }
     exports.log = function () {
-      console.log(
-        "%s - %s",
-        timestamp(),
-        exports.format.apply(exports, arguments)
-      );
+      console.log("%s - %s", timestamp(), exports.format.apply(exports, arguments));
     };
     exports.inherits = require_inherits_browser();
     exports._extend = function (origin, add) {
-      if (!add || !isObject(add)) return origin;
+      if (!add || !isObject(add))
+        return origin;
       var keys = Object.keys(add);
       var i = keys.length;
       while (i--) {
@@ -1812,23 +1562,20 @@ var require_util = __commonJS({
     function hasOwnProperty(obj, prop) {
       return Object.prototype.hasOwnProperty.call(obj, prop);
     }
-    var kCustomPromisifiedSymbol =
-      typeof Symbol !== "undefined" ? Symbol("util.promisify.custom") : void 0;
+    var kCustomPromisifiedSymbol = typeof Symbol !== "undefined" ? Symbol("util.promisify.custom") : void 0;
     exports.promisify = function promisify(original) {
       if (typeof original !== "function")
         throw new TypeError('The "original" argument must be of type Function');
       if (kCustomPromisifiedSymbol && original[kCustomPromisifiedSymbol]) {
         var fn = original[kCustomPromisifiedSymbol];
         if (typeof fn !== "function") {
-          throw new TypeError(
-            'The "util.promisify.custom" argument must be of type Function'
-          );
+          throw new TypeError('The "util.promisify.custom" argument must be of type Function');
         }
         Object.defineProperty(fn, kCustomPromisifiedSymbol, {
           value: fn,
           enumerable: false,
           writable: false,
-          configurable: true,
+          configurable: true
         });
         return fn;
       }
@@ -1862,7 +1609,7 @@ var require_util = __commonJS({
           value: fn,
           enumerable: false,
           writable: false,
-          configurable: true,
+          configurable: true
         });
       return Object.defineProperties(fn, getOwnPropertyDescriptors(original));
     };
@@ -1892,26 +1639,18 @@ var require_util = __commonJS({
         var cb = function () {
           return maybeCb.apply(self, arguments);
         };
-        original.apply(this, args).then(
-          function (ret) {
-            define_process_default.nextTick(cb.bind(null, null, ret));
-          },
-          function (rej) {
-            define_process_default.nextTick(
-              callbackifyOnRejected.bind(null, rej, cb)
-            );
-          }
-        );
+        original.apply(this, args).then(function (ret) {
+          define_process_default.nextTick(cb.bind(null, null, ret));
+        }, function (rej) {
+          define_process_default.nextTick(callbackifyOnRejected.bind(null, rej, cb));
+        });
       }
       Object.setPrototypeOf(callbackified, Object.getPrototypeOf(original));
-      Object.defineProperties(
-        callbackified,
-        getOwnPropertyDescriptors(original)
-      );
+      Object.defineProperties(callbackified, getOwnPropertyDescriptors(original));
       return callbackified;
     }
     exports.callbackify = callbackify;
-  },
+  }
 });
 
 // index.ts
@@ -1922,19 +1661,12 @@ import alt10 from "alt-client";
 init_define_process();
 import { Vector3 } from "alt-client";
 Vector3.prototype.radiansToDirection = function () {
-  return new Vector3(
-    -Math.sin(this.z) * Math.abs(Math.cos(this.x)),
-    Math.cos(this.z) * Math.abs(Math.cos(this.x)),
-    Math.sin(this.x)
-  );
+  return new Vector3(-Math.sin(this.z) * Math.abs(Math.cos(this.x)), Math.cos(this.z) * Math.abs(Math.cos(this.x)), Math.sin(this.x));
 };
 Vector3.prototype.cross = function (vector, y, z) {
-  if (typeof vector === "number") vector = new Vector3(vector, y, z);
-  return new Vector3(
-    this.y * vector.z - this.z * vector.y,
-    this.z * vector.x - this.x * vector.z,
-    this.x * vector.y - this.y * vector.x
-  );
+  if (typeof vector === "number")
+    vector = new Vector3(vector, y, z);
+  return new Vector3(this.y * vector.z - this.z * vector.y, this.z * vector.x - this.x * vector.z, this.x * vector.y - this.y * vector.x);
 };
 
 // controllers/CodeEditorController.ts
@@ -2000,13 +1732,9 @@ var GenericRPC = class {
       var _a2, _b;
       for (const index of Array.from(this.waitingPromises.keys())) {
         const value = this.waitingPromises.get(index);
-        if (!value || value[3]) continue;
-        if (
-          Date.now() - value[0] >
-          ((_b = (_a2 = this.options) == null ? void 0 : _a2.timeout) != null
-            ? _b
-            : 3e4)
-        ) {
+        if (!value || value[3])
+          continue;
+        if (Date.now() - value[0] > ((_b = (_a2 = this.options) == null ? void 0 : _a2.timeout) != null ? _b : 3e4)) {
           value[2].reject("Timeout " + value[1]);
           this.waitingPromises.delete(index);
         }
@@ -2018,14 +1746,14 @@ var GenericRPC = class {
       var _a2;
       this.log("repl accepted " + promiseId + " " + JSON.stringify(args));
       const promise = this.waitingPromises.get(promiseId);
-      if (!promise) return;
-      (_a2 = promise[2]) == null
-        ? void 0
-        : _a2.resolve(args.length > 1 ? args : args[0]);
+      if (!promise)
+        return;
+      (_a2 = promise[2]) == null ? void 0 : _a2.resolve(args.length > 1 ? args : args[0]);
       this.pop(promiseId);
     };
     this.chunkHandler = (chunkId, subId, data) => {
-      if (!this.chunks.has(chunkId)) this.chunks.set(chunkId, []);
+      if (!this.chunks.has(chunkId))
+        this.chunks.set(chunkId, []);
       const chunks = this.chunks.get(chunkId);
       chunks.push([subId, data]);
     };
@@ -2035,9 +1763,7 @@ var GenericRPC = class {
       const chunks = this.chunks.get(chunkId);
       if (chunks.length !== total)
         throw new Error("Invalid chunked message length received");
-      const data = chunks
-        .sort((a, b) => a[0] - b[0])
-        .reduce((prev, curr) => prev + curr[1], "");
+      const data = chunks.sort((a, b) => a[0] - b[0]).reduce((prev, curr) => prev + curr[1], "");
       this.chunks.delete(chunkId);
       this.replHandler(promiseId, data);
     };
@@ -2045,79 +1771,29 @@ var GenericRPC = class {
       var _a2;
       this.log("error repl accepted " + promiseId + " " + error);
       const promise = this.waitingPromises.get(promiseId);
-      if (!promise) return;
+      if (!promise)
+        return;
       this.errorHandlers.forEach((h) => h(error));
-      (_a2 = promise[2]) == null
-        ? void 0
-        : _a2.reject(
-            error ? "RPC error: " + error : "RPC method execution failed"
-          );
+      (_a2 = promise[2]) == null ? void 0 : _a2.reject(error ? "RPC error: " + error : "RPC method execution failed");
       this.pop(promiseId);
     };
     var _a2, _b, _c, _d;
-    eventEmitter.on(
-      (_a2 = options == null ? void 0 : options.replKeyword) != null
-        ? _a2
-        : "$repl",
-      this.replHandler
-    );
-    eventEmitter.on(
-      (_b = options == null ? void 0 : options.errorKeyword) != null
-        ? _b
-        : "$err",
-      this.errorHandler
-    );
-    eventEmitter.on(
-      (_c = options == null ? void 0 : options.chunkKeyword) != null
-        ? _c
-        : "$chunk",
-      this.chunkHandler
-    );
-    eventEmitter.on(
-      (_d = options == null ? void 0 : options.chunkedReplKeyword) != null
-        ? _d
-        : "$chunkedRepl",
-      this.chunkedReplHandler
-    );
-    this.timeoutId = setInterval(
-      this.timeoutHandler,
-      (options == null ? void 0 : options.timeout) ? options.timeout / 5 : 6e3
-    );
+    eventEmitter.on((_a2 = options == null ? void 0 : options.replKeyword) != null ? _a2 : "$repl", this.replHandler);
+    eventEmitter.on((_b = options == null ? void 0 : options.errorKeyword) != null ? _b : "$err", this.errorHandler);
+    eventEmitter.on((_c = options == null ? void 0 : options.chunkKeyword) != null ? _c : "$chunk", this.chunkHandler);
+    eventEmitter.on((_d = options == null ? void 0 : options.chunkedReplKeyword) != null ? _d : "$chunkedRepl", this.chunkedReplHandler);
+    this.timeoutId = setInterval(this.timeoutHandler, (options == null ? void 0 : options.timeout) ? options.timeout / 5 : 6e3);
   }
   destroy() {
     var _a2, _b, _c, _d, _e, _f, _g, _h, _i;
-    console.log(
-      "RPC " +
-        ((_a2 = this.options) == null ? void 0 : _a2.name) +
-        " was destroyed!"
-    );
+    console.log("RPC " + ((_a2 = this.options) == null ? void 0 : _a2.name) + " was destroyed!");
     clearInterval(this.timeoutId);
-    if (!this.eventEmitter.valid) return;
-    this.eventEmitter.off(
-      (_c = (_b = this.options) == null ? void 0 : _b.replKeyword) != null
-        ? _c
-        : "$repl",
-      this.replHandler
-    );
-    this.eventEmitter.off(
-      (_e = (_d = this.options) == null ? void 0 : _d.errorKeyword) != null
-        ? _e
-        : "$err",
-      this.errorHandler
-    );
-    this.eventEmitter.off(
-      (_g = (_f = this.options) == null ? void 0 : _f.chunkKeyword) != null
-        ? _g
-        : "$chunk",
-      this.chunkHandler
-    );
-    this.eventEmitter.off(
-      (_i = (_h = this.options) == null ? void 0 : _h.chunkedReplKeyword) !=
-        null
-        ? _i
-        : "$chunkedRepl",
-      this.chunkedReplHandler
-    );
+    if (!this.eventEmitter.valid)
+      return;
+    this.eventEmitter.off((_c = (_b = this.options) == null ? void 0 : _b.replKeyword) != null ? _c : "$repl", this.replHandler);
+    this.eventEmitter.off((_e = (_d = this.options) == null ? void 0 : _d.errorKeyword) != null ? _e : "$err", this.errorHandler);
+    this.eventEmitter.off((_g = (_f = this.options) == null ? void 0 : _f.chunkKeyword) != null ? _g : "$chunk", this.chunkHandler);
+    this.eventEmitter.off((_i = (_h = this.options) == null ? void 0 : _h.chunkedReplKeyword) != null ? _i : "$chunkedRepl", this.chunkedReplHandler);
   }
   static waitFor(eventEmitter, event) {
     return new Promise((resolve) => {
@@ -2132,31 +1808,31 @@ var GenericRPC = class {
     var _a2;
     return (_a2 = this.eventEmitter.valid) != null ? _a2 : true;
   }
-  log(msg, ...args) {}
+  log(msg, ...args) {
+  }
   registerMethod(event, callback) {
-    if (!this.eventEmitter.valid) return -1;
-    const handler = (promiseId, ...args) =>
-      __async(this, null, function* () {
-        var _a2;
-        try {
-          const res = yield callback(...args);
-          this.answer(promiseId, res);
-        } catch (e) {
-          this.error(
-            promiseId,
-            String((_a2 = e == null ? void 0 : e.stack) != null ? _a2 : e)
-          );
-        }
-      });
+    if (!this.eventEmitter.valid)
+      return -1;
+    const handler = (promiseId, ...args) => __async(this, null, function* () {
+      var _a2;
+      try {
+        const res = yield callback(...args);
+        this.answer(promiseId, res);
+      } catch (e) {
+        this.error(promiseId, String((_a2 = e == null ? void 0 : e.stack) != null ? _a2 : e));
+      }
+    });
     const id = this.lastRegisteredMethod++;
     this.registeredMethods.set(id, [event, handler]);
     this.eventEmitter.on(event, handler);
     return id;
   }
   unregisterMethod(id) {
-    if (!this.eventEmitter.valid) return;
+    if (!this.eventEmitter.valid)
+      return;
     const method = this.registeredMethods.get(id);
-    if (!method) return;
+    if (!method)
+      return;
     this.eventEmitter.off(method[0], method[1]);
     this.registeredMethods.delete(id);
   }
@@ -2179,7 +1855,7 @@ var GenericRPC = class {
       Date.now(),
       name,
       promise,
-      disableTimeout,
+      disableTimeout
     ]);
     return this.promiseId++;
   }
@@ -2190,32 +1866,22 @@ var GenericRPC = class {
     this.log("answer called " + promiseId);
     Promise.all(value).then((values) => {
       var _a2, _b;
-      return this.eventEmitter.emit(
-        (_b = (_a2 = this.options) == null ? void 0 : _a2.replKeyword) != null
-          ? _b
-          : "$repl",
-        promiseId,
-        ...values
-      );
+      return this.eventEmitter.emit((_b = (_a2 = this.options) == null ? void 0 : _a2.replKeyword) != null ? _b : "$repl", promiseId, ...values);
     });
   }
   error(promiseId, error) {
     var _a2, _b;
     this.log("error called " + promiseId);
-    this.eventEmitter.emit(
-      (_b = (_a2 = this.options) == null ? void 0 : _a2.errorKeyword) != null
-        ? _b
-        : "$err",
-      promiseId,
-      error
-    );
+    this.eventEmitter.emit((_b = (_a2 = this.options) == null ? void 0 : _a2.errorKeyword) != null ? _b : "$err", promiseId, error);
   }
   on(event, handler) {
-    if (!this.eventEmitter.valid) return;
+    if (!this.eventEmitter.valid)
+      return;
     this.eventEmitter.on(event, handler);
   }
   off(event, handler) {
-    if (!this.eventEmitter.valid) return;
+    if (!this.eventEmitter.valid)
+      return;
     this.eventEmitter.off(event, handler);
   }
   onError(handler) {
@@ -2230,11 +1896,9 @@ var GenericRPC = class {
 };
 
 // WebView.ts
-var webview = new alt.WebView(
-  true ? "http://resource/dist/frontend/index.html" : "localhost:3000"
-);
+var webview = new alt.WebView(true ? "http://resource/dist/frontend/index.html" : "localhost:3000");
 var webviewRPC = new GenericRPC(webview, {
-  name: "client-webview",
+  name: "client-webview"
 });
 webview.on("load", () => {
   webviewRPC.registerMethod("get", (key) => {
@@ -2248,20 +1912,18 @@ webview.on("load", () => {
 });
 
 // controllers/CodeEditorController.ts
+import natives2 from "natives";
 
 // Server.ts
 init_define_process();
 import alt2 from "alt-client";
-var serverRPC = new GenericRPC(
-  {
-    emit: alt2.emitServer,
-    on: alt2.onServer,
-    off: alt2.offServer,
-  },
-  {
-    name: "client-server",
-  }
-);
+var serverRPC = new GenericRPC({
+  emit: alt2.emitServer,
+  on: alt2.onServer,
+  off: alt2.offServer
+}, {
+  name: "client-server"
+});
 
 // controllers/MouseController.ts
 init_define_process();
@@ -2271,7 +1933,8 @@ import alt4 from "alt-client";
 init_define_process();
 import alt3 from "alt-client";
 var _ControlsController = class {
-  constructor() {}
+  constructor() {
+  }
   _blockers = [];
   get count() {
     return this._blockers.length;
@@ -2282,7 +1945,8 @@ var _ControlsController = class {
   }
   unblock(name) {
     this._blockers = this._blockers.filter((b) => b != name);
-    if (!this._blockers.length) alt3.toggleGameControls(true);
+    if (!this._blockers.length)
+      alt3.toggleGameControls(true);
   }
 };
 var ControlsController = _ControlsController;
@@ -2298,12 +1962,14 @@ var _MouseController = class {
     return this._state;
   }
   onKeydown = (key) => {
-    if (key !== 113) return;
+    if (key !== 113)
+      return;
     this.toggleMouse();
   };
   toggleMouse(newState) {
-    if (this._state === newState && newState != null) return;
-    alt4.showCursor((this._state = newState ?? !this._state));
+    if (this._state === newState && newState != null)
+      return;
+    alt4.showCursor(this._state = newState ?? !this._state);
     if (this._state) {
       webview.focus();
       ControlsController.instance.block("mouse");
@@ -2320,38 +1986,23 @@ __publicField(MouseController, "instance", new _MouseController());
 // utils/Utils.ts
 init_define_process();
 import { RGBA, Vector3 as Vector32 } from "alt-client";
-import alt8, { Vector3 as Vector35 } from "alt-client";
-import alt9, { Vector3 as Vector36 } from "alt-client";
 import natives from "natives";
 var Utils;
 (function (Utils2) {
-  Utils2.AsyncFunction = Object.getPrototypeOf(
-    async function () {}
-  ).constructor;
+  Utils2.AsyncFunction = Object.getPrototypeOf(async function () {
+  }).constructor;
   Utils2.Rad2Deg = 180 / Math.PI;
-  Utils2.asyncTimeout = (ms) =>
-    new Promise((resolve) => setTimeout(resolve, ms));
+  Utils2.asyncTimeout = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
   function clamp(num, min, max) {
     return Math.min(Math.max(num, min), max);
   }
   Utils2.clamp = clamp;
   function rotationToForward(rot) {
     const adjustedRotation = rot.mul(Math.PI / 180);
-    return new Vector32(
-      -Math.sin(adjustedRotation.z) * Math.abs(Math.cos(adjustedRotation.x)),
-      Math.cos(adjustedRotation.z) * Math.abs(Math.cos(adjustedRotation.x)),
-      Math.sin(adjustedRotation.x)
-    );
+    return new Vector32(-Math.sin(adjustedRotation.z) * Math.abs(Math.cos(adjustedRotation.x)), Math.cos(adjustedRotation.z) * Math.abs(Math.cos(adjustedRotation.x)), Math.sin(adjustedRotation.x));
   }
   Utils2.rotationToForward = rotationToForward;
-  function render2DText(
-    text,
-    pos,
-    textScale,
-    color = new RGBA(255, 255, 255, 255),
-    font = 0,
-    outline = true
-  ) {
+  function render2DText(text, pos, textScale, color = new RGBA(255, 255, 255, 255), font = 0, outline = true) {
     natives.beginTextCommandDisplayText("STRING");
     natives.addTextComponentSubstringPlayerName(text);
     natives.setTextFont(font);
@@ -2359,365 +2010,40 @@ var Utils;
     natives.setTextWrap(0, 1);
     natives.setTextCentre(true);
     natives.setTextColour(color.r, color.g, color.b, color.a);
-    if (outline) natives.setTextOutline();
+    if (outline)
+      natives.setTextOutline();
     natives.setTextProportional(true);
     natives.endTextCommandDisplayText(pos.x, pos.y, 0);
   }
   Utils2.render2DText = render2DText;
-  function drawBoxWithPolygons(
-    v1,
-    v2,
-    v3,
-    v4,
-    v5,
-    v6,
-    v7,
-    v8,
-    red,
-    green,
-    blue,
-    alpha
-  ) {
-    natives.drawPoly(
-      v6.x,
-      v6.y,
-      v6.z,
-      v5.x,
-      v5.y,
-      v5.z,
-      v1.x,
-      v1.y,
-      v1.z,
-      red,
-      green,
-      blue,
-      alpha
-    );
-    natives.drawPoly(
-      v1.x,
-      v1.y,
-      v1.z,
-      v2.x,
-      v2.y,
-      v2.z,
-      v6.x,
-      v6.y,
-      v6.z,
-      red,
-      green,
-      blue,
-      alpha
-    );
-    natives.drawPoly(
-      v7.x,
-      v7.y,
-      v7.z,
-      v3.x,
-      v3.y,
-      v3.z,
-      v8.x,
-      v8.y,
-      v8.z,
-      red,
-      green,
-      blue,
-      alpha
-    );
-    natives.drawPoly(
-      v4.x,
-      v4.y,
-      v4.z,
-      v3.x,
-      v3.y,
-      v3.z,
-      v7.x,
-      v7.y,
-      v7.z,
-      red,
-      green,
-      blue,
-      alpha
-    );
-    natives.drawPoly(
-      v6.x,
-      v6.y,
-      v6.z,
-      v2.x,
-      v2.y,
-      v2.z,
-      v4.x,
-      v4.y,
-      v4.z,
-      red,
-      green,
-      blue,
-      alpha
-    );
-    natives.drawPoly(
-      v4.x,
-      v4.y,
-      v4.z,
-      v7.x,
-      v7.y,
-      v7.z,
-      v6.x,
-      v6.y,
-      v6.z,
-      red,
-      green,
-      blue,
-      alpha
-    );
-    natives.drawPoly(
-      v6.x,
-      v6.y,
-      v6.z,
-      v8.x,
-      v8.y,
-      v8.z,
-      v5.x,
-      v5.y,
-      v5.z,
-      red,
-      green,
-      blue,
-      alpha
-    );
-    natives.drawPoly(
-      v7.x,
-      v7.y,
-      v7.z,
-      v8.x,
-      v8.y,
-      v8.z,
-      v6.x,
-      v6.y,
-      v6.z,
-      red,
-      green,
-      blue,
-      alpha
-    );
-    natives.drawPoly(
-      v5.x,
-      v5.y,
-      v5.z,
-      v3.x,
-      v3.y,
-      v3.z,
-      v1.x,
-      v1.y,
-      v1.z,
-      red,
-      green,
-      blue,
-      alpha
-    );
-    natives.drawPoly(
-      v8.x,
-      v8.y,
-      v8.z,
-      v3.x,
-      v3.y,
-      v3.z,
-      v5.x,
-      v5.y,
-      v5.z,
-      red,
-      green,
-      blue,
-      alpha
-    );
-    natives.drawPoly(
-      v1.x,
-      v1.y,
-      v1.z,
-      v3.x,
-      v3.y,
-      v3.z,
-      v2.x,
-      v2.y,
-      v2.z,
-      red,
-      green,
-      blue,
-      alpha
-    );
-    natives.drawPoly(
-      v2.x,
-      v2.y,
-      v2.z,
-      v3.x,
-      v3.y,
-      v3.z,
-      v4.x,
-      v4.y,
-      v4.z,
-      red,
-      green,
-      blue,
-      alpha
-    );
+  function drawBoxWithPolygons(v1, v2, v3, v4, v5, v6, v7, v8, red, green, blue, alpha) {
+    natives.drawPoly(v6.x, v6.y, v6.z, v5.x, v5.y, v5.z, v1.x, v1.y, v1.z, red, green, blue, alpha);
+    natives.drawPoly(v1.x, v1.y, v1.z, v2.x, v2.y, v2.z, v6.x, v6.y, v6.z, red, green, blue, alpha);
+    natives.drawPoly(v7.x, v7.y, v7.z, v3.x, v3.y, v3.z, v8.x, v8.y, v8.z, red, green, blue, alpha);
+    natives.drawPoly(v4.x, v4.y, v4.z, v3.x, v3.y, v3.z, v7.x, v7.y, v7.z, red, green, blue, alpha);
+    natives.drawPoly(v6.x, v6.y, v6.z, v2.x, v2.y, v2.z, v4.x, v4.y, v4.z, red, green, blue, alpha);
+    natives.drawPoly(v4.x, v4.y, v4.z, v7.x, v7.y, v7.z, v6.x, v6.y, v6.z, red, green, blue, alpha);
+    natives.drawPoly(v6.x, v6.y, v6.z, v8.x, v8.y, v8.z, v5.x, v5.y, v5.z, red, green, blue, alpha);
+    natives.drawPoly(v7.x, v7.y, v7.z, v8.x, v8.y, v8.z, v6.x, v6.y, v6.z, red, green, blue, alpha);
+    natives.drawPoly(v5.x, v5.y, v5.z, v3.x, v3.y, v3.z, v1.x, v1.y, v1.z, red, green, blue, alpha);
+    natives.drawPoly(v8.x, v8.y, v8.z, v3.x, v3.y, v3.z, v5.x, v5.y, v5.z, red, green, blue, alpha);
+    natives.drawPoly(v1.x, v1.y, v1.z, v3.x, v3.y, v3.z, v2.x, v2.y, v2.z, red, green, blue, alpha);
+    natives.drawPoly(v2.x, v2.y, v2.z, v3.x, v3.y, v3.z, v4.x, v4.y, v4.z, red, green, blue, alpha);
   }
   Utils2.drawBoxWithPolygons = drawBoxWithPolygons;
-  function drawBoxWithLines(
-    v1,
-    v2,
-    v3,
-    v4,
-    v5,
-    v6,
-    v7,
-    v8,
-    red,
-    green,
-    blue,
-    alpha
-  ) {
-    natives.drawLine(
-      v1.x,
-      v1.y,
-      v1.z,
-      v2.x,
-      v2.y,
-      v2.z,
-      red,
-      green,
-      blue,
-      alpha
-    );
-    natives.drawLine(
-      v1.x,
-      v1.y,
-      v1.z,
-      v3.x,
-      v3.y,
-      v3.z,
-      red,
-      green,
-      blue,
-      alpha
-    );
-    natives.drawLine(
-      v3.x,
-      v3.y,
-      v3.z,
-      v4.x,
-      v4.y,
-      v4.z,
-      red,
-      green,
-      blue,
-      alpha
-    );
-    natives.drawLine(
-      v4.x,
-      v4.y,
-      v4.z,
-      v2.x,
-      v2.y,
-      v2.z,
-      red,
-      green,
-      blue,
-      alpha
-    );
-    natives.drawLine(
-      v5.x,
-      v5.y,
-      v5.z,
-      v8.x,
-      v8.y,
-      v8.z,
-      red,
-      green,
-      blue,
-      alpha
-    );
-    natives.drawLine(
-      v8.x,
-      v8.y,
-      v8.z,
-      v7.x,
-      v7.y,
-      v7.z,
-      red,
-      green,
-      blue,
-      alpha
-    );
-    natives.drawLine(
-      v7.x,
-      v7.y,
-      v7.z,
-      v6.x,
-      v6.y,
-      v6.z,
-      red,
-      green,
-      blue,
-      alpha
-    );
-    natives.drawLine(
-      v5.x,
-      v5.y,
-      v5.z,
-      v6.x,
-      v6.y,
-      v6.z,
-      red,
-      green,
-      blue,
-      alpha
-    );
-    natives.drawLine(
-      v5.x,
-      v5.y,
-      v5.z,
-      v1.x,
-      v1.y,
-      v1.z,
-      red,
-      green,
-      blue,
-      alpha
-    );
-    natives.drawLine(
-      v6.x,
-      v6.y,
-      v6.z,
-      v2.x,
-      v2.y,
-      v2.z,
-      red,
-      green,
-      blue,
-      alpha
-    );
-    natives.drawLine(
-      v7.x,
-      v7.y,
-      v7.z,
-      v4.x,
-      v4.y,
-      v4.z,
-      red,
-      green,
-      blue,
-      alpha
-    );
-    natives.drawLine(
-      v8.x,
-      v8.y,
-      v8.z,
-      v3.x,
-      v3.y,
-      v3.z,
-      red,
-      green,
-      blue,
-      alpha
-    );
+  function drawBoxWithLines(v1, v2, v3, v4, v5, v6, v7, v8, red, green, blue, alpha) {
+    natives.drawLine(v1.x, v1.y, v1.z, v2.x, v2.y, v2.z, red, green, blue, alpha);
+    natives.drawLine(v1.x, v1.y, v1.z, v3.x, v3.y, v3.z, red, green, blue, alpha);
+    natives.drawLine(v3.x, v3.y, v3.z, v4.x, v4.y, v4.z, red, green, blue, alpha);
+    natives.drawLine(v4.x, v4.y, v4.z, v2.x, v2.y, v2.z, red, green, blue, alpha);
+    natives.drawLine(v5.x, v5.y, v5.z, v8.x, v8.y, v8.z, red, green, blue, alpha);
+    natives.drawLine(v8.x, v8.y, v8.z, v7.x, v7.y, v7.z, red, green, blue, alpha);
+    natives.drawLine(v7.x, v7.y, v7.z, v6.x, v6.y, v6.z, red, green, blue, alpha);
+    natives.drawLine(v5.x, v5.y, v5.z, v6.x, v6.y, v6.z, red, green, blue, alpha);
+    natives.drawLine(v5.x, v5.y, v5.z, v1.x, v1.y, v1.z, red, green, blue, alpha);
+    natives.drawLine(v6.x, v6.y, v6.z, v2.x, v2.y, v2.z, red, green, blue, alpha);
+    natives.drawLine(v7.x, v7.y, v7.z, v4.x, v4.y, v4.z, red, green, blue, alpha);
+    natives.drawLine(v8.x, v8.y, v8.z, v3.x, v3.y, v3.z, red, green, blue, alpha);
   }
   Utils2.drawBoxWithLines = drawBoxWithLines;
 })(Utils || (Utils = {}));
@@ -2726,7 +2052,7 @@ var Utils_default = Utils;
 // ../shared/codeHelpers.ts
 init_define_process();
 var codeHelpers = {
-  asyncTimeout: (ms) => new Promise((resolve) => setTimeout(resolve, ms)),
+  asyncTimeout: (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 };
 
 // controllers/CodeEditorController.ts
@@ -2749,36 +2075,13 @@ var _CodeEditorController = class {
   _opacity = false;
   static async evalClientCode(id, code) {
     try {
-      const res = await new AsyncFunction(
-        "alt",
-        "console",
-        "native",
-        "natives",
-        "game",
-        ...Object.keys(codeHelpers),
-        code
-      )(
-        _CodeEditorController.patchAlt(id),
-        _CodeEditorController.patchConsole(id),
-        natives2,
-        natives2,
-        natives2,
-        ...Object.values(codeHelpers)
-      );
-      return import_util.default.inspect(
-        res,
-        _CodeEditorController.inspectSettings
-      );
+      const res = await new AsyncFunction("alt", "console", "native", "natives", "game", ...Object.keys(codeHelpers), code)(_CodeEditorController.patchAlt(id), _CodeEditorController.patchConsole(id), natives2, natives2, natives2, ...Object.values(codeHelpers));
+      return import_util.default.inspect(res, _CodeEditorController.inspectSettings);
     } catch (e) {
       if (e instanceof Error) {
         return _CodeEditorController.colorizeError(String(e.stack));
       }
-      return _CodeEditorController.colorizeError(
-        import_util.default.inspect(e, {
-          ..._CodeEditorController.inspectSettings,
-          colors: false,
-        })
-      );
+      return _CodeEditorController.colorizeError(import_util.default.inspect(e, { ..._CodeEditorController.inspectSettings, colors: false }));
     }
   }
   static async evalServerCode(id, code) {
@@ -2797,10 +2100,7 @@ var _CodeEditorController = class {
       webview.emit("toggle", "codeEditor", this._state);
     }
     if (key === 116) {
-      webview.emit(
-        "codeEditor:halfTransparent",
-        (this._opacity = !this._opacity)
-      );
+      webview.emit("codeEditor:halfTransparent", this._opacity = !this._opacity);
     }
   };
 };
@@ -2808,93 +2108,31 @@ var CodeEditorController = _CodeEditorController;
 __publicField(CodeEditorController, "instance", new _CodeEditorController());
 __publicField(CodeEditorController, "inspectSettings", {
   colors: true,
-  breakLength: 80,
+  breakLength: 80
 });
-__publicField(
-  CodeEditorController,
-  "colorizeError",
-  (text) => "[31;1m[Error] " + text + "[0m"
-);
-__publicField(
-  CodeEditorController,
-  "colorizeWarning",
-  (text) => "[33;1m[Warning] " + text + "[0m"
-);
-__publicField(
-  CodeEditorController,
-  "colorizeInfo",
-  (text) => "[36;1m[Info] " + text + "[0m"
-);
-__publicField(
-  CodeEditorController,
-  "formatAltLog",
-  (text) =>
-    text
-      .replace(/~k~/g, "[30m")
-      .replace(/~r~/g, "[31m")
-      .replace(/~g~/g, "[32m")
-      .replace(/~y~/g, "[33m")
-      .replace(/~b~/g, "[34m")
-      .replace(/~m~/g, "[35m")
-      .replace(/~c~/g, "[36m")
-      .replace(/~w~/g, "[37m")
-      .replace(/~lk~/g, "[30;1m")
-      .replace(/~lr~/g, "[31;1m")
-      .replace(/~lg~/g, "[32;1m")
-      .replace(/~ly~/g, "[33;1m")
-      .replace(/~lb~/g, "[34;1m")
-      .replace(/~lm~/g, "[35;1m")
-      .replace(/~lc~/g, "[36;1m")
-      .replace(/~lw~/g, "[37;1m") + "[0m"
-);
-__publicField(
-  CodeEditorController,
-  "formatArgs",
-  (args, colors = true) =>
-    args
-      .map((e) =>
-        typeof e === "string"
-          ? e
-          : import_util.default.inspect(e, {
-              ..._CodeEditorController.inspectSettings,
-              colors,
-            })
-      )
-      .join(" ") + "[0m"
-);
+__publicField(CodeEditorController, "colorizeError", (text) => "[31;1m[Error] " + text + "[0m");
+__publicField(CodeEditorController, "colorizeWarning", (text) => "[33;1m[Warning] " + text + "[0m");
+__publicField(CodeEditorController, "colorizeInfo", (text) => "[36;1m[Info] " + text + "[0m");
+__publicField(CodeEditorController, "formatAltLog", (text) => text.replace(/~k~/g, "[30m").replace(/~r~/g, "[31m").replace(/~g~/g, "[32m").replace(/~y~/g, "[33m").replace(/~b~/g, "[34m").replace(/~m~/g, "[35m").replace(/~c~/g, "[36m").replace(/~w~/g, "[37m").replace(/~lk~/g, "[30;1m").replace(/~lr~/g, "[31;1m").replace(/~lg~/g, "[32;1m").replace(/~ly~/g, "[33;1m").replace(/~lb~/g, "[34;1m").replace(/~lm~/g, "[35;1m").replace(/~lc~/g, "[36;1m").replace(/~lw~/g, "[37;1m") + "[0m");
+__publicField(CodeEditorController, "formatArgs", (args, colors = true) => args.map((e) => typeof e === "string" ? e : import_util.default.inspect(e, {
+  ..._CodeEditorController.inspectSettings,
+  colors
+})).join(" ") + "[0m");
 __publicField(CodeEditorController, "patchAlt", (id) => {
   return {
     ...alt5,
     log: (...args) => {
       alt5.log(...args);
-      webview.emit(
-        "log",
-        id,
-        _CodeEditorController.formatAltLog(
-          _CodeEditorController.formatArgs(args)
-        )
-      );
+      webview.emit("log", id, _CodeEditorController.formatAltLog(_CodeEditorController.formatArgs(args)));
     },
     logWarning: (...args) => {
       alt5.logWarning(...args);
-      webview.emit(
-        "log",
-        id,
-        _CodeEditorController.colorizeWarning(
-          _CodeEditorController.formatArgs(args, false)
-        )
-      );
+      webview.emit("log", id, _CodeEditorController.colorizeWarning(_CodeEditorController.formatArgs(args, false)));
     },
     logError: (...args) => {
       alt5.logError(...args);
-      webview.emit(
-        "log",
-        id,
-        _CodeEditorController.colorizeError(
-          _CodeEditorController.formatArgs(args, false)
-        )
-      );
-    },
+      webview.emit("log", id, _CodeEditorController.colorizeError(_CodeEditorController.formatArgs(args, false)));
+    }
   };
 });
 __publicField(CodeEditorController, "patchConsole", (id) => {
@@ -2902,44 +2140,20 @@ __publicField(CodeEditorController, "patchConsole", (id) => {
     ...console,
     log: (...args) => {
       console.log(...args);
-      webview.emit(
-        "log",
-        id,
-        _CodeEditorController.formatAltLog(
-          _CodeEditorController.formatArgs(args)
-        )
-      );
+      webview.emit("log", id, _CodeEditorController.formatAltLog(_CodeEditorController.formatArgs(args)));
     },
     warn: (...args) => {
       console.warn(...args);
-      webview.emit(
-        "log",
-        id,
-        _CodeEditorController.colorizeWarning(
-          _CodeEditorController.formatArgs(args, false)
-        )
-      );
+      webview.emit("log", id, _CodeEditorController.colorizeWarning(_CodeEditorController.formatArgs(args, false)));
     },
     error: (...args) => {
       console.error(...args);
-      webview.emit(
-        "log",
-        id,
-        _CodeEditorController.colorizeError(
-          _CodeEditorController.formatArgs(args, false)
-        )
-      );
+      webview.emit("log", id, _CodeEditorController.colorizeError(_CodeEditorController.formatArgs(args, false)));
     },
     info: (...args) => {
       console.info(...args);
-      webview.emit(
-        "log",
-        id,
-        _CodeEditorController.colorizeInfo(
-          _CodeEditorController.formatArgs(args, false)
-        )
-      );
-    },
+      webview.emit("log", id, _CodeEditorController.colorizeInfo(_CodeEditorController.formatArgs(args, false)));
+    }
   };
 });
 
@@ -2953,22 +2167,17 @@ init_define_process();
 import alt6, { Vector3 as Vector33 } from "alt-client";
 import native from "natives";
 function w2s(position) {
-  let result = native.getScreenCoordFromWorldCoord(
-    position.x,
-    position.y,
-    position.z,
-    void 0,
-    void 0
-  );
-  if (!result[0]) return void 0;
+  let result = native.getScreenCoordFromWorldCoord(position.x, position.y, position.z, void 0, void 0);
+  if (!result[0])
+    return void 0;
   return new Vector33((result[1] - 0.5) * 2, (result[2] - 0.5) * 2, 0);
 }
 function processCoordinates(x, y) {
   const res = native.getActualScreenResolution(0, 0);
   let screenX = res[1];
   let screenY = res[2];
-  let relativeX = 1 - (x / screenX) * 2;
-  let relativeY = 1 - (y / screenY) * 2;
+  let relativeX = 1 - x / screenX * 2;
+  let relativeY = 1 - y / screenY * 2;
   if (relativeX > 0) {
     relativeX = -relativeX;
   } else {
@@ -2988,19 +2197,11 @@ function s2w(camPos, relX, relY) {
   let rotDown = camRot.add({ x: -10, y: 0, z: 0 });
   let rotLeft = camRot.add({ x: 0, y: 0, z: -10 });
   let rotRight = camRot.add({ x: 0, y: 0, z: 10 });
-  let camRight = Utils_default.rotationToForward(rotRight).sub(
-    Utils_default.rotationToForward(rotLeft)
-  );
-  let camUp = Utils_default.rotationToForward(rotUp).sub(
-    Utils_default.rotationToForward(rotDown)
-  );
+  let camRight = Utils_default.rotationToForward(rotRight).sub(Utils_default.rotationToForward(rotLeft));
+  let camUp = Utils_default.rotationToForward(rotUp).sub(Utils_default.rotationToForward(rotDown));
   let rollRad = -degToRad(camRot.y);
-  let camRightRoll = camRight
-    .mul(Math.cos(rollRad))
-    .sub(camUp.mul(Math.sin(rollRad)));
-  let camUpRoll = camRight
-    .mul(Math.sin(rollRad))
-    .add(camUp.mul(Math.cos(rollRad)));
+  let camRightRoll = camRight.mul(Math.cos(rollRad)).sub(camUp.mul(Math.sin(rollRad)));
+  let camUpRoll = camRight.mul(Math.sin(rollRad)).add(camUp.mul(Math.cos(rollRad)));
   let point3D = camPos.add(camForward.mul(10)).add(camRightRoll).add(camUpRoll);
   let point2D = w2s(point3D);
   if (point2D === void 0) {
@@ -3012,21 +2213,15 @@ function s2w(camPos, relX, relY) {
     return camPos.add(camForward.mul(10));
   }
   let eps = 1e-3;
-  if (
-    Math.abs(point2D.x - point2DZero.x) < eps ||
-    Math.abs(point2D.y - point2DZero.y) < eps
-  ) {
+  if (Math.abs(point2D.x - point2DZero.x) < eps || Math.abs(point2D.y - point2DZero.y) < eps) {
     return camPos.add(camForward.mul(10));
   }
   let scaleX = (relX - point2DZero.x) / (point2D.x - point2DZero.x);
   let scaleY = (relY - point2DZero.y) / (point2D.y - point2DZero.y);
-  return camPos
-    .add(camForward.mul(10))
-    .add(camRightRoll.mul(scaleX))
-    .add(camUpRoll.mul(scaleY));
+  return camPos.add(camForward.mul(10)).add(camRightRoll.mul(scaleX)).add(camUpRoll.mul(scaleY));
 }
 function degToRad(deg) {
-  return (deg * Math.PI) / 180;
+  return deg * Math.PI / 180;
 }
 function screenToWorld() {
   let x = alt6.getCursorPos().x;
@@ -3054,35 +2249,30 @@ var _ModelInspectorController = class {
       this._state = !this._state;
     } else if (this._state && key === 69) {
       const str = this.getString();
-      if (str) alt7.log(str);
+      if (str)
+        alt7.log(str);
     }
   };
   getString() {
-    if (!this._currentObject) return null;
+    if (!this._currentObject)
+      return null;
     const obj = this._currentObject;
     const entity = alt7.Entity.getByScriptID(+obj.id);
-    let str = `ScriptID: ${obj.id}~n~Model: ${obj.model}~n~Texture: ${
-      obj.textureVariation
-    }~n~Coord: ${obj.coord.x.toFixed(3)} ${obj.coord.y.toFixed(
-      3
-    )} ${obj.coord.z.toFixed(3)}~n~Rot: ${obj.rot.x.toFixed(
-      3
-    )} ${obj.rot.y.toFixed(3)} ${obj.rot.z.toFixed(3)}~n~`;
+    let str = `ScriptID: ${obj.id}~n~Model: ${obj.model}~n~Texture: ${obj.textureVariation}~n~Coord: ${obj.coord.x.toFixed(3)} ${obj.coord.y.toFixed(3)} ${obj.coord.z.toFixed(3)}~n~Rot: ${obj.rot.x.toFixed(3)} ${obj.rot.y.toFixed(3)} ${obj.rot.z.toFixed(3)}~n~`;
     if (entity)
       str += `Entity: ${entity.constructor.name}~n~Entity ID: ${entity.id}~n~`;
     return str;
   }
   onEveryTick = () => {
-    if (!this._state) return;
+    if (!this._state)
+      return;
     const resolution = natives3.getActualScreenResolution(0, 0);
     const height = 3 / resolution[2];
-    const width = (height * resolution[2]) / resolution[1];
+    const width = height * resolution[2] / resolution[1];
     natives3.drawRect(0.5, 0.5, width, height, 255, 255, 255, 255, true);
     if (!this._currentObject) {
       natives3.beginTextCommandDisplayHelp("STRING");
-      natives3.addTextComponentSubstringPlayerName(
-        `Use the crosshair or mouse pointer (F2) to select the target object`
-      );
+      natives3.addTextComponentSubstringPlayerName(`Use the crosshair or mouse pointer (F2) to select the target object`);
       natives3.endTextCommandDisplayHelp(0, false, false, 0);
       return;
     }
@@ -3098,113 +2288,48 @@ var _ModelInspectorController = class {
   };
   cast = () => {
     const start = natives3.getGameplayCamCoord();
-    const end = MouseController.instance.state
-      ? screenToWorld()
-      : start.add(
-          Utils_default.rotationToForward(natives3.getGameplayCamRot(2)).mul(
-            300
-          )
-        );
-    const raycast = natives3.startExpensiveSynchronousShapeTestLosProbe(
-      start.x,
-      start.y,
-      start.z,
-      end.x,
-      end.y,
-      end.z,
-      -1,
-      alt7.Player.local.scriptID,
-      4
-    );
-    const [, hit, endCoords, , entityHit] =
-      natives3.getShapeTestResult(raycast);
-    if (!hit) return (this._currentObject = void 0);
+    const end = MouseController.instance.state ? screenToWorld() : start.add(Utils_default.rotationToForward(natives3.getGameplayCamRot(2)).mul(300));
+    const raycast = natives3.startExpensiveSynchronousShapeTestLosProbe(start.x, start.y, start.z, end.x, end.y, end.z, -1, alt7.Player.local.scriptID, 4);
+    const [, hit, endCoords, , entityHit] = natives3.getShapeTestResult(raycast);
+    if (!hit)
+      return this._currentObject = void 0;
     const hasDrawable = natives3.doesEntityHaveDrawable(entityHit);
     const model = hasDrawable ? natives3.getEntityModel(entityHit) : -1;
     let vertexes = void 0;
     if (hasDrawable) {
       const [, minVR, maxVR] = natives3.getModelDimensions(model);
-      const [minV, maxV] = [
-        new Vector34(-1e-3, -1e-3, -1e-3).add(minVR),
-        new Vector34(1e-3, 1e-3, 1e-3).add(maxVR),
-      ];
+      const [minV, maxV] = [new Vector34(-1e-3, -1e-3, -1e-3).add(minVR), new Vector34(1e-3, 1e-3, 1e-3).add(maxVR)];
       vertexes = [
-        natives3.getOffsetFromEntityInWorldCoords(
-          entityHit,
-          minV.x,
-          minV.y,
-          maxV.z
-        ),
-        natives3.getOffsetFromEntityInWorldCoords(
-          entityHit,
-          minV.x,
-          maxV.y,
-          maxV.z
-        ),
-        natives3.getOffsetFromEntityInWorldCoords(
-          entityHit,
-          maxV.x,
-          minV.y,
-          maxV.z
-        ),
-        natives3.getOffsetFromEntityInWorldCoords(
-          entityHit,
-          maxV.x,
-          maxV.y,
-          maxV.z
-        ),
-        natives3.getOffsetFromEntityInWorldCoords(
-          entityHit,
-          minV.x,
-          minV.y,
-          minV.z
-        ),
-        natives3.getOffsetFromEntityInWorldCoords(
-          entityHit,
-          minV.x,
-          maxV.y,
-          minV.z
-        ),
-        natives3.getOffsetFromEntityInWorldCoords(
-          entityHit,
-          maxV.x,
-          maxV.y,
-          minV.z
-        ),
-        natives3.getOffsetFromEntityInWorldCoords(
-          entityHit,
-          maxV.x,
-          minV.y,
-          minV.z
-        ),
+        natives3.getOffsetFromEntityInWorldCoords(entityHit, minV.x, minV.y, maxV.z),
+        natives3.getOffsetFromEntityInWorldCoords(entityHit, minV.x, maxV.y, maxV.z),
+        natives3.getOffsetFromEntityInWorldCoords(entityHit, maxV.x, minV.y, maxV.z),
+        natives3.getOffsetFromEntityInWorldCoords(entityHit, maxV.x, maxV.y, maxV.z),
+        natives3.getOffsetFromEntityInWorldCoords(entityHit, minV.x, minV.y, minV.z),
+        natives3.getOffsetFromEntityInWorldCoords(entityHit, minV.x, maxV.y, minV.z),
+        natives3.getOffsetFromEntityInWorldCoords(entityHit, maxV.x, maxV.y, minV.z),
+        natives3.getOffsetFromEntityInWorldCoords(entityHit, maxV.x, minV.y, minV.z)
       ];
     }
     this._currentObject = {
       id: entityHit,
       model,
-      coord: natives3.getEntityCoords(
-        entityHit,
-        !natives3.isEntityDead(entityHit, false)
-      ),
+      coord: natives3.getEntityCoords(entityHit, !natives3.isEntityDead(entityHit, false)),
       rot: natives3.getEntityRotation(entityHit, 2),
       coordHit: endCoords,
       textureVariation: natives3.getObjectTintIndex(entityHit),
-      vertexes,
+      vertexes
     };
   };
 };
 var ModelInspectorController = _ModelInspectorController;
-__publicField(
-  ModelInspectorController,
-  "instance",
-  new _ModelInspectorController()
-);
+__publicField(ModelInspectorController, "instance", new _ModelInspectorController());
 
 // index.ts
 import natives6 from "natives";
 
 // controllers/FlyController.ts
 init_define_process();
+import alt8, { Vector3 as Vector35 } from "alt-client";
 import natives4 from "natives";
 var _FlyController = class {
   constructor() {
@@ -3213,58 +2338,49 @@ var _FlyController = class {
     alt8.on("streamSyncedMetaChange", this.onStreamSyncedMetaChange);
   }
   onGameEntityCreate = (entity) => {
-    if (!(entity instanceof alt8.Player)) return;
+    if (!(entity instanceof alt8.Player))
+      return;
     natives4.freezeEntityPosition(entity.id, entity.getStreamSyncedMeta("fly"));
   };
   onStreamSyncedMetaChange = (entity, key, value) => {
-    if (!(entity instanceof alt8.Player)) return;
-    if (key !== "fly") return;
+    if (!(entity instanceof alt8.Player))
+      return;
+    if (key !== "fly")
+      return;
     natives4.freezeEntityPosition(entity.id, value);
   };
   onKeydown = (key) => {
-    if (key !== 115) return;
-    if (this._state) this.stop();
-    else this.start(alt8.isKeyDown(16));
+    if (key !== 115)
+      return;
+    if (this._state)
+      this.stop();
+    else
+      this.start(alt8.isKeyDown(16));
   };
   _state = false;
   _everyTick;
   _speed = 1;
   _cam;
   start(freecam = false) {
-    if (this._state) return;
+    if (this._state)
+      return;
     const player = alt8.Player.local;
     if (!freecam && player.vehicle)
       natives4.taskLeaveVehicle(player.scriptID, player.vehicle.scriptID, 16);
     this._state = true;
     if (freecam) {
-      this._cam = natives4.createCamWithParams(
-        "DEFAULT_SCRIPTED_CAMERA",
-        player.pos.x,
-        player.pos.y,
-        player.pos.z + 1,
-        player.rot.x * Utils_default.Rad2Deg,
-        player.rot.y * Utils_default.Rad2Deg,
-        player.rot.z * Utils_default.Rad2Deg,
-        50,
-        false,
-        2
-      );
+      this._cam = natives4.createCamWithParams("DEFAULT_SCRIPTED_CAMERA", player.pos.x, player.pos.y, player.pos.z + 1, player.rot.x * Utils_default.Rad2Deg, player.rot.y * Utils_default.Rad2Deg, player.rot.z * Utils_default.Rad2Deg, 50, false, 2);
       natives4.setCamActive(this._cam, true);
       natives4.renderScriptCams(true, false, 0, true, false, 0);
     } else {
       alt8.emitServer("qaTools:fly", true);
-      natives4.setEntityCompletelyDisableCollision(
-        alt8.Player.local.scriptID,
-        false,
-        false
-      );
+      natives4.setEntityCompletelyDisableCollision(alt8.Player.local.scriptID, false, false);
     }
-    this._everyTick = alt8.everyTick(
-      freecam ? this.handleFreecam : this.handle
-    );
+    this._everyTick = alt8.everyTick(freecam ? this.handleFreecam : this.handle);
   }
   stop() {
-    if (!this._state) return;
+    if (!this._state)
+      return;
     this._state = false;
     if (this._everyTick) {
       alt8.clearEveryTick(this._everyTick);
@@ -3277,29 +2393,10 @@ var _FlyController = class {
       this._cam = void 0;
     } else {
       const coord = alt8.Player.local.pos;
-      natives4.setEntityCompletelyDisableCollision(
-        alt8.Player.local.scriptID,
-        true,
-        true
-      );
+      natives4.setEntityCompletelyDisableCollision(alt8.Player.local.scriptID, true, true);
       alt8.emitServer("qaTools:fly", false);
       if (!natives4.isDisabledControlPressed(0, 22)) {
-        natives4.setEntityCoordsNoOffset(
-          alt8.Player.local.scriptID,
-          coord.x,
-          coord.y,
-          natives4.getGroundZFor3dCoord(
-            coord.x,
-            coord.y,
-            coord.z,
-            0,
-            false,
-            false
-          )[1],
-          false,
-          false,
-          false
-        );
+        natives4.setEntityCoordsNoOffset(alt8.Player.local.scriptID, coord.x, coord.y, natives4.getGroundZFor3dCoord(coord.x, coord.y, coord.z, 0, false, false)[1], false, false, false);
       }
     }
   }
@@ -3343,60 +2440,29 @@ var _FlyController = class {
     const movementVector = {
       x: rr.x * posMovementY * speed,
       y: rr.y * posMovementY * speed,
-      z: rr.z * posMovementY * speed,
+      z: rr.z * posMovementY * speed
     };
     const rightVector = {
       x: preRightVector.x * posMovementX * speed,
       y: preRightVector.y * posMovementX * speed,
-      z: preRightVector.z * posMovementX * speed,
+      z: preRightVector.z * posMovementX * speed
     };
-    return [
-      rot,
-      new alt8.Vector3(
-        pos.x - movementVector.x + rightVector.x,
-        pos.y - movementVector.y + rightVector.y,
-        pos.z - movementVector.z + vertSpeed
-      ),
-    ];
+    return [rot, new alt8.Vector3(pos.x - movementVector.x + rightVector.x, pos.y - movementVector.y + rightVector.y, pos.z - movementVector.z + vertSpeed)];
   }
   handle = () => {
-    if (!this._state) return;
-    Utils_default.render2DText(
-      "Fly: " + this._speed.toFixed(1),
-      new alt8.Vector2(0.95, 0.05),
-      0.4
-    );
-    
-    const isControllingVehicle =
-      // is driver
-      alt8.Player.local.seat === 1
-      // is a net owner
-      && alt8.Player.local.vehicle?.netOwner === alt8.Player.local;
-
-    const entity = isControllingVehicle
-        ? alt8.Player.local.vehicle
-        : alt8.Player.local;
-
+    if (!this._state)
+      return;
+    Utils_default.render2DText("Fly: " + this._speed.toFixed(1), new alt8.Vector2(0.95, 0.05), 0.4);
+    const entity = alt8.Player.local;
     const [rot, newPos] = this.getNewPos(entity.pos);
-    natives4.setEntityCoordsNoOffset(
-      entity.scriptID,
-      newPos.x,
-      newPos.y,
-      newPos.z,
-      true,
-      true,
-      true
-    );
+    natives4.setEntityCoordsNoOffset(entity.scriptID, newPos.x, newPos.y, newPos.z, true, true, true);
     if (natives4.getFollowPedCamZoomLevel() !== 4)
       natives4.setEntityHeading(entity.scriptID, rot.z);
   };
   handleFreecam = () => {
-    if (!this._state || !this._cam) return;
-    Utils_default.render2DText(
-      "Freecam: " + this._speed.toFixed(1),
-      new alt8.Vector2(0.95, 0.05),
-      0.4
-    );
+    if (!this._state || !this._cam)
+      return;
+    Utils_default.render2DText("Freecam: " + this._speed.toFixed(1), new alt8.Vector2(0.95, 0.05), 0.4);
     const [rot, newPos] = this.getNewPos(natives4.getCamCoord(this._cam));
     natives4.setCamCoord(this._cam, newPos.x, newPos.y, newPos.z);
     natives4.setCamRot(this._cam, rot.x, rot.y, rot.z, 2);
@@ -3404,15 +2470,25 @@ var _FlyController = class {
 };
 var FlyController = _FlyController;
 __publicField(FlyController, "instance", new _FlyController());
-__publicField(
-  FlyController,
-  "blockedKeys",
-  [30, 31, 21, 36, 22, 44, 38, 71, 72, 59, 60, 42, 43]
-);
+__publicField(FlyController, "blockedKeys", [
+  30,
+  31,
+  21,
+  36,
+  22,
+  44,
+  38,
+  71,
+  72,
+  59,
+  60,
+  42,
+  43
+]);
 
 // controllers/TPController.ts
 init_define_process();
-import natives2 from "natives";
+import alt9, { Vector3 as Vector36 } from "alt-client";
 import natives5 from "natives";
 var _TPController = class {
   constructor() {
@@ -3426,45 +2502,26 @@ var _TPController = class {
     }
   }
   onKeydown = async (key) => {
-    if (key !== 120) return;
+    if (key !== 120)
+      return;
     const point = _TPController.getWaypoint();
-    if (!point) return;
-    let [found, z] = natives5.getGroundZFor3dCoord(
-      point[0],
-      point[1],
-      9999999,
-      0,
-      false,
-      false
-    );
+    if (!point)
+      return;
+    let [found, z] = natives5.getGroundZFor3dCoord(point[0], point[1], 9999999, 0, false, false);
     if (!found) {
       let i = 0;
       ControlsController.instance.block("tp");
       natives5.setFocusPosAndVel(point[0], point[1], point[2], 0, 0, 0);
       while (!found && i < 100) {
         await Utils_default.asyncTimeout(50);
-        [found, z] = natives5.getGroundZFor3dCoord(
-          point[0],
-          point[1],
-          9999999,
-          0,
-          false,
-          false
-        );
+        [found, z] = natives5.getGroundZFor3dCoord(point[0], point[1], 9999999, 0, false, false);
         i++;
       }
       natives5.clearFocus();
       ControlsController.instance.unblock("tp");
     }
     const dimensions = natives5.getModelDimensions(alt9.Player.local.model);
-    alt9.emitServer(
-      "qaTools:spawn",
-      new Vector36(
-        point[0],
-        point[1],
-        z + (dimensions[2].z - dimensions[1].z) / 2
-      )
-    );
+    alt9.emitServer("qaTools:spawn", new Vector36(point[0], point[1], z + (dimensions[2].z - dimensions[1].z) / 2));
     return true;
   };
 };
@@ -3479,18 +2536,9 @@ ModelInspectorController.instance;
 FlyController.instance;
 TPController.instance;
 alt10.on("consoleCommand", (cmd, ...args) => {
-  if (cmd != "eval") return;
-  alt10.log(
-    JSON.stringify(
-      new Utils_default.AsyncFunction(
-        "alt",
-        "natives",
-        "native",
-        "game",
-        args.join(" ")
-      )(alt10, natives6, natives6, natives6)
-    )
-  );
+  if (cmd != "eval")
+    return;
+  alt10.log(JSON.stringify(new Utils_default.AsyncFunction("alt", "natives", "native", "game", args.join(" "))(alt10, natives6, natives6, natives6)));
 });
 alt10.onServer("serverLog", (msg) => {
   alt10.log(msg);

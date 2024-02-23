@@ -1,4 +1,4 @@
-import * as alt from "@altv/client";
+import alt from "@altv/client";
 import { z } from "zod";
 import {
   CALL_SERVER_FROM_CLIENT,

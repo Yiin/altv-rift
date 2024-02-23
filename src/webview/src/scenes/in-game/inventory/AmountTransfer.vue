@@ -7,25 +7,26 @@ import { getItemName, isStackable } from "@shared/modules/items";
 const props = defineProps<TransferingAmount>();
 
 const inventory = useInventory();
-const amount = ref(0);
+const amount = ref(1);
 
 const itemName = computed(() => getItemName(props.item.item.key));
 </script>
 
 <template>
   <div
-    v-if="isStackable(item.item)"
     class="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 z-max rounded-lg bg-neutral-900 text-white p-8 shadow-2xl min-w-64">
     <div>
       <div>
-        <img
-          class="h-28 mb-2"
+        <v-img
+          class="drop-shadow-md flex-grow-0 my-5"
+          width="10rem"
           :src="getItemImage(item.item)" />
         <h2 class="text-lg font-bold">
           {{ to ? "You're moving" : "You're dropping" }} <br><span class="text-red-500">{{ itemName }}</span>
         </h2>
 
         <div
+          v-if="isStackable(item.item)"
           class="relative w-full mt-2 pt-1 pb-3 mb-6 border-y-1 border-neutral-700">
           <div class="space-y-4">
             <div class="space-y-2">

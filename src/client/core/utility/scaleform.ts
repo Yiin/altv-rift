@@ -1,5 +1,5 @@
-import * as alt from "@altv/client";
-import * as game from "@altv/natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 
 export class Scaleform {
   private id: number;
@@ -39,8 +39,7 @@ export class Scaleform {
 
         default: {
           alt.logError(
-            `Bad Argument: ${typeof arg} = ${arg.toString()} passed to scaleform with handle ${
-              this.id
+            `Bad Argument: ${typeof arg} = ${arg.toString()} passed to scaleform with handle ${this.id
             }`
           );
         }

@@ -1,4 +1,4 @@
-import * as alt from "@altv/server";
+import alt from "@altv/server";
 import { PedFlags, PedType } from "@shared/modules/ped";
 import { PedKey } from "@shared/modules/ped/list";
 import { createStaticPed, createTerroristPed } from "./registry";

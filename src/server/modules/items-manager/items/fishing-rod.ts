@@ -1,4 +1,4 @@
-import * as alt from "@altv/server";
+import alt from "@altv/server";
 import { toRaw } from "vue";
 import { GroundItemSource, InventoryItemSource, ItemSource, ItemSourceOrigin } from "@shared/interfaces";
 import {
@@ -9,7 +9,7 @@ import {
 } from "@shared/modules/items";
 import { InGamePlayer } from "@/core/utility/assertions";
 import { addItemToInventory, findInventoryByItemSource, findItem, removeItem } from "../api";
-import { dropItemOnTheGround, droppedItems } from "../api/dropped-items";
+import { dropItemOnTheGround } from "../dropped-items";
 
 export function useFishBaitOnFishingRod(
   fishingRodSource: ItemSource,
@@ -27,7 +27,7 @@ export function useFishBaitOnFishingRod(
     return false;
   }
 
-  const droppedItemPos = fishBaitSource.origin === ItemSourceOrigin.Ground ? droppedItems.get(fishBaitSource.originId)?.pos : null;
+  const droppedItemPos = fishBaitSource.origin === ItemSourceOrigin.Ground ? alt.VirtualEntity.getByID(fishBaitSource.originId)?.pos : null;
 
   removeItem(fishBaitSource);
 
@@ -56,7 +56,7 @@ export function removeBaitFromFishingRod(source: ItemSource) {
   }
 
   if (source.origin === ItemSourceOrigin.Ground) {
-    const droppedItemVE = droppedItems.get(source.originId);
+    const droppedItemVE = alt.VirtualEntity.getByID(source.originId);
 
     if (!droppedItemVE) {
       return false;

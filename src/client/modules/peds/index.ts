@@ -1,5 +1,5 @@
-import * as alt from "@altv/client";
-import * as game from "@altv/natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 import { PedFlags } from "@shared/modules/ped/constants";
 import { waitUntil } from "@/core/utility/event-helpers";
 import { setupPeacefulPed } from "./setup-ped/setup-peaceful-ped";

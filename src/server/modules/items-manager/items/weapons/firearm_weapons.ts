@@ -1,4 +1,4 @@
-import * as alt from "@altv/server";
+import alt from "@altv/server";
 import { ServerEvents } from "@shared/events/server";
 import {
   getItemInfoByKey,
@@ -15,8 +15,8 @@ import {
 import { GroundItemSource, InventoryItemSource, ItemSource, ItemSourceOrigin } from "@shared/interfaces";
 import { InGamePlayer, isInGame } from "@/core/utility/assertions";
 import { on } from "@/core/events/emit";
-import { removeItem, addItemToInventory, findInventoryByItemSource, findItem } from "../../api/utils";
-import { dropItemOnTheGround, droppedItems } from "../../api/dropped-items";
+import { removeItem, addItemToInventory, findInventoryByItemSource, findItem } from "../../api";
+import { dropItemOnTheGround } from "../../dropped-items";
 
 on(ServerEvents.FromServer.ITEM_EQUIP, (player, item) => {
   if (!isItemFirearmWeapon(item)) {
@@ -91,7 +91,7 @@ export function loadWeaponWithAmmo(
     return false;
   }
 
-  const pos = ammoSource.origin === ItemSourceOrigin.Ground ? droppedItems.get(ammoSource.originId)?.pos : null;
+  const pos = ammoSource.origin === ItemSourceOrigin.Ground ? alt.VirtualEntity.getByID(ammoSource.originId)?.pos : null;
 
   // remove ammo from inventory
   removeItem(ammoSource);
@@ -123,7 +123,7 @@ export function unloadAmmoFromWeapon(source: ItemSource) {
   }
 
   if (source.origin === ItemSourceOrigin.Ground) {
-    const droppedItemVE = droppedItems.get(source.originId);
+    const droppedItemVE = alt.VirtualEntity.getByID(source.originId);
 
     if (!droppedItemVE) {
       return false;

@@ -1,4 +1,4 @@
-import * as alt from "@altv/server";
+import alt from "@altv/server";
 import type { CommandSuggestion } from "@shared/modules/chat";
 import { bind } from "@shared/decorators";
 import { validateCommandName, validateCommandSuggestion } from "../validators";

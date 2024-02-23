@@ -1,17 +1,17 @@
-import { InteractionInventoryItemSource, InventoryItemSource, ItemSourceOrigin, PlayerInventoryItemSource } from "@shared/interfaces";
+import { StorageItemSource, InventoryItemSource, ItemSourceOrigin, PlayerInventoryItemSource } from "@shared/interfaces";
 import { defineStore } from "pinia";
 import { useGameState } from "./synced/game-state.store";
 import { useInventory } from "./inventory.store";
 import { rpc } from "@/rpc";
 import { ServerCall } from "@shared/calls/server";
-import { InteractionInventoryType } from "@shared/store/game-state.store";
+import { StorageType } from "@shared/store/game-state.store";
 
 type State = {
   action: null;
   itemSource: null;
 } | {
   action: "buy" | "sell";
-  itemSource: PlayerInventoryItemSource | InteractionInventoryItemSource;
+  itemSource: PlayerInventoryItemSource | StorageItemSource;
 };
 
 export const useShop = defineStore("shop", {
@@ -24,12 +24,11 @@ export const useShop = defineStore("shop", {
       return this.interaction !== null;
     },
     interaction() {
-      const gameState = useGameState();
-      return gameState.interactionInventory?.type === InteractionInventoryType.Shop ? gameState.interactionInventory : null;
+      return null as any;
     },
   },
   actions: {
-    initiateBuying(itemSource: InteractionInventoryItemSource) {
+    initiateBuying(itemSource: StorageItemSource) {
       this.action = "buy";
       this.itemSource = itemSource;
     },
@@ -48,7 +47,7 @@ export const useShop = defineStore("shop", {
 
       const inventory = useInventory();
 
-      if (this.itemSource.origin === ItemSourceOrigin.InteractionInventory) {
+      if (this.itemSource.origin === ItemSourceOrigin.Storage) {
         return rpc.callServer(
           ServerCall.FromWebview.BUY_ITEM,
           this.itemSource,

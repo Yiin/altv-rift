@@ -1,4 +1,4 @@
-import * as alt from "@altv/client";
+import alt from "@altv/client";
 import { z } from "zod";
 import {
   CALL_CLIENT_FROM_WEBVIEW,
@@ -99,6 +99,7 @@ getWebview((webview) => {
         const schema = ClientCall.FromWebviewValidation[name as keyof typeof ClientCall.FromWebviewValidation];
 
         if ('args' in schema) {
+          // @ts-ignore
           z.tuple(schema).parse(args);
         }
       } else {

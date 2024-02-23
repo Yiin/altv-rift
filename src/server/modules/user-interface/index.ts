@@ -1,4 +1,3 @@
-//// @index(['./*.ts', './*'], f => `import "${f.path}";`)
-import "./damage-indicators";
+// @index(['./*.ts', './*'], f => `import "${f.path}";`)
 import "./persist-positions";
 // @endindex

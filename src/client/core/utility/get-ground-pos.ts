@@ -1,5 +1,5 @@
-import * as alt from "@altv/client";
-import * as game from "@altv/natives";
+import alt from "@altv/client";
+import game from "@altv/natives";
 import { LOS_FLAGS } from "@/core/constants/shapetest";
 import Raycast from "./raycast";
 
@@ -32,7 +32,7 @@ export async function getGroundPos(
 
       return true;
     }, 3000);
-  } catch {}
+  } catch { }
 
   if (!groundPos) {
     alt.logWarning("failed to get ground pos for waypoint, trying getGroundZ game...");
@@ -48,7 +48,7 @@ export async function getGroundPos(
         foundZ = z;
         return true;
       }, 3000);
-    } catch {}
+    } catch { }
 
     if (foundZ == null) {
       groundPos = point.sub(0, 0, 1);
