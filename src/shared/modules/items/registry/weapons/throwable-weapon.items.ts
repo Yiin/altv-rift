@@ -1,5 +1,5 @@
 import { registerItem } from "@shared/modules/items";
-import { ItemFlags, ItemGrade } from "../../enums";
+import { ItemGrade } from "../../enums";
 import { Item } from "../../types";
 import { makeKeys } from "../../../../utility/make-keys";
 import { WeaponGroup } from "./weapon-groups";

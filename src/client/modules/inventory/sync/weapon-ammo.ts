@@ -3,7 +3,7 @@ import game from "@altv/natives";
 import { computed, watchEffect } from "vue";
 import { ServerEvents } from "@shared/events/server";
 import { ServerCall } from "@shared/calls/server";
-import { getItemInfoByKey, getWeaponHash } from "@shared/modules/items";
+import { getItemInfoByKey } from "@shared/modules/items";
 import { isItemFirearmWeapon } from "@shared/modules/items/registry/weapons/firearm-weapon.items";
 import { rpc } from "@/core/rpc";
 import { useCharacter } from "@/core/store/character.store";
@@ -11,6 +11,10 @@ import { Control, ControlType } from "@/core/constants/controls";
 import { whileInGame } from "@/core/game-state-hooks/in-game.state";
 
 const player = alt.Player.local;
+
+alt.Events.onSpawned(() => {
+  // game.setPedInfiniteAmmoClip(player, true);
+});
 
 whileInGame(() => {
   const currentFirearm = computed(() => {
@@ -47,7 +51,7 @@ whileInGame(() => {
     return true;
   });
 
-  const stopWatchingAmmo = watchEffect(updateAmmo);
+  const stopWatchingAmmo = watchEffect(checkForReload);
 
   const playerWeaponChangeListener = alt.Events.onPlayerWeaponChange(onPlayerWeaponChange);
   const keyDownListener = alt.Events.onKeyDown(handleManualReload);
@@ -65,12 +69,12 @@ whileInGame(() => {
    * Sync the in-game ammo in the clip with ammo state in store when the player switches weapons.
    */
   function onPlayerWeaponChange() {
+    // game.setPedInfiniteAmmoClip(player, true);
+
     alt.Utils.waitFor(
-      () =>
-        !game.isPedSwitchingWeapon(player) &&
-        game.getAmmoInClip(player, player.currentWeapon, 0)[0], // [hasClip, ammoInClip]
+      () => !game.isPedSwitchingWeapon(player),
       3000
-    ).finally(updateAmmo);
+    ).then(() => alt.Utils.wait(1000)).finally(checkForReload);
   }
 
   /**
@@ -83,9 +87,9 @@ whileInGame(() => {
   }
 
   /**
-   * Updates the ammo in the clip for weapon in-game based on current ammo state in the store.
+   * Reloads the weapon if the clip is empty.
    */
-  function updateAmmo() {
+  function checkForReload() {
     const weapon = currentFirearm?.value;
 
     if (!weapon) {
@@ -97,18 +101,6 @@ whileInGame(() => {
     if (clip === 0) {
       reloadWeapon();
       return;
-    }
-
-    const hash = getWeaponHash(weapon.key);
-
-    try {
-      const [, gameClip] = game.getAmmoInClip(player, hash);
-
-      if ((gameClip <= 3 && clip > 0) || gameClip > clip) {
-        game.setAmmoInClip(player, hash, clip + 3);
-      }
-    } catch (e) {
-      alt.log(`Failed to update ammo in clip for weapon ${weapon.key}`);
     }
   }
 
@@ -134,7 +126,7 @@ whileInGame(() => {
       const startReload = await rpc.callServer(ServerCall.FromClient.RELOAD_WEAPON);
 
       if (startReload) {
-        game.taskReloadWeapon(player, true);
+        game.taskReloadWeapon(player, false);
       }
 
       await alt.Utils.waitFor(() => !player.isReloading);
