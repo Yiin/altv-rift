@@ -64,11 +64,23 @@ Workbench:
   ✔ Can't drop single items @done
   ✔ Mask doesn't disappear after unequiping @done
   ✔ Need to separate male and female clothing @done
-    ✔ Add labels in UI @done
-    ✔ Add checks in equipment system @done
+  ✔ Add labels in UI @done
+  ✔ Add checks in equipment system @done
   ✔ Can't equip glasses @done
   ✔ Weapons are fucked, we should allow automatic reload @done
   ✔ Disable weapon wheel and keep only quick access slots available @done
+  ✔ Shooting doesn't work cause no ammo? @done
+  ✔ Player can unequip weapon while reloading @done
+  ☐ Refactor ammo
+    ☐ Generic ammo used w/o equipment
+      Questions to answer:
+      ☐ Do we display generic ammo in special ui element or do we treat it as simple item?
+        treating as simple item is easier from dev perspective, not sure about UX tho
+      ☐ If we move it to special ui, how do we handle drag'n'drop for it?
+    ☐ Special ammo can be equiped and takes priority over generic ammo
+  ✔ Coming back from alt-tab to game with a window open doesn't restore cursor. @done
+  ✔ Fix keybinds being active while in devtools or chat @done
+  ✔ Cancelling reload fucks up ammo @done
   ☐ Crafting UI for weapons
 
 ------------------------------------------------------------------------------------------------------------------------

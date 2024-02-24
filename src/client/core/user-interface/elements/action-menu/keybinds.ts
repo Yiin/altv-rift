@@ -1,6 +1,6 @@
 import alt from "@altv/client";
-import { closeActionMenu, openActionMenu } from "./api";
 import { whileInGame } from "@/core/game-state-hooks/in-game.state";
+import { closeActionMenu, openActionMenu } from "./api";
 
 whileInGame(() => {
   const keyDown = alt.Events.onKeyDown(({ key }) => {

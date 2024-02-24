@@ -6,7 +6,6 @@ import { deserialize } from "@shared/utility/serializer";
 import {
   doesElementHaveCursor,
   getWebview,
-  showCursor,
   toggleElement,
 } from "@/core/user-interface/webview";
 import type { Message } from "../interfaces";
@@ -54,6 +53,7 @@ export class WindowService {
 
   public toggleFocus(value: boolean) {
     value ? this.focus() : this.unfocus();
+    alt.Events.emit("vchat:focus", value);
   }
 
   public toggleFocusEnabled(enabled: boolean) {

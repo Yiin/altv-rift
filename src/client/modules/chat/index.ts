@@ -2,7 +2,7 @@ import { container } from "@shared/dependency-injection";
 import { MessageType } from "@shared/modules/chat";
 import { Chat } from "./chat";
 
-const chat = container.resolve(Chat);
+export const chat = container.resolve(Chat);
 
 chat.start();
 

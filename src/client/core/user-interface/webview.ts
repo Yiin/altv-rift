@@ -79,13 +79,13 @@ export function toggleElement(element: UIElement, state?: boolean) {
 
   if (typeof state === "undefined") {
     toggleElement(element, !clientState.ui.elements.has(element));
-  } else if (state) {
+  } else if (state && !clientState.ui.elements.has(element)) {
     clientState.ui.elements.add(element);
 
     if (doesElementHaveCursor.call(element)) {
       showCursor(true);
     }
-  } else {
+  } else if (clientState.ui.elements.has(element)) {
     clientState.ui.elements.delete(element);
 
     if (doesElementHaveCursor.call(element)) {
@@ -158,11 +158,6 @@ onKeyDown(alt.Enums.KeyCode.Z, () => {
       alt.Cursor.visible = true;
     }
   }
-});
-
-alt.Events.onWindowFocusChange(({ state }) => {
-  alt.log(`Window Focus: ${state}, Cursors: ${cursors}`);
-  showCursor();
 });
 
 alt.Events.onServer(

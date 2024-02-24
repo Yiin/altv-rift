@@ -1,11 +1,10 @@
 import alt from "@altv/client";
 import { UIElement } from "@shared/enums/ui";
+import { onKeyDown } from "@/core/utility/event-helpers";
 import { doesElementHaveCursor, toggleElement } from "../../webview";
 
-alt.Events.onKeyDown(({ key }) => {
-  if (key === alt.Enums.KeyCode.I) {
-    toggleElement(UIElement.SKILL_MENU);
-  }
+onKeyDown(alt.Enums.KeyCode.I, () => {
+  toggleElement(UIElement.SKILL_MENU);
 });
 
 doesElementHaveCursor.hook((element) => {

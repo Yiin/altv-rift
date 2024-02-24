@@ -2097,6 +2097,7 @@ var _CodeEditorController = class {
         ControlsController.instance.unblock("codeEditor");
         MouseController.instance.toggleMouse(false);
       }
+      alt5.emit("qa-tools:codeEditor", this._state);
       webview.emit("toggle", "codeEditor", this._state);
     }
     if (key === 116) {

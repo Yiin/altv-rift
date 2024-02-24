@@ -5,7 +5,7 @@ import { getWebview } from "../user-interface/webview";
 const intervals: alt.Timers.Interval[] = [];
 const timeouts: alt.Timers.Timeout[] = [];
 const ticks: alt.Timers.EveryTick[] = [];
-let inputFocused = false;
+let inputFocusedTimes = 0;
 const registeredKeyDownKeys = new Set();
 
 export function tick() {
@@ -90,7 +90,7 @@ export function onKeyDown(key: alt.Enums.KeyCode, callback: () => void) {
   registeredKeyDownKeys?.add(key);
 
   const handler = alt.Events.onKeyDown(({ key: keyPressed }) => {
-    if (inputFocused) {
+    if (inputFocusedTimes) {
       return;
     }
     if (keyPressed === key) {
@@ -110,8 +110,16 @@ export function onKeyDown(key: alt.Enums.KeyCode, callback: () => void) {
 alt.Timers.nextTick(() => {
   getWebview((webview) => {
     webview.on(ClientEvents.FromWebview.INPUT_FOCUS, (isFocused: boolean) => {
-      inputFocused = isFocused;
+      inputFocusedTimes += isFocused ? 1 : -1;
     });
+  });
+
+  alt.Events.on("qa-tools:codeEditor", (isFocused: boolean) => {
+    inputFocusedTimes += isFocused ? 1 : -1;
+  });
+
+  alt.Events.on("vchat:focus", (isFocused: boolean) => {
+    inputFocusedTimes += isFocused ? 1 : -1;
   });
 });
 

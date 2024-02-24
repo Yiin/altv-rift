@@ -12,10 +12,6 @@ import { whileInGame } from "@/core/game-state-hooks/in-game.state";
 
 const player = alt.Player.local;
 
-alt.Events.onSpawned(() => {
-  // game.setPedInfiniteAmmoClip(player, true);
-});
-
 whileInGame(() => {
   const currentFirearm = computed(() => {
     const character = useCharacter();
@@ -48,10 +44,14 @@ whileInGame(() => {
       return false;
     }
 
+    if (player.isReloading) {
+      return false;
+    }
+
     return true;
   });
 
-  const stopWatchingAmmo = watchEffect(checkForReload);
+  const stopWatchingAmmo = watchEffect(handleAmmoChange);
 
   const playerWeaponChangeListener = alt.Events.onPlayerWeaponChange(onPlayerWeaponChange);
   const keyDownListener = alt.Events.onKeyDown(handleManualReload);
@@ -69,12 +69,22 @@ whileInGame(() => {
    * Sync the in-game ammo in the clip with ammo state in store when the player switches weapons.
    */
   function onPlayerWeaponChange() {
-    // game.setPedInfiniteAmmoClip(player, true);
+    if (!currentFirearm.value) {
+      return;
+    }
+
+    if (!currentFirearm.value.ammo) {
+      return;
+    }
+
+    if (currentFirearm.value.ammo.clip > 0) {
+      allowShooting();
+    }
 
     alt.Utils.waitFor(
       () => !game.isPedSwitchingWeapon(player),
       3000
-    ).then(() => alt.Utils.wait(1000)).finally(checkForReload);
+    ).then(() => alt.Utils.wait(1000)).finally(handleAmmoChange);
   }
 
   /**
@@ -89,18 +99,23 @@ whileInGame(() => {
   /**
    * Reloads the weapon if the clip is empty.
    */
-  function checkForReload() {
+  function handleAmmoChange() {
     const weapon = currentFirearm?.value;
 
     if (!weapon) {
       return;
     }
 
-    const { clip } = weapon.ammo ?? { clip: 0 };
+    const { clip, rest } = weapon.ammo ?? { clip: 0, rest: 0 };
 
-    if (clip === 0) {
+    alt.log("handleAmmoChange", {clip});
+
+    if (clip > 0) {
+      allowShooting();
+    } else if (rest > 0) {
       reloadWeapon();
-      return;
+    } else {
+      disableShooting();
     }
   }
 
@@ -108,10 +123,6 @@ whileInGame(() => {
    * Tries to reload the weapon.
    */
   async function reloadWeapon() {
-    if (player.isReloading) {
-      return;
-    }
-
     if (!weaponCanReload.value) {
       return;
     }
@@ -126,13 +137,26 @@ whileInGame(() => {
       const startReload = await rpc.callServer(ServerCall.FromClient.RELOAD_WEAPON);
 
       if (startReload) {
-        game.taskReloadWeapon(player, false);
+        game.taskReloadWeapon(player, true);
       }
 
       await alt.Utils.waitFor(() => !player.isReloading);
     } finally {
       disableMeleeAttackLight_R.destroy();
     }
+  }
+
+  function allowShooting() {
+    game.setAmmoInClip(player, player.currentWeapon, 1);
+    game.setPedInfiniteAmmoClip(player, true);
+  }
+
+  function disableShooting() {
+    if (player.isReloading) {
+      game.clearPedTasksImmediately(player);
+    }
+    game.setAmmoInClip(player, player.currentWeapon, 0);
+    game.setPedInfiniteAmmoClip(player, false);
   }
 
   return () => {
