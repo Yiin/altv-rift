@@ -31,8 +31,31 @@ Workbench:
   ☐ Airdrops for items & materials
     ✔ UI @done
     ☐ Random loot tables
+      ☐ Medicine
+        ba_prop_battle_crate_med_bc
+        ex_prop_crate_pharma_sc
+        ex_prop_crate_med_sc
+      ☐ Chemicals
+        ba_prop_battle_crate_biohazard_bc
+      ☐ Gems
+        ba_prop_battle_crate_gems_bc
+      ☐ Weapons
+        mix: ba_prop_battle_crates_wpn_mix_01a
+        mix large: h4_prop_h4_crates_full_01a
+        pistols: ba_prop_battle_crates_pistols_01a
+        rifles: ba_prop_battle_crates_rifles_01a, ba_prop_battle_crates_rifles_04a, ba_prop_battle_crates_rifles_03a
+        heavy: ba_prop_battle_crates_sam_01a
+        components: ba_prop_batle_crates_mule
+      ☐ Tech
+        m23_1_prop_m31_crate_tech_01a
+      ☐ Clothing
+        vw_prop_vw_crate_01a
+        sm_prop_smug_crate_m_jewellery
+        big: prop_drop_crate_01_set2
+        small: prop_drop_crate_01
     ☐ Drop points
     ☐ Add airdrop icon to the map
+  ✔ Weapon HUD @done
   ✔ Make airdrop available only after it's landed @done
   ✔ Take all items for some reason doesn't take all items @done
   ✔ Closing the storage window should clear currently open storage @done

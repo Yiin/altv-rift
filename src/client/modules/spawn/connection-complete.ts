@@ -54,10 +54,19 @@ alt.Events.onSpawned(() => {
 });
 
 alt.Timers.everyTick(() => {
+  game.hideHudComponentThisFrame(1); // Wanted Stars
+  game.hideHudComponentThisFrame(2); // Weapon Icon
+  game.hideHudComponentThisFrame(3); // Cash
+  game.hideHudComponentThisFrame(4); // MP Cash
   game.hideHudComponentThisFrame(6); // Vehicle Name
   if (alt.Player.local.vehicle) {
     game.hideHudComponentThisFrame(7); // Area Name
   }
   game.hideHudComponentThisFrame(8); // Vehicle Class
   game.hideHudComponentThisFrame(9); // Street Name
+  game.hideHudComponentThisFrame(13); // Cash Change
+  game.hideHudComponentThisFrame(19); // Weapon Wheel
+  game.hideHudComponentThisFrame(20); // Weapon Wheel Stats
+  game.hideHudComponentThisFrame(21); // HUD Components
+  game.hideHudComponentThisFrame(22); // HUD Weapons
 });
