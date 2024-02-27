@@ -1,5 +1,7 @@
 import alt from "@altv/client";
 import game from "@altv/natives";
+import _ from "lodash";
+import { AirDropType } from "@shared/modules/air-drops";
 import { StorageType } from "@shared/store/game-state.store";
 
 type AirDropData = {
@@ -22,7 +24,7 @@ function syncAirDrop(entity: alt.VirtualEntity) {
   if (!airDrop) {
     // We have no air drop yet, let's create one.
     const lootBox = alt.LocalObject.create({
-      model: "xm3_prop_xm3_pallet_ch_02a",
+      model: getAirDropModel(entity.streamSyncedMeta.airDropType),
       streamingDistance: 300,
       pos: currentPos,
       rot: alt.Vector3.zero,
@@ -109,6 +111,28 @@ function interpolateAirDropPosition(entity: alt.VirtualEntity) {
   const elapsed = (alt.getNetTime() - ts) / 1000;
   const distance = from.distanceTo(to);
   return from.lerp(Math.min(speed * elapsed / distance, 1), to);
+}
+
+function getAirDropModel(type: AirDropType) {
+  switch (type) {
+    case AirDropType.MixWeapons:
+      return "ba_prop_battle_crates_wpn_mix_01a";
+    case AirDropType.MixWeaponsLarge:
+      return "h4_prop_h4_crates_full_01a";
+    case AirDropType.HandgunWeapons:
+      return "ba_prop_battle_crates_pistols_01a";
+    case AirDropType.FirearmWeapons:
+      return _.sample([
+        "ba_prop_battle_crates_rifles_01a",
+        "ba_prop_battle_crates_rifles_04a",
+        "ba_prop_battle_crates_rifles_03a",
+      ]);
+    case AirDropType.HeavyWeapons:
+      return "ba_prop_battle_crates_sam_01a";
+    case AirDropType.WeaponComponents:
+      return "ba_prop_batle_crates_mule";
+  }
+  return "vw_prop_vw_crate_01a";
 }
 
 alt.Events.onStreamSyncedMetaChange(({ entity, key, newValue }) => {

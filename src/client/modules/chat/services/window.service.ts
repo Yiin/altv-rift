@@ -5,7 +5,7 @@ import { UIElement } from "@shared/enums/ui";
 import { deserialize } from "@shared/utility/serializer";
 import {
   doesElementHaveCursor,
-  getWebview,
+  useWebview,
   toggleElement,
 } from "@/core/user-interface/webview";
 import type { Message } from "../interfaces";
@@ -25,7 +25,7 @@ export class WindowService {
   private webView!: alt.WebView;
 
   public constructor() {
-    getWebview((webView) => {
+    useWebview((webView) => {
       this.webView = webView;
       setTimeout(() => {
         this.show();
@@ -98,11 +98,11 @@ export class WindowService {
   }
 
   public on(event: string, listener: (...args: any[]) => void) {
-    getWebview((webview) => webview.on(event, (...args) => listener(...args.flatMap(deserialize))));
+    useWebview((webview) => webview.on(event, (...args) => listener(...args.flatMap(deserialize))));
   }
 
   public once(event: string, listener: (...args: any[]) => void) {
-    getWebview((webview) =>
+    useWebview((webview) =>
       webview.once(event, (...args) => listener(...args.flatMap(deserialize)))
     );
   }

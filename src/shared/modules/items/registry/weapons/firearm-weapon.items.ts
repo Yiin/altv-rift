@@ -1,5 +1,5 @@
 import { registerItem } from "@shared/modules/items";
-import { ItemGrade } from "../../enums";
+import { ItemGrade, ItemTier } from "../../enums";
 import { Item, ItemKey } from "../../types";
 import { AmmoItemKey } from "../ammo/ammo.items";
 import { makeKeys } from "../../../../utility/make-keys";
@@ -7,70 +7,76 @@ import { AmmoGroup, WeaponGroup } from "./weapon-groups";
 import { getWeaponData } from "./weapon.items";
 
 export const FirearmWeapon = makeKeys<FirearmWeaponItemKey>()({
-  ADVANCEDRIFLE: "advancedrifle",
-  APPISTOL: "appistol",
-  ASSAULTRIFLE: "assaultrifle",
-  ASSAULTRIFLEMK2: "assaultriflemk2",
-  ASSAULTSHOTGUN: "assaultshotgun",
-  ASSAULTSMG: "assaultsmg",
-  AUTOSHOTGUN: "autoshotgun",
-  BULLPUPRIFLE: "bullpuprifle",
-  BULLPUPRIFLEMK2: "bullpupriflemk2",
-  BULLPUPSHOTGUN: "bullpupshotgun",
-  CARBINERIFLE: "carbinerifle",
-  CARBINERIFLEMK2: "carbineriflemk2",
-  CERAMICPISTOL: "ceramicpistol",
-  COMBATMG: "combatmg",
-  COMBATMGMK2: "combatmgmk2",
-  COMBATPDW: "combatpdw",
-  COMBATPISTOL: "combatpistol",
-  COMPACTLAUNCHER: "compactlauncher",
-  COMPACTRIFLE: "compactrifle",
-  DBSHOTGUN: "dbshotgun",
-  DOUBLEACTION: "doubleaction",
+  ADVANCEDRIFLE: "advancedrifle", // D
+  APPISTOL: "appistol", // D
+  ASSAULTRIFLE: "assaultrifle", // E
+  ASSAULTRIFLEMK2: "assaultriflemk2", // C
+  ASSAULTSHOTGUN: "assaultshotgun", // B
+  ASSAULTSMG: "assaultsmg", // D
+  AUTOSHOTGUN: "autoshotgun", // D
+  BULLPUPRIFLE: "bullpuprifle", // D
+  BULLPUPRIFLEMK2: "bullpupriflemk2", // B
+  BULLPUPSHOTGUN: "bullpupshotgun", // E
+  CARBINERIFLE: "carbinerifle", // D
+  CARBINERIFLEMK2: "carbineriflemk2", // B
+  CERAMICPISTOL: "ceramicpistol", // C
+  COMBATMG: "combatmg", // A
+  COMBATMGMK2: "combatmgmk2", // S
+  COMBATPDW: "combatpdw", // C
+  COMBATPISTOL: "combatpistol", // E
+  COMBATSHOTGUN: "combatshotgun", // S
+  COMPACTLAUNCHER: "compactlauncher", // S
+  COMPACTRIFLE: "compactrifle", // C
+  DBSHOTGUN: "dbshotgun", // S
+  DOUBLEACTION: "doubleaction", // B
+  EMPLAUNCHER: "emplauncher", // S
   FIREEXTINGUISHER: "fireextinguisher",
-  FIREWORK: "firework",
-  FLAREGUN: "flaregun",
-  GRENADELAUNCHER: "grenadelauncher",
+  FIREWORK: "firework", // F
+  FLAREGUN: "flaregun", // E
+  GADGETPISTOL: "gadgetpistol", // A
+  GRENADELAUNCHER: "grenadelauncher", // A
+  GUSENBERG: "gusenberg", // C
+  HEAVYPISTOL: "heavypistol", // B
+  HEAVYRIFLE: "heavyrifle", // S
+  HEAVYSHOTGUN: "heavyshotgun", // C
+  HEAVYSNIPER: "heavysniper", // A
+  HEAVYSNIPERMK2: "heavysnipermk2", // S
+  HOMINGLAUNCHER: "hominglauncher", // S
+  MACHINEPISTOL: "machinepistol", // E
+  MARKSMANPISTOL: "marksmanpistol", // A
+  MARKSMANRIFLE: "marksmanrifle", // C
+  MARKSMANRIFLEMK2: "marksmanriflemk2", // S
+  MG: "mg", // D
+  MICROSMG: "microsmg", // F
+  MILITARYRIFLE: "militaryrifle", // A
+  MINIGUN: "minigun", // B
+  MINISMG: "minismg", // // D
+  MUSKET: "musket", // C
+  NAVYREVOLVER: "navyrevolver", // B
+  PISTOL: "pistol", // F
+  PISTOL50: "pistol50", // E
+  PISTOLMK2: "pistolmk2", // S
+  PRECISIONRIFLE: "precisionrifle", // B
+  PUMPSHOTGUN: "pumpshotgun", // F
+  PUMPSHOTGUNMK2: "pumpshotgunmk2", // C
+  RAILGUN: "railgun", // A
+  RAYCARBINE: "raycarbine", // S
+  RAYMINIGUN: "rayminigun", // S
+  RAYPISTOL: "raypistol", // S
+  REVOLVER: "revolver", // D
+  REVOLVERMK2: "revolvermk2", // B
+  RPG: "rpg", // S
+  SAWNOFFSHOTGUN: "sawnoffshotgun", // A
+  SMG: "smg", // E
+  SMGMK2: "smgmk2", // A
+  SNIPERRIFLE: "sniperrifle", // B
   SMOKELAUNCHER: "smokelauncher",
-  GUSENBERG: "gusenberg",
-  HEAVYPISTOL: "heavypistol",
-  HEAVYSHOTGUN: "heavyshotgun",
-  HEAVYSNIPER: "heavysniper",
-  HEAVYSNIPERMK2: "heavysnipermk2",
-  HOMINGLAUNCHER: "hominglauncher",
-  MACHINEPISTOL: "machinepistol",
-  MARKSMANPISTOL: "marksmanpistol",
-  MARKSMANRIFLE: "marksmanrifle",
-  MARKSMANRIFLEMK2: "marksmanriflemk2",
-  MG: "mg",
-  MICROSMG: "microsmg",
-  MINIGUN: "minigun",
-  MINISMG: "minismg",
-  MUSKET: "musket",
-  NAVYREVOLVER: "navyrevolver",
-  PISTOL: "pistol",
-  PISTOL50: "pistol50",
-  PISTOLMK2: "pistolmk2",
-  PUMPSHOTGUN: "pumpshotgun",
-  PUMPSHOTGUNMK2: "pumpshotgunmk2",
-  RAILGUN: "railgun",
-  RAYCARBINE: "raycarbine",
-  RAYMINIGUN: "rayminigun",
-  RAYPISTOL: "raypistol",
-  REVOLVER: "revolver",
-  REVOLVERMK2: "revolvermk2",
-  RPG: "rpg",
-  SAWNOFFSHOTGUN: "sawnoffshotgun",
-  SMG: "smg",
-  SMGMK2: "smgmk2",
-  SNIPERRIFLE: "sniperrifle",
   SNSPISTOL: "snspistol",
-  SNSPISTOLMK2: "snspistolmk2",
-  SPECIALCARBINE: "specialcarbine",
-  SPECIALCARBINEMK2: "specialcarbinemk2",
-  STUNGUN: "stungun",
-  VINTAGEPISTOL: "vintagepistol",
+  SNSPISTOLMK2: "snspistolmk2", // A
+  SPECIALCARBINE: "specialcarbine", // D
+  SPECIALCARBINEMK2: "specialcarbinemk2", // B
+  STUNGUN: "stungun", // C
+  VINTAGEPISTOL: "vintagepistol", // F
 });
 
 export type FirearmWeaponItemKey = Brand<string, "FirearmWeaponItemKey">;
@@ -101,7 +107,8 @@ export type FirearmWeaponItemInfo = {
   ammoGroup: AmmoGroup;
   clipSize: number;
   price: number;
-  hud: {
+  tier: ItemTier;
+  comparisonStats: {
     damage: number;
     rate: number;
     accuracy?: number;
@@ -120,7 +127,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.ASSAULT_RIFLE,
     clipSize: 30,
     price: 14250,
-    hud: {
+    tier: ItemTier.D,
+    comparisonStats: {
       damage: 24,
       rate: 70,
       accuracy: 50,
@@ -137,7 +145,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.HANDGUN,
     clipSize: 18,
     price: 5000,
-    hud: {
+    tier: ItemTier.D,
+    comparisonStats: {
       damage: 26,
       rate: 80,
       accuracy: 35,
@@ -154,7 +163,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.ASSAULT_RIFLE,
     clipSize: 30,
     price: 8550,
-    hud: {
+    tier: ItemTier.E,
+    comparisonStats: {
       damage: 30,
       rate: 60,
       accuracy: 45,
@@ -171,7 +181,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.ASSAULT_RIFLE,
     clipSize: 30,
     price: 98750,
-    hud: {
+    tier: ItemTier.C,
+    comparisonStats: {
       damage: 33,
       rate: 60,
       accuracy: 45,
@@ -188,7 +199,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.SHOTGUN,
     clipSize: 8,
     price: 10000,
-    hud: {
+    tier: ItemTier.B,
+    comparisonStats: {
       damage: 77,
       rate: 50,
       accuracy: 25,
@@ -205,7 +217,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.MACHINE_GUN,
     clipSize: 30,
     price: 12550,
-    hud: {
+    tier: ItemTier.D,
+    comparisonStats: {
       damage: 23,
       rate: 55,
       accuracy: 45,
@@ -222,7 +235,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.SHOTGUN,
     clipSize: 10,
     price: 10000,
-    hud: {
+    tier: ItemTier.D,
+    comparisonStats: {
       damage: 77,
       rate: 50,
       accuracy: 25,
@@ -239,7 +253,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.ASSAULT_RIFLE,
     clipSize: 30,
     price: 14500,
-    hud: {
+    tier: ItemTier.D,
+    comparisonStats: {
       damage: 32,
       rate: 70,
       accuracy: 45,
@@ -256,7 +271,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.ASSAULT_RIFLE,
     clipSize: 30,
     price: 14500,
-    hud: {
+    tier: ItemTier.B,
+    comparisonStats: {
       damage: 35,
       rate: 72,
       accuracy: 45,
@@ -273,7 +289,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.SHOTGUN,
     clipSize: 14,
     price: 8000,
-    hud: {
+    tier: ItemTier.E,
+    comparisonStats: {
       damage: 67,
       rate: 20,
       accuracy: 30,
@@ -290,7 +307,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.ASSAULT_RIFLE,
     clipSize: 30,
     price: 13000,
-    hud: {
+    tier: ItemTier.D,
+    comparisonStats: {
       damage: 32,
       rate: 65,
       accuracy: 55,
@@ -307,7 +325,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.ASSAULT_RIFLE,
     clipSize: 30,
     price: 107500,
-    hud: {
+    tier: ItemTier.B,
+    comparisonStats: {
       damage: 36,
       rate: 65,
       accuracy: 55,
@@ -324,7 +343,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.HANDGUN,
     clipSize: 12,
     price: 20000,
-    hud: {
+    tier: ItemTier.C,
+    comparisonStats: {
       damage: 32,
       rate: 44,
       accuracy: 36,
@@ -341,7 +361,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.MACHINE_GUN,
     clipSize: 100,
     price: 14800,
-    hud: {
+    tier: ItemTier.A,
+    comparisonStats: {
       damage: 55,
       rate: 65,
       accuracy: 45,
@@ -358,7 +379,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.MACHINE_GUN,
     clipSize: 100,
     price: 119000,
-    hud: {
+    tier: ItemTier.S,
+    comparisonStats: {
       damage: 57,
       rate: 65,
       accuracy: 45,
@@ -375,7 +397,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.MACHINE_GUN,
     clipSize: 30,
     price: 11750,
-    hud: {
+    tier: ItemTier.C,
+    comparisonStats: {
       damage: 25,
       rate: 50,
       accuracy: 45,
@@ -392,12 +415,31 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.HANDGUN,
     clipSize: 12,
     price: 3200,
-    hud: {
+    tier: ItemTier.E,
+    comparisonStats: {
       damage: 27,
       rate: 40,
       accuracy: 50,
       range: 30,
       overall: 31.4,
+    },
+  },
+  {
+    key: FirearmWeapon.COMBATSHOTGUN,
+    hash: 94989220,
+    name: getWeaponData(94989220).Name,
+    description: getWeaponData(94989220).Description,
+    group: WeaponGroup.SHOTGUN,
+    ammoGroup: AmmoGroup.SHOTGUN,
+    clipSize: 6,
+    price: 13550,
+    tier: ItemTier.S,
+    comparisonStats: {
+      damage: 77,
+      rate: 50,
+      accuracy: 25,
+      range: 15,
+      overall: 38.6,
     },
   },
   {
@@ -409,7 +451,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.GRENADE_LAUNCHER,
     clipSize: 1,
     price: 45000,
-    hud: {
+    tier: ItemTier.S,
+    comparisonStats: {
       damage: 95,
       rate: 10,
       accuracy: 15,
@@ -426,7 +469,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.ASSAULT_RIFLE,
     clipSize: 30,
     price: 14650,
-    hud: {
+    tier: ItemTier.C,
+    comparisonStats: {
       damage: 36,
       rate: 60,
       accuracy: 35,
@@ -443,7 +487,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.SHOTGUN,
     clipSize: 2,
     price: 15450,
-    hud: {
+    tier: ItemTier.S,
+    comparisonStats: {
       damage: 98,
       rate: 25,
       accuracy: 15,
@@ -460,7 +505,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.HANDGUN,
     clipSize: 6,
     price: 75000,
-    hud: {
+    tier: ItemTier.B,
+    comparisonStats: {
       damage: 70,
       rate: 35,
       accuracy: 65,
@@ -477,7 +523,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.FIRE_EXTINGUISHER,
     clipSize: 2000,
     price: 200,
-    hud: {
+    tier: ItemTier.S,
+    comparisonStats: {
       damage: 0,
       rate: 100,
       accuracy: 10,
@@ -494,7 +541,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.FIREWORK,
     clipSize: 1,
     price: 65000,
-    hud: {
+    tier: ItemTier.F,
+    comparisonStats: {
       damage: 45,
       rate: 5,
       accuracy: 12,
@@ -511,12 +559,31 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.HANDGUN,
     clipSize: 1,
     price: 3750,
-    hud: {
+    tier: ItemTier.E,
+    comparisonStats: {
       damage: 20,
       rate: 10,
       accuracy: 30,
       range: 10,
       overall: 16,
+    },
+  },
+  {
+    key: FirearmWeapon.GADGETPISTOL,
+    hash: 1470379660,
+    name: getWeaponData(1470379660).Name,
+    description: getWeaponData(1470379660).Description,
+    group: WeaponGroup.HANDGUN,
+    ammoGroup: AmmoGroup.HANDGUN,
+    clipSize: 1,
+    price: 0,
+    tier: ItemTier.A,
+    comparisonStats: {
+      damage: 80,
+      rate: 15,
+      accuracy: 30,
+      range: 35,
+      overall: 32.4,
     },
   },
   {
@@ -528,7 +595,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.GRENADE_LAUNCHER,
     clipSize: 10,
     price: 32400,
-    hud: {
+    tier: ItemTier.A,
+    comparisonStats: {
       damage: 95,
       rate: 20,
       accuracy: 10,
@@ -545,7 +613,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.SMOKE_GRANADES,
     clipSize: 10,
     price: 4200,
-    hud: {
+    tier: ItemTier.C,
+    comparisonStats: {
       damage: 20,
       rate: 20,
       accuracy: 10,
@@ -562,7 +631,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.MACHINE_GUN,
     clipSize: 30,
     price: 14600,
-    hud: {
+    tier: ItemTier.B,
+    comparisonStats: {
       damage: 34,
       rate: 65,
       accuracy: 38,
@@ -579,7 +649,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.HANDGUN,
     clipSize: 18,
     price: 3750,
-    hud: {
+    tier: ItemTier.S,
+    comparisonStats: {
       damage: 40,
       rate: 40,
       accuracy: 50,
@@ -596,7 +667,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.SHOTGUN,
     clipSize: 6,
     price: 13550,
-    hud: {
+    tier: ItemTier.C,
+    comparisonStats: {
       damage: 85,
       rate: 45,
       accuracy: 30,
@@ -613,7 +685,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.SNIPER_RIFLE,
     clipSize: 6,
     price: 38150,
-    hud: {
+    tier: ItemTier.A,
+    comparisonStats: {
       damage: 98,
       rate: 20,
       accuracy: 90,
@@ -630,7 +703,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.SNIPER_RIFLE,
     clipSize: 6,
     price: 165375,
-    hud: {
+    tier: ItemTier.S,
+    comparisonStats: {
       damage: 98,
       rate: 20,
       accuracy: 90,
@@ -647,7 +721,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.ROCKET_LAUNCHER,
     clipSize: 1,
     price: 165000,
-    hud: {
+    tier: ItemTier.S,
+    comparisonStats: {
       damage: 95,
       rate: 5,
       accuracy: 25,
@@ -664,7 +739,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.HANDGUN,
     clipSize: 12,
     price: 6250,
-    hud: {
+    tier: ItemTier.E,
+    comparisonStats: {
       damage: 28,
       rate: 70,
       accuracy: 40,
@@ -681,7 +757,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.HANDGUN,
     clipSize: 1,
     price: 4350,
-    hud: {
+    tier: ItemTier.A,
+    comparisonStats: {
       damage: 80,
       rate: 15,
       accuracy: 30,
@@ -698,7 +775,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.SNIPER_RIFLE,
     clipSize: 8,
     price: 15750,
-    hud: {
+    tier: ItemTier.C,
+    comparisonStats: {
       damage: 70,
       rate: 40,
       accuracy: 80,
@@ -715,7 +793,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.SNIPER_RIFLE,
     clipSize: 8,
     price: 149000,
-    hud: {
+    tier: ItemTier.S,
+    comparisonStats: {
       damage: 70,
       rate: 40,
       accuracy: 80,
@@ -732,7 +811,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.MACHINE_GUN,
     clipSize: 54,
     price: 13500,
-    hud: {
+    tier: ItemTier.D,
+    comparisonStats: {
       damage: 50,
       rate: 60,
       accuracy: 40,
@@ -749,12 +829,31 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.MACHINE_GUN,
     clipSize: 16,
     price: 3750,
-    hud: {
+    tier: ItemTier.F,
+    comparisonStats: {
       damage: 21,
       rate: 60,
       accuracy: 30,
       range: 25,
       overall: 31.2,
+    },
+  },
+  {
+    key: FirearmWeapon.MILITARYRIFLE,
+    hash: 2636060646,
+    name: getWeaponData(2636060646).Name,
+    description: getWeaponData(2636060646).Description,
+    group: WeaponGroup.ASSAULT_RIFLE,
+    ammoGroup: AmmoGroup.ASSAULT_RIFLE,
+    clipSize: 30,
+    price: 36500,
+    tier: ItemTier.A,
+    comparisonStats: {
+      damage: 38,
+      rate: 55,
+      accuracy: 45,
+      range: 45,
+      overall: 44.6,
     },
   },
   {
@@ -766,7 +865,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.MACHINE_GUN,
     clipSize: 0,
     price: 470000,
-    hud: {
+    tier: ItemTier.B,
+    comparisonStats: {
       damage: 30,
       rate: 100,
       accuracy: 40,
@@ -783,7 +883,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.MACHINE_GUN,
     clipSize: 20,
     price: 8900,
-    hud: {
+    tier: ItemTier.D,
+    comparisonStats: {
       damage: 22,
       rate: 84,
       accuracy: 33,
@@ -800,7 +901,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.SHOTGUN,
     clipSize: 1,
     price: 21400,
-    hud: {
+    tier: ItemTier.C,
+    comparisonStats: {
       damage: 97,
       rate: 10,
       accuracy: 65,
@@ -817,7 +919,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.HANDGUN,
     clipSize: 6,
     price: 55000,
-    hud: {
+    tier: ItemTier.B,
+    comparisonStats: {
       damage: 70,
       rate: 25,
       accuracy: 60,
@@ -834,7 +937,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.HANDGUN,
     clipSize: 12,
     price: 2500,
-    hud: {
+    tier: ItemTier.F,
+    comparisonStats: {
       damage: 26,
       rate: 40,
       accuracy: 40,
@@ -851,7 +955,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.HANDGUN,
     clipSize: 9,
     price: 3900,
-    hud: {
+    tier: ItemTier.E,
+    comparisonStats: {
       damage: 51,
       rate: 40,
       accuracy: 55,
@@ -868,7 +973,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.HANDGUN,
     clipSize: 12,
     price: 73750,
-    hud: {
+    tier: ItemTier.S,
+    comparisonStats: {
       damage: 38,
       rate: 40,
       accuracy: 40,
@@ -885,7 +991,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.SHOTGUN,
     clipSize: 8,
     price: 3500,
-    hud: {
+    tier: ItemTier.B,
+    comparisonStats: {
       damage: 67,
       rate: 20,
       accuracy: 30,
@@ -902,7 +1009,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.SHOTGUN,
     clipSize: 8,
     price: 82500,
-    hud: {
+    tier: ItemTier.F,
+    comparisonStats: {
       damage: 67,
       rate: 20,
       accuracy: 30,
@@ -919,7 +1027,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.PLASMA_RAYS,
     clipSize: 1,
     price: 250000,
-    hud: {
+    tier: ItemTier.C,
+    comparisonStats: {
       damage: 90,
       rate: 25,
       accuracy: 20,
@@ -936,7 +1045,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.PLASMA_RAYS,
     clipSize: 9999,
     price: 449000,
-    hud: {
+    tier: ItemTier.A,
+    comparisonStats: {
       damage: 55,
       rate: 65,
       accuracy: 45,
@@ -953,7 +1063,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.PLASMA_RAYS,
     clipSize: 15000,
     price: 449000,
-    hud: {
+    tier: ItemTier.S,
+    comparisonStats: {
       damage: 30,
       rate: 100,
       accuracy: 40,
@@ -970,7 +1081,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.HANDGUN,
     clipSize: 1,
     price: 399000,
-    hud: {
+    tier: ItemTier.S,
+    comparisonStats: {
       damage: 80,
       rate: 10,
       accuracy: 10,
@@ -987,7 +1099,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.HANDGUN,
     clipSize: 6,
     price: 5900,
-    hud: {
+    tier: ItemTier.S,
+    comparisonStats: {
       damage: 70,
       rate: 20,
       accuracy: 65,
@@ -1004,7 +1117,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.HANDGUN,
     clipSize: 6,
     price: 99000,
-    hud: {
+    tier: ItemTier.D,
+    comparisonStats: {
       damage: 75,
       rate: 30,
       accuracy: 65,
@@ -1021,7 +1135,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.ROCKET_LAUNCHER,
     clipSize: 1,
     price: 26250,
-    hud: {
+    tier: ItemTier.B,
+    comparisonStats: {
       damage: 100,
       rate: 5,
       accuracy: 10,
@@ -1038,7 +1153,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.SHOTGUN,
     clipSize: 8,
     price: 30000,
-    hud: {
+    tier: ItemTier.S,
+    comparisonStats: {
       damage: 96,
       rate: 20,
       accuracy: 20,
@@ -1055,7 +1171,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.MACHINE_GUN,
     clipSize: 30,
     price: 7500,
-    hud: {
+    tier: ItemTier.A,
+    comparisonStats: {
       damage: 22,
       rate: 55,
       accuracy: 40,
@@ -1072,7 +1189,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.MACHINE_GUN,
     clipSize: 30,
     price: 85500,
-    hud: {
+    tier: ItemTier.E,
+    comparisonStats: {
       damage: 22,
       rate: 55,
       accuracy: 40,
@@ -1089,7 +1207,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.SNIPER_RIFLE,
     clipSize: 10,
     price: 20000,
-    hud: {
+    tier: ItemTier.A,
+    comparisonStats: {
       damage: 96,
       rate: 25,
       accuracy: 70,
@@ -1106,7 +1225,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.HANDGUN,
     clipSize: 6,
     price: 2750,
-    hud: {
+    tier: ItemTier.B,
+    comparisonStats: {
       damage: 30,
       rate: 40,
       accuracy: 40,
@@ -1123,7 +1243,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.HANDGUN,
     clipSize: 6,
     price: 79575,
-    hud: {
+    tier: ItemTier.A,
+    comparisonStats: {
       damage: 30,
       rate: 40,
       accuracy: 40,
@@ -1140,7 +1261,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.ASSAULT_RIFLE,
     clipSize: 30,
     price: 14750,
-    hud: {
+    tier: ItemTier.D,
+    comparisonStats: {
       damage: 34,
       rate: 65,
       accuracy: 55,
@@ -1157,7 +1279,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.ASSAULT_RIFLE,
     clipSize: 30,
     price: 135000,
-    hud: {
+    tier: ItemTier.B,
+    comparisonStats: {
       damage: 34,
       rate: 65,
       accuracy: 55,
@@ -1174,7 +1297,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.HANDGUN,
     clipSize: 1, // 2104529083
     price: 100,
-    hud: {
+    tier: ItemTier.C,
+    comparisonStats: {
       damage: 1,
       rate: 10,
       accuracy: 40,
@@ -1191,7 +1315,8 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
     ammoGroup: AmmoGroup.HANDGUN,
     clipSize: 7,
     price: 3450,
-    hud: {
+    tier: ItemTier.F,
+    comparisonStats: {
       damage: 35,
       rate: 40,
       accuracy: 40,

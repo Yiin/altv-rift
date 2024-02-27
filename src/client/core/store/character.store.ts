@@ -5,7 +5,7 @@ import { updateStoreState } from "@shared/store/utils";
 import { ClientEvents } from "@shared/events/client";
 import { WebviewEvents } from "@shared/events/webview";
 import { Character } from "@shared/interfaces";
-import { getWebview } from "@/core/user-interface/webview";
+import { useWebview } from "@/core/user-interface/webview";
 import { pinia } from ".";
 
 type CharacterStore = StoreDefinition<"character", Character, {}, {}>;
@@ -22,7 +22,7 @@ export const useCharacter = () => {
 };
 
 alt.Events.onServer(ClientEvents.FromServer.UPDATE_CHARACTER_STATE, (event: any) => {
-  getWebview().emitRaw(WebviewEvents.FromClient.UPDATE_CHARACTER_STATE, event);
+  useWebview().emitRaw(WebviewEvents.FromClient.UPDATE_CHARACTER_STATE, event);
 
   const character = useCharacter();
 
@@ -30,7 +30,7 @@ alt.Events.onServer(ClientEvents.FromServer.UPDATE_CHARACTER_STATE, (event: any)
 });
 
 alt.Events.onServer(ClientEvents.FromServer.SET_CHARACTER_STATE, (state: any) => {
-  getWebview().emitRaw(WebviewEvents.FromClient.SET_CHARACTER_STATE, state);
+  useWebview().emitRaw(WebviewEvents.FromClient.SET_CHARACTER_STATE, state);
 
   console.log("setting character state: start");
   if (characterStore) {

@@ -42,5 +42,6 @@ declare module "@altv/shared" {
       from: alt.Vector3;
       speed: number;
     }; // entityType: storage & storageType: AirDrop
+    airDropType?: import("../../src/shared/modules/items/registry/air-drop").AirDropType; // entityType: storage & storageType: AirDrop
   }
 }

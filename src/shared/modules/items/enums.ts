@@ -14,3 +14,13 @@ export enum ItemGrade {
   THREE = '+++',
   FOUR = '++++',
 }
+
+export enum ItemTier {
+  S = 'S',
+  A = 'A',
+  B = 'B',
+  C = 'C',
+  D = 'D',
+  E = 'E',
+  F = 'F',
+}

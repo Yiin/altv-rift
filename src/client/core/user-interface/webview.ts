@@ -40,11 +40,11 @@ export async function waitForUserInterface() {
 
 /**
  * Kind of shitty typing here, but it is what it is.
- * Don't call getWebview() until the webview is ready or use getWebview((webview) => {...}).
+ * Don't call useWebview() until the webview is ready or use useWebview((webview) => {...}).
  */
-export function getWebview(): alt.WebView;
-export function getWebview(cb: (webview: alt.WebView) => void): void;
-export function getWebview(cb?: (webview: alt.WebView) => void): alt.WebView | void {
+export function useWebview(): alt.WebView;
+export function useWebview(cb: (webview: alt.WebView) => void): void;
+export function useWebview(cb?: (webview: alt.WebView) => void): alt.WebView | void {
   if (cb) {
     ready.then(() => {
       cb(webview);

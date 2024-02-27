@@ -3,7 +3,7 @@ import game from "@altv/natives";
 import { ref, watch } from "vue";
 import { ClientEvents } from "@shared/events/client";
 import { everyTickWhile } from "@/core/utility/event-helpers";
-import { getWebview } from "@/core/user-interface/webview";
+import { useWebview } from "@/core/user-interface/webview";
 
 let equipmentPed: number | null = null;
 let previousHudColor: alt.RGBA | null = null;
@@ -33,7 +33,7 @@ function hideGameCursor() {
   );
 }
 
-getWebview((webView) => {
+useWebview((webView) => {
   webView.on(ClientEvents.FromWebview.TOGGLE_PLAYER_PREVIEW, async (state) => {
     isPreviewingPlayer.value = state;
   });

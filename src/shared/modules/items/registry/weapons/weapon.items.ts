@@ -53,10 +53,7 @@ export function getWeaponHash(key: WeaponItemKey) {
 export function getWeaponGroup(key: WeaponItemKey) {
   return getItemInfoByKey(key).group;
 }
-export function getWeaponAmmoGroup(key: WeaponItemKey) {
-  if (!isItemKeyFirearmWeapon(key)) {
-    return null;
-  }
+export function getWeaponAmmoGroup(key: FirearmWeaponItemKey) {
   return getItemInfoByKey(key).ammoGroup;
 }
 

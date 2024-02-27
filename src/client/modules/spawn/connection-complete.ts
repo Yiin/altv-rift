@@ -3,8 +3,6 @@ import game from "@altv/natives";
 import { ServerEvents } from "@shared/events/server";
 import { waitForUserInterface } from "@/core/user-interface/webview";
 import { PED_CONFIG_FLAG } from "@/core/constants/ped-flags";
-import { whileInGame } from "@/core/game-state-hooks/in-game.state";
-import { whileInVehicle } from "@/core/game-state-hooks/in-vehicle.state";
 
 alt.Events.onConnectionComplete(handleConnectionComplete);
 alt.setWatermarkPosition(4);

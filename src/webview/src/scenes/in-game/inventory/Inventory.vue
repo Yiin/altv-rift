@@ -12,7 +12,7 @@ import GroundItems from "./ground/Ground.vue";
 import AmountTransfer from "./AmountTransfer.vue";
 import ItemPreview from "./item-preview/ItemPreview.vue";
 import { useGapSize } from "@/composables/use-gap-size";
-import { ItemSourceOrigin } from "@shared/interfaces";
+import { ItemSourceOrigin, EquipmentSlot as EquipmentSlotEnum } from "@shared/interfaces";
 import { useGameState } from "@/store/synced/game-state.store";
 
 const inventory = useInventory();
@@ -90,19 +90,19 @@ onUnmounted(() => {
         <h2 class="uppercase text-white text-2xl font-bold">character</h2>
         <div class="uppercase text-base text-deepGray">equipment</div>
         <div class="uppercase inline-grid grid-cols-3 gap-2.5 place-content-center mt-5">
-          <EquipmentSlot name="headwear" />
-          <EquipmentSlot name="mask" />
-          <EquipmentSlot name="glasses" />
-          <EquipmentSlot name="backpack" />
-          <EquipmentSlot name="earrings" />
-          <EquipmentSlot name="accessory" />
-          <EquipmentSlot name="top" />
-          <EquipmentSlot name="armor" />
-          <EquipmentSlot name="gloves" />
-          <EquipmentSlot name="lefthand" />
-          <EquipmentSlot name="pants" />
-          <EquipmentSlot name="righthand" />
-          <EquipmentSlot name="shoes" class="col-start-2" />
+          <EquipmentSlot :name="EquipmentSlotEnum.Headwear" />
+          <EquipmentSlot :name="EquipmentSlotEnum.Mask" />
+          <EquipmentSlot :name="EquipmentSlotEnum.Glasses" />
+          <EquipmentSlot :name="EquipmentSlotEnum.Backpack" />
+          <EquipmentSlot :name="EquipmentSlotEnum.Earrings" />
+          <EquipmentSlot :name="EquipmentSlotEnum.Accessory" />
+          <EquipmentSlot :name="EquipmentSlotEnum.Top" />
+          <EquipmentSlot :name="EquipmentSlotEnum.Armor" />
+          <EquipmentSlot :name="EquipmentSlotEnum.Gloves" />
+          <EquipmentSlot :name="EquipmentSlotEnum.LeftHand" />
+          <EquipmentSlot :name="EquipmentSlotEnum.Pants" />
+          <EquipmentSlot :name="EquipmentSlotEnum.RightHand" />
+          <EquipmentSlot :name="EquipmentSlotEnum.Shoes" class="col-start-2" />
         </div>
       </div>
       <div>
@@ -126,20 +126,20 @@ onUnmounted(() => {
         <h2 class="uppercase text-white text-2xl font-bold">extras</h2>
         <div class="uppercase text-base text-deepGray">other equipment</div>
         <div class="inline-grid grid-cols-3 gap-2.5 place-content-center mt-5 mb-8">
-          <EquipmentSlot name="tool" />
-          <EquipmentSlot name="phone" />
+          <EquipmentSlot :name="EquipmentSlotEnum.Tool" />
+          <EquipmentSlot :name="EquipmentSlotEnum.Phone" />
         </div>
       </div>
       <div :style="{ width: `${widths[1]}px` }" class="pt-5.5">
         <h2 class="uppercase text-white text-2xl font-bold">backpack</h2>
         <div class="uppercase text-base text-deepGray">quick access</div>
         <div class="mt-2.5 flex gap-2.5">
-          <EquipmentSlot name="weapon" />
-          <EquipmentSlot name="ammo" class="-ml-2.5 mr-2.5" />
-          <EquipmentSlot name="quick1" />
-          <EquipmentSlot name="quick2" />
-          <EquipmentSlot name="quick3" />
-          <EquipmentSlot name="quick4" />
+          <EquipmentSlot :name="EquipmentSlotEnum.Weapon" />
+          <EquipmentSlot :name="EquipmentSlotEnum.Ammo" class="-ml-2.5 mr-2.5" />
+          <EquipmentSlot :name="EquipmentSlotEnum.QuickSlot1" />
+          <EquipmentSlot :name="EquipmentSlotEnum.QuickSlot2" />
+          <EquipmentSlot :name="EquipmentSlotEnum.QuickSlot3" />
+          <EquipmentSlot :name="EquipmentSlotEnum.QuickSlot4" />
         </div>
       </div>
       <div :style="{ width: `${widths[2]}px` }"></div>

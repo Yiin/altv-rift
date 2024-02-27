@@ -16,9 +16,9 @@ import {
   PickaxeBlueprint,
 } from "@shared/modules/production";
 import { PedKey } from "@shared/modules/ped/list";
+import { Note } from "@shared/modules/items/registry/note.items";
 import { isInGame } from "@/core/utility/assertions";
 import { on } from "@/core/events/emit";
-import { Note } from "@shared/modules/items/registry/note.items";
 
 alt.Events.onPlayer(ServerEvents.FromClient.NOTIFY, (player, questFact) => {
   if (!isInGame(player)) {

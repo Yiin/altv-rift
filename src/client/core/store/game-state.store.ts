@@ -4,7 +4,7 @@ import { updateStoreState } from "@shared/store/utils";
 import { ClientEvents } from "@shared/events/client";
 import { getDefaultGameState } from "@shared/store/game-state.store";
 import { WebviewEvents } from "@shared/events/webview";
-import { getWebview } from "@/core/user-interface/webview";
+import { useWebview } from "@/core/user-interface/webview";
 import { pinia } from ".";
 
 const useGameState = defineStore("game-state", {
@@ -14,14 +14,14 @@ const useGameState = defineStore("game-state", {
 export const gameState = useGameState(pinia);
 
 alt.Events.onServer(ClientEvents.FromServer.UPDATE_GAME_STATE, (event: any) => {
-  getWebview().emitRaw(WebviewEvents.FromClient.UPDATE_GAME_STATE, event);
+  useWebview().emitRaw(WebviewEvents.FromClient.UPDATE_GAME_STATE, event);
 
   alt.log("Updating game state", event);
   updateStoreState(gameState, event);
 });
 
 alt.Events.onServer(ClientEvents.FromServer.SET_GAME_STATE, (state: any) => {
-  getWebview().emitRaw(WebviewEvents.FromClient.SET_GAME_STATE, state);
+  useWebview().emitRaw(WebviewEvents.FromClient.SET_GAME_STATE, state);
 
   alt.log("Setting game state", state);
   gameState.$state = state;

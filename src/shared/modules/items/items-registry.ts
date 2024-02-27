@@ -30,3 +30,10 @@ export function getItemDescription(key: ItemKey) {
   const itemInfo = getItemInfoByKey(key);
   return itemInfo && "description" in itemInfo ? itemInfo.description : "";
 }
+
+/**
+ * Returns all registered item keys.
+ */
+export function getAllItemKeys() {
+  return Array.from(ITEMS_REGISTRY.keys());
+}

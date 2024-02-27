@@ -6,15 +6,15 @@ import {
   CALL_WEBVIEW_FROM_SERVER_RESPONSE,
 } from "@shared/calls/constants";
 import { deserialize } from "@shared/utility/serializer";
-import { getWebview } from "@/core/user-interface/webview";
+import { useWebview } from "@/core/user-interface/webview";
 
 alt.Events.onServer(CALL_WEBVIEW_FROM_SERVER, async (payload) => {
-  getWebview((webview) => {
+  useWebview((webview) => {
     webview.emitRaw(CALL_WEBVIEW_FROM_SERVER, payload);
   });
 });
 
-getWebview((webview) => {
+useWebview((webview) => {
   webview.on(CALL_WEBVIEW_FROM_SERVER_RESPONSE, (response) => {
     alt.Events.emitServerRaw(CALL_WEBVIEW_FROM_SERVER_RESPONSE, deserialize(response));
   });
@@ -26,7 +26,7 @@ getWebview((webview) => {
 });
 
 alt.Events.onServer(CALL_SERVER_FROM_WEBVIEW_RESPONSE, (response) => {
-  getWebview((webview) => {
+  useWebview((webview) => {
     webview.emitRaw(CALL_SERVER_FROM_WEBVIEW_RESPONSE, response);
   });
 });

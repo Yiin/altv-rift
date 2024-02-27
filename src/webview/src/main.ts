@@ -7,7 +7,7 @@ import { router } from "./router";
 import { pinia } from "./store";
 
 import "./main.css";
-import { DefineComponent } from "vue";
+// import { DefineComponent } from "vue";
 
 loadFonts();
 

@@ -108,8 +108,6 @@ whileInGame(() => {
 
     const { clip, rest } = weapon.ammo ?? { clip: 0, rest: 0 };
 
-    alt.log("handleAmmoChange", {clip});
-
     if (clip > 0) {
       allowShooting();
     } else if (rest > 0) {
@@ -147,6 +145,8 @@ whileInGame(() => {
   }
 
   function allowShooting() {
+    // Setting 1 ammo in clip because infinite ammo
+    // doesn't do anything if there is no ammo in clip
     game.setAmmoInClip(player, player.currentWeapon, 1);
     game.setPedInfiniteAmmoClip(player, true);
   }

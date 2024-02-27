@@ -1,6 +1,7 @@
 import { registerItem } from "../items-registry";
 import { makeKeys } from "../../../utility/make-keys";
 import { Item } from "../types";
+import { ItemFlags } from "../enums";
 import { FoodIngredient } from "./materials/food-ingredient.items";
 
 export const FishBait = makeKeys<FishBaitItemKey>()({

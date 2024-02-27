@@ -47,11 +47,11 @@ const models = [
 ];
 
 const weapons = [
-  MeleeWeapon.BAT,
-  // FirearmWeapon.COMBATMG,
-  // FirearmWeapon.COMBATPISTOL,
-  // FirearmWeapon.MICROSMG,
-  // FirearmWeapon.SMG,
+  // MeleeWeapon.BAT,
+  FirearmWeapon.COMBATMG,
+  FirearmWeapon.COMBATPISTOL,
+  FirearmWeapon.MICROSMG,
+  FirearmWeapon.SMG,
 ];
 
 const thugs = new Set<alt.Ped>();

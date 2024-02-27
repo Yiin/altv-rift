@@ -1,7 +1,7 @@
 import game from "@altv/natives";
 import { UIElement } from "@shared/enums/ui";
 import { ClientEvents } from "@shared/events/client";
-import { toggleElement, getWebview } from "../../webview";
+import { toggleElement, useWebview } from "../../webview";
 import { actions } from "./action-menu";
 
 export function openActionMenu() {
@@ -10,7 +10,7 @@ export function openActionMenu() {
   }
   toggleElement(UIElement.ACTION_MENU, true);
 
-  getWebview().once(ClientEvents.FromWebview.ACTION_MENU_SELECT, (title) => {
+  useWebview().once(ClientEvents.FromWebview.ACTION_MENU_SELECT, (title) => {
     toggleElement(UIElement.ACTION_MENU, false);
     game.playSoundFrontend(-1, "SELECT", "HUD_FREEMODE_SOUNDSET", true);
 

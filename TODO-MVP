@@ -2,8 +2,8 @@ MVP Development Plan:
 
 Introduction MVP:
   ☐ Gather materials - explain what to do with them
-    ☐ Scrapping minigames to gather materials (5)
-    ☐ Different scrapping points for different materials (8 hours)
+    ☐ Scrapping minigames to gather materials
+    ☐ Different scrapping points for different materials
   Weapon:
     ☐ Craft basic weapon
       ☐ Crafting menu (just basic UI, no design)
@@ -11,7 +11,7 @@ Introduction MVP:
     ☐ Upgrade weapon with fire ammo as a gift - omg
     ☐ Use upgraded on more zombie boars - 1 hit + effect to kill
   Food:
-    ☐ Fish for food
+    ☐ Fish for food @started
     ☐ Hunt rabbit for food
     ☐ Cook food
     ☐ Eat food - observe health bar
@@ -21,7 +21,7 @@ Next steps (Base game MVP):
   ☐ Deliver package to NPC
   ☐ NPC gives you a basic transport
   ☐ Give map to player with defined areas to explore
-  ☐ Random raids
+  ☐ Random raids / events / airdrops
 
 ------------------------------------------------------------------------------------------------------------------------
 
@@ -39,7 +39,7 @@ Workbench:
         ba_prop_battle_crate_biohazard_bc
       ☐ Gems
         ba_prop_battle_crate_gems_bc
-      ☐ Weapons
+      ☐ Weapons @started
         mix: ba_prop_battle_crates_wpn_mix_01a
         mix large: h4_prop_h4_crates_full_01a
         pistols: ba_prop_battle_crates_pistols_01a
@@ -71,17 +71,32 @@ Workbench:
   ✔ Disable weapon wheel and keep only quick access slots available @done
   ✔ Shooting doesn't work cause no ammo? @done
   ✔ Player can unequip weapon while reloading @done
-  ☐ Refactor ammo
+  ✔ Move weapon loot tables to separate files @done
+  ☐ Create more weapon loot tables
+  ☐ Refactor ammo !
     ☐ Generic ammo used w/o equipment
       Questions to answer:
-      ☐ Do we display generic ammo in special ui element or do we treat it as simple item?
+      ✔ Do we display generic ammo in special ui element or do we treat it as simple item? @done
         treating as simple item is easier from dev perspective, not sure about UX tho
-      ☐ If we move it to special ui, how do we handle drag'n'drop for it?
+        ☐ Simple item
+      ✘ If we move it to special ui, how do we handle drag'n'drop for it? @cancelled
     ☐ Special ammo can be equiped and takes priority over generic ammo
+      ☐ Create special ammo
+        ☐ Fire
+        ☐ Explosive
+        ☐ Lethality
+  ☐ Weapon components ;-;
+    ☐ How do they work, do we need icons?
+  ☐ Investigate AI solutions for custom icons because I'm poor
+  ✔ Fix camera moving from 0;0 to player when spawned. @done(24-02-27 00:24)
+  ☐ Enemy ped health is fucked.
+  ☐ Have a better mechanism to handle game control state (similar to cursor)
   ✔ Coming back from alt-tab to game with a window open doesn't restore cursor. @done
   ✔ Fix keybinds being active while in devtools or chat @done
   ✔ Cancelling reload fucks up ammo @done
   ☐ Crafting UI for weapons
+    ☐ UI itself
+    ☐ The actual integration of that UI
 
 ------------------------------------------------------------------------------------------------------------------------
 

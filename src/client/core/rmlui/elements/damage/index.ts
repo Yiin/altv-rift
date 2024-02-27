@@ -80,6 +80,8 @@ alt.Timers.everyTick(() => {
 alt.Events.onServer(
   ClientEvents.FromServer.DISPLAY_DAMAGE_HIT,
   (entityType, entityRemoteID, damage, type) => {
+    alt.log("Displaying damage hit", entityType, entityRemoteID, damage, type);
+
     switch (entityType) {
       // case alt.Enums.BaseObjectType.PLAYER: {
       //   const player = alt.Player.getByRemoteID(entityRemoteID);

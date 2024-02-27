@@ -5,10 +5,10 @@ import { ClientEvents } from "@shared/events/client";
 import { loadSceneAtCoords } from "@/core/utility/scene";
 import { Control, ControlType } from "@/core/constants/controls";
 import { everyTickWhile } from "@/core/utility/event-helpers";
-import { getWebview } from "@/core/user-interface/webview";
+import { useWebview } from "@/core/user-interface/webview";
 import { whileEntityIsStreamedIn } from "@/core/game-state-hooks/entity-is-streamed-in.state";
-import { getCharacterCreationPed } from "./character-ped";
 import { vec3ToArr } from "@/core/utility/vectors";
+import { getCharacterCreationPed } from "./character-ped";
 
 const cameraPositionBaseline = new alt.Vector3(1508.8, -1731.9, 79.3);
 let cameraHorizontalOffset = 0;
@@ -106,7 +106,7 @@ export function createCharacterCreationCamera(ped: alt.LocalPed) {
     }
   );
 
-  getWebview().on(ClientEvents.FromWebview.CAMERA_MOVE_START, () => {
+  useWebview().on(ClientEvents.FromWebview.CAMERA_MOVE_START, () => {
     if (cameraControlInterval) {
       cameraControlInterval.destroy();
       cameraControlInterval = undefined;
@@ -115,7 +115,7 @@ export function createCharacterCreationCamera(ped: alt.LocalPed) {
     cameraControlInterval = alt.Timers.everyTick(moveCharacterCreationCamera);
   });
 
-  getWebview().on(ClientEvents.FromWebview.CAMERA_MOVE_END, () => {
+  useWebview().on(ClientEvents.FromWebview.CAMERA_MOVE_END, () => {
     if (cameraControlInterval) {
       cameraControlInterval.destroy();
       cameraControlInterval = undefined;

@@ -1,6 +1,6 @@
 import alt from "@altv/client";
 import { ClientEvents } from "@shared/events/client";
-import { getWebview } from "../user-interface/webview";
+import { useWebview } from "../user-interface/webview";
 
 const intervals: alt.Timers.Interval[] = [];
 const timeouts: alt.Timers.Timeout[] = [];
@@ -108,7 +108,7 @@ export function onKeyDown(key: alt.Enums.KeyCode, callback: () => void) {
 }
 
 alt.Timers.nextTick(() => {
-  getWebview((webview) => {
+  useWebview((webview) => {
     webview.on(ClientEvents.FromWebview.INPUT_FOCUS, (isFocused: boolean) => {
       inputFocusedTimes += isFocused ? 1 : -1;
     });
@@ -122,25 +122,3 @@ alt.Timers.nextTick(() => {
     inputFocusedTimes += isFocused ? 1 : -1;
   });
 });
-
-// alt.Events.onDisconnect(() => {
-//   for (const interval of intervals) {
-//     try {
-//       alt.clearInterval(interval);
-//     } catch {}
-//   }
-//   for (const timeout of timeouts) {
-//     try {
-//       alt.clearTimeout(timeout);
-//     } catch {}
-//   }
-//   for (const tick of ticks) {
-//     try {
-//       alt.clearEveryTick(tick);
-//     } catch {}
-//   }
-
-//   intervals.splice(0, intervals.length);
-//   timeouts.splice(0, timeouts.length);
-//   ticks.splice(0, ticks.length);
-// });

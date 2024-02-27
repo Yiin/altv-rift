@@ -5,7 +5,7 @@ import { ServerEvents } from "@shared/events/server";
 import { WebviewEvents } from "@shared/events/webview";
 import { ServerCall } from "@shared/calls/server";
 import { Scene } from "@shared/enums/ui";
-import { getWebview, setScene } from "@/core/user-interface/webview";
+import { useWebview, setScene } from "@/core/user-interface/webview";
 import { rpc } from "@/core/rpc";
 
 // TODO: it should be possible to use process.env here, but
@@ -52,7 +52,7 @@ async function beginAuth() {
     const url = await rpc.callServer(ServerCall.FromClient.GET_DISCORD_AUTH_URL);
 
     setScene(Scene.DISCORD_AUTH, { hasCursor: true });
-    getWebview((webview) => {
+    useWebview((webview) => {
       webview.emitRaw(WebviewEvents.FromClient.SETUP_DISCORD_AUTH, url);
     });
 

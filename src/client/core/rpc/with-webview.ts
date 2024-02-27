@@ -12,7 +12,7 @@ import { WebviewCall } from "@shared/calls/webview";
 import { CallFromClient } from "@shared/calls/webview/from-client";
 import { createPayload } from "@shared/utility/create-payload";
 import { deserialize } from "@shared/utility/serializer";
-import { getWebview } from "@/core/user-interface/webview";
+import { useWebview } from "@/core/user-interface/webview";
 
 const webviewProcedures = new Map<string, any>();
 const webviewHandlers = new Map<
@@ -28,13 +28,13 @@ export const callWebview = async <T extends keyof typeof WebviewCall.FromClient>
   return new Promise<ReturnType<CallFromClient[T]>>((resolve, reject) => {
     const payload = createPayload(name, args);
 
-    getWebview().emitRaw(CALL_WEBVIEW_FROM_CLIENT, payload);
+    useWebview().emitRaw(CALL_WEBVIEW_FROM_CLIENT, payload);
     webviewHandlers.set(payload.id, { name, resolve, reject });
   });
 };
 
 // get response from webview on client
-getWebview((webview) =>
+useWebview((webview) =>
   webview.on(CALL_WEBVIEW_FROM_CLIENT_RESPONSE, (response) => {
     response = deserialize(response);
 
@@ -85,7 +85,7 @@ export const unregisterWebview = <T extends keyof typeof ClientCall.FromWebview>
 };
 
 // handle call from webview on client
-getWebview((webview) => {
+useWebview((webview) => {
   webview.on(CALL_CLIENT_FROM_WEBVIEW, async (payload) => {
     const { id, name, args } = deserialize(payload);
     const callback = webviewProcedures.get(name);

@@ -5,6 +5,7 @@ import { Inventory, ItemSourceOrigin } from '@shared/interfaces';
 import { StorageType } from '@shared/store/game-state.store';
 import { Ammo, createItem } from '@shared/modules/items';
 import { ServerEvents } from '@shared/events/server';
+import { AirDropType } from '@shared/modules/air-drops';
 import { InGamePlayer } from '@/core/utility/assertions';
 import { addItemToInventory, removeItemFromInventorySlot } from './api';
 
@@ -25,6 +26,7 @@ export function createStorage(options: {
     from: alt.IVector3;
     speed: number;
   };
+  airDropType?: AirDropType
   meta?: Record<string, any>
 }): alt.VirtualEntity {
   const storage = alt.VirtualEntity.create({
@@ -35,6 +37,7 @@ export function createStorage(options: {
       entityType: 'storage',
       storageType: options.type ?? StorageType.Storage,
       interpolate: options.interpolate,
+      airDropType: options.airDropType,
     }
   });
 
@@ -43,14 +46,6 @@ export function createStorage(options: {
     inventory: reactive(options.inventory),
     meta: options.meta,
   };
-
-  alt.Timers.nextTick(async () => {
-    removeItemFromInventorySlot(storageItems[storage.id].inventory, 0);
-
-    await alt.Utils.waitForNextTick();
-
-    addItemToInventory(storageItems[storage.id].inventory, createItem(Ammo.ASSAULT_RIFLE_AMMO, { amount: 100 }));
-  });
 
   return storage;
 }

@@ -1,5 +1,5 @@
 import { registerItem } from "@shared/modules/items";
-import { ItemGrade } from "../../enums";
+import { ItemTier, ItemGrade } from "../../enums";
 import { Item } from "../../types";
 import { makeKeys } from "../../../../utility/make-keys";
 import { WeaponGroup } from "./weapon-groups";
@@ -36,6 +36,7 @@ export type ThrowableWeaponItemInfo = {
   description: string;
   group: typeof WeaponGroup.THROWABLE;
   price: number;
+  tier: ItemTier;
   comparisonStats: {
     damage: number;
     rate: number;
@@ -53,6 +54,7 @@ export const throwableWeapons: ThrowableWeaponItemInfo[] = [
     description: getWeaponData(3125143736).Description,
     group: WeaponGroup.THROWABLE,
     price: 50000,
+    tier: ItemTier.C,
     comparisonStats: {
       damage: 85,
       rate: 10,
@@ -68,6 +70,7 @@ export const throwableWeapons: ThrowableWeaponItemInfo[] = [
     description: getWeaponData(2874559379).Description,
     group: WeaponGroup.THROWABLE,
     price: 1000,
+    tier: ItemTier.B,
     comparisonStats: {
       damage: 90,
       rate: 10,
@@ -83,6 +86,7 @@ export const throwableWeapons: ThrowableWeaponItemInfo[] = [
     description: getWeaponData(2481070269).Description,
     group: WeaponGroup.THROWABLE,
     price: 2500,
+    tier: ItemTier.B,
     comparisonStats: {
       damage: 95,
       rate: 20,
@@ -98,6 +102,7 @@ export const throwableWeapons: ThrowableWeaponItemInfo[] = [
     description: getWeaponData(741814745).Description,
     group: WeaponGroup.THROWABLE,
     price: 60000,
+    tier: ItemTier.A,
     comparisonStats: {
       damage: 95,
       rate: 10,
@@ -113,6 +118,7 @@ export const throwableWeapons: ThrowableWeaponItemInfo[] = [
     description: getWeaponData(126349499).Description,
     group: WeaponGroup.THROWABLE,
     price: 5,
+    tier: ItemTier.F,
     comparisonStats: {
       damage: 1,
       rate: 10,
@@ -128,6 +134,7 @@ export const throwableWeapons: ThrowableWeaponItemInfo[] = [
     description: getWeaponData(4256991824).Description,
     group: WeaponGroup.THROWABLE,
     price: 800,
+    tier: ItemTier.F,
     comparisonStats: {
       damage: 10,
       rate: 10,
@@ -143,6 +150,7 @@ export const throwableWeapons: ThrowableWeaponItemInfo[] = [
     description: getWeaponData(883325847).Description,
     group: WeaponGroup.THROWABLE,
     price: 100,
+    tier: ItemTier.E,
     comparisonStats: {
       damage: 0,
       rate: 10,
@@ -158,6 +166,7 @@ export const throwableWeapons: ThrowableWeaponItemInfo[] = [
     description: getWeaponData(615608432).Description,
     group: WeaponGroup.THROWABLE,
     price: 200,
+    tier: ItemTier.E,
     comparisonStats: {
       damage: 50,
       rate: 20,
@@ -173,6 +182,7 @@ export const throwableWeapons: ThrowableWeaponItemInfo[] = [
     description: getWeaponData(3126027122).Description,
     group: WeaponGroup.THROWABLE,
     price: 100,
+    tier: ItemTier.E,
     comparisonStats: {
       damage: 0,
       rate: 10,
@@ -188,6 +198,7 @@ export const throwableWeapons: ThrowableWeaponItemInfo[] = [
     description: getWeaponData(600439132).Description,
     group: WeaponGroup.THROWABLE,
     price: 10,
+    tier: ItemTier.F,
     comparisonStats: {
       damage: 0,
       rate: 10,
@@ -203,6 +214,7 @@ export const throwableWeapons: ThrowableWeaponItemInfo[] = [
     description: getWeaponData(2694266206).Description,
     group: WeaponGroup.THROWABLE,
     price: 150,
+    tier: ItemTier.E,
     comparisonStats: {
       damage: 10,
       rate: 20,
@@ -218,6 +230,7 @@ export const throwableWeapons: ThrowableWeaponItemInfo[] = [
     description: getWeaponData(1233104067).Description,
     group: WeaponGroup.THROWABLE,
     price: 50,
+    tier: ItemTier.C,
     comparisonStats: {
       damage: 0,
       rate: 10,

@@ -4,7 +4,7 @@ import { InteractionType, SlottedItem, useInventory, isSameItemSource } from "@/
 import ItemIcon from "../ItemIcon.vue";
 import { px } from "@/composables/use-pixel";
 
-import { ItemSourceOrigin, PlayerEquipmentItemSource } from "@shared/interfaces";
+import { EquipmentSlot, ItemSourceOrigin, PlayerEquipmentItemSource } from "@shared/interfaces";
 import { AmmoItem, isItemFirearmWeapon } from "@shared/modules/items";
 import { useCombinableItem } from "@/composables/use-combinable-item";
 
@@ -89,12 +89,10 @@ const equipmentSlots = {
   quick4: {
     label: "Num 4",
   },
-};
-
-type EquipmentSlotName = keyof typeof equipmentSlots;
+} satisfies Record<EquipmentSlot, { label: string; image?: string }>;
 
 const props = defineProps<{
-  name: EquipmentSlotName;
+  name: EquipmentSlot;
 }>();
 
 const inventory = useInventory();
