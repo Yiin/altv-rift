@@ -40,6 +40,7 @@ function displayHit(position: alt.Vector3, damage: number, type: "health" | "arm
   // Remove the div after the animation is done
   setTimeout(() => {
     damageContainer.removeChild(damageDiv);
+    damageDiv.destroy();
   }, 900);
 }
 

@@ -53,12 +53,14 @@ function renderParsedNode(
       // Replace element with text node
       const ref = createTextNode(document, parsedElement.text);
       parent.replaceChild(ref, rmlNode);
+      rmlNode.destroy();
       rmlNode = ref;
     } else {
       // Update text node
       if (rmlNode.meta.text !== parsedElement.text) {
         const ref = createTextNode(document, parsedElement.text);
         rmlNode.parent?.replaceChild(ref, rmlNode);
+        rmlNode.destroy();
         rmlNode = ref;
       }
     }
@@ -70,6 +72,7 @@ function renderParsedNode(
     applyClassesAndAttrs(ref, parsedElement);
 
     parent.replaceChild(ref, rmlNode);
+    rmlNode.destroy();
     rmlNode = ref;
   } else {
     applyClassesAndAttrs(rmlNode, parsedElement);
@@ -84,6 +87,7 @@ function renderParsedNode(
 
   //   for (const child of rmlNode.childNodes) {
   //     rmlNode.removeChild(child);
+  //     child.destroy();
   //   }
   // }
 
@@ -103,6 +107,7 @@ function renderParsedNode(
         const result = child.compute(...args);
         if (!result) {
           rmlNode.removeChild(currentChildren[i]);
+          currentChildren[i].destroy();
         } else {
           renderParsedNode(
             rmlNode.childNodes[i],

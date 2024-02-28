@@ -39,6 +39,7 @@ function removeOrphanedElement(entity: AnchorEntity) {
     elementsMap.forEach((element) => {
       notRenderedElements.delete(element);
       container.removeChild(element);
+      element.destroy();
     });
   }
 
