@@ -1,6 +1,6 @@
-import { Item, ItemGrade, registerItem } from "@shared/modules/items";
+import { Item, ItemGrade, registerItem, registerItems } from "@shared/modules/items";
 import { makeKeys } from "@shared/utility/make-keys";
-import GLOVES_ITEMS from "./gloves.json";
+const GLOVES_ITEMS: Record<string, GlovesItemInfo> = require("./gloves.json");
 
 export const Gloves = makeKeys<GlovesItemKey>()({
   FemaleBlackTactGloves: "DLC_MP_LTS_F_UPPR_0_0",
@@ -2207,22 +2207,13 @@ export type GlovesItemInfo = {
   restrictionTags: string[] | null;
 };
 
-export const gloves = Object.values(GLOVES_ITEMS) as any as GlovesItemInfo[];
-
-/**
- * Register all gloves.
- */
-// console.log("Registering gloves...");
-for (const info of gloves) {
-  registerItem(info);
-}
-// console.log(`Registered ${Object.keys(gloves).length} gloves.`);
+export const gloves = registerItems(Object.values(GLOVES_ITEMS));
 
 /**
  * Type guards for gloves
  */
 export function isItemKeyGloves(key: string): key is GlovesItemKey {
-  return gloves.some((info) => info.key === key);
+  return gloves.has(key as GlovesItemKey);
 }
 
 export function isItemGloves(item: Item): item is GlovesItem {

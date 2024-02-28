@@ -9,6 +9,7 @@
     "noPropertyAccessFromIndexSignature": false,
     "moduleResolution": "node",
     "resolveJsonModule": true,
+    "esModuleInterop": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "allowSyntheticDefaultImports": true,

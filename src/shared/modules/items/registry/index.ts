@@ -26,6 +26,7 @@ export * from "./tools/fishing-rod.items";
 export * from "./tools/hatchet.items";
 export * from "./tools/pickaxe.items";
 export * from "./tools/tool.items";
+export * from "./weapon-components/weapon-component.items";
 export * from "./weapons/firearm-weapon.items";
 export * from "./weapons/melee-weapon.items";
 export * from "./weapons/throwable-weapon.items";

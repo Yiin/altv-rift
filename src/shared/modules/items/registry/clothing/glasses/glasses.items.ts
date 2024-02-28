@@ -1,6 +1,6 @@
-import { Item, registerItem } from "@shared/modules/items";
+import { Item, registerItem, registerItems } from "@shared/modules/items";
 import { makeKeys } from "@shared/utility/make-keys";
-import GLASSES_ITEMS from "./glasses.json";
+const GLASSES_ITEMS: Record<string, GlassesItemInfo> = require("./glasses.json");
 
 export const Glasses = makeKeys<GlassesItemKey>()({
   MaleBlackWraparounds: "SP_M_EYES_1_1",
@@ -953,22 +953,13 @@ export type GlassesItemInfo = {
   restrictionTags: string[] | null;
 };
 
-export const glasses = Object.values(GLASSES_ITEMS) as any as GlassesItemInfo[];
-
-/**
- * Register all glasses.
- */
-// console.log("Registering glasses...");
-for (const info of glasses) {
-  registerItem(info);
-}
-// console.log(`Registered ${Object.keys(glasses).length} glasses.`);
+export const glasses = registerItems(Object.values(GLASSES_ITEMS));
 
 /**
  * Type guards for glasses
  */
 export function isItemKeyGlasses(key: string): key is GlassesItemKey {
-  return glasses.some((info) => info.key === key);
+  return glasses.has(key as GlassesItemKey);
 }
 
 export function isItemGlasses(item: Item): item is GlassesItem {

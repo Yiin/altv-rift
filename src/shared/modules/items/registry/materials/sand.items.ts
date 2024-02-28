@@ -1,4 +1,4 @@
-import { registerItem } from "../../items-registry";
+import { registerItems } from "../../items-registry";
 import { makeKeys } from "../../../../utility/make-keys";
 import { Item, ItemKey } from "../../types";
 
@@ -20,7 +20,7 @@ export type SandItemInfo = {
   description: string;
 };
 
-const sands: SandItemInfo[] = [
+const sands = registerItems<SandItemInfo>([
   {
     key: Sand.SAND,
     name: "Sand",
@@ -32,17 +32,10 @@ const sands: SandItemInfo[] = [
     name: "Gravel",
     description: "Gravel is a loose aggregation of rock fragments and is used for making concrete.",
   },
-];
-
-/**
- * Register all sands.
- */
-for (const info of sands) {
-  registerItem(info);
-}
+]);
 
 export function isItemKeySand(key: ItemKey): key is SandItemKey {
-  return sands.some((info) => info.key === key);
+  return sands.has(key as SandItemKey);
 }
 
 export function isItemSand(item: Item): item is SandItem {

@@ -1,4 +1,4 @@
-import { registerItem } from "../../items-registry";
+import { registerItem, registerItems } from "../../items-registry";
 import { makeKeys } from "../../../../utility/make-keys";
 import { Item, ItemKey } from "../../types";
 
@@ -37,7 +37,7 @@ export type TreeLogItemInfo = {
   description: string;
 };
 
-export const treeLogs: TreeLogItemInfo[] = [
+export const treeLogs = registerItems<TreeLogItemInfo>([
   {
     key: TreeLogs.HAWTHORN_LOGS,
     name: "Hawthorn Logs",
@@ -133,17 +133,10 @@ export const treeLogs: TreeLogItemInfo[] = [
     name: "Pine Logs",
     description: "Logs from a Pine Tree.",
   },
-];
-
-/**
- * Register all tree logs.
- */
-for (const info of treeLogs) {
-  registerItem(info);
-}
+]);
 
 export function isItemKeyTreeLog(key: ItemKey): key is TreeLogItemKey {
-  return treeLogs.some((log) => log.key === key);
+  return treeLogs.has(key as TreeLogItemKey);
 }
 
 export function isItemTreeLog(item: Item): item is TreeLogItem {

@@ -11,3 +11,7 @@ declare module "*.yaml" {
   const content: any;
   export default content;
 }
+
+declare module "*.json" {
+  export default {} as any;
+}

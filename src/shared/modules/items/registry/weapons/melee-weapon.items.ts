@@ -1,4 +1,4 @@
-import { registerItem } from "@shared/modules/items";
+import { registerItem, registerItems } from "@shared/modules/items";
 import { ItemTier, ItemFlags, ItemGrade } from "../../enums";
 import { Item } from "../../types";
 import { makeKeys } from "../../../../utility/make-keys";
@@ -53,7 +53,7 @@ export type MeleeWeaponItemInfo = {
   };
 };
 
-export const meleeWeapons: MeleeWeaponItemInfo[] = [
+export const meleeWeapons = registerItems<MeleeWeaponItemInfo>([
   {
     key: MeleeWeapon.SWITCHBLADE,
     hash: 3756226112,
@@ -309,20 +309,13 @@ export const meleeWeapons: MeleeWeaponItemInfo[] = [
       overall: 12,
     },
   },
-];
-
-/**
- * Register all melee weapons.
- */
-for (const info of meleeWeapons) {
-  registerItem(info);
-}
+]);
 
 /**
  * Type guards for melee weapons
  */
 export function isItemKeyMeleeWeapon(key: string): key is MeleeWeaponItemKey {
-  return meleeWeapons.some((meleeWeapon) => meleeWeapon.key === key);
+  return meleeWeapons.has(key as MeleeWeaponItemKey);
 }
 
 export function isItemMeleeWeapon(item: Item): item is MeleeWeaponItem {

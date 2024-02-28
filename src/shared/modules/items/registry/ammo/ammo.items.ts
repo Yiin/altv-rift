@@ -1,7 +1,7 @@
 import { AmmoGroup } from "../weapons/weapon-groups";
 import { Item, ItemKey } from "../../types";
 import { EquipedAmmo } from "../weapons/firearm-weapon.items";
-import { registerItem } from "../../items-registry";
+import { registerItem, registerItems } from "../../items-registry";
 import { makeKeys } from "../../../../utility/make-keys";
 import { ItemTier } from "../../enums";
 
@@ -37,7 +37,7 @@ export type AmmoItemInfo = {
   damagemultiplier: number;
 };
 
-export const ammo: AmmoItemInfo[] = [
+export const ammo = registerItems<AmmoItemInfo>([
   {
     key: Ammo.HANDGUN_AMMO,
     name: "Handgun ammo",
@@ -143,17 +143,10 @@ export const ammo: AmmoItemInfo[] = [
     name: "Smoke grenades",
     damagemultiplier: 0,
   },
-];
-
-/**
- * Register all ammo items.
- */
-for (const info of ammo) {
-  registerItem(info);
-}
+]);
 
 export function isItemKeyAmmo(key: ItemKey): key is AmmoItemKey {
-  return ammo.some((item) => item.key === key);
+  return ammo.has(key as AmmoItemKey);
 }
 
 export function isItemAmmo(item: Item): item is AmmoItem {
@@ -161,11 +154,20 @@ export function isItemAmmo(item: Item): item is AmmoItem {
 }
 
 export function getAmmoKeyForAmmoGroup(ammoGroup: AmmoGroup) {
-  return ammo.find(({ group }) => group === ammoGroup)?.key!;
+  for (const ammoItemInfo of ammo.values()) {
+    if (ammoItemInfo.group === ammoGroup) {
+      return ammoItemInfo.key;
+    }
+  }
+  throw new Error(`No ammo found for group ${ammoGroup}`);
+}
+
+export function getAmmoGroup(ammoKey: AmmoItemKey) {
+  return ammo.get(ammoKey)!.group;
 }
 
 export function getAmmoDamageMultiplier(ammoKey: AmmoItemKey) {
-  return ammo.find(({ key }) => key === ammoKey)!.damagemultiplier;
+  return ammo.get(ammoKey)!.damagemultiplier;
 }
 
 export function toEquipedAmmo(

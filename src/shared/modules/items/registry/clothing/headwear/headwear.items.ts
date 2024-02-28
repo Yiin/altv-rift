@@ -1,6 +1,6 @@
-import { Item, ItemGrade, registerItem } from "@shared/modules/items";
+import { Item, ItemGrade, registerItem, registerItems } from "@shared/modules/items";
 import { makeKeys } from "@shared/utility/make-keys";
-import HEADWEAR_ITEMS from "./headwear.json";
+const HEADWEAR_ITEMS: Record<string, HeadwearItemInfo> = require("./headwear.json");
 
 export const Headwear = makeKeys<HeadwearItemKey>()({
   MaleRedEarDefenders: "SP_M_HEAD_0_0_1",
@@ -3177,22 +3177,13 @@ export type HeadwearItemInfo = {
   restrictionTags: string[] | null;
 };
 
-export const headwears = Object.values(HEADWEAR_ITEMS) as any as HeadwearItemInfo[];
-
-/**
- * Register all headwears.
- */
-// console.log("Registering headwears...");
-for (const info of headwears) {
-  registerItem(info);
-}
-// console.log(`Registered ${Object.keys(headwears).length} headwears.`);
+export const headwears = registerItems(Object.values(HEADWEAR_ITEMS));
 
 /**
  * Type guards for headwears
  */
 export function isItemKeyHeadwear(key: string): key is HeadwearItemKey {
-  return headwears.some((info) => info.key === key);
+  return headwears.has(key as HeadwearItemKey);
 }
 
 export function isItemHeadwear(item: Item): item is HeadwearItem {

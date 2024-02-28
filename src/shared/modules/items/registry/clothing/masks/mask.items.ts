@@ -1,6 +1,6 @@
-import { Item, registerItem } from "@shared/modules/items";
+import { Item, registerItem, registerItems } from "@shared/modules/items";
 import { makeKeys } from "@shared/utility/make-keys";
-import MASK_ITEMS from "./mask.json";
+const MASK_ITEMS: Record<string, MaskItemInfo> = require("./mask.json");
 
 export const Mask = makeKeys<MaskItemKey>()({
   MalePinkPig: "SP_M_BERD_1_0",
@@ -2750,22 +2750,13 @@ export type MaskItemInfo = {
   restrictionTags: string[] | null;
 };
 
-export const masks = Object.values(MASK_ITEMS) as any as MaskItemInfo[];
-
-/**
- * Register all masks.
- */
-// console.log("Registering masks...");
-for (const info of masks) {
-  registerItem(info);
-}
-// console.log(`Registered ${Object.keys(masks).length} masks.`);
+export const masks = registerItems(Object.values(MASK_ITEMS));
 
 /**
  * Type guards for masks
  */
 export function isItemKeyMask(key: string): key is MaskItemKey {
-  return masks.some((info) => info.key === key);
+  return masks.has(key as MaskItemKey);
 }
 
 export function isItemMask(item: Item): item is MaskItem {

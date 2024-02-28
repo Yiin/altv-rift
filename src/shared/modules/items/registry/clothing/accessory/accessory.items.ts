@@ -1,6 +1,6 @@
-import { Item, registerItem } from "@shared/modules/items";
+import { Item, registerItem, registerItems } from "@shared/modules/items";
 import { makeKeys } from "@shared/utility/make-keys";
-import ACCESSORY_ITEMS from "./accessory.json";
+const ACCESSORY_ITEMS: Record<string, AccessoryItemInfo> = require("./accessory.json");
 
 export const Accessory = makeKeys<AccessoryItemKey>()({
   MaleNoTie: "SP_M_TEEF_0_0",
@@ -936,22 +936,13 @@ export type AccessoryItemInfo = {
   restrictionTags: string[] | null;
 };
 
-export const accessories = Object.values(ACCESSORY_ITEMS) as any as AccessoryItemInfo[];
-
-/**
- * Register all accessories.
- */
-// console.log("Registering accessories...");
-for (const info of accessories) {
-  registerItem(info);
-}
-// console.log(`Registered ${Object.keys(accessories).length} accessories.`);
+export const accessories = registerItems(Object.values(ACCESSORY_ITEMS));
 
 /**
  * Type guards for accessories
  */
 export function isItemKeyAccessory(key: string): key is AccessoryItemKey {
-  return accessories.some((info) => info.key === key);
+  return accessories.has(key as AccessoryItemKey);
 }
 
 export function isItemAccessory(item: Item): item is AccessoryItem {

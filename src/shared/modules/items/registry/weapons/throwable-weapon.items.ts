@@ -1,4 +1,4 @@
-import { registerItem } from "@shared/modules/items";
+import { registerItem, registerItems } from "@shared/modules/items";
 import { ItemTier, ItemGrade } from "../../enums";
 import { Item } from "../../types";
 import { makeKeys } from "../../../../utility/make-keys";
@@ -46,7 +46,7 @@ export type ThrowableWeaponItemInfo = {
   };
 };
 
-export const throwableWeapons: ThrowableWeaponItemInfo[] = [
+export const throwableWeapons = registerItems<ThrowableWeaponItemInfo>([
   {
     key: ThrowableWeapon.PIPEBOMB,
     hash: 3125143736,
@@ -239,20 +239,13 @@ export const throwableWeapons: ThrowableWeaponItemInfo[] = [
       overall: 11.25,
     },
   },
-];
-
-/**
- * Register throwable weapons
- */
-for (const info of throwableWeapons) {
-  registerItem(info);
-}
+]);
 
 /**
  * Type guards for throwable weapons
  */
 export function isItemKeyThrowableWeapon(key: string): key is ThrowableWeaponItemKey {
-  return throwableWeapons.some((throwableWeapon) => throwableWeapon.key === key);
+  return throwableWeapons.has(key as ThrowableWeaponItemKey);
 }
 
 export function isItemThrowableWeapon(item: Item): item is ThrowableWeaponItem {

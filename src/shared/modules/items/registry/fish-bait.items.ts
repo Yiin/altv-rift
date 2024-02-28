@@ -1,4 +1,4 @@
-import { registerItem } from "../items-registry";
+import { registerItem, registerItems } from "../items-registry";
 import { makeKeys } from "../../../utility/make-keys";
 import { Item } from "../types";
 import { ItemFlags } from "../enums";
@@ -35,7 +35,7 @@ export type FishBaitItemInfo = {
   description: string;
 };
 
-export const fishBaits: FishBaitItemInfo[] = [
+export const fishBaits = registerItems<FishBaitItemInfo>([
   {
     key: FishBait.WORMS,
     name: "Worms",
@@ -111,17 +111,10 @@ export const fishBaits: FishBaitItemInfo[] = [
     name: "Golden Worms",
     description: "Rare bait used to catch the mythical Golden Koi.",
   },
-];
-
-/**
- * Register all fish baits.
- */
-for (const info of fishBaits) {
-  registerItem(info);
-}
+]);
 
 export function isItemKeyFishBait(key: string): key is FishBaitItemKey {
-  return fishBaits.some((bait) => bait.key === key);
+  return fishBaits.has(key as FishBaitItemKey);
 }
 
 export function isItemFishBait(item: Item): item is FishBaitItem {

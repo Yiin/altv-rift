@@ -1,6 +1,6 @@
-import { Item, registerItem } from "@shared/modules/items";
+import { Item, registerItem, registerItems } from "@shared/modules/items";
 import { makeKeys } from "@shared/utility/make-keys";
-import SHOES_ITEMS from "./shoes.json";
+const SHOES_ITEMS: Record<string, ShoesItemInfo> = require("./shoes.json");
 
 export const Shoes = makeKeys<ShoesItemKey>()({
   MaleProlapsGreenSneakers: "SP_M_FEET_0_0",
@@ -2152,22 +2152,13 @@ export type ShoesItemInfo = {
   restrictionTags: string[] | null;
 };
 
-export const shoes = Object.values(SHOES_ITEMS) as any as ShoesItemInfo[];
-
-/**
- * Register all shoes.
- */
-// console.log("Registering shoes...");
-for (const info of shoes) {
-  registerItem(info);
-}
-// console.log(`Registered ${Object.keys(shoes).length} shoes.`);
+export const shoes = registerItems(Object.values(SHOES_ITEMS));
 
 /**
  * Type guards for shoes
  */
 export function isItemKeyShoes(key: string): key is ShoesItemKey {
-  return shoes.some((info) => info.key === key);
+  return shoes.has(key as ShoesItemKey);
 }
 
 export function isItemShoes(item: Item): item is ShoesItem {

@@ -1,4 +1,4 @@
-import { registerItem } from "../../items-registry";
+import { registerItem, registerItems } from "../../items-registry";
 import { makeKeys } from "../../../../utility/make-keys";
 import { Item } from "../../types";
 
@@ -22,7 +22,7 @@ export type HatchetItemInfo = {
   description: string;
 };
 
-export const hatchets: HatchetItemInfo[] = [
+export const hatchets = registerItems<HatchetItemInfo>([
   {
     key: Hatchet.BASIC_HATCHET,
     name: "Basic Hatchet",
@@ -53,17 +53,10 @@ export const hatchets: HatchetItemInfo[] = [
     description:
       "Carved from the finest materials and imbued with legendary craftsmanship, this hatchet is a masterpiece. Its unparalleled edge and ergonomic design make it an emblem of excellence.",
   },
-];
-
-/**
- * Register all hatchets.
- */
-for (const info of hatchets) {
-  registerItem(info);
-}
+]);
 
 export function isItemKeyHatchet(key: string): key is HatchetItemKey {
-  return hatchets.some((hatchet) => hatchet.key === key);
+  return hatchets.has(key as HatchetItemKey);
 }
 
 export function isItemHatchet(item: Item): item is HatchetItem {

@@ -8,7 +8,7 @@ debug = true
 
 announce = false
 host = '0.0.0.0'
-port = 8888
+port = 7788
 
 [js-module]
 extra-cli-args = [

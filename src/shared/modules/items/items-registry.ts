@@ -10,6 +10,19 @@ export function registerItem(info: ItemInfo) {
 }
 
 /**
+ * Register multiple items in the items registry so they're available for use.
+ */
+export function registerItems<T extends ItemInfo>(items: T[]): Map<T['key'], T> {
+  const map = new Map<T['key'], T>();
+  items.map((item) => {
+    registerItem(item);
+    map.set(item.key, item);
+    return item;
+  });
+  return map;
+}
+
+/**
  * Checks if there is a registered item with the given key.
  */
 export function isValidItem(key: string): key is ItemKey {

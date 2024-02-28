@@ -75,6 +75,7 @@ import { WoodItemKey, WoodItem, WoodItemInfo } from "./registry/materials/wood.i
 import { MetalItemKey, MetalItem, MetalItemInfo } from "./registry/materials/metal.items";
 import { NoteItemKey, NoteItem, NoteItemInfo } from "./registry/note.items";
 import { SandItem, SandItemInfo, SandItemKey } from "./registry/materials/sand.items";
+import { WeaponComponentItem, WeaponComponentItemInfo, WeaponComponentItemKey } from "./registry/weapon-components/weapon-component.items";
 
 export type StackableItem = Extract<Item, { amount: number }>;
 
@@ -83,6 +84,7 @@ export type ItemKey =
   | ThrowableWeaponItemKey
   | MeleeWeaponItemKey
   | AmmoItemKey
+  | WeaponComponentItemKey
   | ClothingItemKey
   | ConsumableItemKey
   | MaterialItemKey
@@ -90,30 +92,6 @@ export type ItemKey =
   | ToolItemKey
   | FishingRodItemKey
   | NoteItemKey;
-
-export type NarrowedItemKey<T extends ItemKey> = T extends FirearmWeaponItemKey
-  ? FirearmWeaponItemKey
-  : T extends ThrowableWeaponItemKey
-  ? ThrowableWeaponItemKey
-  : T extends MeleeWeaponItemKey
-  ? MeleeWeaponItemKey
-  : T extends AmmoItemKey
-  ? AmmoItemKey
-  : T extends ClothingItemKey
-  ? ClothingItemKey
-  : T extends ConsumableItemKey
-  ? ConsumableItemKey
-  : T extends MaterialItemKey
-  ? MaterialItemKey
-  : T extends FishBaitItemKey
-  ? FishBaitItemKey
-  : T extends ToolItemKey
-  ? ToolItemKey
-  : T extends FishingRodItemKey
-  ? FishingRodItemKey
-  : T extends NoteItemKey
-  ? NoteItemKey
-  : never;
 
 type ItemMapping<T> = T extends FirearmWeaponItemKey
   ? [FirearmWeaponItem, FirearmWeaponItemInfo]
@@ -123,6 +101,8 @@ type ItemMapping<T> = T extends FirearmWeaponItemKey
   ? [MeleeWeaponItem, MeleeWeaponItemInfo]
   : T extends AmmoItemKey
   ? [AmmoItem, AmmoItemInfo]
+  : T extends WeaponComponentItemKey
+  ? [WeaponComponentItem, WeaponComponentItemInfo]
   : T extends AccessoryItemKey
   ? [AccessoryItem, AccessoryItemInfo]
   : T extends ArmorItemKey

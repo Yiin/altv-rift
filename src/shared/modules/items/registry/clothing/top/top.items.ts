@@ -1,6 +1,6 @@
-import { Item, registerItem } from "@shared/modules/items";
+import { Item, registerItem, registerItems } from "@shared/modules/items";
 import { makeKeys } from "@shared/utility/make-keys";
-import TOP_ITEMS from "./top.json";
+const TOP_ITEMS: Record<string, TopItemInfo> = require("./top.json");
 
 export const Top = makeKeys<TopItemKey>()({
   MaleCrewTshirt: "SP_M_JBIB_0_0",
@@ -7968,22 +7968,13 @@ export type TopItemInfo = {
   restrictionTags: string[] | null;
 };
 
-export const tops = Object.values(TOP_ITEMS) as any as TopItemInfo[];
-
-/**
- * Register all tops.
- */
-// console.log("Registering tops...");
-for (const info of tops) {
-  registerItem(info);
-}
-// console.log(`Registered ${Object.keys(tops).length} tops.`);
+export const tops = registerItems(Object.values(TOP_ITEMS));
 
 /**
  * Type guards for tops
  */
 export function isItemKeyTop(key: string): key is TopItemKey {
-  return tops.some((info) => info.key === key);
+  return tops.has(key as TopItemKey);
 }
 
 export function isItemTop(item: Item): item is TopItem {

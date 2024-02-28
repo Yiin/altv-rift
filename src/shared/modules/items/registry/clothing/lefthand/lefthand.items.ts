@@ -1,6 +1,6 @@
-import { Item, ItemGrade, registerItem } from "@shared/modules/items";
+import { Item, ItemGrade, registerItem, registerItems } from "@shared/modules/items";
 import { makeKeys } from "@shared/utility/make-keys";
-import LEFTHAND_ITEMS from "./lefthand.json";
+const LEFTHAND_ITEMS: Record<string, LeftHandItemInfo> = require("./lefthand.json");
 
 export const LeftHand = makeKeys<LeftHandItemKey>()({
   MaleDeepSeaWatch: "SP_M_LEFT_WRIST_0_0",
@@ -336,22 +336,13 @@ export type LeftHandItemInfo = {
   restrictionTags: string[] | null;
 };
 
-export const lefthand = Object.values(LEFTHAND_ITEMS) as any as LeftHandItemInfo[];
-
-/**
- * Register all left hand items.
- */
-// console.log("Registering left hand items...");
-for (const info of lefthand) {
-  registerItem(info);
-}
-// console.log(`Registered ${Object.keys(lefthand).length} left hand items.`);
+export const lefthand = registerItems(Object.values(LEFTHAND_ITEMS));
 
 /**
  * Type guards for left hand items
  */
 export function isItemKeyLeftHand(key: string): key is LeftHandItemKey {
-  return lefthand.some((info) => info.key === key);
+  return lefthand.has(key as LeftHandItemKey);
 }
 
 export function isItemLeftHand(item: Item): item is LeftHandItem {

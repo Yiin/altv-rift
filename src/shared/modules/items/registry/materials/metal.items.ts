@@ -1,4 +1,4 @@
-import { registerItem } from "../../items-registry";
+import { registerItem, registerItems } from "../../items-registry";
 import { makeKeys } from "../../../../utility/make-keys";
 import { Item, ItemKey } from "../../types";
 
@@ -23,7 +23,7 @@ export type MetalItemInfo = {
   description: string;
 };
 
-const metals: MetalItemInfo[] = [
+const metals = registerItems<MetalItemInfo>([
   {
     key: Metal.BASIC_METAL,
     name: "Basic Metal",
@@ -54,17 +54,10 @@ const metals: MetalItemInfo[] = [
     description:
       "Sourced from the rarest ores and processed with unparalleled precision, this metal is legendary. Its exceptional properties and radiant luster are unmatched, making it the dream material for elite craftsmen.",
   },
-];
-
-/**
- * Register all metals.
- */
-for (const info of metals) {
-  registerItem(info);
-}
+]);
 
 export function isItemKeyMetal(key: ItemKey): key is MetalItemKey {
-  return metals.some((info) => info.key === key);
+  return metals.has(key as MetalItemKey);
 }
 
 export function isItemMetal(item: Item): item is MetalItem {

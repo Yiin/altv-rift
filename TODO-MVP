@@ -3,7 +3,11 @@ MVP Development Plan:
 Introduction MVP:
   ☐ Gather materials - explain what to do with them
     ☐ Scrapping minigames to gather materials
+      ✔ Woodcutting @done
+      ☐ Fishing w/ simple mini-game
+      ☐ Mining
     ☐ Different scrapping points for different materials
+      ☐ Random boxes in the world
   Weapon:
     ☐ Craft basic weapon
       ☐ Crafting menu (just basic UI, no design)
@@ -85,8 +89,11 @@ Workbench:
         ☐ Fire
         ☐ Explosive
         ☐ Lethality
-  ☐ Weapon components ;-;
-    ☐ How do they work, do we need icons?
+  ✔ Weapon components ;-; @started @done(24-02-28 00:39)
+    ✔ Create weapon component items @done(24-02-27 23:39)
+    ✔ How do they work, do we need icons? @done(24-02-27 23:39)
+        They do work, we will need icons
+      ☐ Get the icons
   ☐ Investigate AI solutions for custom icons because I'm poor
   ✔ Fix camera moving from 0;0 to player when spawned. @done(24-02-27 00:24)
   ☐ Enemy ped health is fucked.
@@ -94,6 +101,11 @@ Workbench:
   ✔ Coming back from alt-tab to game with a window open doesn't restore cursor. @done
   ✔ Fix keybinds being active while in devtools or chat @done
   ✔ Cancelling reload fucks up ammo @done
+  ✘ Move items to database @cancelled(24-02-28 00:39)
+    ✘ Create a script to update weapon components database @cancelled(24-02-28 00:39)
+    ✘ Create a script to update weapons in the database @cancelled(24-02-28 00:39)
+    ✘ Create a script to update clothing in the database @cancelled(24-02-28 00:39)
+  ☐ Move weapon stats to different file
   ☐ Crafting UI for weapons
     ☐ UI itself
     ☐ The actual integration of that UI

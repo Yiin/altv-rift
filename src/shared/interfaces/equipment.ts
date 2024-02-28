@@ -1,9 +1,4 @@
-/**
- * `ammo` is an equipment slot in the UI only, in the game
- * it is inside weapon data in weapon slot.
- */
 export enum EquipmentSlot {
-  Ammo = "ammo",
   Mask = "mask",
   Glasses = "glasses",
   Headwear = "headwear",
@@ -24,4 +19,17 @@ export enum EquipmentSlot {
   QuickSlot2 = "quick2",
   QuickSlot3 = "quick3",
   QuickSlot4 = "quick4",
+
+  // Ammo
+  AssaultRifleAmmo = "assaultrifleammo",
+  HandgunAmmo = "handgunammo",
+  MachineGunAmmo = "machinegunammo",
+  ShotgunAmmo = "shotgunammo",
+  SniperRifleAmmo = "sniperrifleammo",
+  RocketLauncherAmmo = "rocketlauncherammo",
+  FireworkAmmo = "fireworkammo",
+  GrenadeLauncherAmmo = "grenadelauncherammo",
+  PlasmaRaysAmmo = "plasmaraysammo",
+  FireExtinguisherAmmo = "fireextinguisherammo",
+  SmokeGranadesAmmo = "smokegranadesammo",
 }

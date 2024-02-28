@@ -1,4 +1,4 @@
-import { FishBaitItem, Item, registerItem } from "@shared/modules/items";
+import { FishBaitItem, Item, registerItem, registerItems } from "@shared/modules/items";
 import { makeKeys } from "@shared/utility/make-keys";
 
 export const FishingRod = makeKeys<FishingRodItemKey>()({
@@ -22,7 +22,7 @@ export type FishingRodItemInfo = {
   description: string;
 };
 
-export const fishingRods: FishingRodItemInfo[] = [
+export const fishingRods = registerItems<FishingRodItemInfo>([
   {
     key: FishingRod.BASIC_FISHING_ROD,
     name: "Basic Fishing Rod",
@@ -52,20 +52,13 @@ export const fishingRods: FishingRodItemInfo[] = [
     description:
       "Legend speaks of this rod's unparalleled prowess. Crafted from the finest materials, it promises an epic fishing adventure like no other.",
   },
-];
-
-/**
- * Register all fishing rods.
- */
-for (const info of fishingRods) {
-  registerItem(info);
-}
+]);
 
 /***
  * Type guards for fishing rods
  */
 export function isItemKeyFishingRod(key: string): key is FishingRodItemKey {
-  return fishingRods.some((rod) => rod.key === key);
+  return fishingRods.has(key as FishingRodItemKey);
 }
 
 export function isItemFishingRod(item: Item): item is FishingRodItem {

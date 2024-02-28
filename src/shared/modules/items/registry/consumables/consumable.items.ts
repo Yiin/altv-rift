@@ -1,6 +1,6 @@
 import { Item, ItemKey } from "../../types";
 import { ItemFlags } from "../../enums";
-import { registerItem } from "../../items-registry";
+import { registerItem, registerItems } from "../../items-registry";
 import { makeKeys } from "../../../../utility/make-keys";
 
 export const Consumable = makeKeys<ConsumableItemKey>()({
@@ -36,7 +36,7 @@ export type ConsumableItemInfo = {
   description: string;
 };
 
-export const consumables: ConsumableItemInfo[] = [
+export const consumables = registerItems<ConsumableItemInfo>([
   {
     key: Consumable.SIMPLE_MEDKIT,
     name: "Basic Survival Medkit",
@@ -118,17 +118,10 @@ export const consumables: ConsumableItemInfo[] = [
     name: "Cooked Golden Koi",
     description: "Grants special benefits when consumed.",
   },
-];
-
-/**
- * Register all consumable items.
- */
-for (const info of consumables) {
-  registerItem(info);
-}
+]);
 
 export function isItemKeyConsumable(key: ItemKey): key is ConsumableItemKey {
-  return consumables.some((info) => info.key === key);
+  return consumables.has(key as ConsumableItemKey);
 }
 
 export function isItemConsumable(item: Item): item is ConsumableItem {

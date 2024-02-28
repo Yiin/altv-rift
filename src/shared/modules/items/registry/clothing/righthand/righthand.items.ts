@@ -1,7 +1,6 @@
-import { Item, registerItem } from "@shared/modules/items";
+import { Item, registerItem, registerItems } from "@shared/modules/items";
 import { makeKeys } from "@shared/utility/make-keys";
-import RIGHTHAND_ITEMS from "./righthand.json";
-import { RightHandMap } from "./righthand-map";
+const RIGHTHAND_ITEMS: Record<string, RightHandItemInfo> = require("./righthand.json");
 
 export const RightHand = makeKeys<RightHandItemKey>()({
   MaleAquaHippyBracelet: "DLC_MP_SUM23_M_PRIGHT_WRIST_0_0",
@@ -144,22 +143,13 @@ export type RightHandItemInfo = {
   restrictionTags: string[] | null;
 };
 
-export const righthand = Object.values(RIGHTHAND_ITEMS) as any as RightHandItemInfo[];
-
-/**
- * Register all right hand items.
- */
-// console.log("Registering right hand items...");
-for (const info of righthand) {
-  registerItem(info);
-}
-// console.log(`Registered ${Object.keys(righthand).length} right hand items.`);
+export const righthand = registerItems(Object.values(RIGHTHAND_ITEMS));
 
 /**
  * Type guards for right hand items
  */
 export function isItemKeyRightHand(key: string): key is RightHandItemKey {
-  return righthand.some((info) => info.key === key);
+  return righthand.has(key as RightHandItemKey);
 }
 
 export function isItemRightHand(item: Item): item is RightHandItem {

@@ -1,4 +1,4 @@
-import { ItemFlags, registerItem } from "@shared/modules/items";
+import { ItemFlags, registerItem, registerItems } from "@shared/modules/items";
 import { Item } from "../types";
 import { makeKeys } from "../../../utility/make-keys";
 
@@ -19,27 +19,20 @@ export type NoteItemInfo = {
   flags: ItemFlags;
 };
 
-export const notes: NoteItemInfo[] = [
+export const notes = registerItems<NoteItemInfo>([
   {
     key: Note.INTRODUCTION_MAP,
     name: "Map from Cal",
     description: "A map containing some sketches of the area.",
     flags: ItemFlags.IsPreviewable | ItemFlags.DestroyOnDrop,
   },
-];
-
-/**
- * Register all notes.
- */
-for (const info of notes) {
-  registerItem(info);
-}
+]);
 
 /***
  * Type guards for notes
  */
 export function isItemKeyNote(key: string): key is NoteItemKey {
-  return notes.some((rod) => rod.key === key);
+  return notes.has(key as NoteItemKey);
 }
 
 export function isItemNote(item: Item): item is NoteItem {

@@ -1,4 +1,4 @@
-import { registerItem } from "../../items-registry";
+import { registerItem, registerItems } from "../../items-registry";
 import { makeKeys } from "../../../../utility/make-keys";
 import { Item } from "../../types";
 
@@ -22,7 +22,7 @@ export type PickaxeItemInfo = {
   description: string;
 };
 
-export const pickaxes: PickaxeItemInfo[] = [
+export const pickaxes = registerItems<PickaxeItemInfo>([
   {
     key: Pickaxe.BASIC_PICKAXE,
     name: "Basic Pickaxe",
@@ -53,17 +53,10 @@ export const pickaxes: PickaxeItemInfo[] = [
     description:
       "Forged from the rarest metals and honed to perfection, this pickaxe represents the pinnacle of mining excellence.",
   },
-];
-
-/**
- * Register all pickaxes.
- */
-for (const info of pickaxes) {
-  registerItem(info);
-}
+]);
 
 export function isItemKeyPickaxe(key: string): key is PickaxeItemKey {
-  return pickaxes.some((pickaxe) => pickaxe.key === key);
+  return pickaxes.has(key as PickaxeItemKey);
 }
 
 export function isItemPickaxe(item: Item): item is PickaxeItem {

@@ -1,7 +1,7 @@
 import alt from "@altv/server";
 import { PlayerFlags } from "@shared/store/game-state.store";
 import { isInGame } from "@/core/utility/assertions";
-import WATER_ZONES from "./water-zones.json";
+import WATER_ZONES from "./water-zones.json" assert { type: 'json' };
 
 declare module "@altv/server" {
   interface ICustomColshapeMeta {

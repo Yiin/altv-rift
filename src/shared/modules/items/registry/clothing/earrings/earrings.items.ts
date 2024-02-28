@@ -1,6 +1,6 @@
-import { Item, registerItem } from "@shared/modules/items";
+import { Item, registerItem, registerItems } from "@shared/modules/items";
 import { makeKeys } from "@shared/utility/make-keys";
-import EARRINGS_ITEMS from "./earrings.json";
+const EARRINGS_ITEMS: Record<string, EarringsItemInfo> = require("./earrings.json");
 
 export const Earrings = makeKeys<EarringsItemKey>()({
   FemaleGrayEarpiece: "DLC_MP_HEIST_F_EAR0_0",
@@ -207,22 +207,13 @@ export type EarringsItemInfo = {
   restrictionTags: string[] | null;
 };
 
-export const earrings = Object.values(EARRINGS_ITEMS) as any as EarringsItemInfo[];
-
-/**
- * Register all earrings.
- */
-// console.log("Registering earrings...");
-for (const info of earrings) {
-  registerItem(info);
-}
-// console.log(`Registered ${Object.keys(earrings).length} earrings.`);
+export const earrings = registerItems(Object.values(EARRINGS_ITEMS));
 
 /**
  * Type guards for earrings
  */
 export function isItemKeyEarrings(key: string): key is EarringsItemKey {
-  return earrings.some((info) => info.key === key);
+  return earrings.has(key as EarringsItemKey);
 }
 
 export function isItemEarrings(item: Item): item is EarringsItem {

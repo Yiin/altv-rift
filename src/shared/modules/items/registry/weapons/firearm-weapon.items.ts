@@ -1,4 +1,4 @@
-import { registerItem } from "@shared/modules/items";
+import { registerItem, registerItems } from "@shared/modules/items";
 import { ItemGrade, ItemTier } from "../../enums";
 import { Item, ItemKey } from "../../types";
 import { AmmoItemKey } from "../ammo/ammo.items";
@@ -117,7 +117,7 @@ export type FirearmWeaponItemInfo = {
   };
 };
 
-export const firearmWeapons: FirearmWeaponItemInfo[] = [
+export const firearmWeapons = registerItems<FirearmWeaponItemInfo>([
   {
     key: FirearmWeapon.ADVANCEDRIFLE,
     hash: 2937143193,
@@ -1324,22 +1324,19 @@ export const firearmWeapons: FirearmWeaponItemInfo[] = [
       overall: 29.2,
     },
   },
-];
-
-/**
- * Register all firearm weapons.
- */
-for (const info of firearmWeapons) {
-  registerItem(info);
-}
+]);
 
 /**
  * Type guards for firearm weapons.
  */
 export function isItemKeyFirearmWeapon(key: ItemKey): key is FirearmWeaponItemKey {
-  return firearmWeapons.some((info) => info.key === key);
+  return firearmWeapons.has(key as FirearmWeaponItemKey);
 }
 
 export function isItemFirearmWeapon(item: Item): item is FirearmWeaponItem {
   return isItemKeyFirearmWeapon(item.key);
+}
+
+export function getWeaponClipSize(key: FirearmWeaponItemKey): number {
+  return firearmWeapons.get(key)?.clipSize ?? 0;
 }

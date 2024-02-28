@@ -28,6 +28,7 @@ import { useUser } from "./core/store/user.store";
 import { useCharacter } from "./core/store/character.store";
 import { gameState } from "./core/store/game-state.store";
 import { clientState } from "./core/store/client.store";
+import { document } from "./core/rmlui/renderer/element-renderer";
 
 alt.Events.onConsoleCommand(({ command }) => {
   if (command === "user") {

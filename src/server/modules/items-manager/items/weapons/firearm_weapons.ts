@@ -7,12 +7,16 @@ import {
   toEquipedAmmo,
   AmmoItem,
   Item,
+  getAmmoKeyForAmmoGroup,
+  getWeaponAmmoGroup,
 } from "@shared/modules/items";
 import {
   FirearmWeaponItem,
+  getWeaponClipSize,
   isItemFirearmWeapon,
 } from "@shared/modules/items/registry/weapons/firearm-weapon.items";
 import { GroundItemSource, InventoryItemSource, ItemSource, ItemSourceOrigin } from "@shared/interfaces";
+import { getInventoryItemByKey } from "@shared/modules/inventory";
 import { InGamePlayer, isInGame } from "@/core/utility/assertions";
 import { on } from "@/core/events/emit";
 import { removeItem, addItemToInventory, findInventoryByItemSource, findItem } from "../../api";
@@ -56,6 +60,8 @@ alt.Events.onPlayer(ServerEvents.FromClient.WEAPON_SHOOT, (player) => {
   if (!isItemFirearmWeapon(equipedWeapon)) {
     return;
   }
+
+  // const ammo = findAmmoUsedForWeapon(player, equipedWeapon);
 
   if (!equipedWeapon.ammo) {
     return;
@@ -233,4 +239,21 @@ export function unloadWeaponItemAmmo(item: Item) {
   return createItem(ammo.key, {
     amount: ammo.clip + ammo.rest,
   });
+}
+
+/**
+ * Returns ammo item used for weapon.
+ */
+export function findAmmoUsedForWeapon(player: InGamePlayer, weapon: FirearmWeaponItem) {
+  if (weapon.ammo) {
+    return weapon.ammo;
+  }
+
+  const item = getInventoryItemByKey(player.character.inventory, getAmmoKeyForAmmoGroup(getWeaponAmmoGroup(weapon.key)))?.item;
+
+  if (!item) {
+    return null;
+  }
+
+  return toEquipedAmmo(item, getWeaponClipSize(weapon.key));
 }

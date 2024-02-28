@@ -1,4 +1,4 @@
-import { registerItem } from "../../items-registry";
+import { registerItem, registerItems } from "../../items-registry";
 import { makeKeys } from "../../../../utility/make-keys";
 
 export const FoodIngredient = makeKeys<FoodIngredientItemKey>()({
@@ -32,7 +32,7 @@ export type FoodIngredientItemInfo = {
   description: string;
 };
 
-export const foodIngredients: FoodIngredientItemInfo[] = [
+export const foodIngredients = registerItems<FoodIngredientItemInfo>([
   {
     key: FoodIngredient.RAW_TROUT,
     name: "Raw Trout",
@@ -108,15 +108,8 @@ export const foodIngredients: FoodIngredientItemInfo[] = [
     name: "Raw Golden Koi",
     description: "A mythical fish, beautiful and rare.",
   },
-];
-
-/**
- * Register all food ingredients.
- */
-for (const info of foodIngredients) {
-  registerItem(info);
-}
+]);
 
 export function isItemKeyFoodIngredient(key: string): key is FoodIngredientItemKey {
-  return foodIngredients.some((ingredient) => ingredient.key === key);
+  return foodIngredients.has(key as FoodIngredientItemKey);
 }

@@ -16,15 +16,29 @@ import {
   isItemKeyShoes,
   isItemKeyTop,
   isItemKeyTool,
+  getAmmoGroup,
 } from "../registry";
 import { Item, ItemKey } from "../types";
+import { AmmoGroup } from "../registry/weapons/weapon-groups";
 
 /**
  * Determines the equipment slot suitable for the given item,
  */
 export function getItemKeyEquipmentSlot(key: ItemKey): EquipmentSlot | undefined {
   if (isItemKeyAmmo(key)) {
-    return EquipmentSlot.Ammo;
+    switch (getAmmoGroup(key)) {
+      case AmmoGroup.ASSAULT_RIFLE: return EquipmentSlot.AssaultRifleAmmo;
+      case AmmoGroup.HANDGUN: return EquipmentSlot.HandgunAmmo;
+      case AmmoGroup.MACHINE_GUN: return EquipmentSlot.MachineGunAmmo;
+      case AmmoGroup.SHOTGUN: return EquipmentSlot.ShotgunAmmo;
+      case AmmoGroup.SNIPER_RIFLE: return EquipmentSlot.SniperRifleAmmo;
+      case AmmoGroup.ROCKET_LAUNCHER: return EquipmentSlot.RocketLauncherAmmo;
+      case AmmoGroup.FIREWORK: return EquipmentSlot.FireworkAmmo;
+      case AmmoGroup.GRENADE_LAUNCHER: return EquipmentSlot.GrenadeLauncherAmmo;
+      case AmmoGroup.PLASMA_RAYS: return EquipmentSlot.PlasmaRaysAmmo;
+      case AmmoGroup.FIRE_EXTINGUISHER: return EquipmentSlot.FireExtinguisherAmmo;
+      case AmmoGroup.SMOKE_GRANADES: return EquipmentSlot.SmokeGranadesAmmo;
+    }
   }
   if (isItemKeyWeapon(key)) {
     return EquipmentSlot.Weapon;

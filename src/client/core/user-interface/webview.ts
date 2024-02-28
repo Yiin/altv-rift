@@ -58,6 +58,7 @@ let sceneCursorState = false;
 
 export async function setScene(scene: Scene, { hasCursor }: { hasCursor: boolean }) {
   alt.log(`Setting Scene: ${scene}`);
+
   if (clientState.ui.scene && sceneCursorState) {
     sceneCursorState = false;
     showCursor(false);

@@ -1,4 +1,4 @@
-import { registerItem } from "../../items-registry";
+import { registerItem, registerItems } from "../../items-registry";
 import { makeKeys } from "../../../../utility/make-keys";
 import { Item, ItemKey } from "../../types";
 
@@ -23,7 +23,7 @@ export type WoodItemInfo = {
   description: string;
 };
 
-const woods: WoodItemInfo[] = [
+const woods = registerItems<WoodItemInfo>([
   {
     key: Wood.BASIC_WOOD,
     name: "Basic Wood",
@@ -54,17 +54,10 @@ const woods: WoodItemInfo[] = [
     description:
       "Its unmatched quality and rare origin make it the ultimate choice for crafting masterpieces.",
   },
-];
-
-/**
- * Register all woods.
- */
-for (const info of woods) {
-  registerItem(info);
-}
+]);
 
 export function isItemKeyWood(key: ItemKey): key is WoodItemKey {
-  return woods.some((info) => info.key === key);
+  return woods.has(key as WoodItemKey);
 }
 
 export function isItemWood(item: Item): item is WoodItem {

@@ -1,6 +1,6 @@
-import { Item, registerItem } from "@shared/modules/items";
+import { Item, registerItem, registerItems } from "@shared/modules/items";
 import { makeKeys } from "@shared/utility/make-keys";
-import ARMOR_ITEMS from "./armor.json";
+const ARMOR_ITEMS: Record<string, ArmorItemInfo> = require("./armor.json");
 
 export const Armor = makeKeys<ArmorItemKey>()({
   FemaleTanUtilityVest: "DLC_MP_APA_F_SPECIAL2_1_0",
@@ -36,22 +36,13 @@ export type ArmorItemInfo = {
   restrictionTags: string[] | null;
 };
 
-export const armors = Object.values(ARMOR_ITEMS) as any as ArmorItemInfo[];
-
-/**
- * Register all armors.
- */
-// console.log("Registering armors...");
-for (const info of armors) {
-  registerItem(info);
-}
-// console.log(`Registered ${Object.keys(armors).length} armors.`);
+export const armors = registerItems(Object.values(ARMOR_ITEMS));
 
 /**
  * Type guards for armors
  */
 export function isItemKeyArmor(key: string): key is ArmorItemKey {
-  return armors.some((info) => info.key === key);
+  return armors.has(key as ArmorItemKey);
 }
 
 export function isItemArmor(item: Item): item is ArmorItem {
