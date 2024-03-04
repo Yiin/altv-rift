@@ -7,7 +7,7 @@ import {
   isItemFishBait,
 } from "@shared/modules/items/registry/fish-bait.items";
 import { FishingRodItem, createItem, isItemFishingRod } from "@shared/modules/items";
-import { InventoryItem, ItemSourceOrigin } from "@shared/interfaces";
+import { EquipmentSlot, InventoryItem, ItemSourceOrigin } from "@shared/interfaces";
 import { rpc } from "@/core/rpc";
 import { isInGame, needsToBeInGame } from "@/core/utility/assertions";
 import { sendChatMessage } from "@/modules/chat";
@@ -15,7 +15,7 @@ import { sendChatMessage } from "@/modules/chat";
 rpc.registerClient(ServerCall.FromClient.START_FISHING, (player: alt.Player) => {
   needsToBeInGame(player);
 
-  if (!player.getEquipedItemInSlot("tool")) {
+  if (!player.getEquipedItemInSlot(EquipmentSlot.Tool)) {
     const bestFishingRod = player.character.inventory.items.reduce((best, next) => {
       if (best && isItemFishingRod(next.item)) {
         return best.item.key > next.item.key
@@ -44,7 +44,7 @@ rpc.registerClient(ServerCall.FromClient.START_FISHING, (player: alt.Player) => 
     }
   }
 
-  const fishingRod = player.getEquipedItemInSlot("tool");
+  const fishingRod = player.getEquipedItemInSlot(EquipmentSlot.Tool);
 
   if (!fishingRod || !isItemFishingRod(fishingRod)) {
     sendChatMessage(player, `You dont have a fishing rod!`);
@@ -86,7 +86,7 @@ function fishingTick(player: alt.Player) {
     return;
   }
 
-  const fishingRod = player.getEquipedItemInSlot("tool");
+  const fishingRod = player.getEquipedItemInSlot(EquipmentSlot.Tool);
 
   if (!fishingRod || !isItemFishingRod(fishingRod) || !fishingRod.bait) {
     stopFishing(player);

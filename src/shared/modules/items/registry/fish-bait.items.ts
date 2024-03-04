@@ -1,4 +1,4 @@
-import { registerItem, registerItems } from "../items-registry";
+import { registerItems } from "../items-registry";
 import { makeKeys } from "../../../utility/make-keys";
 import { Item } from "../types";
 import { ItemFlags } from "../enums";

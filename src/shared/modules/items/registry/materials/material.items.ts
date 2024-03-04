@@ -9,20 +9,23 @@ import { MetalItem, MetalItemInfo, MetalItemKey, isItemKeyMetal } from "./metal.
 import { SandItem, SandItemInfo, SandItemKey, isItemKeySand } from "./sand.items";
 import { TreeLogItem, TreeLogItemInfo, TreeLogItemKey, isItemKeyTreeLog } from "./tree-log.items";
 import { WoodItem, WoodItemInfo, WoodItemKey, isItemKeyWood } from "./wood.items";
+import { OreItem, OreItemInfo, OreItemKey, isItemKeyOre } from "./ore.items";
 
 export type MaterialItemKey =
   | FoodIngredientItemKey
   | TreeLogItemKey
   | WoodItemKey
   | MetalItemKey
-  | SandItemKey;
+  | SandItemKey
+  | OreItemKey;
 export type MaterialItemInfo =
   | FoodIngredientItemInfo
   | TreeLogItemInfo
   | WoodItemInfo
   | MetalItemInfo
-  | SandItemInfo;
-export type MaterialItem = FoodIngredientItem | TreeLogItem | WoodItem | MetalItem | SandItem;
+  | SandItemInfo
+  | OreItemInfo;
+export type MaterialItem = FoodIngredientItem | TreeLogItem | WoodItem | MetalItem | SandItem | OreItem;
 
 export function isItemKeyMaterial(key: ItemKey): key is MaterialItemKey {
   return (
@@ -30,7 +33,8 @@ export function isItemKeyMaterial(key: ItemKey): key is MaterialItemKey {
     isItemKeyTreeLog(key) ||
     isItemKeyWood(key) ||
     isItemKeyMetal(key) ||
-    isItemKeySand(key)
+    isItemKeySand(key) ||
+    isItemKeyOre(key)
   );
 }
 

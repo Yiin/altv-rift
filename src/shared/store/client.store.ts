@@ -4,11 +4,10 @@
  * @ref src/client/store/client.ts
  * @ref src/webview/src/store/client.ts
  */
-import { addMinutes } from "date-fns";
 import { Scene, UIElement } from "@shared/enums/ui";
-import { GroundItemSource, Inventory } from "@shared/interfaces";
+import { GroundItemSource } from "@shared/interfaces";
 import { ConversationOption } from "@shared/interfaces/conversation";
-import { Ammo, FirearmWeapon, Item, ItemGrade, MeleeWeapon, TreeLogs, createItem } from "@shared/modules/items";
+import { Item } from "@shared/modules/items";
 
 export type CurrentConversation = {
   with: string;
@@ -87,10 +86,18 @@ export interface ClientState {
 export const getDefaultClientStoreState = (): ClientState => ({
   ui: {
     scene: null,
-    elements: new Set(),
-    window: 'altMock' in globalThis ? {
-      type: WindowType.LOOT_BOX,
-    } : null,
+    elements: 'altMock' in globalThis
+      // browser context
+      ? new Set()
+      // game context
+      : new Set(),
+    window: 'altMock' in globalThis
+      // browser context
+      ? {
+        type: WindowType.PLAYER_INVENTORY,
+      }
+      // game context
+      : null,
   },
   conversation: null,
   trackingQuest: null,

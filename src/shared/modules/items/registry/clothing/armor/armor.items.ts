@@ -1,6 +1,6 @@
-import { Item, registerItem, registerItems } from "@shared/modules/items";
+import { Item, registerItems } from "@shared/modules/items";
 import { makeKeys } from "@shared/utility/make-keys";
-const ARMOR_ITEMS: Record<string, ArmorItemInfo> = require("./armor.json");
+const ARMOR_ITEMS: Record<string, ArmorItemInfo> = (await import("./armor.json")).default as any;
 
 export const Armor = makeKeys<ArmorItemKey>()({
   FemaleTanUtilityVest: "DLC_MP_APA_F_SPECIAL2_1_0",

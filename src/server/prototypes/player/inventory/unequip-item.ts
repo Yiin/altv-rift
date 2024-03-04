@@ -1,13 +1,11 @@
 import alt from "@altv/server";
-import { EquipmentSlot, InventoryItemSource, ItemSourceOrigin } from "@shared/interfaces";
+import { EquipmentSlot, InventoryItemSource } from "@shared/interfaces";
 import { ServerEvents } from "@shared/events/server";
 import { Equipment, Item } from "@shared/modules/items";
 import { InGamePlayer } from "@/core/utility/assertions";
 import {
   addItemToInventory,
   findInventoryByItemSource,
-  unloadAmmoFromWeapon,
-  unloadWeaponItemAmmo,
 } from "@/modules/items-manager";
 import { emit } from "@/core/events/emit";
 
@@ -30,67 +28,41 @@ declare module "@altv/server" {
 }
 
 alt.Player.prototype.unequipItem = function (equipmentSlot, to) {
-  if (equipmentSlot === "ammo") {
-    if (
-      !unloadAmmoFromWeapon({
-        origin: ItemSourceOrigin.PlayerEquipment,
-        originId: this.character.id,
-        equipmentSlot: EquipmentSlot.Weapon,
-      })
-    ) {
-      return false;
-    }
-  } else {
-    const slot = equipmentSlot as keyof Equipment;
-    const item = this.character.equipment[slot];
+  const slot = equipmentSlot as keyof Equipment;
+  const item = this.character.equipment[slot];
 
-    if (!item) {
-      return false;
-    }
-
-    if (to) {
-      const inventory = findInventoryByItemSource(to);
-      if (!inventory) {
-        return false;
-      }
-      if (!addItemToInventory(inventory, item, to.inventorySlot)) {
-        return false;
-      }
-    } else if (!this.addItem(item)) {
-      return false;
-    }
-
-    this.character.equipment[slot] = null;
+  if (!item) {
+    return false;
   }
+
+  if (to) {
+    const inventory = findInventoryByItemSource(to);
+    if (!inventory) {
+      return false;
+    }
+    if (!addItemToInventory(inventory, item, to.inventorySlot)) {
+      return false;
+    }
+  } else if (!this.addItem(item)) {
+    return false;
+  }
+
+  this.character.equipment[slot] = null;
 
   emit(ServerEvents.FromServer.ITEM_UNEQUIP, this, equipmentSlot);
   return true;
 };
 
 alt.Player.prototype.removeEquipedItem = function (equipmentSlot) {
-  let removedItem: Item | null = null;
+  const slot = equipmentSlot as keyof Equipment;
+  const item = this.character.equipment[slot];
 
-  if (equipmentSlot === "ammo") {
-    const weapon = this.character.equipment.weapon;
-
-    if (!weapon) {
-      return null;
-    }
-    const ammo = unloadWeaponItemAmmo(weapon);
-
-    removedItem = ammo;
-  } else {
-    const slot = equipmentSlot as keyof Equipment;
-    const item = this.character.equipment[slot];
-
-    if (!item) {
-      return null;
-    }
-
-    this.character.equipment[slot] = null;
-    removedItem = item;
+  if (!item) {
+    return null;
   }
 
+  this.character.equipment[slot] = null;
+
   emit(ServerEvents.FromServer.ITEM_UNEQUIP, this, equipmentSlot);
-  return removedItem;
+  return item;
 };

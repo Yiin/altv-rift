@@ -1,7 +1,7 @@
 import alt from "@altv/server";
 import { ClientEvents } from "@shared/events/client";
 import { getBodyPartDamageMultiplier } from "@shared/modules/combat/damage-multipliers";
-import { getItemInfoByKey, isItemFirearmWeapon, getAmmoDamageMultiplier } from "@shared/modules/items";
+import { getItemInfoByKey, isItemFirearmWeapon, getAmmoDamageMultiplier, getWeaponAmmoEquipmentSlot, isWeaponWithClip } from "@shared/modules/items";
 import { isInGame } from "@/core/utility/assertions";
 
 alt.Events.onWeaponDamage(({ source, target, damage, weaponHash, bodyPart, cancel, setDamageValue }) => {
@@ -25,16 +25,16 @@ alt.Events.onWeaponDamage(({ source, target, damage, weaponHash, bodyPart, cance
     return cancel();
   }
 
-  if (!equipedWeapon.ammo) {
-    return cancel();
-  }
+  let ammoKey = isWeaponWithClip(equipedWeapon.key)
+    ? equipedWeapon.clip?.key
+    : source.getEquipedItemInSlot(getWeaponAmmoEquipmentSlot(equipedWeapon.key))?.key;
 
-  if (equipedWeapon.ammo.clip <= 0) {
+  if (!ammoKey) {
     return cancel();
   }
 
   const initialDamage = damage;
-  damage *= getAmmoDamageMultiplier(equipedWeapon.ammo.key);
+  damage *= getAmmoDamageMultiplier(ammoKey);
   damage *= getBodyPartDamageMultiplier(bodyPart);
 
   if (damage > 0) {

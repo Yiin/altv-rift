@@ -27,6 +27,7 @@ const { combinableWithHoveredItem, combinableWithOtherItems } = useCombinableIte
 const dragging = computed(
   () =>
     inventory.currentInteraction.type === InteractionType.Dragging &&
+    !inventory.currentInteraction.maybe &&
     isSameItemSource(inventory.currentInteraction.state.item.source, props.source)
 );
 
@@ -38,7 +39,7 @@ const selected = computed(
 const draggingOver = computed(() => {
   const interaction = inventory.currentInteraction;
 
-  if (interaction.type === InteractionType.Dragging) {
+  if (interaction.type === InteractionType.Dragging && !interaction.maybe) {
     const currentCursorPos = interaction.state.currentPosition;
 
     const nodeRect = nodeRef.value?.parentElement?.getBoundingClientRect();

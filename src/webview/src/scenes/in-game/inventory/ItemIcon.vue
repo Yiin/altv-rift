@@ -30,7 +30,7 @@ watch(
 </script>
 
 <template>
-  <div class="w-20 h-20 text-white flex items-center justify-center p-2">
+  <div class="relative w-20 h-20 text-white flex items-center justify-center p-2">
     <template v-if="noImage">
       <LogIcon v-if="item.key.endsWith(`_logs`)" :item-key="(item.key as TreeLogItemKey)" />
       <div v-else class="text-center text-sm tracking-wider font-bold">

@@ -5,11 +5,11 @@ import { ItemSourceOrigin } from "@shared/interfaces";
 import { getInventoryItemInSlot } from "@shared/modules/inventory";
 import { rpc } from "@/core/rpc";
 import { needsToBeInGame } from "@/core/utility/assertions";
-import { loadWeaponWithAmmo, unloadAmmoFromWeapon } from "./items/weapons/firearm_weapons";
 import { removeBaitFromFishingRod, useFishBaitOnFishingRod } from "./items/fishing-rod";
 import { canDropItem, canEquipItems } from "./api/hooks";
 import { dropItem, removeItem, swapItems, canInteractWithItemSource, findItem, useItemFromSource, removeItemFromInventorySlot } from "./api";
 import { getStorageInventory, openStorage } from "./storage";
+import { loadWeaponWithAmmo, unloadAmmoFromWeapon } from "./items";
 
 /**
  * Player tries to use an item.

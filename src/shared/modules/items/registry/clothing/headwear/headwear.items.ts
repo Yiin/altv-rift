@@ -1,6 +1,6 @@
-import { Item, ItemGrade, registerItem, registerItems } from "@shared/modules/items";
+import { Item, ItemGrade, registerItems } from "@shared/modules/items";
 import { makeKeys } from "@shared/utility/make-keys";
-const HEADWEAR_ITEMS: Record<string, HeadwearItemInfo> = require("./headwear.json");
+const HEADWEAR_ITEMS: Record<string, HeadwearItemInfo> = (await import("./headwear.json")).default as any;
 
 export const Headwear = makeKeys<HeadwearItemKey>()({
   MaleRedEarDefenders: "SP_M_HEAD_0_0_1",

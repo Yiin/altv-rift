@@ -27,6 +27,7 @@ const draggingStyle = computed(() => {
 
   if (
     interaction.type === InteractionType.Dragging &&
+    !interaction.maybe &&
     isSameItemSource(interaction.state.item.source, slottedItem.value.source)
   ) {
     const x =

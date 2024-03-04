@@ -40,7 +40,6 @@ export function getItemDefaultData(key: ItemKey) {
     return {
       durability: 100,
       customName: null,
-      ammo: null,
       components: [],
       tint: 0,
       grade: ItemGrade.BASE

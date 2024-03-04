@@ -1,7 +1,7 @@
-import { registerItem, registerItems } from "@shared/modules/items";
+import { registerItems } from "@shared/modules/items";
 import { ItemGrade, ItemTier } from "../../enums";
 import { Item, ItemKey } from "../../types";
-import { AmmoItemKey } from "../ammo/ammo.items";
+import { AmmoItem, AmmoItemKey } from "../ammo/ammo.items";
 import { makeKeys } from "../../../../utility/make-keys";
 import { AmmoGroup, WeaponGroup } from "./weapon-groups";
 import { getWeaponData } from "./weapon.items";
@@ -81,12 +81,6 @@ export const FirearmWeapon = makeKeys<FirearmWeaponItemKey>()({
 
 export type FirearmWeaponItemKey = Brand<string, "FirearmWeaponItemKey">;
 
-export type EquipedAmmo = {
-  key: AmmoItemKey;
-  clip: number;
-  rest: number;
-};
-
 export type FirearmWeaponItem = {
   key: FirearmWeaponItemKey;
 
@@ -94,7 +88,7 @@ export type FirearmWeaponItem = {
   durability: number;
   tint: number;
   components: number[];
-  ammo?: EquipedAmmo | null;
+  clip?: AmmoItem | null;
   grade: ItemGrade;
 };
 
@@ -1339,4 +1333,8 @@ export function isItemFirearmWeapon(item: Item): item is FirearmWeaponItem {
 
 export function getWeaponClipSize(key: FirearmWeaponItemKey): number {
   return firearmWeapons.get(key)?.clipSize ?? 0;
+}
+
+export function isWeaponWithClip(key: FirearmWeaponItemKey) {
+  return getWeaponClipSize(key) > 0;
 }

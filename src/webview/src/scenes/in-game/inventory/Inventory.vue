@@ -10,6 +10,7 @@ import InventorySlot from "./InventorySlot.vue";
 import StorageItems from "./storage/Storage.vue";
 import GroundItems from "./ground/Ground.vue";
 import AmountTransfer from "./AmountTransfer.vue";
+import Ammunition from "./Ammunition.vue";
 import ItemPreview from "./item-preview/ItemPreview.vue";
 import { useGapSize } from "@/composables/use-gap-size";
 import { ItemSourceOrigin, EquipmentSlot as EquipmentSlotEnum } from "@shared/interfaces";
@@ -106,8 +107,24 @@ onUnmounted(() => {
         </div>
       </div>
       <div>
-        <h2 class="uppercase text-white text-2xl font-bold">inventory</h2>
-        <div class="uppercase text-base text-deepGray">items</div>
+        <div class="relative flex justify-between">
+          <div>
+            <h2 class="uppercase text-white text-2xl font-bold">inventory</h2>
+            <div class="uppercase text-base text-deepGray">items</div>
+          </div>
+          <div
+            class="inline-block"
+            v-click-outside="inventory.closeAmmunitionPanel">
+            <div
+              @click="inventory.openAmmunitionPanel()"
+              class="w-[139px] h-[45px] bg-zinc-600 bg-opacity-0 hover:bg-opacity-5 border border-white border-opacity-5 flex items-center justify-center cursor-pointer">
+              <div class="text-white text-sm font-bold uppercase">ammunition</div>
+            </div>
+            <Ammunition
+              v-if="inventory.currentInteraction?.type === InteractionType.AmmunitionPanel"
+              class="absolute top-14.5 right-0" />
+          </div>
+        </div>
         <div class="inline-grid grid-cols-6 grid-rows-5 gap-2.5 mt-5">
           <InventorySlot v-for="(_, slot) in inventory.size"
             :source="{ origin: ItemSourceOrigin.PlayerInventory, originId: inventory.playerId, inventorySlot: slot }" />
@@ -134,8 +151,7 @@ onUnmounted(() => {
         <h2 class="uppercase text-white text-2xl font-bold">backpack</h2>
         <div class="uppercase text-base text-deepGray">quick access</div>
         <div class="mt-2.5 flex gap-2.5">
-          <EquipmentSlot :name="EquipmentSlotEnum.Weapon" />
-          <EquipmentSlot :name="EquipmentSlotEnum.Ammo" class="-ml-2.5 mr-2.5" />
+          <EquipmentSlot :name="EquipmentSlotEnum.Weapon" class="w-44.5" />
           <EquipmentSlot :name="EquipmentSlotEnum.QuickSlot1" />
           <EquipmentSlot :name="EquipmentSlotEnum.QuickSlot2" />
           <EquipmentSlot :name="EquipmentSlotEnum.QuickSlot3" />

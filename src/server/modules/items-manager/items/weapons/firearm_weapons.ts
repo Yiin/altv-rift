@@ -1,25 +1,12 @@
 import alt from "@altv/server";
 import { ServerEvents } from "@shared/events/server";
-import {
-  getItemInfoByKey,
-  createItem,
-  isItemAmmo,
-  toEquipedAmmo,
-  AmmoItem,
-  Item,
-  getAmmoKeyForAmmoGroup,
-  getWeaponAmmoGroup,
-} from "@shared/modules/items";
-import {
-  FirearmWeaponItem,
-  getWeaponClipSize,
-  isItemFirearmWeapon,
-} from "@shared/modules/items/registry/weapons/firearm-weapon.items";
-import { GroundItemSource, InventoryItemSource, ItemSource, ItemSourceOrigin } from "@shared/interfaces";
+import { AmmoItem, Item, createItem, getAmmoKeyForAmmoGroup, getItemInfoByKey, getWeaponAmmoEquipmentSlot, getWeaponAmmoGroup, isItemAmmo } from "@shared/modules/items";
+import { FirearmWeaponItem, getWeaponClipSize, isItemFirearmWeapon, isWeaponWithClip } from "@shared/modules/items/registry/weapons/firearm-weapon.items";
+import { ItemSource, InventoryItemSource, GroundItemSource, ItemSourceOrigin } from "@shared/interfaces";
 import { getInventoryItemByKey } from "@shared/modules/inventory";
 import { InGamePlayer, isInGame } from "@/core/utility/assertions";
 import { on } from "@/core/events/emit";
-import { removeItem, addItemToInventory, findInventoryByItemSource, findItem } from "../../api";
+import { findItem, findInventoryByItemSource, removeItem, addItemToInventory } from "../../api";
 import { dropItemOnTheGround } from "../../dropped-items";
 
 on(ServerEvents.FromServer.ITEM_EQUIP, (player, item) => {
@@ -29,10 +16,6 @@ on(ServerEvents.FromServer.ITEM_EQUIP, (player, item) => {
 
   const itemInfo = getItemInfoByKey(item.key);
 
-  if (item.ammo && item.ammo.clip + item.ammo.rest <= 0) {
-    item.ammo = null;
-  }
-
   if (player.currentWeapon === itemInfo.hash) {
     return;
   }
@@ -40,6 +23,9 @@ on(ServerEvents.FromServer.ITEM_EQUIP, (player, item) => {
   player.giveWeapon(itemInfo.hash, 0, true);
 });
 
+/**
+ * Handles weapon ammo consumption
+ */
 alt.Events.onPlayer(ServerEvents.FromClient.WEAPON_SHOOT, (player) => {
   if (!isInGame(player)) {
     return;
@@ -61,20 +47,29 @@ alt.Events.onPlayer(ServerEvents.FromClient.WEAPON_SHOOT, (player) => {
     return;
   }
 
-  // const ammo = findAmmoUsedForWeapon(player, equipedWeapon);
+  // If weapon has a clip, use ammo in the clip
+  if (isWeaponWithClip(equipedWeapon.key) && equipedWeapon.clip) {
+    if (equipedWeapon.clip.amount > 0) {
+      equipedWeapon.clip.amount--;
 
-  if (!equipedWeapon.ammo) {
+      if (equipedWeapon.clip.amount <= 0) {
+        equipedWeapon.clip = null;
+      }
+    }
     return;
   }
 
-  if (equipedWeapon.ammo.clip <= 0) {
-    return;
-  }
+  // Otherwise use equiped ammo reserves
+  const ammoEquipmentSlot = getWeaponAmmoEquipmentSlot(equipedWeapon.key);
 
-  equipedWeapon.ammo.clip--;
+  const ammo = player.character.equipment[ammoEquipmentSlot];
 
-  if (equipedWeapon.ammo.clip + equipedWeapon.ammo.rest <= 0) {
-    equipedWeapon.ammo = null;
+  if (ammo) {
+    ammo.amount--;
+
+    if (ammo.amount <= 0) {
+      player.removeEquipedItem(ammoEquipmentSlot);
+    }
   }
 });
 
@@ -97,21 +92,18 @@ export function loadWeaponWithAmmo(
     return false;
   }
 
-  const pos = ammoSource.origin === ItemSourceOrigin.Ground ? alt.VirtualEntity.getByID(ammoSource.originId)?.pos : null;
-
-  // remove ammo from inventory
-  removeItem(ammoSource);
-
-  const previousAmmo = loadWeaponItemWithAmmoItem(weapon, ammo);
-
-  if (previousAmmo) {
-    if (ammoInventory) {
-      addItemToInventory(ammoInventory, previousAmmo);
-    } else if (pos) {
-      dropItemOnTheGround(previousAmmo, pos);
-    }
+  if (weapon.clip) {
+    // Weapon already has a clip
+    return false;
   }
-  return true;
+
+  const success = loadWeaponItemWithAmmoItem(weapon, ammo);
+
+  if (!ammo.amount) {
+    removeItem(ammoSource);
+  }
+
+  return success;
 }
 
 /**
@@ -199,25 +191,21 @@ export function unloadAmmoFromWeapon(source: ItemSource) {
 export function loadWeaponItemWithAmmoItem(
   weapon: FirearmWeaponItem,
   ammo: AmmoItem
-): AmmoItem | null {
-  const { clipSize } = getItemInfoByKey(weapon.key);
+): boolean {
+  const clipSize = getWeaponClipSize(weapon.key);
 
-  if (!weapon.ammo) {
-    weapon.ammo = toEquipedAmmo(ammo, clipSize);
-  } else {
-    const previousAmmo = weapon.ammo;
-
-    if (previousAmmo.key !== ammo.key) {
-      weapon.ammo = toEquipedAmmo(ammo, clipSize);
-
-      return createItem(previousAmmo.key, {
-        amount: previousAmmo.clip + previousAmmo.rest,
-      });
-    }
-
-    weapon.ammo = toEquipedAmmo(ammo, clipSize, weapon.ammo);
+  if (!weapon.clip) {
+    const amount = Math.min(clipSize, ammo.amount);
+    weapon.clip = createItem(ammo.key, { amount });
+    ammo.amount -= amount;
+    return true;
+  } else if (weapon.clip.key === ammo.key) {
+    const amount = Math.min(clipSize - weapon.clip.amount, ammo.amount);
+    weapon.clip.amount += amount;
+    ammo.amount -= amount;
+    return true;
   }
-  return null;
+  return false;
 }
 
 /**
@@ -228,32 +216,13 @@ export function unloadWeaponItemAmmo(item: Item) {
     return null;
   }
 
-  if (!item.ammo) {
+  if (!item.clip) {
     return null;
   }
 
-  const ammo = item.ammo;
+  const ammo = item.clip;
 
-  item.ammo = null;
+  item.clip = null;
 
-  return createItem(ammo.key, {
-    amount: ammo.clip + ammo.rest,
-  });
-}
-
-/**
- * Returns ammo item used for weapon.
- */
-export function findAmmoUsedForWeapon(player: InGamePlayer, weapon: FirearmWeaponItem) {
-  if (weapon.ammo) {
-    return weapon.ammo;
-  }
-
-  const item = getInventoryItemByKey(player.character.inventory, getAmmoKeyForAmmoGroup(getWeaponAmmoGroup(weapon.key)))?.item;
-
-  if (!item) {
-    return null;
-  }
-
-  return toEquipedAmmo(item, getWeaponClipSize(weapon.key));
+  return ammo;
 }

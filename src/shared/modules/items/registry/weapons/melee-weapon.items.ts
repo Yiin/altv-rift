@@ -1,4 +1,4 @@
-import { registerItem, registerItems } from "@shared/modules/items";
+import { registerItems } from "@shared/modules/items";
 import { ItemTier, ItemFlags, ItemGrade } from "../../enums";
 import { Item } from "../../types";
 import { makeKeys } from "../../../../utility/make-keys";

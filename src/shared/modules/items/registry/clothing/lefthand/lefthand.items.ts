@@ -1,6 +1,6 @@
-import { Item, ItemGrade, registerItem, registerItems } from "@shared/modules/items";
+import { Item, ItemGrade, registerItems } from "@shared/modules/items";
 import { makeKeys } from "@shared/utility/make-keys";
-const LEFTHAND_ITEMS: Record<string, LeftHandItemInfo> = require("./lefthand.json");
+const LEFTHAND_ITEMS: Record<string, LeftHandItemInfo> = (await import("./lefthand.json")).default as any;
 
 export const LeftHand = makeKeys<LeftHandItemKey>()({
   MaleDeepSeaWatch: "SP_M_LEFT_WRIST_0_0",

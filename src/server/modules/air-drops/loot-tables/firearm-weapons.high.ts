@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { AirDropType } from "@shared/modules/air-drops";
-import { ItemKey, WeaponItemKey, AmmoItemKey, ItemTier, getItemTier, isItemKeyAmmo, isItemKeyFirearmWeapon, createItem, ItemGrade, isItemKeyThrowableWeapon, isItemKeyMeleeWeapon, FirearmWeaponItemKey, getAmmoKeyForAmmoGroup, getWeaponAmmoGroup } from "@shared/modules/items";
+import { ItemKey, WeaponItemKey, AmmoItemKey, ItemTier, getItemTier, isItemKeyAmmo, isItemKeyFirearmWeapon, createItem, ItemGrade, isItemKeyThrowableWeapon, isItemKeyMeleeWeapon, FirearmWeaponItemKey, getAmmoKeyForAmmoGroup, getWeaponAmmoGroup, getWeaponClipSize } from "@shared/modules/items";
 import { rollItem } from "@shared/utility/random";
 
 /**
@@ -38,11 +38,9 @@ export default {
           [50, ItemGrade.THREE],
           [5, ItemGrade.FOUR],
         ]),
-        ammo: {
-          key: getAmmoKeyForAmmoGroup(getWeaponAmmoGroup(itemKey)),
-          clip: 0,
-          rest: _.random(0, 3) * 100,
-        }
+        clip: createItem(getAmmoKeyForAmmoGroup(getWeaponAmmoGroup(itemKey)), {
+          amount: getWeaponClipSize(itemKey),
+        }),
       });
     }
     return createItem(itemKey, {

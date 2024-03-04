@@ -105,17 +105,16 @@ const combination = computed(() => {
       <!--
         Firearm weapon info
       -->
-      <div v-if="isItemFirearmWeapon(item) && item.ammo" class="flex items-center gap-1">
+      <div v-if="isItemFirearmWeapon(item) && item.clip" class="flex items-center gap-1">
         <v-icon icon="mdi-ammunition" />
         <div>
           <div class="font-bold">
-            {{ getItemName(item.ammo.key) }}
+            {{ getItemName(item.clip.key) }}
           </div>
           <div class="flex items-baseline gap-1">
             <v-icon icon="mdi-close" size="12" />
             <div class="font-bold text-yellow-500">
-              {{ item.ammo.clip }}
-              <span class="text-xs">/ {{ item.ammo.rest }}</span>
+              {{ item.clip.amount }}
             </div>
           </div>
         </div>

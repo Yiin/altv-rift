@@ -1,6 +1,4 @@
 import alt from "@altv/server";
-import { createItem } from "@shared/modules/items";
-import { isItemFirearmWeapon } from "@shared/modules/items/registry/weapons/firearm-weapon.items";
 import { getInventoryItemInSlot } from "@shared/modules/inventory";
 import { ItemSource, ItemSourceOrigin } from "@shared/interfaces";
 import { InGamePlayer } from "@/core/utility/assertions";
@@ -29,23 +27,6 @@ export function findItem(itemSource: ItemSource, player?: InGamePlayer) {
     }
 
     if (itemSource.origin === ItemSourceOrigin.PlayerEquipment) {
-      if (itemSource.equipmentSlot === "ammo") {
-        const weapon = sourcePlayer.character.equipment.weapon;
-
-        if (!weapon || !isItemFirearmWeapon(weapon)) {
-          return null;
-        }
-
-        const ammo = weapon.ammo;
-
-        if (!ammo) {
-          return null;
-        }
-
-        return createItem(ammo.key, {
-          amount: ammo.clip + ammo.rest,
-        });
-      }
       return sourcePlayer.character.equipment[itemSource.equipmentSlot] ?? null;
     }
 

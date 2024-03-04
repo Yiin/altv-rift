@@ -1,127 +1,99 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { InteractionType, SlottedItem, useInventory, isSameItemSource } from "@/store/inventory.store";
+import { InteractionType, useInventory, isSameItemSource } from "@/store/inventory.store";
 import ItemIcon from "../ItemIcon.vue";
 import { px } from "@/composables/use-pixel";
 
-import { EquipmentSlot, ItemSourceOrigin, PlayerEquipmentItemSource } from "@shared/interfaces";
-import { AmmoItem, isItemFirearmWeapon } from "@shared/modules/items";
+import { AmmoEquipmentSlot, EquipmentSlot, ItemSourceOrigin } from "@shared/interfaces";
 import { useCombinableItem } from "@/composables/use-combinable-item";
 
 const equipmentSlots = {
-  headwear: {
+  [EquipmentSlot.Headwear]: {
     label: "Headwear",
     image: "./assets/inventory/headwear.png",
   },
-  mask: {
+  [EquipmentSlot.Mask]: {
     label: "Mask",
     image: "./assets/inventory/mask.png",
   },
-  glasses: {
+  [EquipmentSlot.Glasses]: {
     label: "Glasses",
     image: "./assets/inventory/glasses.png",
   },
-  backpack: {
+  [EquipmentSlot.Backpack]: {
     label: "Backpack",
     image: "./assets/inventory/backpack.png",
   },
-  earrings: {
+  [EquipmentSlot.Earrings]: {
     label: "Earrings",
     image: "./assets/inventory/earrings.png",
   },
-  accessory: {
+  [EquipmentSlot.Accessory]: {
     label: "Accessories",
     image: "./assets/inventory/bowtie.png",
   },
-  top: {
+  [EquipmentSlot.Top]: {
     label: "Top",
     image: "./assets/inventory/top.png",
   },
-  armor: {
+  [EquipmentSlot.Armor]: {
     label: "Armor",
     image: "./assets/inventory/armor.png",
   },
-  gloves: {
+  [EquipmentSlot.Gloves]: {
     label: "Gloves",
     image: "./assets/inventory/gloves.png",
   },
-  weapon: {
+  [EquipmentSlot.Weapon]: {
     label: "Weapon",
     image: "./assets/inventory/weapon.png",
   },
-  ammo: {
-    label: "Ammo",
-    image: "./assets/inventory/ammo.png",
-  },
-  pants: {
+  [EquipmentSlot.Pants]: {
     label: "Pants",
     image: "./assets/inventory/pants.png",
   },
-  lefthand: {
+  [EquipmentSlot.LeftHand]: {
     label: "Left hand",
     image: "./assets/inventory/watch.png",
   },
-  righthand: {
+  [EquipmentSlot.RightHand]: {
     label: "Right hand",
     image: "./assets/inventory/bracelet.png",
   },
-  shoes: {
+  [EquipmentSlot.Shoes]: {
     label: "Shoes",
     image: "./assets/inventory/shoes.png",
   },
-  phone: {
+  [EquipmentSlot.Phone]: {
     label: "Phone",
     image: "./assets/inventory/phone.png",
   },
-  tool: {
+  [EquipmentSlot.Tool]: {
     label: "Tool",
     image: "./assets/inventory/tool.png",
   },
-  quick1: {
+  [EquipmentSlot.QuickSlot1]: {
     label: "Num 1",
   },
-  quick2: {
+  [EquipmentSlot.QuickSlot2]: {
     label: "Num 2",
   },
-  quick3: {
+  [EquipmentSlot.QuickSlot3]: {
     label: "Num 3",
   },
-  quick4: {
+  [EquipmentSlot.QuickSlot4]: {
     label: "Num 4",
   },
-} satisfies Record<EquipmentSlot, { label: string; image?: string }>;
+} satisfies Record<Exclude<EquipmentSlot, AmmoEquipmentSlot>, { label: string; image?: string }>;
 
 const props = defineProps<{
-  name: EquipmentSlot;
+  name: Exclude<EquipmentSlot, AmmoEquipmentSlot>;
 }>();
 
 const inventory = useInventory();
 
 const slot = computed(() => equipmentSlots[props.name]);
-
-const item = computed(() => {
-  if (props.name === "ammo") {
-    const weapon = inventory.equipment.weapon?.item;
-    const equipedAmmo = weapon && isItemFirearmWeapon(weapon) && weapon?.ammo;
-
-    if (equipedAmmo) {
-      // Construct a fake slotted item that represents the ammo in the weapon
-      return {
-        item: {
-          key: equipedAmmo.key,
-          amount: equipedAmmo.clip + equipedAmmo.rest,
-        },
-        source: {
-          origin: ItemSourceOrigin.PlayerEquipment,
-          originId: inventory.playerId,
-          equipmentSlot: "ammo",
-        },
-      } as SlottedItem<PlayerEquipmentItemSource, AmmoItem>;
-    }
-    return null;
-  }
-  return inventory.equipment[props.name] ?? null;
-});
+const item = computed(() => inventory.equipment[props.name] ?? null);
 
 const { combinableWithHoveredItem, combinableWithOtherItems } = useCombinableItem(item);
 
@@ -133,6 +105,7 @@ const draggingStyle = computed(() => {
 
   if (
     interaction.type === InteractionType.Dragging &&
+    !interaction.maybe &&
     isSameItemSource(interaction.state.item.source, item.value.source)
   ) {
     const x =
@@ -185,7 +158,7 @@ inventory.registerItemSlot({
     }">
       {{ slot.label }}
     </div>
-    <ItemIcon v-else="item" :item="item.item" :style="draggingStyle" @mousedown="inventory.handleMouseDown"
+    <ItemIcon v-else :item="item.item" :style="draggingStyle" @mousedown="inventory.handleMouseDown"
       @dblclick="unequipItem" @contextmenu.prevent="(e) => item && inventory.openContextMenu(item, e)" />
   </div>
 </template>

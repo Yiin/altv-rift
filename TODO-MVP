@@ -15,7 +15,7 @@ Introduction MVP:
     ☐ Upgrade weapon with fire ammo as a gift - omg
     ☐ Use upgraded on more zombie boars - 1 hit + effect to kill
   Food:
-    ☐ Fish for food @started
+    ☐ Fish for food
     ☐ Hunt rabbit for food
     ☐ Cook food
     ☐ Eat food - observe health bar
@@ -77,23 +77,26 @@ Workbench:
   ✔ Player can unequip weapon while reloading @done
   ✔ Move weapon loot tables to separate files @done
   ☐ Create more weapon loot tables
-  ☐ Refactor ammo !
-    ☐ Generic ammo used w/o equipment
+  ✔ Refactor ammo ! @done(24-03-01 19:33)
+    ✔ Shared ammo in equipment slots @done(24-03-01 19:33)
       Questions to answer:
       ✔ Do we display generic ammo in special ui element or do we treat it as simple item? @done
         treating as simple item is easier from dev perspective, not sure about UX tho
-        ☐ Simple item
+        ✘ Simple item @cancelled(24-02-29 18:36)
+        ✔ Special UI element @done(24-03-01 19:33)
       ✘ If we move it to special ui, how do we handle drag'n'drop for it? @cancelled
-    ☐ Special ammo can be equiped and takes priority over generic ammo
-      ☐ Create special ammo
-        ☐ Fire
-        ☐ Explosive
-        ☐ Lethality
-  ✔ Weapon components ;-; @started @done(24-02-28 00:39)
+    ✘ Special ammo can be equiped and takes priority over generic ammo @cancelled(24-02-29 18:36)
+  ☐ Create special ammo
+    ☐ Fire
+    ☐ Explosive
+    ☐ Lethality
+
+  ☐ Weapon components ;-; @started
     ✔ Create weapon component items @done(24-02-27 23:39)
     ✔ How do they work, do we need icons? @done(24-02-27 23:39)
         They do work, we will need icons
       ☐ Get the icons
+      ☐ UI for equiping weapon components
   ☐ Investigate AI solutions for custom icons because I'm poor
   ✔ Fix camera moving from 0;0 to player when spawned. @done(24-02-27 00:24)
   ☐ Enemy ped health is fucked.

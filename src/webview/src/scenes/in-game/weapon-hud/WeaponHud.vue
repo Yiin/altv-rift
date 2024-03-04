@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useInventory } from "@/store/inventory.store";
-import { getItemName, getItemInfoByKey, isItemFirearmWeapon, isItemMeleeWeapon, isItemThrowableWeapon } from "@shared/modules/items";
+import { getItemName, isItemFirearmWeapon, isItemMeleeWeapon, isItemThrowableWeapon, getWeaponAmmoEquipmentSlot, isWeaponWithClip } from "@shared/modules/items";
 import { getItemImage } from "@/utils/items";
+import { useCharacter } from "@/store/synced/character.store";
 
 const inventory = useInventory();
+const character = useCharacter();
 
 const weaponItem = computed(() => {
   const { weapon } = inventory.equipment;
@@ -23,15 +25,32 @@ const weapon = computed(() => {
 
   if (isItemFirearmWeapon(weaponItem.value)) {
     const name = getItemName(weaponItem.value.key);
-    const weaponInfo = getItemInfoByKey(weaponItem.value.key);
 
+    const ammoSlot = getWeaponAmmoEquipmentSlot(weaponItem.value.key);
+
+    if (!ammoSlot) {
+      return null;
+    }
+
+    const equippedAmmo = character.equipment[ammoSlot];
+    const clipAmmo = weaponItem.value.clip;
+
+    const hasClip = isWeaponWithClip(weaponItem.value.key);
+
+    /**
+     * Make ammo easier to deal with.
+     * If weapon has clip, the ammo in weapon clip is the clip ammo
+     * and ammo in reserves is the rest.
+     * Otherwise, we treat ammo in reserves as the clip ammo (for e.g. machinegun).
+     */
     return {
       type: "firearm",
       name,
-      clipSize: weaponInfo.clipSize ?? 0,
-      ammo: weaponItem.value.ammo,
-      clip: weaponItem.value.ammo?.clip ?? 0,
-      rest: weaponItem.value.ammo?.rest ?? 0,
+      ammo: clipAmmo || equippedAmmo,
+      hasClip,
+      hasAmmoReserves: hasClip && equippedAmmo && equippedAmmo.amount > 0,
+      clip: (hasClip ? weaponItem.value.clip?.amount : equippedAmmo?.amount) ?? 0,
+      rest: (hasClip ? equippedAmmo?.amount : 0) ?? 0,
       item: weaponItem.value,
     };
   }
@@ -69,7 +88,7 @@ const weapon = computed(() => {
       </div>
       <div class="flex items-end gap-2">
         <span class="text-4xl text-white">{{ weapon.clip }}</span>
-        <span v-if="weapon.clipSize" class="text-xl text-white/50">{{ weapon.rest }}</span>
+        <span v-if="weapon.hasClip" class="text-xl text-white/50">{{ weapon.rest }}</span>
       </div>
     </template>
     <template v-if="weapon.type === 'throwable'">

@@ -15,6 +15,7 @@ fs.readFile('C:\\Users\\stani\\Projects\\proxy-world\\src\\shared\\modules\\item
           key: `${weapon.HashKey.replace("WEAPON_", "")}_${component.NameGXT.replace("WCT_", "")}`,
           componentHash: +componentHash,
           weaponHash: +weaponHash,
+          model: component.ModelHashKey,
           name: component.Name,
           description: component.Description,
         });

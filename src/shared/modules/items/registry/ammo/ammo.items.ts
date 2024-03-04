@@ -1,7 +1,6 @@
 import { AmmoGroup } from "../weapons/weapon-groups";
 import { Item, ItemKey } from "../../types";
-import { EquipedAmmo } from "../weapons/firearm-weapon.items";
-import { registerItem, registerItems } from "../../items-registry";
+import { registerItems } from "../../items-registry";
 import { makeKeys } from "../../../../utility/make-keys";
 import { ItemTier } from "../../enums";
 
@@ -168,21 +167,4 @@ export function getAmmoGroup(ammoKey: AmmoItemKey) {
 
 export function getAmmoDamageMultiplier(ammoKey: AmmoItemKey) {
   return ammo.get(ammoKey)!.damagemultiplier;
-}
-
-export function toEquipedAmmo(
-  ammo: AmmoItem,
-  clipSize: number,
-  currentEquipedAmmo?: EquipedAmmo
-): EquipedAmmo {
-  const total = ammo.amount + (currentEquipedAmmo?.clip ?? 0) + (currentEquipedAmmo?.rest ?? 0);
-
-  const clip = Math.min(total, clipSize || Number.MAX_SAFE_INTEGER);
-  const rest = total - clip;
-
-  return {
-    key: ammo.key,
-    clip,
-    rest,
-  };
 }

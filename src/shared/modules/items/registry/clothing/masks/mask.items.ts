@@ -1,6 +1,6 @@
-import { Item, registerItem, registerItems } from "@shared/modules/items";
+import { Item, registerItems } from "@shared/modules/items";
 import { makeKeys } from "@shared/utility/make-keys";
-const MASK_ITEMS: Record<string, MaskItemInfo> = require("./mask.json");
+const MASK_ITEMS: Record<string, MaskItemInfo> = (await import("./mask.json")).default as any;
 
 export const Mask = makeKeys<MaskItemKey>()({
   MalePinkPig: "SP_M_BERD_1_0",

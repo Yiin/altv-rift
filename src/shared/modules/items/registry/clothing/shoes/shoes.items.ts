@@ -1,6 +1,6 @@
-import { Item, registerItem, registerItems } from "@shared/modules/items";
+import { Item, registerItems } from "@shared/modules/items";
 import { makeKeys } from "@shared/utility/make-keys";
-const SHOES_ITEMS: Record<string, ShoesItemInfo> = require("./shoes.json");
+const SHOES_ITEMS: Record<string, ShoesItemInfo> = (await import("./shoes.json")).default as any;
 
 export const Shoes = makeKeys<ShoesItemKey>()({
   MaleProlapsGreenSneakers: "SP_M_FEET_0_0",

@@ -1,4 +1,4 @@
-import { FishBaitItem, Item, registerItem, registerItems } from "@shared/modules/items";
+import { FishBaitItem, Item, registerItems } from "@shared/modules/items";
 import { makeKeys } from "@shared/utility/make-keys";
 
 export const FishingRod = makeKeys<FishingRodItemKey>()({

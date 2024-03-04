@@ -33,3 +33,16 @@ export enum EquipmentSlot {
   FireExtinguisherAmmo = "fireextinguisherammo",
   SmokeGranadesAmmo = "smokegranadesammo",
 }
+
+export type AmmoEquipmentSlot =
+  | EquipmentSlot.AssaultRifleAmmo
+  | EquipmentSlot.HandgunAmmo
+  | EquipmentSlot.MachineGunAmmo
+  | EquipmentSlot.ShotgunAmmo
+  | EquipmentSlot.SniperRifleAmmo
+  | EquipmentSlot.RocketLauncherAmmo
+  | EquipmentSlot.FireworkAmmo
+  | EquipmentSlot.GrenadeLauncherAmmo
+  | EquipmentSlot.PlasmaRaysAmmo
+  | EquipmentSlot.FireExtinguisherAmmo
+  | EquipmentSlot.SmokeGranadesAmmo;

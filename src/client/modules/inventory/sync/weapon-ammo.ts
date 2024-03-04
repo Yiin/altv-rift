@@ -3,8 +3,8 @@ import game from "@altv/natives";
 import { computed, watchEffect } from "vue";
 import { ServerEvents } from "@shared/events/server";
 import { ServerCall } from "@shared/calls/server";
-import { getItemInfoByKey } from "@shared/modules/items";
-import { isItemFirearmWeapon } from "@shared/modules/items/registry/weapons/firearm-weapon.items";
+import { getItemInfoByKey, getWeaponAmmoEquipmentSlot } from "@shared/modules/items";
+import { isItemFirearmWeapon, isWeaponWithClip } from "@shared/modules/items/registry/weapons/firearm-weapon.items";
 import { rpc } from "@/core/rpc";
 import { useCharacter } from "@/core/store/character.store";
 import { Control, ControlType } from "@/core/constants/controls";
@@ -28,6 +28,35 @@ whileInGame(() => {
     return weapon;
   });
 
+  const currentAmmo = computed(() => {
+    if (!currentFirearm.value) {
+      return null;
+    }
+
+    const ammoSlot = getWeaponAmmoEquipmentSlot(currentFirearm.value.key);
+
+    if (!ammoSlot) {
+      return null;
+    }
+
+    const character = useCharacter();
+    const equippedAmmo = character.equipment[ammoSlot];
+
+    const hasClip = isWeaponWithClip(currentFirearm.value.key);
+
+    /**
+     * Make ammo easier to deal with.
+     * If weapon has clip, the ammo in weapon clip is the clip ammo
+     * and ammo in reserves is the rest.
+     * Otherwise, we treat ammo in reserves as the clip ammo (for e.g. machinegun).
+     */
+    return {
+      hasAmmoReserves: hasClip && equippedAmmo && equippedAmmo.amount > 0,
+      clip: (hasClip ? currentFirearm.value.clip?.amount : equippedAmmo?.amount) ?? 0,
+      rest: (hasClip ? equippedAmmo?.amount : 0) ?? 0,
+    };
+  });
+
   const weaponCanReload = computed(() => {
     // We don't have a firearm equipped
     if (!currentFirearm.value) {
@@ -35,12 +64,16 @@ whileInGame(() => {
     }
 
     // We don't have any ammo
-    if (!currentFirearm.value?.ammo) {
+    if (!currentAmmo.value) {
       return false;
     }
 
     // We have a full clip
-    if (currentFirearm.value.ammo.clip >= getItemInfoByKey(currentFirearm.value.key).clipSize) {
+    if (currentAmmo.value.clip >= getItemInfoByKey(currentFirearm.value.key).clipSize) {
+      return false;
+    }
+
+    if (!currentAmmo.value.hasAmmoReserves) {
       return false;
     }
 
@@ -69,15 +102,11 @@ whileInGame(() => {
    * Sync the in-game ammo in the clip with ammo state in store when the player switches weapons.
    */
   function onPlayerWeaponChange() {
-    if (!currentFirearm.value) {
+    if (!currentAmmo.value) {
       return;
     }
 
-    if (!currentFirearm.value.ammo) {
-      return;
-    }
-
-    if (currentFirearm.value.ammo.clip > 0) {
+    if (currentAmmo.value.clip > 0) {
       allowShooting();
     }
 
@@ -106,11 +135,13 @@ whileInGame(() => {
       return;
     }
 
-    const { clip, rest } = weapon.ammo ?? { clip: 0, rest: 0 };
+    const ammo = currentAmmo.value;
+
+    const { hasAmmoReserves, clip } = ammo ?? { hasAmmoReserves: false, clip: 0, rest: 0 };
 
     if (clip > 0) {
       allowShooting();
-    } else if (rest > 0) {
+    } else if (hasAmmoReserves) {
       reloadWeapon();
     } else {
       disableShooting();

@@ -1,6 +1,6 @@
-import { Item, ItemGrade, registerItem, registerItems } from "@shared/modules/items";
+import { Item, ItemGrade, registerItems } from "@shared/modules/items";
 import { makeKeys } from "@shared/utility/make-keys";
-const GLOVES_ITEMS: Record<string, GlovesItemInfo> = require("./gloves.json");
+const GLOVES_ITEMS: Record<string, GlovesItemInfo> = (await import("./gloves.json")).default as any;
 
 export const Gloves = makeKeys<GlovesItemKey>()({
   FemaleBlackTactGloves: "DLC_MP_LTS_F_UPPR_0_0",

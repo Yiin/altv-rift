@@ -1,6 +1,6 @@
-import { Item, registerItem, registerItems } from "@shared/modules/items";
+import { Item, registerItems } from "@shared/modules/items";
 import { makeKeys } from "@shared/utility/make-keys";
-const TOP_ITEMS: Record<string, TopItemInfo> = require("./top.json");
+const TOP_ITEMS: Record<string, TopItemInfo> = (await import("./top.json")).default as any;
 
 export const Top = makeKeys<TopItemKey>()({
   MaleCrewTshirt: "SP_M_JBIB_0_0",

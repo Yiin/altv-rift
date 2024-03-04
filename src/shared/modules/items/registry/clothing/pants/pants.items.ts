@@ -1,6 +1,6 @@
 import { Item, registerItem } from "@shared/modules/items";
 import { makeKeys } from "@shared/utility/make-keys";
-const PANTS_ITEMS: Record<string, PantsItemInfo> = require("./pants.json");
+const PANTS_ITEMS: Record<string, PantsItemInfo> = (await import("./pants.json")).default as any;
 
 export const Pants = makeKeys<PantsItemKey>()({
   MaleNavyRegularFit: "SP_M_LOWR_0_0",

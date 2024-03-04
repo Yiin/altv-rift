@@ -36,7 +36,7 @@ const isEquipable = computed(
 );
 const isUnequipable = computed(() => itemSource.value.origin === ItemSourceOrigin.PlayerEquipment);
 const isDroppable = computed(() => !isInShop.value && [ItemSourceOrigin.PlayerInventory, ItemSourceOrigin.PlayerEquipment].includes(itemSource.value.origin));
-const hasAmmo = computed(() => !isInShop.value && isItemFirearmWeapon(item.value) && !!item.value.ammo);
+const hasAmmo = computed(() => !isInShop.value && isItemFirearmWeapon(item.value) && !!item.value.clip);
 const hasFishBait = computed(() => !isInShop.value && isItemFishingRod(item.value) && !!item.value.bait);
 const isPreviewable = computed(() => !isInShop.value && isItemPreviewable(item.value.key));
 

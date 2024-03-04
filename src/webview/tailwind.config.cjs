@@ -70,6 +70,7 @@ module.exports = {
       },
       borderWidth: {
         1: "1px",
+        "3.5": "3.5px",
       },
       dropShadow: {
         "glow-simple": "0px 1px 32px rgba(255, 238, 87, 0.15)",
@@ -80,10 +81,13 @@ module.exports = {
       },
       minWidth: (utils) => utils.theme("spacing"),
       spacing: {
+        "1.75": "0.4375rem",
         "5.5": "1.375rem",
+        "14.5": "3.625rem",
         21: "5.25rem",
         22: "5.5rem",
         42: "10.5rem",
+        '44.5': '11.125rem',
         49: "12.25rem",
         135: "33.75rem",
         132.5: "33.125rem",

@@ -20,9 +20,7 @@ Player.prototype.saveCharacter = async function () {
     },
     data: {
       ...data,
-      equipment: {
-        set: equipment,
-      },
+      equipment,
       lastPosition: {
         x: this.pos.x,
         y: this.pos.y,

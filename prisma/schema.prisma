@@ -58,7 +58,7 @@ model Character {
   maxHealth    Float      @default(100)
   createdAt    DateTime   @default(now())
   inventory    Inventory
-  equipment    Equipment
+  equipment    Json // typed in TS as Equipment
   questFacts   String[]
   skills       Skills
   blueprints   String[]
@@ -73,7 +73,7 @@ model Shop {
 
 model DroppedItem {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  item      Json
+  item      Json // typed in TS as Item
   pos       Position
   createdAt DateTime @default(now())
 }
@@ -97,27 +97,8 @@ type Inventory {
 
 type InventoryItem {
   slot  Int
-  item  Json
+  item  Json // typed in TS as Item
   price Int?
-}
-
-type Equipment {
-  mask      Json?
-  glasses   Json?
-  headwear  Json?
-  earrings  Json?
-  top       Json?
-  armor     Json?
-  accessory Json?
-  weapon    Json?
-  gloves    Json?
-  lefthand  Json?
-  pants     Json?
-  righthand Json?
-  backpack  Json?
-  shoes     Json?
-  phone     Json?
-  tool      Json?
 }
 
 type Position {

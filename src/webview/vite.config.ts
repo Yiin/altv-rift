@@ -10,6 +10,7 @@ export default defineConfig({
   build: {
     // outDir: "../../resources/main/client/webview",
     emptyOutDir: true,
+    target: "es2022",
   },
   server: {
     fs: {

@@ -1,6 +1,5 @@
 import { Item, ItemKey } from "../../types";
-import { ItemFlags } from "../../enums";
-import { registerItem, registerItems } from "../../items-registry";
+import { registerItems } from "../../items-registry";
 import { makeKeys } from "../../../../utility/make-keys";
 
 export const Consumable = makeKeys<ConsumableItemKey>()({

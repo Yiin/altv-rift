@@ -29,6 +29,7 @@ export function isProp(equipmentSlot: string) {
 
 on(ServerEvents.FromServer.ITEM_EQUIP, (player, item) => {
   if (!isItemClothing(item)) {
+    alt.log(`[ITEMS] Tried to equip non-clothing item`, item);
     return;
   }
 

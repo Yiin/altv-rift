@@ -1,4 +1,4 @@
-import { registerItem, registerItems } from "../../items-registry";
+import { registerItems } from "../../items-registry";
 import { makeKeys } from "../../../../utility/make-keys";
 
 export const FoodIngredient = makeKeys<FoodIngredientItemKey>()({

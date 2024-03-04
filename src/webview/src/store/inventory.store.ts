@@ -2,15 +2,12 @@ import { defineStore } from "pinia";
 import { rpc } from "@/rpc";
 import { ServerCall } from "@shared/calls/server";
 import { ComponentPublicInstance, markRaw, reactive, toRaw } from "vue";
-import DropItemWarning from "@/scenes/in-game/inventory/DropItemWarning.vue";
 import { ClientEvents } from "@shared/events/client";
 import {
   CombineType,
   Equipment,
   Item,
-  createItem,
   getCombineType,
-  isItemFirearmWeapon,
   isStackable,
 } from "@shared/modules/items";
 
@@ -29,6 +26,7 @@ import {
   PlayerInventoryItemSource,
   PlayerItemSource,
 } from "@shared/interfaces";
+import { Ref } from "vue";
 
 const MOCK_ITEMS = reactive([
   {
@@ -38,7 +36,7 @@ const MOCK_ITEMS = reactive([
     },
   },
   {
-    slot: 1,
+    slot: 4,
     item: {
       key: "appistol",
       durability: 100,
@@ -48,7 +46,7 @@ const MOCK_ITEMS = reactive([
     },
   },
   {
-    slot: 2,
+    slot: 3,
     item: {
       key: "handgunammo",
       amount: 100,
@@ -101,6 +99,7 @@ export enum InteractionType {
   TransferingAmount = "TransferingAmount",
   Hovering = "Hovering",
   ContextMenu = "ContextMenu",
+  AmmunitionPanel = "AmmunitionPanel",
 }
 
 export type ItemInteraction =
@@ -121,6 +120,8 @@ export type ItemInteraction =
   | {
     type: InteractionType.ContextMenu;
     state: ItemActionMenu;
+  } | {
+    type: InteractionType.AmmunitionPanel;
   };
 
 const IDLE = { type: InteractionType.None } as const;
@@ -201,21 +202,21 @@ type ItemNode = { source: ItemSource; node: { value: HTMLElement | undefined } }
 
 interface State {
   itemNodes: ItemNode[];
-  dropItemWarningRef?: ComponentPublicInstance<typeof DropItemWarning>;
   currentInteraction: ItemInteraction;
   selectedItem?: SlottedItem;
   draggingItemThisFrame: boolean;
   previewingItem?: SlottedItem;
+  ammunitionPanelRef?: Ref<HTMLElement>;
 }
 
 export const useInventory = defineStore("inventory", {
   state: (): State => ({
     itemNodes: [],
-    dropItemWarningRef: undefined,
     currentInteraction: IDLE,
     draggingItemThisFrame: false,
     selectedItem: undefined,
     previewingItem: undefined,
+    ammunitionPanelRef: undefined,
   }),
   getters: {
     character: () => {
@@ -363,9 +364,6 @@ export const useInventory = defineStore("inventory", {
 
       for (const item of this.equipmentItems) {
         const equipmentSlot = item.source.equipmentSlot;
-        if (equipmentSlot === "ammo") {
-          continue;
-        }
         // @ts-expect-error item is guaranteed to be of correct type,
         // but TS is complaining that e.g. ClothingItem might be on weapon slot
         equipment[equipmentSlot] = item;
@@ -421,6 +419,16 @@ export const useInventory = defineStore("inventory", {
           from.source = to;
         }
       }
+    },
+    openAmmunitionPanel() {
+      setTimeout(() => {
+        this.currentInteraction = {
+          type: InteractionType.AmmunitionPanel,
+        };
+      }, 0);
+    },
+    closeAmmunitionPanel() {
+      this.currentInteraction = IDLE;
     },
     transferAmount(from: ItemSource, to: ItemSource | null, position: { x: number; y: number }) {
       return new Promise<number>((resolve, reject) => {
@@ -498,6 +506,10 @@ export const useInventory = defineStore("inventory", {
         return;
       }
 
+      if (this.ammunitionPanelRef?.value?.contains(e.target as HTMLElement)) {
+        return;
+      }
+
       const source = this.getItemSourceFromScreenPos(e.clientX, e.clientY);
 
       if (!source) {
@@ -560,29 +572,7 @@ export const useInventory = defineStore("inventory", {
             }
           }
 
-          const itemInSlot =
-            source.origin === ItemSourceOrigin.PlayerEquipment && source.equipmentSlot === "ammo"
-              ? (() => {
-                const weapon = this.items.find((item) =>
-                  isSameItemSource(item.source, {
-                    origin: ItemSourceOrigin.PlayerEquipment,
-                    originId: this.playerId,
-                    equipmentSlot: EquipmentSlot.Weapon,
-                  })
-                )?.item;
-
-                const ammo = weapon && isItemFirearmWeapon(weapon) && weapon.ammo;
-
-                return (
-                  ammo && {
-                    source,
-                    item: createItem(ammo.key, {
-                      amount: ammo.clip + ammo.rest,
-                    }),
-                  }
-                );
-              })()
-              : this.getItemFromSource(source);
+          const itemInSlot = this.getItemFromSource(source);
 
           if (!itemInSlot) {
             this.currentInteraction = IDLE;
@@ -665,6 +655,10 @@ export const useInventory = defineStore("inventory", {
     handleClick(e: MouseEvent) {
       if (this.currentInteraction.type === InteractionType.ContextMenu) {
         this.selectedItem = undefined;
+        return;
+      }
+
+      if (this.currentInteraction.type === InteractionType.AmmunitionPanel) {
         return;
       }
 
