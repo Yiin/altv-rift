@@ -1,3 +1,11 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:84095270b19ad328ebd177b149b5d0f7a70d25019ba8b192cd1caa20bc105f66
-size 329
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@shared/*": ["../shared/*"],
+      "@/*": ["./*"]
+    }
+  },
+  "include": ["./**/*", "../shared/**/*", "../client/constants/ui.ts", "../../custom-types", "../../node_modules/@altv/shared", "../../node_modules/@altv/server"]
+}

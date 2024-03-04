@@ -1,3 +1,3 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:52ae49c12d428d63080a4fb5f18ebc239bdcaa478d79d93d261d9d2ffd3f3197
-size 75
+{
+  "recommendations": ["Vue.volar", "Vue.vscode-typescript-vue-plugin"]
+}

@@ -1,3 +1,42 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:887272a982a875ad2fdaa9e4b1119636fcdfd68156fcabde57d24b86bbd362fa
-size 1309
+{
+  "compilerOptions": {
+    "module": "ESNext",
+    "target": "ESNext",
+    "strict": true,
+    "noErrorTruncation": true,
+    "exactOptionalPropertyTypes": false,
+    "noUncheckedIndexedAccess": false,
+    "noPropertyAccessFromIndexSignature": false,
+    "moduleResolution": "Bundler",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "allowSyntheticDefaultImports": true,
+    "isolatedModules": false,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noImplicitOverride": true,
+    "noImplicitAny": true,
+    "noEmit": true,
+    "preserveWatchOutput": false,
+    "pretty": true,
+    "skipLibCheck": true,
+    "useDefineForClassFields": true,
+    "jsx": "preserve",
+    "allowJs": true,
+    "lib": ["ESNext", "DOM"],
+    "typeRoots": [
+      "./node_modules/@altv",
+      "./node_modules/@types",
+      "./src/typings"
+    ],
+    "paths": {
+      "@/*": ["./src/*"],
+      "@shared/*": ["../shared/*"],
+      "@prisma/client": ["../../node_modules/@prisma/client"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "../shared/**/*", "../../node_modules/@prisma/client/**/*.ts", "../../custom-types/**/*.d.ts"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}

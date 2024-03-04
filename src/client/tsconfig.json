@@ -1,3 +1,14 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:f9143b16c80f58bbc595b801ee1ba64489671c215eb3ca4b8bb8969c0f235d7a
-size 541
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "jsx": "preserve",
+    "jsxFactory": "createElement",
+    "paths": {
+      "@shared/*": ["../shared/*"],
+      "@/*": ["./*"]
+    }
+  },
+  "include": ["./**/*", "../shared/**/*", "../../custom-types", "../../node_modules/@altv/shared", "../../node_modules/@altv/client", "../../node_modules/@altv/server", "../../node_modules/@altv/natives"],
+  "exclude": ["../webview/**/*", "../shared/events/server/index.ts", "../shared/events/server/from-server.ts"]
+}

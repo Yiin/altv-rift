@@ -1,3 +1,6 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:1ab517bf1d4e99dd9e59d7fa1fc628f3c907d3ca7f2e4a88ca068c4a163a130e
-size 116
+{
+  "printWidth": 100,
+  "htmlWhitespaceSensitivity": "ignore",
+  "tabWidth": 2,
+  "singleAttributePerLine": true
+}
