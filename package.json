@@ -6,7 +6,7 @@
     "dev:server": "node --es-module-specifier-resolution=node build/server -dev",
     "dev:client": "node --es-module-specifier-resolution=node build/client -dev",
     "before-any": "npm i && node --es-module-specifier-resolution=node build/copy",
-    "dev": "npm run before-any && concurrently \"npm:dev:*\" \"npm:tsc\" -c \"magenta.bold,cyan.bold\"",
+    "dev": "npm run upd-altv-types && npm run before-any && concurrently \"npm:dev:*\" \"npm:tsc\" -c \"magenta.bold,cyan.bold\"",
     "build": "npm run before-any && concurrently \"npm:build:*\"",
     "upd-altv-types": "npm i @altv/shared@latest @altv/client@latest @altv/server@latest @altv/natives@latest",
     "tsc:server": "cd src/server && npx tsc -w --noEmit",
