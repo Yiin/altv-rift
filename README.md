@@ -40,6 +40,7 @@ Craft/find gear, level up abilities, conquer & defend territories, stay at the t
 1. `cd src/webview`
 2. `npm i` (installing npm deps)
 3. `npm run dev` (build & run the project)
+4. Checkout `src/webview/README.md` for more info
 
 ## Development
 
