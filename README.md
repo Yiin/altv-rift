@@ -31,13 +31,13 @@ Craft/find gear, level up abilities, conquer & defend territories, stay at the t
 
 ### Server
 
-1. `npm run i` (installing npm deps)
+1. `npm i` (installing npm deps)
 2. `npm run update` (altv serverfiles)
 3. `npm run dev` (esbuild for building code & tsc for checking types)
 
 ### Webview
 
-1. `npm run i` (installing npm deps)
+1. `npm i` (installing npm deps)
 2. `npm run dev` (build & run the project)
 
 ## Development
