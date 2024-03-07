@@ -1,6 +1,7 @@
-import { craftingOneRoute } from "./crafting-1";
+import { craftingOneRoute } from "./crafting";
 import { createCharacterRoute } from "./create-character";
 import { discordAuthRoute } from "./discord-auth";
 import { inGameRoute } from "./in-game";
+import { weaponShopRoute } from "./weapon-shop";
 
-export const routes = [discordAuthRoute, createCharacterRoute, inGameRoute, craftingOneRoute];
+export const routes = [discordAuthRoute, createCharacterRoute, inGameRoute, craftingOneRoute, weaponShopRoute];

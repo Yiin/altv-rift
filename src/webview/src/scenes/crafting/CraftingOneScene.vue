@@ -1,10 +1,154 @@
 <script setup lang="ts">
 import Screen from "@/components/Screen.vue";
+import { computed, ref } from "vue";
 import Bg from "../../../public/assets/bg/crafting-bg.png";
-import CarbineRifle2 from "../../../public/assets/items/carbinerifle2.png";
 import Strap10x from "../../../public/assets/items/10x-strap.png";
 import Powder1x from "../../../public/assets/items/1x-powder.png";
-import RiffleList from "@/components/RiffleList.vue";
+import AdvancedRifle1 from "../../../public/assets/items/advancedrifle1.png";
+import AssaultRifle1 from "../../../public/assets/items/assaultrifle1.png";
+import CarbineRifle1 from "../../../public/assets/items/carbinerifle1.png";
+import Riffle from "./Riffle.vue";
+import RiffleDetails from "./RiffleDetails.vue";
+import RiffleList from "./RiffleList.vue";
+import { RifleType } from "./types";
+
+const rifles = ref<RifleType[]>([
+  {
+    name: "Carbine Rifle",
+    tag: { text: "common", bgCol: "bg-skyBlue" },
+    ammo: "7-62mm",
+    image: CarbineRifle1,
+    isActive: true,
+    properties: {
+      damage: 80,
+      firerate: 120,
+      clip: 80,
+      accuracy: 90,
+    },
+    requirements: [
+      { name: "10x Trash scraps", image: Strap10x },
+      { name: "1x Trash scraps", image: Powder1x },
+      { name: "1x Powder", image: Powder1x },
+    ],
+    craftingInfo: {
+      chance: 75,
+      time: "00:35",
+    },
+  },
+  {
+    name: "Assault Rifle",
+    tag: { text: "common", bgCol: "bg-accentRed" },
+    ammo: "7-62mm",
+    image: AssaultRifle1,
+    isActive: false,
+    properties: {
+      damage: 60,
+      firerate: 120,
+      clip: 80,
+      accuracy: 90,
+    },
+    requirements: [
+      { name: "10x Trash scraps", image: Strap10x },
+      { name: "1x Trash scraps", image: Powder1x },
+      { name: "1x Powder", image: Powder1x },
+    ],
+    craftingInfo: {
+      chance: 75,
+      time: "00:35",
+    },
+  },
+  {
+    name: "Advanced Rifle",
+    tag: { text: "legendary", bgCol: "bg-sunYellow" },
+    ammo: "7-62mm",
+    image: AdvancedRifle1,
+    isActive: false,
+    properties: {
+      damage: 60,
+      firerate: 120,
+      clip: 80,
+      accuracy: 90,
+    },
+    requirements: [
+      { name: "10x Trash scraps", image: "" },
+      { name: "1x Trash scraps", image: "" },
+    ],
+    craftingInfo: {
+      chance: 75,
+      time: "00:35",
+    },
+  },
+  {
+    name: "Advanced Rifle",
+    tag: { text: "legendary", bgCol: "bg-sunYellow" },
+    ammo: "7-62mm",
+    image: AdvancedRifle1,
+    isActive: false,
+    properties: {
+      damage: 60,
+      firerate: 120,
+      clip: 80,
+      accuracy: 90,
+    },
+    requirements: [
+      { name: "10x Trash scraps", image: Strap10x },
+      { name: "1x Trash scraps", image: Powder1x },
+      { name: "1x Powder", image: Powder1x },
+    ],
+    craftingInfo: {
+      chance: 75,
+      time: "00:35",
+    },
+  },
+  {
+    name: "Advanced Rifle",
+    tag: { text: "legendary", bgCol: "bg-sunYellow" },
+    ammo: "7-62mm",
+    image: AdvancedRifle1,
+    isActive: false,
+    properties: {
+      damage: 60,
+      firerate: 120,
+      clip: 80,
+      accuracy: 90,
+    },
+    requirements: [
+      { name: "10x Trash scraps", image: Strap10x },
+      { name: "1x Trash scraps", image: Powder1x },
+      { name: "1x Powder", image: Powder1x },
+    ],
+    craftingInfo: {
+      chance: 75,
+      time: "00:35",
+    },
+  },
+  {
+    name: "Advanced Rifle",
+    tag: { text: "legendary", bgCol: "bg-sunYellow" },
+    ammo: "7-62mm",
+    image: AdvancedRifle1,
+    isActive: false,
+    properties: {
+      damage: 60,
+      firerate: 120,
+      clip: 80,
+      accuracy: 90,
+    },
+    requirements: [
+      { name: "10x Trash scraps", image: Strap10x },
+      { name: "1x Trash scraps", image: Powder1x },
+      { name: "1x Powder", image: Powder1x },
+    ],
+    craftingInfo: {
+      chance: 75,
+      time: "00:35",
+    },
+  },
+]);
+
+const activeRifle = computed(() => {
+  return rifles.value.find((rifle) => rifle.isActive);
+});
 </script>
 
 <template>
@@ -102,154 +246,9 @@ import RiffleList from "@/components/RiffleList.vue";
     <main
       class="max-w-screen-2xl p-6 mx-auto flex items-start gap-12 h-[calc(100vh_-_155px)] overflow-y-auto"
     >
-      <RiffleList />
-      <div class="flex-1">
-        <div class="flex flex-col items-center">
-          <div class="relative h-[476px] w-[476px]">
-            <img
-              :src="CarbineRifle2"
-              class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-              alt="carbine rifle"
-            />
-            <svg
-              class="w-[304px] h-[304px] -rotate-90 -scale-y-100 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10"
-            >
-              <circle
-                class="text-white/20"
-                stroke-width="8"
-                stroke="currentColor"
-                fill="transparent"
-                r="147"
-                cx="152"
-                cy="152"
-              />
-              <circle
-                class="text-mustardYellow drop-shadow-glow"
-                stroke-width="8"
-                :stroke-dasharray="955.04"
-                :stroke-dashoffset="955.04 - (10 / 100) * 955.04"
-                stroke-dasharray="955.04"
-                stroke-dashoffset="802.2336"
-                stroke-linecap="butt"
-                stroke="currentColor"
-                fill="transparent"
-                r="147"
-                cx="152"
-                cy="152"
-              />
-            </svg>
-            <div
-              class="w-72 h-72 bg-delicateWhiteVeil rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 overflow-hidden"
-            ></div>
-            <div
-              class="w-[372px] h-[372px] bg-transparent border border-solid border-white/35 rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10"
-            ></div>
-            <div
-              class="w-[422px] h-[422px] bg-transparent border border-solid border-white/15 rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10"
-            ></div>
-            <div
-              class="w-[476px] h-[476px] bg-transparent border border-solid border-white/[0.04] rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10"
-            ></div>
-          </div>
-          <div class="flex flex-col items-center mt-14">
-            <p class="text-white/50 text-xl mb-2.5">Time remaining</p>
-            <span class="text-white text-3xl font-bold">00:35</span>
-          </div>
-          <div class="flex justify-center items-center mt-20">
-            <button
-              class="uppercase text-base font-bold text-white py-3 px-2.5 border border-solid border-white/10"
-            >
-              LMB
-            </button>
-            <span class="text-base text-white ml-3">To rotate Weapon</span>
-          </div>
-        </div>
-      </div>
-      <div class="bg-transparent border border-solid border-white/10">
-        <div
-          class="py-8 px-9 border-b border-solid border-white/10 flex gap-12 justify-between items-center"
-        >
-          <div class="">
-            <h2 class="text-white text-3xl">Carbine Rifle</h2>
-            <span class="text-base text-steelGray">7-62mm</span>
-          </div>
-          <span
-            class="inline-block px-2 py-1 text-xs font-extrabold bg-skyBlue rounded-sm uppercase"
-          >
-            COMMON
-          </span>
-        </div>
-        <div class="py-8 px-9 border-b border-solid border-white/10">
-          <ul class="flex flex-col gap-4">
-            <li class="flex justify-between items-center text-base text-white uppercase">
-              <span>Damage</span>
-              <span>60</span>
-            </li>
-            <li class="flex justify-between items-center text-base text-white uppercase">
-              <span>Firerate</span>
-              <span>120</span>
-            </li>
-            <li class="flex justify-between items-center text-base text-white uppercase">
-              <span>clip</span>
-              <span>80</span>
-            </li>
-            <li class="flex justify-between items-center text-base text-white uppercase">
-              <span>accuracy</span>
-              <span>90</span>
-            </li>
-          </ul>
-        </div>
-        <div class="py-8 px-9 border-b border-solid border-white/10">
-          <h2 class="text-white text-3xl uppercase mb-3">requirments</h2>
-          <ul class="flex gap-2 flex-col">
-            <li class="flex gap-4 items-center">
-              <div class="p-3 border border-solid border-white/5 bg-transparent">
-                <img
-                  :src="Strap10x"
-                  alt="10x Trash sraps"
-                />
-              </div>
-              <p class="text-base text-white">10x Trash sraps</p>
-            </li>
-            <li class="flex gap-4 items-center">
-              <div class="p-3 border border-solid border-white/5 bg-transparent">
-                <img
-                  :src="Powder1x"
-                  alt="1x Trash scraps"
-                />
-              </div>
-              <p class="text-base text-white">1x Trash scraps</p>
-            </li>
-            <li class="flex gap-4 items-center">
-              <div class="p-3 border border-solid border-white/5 bg-transparent">
-                <img
-                  :src="Powder1x"
-                  alt="1x Powder"
-                />
-              </div>
-              <p class="text-base text-white">1x Powder</p>
-            </li>
-          </ul>
-        </div>
-        <div class="py-8 px-9 border-b border-solid border-white/10">
-          <h2 class="text-white text-3xl uppercase mb-3">crafting information</h2>
-          <ul class="flex flex-col gap-4">
-            <li class="flex justify-between items-center text-base text-white uppercase">
-              <span>chance</span>
-              <span>75%</span>
-            </li>
-            <li class="flex justify-between items-center text-base text-white uppercase">
-              <span>crafting time</span>
-              <span>00:35</span>
-            </li>
-          </ul>
-        </div>
-        <button
-          class="py-5 px-9 flex justify-center items-center bg-mustardYellow text-midnightCharcoal text-base font-bold w-full"
-        >
-          Start crafting
-        </button>
-      </div>
+      <RiffleList :rifles="rifles" />
+      <Riffle :activeRifle="activeRifle" />
+      <RiffleDetails :activeRifle="activeRifle" />
     </main>
   </Screen>
 </template>

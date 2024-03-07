@@ -1,53 +1,42 @@
 <script setup lang="ts">
-import CarbineRifle1 from "../../public/assets/items/carbinerifle1.png";
-import AssaultRifle1 from "../../public/assets/items/assaultrifle1.png";
-import AdvancedRifle1 from "../../public/assets/items/advancedrifle1.png";
-import { ref } from "vue";
+import { defineProps } from "vue";
 
-const riffles = ref([
-  {
-    name: "Carbine Rifle",
-    tag: { text: "common", bgCol: "bg-skyBlue" },
-    ammo: "7-62mm",
-    image: CarbineRifle1,
-    isActive: true,
-  },
-  {
-    name: "Assault Rifle",
-    tag: { text: "common", bgCol: "bg-accentRed" },
-    ammo: "7-62mm",
-    image: AssaultRifle1,
-    isActive: false,
-  },
-  {
-    name: "Advanced Rifle",
-    tag: { text: "legendary", bgCol: "bg-sunYellow" },
-    ammo: "7-62mm",
-    image: AdvancedRifle1,
-    isActive: false,
-  },
-  {
-    name: "Advanced Rifle",
-    tag: { text: "legendary", bgCol: "bg-sunYellow" },
-    ammo: "7-62mm",
-    image: AdvancedRifle1,
-    isActive: false,
-  },
-  {
-    name: "Advanced Rifle",
-    tag: { text: "legendary", bgCol: "bg-sunYellow" },
-    ammo: "7-62mm",
-    image: AdvancedRifle1,
-    isActive: false,
-  },
-  {
-    name: "Advanced Rifle",
-    tag: { text: "legendary", bgCol: "bg-sunYellow" },
-    ammo: "7-62mm",
-    image: AdvancedRifle1,
-    isActive: false,
-  },
-]);
+interface Requirement {
+  name: string;
+  image: string;
+}
+
+interface Tag {
+  text: string;
+  bgCol: string;
+}
+
+interface Properties {
+  damage: number;
+  firerate: number;
+  clip: number;
+  accuracy: number;
+}
+
+interface CraftingInfo {
+  chance: number;
+  time: string;
+}
+
+interface Rifle {
+  name: string;
+  tag: Tag;
+  ammo: string;
+  image: string;
+  isActive: boolean;
+  properties: Properties;
+  requirements: Requirement[];
+  craftingInfo: CraftingInfo;
+}
+
+const props = defineProps({
+  rifles: Array<Rifle>,
+});
 </script>
 
 <template>
@@ -137,33 +126,33 @@ const riffles = ref([
       class="overflow-y-auto flex flex-col gap-2.5 h-[calc(100vh_-_213px)] pl-3 relative scrollbar-left riffles"
     >
       <div
-        v-for="riffle in riffles"
-        :key="riffle.name"
+        v-for="(rifle, index) in props.rifles"
+        :key="rifle.name"
         :class="
-          riffle.isActive
+          rifle.isActive
             ? 'bg-white/5 rounded-md pt-7 pb-6 px-6 dltr'
             : 'bg-transparent rounded-md border border-solid border-white/10 pt-7 pb-6 px-6 dltr'
         "
       >
         <div>
           <img
-            :src="riffle.image"
-            :alt="riffle.name"
+            :src="rifle.image"
+            :alt="rifle.name"
           />
         </div>
         <div>
           <span
             :class="[
-              `inline-block px-2 py-1 text-xs font-extrabold bg-accentRed rounded-sm uppercase`,
-              riffle.tag.bgCol,
+              `inline-block px-2 py-1 text-xs font-extrabold rounded-sm uppercase`,
+              rifle.tag.bgCol,
             ]"
           >
-            {{ riffle.tag.text }}
+            {{ rifle.tag.text }}
           </span>
           <h3 class="mt-0.5 text-[20px] font-bold text-white">
-            {{ riffle.name }}
+            {{ rifle.name }}
           </h3>
-          <p class="text-sm text-steelGray">{{ riffle.ammo }}</p>
+          <p class="text-sm text-steelGray">{{ rifle.ammo }}</p>
         </div>
       </div>
     </div>
