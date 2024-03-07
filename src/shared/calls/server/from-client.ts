@@ -1,3 +1,4 @@
+import alt from "@altv/shared";
 import { z } from "zod";
 
 export const FromClient = {
@@ -13,6 +14,7 @@ export const FromClient = {
   STOP_DIGGING: "STOP_DIGGING",
   TOGGLE_VEHICLE_DOOR: "TOGGLE_VEHICLE_DOOR",
   OPEN_STORAGE: "OPEN_STORAGE",
+  REGISTER_KEY_PRESS: "REGISTER_KEY_PRESS",
 } as const;
 
 export interface CallFromClient<
@@ -44,6 +46,7 @@ export interface CallFromClient<
     shouldClose?: boolean
   ) => void;
   [FromClient.OPEN_STORAGE]: (player: Player, storageId: number) => boolean;
+  [FromClient.REGISTER_KEY_PRESS]: (player: Player, key: alt.Enums.KeyCode) => void;
 }
 
 export const FromClientValidation = {
@@ -82,5 +85,8 @@ export const FromClientValidation = {
   [FromClient.OPEN_STORAGE]: {
     args: [z.number()],
     returns: z.boolean(),
+  },
+  [FromClient.REGISTER_KEY_PRESS]: {
+    args: [z.number()],
   },
 } satisfies Record<keyof typeof FromClient, { args?: [z.ZodTypeAny, ...z.ZodTypeAny[]], returns?: z.ZodTypeAny }>;

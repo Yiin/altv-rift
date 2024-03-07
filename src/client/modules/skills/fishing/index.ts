@@ -1,19 +1,16 @@
-import { PlayerFlags } from "@shared/store/game-state.store";
+import alt from "@altv/client";
+import { FishingGameType, PlayerFlags } from "@shared/store/game-state.store";
 import { ActionType, ClientFlags } from "@shared/store/client.store";
+import { ServerCall } from "@shared/calls/server";
 import { gameState } from "@/core/store/game-state.store";
 import { clientState } from "@/core/store/client.store";
 import { whileInGame } from "@/core/game-state-hooks/in-game.state";
 import { registerActions } from "@/core/user-interface/elements";
+import { rpc } from "@/core/rpc";
 import { startFishingTask, stopFishingTask } from "./utils/fishing-task";
 import { trackCanFishFlag } from "./utils/track-can-fish-flag";
 
-whileInGame(() => {
-  const stopTracking = trackCanFishFlag();
-
-  return () => {
-    stopTracking();
-  };
-});
+whileInGame(trackCanFishFlag);
 
 registerActions(() => {
   const actions = [];
@@ -41,4 +38,22 @@ registerActions(() => {
   }
 
   return actions;
+});
+
+alt.Events.onKeyDown(({ key }) => {
+  if (gameState.fishingProgress?.gameType === FishingGameType.TimeClick) {
+    if (key === alt.Enums.KeyCode.MOUSE_LEFT) {
+      rpc.callServer(ServerCall.FromClient.REGISTER_KEY_PRESS, key);
+    }
+  }
+  if (gameState.fishingProgress?.gameType === FishingGameType.Keys) {
+    if ([
+      alt.Enums.KeyCode.W,
+      alt.Enums.KeyCode.A,
+      alt.Enums.KeyCode.S,
+      alt.Enums.KeyCode.D,
+    ].includes(key)) {
+      rpc.callServer(ServerCall.FromClient.REGISTER_KEY_PRESS, key);
+    }
+  }
 });

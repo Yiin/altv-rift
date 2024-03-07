@@ -11,6 +11,7 @@ import Notifications from "./notifications/Notifications.vue";
 import AreaIndicators from "./area-indicators/AreaIndicators.vue";
 import ActionMenu from "./action-menu/ActionMenu.vue";
 import TargetAction from "./target-action/TargetAction.vue";
+import FishingGame from "./fishing-game/FishingGame.vue";
 import { useClient } from "@/store/synced/client.store";
 import { UIElement } from "@shared/enums/ui";
 import { WindowType } from "@shared/store/client.store";
@@ -20,19 +21,20 @@ const client = useClient();
 
 <template>
   <Screen>
-    <ChatBox v-if="client.ui.elements.has(UIElement.CHAT)" />
     <template v-if="client.ui.window">
       <Inventory v-if="[WindowType.PLAYER_INVENTORY, WindowType.SHOP].includes(client.ui.window.type)" />
       <LootBox v-if="client.ui.window.type === WindowType.LOOT_BOX" />
     </template>
     <ActionMenu v-else-if="client.ui.elements.has(UIElement.ACTION_MENU)" />
     <template v-else>
+      <ChatBox v-if="client.ui.elements.has(UIElement.CHAT)" />
       <QuestMenu v-if="client.ui.elements.has(UIElement.QUEST_MENU)" />
       <SkillMenu v-if="client.ui.elements.has(UIElement.SKILL_MENU)" />
       <TargetAction v-if="client.ui.elements.has(UIElement.TARGET_ACTION)" />
       <Conversation />
       <AreaIndicators />
       <WeaponHud />
+      <FishingGame />
     </template>
     <Notifications />
   </Screen>

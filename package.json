@@ -60,7 +60,7 @@
     "proxy-deep": "^3.1.1",
     "reflect-metadata": "^0.1.13",
     "sjcl": "^1.0.8",
-    "typescript": "^5.1.6",
+    "typescript": "^5.3.3",
     "umap": "^1.0.2",
     "validator": "^13.7.0",
     "vue": "^3.3.4",
@@ -68,10 +68,10 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@altv/client": "^0.0.27",
+    "@altv/client": "^0.0.29",
     "@altv/natives": "^0.0.8",
-    "@altv/server": "^0.0.30",
-    "@altv/shared": "^0.0.11",
+    "@altv/server": "^0.0.36",
+    "@altv/shared": "^0.0.14",
     "@altv/types-webview": "^15.0.2-dev",
     "@babel/types": "^7.20.7",
     "@rollup/plugin-commonjs": "^24.0.1",

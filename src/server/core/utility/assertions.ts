@@ -17,7 +17,7 @@ export function needsToBeInGame(player: alt.Player): asserts player is InGamePla
 }
 
 export function isInGame(player: alt.Player): player is InGamePlayer {
-  return player.character !== undefined;
+  return player.valid && player.character !== undefined;
 }
 
 export function needsToBeLoggedIn(player: alt.Player): asserts player is LoggedInPlayer {
@@ -27,5 +27,5 @@ export function needsToBeLoggedIn(player: alt.Player): asserts player is LoggedI
 }
 
 export function isLoggedIn(player: alt.Player): player is LoggedInPlayer {
-  return player.user !== undefined;
+  return player.valid && player.user !== undefined;
 }

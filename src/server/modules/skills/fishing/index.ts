@@ -1,4 +1,3 @@
-//// @index('./*.ts', f => `import "${f.path}";`)
-import "./fishing.skill";
+import "./controller";
+import "./progress";
 import "./water-zones";
-// @endindex

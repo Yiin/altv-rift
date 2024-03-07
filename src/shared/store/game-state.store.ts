@@ -1,10 +1,11 @@
 import alt from "@altv/shared";
 import { Inventory, StorageSource } from "@shared/interfaces";
-import { Ammo } from "@shared/modules/items";
+import { FishBaitItemKey } from "@shared/modules/items";
 
 export enum PlayerFlags {
   InFishingArea = "InFishingArea",
   IsFishing = "IsFishing",
+  IsCatchingAFish = "IsCatchingAFish",
   InDiggingArea = "InDiggingArea",
   IsDigging = "IsDigging",
 }
@@ -14,6 +15,12 @@ export enum StorageType {
   Storage = "Storage",
   AirDrop = "AirDrop",
   LootBox = "LootBox",
+}
+
+export enum FishingGameType {
+  // HoldBalance = "HoldBalance",
+  TimeClick = "TimeClick",
+  Keys = "Keys",
 }
 
 export interface GameState {
@@ -36,9 +43,31 @@ export interface GameState {
     validUntil: number;
     inventory: Inventory;
   } | null;
+  fishingProgress:
+  // | {
+  //   baitKey: FishBaitItemKey;
+  //   gameType: FishingGameType.HoldBalance;
+  //   balance: number;
+  // }
+  | {
+    baitKey: FishBaitItemKey;
+    gameType: FishingGameType.TimeClick;
+    startedAt: number;
+    durationMs: number;
+    target: number; // 0-1
+  }
+  | {
+    baitKey: FishBaitItemKey;
+    gameType: FishingGameType.Keys;
+    startedAt: number;
+    durationMs: number;
+    keys: alt.Enums.KeyCode[];
+    pressedKeys: alt.Enums.KeyCode[];
+  } | null;
 }
 
 export const getDefaultGameState = (): GameState => ({
   flags: new Set(),
   openedStorage: null,
+  fishingProgress: null,
 });

@@ -5,6 +5,8 @@ Introduction MVP:
     ☐ Scrapping minigames to gather materials
       ✔ Woodcutting @done
       ☐ Fishing w/ simple mini-game
+        ✔ Fishing mini-game logic @done(24-03-07 00:03)
+        ☐ Fishing mini-game UI @started(24-03-07 00:03)
       ☐ Mining
     ☐ Different scrapping points for different materials
       ☐ Random boxes in the world
