@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import Screen from "@/components/Screen.vue";
 import Bg from "../../../public/assets/bg/crafting-bg.png";
-import CarbineRifle1 from "../../../public/assets/items/carbinerifle1.png";
 import CarbineRifle2 from "../../../public/assets/items/carbinerifle2.png";
-import AssaultRifle1 from "../../../public/assets/items/assaultrifle1.png";
-import AdvancedRifle1 from "../../../public/assets/items/advancedrifle1.png";
 import Strap10x from "../../../public/assets/items/10x-strap.png";
 import Powder1x from "../../../public/assets/items/1x-powder.png";
+import RiffleList from "@/components/RiffleList.vue";
 </script>
 
 <template>
@@ -17,17 +15,16 @@ import Powder1x from "../../../public/assets/items/1x-powder.png";
         class="w-full h-full object-cover object-center bg-no-repeat"
         alt="crafting"
       />
-      <div
-        class="bg-subtleDarkRadialGradient absolute inset-0 opacity-95"
-      ></div>
+      <div class="bg-subtleDarkRadialGradient absolute inset-0 opacity-95"></div>
       <div class="bg-black/20 blur-sm absolute inset-0"></div>
     </div>
 
-    <nav
-      class="flex max-w-screen-2xl px-6 mx-auto py-8 justify-between items-center gap-7"
-    >
+    <nav class="flex max-w-screen-2xl px-6 mx-auto py-8 justify-between items-center gap-7">
       <div>
-        <a href="/crafting.html" class="flex gap-6 items-center">
+        <a
+          href="#"
+          class="flex gap-6 items-center"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="165"
@@ -89,7 +86,7 @@ import Powder1x from "../../../public/assets/items/1x-powder.png";
             />
           </svg>
           <div class="h-9 w-0.5 bg-white/30"></div>
-          <span class="text-lg font-semibold">Your workspace</span>
+          <span class="text-lg font-semibold text-white">Your workspace</span>
         </a>
       </div>
       <div class="flex gap-7 items-center">
@@ -105,247 +102,7 @@ import Powder1x from "../../../public/assets/items/1x-powder.png";
     <main
       class="max-w-screen-2xl p-6 mx-auto flex items-start gap-12 h-[calc(100vh_-_155px)] overflow-y-auto"
     >
-      <div class="">
-        <div class="">
-          <button
-            id="dropdownDefaultButton"
-            data-dropdown-toggle="dropdown"
-            class="text-white w-full bg-transparent border border-solid border-white/10 font-bold rounded-md text-base px-5 py-4 text-center flex justify-between items-center mb-2.5"
-            type="button"
-          >
-            <div class="flex gap-3 items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="11"
-                viewBox="0 0 16 11"
-                fill="none"
-              >
-                <path
-                  d="M4.4058 0.6875H16V3.4375H15.2754V4.125H10.9275C10.7354 4.125 10.551 4.19743 10.4151 4.32636C10.2792 4.4553 10.2029 4.63016 10.2029 4.8125V5.5C10.2029 5.86467 10.0502 6.21441 9.77842 6.47227C9.50662 6.73013 9.13799 6.875 8.75362 6.875H6.30435C6.02899 6.875 5.77536 7.02625 5.65217 7.26L3.87681 10.6219C3.75362 10.8556 3.50725 11 3.23188 11H0.782609C0.782609 11 -1.3913 11 1.50725 6.875C1.50725 6.875 3.68116 4.125 0.782609 4.125V0.6875H1.50725L1.86957 0H4.04348L4.4058 0.6875ZM9.47826 5.5V4.8125C9.47826 4.63016 9.40191 4.4553 9.26602 4.32636C9.13012 4.19743 8.94581 4.125 8.75362 4.125H8.02899C8.02899 4.125 7.30435 4.8125 8.02899 5.5C7.64461 5.5 7.27599 5.35513 7.00419 5.09727C6.7324 4.83941 6.57971 4.48967 6.57971 4.125C6.38752 4.125 6.20321 4.19743 6.06731 4.32636C5.93142 4.4553 5.85507 4.63016 5.85507 4.8125V5.5C5.85507 5.68234 5.93142 5.8572 6.06731 5.98614C6.20321 6.11507 6.38752 6.1875 6.57971 6.1875H8.75362C8.94581 6.1875 9.13012 6.11507 9.26602 5.98614C9.40191 5.8572 9.47826 5.68234 9.47826 5.5Z"
-                  fill="white"
-                ></path>
-              </svg>
-              <p>Rifles</p>
-            </div>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="8"
-              height="6"
-              viewBox="0 0 8 6"
-              fill="none"
-            >
-              <path
-                d="M0.5 1L4 4.5L7.5 1"
-                stroke="white"
-                stroke-linecap="round"
-              ></path>
-            </svg>
-          </button>
-
-          <!-- Dropdown menu -->
-          <div
-            id="dropdown"
-            class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
-          >
-            <ul
-              class="py-2 text-sm text-gray-700 dark:text-gray-200"
-              aria-labelledby="dropdownDefaultButton"
-            >
-              <li>
-                <a
-                  href="#"
-                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  >Dashboard</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  >Settings</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  >Earnings</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  >Sign out</a
-                >
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div
-          class="overflow-y-auto flex flex-col gap-2.5 h-[calc(100vh_-_213px)] pl-3 relative scrollbar-left riffles"
-        >
-          <div class="bg-white/5 rounded-md pt-7 pb-6 px-6 dltr">
-            <div class="mb-4">
-              <img
-                :src="CarbineRifle1"
-                alt="carbine rifle"
-              />
-            </div>
-            <div>
-              <span
-                class="inline-block px-2 py-1 text-xs font-extrabold bg-skyBlue rounded-sm uppercase"
-                >COMMON</span
-              >
-              <h3 class="mt-0.5 text-[20px] font-bold text-white">
-                Carbine Rifle
-              </h3>
-              <p class="text-sm text-steelGray">7-62mm</p>
-            </div>
-          </div>
-          <div
-            class="bg-transparent rounded-md border border-solid border-white/10 pt-7 pb-6 px-6 dltr"
-          >
-            <div>
-              <img
-                :src="AssaultRifle1"
-                alt="assault rifle"
-              />
-            </div>
-            <div>
-              <span
-                class="inline-block px-2 py-1 text-xs font-extrabold bg-accentRed rounded-sm uppercase"
-                >rare</span
-              >
-              <h3 class="mt-0.5 text-[20px] font-bold text-white">
-                Assault Rifle
-              </h3>
-              <p class="text-sm text-steelGray">7-62mm</p>
-            </div>
-          </div>
-          <div
-            class="bg-transparent rounded-md border border-solid border-white/10 pt-7 pb-6 px-6 dltr"
-          >
-            <div>
-              <img
-                :src="AdvancedRifle1"
-                alt="advanced rifle"
-              />
-            </div>
-            <div>
-              <span
-                class="inline-block px-2 py-1 text-xs font-extrabold bg-sunYellow rounded-sm uppercase"
-                >LEGENDARY</span
-              >
-              <h3 class="mt-0.5 text-[20px] font-bold text-white">
-                Advanced Rifle
-              </h3>
-              <p class="text-sm text-steelGray">7-62mm</p>
-            </div>
-          </div>
-          <div
-            class="bg-transparent rounded-md border border-solid border-white/10 pt-7 pb-6 px-6 dltr"
-          >
-            <div>
-              <img
-                :src="AdvancedRifle1"
-                alt="advanced rifle"
-              />
-            </div>
-            <div>
-              <span
-                class="inline-block px-2 py-1 text-xs font-extrabold bg-sunYellow rounded-sm uppercase"
-                >LEGENDARY</span
-              >
-              <h3 class="mt-0.5 text-[20px] font-bold text-white">
-                Advanced Rifle
-              </h3>
-              <p class="text-sm text-steelGray">7-62mm</p>
-            </div>
-          </div>
-          <div
-            class="bg-transparent rounded-md border border-solid border-white/10 pt-7 pb-6 px-6 dltr"
-          >
-            <div>
-              <img
-                :src="AdvancedRifle1"
-                alt="advanced rifle"
-              />
-            </div>
-            <div>
-              <span
-                class="inline-block px-2 py-1 text-xs font-extrabold bg-sunYellow rounded-sm uppercase"
-                >LEGENDARY</span
-              >
-              <h3 class="mt-0.5 text-[20px] font-bold text-white">
-                Advanced Rifle
-              </h3>
-              <p class="text-sm text-steelGray">7-62mm</p>
-            </div>
-          </div>
-          <div
-            class="bg-transparent rounded-md border border-solid border-white/10 pt-7 pb-6 px-6 dltr"
-          >
-            <div>
-              <img
-                :src="AdvancedRifle1"
-                alt="advanced rifle"
-              />
-            </div>
-            <div>
-              <span
-                class="inline-block px-2 py-1 text-xs font-extrabold bg-sunYellow rounded-sm uppercase"
-                >LEGENDARY</span
-              >
-              <h3 class="mt-0.5 text-[20px] font-bold text-white">
-                Advanced Rifle
-              </h3>
-              <p class="text-sm text-steelGray">7-62mm</p>
-            </div>
-          </div>
-          <div
-            class="bg-transparent rounded-md border border-solid border-white/10 pt-7 pb-6 px-6 dltr"
-          >
-            <div>
-              <img
-                :src="AdvancedRifle1"
-                alt="advanced rifle"
-              />
-            </div>
-            <div>
-              <span
-                class="inline-block px-2 py-1 text-xs font-extrabold bg-sunYellow rounded-sm uppercase"
-                >LEGENDARY</span
-              >
-              <h3 class="mt-0.5 text-[20px] font-bold text-white">
-                Advanced Rifle
-              </h3>
-              <p class="text-sm text-steelGray">7-62mm</p>
-            </div>
-          </div>
-          <div
-            class="bg-transparent rounded-md border border-solid border-white/10 pt-7 pb-6 px-6 dltr"
-          >
-            <div>
-              <img
-                :src="AdvancedRifle1"
-                alt="advanced rifle"
-              />
-            </div>
-            <div>
-              <span
-                class="inline-block px-2 py-1 text-xs font-extrabold bg-sunYellow rounded-sm uppercase"
-                >LEGENDARY</span
-              >
-              <h3 class="mt-0.5 text-[20px] font-bold text-white">
-                Advanced Rifle
-              </h3>
-              <p class="text-sm text-steelGray">7-62mm</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <RiffleList />
       <div class="flex-1">
         <div class="flex flex-col items-center">
           <div class="relative h-[476px] w-[476px]">
@@ -370,7 +127,7 @@ import Powder1x from "../../../public/assets/items/1x-powder.png";
                 class="text-mustardYellow drop-shadow-glow"
                 stroke-width="8"
                 :stroke-dasharray="955.04"
-                :stroke-dashoffset="955.04 - 10 / 100 * 955.04"
+                :stroke-dashoffset="955.04 - (10 / 100) * 955.04"
                 stroke-dasharray="955.04"
                 stroke-dashoffset="802.2336"
                 stroke-linecap="butt"
@@ -418,30 +175,27 @@ import Powder1x from "../../../public/assets/items/1x-powder.png";
           </div>
           <span
             class="inline-block px-2 py-1 text-xs font-extrabold bg-skyBlue rounded-sm uppercase"
-            >COMMON</span
           >
+            COMMON
+          </span>
         </div>
         <div class="py-8 px-9 border-b border-solid border-white/10">
           <ul class="flex flex-col gap-4">
-            <li
-              class="flex justify-between items-center text-base text-white uppercase"
-            >
-              <span>Damage</span> <span>60</span>
+            <li class="flex justify-between items-center text-base text-white uppercase">
+              <span>Damage</span>
+              <span>60</span>
             </li>
-            <li
-              class="flex justify-between items-center text-base text-white uppercase"
-            >
-              <span>Firerate</span> <span>120</span>
+            <li class="flex justify-between items-center text-base text-white uppercase">
+              <span>Firerate</span>
+              <span>120</span>
             </li>
-            <li
-              class="flex justify-between items-center text-base text-white uppercase"
-            >
-              <span>clip</span> <span>80</span>
+            <li class="flex justify-between items-center text-base text-white uppercase">
+              <span>clip</span>
+              <span>80</span>
             </li>
-            <li
-              class="flex justify-between items-center text-base text-white uppercase"
-            >
-              <span>accuracy</span> <span>90</span>
+            <li class="flex justify-between items-center text-base text-white uppercase">
+              <span>accuracy</span>
+              <span>90</span>
             </li>
           </ul>
         </div>
@@ -449,45 +203,44 @@ import Powder1x from "../../../public/assets/items/1x-powder.png";
           <h2 class="text-white text-3xl uppercase mb-3">requirments</h2>
           <ul class="flex gap-2 flex-col">
             <li class="flex gap-4 items-center">
-              <div
-                class="p-3 border border-solid border-white/5 bg-transparent"
-              >
-                <img :src="Strap10x" alt="10x Trash sraps" />
+              <div class="p-3 border border-solid border-white/5 bg-transparent">
+                <img
+                  :src="Strap10x"
+                  alt="10x Trash sraps"
+                />
               </div>
               <p class="text-base text-white">10x Trash sraps</p>
             </li>
             <li class="flex gap-4 items-center">
-              <div
-                class="p-3 border border-solid border-white/5 bg-transparent"
-              >
-                <img :src="Powder1x" alt="1x Trash scraps" />
+              <div class="p-3 border border-solid border-white/5 bg-transparent">
+                <img
+                  :src="Powder1x"
+                  alt="1x Trash scraps"
+                />
               </div>
               <p class="text-base text-white">1x Trash scraps</p>
             </li>
             <li class="flex gap-4 items-center">
-              <div
-                class="p-3 border border-solid border-white/5 bg-transparent"
-              >
-                <img :src="Powder1x" alt="1x Powder" />
+              <div class="p-3 border border-solid border-white/5 bg-transparent">
+                <img
+                  :src="Powder1x"
+                  alt="1x Powder"
+                />
               </div>
               <p class="text-base text-white">1x Powder</p>
             </li>
           </ul>
         </div>
         <div class="py-8 px-9 border-b border-solid border-white/10">
-          <h2 class="text-white text-3xl uppercase mb-3">
-            crafting information
-          </h2>
+          <h2 class="text-white text-3xl uppercase mb-3">crafting information</h2>
           <ul class="flex flex-col gap-4">
-            <li
-              class="flex justify-between items-center text-base text-white uppercase"
-            >
-              <span>chance</span> <span>75%</span>
+            <li class="flex justify-between items-center text-base text-white uppercase">
+              <span>chance</span>
+              <span>75%</span>
             </li>
-            <li
-              class="flex justify-between items-center text-base text-white uppercase"
-            >
-              <span>crafting time</span> <span>00:35</span>
+            <li class="flex justify-between items-center text-base text-white uppercase">
+              <span>crafting time</span>
+              <span>00:35</span>
             </li>
           </ul>
         </div>
