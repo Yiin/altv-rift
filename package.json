@@ -68,9 +68,9 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@altv/client": "^0.0.29",
+    "@altv/client": "^0.0.30",
     "@altv/natives": "^0.0.8",
-    "@altv/server": "^0.0.36",
+    "@altv/server": "^0.0.37",
     "@altv/shared": "^0.0.14",
     "@altv/types-webview": "^15.0.2-dev",
     "@babel/types": "^7.20.7",

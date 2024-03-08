@@ -1,21 +1,41 @@
 .info {
-    background-color: hsla(198, 93%, 60%, 0.6);
     color: hsl(0, 0%, 100%);
+    path {
+        fill: hsl(198, 93%, 60%);
+        stroke: #00000055;
+        stroke-width: 2px;
+        paint-order: stroke;
+    }
 }
 
 .success {
-    background-color: hsla(158, 64%, 52%, 0.6);
     color: hsl(0, 0%, 100%);
+    path {
+        fill: hsl(158, 64%, 52%);
+        stroke: #00000055;
+        stroke-width: 2px;
+        paint-order: stroke;
+    }
 }
 
 .warning {
-    background-color: hsla(43, 100%, 46%, 0.6);
     color: hsl(0, 0%, 100%);
+    path {
+        fill: hsl(43, 100%, 46%);
+        stroke: #00000055;
+        stroke-width: 2px;
+        paint-order: stroke;
+    }
 }
 
 .error {
-    background-color: hsla(0, 100%, 58%, 0.6);
     color: hsl(0, 0%, 100%);
+    path {
+        fill: hsl(0, 100%, 58%);
+        stroke: #00000055;
+        stroke-width: 2px;
+        paint-order: stroke;
+    }
 }
 
 .fade-in {

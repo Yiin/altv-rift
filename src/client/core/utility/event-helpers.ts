@@ -90,7 +90,7 @@ export function onKeyDown(key: alt.Enums.KeyCode, callback: () => void) {
   registeredKeyDownKeys?.add(key);
 
   const handler = alt.Events.onKeyDown(({ key: keyPressed }) => {
-    if (inputFocusedTimes) {
+    if (inputFocusedTimes > 0) {
       return;
     }
     if (keyPressed === key) {
@@ -110,15 +110,18 @@ export function onKeyDown(key: alt.Enums.KeyCode, callback: () => void) {
 alt.Timers.nextTick(() => {
   useWebview((webview) => {
     webview.on(ClientEvents.FromWebview.INPUT_FOCUS, (isFocused: boolean) => {
+      console.log(`Webview input: ${isFocused}`);
       inputFocusedTimes += isFocused ? 1 : -1;
     });
   });
 
   alt.Events.on("qa-tools:codeEditor", (isFocused: boolean) => {
+    console.log(`QA Tools: Code Editor: ${isFocused}`);
     inputFocusedTimes += isFocused ? 1 : -1;
   });
 
   alt.Events.on("vchat:focus", (isFocused: boolean) => {
+    console.log(`VChat: ${isFocused}`);
     inputFocusedTimes += isFocused ? 1 : -1;
   });
 });

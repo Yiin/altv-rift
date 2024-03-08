@@ -42,8 +42,8 @@ const maskBottomHeight = computed(() =>
   currentScroll === boxHeight
     ? "0px"
     : `${Math.floor(
-        (64 * (boxHeight.value - currentScroll.value)) / boxHeight.value
-      )}px`
+      (64 * (boxHeight.value - currentScroll.value)) / boxHeight.value
+    )}px`
 );
 
 // --------------------------------------------------------------
@@ -71,8 +71,8 @@ async function addMessage(
   newMessages.length < options.maxMessages
     ? (messages.value = newMessages)
     : (messages.value = newMessages.slice(
-        newMessages.length - options.maxMessages
-      ));
+      newMessages.length - options.maxMessages
+    ));
   await updateBox();
 }
 
@@ -84,8 +84,8 @@ async function loadMessages(_messages: Array<MessageData>) {
   _messages.length < options.maxMessages
     ? (messages.value = _messages)
     : (messages.value = _messages.slice(
-        _messages.length - options.maxMessages
-      ));
+      _messages.length - options.maxMessages
+    ));
   await updateBox();
 }
 
@@ -231,23 +231,17 @@ onUnmounted(() => {
 
 <template>
   <div
-    class="scrollbar mask flex flex-col gap-[4px] h-[320px] w-full mask mb-[16px] pr-2"
-    :class="{
-      'opacity-50': !focus,
-      'opacity-100': focus,
-    }"
+    class="scrollbar mask flex flex-col gap-0.5 h-[320px] w-full mask mb-[16px] pr-2 crisp-shadow"
     :style="{
       '--scrollbar-opacity': focus && scrollHeight > clientHeight ? 1 : 0,
       '--mask-top-height': maskTopHeight,
       '--mask-bottom-height': maskBottomHeight,
     }"
-    ref="messagesRef"
-  >
+    ref="messagesRef">
     <Message
       v-for="message in messages"
       :content="message.content"
-      :type="message.type"
-    />
+      :type="message.type" />
   </div>
 </template>
 
