@@ -16,7 +16,7 @@ const props = defineProps({
   <div
     class="flex flex-row items-center gap-[8px] text-white text-base select-none fade-in"
     :class="{
-      'py-[4px]':
+      'py-0.5':
         props.type !== MessageType.Default && props.type !== MessageType.Empty,
       'px-[8px]': props.type !== MessageType.Empty,
       info: props.type === MessageType.Info,
