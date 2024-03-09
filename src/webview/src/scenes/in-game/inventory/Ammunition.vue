@@ -4,7 +4,7 @@ import { useCharacter } from '@/store/synced/character.store';
 import { getItemImage } from '@/utils/items';
 import { EquipmentSlot } from '@shared/interfaces';
 import { getItemName } from '@shared/modules/items';
-import { computed, watchEffect } from 'vue';
+import { computed } from 'vue';
 
 const inventory = useInventory();
 const equipment = computed(() => useCharacter().equipment);
@@ -28,10 +28,6 @@ const equipedAmmo = computed(() => [
     key: equipment.value[slot]!.key,
   }))
 );
-
-watchEffect(() => {
-  console.log(equipedAmmo.value);
-});
 </script>
 
 <template>

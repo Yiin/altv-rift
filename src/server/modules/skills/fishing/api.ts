@@ -107,18 +107,11 @@ export function startCatchingFish(player: InGamePlayer, baitKey: FishBaitItemKey
   player.gameState.flags.add(PlayerFlags.IsCatchingAFish);
 
   const gameType = rollItem([
-    // [1, FishingGameType.HoldBalance],
     [1, FishingGameType.TimeClick],
     // [1, FishingGameType.Keys]
   ]);
 
   switch (gameType) {
-    // case FishingGameType.HoldBalance:
-    //   player.gameState.fishingProgress = {
-    //     gameType,
-    //     balance: Math.random(),
-    //   };
-    //   break;
     case FishingGameType.TimeClick: {
       const durationMs = 2000;
       player.gameState.fishingProgress = {
@@ -126,15 +119,14 @@ export function startCatchingFish(player: InGamePlayer, baitKey: FishBaitItemKey
         gameType,
         startedAt: Date.now(),
         durationMs,
-        target: Math.min(1, Math.random() + 0.2),
+        targetPosition: Math.min(1, Math.random() + 0.2),
+        targetSize: 0.1
       };
 
       const timeout = alt.Timers.setTimeout(() => {
         if (!player.gameState.flags.has(PlayerFlags.IsCatchingAFish)) {
           return;
         }
-
-        console.log(`Player ran out of time.`)
 
         stopFishing(player);
       }, durationMs + 1000);
@@ -175,8 +167,6 @@ export function startCatchingFish(player: InGamePlayer, baitKey: FishBaitItemKey
         if (!player.gameState.flags.has(PlayerFlags.IsCatchingAFish)) {
           return;
         }
-
-        console.log(`Player ran out of time.`)
 
         stopFishing(player);
       }, durationMs + 1000);

@@ -1,4 +1,4 @@
-import { Item, registerItem } from "@shared/modules/items";
+import { Item, registerItems } from "@shared/modules/items";
 import { makeKeys } from "@shared/utility/make-keys";
 const PANTS_ITEMS: Record<string, PantsItemInfo> = (await import("./pants.json")).default as any;
 
@@ -2229,22 +2229,13 @@ export type PantsItemInfo = {
   restrictionTags: string[] | null;
 };
 
-export const pants = Object.values(PANTS_ITEMS) as any as PantsItemInfo[];
-
-/**
- * Register all pants.
- */
-// console.log("Registering pants...");
-for (const info of pants) {
-  registerItem(info);
-}
-// console.log(`Registered ${Object.keys(pants).length} pants.`);
+export const pants = registerItems(Object.values(PANTS_ITEMS));
 
 /**
  * Type guards for pants
  */
 export function isItemKeyPants(key: string): key is PantsItemKey {
-  return pants.some((info) => info.key === key);
+  return pants.has(key as PantsItemKey);
 }
 
 export function isItemPants(item: Item): item is PantsItem {

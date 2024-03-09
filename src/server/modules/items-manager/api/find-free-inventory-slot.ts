@@ -11,6 +11,5 @@ export function findFreeInventorySlot(inventory: Inventory, slot?: number) {
       return i;
     }
   }
-  console.log("no free slot", inventory.size, inventory.items.length);
   return -1;
 }

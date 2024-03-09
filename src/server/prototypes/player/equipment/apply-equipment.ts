@@ -11,7 +11,6 @@ declare module "@altv/server" {
 }
 
 alt.Player.prototype.applyEquipment = function () {
-  console.log(this.character.equipment);
   for (const equipmentSlot in this.character.equipment) {
     const slot = equipmentSlot as keyof Equipment;
     const item = this.getEquipedItemInSlot(slot);

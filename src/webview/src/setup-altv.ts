@@ -41,7 +41,7 @@ if (!("alt" in globalThis)) {
         const deserializedArgs = args.flatMap((arg) => arg && deserialize(arg));
         listener(...deserializedArgs);
       } catch (e) {
-        console.error("err", eventName, e);
+        console.error("err", eventName, args, e);
       }
     }
     handlers.push({
@@ -64,8 +64,7 @@ if (!("alt" in globalThis)) {
       try {
         listener(...args.flatMap((arg) => arg && deserialize(arg)));
       } catch (e) {
-        console.log("alt.once", args);
-        console.error("alt.once", eventName, e);
+        console.error("alt.once", eventName, args, e);
       }
     }
     handlers.push({

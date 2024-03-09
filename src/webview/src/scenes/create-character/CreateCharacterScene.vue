@@ -29,7 +29,6 @@ const createCharacter = useCreateCharacter();
 const screenRef = ref<InstanceType<typeof Screen> | null>(null);
 
 watch(createCharacter, () => {
-  console.log("sending appearance");
   alt.emit(ClientEvents.FromWebview.UPDATE_CHARACTER_APPEARANCE, createCharacter.appearance);
 });
 

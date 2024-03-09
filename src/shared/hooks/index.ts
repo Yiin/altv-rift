@@ -36,16 +36,10 @@ export function createHookableFunction<F extends (...args: any) => any>(
     for (const handler of handlers) {
       const result = handler(...args);
       if (typeof result !== "undefined") {
-        console.log(
-          `[HookableFunction] ${options.name} hook returned ${JSON.stringify(result)}`
-        );
         options.onResult?.(result, args);
         return result;
       }
     }
-    console.log(
-      `[HookableFunction] ${options.name} hook returned default value ${options.defaultReturn}}`
-    );
     options.onResult?.(options.defaultReturn as ReturnType<F>, args);
     return options.defaultReturn as ReturnType<F>;
   };

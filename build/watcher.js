@@ -30,7 +30,6 @@ clientWatcher.on('change', () => {
 });
 
 assetsWatcher.on('change', () => {
-  console.log("Assets changed");
   restartServer('client');
 });
 
@@ -60,11 +59,9 @@ function kickAllPlayers() {
 
 async function restartServer() {
   if (childProcess) {
-    console.log("Kicking all players");
     await kickAllPlayers();
     await wait(500);
 
-    console.log("Killing old server process");
     try {
       await fkill(':8888');
     } catch { }
@@ -76,12 +73,10 @@ async function restartServer() {
     }
   }
 
-  console.log("Spawning new server process");
   childProcess = spawn(altvProcessName, ['--convert-config-format'], { stdio: 'inherit' });
 
   await wait(3000);
 
-  console.log("Reconnecting to server");
   await tryToReconnect();
 }
 

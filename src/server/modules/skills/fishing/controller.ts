@@ -18,35 +18,33 @@ rpc.registerClient(ServerCall.FromClient.STOP_FISHING, (player) => {
   return stopFishing(player);
 });
 
-// rpc.registerClient(ServerCall.FromClient.)
-
 rpc.registerClient(ServerCall.FromClient.REGISTER_KEY_PRESS, (player, key) => {
   needsToBeInGame(player);
 
   const isCatchingAFish = player.gameState.flags.has(PlayerFlags.IsCatchingAFish);
 
   if (!isCatchingAFish) {
-    console.log(`Player is not catching a fish.`);
     return;
   }
 
   switch (player.gameState.fishingProgress?.gameType) {
     case FishingGameType.TimeClick: {
-      const currentTime = Date.now();
-      const startedAt = player.gameState.fishingProgress.startedAt;
-      const durationMs = player.gameState.fishingProgress.durationMs;
-      const target = player.gameState.fishingProgress.target;
+      // account for the ping
+      const currentTime = Date.now() - player.ping;
+      const { startedAt, durationMs, targetPosition, targetSize } = player.gameState.fishingProgress;
 
       const timePassed = (currentTime - startedAt) / durationMs;
-      const min = target - 0.1;
-      const max = target + 0.1;
 
-      if (timePassed < min || timePassed > max) {
-        console.log(`Player clicked too early or too late.`);
-        stopFishing(player);
-      } else {
-        console.log(`Player clicked at the right time.`);
+      // target limits
+      const min = targetPosition - (targetSize / 2);
+      const max = targetPosition + (targetSize / 2);
+
+      const hitTheTarget = timePassed >= min && timePassed <= max;
+
+      if (hitTheTarget) {
         catchAFish(player, player.gameState.fishingProgress.baitKey);
+      } else {
+        stopFishing(player);
       }
       break;
     }
@@ -56,15 +54,11 @@ rpc.registerClient(ServerCall.FromClient.REGISTER_KEY_PRESS, (player, key) => {
 
       pressedKeys.push(key);
 
-      console.log(`Player pressed a key.`, alt.Enums.KeyCode[key]);
-
       if (_.isEqual(keysRequired, pressedKeys)) {
-        console.log(`Player caught a fish.`);
         catchAFish(player, player.gameState.fishingProgress.baitKey);
       } else {
         const keysToValidate = keysRequired.slice(0, pressedKeys.length);
         if (!_.isEqual(keysToValidate, pressedKeys)) {
-          console.log(`Player pressed the wrong key.`);
           // Player pressed the wrong key
           stopFishing(player);
         }

@@ -240,7 +240,6 @@ export const useInventory = defineStore("inventory", {
       return this.character.inventory.size ?? 24;
     },
     items(): SlottedItem[] {
-      console.log("items start");
       const items: SlottedItem[] = reactive([]);
 
       if (!("altMock" in globalThis) && !isCharacterStoreAvailable()) {
@@ -306,7 +305,6 @@ export const useInventory = defineStore("inventory", {
        * Nearby items
        */
       for (const groundItem of this.droppedItems) {
-        console.log(groundItem);
         items.push({
           item: groundItem.item,
           source: {
@@ -315,8 +313,6 @@ export const useInventory = defineStore("inventory", {
           } satisfies GroundItemSource,
         });
       }
-
-      console.log("items end");
 
       return items;
     },
@@ -433,18 +429,15 @@ export const useInventory = defineStore("inventory", {
     transferAmount(from: ItemSource, to: ItemSource | null, position: { x: number; y: number }) {
       return new Promise<number>((resolve, reject) => {
         if (to && isSameSourceOrigin(from, to)) {
-          console.log("cannot transfer to the same source origin");
           return reject("Cannot transfer to the same source origin");
         }
 
         const fromItem = this.getItemFromSource(from);
 
         if (!fromItem) {
-          console.log("no item in source");
           return reject("No item in source");
         }
 
-        console.log("transfer amount", from, to, position);
         this.currentInteraction = { type: InteractionType.TransferingAmount, state: { item: fromItem, to, resolve, reject, position } };
         return true;
       });
@@ -490,8 +483,6 @@ export const useInventory = defineStore("inventory", {
         return true;
       }
 
-      console.log("move item", from, to, options.amount ?? 1);
-
       this.swapLocally(itemInSlotFrom, itemInSlotTo || to);
 
       const ok = await rpc.callServer(ServerCall.FromWebview.MOVE_ITEM, from, to, options.amount);
@@ -513,14 +504,12 @@ export const useInventory = defineStore("inventory", {
       const source = this.getItemSourceFromScreenPos(e.clientX, e.clientY);
 
       if (!source) {
-        console.log("no source");
         return;
       }
 
       const item = this.getItemFromSource(source);
 
       if (!item) {
-        console.log("no item", source, this.items);
         return;
       }
 
@@ -608,13 +597,10 @@ export const useInventory = defineStore("inventory", {
 
         try {
           if (from.origin === ItemSourceOrigin.Ground && !to) {
-            console.log("Cannot move item from ground to ground");
             throw new Error("Cannot move item from ground to ground");
           }
 
           const isSameOrigin = to && isSameSourceOrigin(from, to);
-
-          console.log("isSameOrigin", toRaw(isSameOrigin), toRaw(from), toRaw(to));
 
           const amount = isSameOrigin
             // move full amount because we don't split items in the same origin
@@ -622,27 +608,21 @@ export const useInventory = defineStore("inventory", {
             // ask for amount to move
             : await this.transferAmount(from, to, { x: e.clientX, y: e.clientY });
 
-          console.log("amount", toRaw(amount));
-
           // if we're dropping the item
           if (!to || to.origin === ItemSourceOrigin.Ground) {
             // we can drop it only from either inventory or equipment
             if ([ItemSourceOrigin.PlayerInventory, ItemSourceOrigin.PlayerEquipment].includes(from.origin)) {
               this.dropItem(from as PlayerItemSource, amount);
             } else {
-              console.log("Cannot drop item from this source");
               throw new Error("Cannot drop item from this source");
             }
           } else {
-            console.log("wtf");
             // Move the item or swap with another item
             this.moveItem(from, to, { amount });
           }
         } catch (e) {
-          console.log("failed to transfer amount", e);
+          console.error(e);
         }
-
-        console.log("????");
 
         this.currentInteraction = IDLE;
 
@@ -772,8 +752,6 @@ export const useInventory = defineStore("inventory", {
       if ([InteractionType.TransferingAmount]?.includes(this.currentInteraction.type)) {
         return;
       }
-
-      console.log("open context menu", item, event.clientX, event.clientY);
 
       this.currentInteraction = {
         type: InteractionType.ContextMenu,

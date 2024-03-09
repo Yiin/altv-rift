@@ -18,8 +18,6 @@ const virtualTreeGroup = alt.VirtualEntityGroup.create({ maxEntitiesInStream: 30
 const virtualTreeById: Map<number, alt.VirtualEntity> = new Map();
 const playerHittingTree: WeakMap<InGamePlayer, number> = new WeakMap();
 
-console.log("Growing trees...");
-
 async function growTrees() {
   let skippedTrees = 0;
   let validTrees = 0;
@@ -64,8 +62,6 @@ async function growTrees() {
     }
     await alt.Utils.waitForNextTick();
   }
-
-  alt.log(`Finished growing trees. Total: ${validTrees}, skipped: ${skippedTrees}`);
 }
 
 growTrees();
@@ -139,31 +135,26 @@ rpc.registerClient(ServerCall.FromClient.TREE_HIT, (player, virtualTreeId) => {
   const virtualTree = virtualTreeById.get(virtualTreeId);
 
   if (!virtualTree) {
-    console.log("no virtual tree", virtualTreeId);
     return 0;
   }
 
   if (playerHittingTree.get(player) !== virtualTreeId) {
-    console.log("not hitting tree", virtualTreeId);
     return 0;
   }
 
   const treeType = virtualTree.streamSyncedMeta.treeType;
 
   if (!isPlayerNearTree(player, virtualTree)) {
-    alt.log("Not near tree", treeType, virtualTree.id);
     return 0;
   }
 
   const cooldownUntil = virtualTree.streamSyncedMeta.cooldownUntil;
 
   if (cooldownUntil && cooldownUntil > Date.now()) {
-    alt.log("On cooldown", treeType, virtualTree.id);
     return 0;
   }
 
   if (!canPlayerHitTheTree(player, virtualTree)) {
-    alt.log("Can't hit tree", treeType, virtualTree.id);
     return 0;
   }
   const capacity = virtualTree.meta.capacity;
@@ -218,12 +209,10 @@ function canPlayerHitTheTree(player: InGamePlayer, virtualTree: alt.VirtualEntit
   const treeType = virtualTree.streamSyncedMeta.treeType;
 
   if (!treeType) {
-    console.log("No tree type", virtualTree.id);
     return false;
   }
 
   if (getLevel(player.character.skills.woodcutting) < getTreeLevel(treeType)) {
-    console.log("Not enough level", virtualTree.id);
     return false;
   }
   return true;

@@ -50,7 +50,7 @@ const Raycast = {
     }
 
     const [status, didHit, position, surfaceNormal, entityHit] = game.getShapeTestResult(raycast);
-    console.log(typeof entityHit);
+
     return {
       didComplete: [0, 2].includes(status),
       didHit,
