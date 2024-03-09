@@ -36,6 +36,8 @@ module.exports = {
         silverCloud: "#D9D9D9",
         midnightCharcoal: "#1B1B1B",
         limeZest: "#B9F045",
+        saffronBlaze: "#FA8633",
+        ceruleanSky: "#3382FA",
       },
       backgroundImage: {
         weaponCard: "linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(102,102,102,0.2) 100%), linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.05) 100%)",
