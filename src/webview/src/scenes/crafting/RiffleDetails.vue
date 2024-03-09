@@ -11,7 +11,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="bg-transparent border border-solid border-white/10">
+  <div class="bg-transparent border border-white/10 max-w-md">
     <div
       class="py-8 px-9 border-b border-solid border-white/10 flex gap-12 justify-between items-center"
     >
@@ -21,7 +21,7 @@ const props = defineProps({
       </div>
       <span
         :class="[
-          `inline-block px-2 py-1 text-xs font-extrabold rounded-sm uppercase`,
+          `inline-block px-2 py-1 text-xs font-extrabold rounded-sm uppercase text-white`,
           activeRifle.tag.bgCol,
         ]"
       >

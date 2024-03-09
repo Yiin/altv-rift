@@ -13,13 +13,13 @@
         display: none;
       }
     </style>
+    <link type="text/rcss" href="/client/core/rmlui/elements/vehicle-action/vehicle-action.rcss"/>
+    <link type="text/rcss" href="/client/core/rmlui/elements/storage-interaction/storage-interaction.rcss"/>
+    <link type="text/rcss" href="/client/core/rmlui/elements/tree/tree.rcss"/>
+    <link type="text/rcss" href="/client/core/rmlui/elements/damage/damage.rcss"/>
+    <link type="text/rcss" href="/client/core/rmlui/elements/ped-interaction/ped-interaction.rcss"/>
     <link type="text/rcss" href="/client/core/rmlui/components/indicator/indicator.rcss"/>
     <link type="text/rcss" href="/client/core/rmlui/components/icon/icon.rcss"/>
-    <link type="text/rcss" href="/client/core/rmlui/elements/vehicle-action/vehicle-action.rcss"/>
-    <link type="text/rcss" href="/client/core/rmlui/elements/tree/tree.rcss"/>
-    <link type="text/rcss" href="/client/core/rmlui/elements/storage-interaction/storage-interaction.rcss"/>
-    <link type="text/rcss" href="/client/core/rmlui/elements/ped-interaction/ped-interaction.rcss"/>
-    <link type="text/rcss" href="/client/core/rmlui/elements/damage/damage.rcss"/>
   </head>
   <body id="container"></body>
 </rml>

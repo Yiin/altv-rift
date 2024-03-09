@@ -9,17 +9,17 @@ const props = defineProps({
   },
 });
 
-const isWeaponCrafted = ref(true);
+const isWeaponCrafted = ref(false);
 </script>
 
 <template>
-  <div class="flex-1">
+  <div class="flex-1 pl-[31rem]">
     <div class="flex flex-col items-center">
       <div v-if="!isWeaponCrafted">
         <div class="relative h-[476px] w-[476px]">
           <img
             :src="activeRifle.image"
-            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full"
             :alt="activeRifle.name"
           />
           <svg
@@ -51,10 +51,10 @@ const isWeaponCrafted = ref(true);
             class="w-72 h-72 bg-delicateWhiteVeil rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 overflow-hidden"
           ></div>
           <div
-            class="w-[372px] h-[372px] bg-transparent border border-solid border-white/35 rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10"
+            class="w-[372px] h-[372px] bg-transparent border border-solid border-white/[0.35] rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10"
           ></div>
           <div
-            class="w-[422px] h-[422px] bg-transparent border border-solid border-white/15 rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10"
+            class="w-[422px] h-[422px] bg-transparent border border-solid border-white/[0.15] rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10"
           ></div>
           <div
             class="w-[476px] h-[476px] bg-transparent border border-solid border-white/[0.04] rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10"

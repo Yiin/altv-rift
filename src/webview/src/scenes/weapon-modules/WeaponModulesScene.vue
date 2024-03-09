@@ -6,14 +6,13 @@ import Strap10x from "../../../public/assets/items/10x-strap.png";
 import Powder1x from "../../../public/assets/items/1x-powder.png";
 import AdvancedRifle1 from "../../../public/assets/items/advancedrifle1.png";
 import AssaultRifle1 from "../../../public/assets/items/assaultrifle1.png";
-import CarbineRifle1 from "../../../public/assets/items/carbinerifle1.png";
 import CarbineRifle2 from "../../../public/assets/items/carbinerifle2.png";
-import Riffle from "./Riffle.vue";
-import RiffleDetails from "./RiffleDetails.vue";
-import RiffleList from "./RiffleList.vue";
-import { RifleType } from "./types";
+import InstalledModules from "./InstalledModules.vue";
+import AvailableModules from "./AvailableModules.vue";
+import WeaponryList from "./WeaponryList.vue";
+import { WeaponModuleType } from "./types";
 
-const rifles = ref<RifleType[]>([
+const weaponModules = ref<WeaponModuleType[]>([
   {
     name: "Carbine Rifle",
     tag: { text: "common", bgCol: "bg-skyBlue" },
@@ -147,9 +146,7 @@ const rifles = ref<RifleType[]>([
   },
 ]);
 
-const activeRifle = computed(() => {
-  return rifles.value.find((rifle) => rifle.isActive);
-});
+const availableModules = ref();
 </script>
 
 <template>
@@ -247,9 +244,10 @@ const activeRifle = computed(() => {
     <main
       class="max-w-screen-2xl p-6 mx-auto flex items-start gap-12 h-[calc(100vh_-_131px)] overflow-y-auto"
     >
-      <RiffleList :rifles="rifles" />
-      <Riffle :activeRifle="activeRifle" />
-      <RiffleDetails :activeRifle="activeRifle" />
+      <WeaponryList :weaponModules="weaponModules" />
+      <InstalledModules />
+      <AvailableModules :availableModules="availableModules" />
     </main>
   </Screen>
 </template>
+./WeaponModuleList.vue./WeaponModuleDetails.vue./WeaponModule.vue./WeaponaryList.vue./InstalledModule.vue./AvailableModules.vue

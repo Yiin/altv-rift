@@ -89,12 +89,11 @@
 
 html,
 body {
-  overflow: hidden;
+  @apply overflow-hidden;
 }
 
 body {
-  @apply font-sans scroll-smooth;
-  margin: 0;
+  @apply font-sans scroll-smooth m-0;
   /* background: #111; */
   /* background-image: url(https://news-cdn.softpedia.com/images/news2/GTA-5-Gets-New-Gorgeous-4K-Screenshots-on-PC-478043-23.jpg); */
   /* background-image: url(/assets/game-scene.png); */
@@ -103,68 +102,51 @@ body {
 }
 
 *:has(::-webkit-scrollbar) {
-  margin-right: -14px;
+  @apply -mr-[14px];
 }
 
 ::-webkit-scrollbar {
-  width: 14px;
-  height: 18px;
+  @apply w-[14px] h-[18px];
 }
 
 ::-webkit-scrollbar-thumb {
-  height: 6px;
-  border: 4px solid rgba(0, 0, 0, 0);
-  background-clip: padding-box;
-  border-radius: 7px;
-  background-color: rgba(0, 0, 0, 0.15);
-  box-shadow: inset -1px -1px 0px rgba(0, 0, 0, 0.05), inset 1px 1px 0px rgba(0, 0, 0, 0.05);
+  @apply border-4 bg-clip-padding rounded-[7px] bg-black/[0.15] shadow-[inset_-1px_-1px_0px_rgba(0,0,0,0.05),inset_1px_1px_0px_rgba(0,0,0,0.05)];
 }
 
-::-webkit-scrollbar-button {
-  width: 0;
-  height: 0;
-  display: none;
+.rifles::-webkit-scrollbar {
+  @apply w-[4px] m-0;
 }
 
-::-webkit-scrollbar-corner {
-  background-color: transparent;
+.rifles::-webkit-scrollbar-thumb {
+  @apply bg-white shadow-none border-none rounded-full bg-clip-content;
 }
 
-.riffles::-webkit-scrollbar {
-  @apply w-1 h-1;
+.rifles::-webkit-scrollbar-track {
+  @apply bg-white/[0.03] rounded-full;
 }
 
-.riffles::-webkit-scrollbar-thumb {
-  @apply bg-white rounded-md;
+.clothes::-webkit-scrollbar {
+  @apply w-[4px] m-0;
 }
 
-.riffles::-webkit-scrollbar-track {
-  @apply bg-white/[0.03] rounded-md;
-}
-
-.riffles::-webkit-scrollbar-button {
-  @apply w-1 h-1 block;
-}
-
-.riffles::-webkit-scrollbar-corner {
-  background-color: white;
+.clothes::-webkit-scrollbar-track {
+  @apply bg-[#D9D9D9]/20 rounded-full;
 }
 
 .clothes::-webkit-scrollbar-thumb {
-  @apply bg-sunriseYellow;
+  @apply bg-sunriseYellow shadow-none border-none rounded-full bg-clip-content;
 }
 
 .v-application {
-  background: transparent !important;
+  @apply !bg-transparent;
 }
 
 .v-card-item__content {
-  overflow: visible;
+  @apply overflow-visible;
 }
 
 .v-card--transparent {
-  --card-bg-color: rgba(0, 0, 0, 0.5);
-  background: var(--card-bg-color) !important;
+  @apply !bg-black/50;
 }
 
 .text-shadow {
@@ -190,119 +172,45 @@ body {
     -0.31px 0.95px 0 #000;
 }
 
-.scrollbar-left {
-  direction: rtl;
-}
-
-.dltr {
-  direction: ltr;
-}
-
 .yellow-gradient-border {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
-  border: 1px solid transparent;
-  background-clip: padding-box;
   border-image: linear-gradient(to bottom, #ffda57, transparent) 1;
-  z-index: -1;
+  @apply absolute top-0 left-0 right-0 w-full h-full border border-solid border-transparent bg-clip-padding -z-10;
 }
 
 .yellow-border-bottom {
-  position: absolute;
-  bottom: 0;
-  left: 2px;
-  width: 100%;
-  height: 1px;
-  background-color: rgba(102, 86, 41, 0.5);
-  rotate: -10deg;
-  transform-origin: 0 0;
-  z-index: -1;
+  @apply absolute bottom-0 left-[2px] w-full h-[1px] bg-[rgba(102,86,41,0.5)] -rotate-[10deg] origin-[0_0] -z-10;
 }
 
 .blue-gradient-border {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: 1px solid transparent;
-  background-clip: padding-box;
   border-image: linear-gradient(to bottom, #4850ff, transparent) 1;
-  z-index: -1;
+  @apply absolute top-0 left-0 w-full h-full border border-solid border-transparent bg-clip-padding -z-10;
 }
 
 .blue-border-bottom {
-  position: absolute;
-  top: 3rem;
-  left: 1px;
-  width: 100%;
-  height: 1px;
-  background-color: #4850ff;
-  rotate: -10deg;
-  transform-origin: 0 0;
-  z-index: -1;
+  @apply absolute top-12 left-[1px] w-full h-[1px] bg-[#4850ff] -rotate-[10deg] origin-[0_0] -z-10;
 }
 
 .green-gradient-border {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: 1px solid transparent;
-  background-clip: padding-box;
   border-image: linear-gradient(to bottom, #95c82a, transparent) 1;
-  z-index: -1;
+  @apply absolute top-0 left-0 w-full h-full border border-solid border-transparent bg-clip-padding -z-10;
 }
 
 .cyan-gradient-border {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: 1px solid transparent;
-  background-clip: padding-box;
   border-image: linear-gradient(to bottom, #51c3c3, transparent) 1;
-  z-index: -1;
+  @apply absolute top-0 left-0 w-full h-full border border-solid border-transparent bg-clip-padding -z-10;
 }
 
 .crimson-gradient-border {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: 1px solid transparent;
-  background-clip: padding-box;
   border-image: linear-gradient(to bottom, #ff4a4a, transparent) 1;
-  z-index: -1;
+  @apply absolute top-0 left-0 w-full h-full border border-solid border-transparent bg-clip-padding -z-10;
 }
 
 .softwhite-gradient-border {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: 1px solid transparent;
-  background-clip: padding-box;
   border-image: linear-gradient(to bottom, #ffffff6d, transparent) 1;
-  z-index: -1;
+  @apply absolute top-0 left-0 w-full h-full border border-solid border-transparent bg-clip-padding -z-10;
 }
 
 .white-gradient-border {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: 1px solid transparent;
-  background-clip: padding-box;
   border-image: linear-gradient(to bottom, #fff, transparent) 1;
-  z-index: -1;
+  @apply absolute top-0 left-0 w-full h-full border border-solid border-transparent bg-clip-padding -z-10;
 }

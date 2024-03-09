@@ -93,6 +93,62 @@ const rifles = ref<RifleType[]>([
     includedMods: ["Scope x2", "Flash Hider"],
     isInStock: true,
   },
+  {
+    name: "Assult Rifle",
+    ammo: "7-62mm",
+    price: 5280,
+    image: AssultRifle1,
+    properties: {
+      damage: 80,
+      firerate: 120,
+      clip: 80,
+      accuracy: 90,
+    },
+    includedMods: ["Scope x2", "Flash Hider"],
+    isInStock: true,
+  },
+  {
+    name: "Carbine Rifle",
+    ammo: "7-62mm",
+    price: 5280,
+    image: CarbineRifle1,
+    properties: {
+      damage: 80,
+      firerate: 120,
+      clip: 80,
+      accuracy: 90,
+    },
+    includedMods: ["Scope x2", "Flash Hider"],
+    isInStock: false,
+  },
+  {
+    name: "Advanced Rifle",
+    ammo: "7-62mm",
+    price: 5280,
+    image: AdvancedRifle1,
+    properties: {
+      damage: 80,
+      firerate: 120,
+      clip: 80,
+      accuracy: 90,
+    },
+    includedMods: ["Scope x2", "Flash Hider"],
+    isInStock: true,
+  },
+  {
+    name: "Carbine Rifle",
+    ammo: "7-62mm",
+    price: 5280,
+    image: CarbineRifle1,
+    properties: {
+      damage: 80,
+      firerate: 120,
+      clip: 80,
+      accuracy: 90,
+    },
+    includedMods: ["Scope x2", "Flash Hider"],
+    isInStock: false,
+  },
 ]);
 </script>
 
@@ -172,7 +228,7 @@ const rifles = ref<RifleType[]>([
           <li class="h-36 px-10 relative">
             <a
               href="#"
-              class="absolute top-[calc(50%_+_12px)] left-1/2 -translate-x-1/2 -translate-y-1/2 font-semibold text-white/35"
+              class="absolute top-[calc(50%_+_12px)] left-1/2 -translate-x-1/2 -translate-y-1/2 font-semibold text-white/[0.35]"
             >
               Melee
             </a>
@@ -180,7 +236,7 @@ const rifles = ref<RifleType[]>([
           <li class="h-36 px-10 relative">
             <a
               href="#"
-              class="absolute top-[calc(50%_+_12px)] left-1/2 -translate-x-1/2 -translate-y-1/2 font-semibold text-white/35"
+              class="absolute top-[calc(50%_+_12px)] left-1/2 -translate-x-1/2 -translate-y-1/2 font-semibold text-white/[0.35]"
             >
               Pistols
             </a>
@@ -198,7 +254,7 @@ const rifles = ref<RifleType[]>([
           <li class="h-36 px-10 relative">
             <a
               href="#"
-              class="absolute top-[calc(50%_+_12px)] left-1/2 -translate-x-1/2 -translate-y-1/2 font-semibold text-white/35"
+              class="absolute top-[calc(50%_+_12px)] left-1/2 -translate-x-1/2 -translate-y-1/2 font-semibold text-white/[0.35]"
             >
               SMGs
             </a>
@@ -206,7 +262,7 @@ const rifles = ref<RifleType[]>([
           <li class="h-36 px-10 relative">
             <a
               href="#"
-              class="absolute top-[calc(50%_+_12px)] left-1/2 -translate-x-1/2 -translate-y-1/2 font-semibold text-white/35"
+              class="absolute top-[calc(50%_+_12px)] left-1/2 -translate-x-1/2 -translate-y-1/2 font-semibold text-white/[0.35]"
             >
               Shotgun
             </a>
@@ -214,7 +270,7 @@ const rifles = ref<RifleType[]>([
           <li class="h-36 px-10 relative">
             <a
               href="#"
-              class="absolute top-[calc(50%_+_12px)] left-1/2 -translate-x-1/2 -translate-y-1/2 font-semibold text-white/35"
+              class="absolute top-[calc(50%_+_12px)] left-1/2 -translate-x-1/2 -translate-y-1/2 font-semibold text-white/[0.35]"
             >
               Snipers
             </a>
@@ -222,7 +278,7 @@ const rifles = ref<RifleType[]>([
           <li class="h-36 px-10 relative">
             <a
               href="#"
-              class="absolute top-[calc(50%_+_12px)] left-1/2 -translate-x-1/2 -translate-y-1/2 font-semibold text-white/35"
+              class="absolute top-[calc(50%_+_12px)] left-1/2 -translate-x-1/2 -translate-y-1/2 font-semibold text-white/[0.35]"
             >
               Ammo
             </a>
@@ -230,7 +286,7 @@ const rifles = ref<RifleType[]>([
           <li class="h-36 px-10 relative">
             <a
               href="#"
-              class="absolute top-[calc(50%_+_12px)] left-1/2 -translate-x-1/2 -translate-y-1/2 font-semibold text-white/35"
+              class="absolute top-[calc(50%_+_12px)] left-1/2 -translate-x-1/2 -translate-y-1/2 font-semibold text-white/[0.35]"
             >
               Armor
             </a>
@@ -238,7 +294,7 @@ const rifles = ref<RifleType[]>([
           <li class="h-36 px-10 relative">
             <a
               href="#"
-              class="absolute top-[calc(50%_+_12px)] left-1/2 -translate-x-1/2 -translate-y-1/2 font-semibold text-white/35"
+              class="absolute top-[calc(50%_+_12px)] left-1/2 -translate-x-1/2 -translate-y-1/2 font-semibold text-white/[0.35]"
             >
               Mods
             </a>
@@ -257,14 +313,14 @@ const rifles = ref<RifleType[]>([
 
     <!-- Main section -->
     <main
-      class="min-h-[calc(100vh_-_155px)] flex justify-center items-center px-6 mx-auto max-w-screen-2xl"
+      class="min-h-[calc(100vh_-_155px)] flex flex-col justify-center pl-6 min-[1536px]:w-[calc(100vw_-_(100vw_-_1536px)_/_2)] ml-auto"
     >
-      <div class="relative">
-        <div class="flex flex-nowrap gap-4 overflow-x-auto pb-4 relative">
+      <div class="relative flex justify-start items-center w-full">
+        <div class="flex flex-nowrap gap-4 overflow-x-auto pb-4 relative w-full pr-6 snap-x">
           <div
             v-for="(rifle, index) in rifles"
             :key="rifle.name"
-            class="border-x border-t border-opacity-70 border-[#5e5d5d] flex-[1_0_250px]"
+            class="border-x border-t border-opacity-70 border-[#5e5d5d] flex-[1_0_250px] snap-start"
           >
             <div class="p-4">
               <div class="flex items-center gap-2">
@@ -283,37 +339,38 @@ const rifles = ref<RifleType[]>([
                 </svg>
                 <span class="text-white text-base font-extrabold leading-4">{{ rifle.price }}</span>
               </div>
-              <figure class="h-40 mt-14">
+              <figure class="h-40 mt-14 mb-10 px-6">
                 <img
                   :src="rifle.image"
                   :alt="rifle.name"
+                  class="w-full"
                 />
               </figure>
-              <h1 class="text-xl font-bold">{{ rifle.name }}</h1>
+              <h1 class="text-xl font-bold text-white">{{ rifle.name }}</h1>
               <p class="text-[#898989] text-sm font-semibold">{{ rifle.ammo }}</p>
             </div>
             <hr class="opacity-70 border-[#5e5d5d]" />
             <div class="p-4">
               <div class="space-y-6">
-                <div class="flex items-center justify-between">
-                  <h2 class="uppercase text-sm">Damage</h2>
+                <div class="flex items-center justify-between text-white">
+                  <p class="uppercase text-sm">Damage</p>
                   <p class="text-sm opacity-50">{{ rifle.properties.damage }}</p>
                 </div>
-                <div class="flex items-center justify-between">
-                  <h2 class="uppercase text-sm">Firerate</h2>
+                <div class="flex items-center justify-between text-white">
+                  <p class="uppercase text-sm">Firerate</p>
                   <p class="text-sm opacity-50">{{ rifle.properties.firerate }}</p>
                 </div>
-                <div class="flex items-center justify-between">
-                  <h2 class="uppercase text-sm">clip</h2>
+                <div class="flex items-center justify-between text-white">
+                  <p class="uppercase text-sm">clip</p>
                   <p class="text-sm opacity-50">{{ rifle.properties.clip }}</p>
                 </div>
-                <div class="flex items-center justify-between">
-                  <h2 class="uppercase text-sm">accuracy</h2>
+                <div class="flex items-center justify-between text-white">
+                  <p class="uppercase text-sm">accuracy</p>
                   <p class="text-sm opacity-50">{{ rifle.properties.accuracy }}</p>
                 </div>
               </div>
-              <div class="my-6">
-                <h1 class="uppercase font-extrabold text-base">included mods</h1>
+              <div class="my-6 text-white">
+                <p class="uppercase font-extrabold text-base">included mods</p>
                 <span
                   v-for="mod in rifle.includedMods"
                   :key="mod"
@@ -325,73 +382,74 @@ const rifles = ref<RifleType[]>([
             </div>
             <button
               :class="{
-                'h-14 w-full font-bold': true,
+                'h-14 w-full font-bold text-white': true,
                 'bg-[#FF2431]': rifle.isInStock,
-                'bg-[#777777] bg-opacity-25': !rifle.isInStock,
+                'bg-[#777777] bg-opacity-25 cursor-not-allowed': !rifle.isInStock,
               }"
             >
               {{ rifle.isInStock ? "Purchase" : "Out of stock" }}
             </button>
           </div>
-          <div class="border-x border-t border-opacity-70 border-[#5e5d5d] flex-[1_0_250px]">
-            <div class="p-4">
-              <div class="flex items-center gap-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="15"
-                  height="15"
-                  viewBox="0 0 15 15"
-                  fill="none"
-                >
-                  <path
-                    d="M0 7.5C0 3.35781 3.35781 0 7.5 0C11.6422 0 15 3.35781 15 7.5C15 11.6422 11.6422 15 7.5 15C3.35781 15 0 11.6422 0 7.5ZM7.67906 8.045C8.60844 8.27375 8.88688 8.57687 8.88688 9.08875C8.88688 9.62062 8.52906 10.0231 7.67906 10.0878V8.045ZM7.1175 6.89719C6.3225 6.69812 6.02406 6.36531 6.02406 5.91281C6.02406 5.46062 6.40188 5.04812 7.11781 4.95875L7.1175 6.89719ZM7.67906 7.03125V4.95875C8.31531 5.03813 8.7625 5.40094 8.82719 6.0275H9.86094C9.82125 4.89937 8.92156 4.15375 7.67906 4.05406V3.21438H7.1175V4.05406C5.865 4.14875 4.97062 4.88406 4.97062 5.9975C4.97062 7.00625 5.65156 7.57313 6.91375 7.86625L7.1175 7.91594V10.0828C6.3175 9.99844 5.93969 9.57094 5.85031 8.98937H4.82156C4.85594 10.1822 5.85531 10.8928 7.1175 10.9875V11.8222H7.67906V10.9875C8.94656 10.8978 9.94063 10.2072 9.94063 8.98937C9.94063 7.93094 9.225 7.39406 7.91781 7.09094L7.67906 7.03125Z"
-                    fill="white"
-                    fill-opacity="0.35"
-                  />
-                </svg>
-                <h3 class="text-white text-base font-extrabold leading-4">5 280</h3>
-              </div>
-              <figure class="h-40 mt-14">
-                <img
-                  src="./images/guns/Assault Rifle 1.png"
-                  alt=""
-                />
-              </figure>
-              <h1 class="text-xl font-bold">Assault Rifle</h1>
-              <p class="text-[#898989] text-sm font-semibold">7-62mm</p>
-            </div>
-            <hr class="opacity-70 border-[#5e5d5d]" />
-            <div class="p-4">
-              <div class="space-y-6">
-                <div class="flex items-center justify-between">
-                  <h2 class="uppercase text-sm">Damage</h2>
-                  <p class="text-sm opacity-50">60</p>
-                </div>
-                <div class="flex items-center justify-between">
-                  <h2 class="uppercase text-sm">Firerate</h2>
-                  <p class="text-sm opacity-50">120</p>
-                </div>
-                <div class="flex items-center justify-between">
-                  <h2 class="uppercase text-sm">clip</h2>
-                  <p class="text-sm opacity-50">80</p>
-                </div>
-                <div class="flex items-center justify-between">
-                  <h2 class="uppercase text-sm">accuracy</h2>
-                  <p class="text-sm opacity-50">90</p>
-                </div>
-              </div>
-              <div class="my-6">
-                <h1 class="uppercase font-extrabold text-base">included mods</h1>
-                <p class="opacity-50 text-base font-semibold">Scope x2, Flash Hider</p>
-              </div>
-            </div>
-            <button class="h-14 w-full bg-[#FF2431] font-bold">Purchase</button>
-          </div>
         </div>
-        <div
-          class="absolute top-0 bottom-0 right-0 w-96 bg-gradient-to-r from-transparent to-white/20 z-10"
-        ></div>
       </div>
+      <div class="flex items-center gap-6">
+        <div class="text-white flex items-center gap-3">
+          <button
+            class="w-12 h-12 flex justify-center items-center border border-solid border-white/10"
+          >
+            Q
+          </button>
+          <span class="uppercase">More information</span>
+        </div>
+        <div class="text-white flex items-center gap-3">
+          <button
+            class="w-12 h-12 flex justify-center items-center border border-solid border-white/10"
+          >
+            F
+          </button>
+          <span class="uppercase">inspect gun</span>
+        </div>
+        <div class="text-white flex items-center gap-3">
+          <div class="flex items-center gap-2">
+            <button
+              class="w-12 h-12 flex justify-center items-center border border-solid border-white/10"
+            >
+              <svg
+                width="5"
+                height="9"
+                viewBox="0 0 5 9"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M-1.96701e-07 4.5L4.5 0.602886L4.5 8.39711L-1.96701e-07 4.5Z"
+                  fill="white"
+                />
+              </svg>
+            </button>
+            <button
+              class="w-12 h-12 flex justify-center items-center border border-solid border-white/10"
+            >
+              <svg
+                width="5"
+                height="9"
+                viewBox="0 0 5 9"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M5 4.5L0.499999 8.39711L0.499999 0.602886L5 4.5Z"
+                  fill="white"
+                />
+              </svg>
+            </button>
+          </div>
+          <span class="uppercase">slide</span>
+        </div>
+      </div>
+      <div
+        class="absolute top-0 bottom-0 right-0 max-w-sm w-1/4 bg-gradient-to-r from-transparent to-white/20 pointer-events-none"
+      ></div>
     </main>
   </Screen>
 </template>

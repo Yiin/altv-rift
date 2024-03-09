@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { defineProps } from "vue";
-import { RifleType } from "./types";
+import { WeaponModuleType } from "./types";
 
 const props = defineProps({
-  rifles: Array<RifleType>,
+  weaponModules: Array<WeaponModuleType>,
 });
 </script>
 
@@ -95,20 +95,20 @@ const props = defineProps({
       dir="rtl"
     >
       <div
-        v-for="(rifle, index) in props.rifles"
-        :key="rifle.name"
+        v-for="(weaponModule, index) in props.weaponModules"
+        :key="weaponModule.name"
         class="w-full snap-start"
         dir="ltr"
         :class="
-          rifle.isActive
+          weaponModule.isActive
             ? 'bg-white/5 rounded-md pt-7 pb-6 px-6'
             : 'bg-transparent rounded-md border border-solid border-white/10 pt-7 pb-6 px-6'
         "
       >
         <div>
           <img
-            :src="rifle.image"
-            :alt="rifle.name"
+            :src="weaponModule.image"
+            :alt="weaponModule.name"
             class="w-full"
           />
         </div>
@@ -116,15 +116,15 @@ const props = defineProps({
           <span
             :class="[
               `inline-block px-2 py-1 text-xs font-extrabold rounded-sm uppercase text-white`,
-              rifle.tag.bgCol,
+              weaponModule.tag.bgCol,
             ]"
           >
-            {{ rifle.tag.text }}
+            {{ weaponModule.tag.text }}
           </span>
           <h3 class="mt-0.5 text-[20px] font-bold text-white">
-            {{ rifle.name }}
+            {{ weaponModule.name }}
           </h3>
-          <p class="text-sm text-steelGray">{{ rifle.ammo }}</p>
+          <p class="text-sm text-steelGray">{{ weaponModule.ammo }}</p>
         </div>
       </div>
     </div>
