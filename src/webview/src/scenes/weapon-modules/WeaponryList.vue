@@ -8,103 +8,20 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="max-w-md absolute h-full">
-    <div class="w-full">
-      <button
-        id="dropdownDefaultButton"
-        data-dropdown-toggle="dropdown"
-        class="text-white w-full bg-transparent border border-solid border-white/10 font-bold rounded-md text-base px-5 py-4 text-center flex justify-between items-center mb-2.5"
-        type="button"
-      >
-        <div class="flex gap-3 items-center">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="11"
-            viewBox="0 0 16 11"
-            fill="none"
-          >
-            <path
-              d="M4.4058 0.6875H16V3.4375H15.2754V4.125H10.9275C10.7354 4.125 10.551 4.19743 10.4151 4.32636C10.2792 4.4553 10.2029 4.63016 10.2029 4.8125V5.5C10.2029 5.86467 10.0502 6.21441 9.77842 6.47227C9.50662 6.73013 9.13799 6.875 8.75362 6.875H6.30435C6.02899 6.875 5.77536 7.02625 5.65217 7.26L3.87681 10.6219C3.75362 10.8556 3.50725 11 3.23188 11H0.782609C0.782609 11 -1.3913 11 1.50725 6.875C1.50725 6.875 3.68116 4.125 0.782609 4.125V0.6875H1.50725L1.86957 0H4.04348L4.4058 0.6875ZM9.47826 5.5V4.8125C9.47826 4.63016 9.40191 4.4553 9.26602 4.32636C9.13012 4.19743 8.94581 4.125 8.75362 4.125H8.02899C8.02899 4.125 7.30435 4.8125 8.02899 5.5C7.64461 5.5 7.27599 5.35513 7.00419 5.09727C6.7324 4.83941 6.57971 4.48967 6.57971 4.125C6.38752 4.125 6.20321 4.19743 6.06731 4.32636C5.93142 4.4553 5.85507 4.63016 5.85507 4.8125V5.5C5.85507 5.68234 5.93142 5.8572 6.06731 5.98614C6.20321 6.11507 6.38752 6.1875 6.57971 6.1875H8.75362C8.94581 6.1875 9.13012 6.11507 9.26602 5.98614C9.40191 5.8572 9.47826 5.68234 9.47826 5.5Z"
-              fill="white"
-            ></path>
-          </svg>
-          <p>Rifles</p>
-        </div>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="8"
-          height="6"
-          viewBox="0 0 8 6"
-          fill="none"
-        >
-          <path
-            d="M0.5 1L4 4.5L7.5 1"
-            stroke="white"
-            stroke-linecap="round"
-          ></path>
-        </svg>
-      </button>
-
-      <!-- Dropdown menu -->
-      <div
-        id="dropdown"
-        class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
-      >
-        <ul
-          class="py-2 text-sm text-gray-700 dark:text-gray-200"
-          aria-labelledby="dropdownDefaultButton"
-        >
-          <li>
-            <a
-              href="#"
-              class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-            >
-              Dashboard
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-            >
-              Settings
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-            >
-              Earnings
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-            >
-              Sign out
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
+  <div class="max-w-sm absolute h-full">
     <div
-      class="overflow-y-auto flex flex-col gap-2.5 h-[calc(100vh_-_213px)] pl-3 relative rifles w-full snap-y"
+      class="overflow-y-auto flex flex-col gap-2.5 h-[calc(100vh_-_128px)] pl-3 relative rifles w-full snap-y snap-mandatory"
       dir="rtl"
     >
       <div
         v-for="(weaponModule, index) in props.weaponModules"
         :key="weaponModule.name"
-        class="w-full snap-start"
+        class="w-full snap-start rounded-md pt-7 pb-6 px-6"
+        :class="weaponModule.isActive ? 'bg-weaponCardA' : 'bg-weaponCard'"
         dir="ltr"
-        :class="
-          weaponModule.isActive
-            ? 'bg-white/5 rounded-md pt-7 pb-6 px-6'
-            : 'bg-transparent rounded-md border border-solid border-white/10 pt-7 pb-6 px-6'
-        "
       >
+        <h2 class="text-white text-xl font-bold">{{ weaponModule.name }}</h2>
+        <p class="text-sm text-[#B1B1B1]">{{ weaponModule.shortDesc }}</p>
         <div>
           <img
             :src="weaponModule.image"
@@ -112,19 +29,23 @@ const props = defineProps({
             class="w-full"
           />
         </div>
-        <div>
-          <span
-            :class="[
-              `inline-block px-2 py-1 text-xs font-extrabold rounded-sm uppercase text-white`,
-              weaponModule.tag.bgCol,
-            ]"
+        <div class="flex justify-end -mt-6">
+          <button
+            class="border border-solid border-primaryGreen w-10 h-10 rounded-[4px] text-primaryGreen flex justify-center items-center p-2"
           >
-            {{ weaponModule.tag.text }}
-          </span>
-          <h3 class="mt-0.5 text-[20px] font-bold text-white">
-            {{ weaponModule.name }}
-          </h3>
-          <p class="text-sm text-steelGray">{{ weaponModule.ammo }}</p>
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M13.797 12.8025L12.803 13.7965C12.6719 13.9268 12.4945 14 12.3096 14C12.1246 14 11.9472 13.9268 11.8161 13.7965L3.50042 5.49478C3.27279 5.56073 3.0374 5.59603 2.80044 5.59978C2.35477 5.59946 1.91562 5.49276 1.51949 5.28854C1.12336 5.08433 0.781699 4.78851 0.522918 4.42566C0.264136 4.06282 0.0957085 3.64345 0.0316382 3.20241C-0.0324322 2.76137 0.00970582 2.3114 0.154549 1.88992L1.93248 3.66785L2.30346 3.29687L3.29742 2.30291L3.66841 1.93192L1.89048 0.153994C2.31196 0.00915092 2.76192 -0.0329871 3.20296 0.0310833C3.644 0.0951536 4.06338 0.263581 4.42622 0.522363C4.78906 0.781144 5.08489 1.1228 5.2891 1.51893C5.49331 1.91506 5.60001 2.35422 5.60033 2.79989C5.59659 3.03684 5.56128 3.27224 5.49534 3.49986L13.797 11.8155C13.9274 11.9467 14.0006 12.1241 14.0006 12.309C14.0006 12.4939 13.9274 12.6713 13.797 12.8025ZM0.203547 11.8155C0.0731763 11.9467 0 12.1241 0 12.309C0 12.4939 0.0731763 12.6713 0.203547 12.8025L1.19751 13.7965C1.32866 13.9268 1.50607 14 1.69099 14C1.87591 14 2.05332 13.9268 2.18447 13.7965L6.01332 9.9746L4.03239 7.99368M12.6001 0L9.80017 1.39994V2.79989L8.28123 4.31883L9.68117 5.71877L11.2001 4.19983H12.6001L14 1.39994L12.6001 0Z"
+                fill="currentColor"
+              />
+            </svg>
+          </button>
         </div>
       </div>
     </div>

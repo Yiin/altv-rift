@@ -38,6 +38,8 @@ module.exports = {
         limeZest: "#B9F045",
       },
       backgroundImage: {
+        weaponCard: "linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(102,102,102,0.2) 100%), linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.05) 100%)",
+        weaponCardA: "linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(102,102,102,0.2) 100%), linear-gradient(to bottom, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.15) 100%)",
         darkRadialGradient:
           "radial-gradient(47.55% 47.55% at 50% 0%, #050623 0%, #00010F 100%)",
         semiTransparentRadialGradient:
