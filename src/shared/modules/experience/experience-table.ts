@@ -44,7 +44,5 @@ export function getLevelProgress(xp: number) {
     return 100;
   }
 
-  console.log({ xp, level, start, next })
-
   return (xp - start) / (next - start) * 100;
 }

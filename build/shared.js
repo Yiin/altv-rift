@@ -1,5 +1,4 @@
 const dev = process.argv[2] === "-dev";
-console.log("dev:", dev);
 
 export const esbuildOptions = {
   bundle: true,

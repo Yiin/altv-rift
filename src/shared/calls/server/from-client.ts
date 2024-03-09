@@ -4,7 +4,6 @@ import { z } from "zod";
 export const FromClient = {
   GET_DISCORD_AUTH_URL: "GET_DISCORD_AUTH_URL",
   TRY_CACHED_TOKEN: "TRY_CACHED_TOKEN",
-  START_CONVERSATION: "START_CONVERSATION",
   BEGIN_TREE_HIT: "BEGIN_TREE_HIT",
   TREE_HIT: "TREE_HIT",
   RELOAD_WEAPON: "RELOAD_WEAPON",
@@ -22,18 +21,11 @@ export interface CallFromClient<
 > {
   [FromClient.GET_DISCORD_AUTH_URL]: (player: Player) => string;
   [FromClient.TRY_CACHED_TOKEN]: (player: Player, token: string) => boolean;
-  [FromClient.START_CONVERSATION]: (
-    player: Player,
-    pedId: import("@altv/server").Ped["id"]
-  ) => {
-    type: "quest";
-    pages: string[];
-  };
   [FromClient.BEGIN_TREE_HIT]: (player: Player, virtualTreeId: number) => number;
   [FromClient.TREE_HIT]: (
     player: Player,
     virtualTreeId: number
-  ) => import("@shared/modules/woodcutting/interfaces").TreeHitResult;
+  ) => number;
   [FromClient.RELOAD_WEAPON]: (player: Player) => boolean;
   [FromClient.START_FISHING]: (player: Player) => void;
   [FromClient.STOP_FISHING]: (player: Player) => void;
@@ -56,13 +48,6 @@ export const FromClientValidation = {
   [FromClient.TRY_CACHED_TOKEN]: {
     args: [z.string()],
     returns: z.boolean(),
-  },
-  [FromClient.START_CONVERSATION]: {
-    args: [z.number()],
-    returns: z.object({
-      type: z.literal("quest"),
-      pages: z.array(z.string()),
-    }),
   },
   [FromClient.BEGIN_TREE_HIT]: {
     args: [z.number()],

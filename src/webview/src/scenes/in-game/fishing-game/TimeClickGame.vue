@@ -5,7 +5,8 @@ import { ref } from 'vue';
 const props = defineProps<{
   startedAt: number;
   durationMs: number;
-  target: number; // 0-1
+  targetPosition: number; // 0-1
+  targetSize: number; // 0-1
 }>();
 
 const currentTime = ref(Date.now());
@@ -17,12 +18,11 @@ onUnmounted(() => {
 });
 
 const circumference = Math.PI * 90;
-const yellowLength = Math.PI * 10;
+const yellowLength = Math.PI * props.targetSize * 100;
 
-const position = computed(() => props.target);
 const target = computed(() => ((currentTime.value - props.startedAt) / props.durationMs));
 
-const dashOffset = computed(() => circumference - position.value * circumference + yellowLength / 2);
+const dashOffset = computed(() => circumference - props.targetPosition * circumference + yellowLength / 2);
 const targetAngle = computed(() => target.value * 360);
 
 requestAnimationFrame(function update() {
@@ -56,7 +56,7 @@ requestAnimationFrame(function update() {
         x2="50"
         y2="10"
         stroke="#fff"
-        stroke-width="5"
+        stroke-width="4"
         stroke-linecap="round"
         :transform="`rotate(${targetAngle} 50 50)`" />
     </svg>

@@ -22,7 +22,6 @@ export function addItemToInventory(inventory: Inventory, item: Item, slot?: numb
         });
         return true;
       }
-      console.log("unreachable");
       // unreachable
       return false;
     }
@@ -31,7 +30,6 @@ export function addItemToInventory(inventory: Inventory, item: Item, slot?: numb
   const emptySlot = findFreeInventorySlot(inventory, slot);
 
   if (emptySlot === -1) {
-    console.log("no empty slot");
     return false;
   }
 

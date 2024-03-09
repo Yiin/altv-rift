@@ -3,7 +3,7 @@
     "module": "ESNext",
     "target": "ESNext",
     "strict": true,
-    "noErrorTruncation": true,
+    "noErrorTruncation": false,
     "exactOptionalPropertyTypes": false,
     "noUncheckedIndexedAccess": false,
     "noPropertyAccessFromIndexSignature": false,
@@ -29,7 +29,6 @@
       "./custom-types/prisma",
       "./custom-types/utils",
       "./custom-types/vendor",
-      "./node_modules/altv-esbuild/@altv/shared/types",
     ],
   },
   "exclude": [

@@ -52,7 +52,3 @@ fs.readdir(".", (err, files) => {
     });
   });
 });
-
-setTimeout(() => {
-  console.log("Total trees:", totalTrees);
-}, 1000);

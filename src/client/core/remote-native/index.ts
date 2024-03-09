@@ -12,8 +12,6 @@ alt.Events.onServer(ClientEvents.FromServer.CALL_NATIVE, (native, ...args) => {
   });
 
   try {
-    console.log(`Calling native ${native} with args:`, nativeArgs);
-
     // @ts-expect-error
     game[native](...nativeArgs);
   } catch { }

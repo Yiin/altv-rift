@@ -54,7 +54,8 @@ export interface GameState {
     gameType: FishingGameType.TimeClick;
     startedAt: number;
     durationMs: number;
-    target: number; // 0-1
+    targetPosition: number; // 0-1
+    targetSize: number; // 0-1
   }
   | {
     baitKey: FishBaitItemKey;

@@ -29,7 +29,6 @@ export function isProp(equipmentSlot: string) {
 
 on(ServerEvents.FromServer.ITEM_EQUIP, (player, item) => {
   if (!isItemClothing(item)) {
-    alt.log(`[ITEMS] Tried to equip non-clothing item`, item);
     return;
   }
 
@@ -68,10 +67,7 @@ on(ServerEvents.FromServer.ITEM_UNEQUIP, (player, equipmentSlot) => {
       }[equipmentSlot as string] ?? -1;
 
     if (componentId !== -1) {
-      console.log("resetting clothes", componentId, equipmentSlot);
       player.resetClothes(componentId);
-    } else {
-      console.log("no componentId", equipmentSlot);
     }
     return;
   }

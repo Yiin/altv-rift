@@ -3,7 +3,7 @@
     "module": "ESNext",
     "target": "ESNext",
     "strict": true,
-    "noErrorTruncation": true,
+    "noErrorTruncation": false,
     "exactOptionalPropertyTypes": false,
     "noUncheckedIndexedAccess": false,
     "noPropertyAccessFromIndexSignature": false,

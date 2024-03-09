@@ -32,7 +32,6 @@ alt.Events.onServer(ClientEvents.FromServer.UPDATE_CHARACTER_STATE, (event: any)
 alt.Events.onServer(ClientEvents.FromServer.SET_CHARACTER_STATE, (state: any) => {
   useWebview().emitRaw(WebviewEvents.FromClient.SET_CHARACTER_STATE, state);
 
-  console.log("setting character state: start");
   if (characterStore) {
     const character = useCharacter();
     character.$state = state;
@@ -42,5 +41,4 @@ alt.Events.onServer(ClientEvents.FromServer.SET_CHARACTER_STATE, (state: any) =>
     });
     isCharacterStoreAvailable.value = true;
   }
-  console.log("setting character state: end");
 });

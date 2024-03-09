@@ -178,7 +178,6 @@ rpc.registerWebview(ServerCall.FromWebview.MOVE_ITEM, (player, from, to, amount 
   needsToBeInGame(player);
 
   if (!canInteractWithItemSource(player, from) || !canInteractWithItemSource(player, to)) {
-    console.log('cant interact with item source');
     return false;
   }
 
@@ -198,7 +197,6 @@ rpc.registerWebview(ServerCall.FromWebview.MOVE_ITEM, (player, from, to, amount 
     const item = findItem(from);
 
     if (!item) {
-      console.log('cant find item');
       return false;
     }
 
@@ -207,7 +205,6 @@ rpc.registerWebview(ServerCall.FromWebview.MOVE_ITEM, (player, from, to, amount 
      */
     if (to.origin === ItemSourceOrigin.PlayerEquipment) {
       if (!canEquipItems.call(player)) {
-        console.log('cant equip items');
         return false;
       }
 
@@ -225,9 +222,7 @@ rpc.registerWebview(ServerCall.FromWebview.MOVE_ITEM, (player, from, to, amount 
 
         return true;
       }
-      console.log('cant add item to inventory');
     }
-    console.log('cant move item from ground');
     return false;
   }
 

@@ -7,5 +7,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["./**/*", "../shared/**/*", "../client/constants/ui.ts", "../../custom-types", "../../node_modules/@altv/shared", "../../node_modules/@altv/server"]
+  "include": ["./**/*", "../shared/**/*", "../../custom-types", "../../node_modules/@altv/server"],
+  "exclude": ["../webview/**/*", "../client/**/*"]
 }
