@@ -1,20 +1,17 @@
 <script setup lang="ts">
 import { defineProps } from "vue";
-import PipeBrushed from "../../../public/assets/items/pipe-brushed.png";
-import Suppressor from "../../../public/assets/items/suppressor.png";
-import { WeaponModuleType } from "./types";
+import { AvailableWeaponModuleType } from "./types";
 
 const props = defineProps({
-  availableModules: {
-    type: Object as () => WeaponModuleType,
-    default: {} as WeaponModuleType,
-  },
+  availableModules: Array<AvailableWeaponModuleType>,
 });
+
+const activeAvailableModule = props.availableModules?.find((module) => module.isActive);
 </script>
 
 <template>
-  <div class="max-w-sm flex flex-col items-end w-full">
-    <h2 class="text-white text-3xl">Available Modules</h2>
+  <div class="max-w-xs flex flex-col items-end w-full">
+    <h2 class="text-white text-3xl mb-9">Available Modules</h2>
     <button
       id="dropdownDefaultButton"
       data-dropdown-toggle="dropdown"
@@ -38,68 +35,63 @@ const props = defineProps({
         ></path>
       </svg>
     </button>
-    <div class="w-full flex flex-col gap-1.5">
+    <div class="w-full flex flex-col gap-1.5 mb-14">
       <div
-        class="bg-weaponCard border border-solid border-white rounded-md px-5 py-4 flex justify-between items-center gap-4 w-full"
+        v-for="(module, index) in props.availableModules"
+        class="bg-weaponCard border border-solid rounded-md px-5 py-4 flex justify-between items-center gap-4 w-full"
+        :class="`${module.isActive ? 'border-white' : 'border-transparent'}`"
       >
         <div>
-          <p class="text-white text-base">Suppressor</p>
-          <span class="text-primaryGreen text-sm">Stage 2</span>
+          <p class="text-white text-base">{{ module.name }}</p>
+          <span class="text-primaryGreen text-sm">Stage {{ module.stage }}</span>
         </div>
         <div class="w-20">
           <img
-            :src="Suppressor"
-            alt="suppressor"
-            class="w-full"
-          />
-        </div>
-      </div>
-      <div
-        class="bg-weaponCard rounded-md px-5 py-4 flex justify-between items-center gap-4 w-full"
-      >
-        <div>
-          <p class="text-white text-base">Suppressor</p>
-          <span class="text-primaryGreen text-sm">Stage 2</span>
-        </div>
-        <div class="w-20">
-          <img
-            :src="Suppressor"
-            alt="suppressor"
+            :src="module.image"
+            :alt="module.name"
             class="w-full"
           />
         </div>
       </div>
     </div>
     <div class="flex flex-col items-end">
-      <div>
+      <div class="w-52 mb-4">
         <img
-          :src="Suppressor"
-          alt="suppressor"
+          :src="activeAvailableModule?.image"
+          :alt="activeAvailableModule?.name"
+          class="w-full"
         />
       </div>
       <p class="text-primaryGreen text-base font-semibold">Attachments</p>
-      <p class="text-2xl text-white font-bold">Suppressor</p>
-      <p class="text-base font-semibold text-steelGray">
-        Silences but slightly reduces damage and range
+      <p class="text-2xl text-white font-bold">{{ activeAvailableModule?.name }}</p>
+      <p class="text-base font-semibold text-steelGray mb-4">
+        {{ activeAvailableModule?.desc }}
       </p>
-      <span class="text-2xl text-primaryGreen font-semibold">$12,450</span>
-      <div class="flex items-center gap-2">
-        <div>
-          <p class="text-base text-white uppercase">Metal Pipes</p>
-          <p class="text-sm text-primaryGreen uppercase">Required to craft</p>
-        </div>
+      <span class="text-2xl text-primaryGreen font-semibold mb-6">
+        ${{ activeAvailableModule?.price }}
+      </span>
+      <div class="flex flex-col gap-3">
         <div
-          class="relative bg-weaponCard border border-solid border-white/5 w-10 h-10 flex justify-center items-center"
+          v-for="extra in activeAvailableModule?.extras"
+          class="flex items-center gap-2 mb-14"
         >
-          <img
-            :src="PipeBrushed"
-            alt="pipe brushed"
-          />
-          <span
-            class="text-xs bg-primaryGreen text-white text-center rounded-sm px-0.5 font-bold absolute -top-1 -right-1"
+          <div>
+            <p class="text-base text-white uppercase">{{ extra.name }}</p>
+            <p class="text-sm text-primaryGreen uppercase">{{ extra.desc }}</p>
+          </div>
+          <div
+            class="relative bg-weaponCard border border-solid border-white/5 w-10 h-10 flex justify-center items-center"
           >
-            x12
-          </span>
+            <img
+              :src="extra.image"
+              :alt="extra.name"
+            />
+            <span
+              class="text-xs bg-primaryGreen text-white text-center rounded-sm px-0.5 font-bold absolute -top-1 -right-1"
+            >
+              x{{ extra.x }}
+            </span>
+          </div>
         </div>
       </div>
       <button

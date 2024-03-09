@@ -47,7 +47,7 @@ const props = defineProps({
       </button>
     </div>
     <div
-      class="overflow-y-auto flex flex-col gap-2.5 h-[calc(100vh_-_213px)] pl-3 relative rifles w-full snap-y"
+      class="overflow-y-auto flex flex-col gap-2.5 h-[calc(100vh_-_213px)] pl-3 relative rifles w-full snap-y snap-mandatory"
       dir="rtl"
     >
       <div

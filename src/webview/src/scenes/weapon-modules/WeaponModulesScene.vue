@@ -5,10 +5,12 @@ import Bg from "../../../public/assets/bg/weapon-module-bg.png";
 import AdvancedRifle1 from "../../../public/assets/items/advancedrifle1.png";
 import AssaultRifle1 from "../../../public/assets/items/assaultrifle1.png";
 import CarbineRifle2 from "../../../public/assets/items/carbinerifle2.png";
+import PipeBrushed from "../../../public/assets/items/pipe-brushed.png";
+import Suppressor from "../../../public/assets/items/suppressor.png";
 import AvailableModules from "./AvailableModules.vue";
 import InstalledModules from "./InstalledModules.vue";
 import WeaponryList from "./WeaponryList.vue";
-import { WeaponModuleType } from "./types";
+import { AvailableWeaponModuleType, WeaponModuleType } from "./types";
 
 const weaponModules = ref<WeaponModuleType[]>([
   {
@@ -49,7 +51,72 @@ const weaponModules = ref<WeaponModuleType[]>([
   },
 ]);
 
-const availableModules = ref();
+const availableModules = ref<AvailableWeaponModuleType[]>([
+  {
+    name: "Suppressor",
+    image: Suppressor,
+    stage: 2,
+    isActive: true,
+    desc: "Silences but slightly reduces damage and range",
+    price: 12450,
+    extras: [
+      {
+        name: "Metal Pipes",
+        image: PipeBrushed,
+        desc: "Required to craft",
+        x: "12",
+      },
+    ],
+  },
+  {
+    name: "Suppressor",
+    image: Suppressor,
+    stage: 1,
+    isActive: false,
+    desc: "Silences but slightly reduces damage and range",
+    price: 12450,
+    extras: [
+      {
+        name: "Metal Pipes",
+        image: PipeBrushed,
+        desc: "Required to craft",
+        x: "12",
+      },
+    ],
+  },
+  {
+    name: "Suppressor",
+    image: Suppressor,
+    stage: 1,
+    isActive: false,
+    desc: "Silences but slightly reduces damage and range",
+    price: 12450,
+    extras: [
+      {
+        name: "Metal Pipes",
+        image: PipeBrushed,
+        desc: "Required to craft",
+        x: "12",
+      },
+    ],
+  },
+  {
+    name: "Suppressor",
+    image: Suppressor,
+    stage: 1,
+    isActive: false,
+    desc: "Silences but slightly reduces damage and range",
+    price: 12450,
+    extras: [
+      {
+        name: "Metal Pipes",
+        image: PipeBrushed,
+        desc: "Required to craft",
+        x: "12",
+      },
+    ],
+  },
+]);
 </script>
 
 <template>
@@ -90,4 +157,3 @@ const availableModules = ref();
     </main>
   </Screen>
 </template>
-./WeaponModuleList.vue./WeaponModuleDetails.vue./WeaponModule.vue./WeaponaryList.vue./InstalledModule.vue./AvailableModules.vue

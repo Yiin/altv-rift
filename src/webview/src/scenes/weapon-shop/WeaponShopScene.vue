@@ -316,7 +316,9 @@ const rifles = ref<RifleType[]>([
       class="min-h-[calc(100vh_-_155px)] flex flex-col justify-center pl-6 min-[1536px]:w-[calc(100vw_-_(100vw_-_1536px)_/_2)] ml-auto"
     >
       <div class="relative flex justify-start items-center w-full">
-        <div class="flex flex-nowrap gap-4 overflow-x-auto pb-4 relative w-full pr-6 snap-x">
+        <div
+          class="flex flex-nowrap gap-4 overflow-x-auto pb-4 relative w-full pr-6 snap-x snap-mandatory"
+        >
           <div
             v-for="(rifle, index) in rifles"
             :key="rifle.name"
