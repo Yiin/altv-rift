@@ -1,16 +1,17 @@
 <script setup lang="ts">
 import Screen from "@/components/Screen.vue";
 import { ref } from "vue";
-import Bg from "../../../public/assets/bg/weapon-module-bg.png";
-import AdvancedRifle1 from "../../../public/assets/items/advancedrifle1.png";
-import AssaultRifle1 from "../../../public/assets/items/assaultrifle1.png";
-import CarbineRifle2 from "../../../public/assets/items/carbinerifle2.png";
-import PipeBrushed from "../../../public/assets/items/pipe-brushed.png";
-import Suppressor from "../../../public/assets/items/suppressor.png";
 import AvailableModules from "./AvailableModules.vue";
 import InstalledModules from "./InstalledModules.vue";
 import WeaponryList from "./WeaponryList.vue";
 import { AvailableWeaponModuleType, WeaponModuleType } from "./types";
+
+const Bg = "/assets/bg/weapon-module-bg.png";
+const AdvancedRifle1 = "/assets/items/advancedrifle1.png";
+const AssaultRifle1 = "/assets/items/assaultrifle1.png";
+const CarbineRifle2 = "/assets/items/carbinerifle2.png";
+const PipeBrushed = "/assets/items/pipe-brushed.png";
+const Suppressor = "/assets/items/suppressor.png";
 
 const weaponModules = ref<WeaponModuleType[]>([
   {
@@ -125,8 +126,7 @@ const availableModules = ref<AvailableWeaponModuleType[]>([
       <img
         :src="Bg"
         class="w-full h-full object-cover object-center bg-no-repeat"
-        alt="crafting"
-      />
+        alt="crafting" />
     </div>
 
     <nav class="flex max-w-screen-2xl px-6 mx-auto py-8 justify-between items-center gap-7">
@@ -141,16 +141,14 @@ const availableModules = ref<AvailableWeaponModuleType[]>([
       <div class="flex gap-7 items-center">
         <button class="uppercase text-sm font-bold text-white">close</button>
         <button
-          class="uppercase text-sm font-bold text-white py-3 px-2.5 border border-solid border-white/10"
-        >
+          class="uppercase text-sm font-bold text-white py-3 px-2.5 border border-solid border-white/10">
           esc
         </button>
       </div>
     </nav>
 
     <main
-      class="max-w-screen-2xl p-6 mx-auto flex items-start gap-12 h-[calc(100vh_-_98px)] overflow-y-auto"
-    >
+      class="max-w-screen-2xl p-6 mx-auto flex items-start gap-12 h-[calc(100vh_-_98px)] overflow-y-auto">
       <WeaponryList :weaponModules="weaponModules" />
       <InstalledModules />
       <AvailableModules :availableModules="availableModules" />

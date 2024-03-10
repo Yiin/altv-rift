@@ -80,7 +80,7 @@ const weapon = computed(() => {
 
 <template>
   <div v-if="weapon" class="absolute right-0 top-1/3 m-10 flex flex-col items-end gap-2">
-    <v-img :height="57" :width="115" :src="getItemImage(weapon.item)" />
+    <v-img :height="57" :width="115" :src="getItemImage(weapon.item.key)" />
     <div class="font-bold text-2xl text-white">{{ weapon.name }}</div>
     <template v-if="weapon.type === 'firearm'">
       <div v-if="weapon.ammo" class="pt-1 px-2 text-black bg-yellow-500 uppercase rounded font-bold">

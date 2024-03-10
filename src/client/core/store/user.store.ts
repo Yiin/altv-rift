@@ -22,7 +22,7 @@ export const useUser = () => {
 };
 
 alt.Events.onServer(ClientEvents.FromServer.UPDATE_USER_STATE, (event: any) => {
-  useWebview().emitRaw(WebviewEvents.FromClient.UPDATE_USER_STATE, event);
+  useWebview(webview => webview.emitRaw(WebviewEvents.FromClient.UPDATE_USER_STATE, event));
 
   const user = useUser();
 
@@ -30,7 +30,7 @@ alt.Events.onServer(ClientEvents.FromServer.UPDATE_USER_STATE, (event: any) => {
 });
 
 alt.Events.onServer(ClientEvents.FromServer.SET_USER_STATE, (state: any) => {
-  useWebview().emitRaw(WebviewEvents.FromClient.SET_USER_STATE, state);
+  useWebview(webview => webview.emitRaw(WebviewEvents.FromClient.SET_USER_STATE, state));
 
   if (userStore) {
     const user = useUser();

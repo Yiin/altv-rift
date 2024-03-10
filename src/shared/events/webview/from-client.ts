@@ -3,6 +3,7 @@ import { GameState } from "@shared/store/game-state.store";
 import { ClientState } from "@shared/store/client.store";
 import { NotificationType } from "@shared/interfaces/notification";
 import { StoreUpdatePayload } from "@shared/store/utils";
+import { Item } from "@shared/modules/items";
 
 export const FromClient = {
   SETUP_DISCORD_AUTH: "SETUP_DISCORD_AUTH",
@@ -17,6 +18,7 @@ export const FromClient = {
   SET_CLIENT_STATE: "SET_CLIENT_STATE",
   UPDATE_CLIENT_STATE: "UPDATE_CLIENT_STATE",
   SHOW_NOTIFICATION: "SHOW_NOTIFICATION",
+  INVENTORY_ITEM_ADD: "INVENTORY_ITEM_ADD",
 } as const;
 
 export interface EventFromClient {
@@ -32,6 +34,7 @@ export interface EventFromClient {
   [FromClient.SET_CLIENT_STATE]: (data: ClientState) => void;
   [FromClient.UPDATE_CLIENT_STATE]: (data: StoreUpdatePayload) => void;
   [FromClient.SHOW_NOTIFICATION]: (type: NotificationType, title: string, text: string) => void;
+  [FromClient.INVENTORY_ITEM_ADD]: (item: Item) => void;
 }
 
 declare global {

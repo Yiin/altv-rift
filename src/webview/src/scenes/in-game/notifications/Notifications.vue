@@ -1,12 +1,18 @@
 <script setup lang="ts">
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import { useAlt } from "@/composables/use-alt";
 import { WebviewEvents } from "@shared/events/webview";
 import { Notification, NotificationType } from "@shared/interfaces";
-import NotificationMessage from "./Notification.vue";
+import GenericNotification from "./GenericNotification.vue";
+import ItemReceivedNotification from "./ItemReceivedNotification.vue";
+import { Item } from "@shared/modules/items";
 
 const alt = useAlt();
 const notifications = reactive<Notification[]>([]);
+const addedItem = ref<{
+  timeout: any;
+  item: Item;
+} | null>(null);
 
 function showNotification(type: NotificationType, title: string, text: string) {
   const notification = {
@@ -23,11 +29,26 @@ function showNotification(type: NotificationType, title: string, text: string) {
 }
 
 alt.on(WebviewEvents.FromClient.SHOW_NOTIFICATION, showNotification);
+alt.on(WebviewEvents.FromClient.INVENTORY_ITEM_ADD, (item) => {
+  if (addedItem.value) {
+    clearTimeout(addedItem.value.timeout);
+  }
+
+  addedItem.value = {
+    item,
+    timeout: setTimeout(() => {
+      addedItem.value = null;
+    }, 4000)
+  };
+});
 </script>
 
 <template>
   <transition-group name="notification" tag="div" class="absolute right-6 top-6">
-    <NotificationMessage v-for="notification in notifications" v-bind="notification" />
+    <GenericNotification v-for="notification in notifications" v-bind="notification" />
+  </transition-group>
+  <transition-group name="notification" tag="div" class="absolute w-full h-full flex justify-center items-start top-2/3">
+    <ItemReceivedNotification v-if="addedItem" :item="addedItem.item" />
   </transition-group>
 </template>
 

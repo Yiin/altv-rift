@@ -7,7 +7,6 @@ import { useWebview, setScene } from "@/core/user-interface/webview";
 import { whileCreatingCharacter } from "@/core/game-state-hooks/creating-character.state";
 import { PedAppearance } from "@/core/utility/ped-appearance";
 import { whileInGame } from "@/core/game-state-hooks/in-game.state";
-import { switchToMultiSecondpart } from "@/core/utility/switch";
 import { createCharacterCreationCamera, destroyCharacterCreationCamera } from "./camera";
 import { createCharacterPed, updateAppearance } from "./character-ped";
 
@@ -31,10 +30,10 @@ whileCreatingCharacter(async () => {
   game.doScreenFadeIn(1000);
   game.disableScreenblurFade();
 
-  useWebview().on(ClientEvents.FromWebview.UPDATE_CHARACTER_APPEARANCE, updateAppearance);
+  useWebview(webview => webview.on(ClientEvents.FromWebview.UPDATE_CHARACTER_APPEARANCE, updateAppearance));
 
   return () => {
-    useWebview().off(ClientEvents.FromWebview.UPDATE_CHARACTER_APPEARANCE, updateAppearance);
+    useWebview(webview => webview.off(ClientEvents.FromWebview.UPDATE_CHARACTER_APPEARANCE, updateAppearance));
     destroyCharacterCreationCamera();
 
     if (ped && ped.valid) {

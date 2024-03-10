@@ -49,7 +49,7 @@ const equipedAmmo = computed(() => [
             :class="{ 'border-t-1 border-dashed border-t-white/10': index > 0 }">
             <!-- 42x30 -->
             <div>
-              <v-img :height="30" :width="42" :src="getItemImage({ key })" />
+              <v-img :height="30" :width="42" :src="getItemImage(key)" />
             </div>
             <div class="flex flex-col gap-1">
               <div class="text-white text-sm font-bold uppercase">{{ getItemName(key) }}</div>

@@ -20,7 +20,7 @@ const itemName = computed(() => getItemName(props.item.item.key));
         <v-img
           class="drop-shadow-md flex-grow-0 my-5"
           width="10rem"
-          :src="getItemImage(item.item)" />
+          :src="getItemImage(item.item.key)" />
         <h2 class="text-lg font-bold">
           {{ to ? "You're moving" : "You're dropping" }} <br><span class="text-red-500">{{ itemName }}</span>
         </h2>

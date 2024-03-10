@@ -106,21 +106,21 @@ export function createCharacterCreationCamera(ped: alt.LocalPed) {
     }
   );
 
-  useWebview().on(ClientEvents.FromWebview.CAMERA_MOVE_START, () => {
+  useWebview(webview => webview.on(ClientEvents.FromWebview.CAMERA_MOVE_START, () => {
     if (cameraControlInterval) {
       cameraControlInterval.destroy();
       cameraControlInterval = undefined;
     }
     mouseStartPos = alt.Cursor.pos;
     cameraControlInterval = alt.Timers.everyTick(moveCharacterCreationCamera);
-  });
+  }));
 
-  useWebview().on(ClientEvents.FromWebview.CAMERA_MOVE_END, () => {
+  useWebview(webview => webview.on(ClientEvents.FromWebview.CAMERA_MOVE_END, () => {
     if (cameraControlInterval) {
       cameraControlInterval.destroy();
       cameraControlInterval = undefined;
     }
-  });
+  }));
 }
 
 let mouseStartPos: alt.Vector2 | undefined;
