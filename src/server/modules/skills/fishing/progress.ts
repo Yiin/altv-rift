@@ -36,7 +36,7 @@ function fishingTick(player: alt.Player) {
 
   // 10% chance to catch a fish
   // TODO: Make it so that the chance is based on the player's fishing skill
-  const shouldUseBait = Math.random() < 0.1;
+  const shouldUseBait = true; //Math.random() < 0.1;
 
   if (shouldUseBait) {
     const usedBait = fishingRod.bait;

@@ -12,13 +12,14 @@ const props = defineProps<{
 const currentTime = ref(Date.now());
 
 const isMounted = ref(true);
+const isFailed = ref(false);
 
 onUnmounted(() => {
   isMounted.value = false;
 });
 
-const circumference = Math.PI * 90;
-const yellowLength = Math.PI * props.targetSize * 100;
+const circumference = Math.PI * 450;
+const yellowLength = Math.PI * props.targetSize * 500;
 
 const target = computed(() => ((currentTime.value - props.startedAt) / props.durationMs));
 
@@ -28,6 +29,10 @@ const targetAngle = computed(() => target.value * 360);
 requestAnimationFrame(function update() {
   currentTime.value = Math.min(Date.now(), props.startedAt + props.durationMs);
 
+  if (currentTime.value === props.startedAt + props.durationMs) {
+    isFailed.value = true;
+  }
+
   if (isMounted.value) {
     requestAnimationFrame(update);
   }
@@ -36,29 +41,35 @@ requestAnimationFrame(function update() {
 
 <template>
   <div class="absolute w-full h-full flex items-center justify-center">
-    <svg width="233" height="233" viewBox="-5 -5 110 110">
-      <circle cx="50" cy="50" r="47.25" fill="none" stroke="#ffffff33" stroke-width="1" />
-      <circle cx="50" cy="50" r="42.75" fill="none" stroke="#ffffff33" stroke-width="1" />
-      <circle cx="50" cy="50" r="45" fill="none" stroke="#ffffff26" stroke-width="3.5" />
-      <circle
-        cx="50"
-        cy="50"
-        r="45"
-        fill="none"
-        stroke="#FFDA57"
-        stroke-width="5.5"
-        :stroke-dasharray="yellowLength + ' ' + (circumference - yellowLength)"
-        :stroke-dashoffset="dashOffset"
-        transform="rotate(-90 50 50)" />
-      <line
-        x1="50"
-        y1="0"
-        x2="50"
-        y2="10"
-        stroke="#fff"
-        stroke-width="4"
-        stroke-linecap="round"
-        :transform="`rotate(${targetAngle} 50 50)`" />
-    </svg>
+    <div class="relative">
+      <svg class="w-80 h-80" viewBox="-25 -25 550 550">
+        <circle cx="250" cy="250" r="227.25" fill="none" stroke="#ffffff33" stroke-width="1" />
+        <circle cx="250" cy="250" r="222.75" fill="none" stroke="#ffffff33" stroke-width="1" />
+        <circle cx="250" cy="250" r="225" fill="none" stroke="#ffffff26" stroke-width="3.5" />
+        <circle
+          class="stroke-blue-500"
+          cx="250"
+          cy="250"
+          r="225"
+          fill="none"
+          stroke-width="10"
+          :stroke-dasharray="yellowLength + ' ' + (circumference - yellowLength)"
+          :stroke-dashoffset="dashOffset"
+          transform="rotate(-90 250 250)" />
+        <line
+          x1="250"
+          y1="0"
+          x2="250"
+          y2="50"
+          :stroke="isFailed ? '#800' : '#fff'"
+          stroke-width="15"
+          stroke-linecap="round"
+          :transform="`rotate(${targetAngle} 250 250)`" />
+      </svg>
+      <div class="absolute top-0 left-0 w-full h-full flex flex-col justify-center">
+        <div class="text-center text-white text-2xl font-semibold uppercase">you caught a fish!</div>
+        <div class="text-center text-white text-md uppercase">click on time</div>
+      </div>
+    </div>
   </div>
 </template>
