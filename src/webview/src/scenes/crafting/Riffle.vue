@@ -9,7 +9,7 @@ const props = defineProps({
   },
 });
 
-const isWeaponCrafted = ref(false);
+const isWeaponCrafted = ref(true);
 </script>
 
 <template>
@@ -73,7 +73,7 @@ const isWeaponCrafted = ref(false);
             :alt="activeRifle.name"
           />
           <div
-            class="w-72 h-72 bg-sublimeCitrusHaze border border-solid border-[rgba(185,240,69,0.25)] rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10"
+            class="w-[293px] h-[293px] bg-sublimeCitrusHaze border border-solid border-[rgba(185,240,69,0.25)] rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10"
           ></div>
           <div
             class="w-[372px] h-[372px] bg-transparent border border-solid border-limeZest rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10"
