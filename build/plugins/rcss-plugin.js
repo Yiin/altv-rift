@@ -6,6 +6,8 @@ async function updateRml() {
   const rcssFiles = await glob("src/client/core/rmlui/**/*.rcss", {
     platform: "linux",
   });
+  rcssFiles.sort();
+
   const screenRmlPath = "src/client/core/rmlui/screen.rml";
 
   const rmlFile = await fs.readFile(screenRmlPath, "utf-8");

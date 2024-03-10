@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import Screen from "@/components/Screen.vue";
 import { ref } from "vue";
-import Bg from "../../../public/assets/bg/crafting-items-bg.png";
-import CardBg from "../../../public/assets/bg/crafting-items-card-bg.png";
-import GranadeWeapon from "../../../public/assets/items/granade-weapon.png";
-import MeleeWeapon from "../../../public/assets/items/melee-weapon.png";
-import PistolWeapon from "../../../public/assets/items/pistol-weapon.png";
-import RifleWeapon from "../../../public/assets/items/rifle-weapon.png";
-import SniperWeapon from "../../../public/assets/items/sniper-weapon.png";
 import { CraftingItemType } from "./types";
+
+const Bg = "/assets/bg/crafting-items-bg.png";
+const CardBg = "/assets/bg/crafting-items-card-bg.png";
+const GranadeWeapon = "/assets/items/granade-weapon.png";
+const MeleeWeapon = "/assets/items/melee-weapon.png";
+const PistolWeapon = "/assets/items/pistol-weapon.png";
+const RifleWeapon = "/assets/items/rifle-weapon.png";
+const SniperWeapon = "/assets/items/sniper-weapon.png";
 
 const weapons = ref<CraftingItemType[]>([
   {

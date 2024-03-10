@@ -16,3 +16,14 @@ function kickAll() {
     player.kick("Restarting Server");
   });
 }
+
+alt.Events.onPlayerDisconnect(({ reason }) => {
+  if (reason === "timed out") {
+    ipc.connectTo('watcher', () => {
+      ipc.of.watcher.on('connect', () => {
+        ipc.of.watcher?.emit('restart-server', 'client');
+        ipc.disconnect('watcher');
+      });
+    });
+  }
+});

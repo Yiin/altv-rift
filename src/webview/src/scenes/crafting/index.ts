@@ -1,6 +1,6 @@
-import CraftingOneScene from "./CraftingOneScene.vue";
+import CraftingScene from "./CraftingScene.vue";
 
-export const craftingOneRoute = {
+export const craftingRoute = {
   path: "/crafting",
-  component: CraftingOneScene,
+  component: CraftingScene,
 };

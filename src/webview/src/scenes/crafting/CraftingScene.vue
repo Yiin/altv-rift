@@ -1,16 +1,18 @@
 <script setup lang="ts">
 import Screen from "@/components/Screen.vue";
 import { computed, ref } from "vue";
-import Bg from "../../../public/assets/bg/crafting-bg.png";
-import Strap10x from "../../../public/assets/items/10x-strap.png";
-import Powder1x from "../../../public/assets/items/1x-powder.png";
-import AdvancedRifle1 from "../../../public/assets/items/advancedrifle1.png";
-import AssaultRifle1 from "../../../public/assets/items/assaultrifle1.png";
-import CarbineRifle2 from "../../../public/assets/items/carbinerifle2.png";
 import Riffle from "./Riffle.vue";
 import RiffleDetails from "./RiffleDetails.vue";
 import RiffleList from "./RiffleList.vue";
 import { RifleType } from "./types";
+
+const Bg = "/assets/bg/crafting-bg.png";
+const Strap10x = "/assets/items/10x-strap.png";
+const Powder1x = "/assets/items/1x-powder.png";
+const AdvancedRifle1 = "/assets/items/advancedrifle1.png";
+const AssaultRifle1 = "/assets/items/assaultrifle1.png";
+const CarbineRifle1 = "/assets/items/carbinerifle1.png";
+const CarbineRifle2 = "/assets/items/carbinerifle2.png";
 
 const rifles = ref<RifleType[]>([
   {
@@ -170,7 +172,8 @@ const activeRifle = computed(() => {
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="w-[30vw] max-w-[165px]"
+          width="165"
+          height="91"
           viewBox="0 0 165 91"
           fill="none"
         >
