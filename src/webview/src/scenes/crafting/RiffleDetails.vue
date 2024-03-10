@@ -11,7 +11,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="bg-transparent border border-white/10 max-w-md">
+  <div class="bg-transparent border border-white/10 max-w-full w-full lg:w-auto lg:max-w-[300px]">
     <div
       class="py-8 px-9 border-b border-solid border-white/10 flex gap-12 justify-between items-center"
     >

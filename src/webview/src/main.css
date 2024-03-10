@@ -114,7 +114,7 @@ body {
 }
 
 .rifles::-webkit-scrollbar {
-  @apply w-[4px] m-0;
+  @apply w-[4px] h-[4px] m-0;
 }
 
 .rifles::-webkit-scrollbar-thumb {
