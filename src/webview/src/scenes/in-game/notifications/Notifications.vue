@@ -5,7 +5,7 @@ import { WebviewEvents } from "@shared/events/webview";
 import { Notification, NotificationType } from "@shared/interfaces";
 import GenericNotification from "./GenericNotification.vue";
 import ItemReceivedNotification from "./ItemReceivedNotification.vue";
-import { Item } from "@shared/modules/items";
+import { Item, createItem, FoodIngredient } from "@shared/modules/items";
 
 const alt = useAlt();
 const notifications = reactive<Notification[]>([]);
@@ -13,6 +13,13 @@ const addedItem = ref<{
   timeout: any;
   item: Item;
 } | null>(null);
+
+setTimeout(() => {
+  addedItem.value = {
+    timeout: null,
+    item: createItem(FoodIngredient.RAW_TROUT, { amount: 1 }),
+  };
+}, 1000);
 
 function showNotification(type: NotificationType, title: string, text: string) {
   const notification = {
@@ -29,9 +36,12 @@ function showNotification(type: NotificationType, title: string, text: string) {
 }
 
 alt.on(WebviewEvents.FromClient.SHOW_NOTIFICATION, showNotification);
-alt.on(WebviewEvents.FromClient.INVENTORY_ITEM_ADD, (item) => {
+alt.on(WebviewEvents.FromClient.INVENTORY_ITEM_ADD, async (item) => {
   if (addedItem.value) {
     clearTimeout(addedItem.value.timeout);
+    addedItem.value = null;
+
+    await new Promise((resolve) => setTimeout(resolve, 0));
   }
 
   addedItem.value = {
@@ -63,7 +73,7 @@ alt.on(WebviewEvents.FromClient.INVENTORY_ITEM_ADD, (item) => {
 .notification-enter-from,
 .notification-leave-to {
   opacity: 0;
-  transform: translateX(30px);
+  transform: translateY(30px);
 }
 
 /* ensure leaving items are taken out of layout flow so that moving
