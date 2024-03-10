@@ -9,11 +9,11 @@ import {
 } from "@shared/interfaces";
 import { Item, isItemKeyClothing, isItemKeyPants } from "@shared/modules/items";
 
-export const getItemImage = (item: { key: string }) => {
-  if (isItemKeyClothing(item.key)) {
-    return `./assets/items/clothing/${item.key}.png`;
+export const getItemImage = (key: string) => {
+  if (isItemKeyClothing(key)) {
+    return `./assets/items/clothing/${key}.png`;
   }
-  return `./assets/items/${item.key}.png`;
+  return `./assets/items/${key}.png`;
 };
 
 // function getFallback(item) {

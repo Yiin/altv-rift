@@ -10,7 +10,7 @@ export function openActionMenu() {
   }
   toggleElement(UIElement.ACTION_MENU, true);
 
-  useWebview().once(ClientEvents.FromWebview.ACTION_MENU_SELECT, (title) => {
+  useWebview(webview => webview.once(ClientEvents.FromWebview.ACTION_MENU_SELECT, (title) => {
     toggleElement(UIElement.ACTION_MENU, false);
     game.playSoundFrontend(-1, "SELECT", "HUD_FREEMODE_SOUNDSET", true);
 
@@ -21,7 +21,7 @@ export function openActionMenu() {
     }
 
     action.onSelect();
-  });
+  }));
 }
 
 export function closeActionMenu() {

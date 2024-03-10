@@ -3,16 +3,8 @@ import game from "@altv/natives";
 import { ClientEvents } from "@shared/events/client";
 
 alt.Events.onServer(ClientEvents.FromServer.CALL_NATIVE, (native, ...args) => {
-  const nativeArgs = args.map((arg) => {
-    if (arg instanceof alt.Entity) {
-      return arg.scriptID;
-    }
-
-    return arg;
-  });
-
   try {
     // @ts-expect-error
-    game[native](...nativeArgs);
+    game[native]?.(...args);
   } catch { }
 });

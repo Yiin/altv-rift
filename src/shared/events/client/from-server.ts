@@ -1,6 +1,7 @@
 import alt from "@altv/shared";
 import { StoreUpdatePayload } from "@shared/store/utils";
 import { Spinner } from "@shared/modules/game/ui/spinner/spinner";
+import { Item } from "@shared/modules/items";
 
 export const FromServer = {
   BEGIN_NATIVE_DISCORD_AUTH: "BEGIN_NATIVE_DISCORD_AUTH",
@@ -34,6 +35,7 @@ export const FromServer = {
   UPDATE_SERVER_STATE: "UPDATE_SERVER_STATE",
   CALL_NATIVE: "CALL_NATIVE",
   DISPLAY_DAMAGE_HIT: "DISPLAY_DAMAGE_HIT",
+  INVENTORY_ITEM_ADD: "INVENTORY_ITEM_ADD",
 } as const;
 
 declare module "@altv/shared" {
@@ -82,6 +84,7 @@ declare module "@altv/shared" {
         damage: number,
         type: "health" | "armor"
       ) => void;
+      [FromServer.INVENTORY_ITEM_ADD]: (item: Item) => void;
     }
   }
 }

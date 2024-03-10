@@ -28,7 +28,7 @@ export const callWebview = async <T extends keyof typeof WebviewCall.FromClient>
   return new Promise<ReturnType<CallFromClient[T]>>((resolve, reject) => {
     const payload = createPayload(name, args);
 
-    useWebview().emitRaw(CALL_WEBVIEW_FROM_CLIENT, payload);
+    useWebview(webview => webview.emitRaw(CALL_WEBVIEW_FROM_CLIENT, payload));
     webviewHandlers.set(payload.id, { name, resolve, reject });
   });
 };

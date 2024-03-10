@@ -24,13 +24,13 @@ alt.WebView.prototype.emitRaw = function (eventName: string, ...args: unknown[])
   return this.emit(eventName, serialize(args));
 };
 
-let url!: string;
-let webview!: alt.WebView;
+let url: string;
+let webview: alt.WebView;
 let cursors = 0;
 
 // Make sure the webview is ready before we do anything with it.
-let markWebViewAsReady!: () => void;
-const ready = new Promise<void>((resolve) => {
+let markWebViewAsReady: (webview: alt.WebView) => void;
+const ready = new Promise<alt.WebView>((resolve) => {
   markWebViewAsReady = resolve;
 });
 
@@ -38,20 +38,8 @@ export async function waitForUserInterface() {
   await ready;
 }
 
-/**
- * Kind of shitty typing here, but it is what it is.
- * Don't call useWebview() until the webview is ready or use useWebview((webview) => {...}).
- */
-export function useWebview(): alt.WebView;
-export function useWebview(cb: (webview: alt.WebView) => void): void;
-export function useWebview(cb?: (webview: alt.WebView) => void): alt.WebView | void {
-  if (cb) {
-    ready.then(() => {
-      cb(webview);
-    });
-  } else {
-    return webview;
-  }
+export function useWebview(fn: (webview: alt.WebView) => void) {
+  ready.then(fn);
 }
 
 let sceneCursorState = false;
@@ -180,7 +168,7 @@ alt.Events.onServer(
 
     webview.on(ClientEvents.FromWebview.VIEW_READY, () => {
       webview.focused = true;
-      markWebViewAsReady();
+      markWebViewAsReady(webview);
     });
     webview.on(ClientEvents.FromWebview.PLAY_SOUND, (audioName: string, ref: string) => {
       game.playSoundFrontend(-1, audioName, ref, true);
