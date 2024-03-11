@@ -5,6 +5,8 @@ import type { DefineComponent } from "vue";
 interface IconProps {
   name: string;
   size?: number;
+  width?: number;
+  height?: number;
 }
 
 const props = withDefaults(defineProps<IconProps>(), {
@@ -35,6 +37,5 @@ watchEffect(async () => {
   <component
     :is="iconComponent"
     v-if="iconComponent"
-    :style="{ width: `${size}rem`, height: `${size}rem` }"
-  ></component>
+    :style="{ width: `${width || size}rem`, height: `${height || size}rem` }"></component>
 </template>
