@@ -71,6 +71,7 @@ module.exports = {
         delicateWhiteVeil:
           "linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.00) 100%)",
         passionateRubyBlaze: "linear-gradient(180deg, rgba(255, 36, 49, 0.40) 0%, rgba(255, 36, 49, 0.00) 100%)",
+        sunriseYellowToBlack: "linear-gradient(180deg, rgba(255, 218, 87, 0.15) 0%, rgba(255, 218, 87, 0.01) 100%)",
       },
       borderWidth: {
         1: "1px",
@@ -126,6 +127,9 @@ module.exports = {
       zIndex: {
         max: 9007199254740000,
       },
+      boxShadow: {
+        sunriseYellow: "0px 3px 15px 0px rgba(255, 209, 45, 0.50)"
+      }
     },
   },
   plugins: [

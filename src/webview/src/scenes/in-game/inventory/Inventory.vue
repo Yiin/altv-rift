@@ -15,6 +15,8 @@ import ItemPreview from "./item-preview/ItemPreview.vue";
 import { useGapSize } from "@/composables/use-gap-size";
 import { ItemSourceOrigin, EquipmentSlot as EquipmentSlotEnum } from "@shared/interfaces";
 import { useGameState } from "@/store/synced/game-state.store";
+import DarkBackground from "../../../components/DarkBackground.vue"
+import BackButtons from "../../../components/buttons/BackButtons.vue"
 
 const inventory = useInventory();
 const gameState = useGameState();
@@ -34,9 +36,7 @@ onUnmounted(() => {
 
 <template>
   <div class="relative w-full px-10 lg:px-1/8 lg:py-16">
-    <div class="fixed inset-0 -z-10">
-      <div class="bg-darkRadialGradient absolute inset-0 opacity-95"></div>
-    </div>
+    <DarkBackground />
     <div :style="{ padding: `2rem ${gapSize}px 7rem` }" class="flex w-full mx-auto justify-between items-center gap-7">
       <div>
         <div class="flex gap-24 items-center uppercase">
@@ -81,13 +81,7 @@ onUnmounted(() => {
           </div>
         </div>
       </div>
-      <div class="flex gap-7 items-center">
-        <button class="uppercase text-sm font-bold text-white">close</button>
-        <button
-          class="uppercase text-sm font-bold text-white py-3 px-2.5 border border-solid border-white/10">
-          esc
-        </button>
-      </div>
+      <BackButtons />
     </div>
     <div ref="containerRef" class="flex justify-around">
       <div>

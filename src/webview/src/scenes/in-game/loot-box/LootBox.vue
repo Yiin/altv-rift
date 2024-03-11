@@ -9,6 +9,7 @@ import { rpc } from "@/rpc";
 import { ServerCall } from "@shared/calls/server";
 import { useClient } from "@/store/synced/client.store";
 import { StorageType } from "@shared/store/game-state.store";
+import DarkBackground from "../../../components/DarkBackground.vue"
 
 const hoveredItem = ref<Item | null>(null);
 const timeLeft = ref<string>('');
@@ -36,10 +37,7 @@ function takeAllItems() {
 
 <template>
   <div class="relative w-full px-10 lg:px-1/8 lg:py-16">
-    <div class="fixed inset-0 -z-10">
-      <div class="bg-darkRadialGradient absolute inset-0 opacity-95"></div>
-      <!-- <div class="bg-black/85 blur-sm absolute inset-0"></div> -->
-    </div>
+    <DarkBackground />
     <div
       class="flex max-w-screen-2xl px-6 mx-auto py-8 justify-end items-center gap-7">
       <button class="uppercase text-sm font-bold text-white">close</button>
