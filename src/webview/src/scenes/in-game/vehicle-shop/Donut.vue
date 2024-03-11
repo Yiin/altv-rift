@@ -1,5 +1,5 @@
 <template>
-  <div class="donut-chart w-28 h-28" :style="{ '--percent': percent + '%' }">
+  <div class="donut-chart before:top-1 before:bottom-1 before:left-1 before:right-1 w-28 h-28" :style="{ '--percent': percent + '%' }">
     <div class="center-text">
       <div class="text-sm text-white font-bold text-center uppercase">{{ label }}</div>
       <div class="text-sm text-sunriseYellow font-bold text-center uppercase">{{ value }}</div>
@@ -37,10 +37,6 @@ export default {
 .donut-chart::before {
   content: '';
   position: absolute;
-  top: 2px;
-  left: 2px;
-  right: 2px;
-  bottom: 2px;
   border-radius: 50%;
   background-color: black;
 }
