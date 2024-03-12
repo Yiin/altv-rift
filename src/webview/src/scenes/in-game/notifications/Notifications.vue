@@ -51,7 +51,7 @@ alt.on(WebviewEvents.FromClient.INVENTORY_ITEM_ADD, async (item) => {
     <GenericNotification v-for="notification in notifications" v-bind="notification" />
   </transition-group>
   <transition-group name="notification" tag="div"
-    class="absolute w-full h-full flex justify-center items-start top-2/3">
+    class="absolute w-full h-full flex justify-center items-start top-2/3 pointer-events-none">
     <ItemReceivedNotification v-if="addedItem" :item="addedItem.item" />
   </transition-group>
 </template>
