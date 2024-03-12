@@ -1,29 +1,5 @@
 <script setup lang="ts">
-<<<<<<< HEAD
-import { defineProps, onBeforeUnmount, onMounted, ref } from "vue";
-=======
->>>>>>> 7774ac3 (fix item icon flickering when picking up from the ground)
 import { RifleType } from "./types";
-
-const breakpoint = 1024;
-const direction = ref(getDirection());
-
-function getDirection() {
-  return window.innerWidth >= breakpoint ? "rtl" : "ltr";
-}
-
-function handleResize() {
-  direction.value = getDirection();
-}
-
-onMounted(() => {
-  window.addEventListener("resize", handleResize);
-  handleResize();
-});
-
-onBeforeUnmount(() => {
-  window.removeEventListener("resize", handleResize);
-});
 
 const props = defineProps({
   rifles: Array<RifleType>,
@@ -65,30 +41,18 @@ const props = defineProps({
       </button>
     </div>
     <div
-<<<<<<< HEAD
-      class="overflow-y-auto flex lg:flex-col gap-2.5 lg:h-[calc(100vh_-_213px)] pb-3 lg:pb-0 lg:pl-3 relative rifles w-full snap-y snap-mandatory"
-      :dir="direction"
-    >
-=======
       class="overflow-y-auto flex flex-col gap-2.5 h-[calc(100vh_-_213px)] pl-3 relative rifles w-full snap-y snap-mandatory"
       dir="rtl">
->>>>>>> 7774ac3 (fix item icon flickering when picking up from the ground)
       <div
         v-for="(rifle, index) in props.rifles"
         :key="rifle.name"
         class="lg:w-full snap-start"
         dir="ltr"
         :class="rifle.isActive
-            ? 'bg-white/5 rounded-md pt-7 pb-6 px-6'
-            : 'bg-transparent rounded-md border border-solid border-white/10 pt-7 pb-6 px-6'
-<<<<<<< HEAD
-        "
-      >
-        <div class="lg:w-full w-48">
-=======
+          ? 'bg-white/5 rounded-md pt-7 pb-6 px-6'
+          : 'bg-transparent rounded-md border border-solid border-white/10 pt-7 pb-6 px-6'
           ">
         <div>
->>>>>>> 7774ac3 (fix item icon flickering when picking up from the ground)
           <img
             :src="rifle.image"
             :alt="rifle.name"
