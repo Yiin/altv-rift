@@ -23,9 +23,9 @@ const selectCar = (car) => {
     <div class="flex w-full mx-auto justify-between items-center">
       <div class="w-40"> <v-img :src="`./assets/vehicles/logo.png`" /></div>
       <div
-        class="flex gap-2.5 uppercase text-white font-bold text-base overflow-x-auto whitespace-nowrap mx-20 disableScrollBar">
+        class="flex gap-2.5 text-white font-bold text-base overflow-x-auto whitespace-nowrap mx-20 disableScrollBar">
         <button v-for="item in  vehshop.carTypes " :key="item" @click="selectCarType(item)"
-          class="px-11 py-3 border border-solid rounded-md border-white/30"
+          class="px-11 py-3 border border-solid rounded-md border-white/30 uppercase"
           :class="{
         'bg-sunriseYellow text-black shadow-sunriseYellow': item === vehshop.selectedCarType,
         'hover:bg-white/10 transition duration-200': item !== vehshop.selectedCarType
