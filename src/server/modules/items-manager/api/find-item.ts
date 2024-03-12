@@ -56,7 +56,9 @@ export function findItem(itemSource: ItemSource, player?: InGamePlayer) {
     return new Proxy(droppedItemVE.streamSyncedMeta.item, {
       set(target, prop, value, receiver) {
         const ret = Reflect.set(target, prop, value, receiver);
-        droppedItemVE.streamSyncedMeta.item = target;
+        if (droppedItemVE.valid) {
+          droppedItemVE.streamSyncedMeta.item = target;
+        }
         return ret;
       },
     });

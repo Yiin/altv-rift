@@ -43,7 +43,7 @@ alt.Player.prototype.unequipItem = function (equipmentSlot, to) {
     if (!addItemToInventory(inventory, item, to.inventorySlot)) {
       return false;
     }
-  } else if (!this.addItem(item)) {
+  } else if (!addItemToInventory(this.character.inventory, item)) {
     return false;
   }
 

@@ -72,7 +72,7 @@ function updateNearbyItems() {
 
   // Remove any items that are no longer nearby
   // This step cleans up any items that might have been missed in the forEach loop
-  _.remove(clientState.nearbyItems, item => !processedItemIDs.has(item.id));
+  const removedItems = _.remove(clientState.nearbyItems, item => !processedItemIDs.has(item.id));
 
   // Sort the nearbyItems by distance to the player
   clientState.nearbyItems.sort((a, b) => {

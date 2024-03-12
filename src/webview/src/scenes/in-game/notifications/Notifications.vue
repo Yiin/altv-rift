@@ -14,13 +14,6 @@ const addedItem = ref<{
   item: Item;
 } | null>(null);
 
-setTimeout(() => {
-  addedItem.value = {
-    timeout: null,
-    item: createItem(FoodIngredient.RAW_TROUT, { amount: 1 }),
-  };
-}, 1000);
-
 function showNotification(type: NotificationType, title: string, text: string) {
   const notification = {
     key: Date.now().toString(),
@@ -57,7 +50,8 @@ alt.on(WebviewEvents.FromClient.INVENTORY_ITEM_ADD, async (item) => {
   <transition-group name="notification" tag="div" class="absolute right-6 top-6">
     <GenericNotification v-for="notification in notifications" v-bind="notification" />
   </transition-group>
-  <transition-group name="notification" tag="div" class="absolute w-full h-full flex justify-center items-start top-2/3">
+  <transition-group name="notification" tag="div"
+    class="absolute w-full h-full flex justify-center items-start top-2/3">
     <ItemReceivedNotification v-if="addedItem" :item="addedItem.item" />
   </transition-group>
 </template>

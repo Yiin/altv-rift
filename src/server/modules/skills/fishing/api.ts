@@ -114,13 +114,18 @@ export function startCatchingFish(player: InGamePlayer, baitKey: FishBaitItemKey
   switch (gameType) {
     case FishingGameType.TimeClick: {
       const durationMs = 2000;
+      const targetSize = 0.1;
+      const startingOffset = targetSize * 2;
+      const endOffset = targetSize * 0.5;
+      const targetPosition = Math.random() * (1 - startingOffset - endOffset) + startingOffset;
+
       player.gameState.fishingProgress = {
         baitKey,
         gameType,
         startedAt: Date.now(),
         durationMs,
-        targetPosition: Math.min(1, Math.random() + 0.2),
-        targetSize: 0.1
+        targetPosition,
+        targetSize
       };
 
       const timeout = alt.Timers.setTimeout(() => {

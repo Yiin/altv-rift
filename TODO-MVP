@@ -4,10 +4,11 @@ Introduction MVP:
   ☐ Gather materials - explain what to do with them
     ☐ Scrapping minigames to gather materials
       ✔ Woodcutting @done
-      ☐ Fishing w/ simple mini-game
+      ✔ Fishing w/ simple mini-game @done(24-03-10 05:46)
         ✔ Fishing mini-game logic @done(24-03-07 00:03)
-        ☐ Fishing mini-game UI @started(24-03-07 00:03)
+        ✔ Fishing mini-game UI @started(24-03-07 00:03) @done(24-03-10 05:46) @lasted(3d5h43m28s)
       ☐ Mining
+      ☐ Looting
     ☐ Different scrapping points for different materials
       ☐ Random boxes in the world
   Weapon:

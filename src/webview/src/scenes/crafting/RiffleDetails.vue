@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { defineProps } from "vue";
 import { RifleType } from "./types";
 
 const props = defineProps({
@@ -13,8 +12,7 @@ const props = defineProps({
 <template>
   <div class="bg-transparent border border-white/10 max-w-full w-full lg:w-auto lg:max-w-[300px]">
     <div
-      class="py-8 px-9 border-b border-solid border-white/10 flex gap-12 justify-between items-center"
-    >
+      class="py-8 px-9 border-b border-solid border-white/10 flex gap-12 justify-between items-center">
       <div class="">
         <h2 class="text-white text-3xl">{{ activeRifle.name }}</h2>
         <span class="text-base text-steelGray">{{ activeRifle.ammo }}</span>
@@ -23,8 +21,7 @@ const props = defineProps({
         :class="[
           `inline-block px-2 py-1 text-xs font-extrabold rounded-sm uppercase text-white`,
           activeRifle.tag.bgCol,
-        ]"
-      >
+        ]">
         {{ activeRifle.tag.text }}
       </span>
     </div>
@@ -54,13 +51,11 @@ const props = defineProps({
         <li
           v-for="req in activeRifle.requirements"
           :key="req.name"
-          class="flex gap-4 items-center"
-        >
+          class="flex gap-4 items-center">
           <div class="p-3 border border-solid border-white/5 bg-transparent">
             <img
               :src="req.image"
-              :alt="req.name"
-            />
+              :alt="req.name" />
           </div>
           <p class="text-base text-white">{{ req.name }}</p>
         </li>
@@ -80,8 +75,7 @@ const props = defineProps({
       </ul>
     </div>
     <button
-      class="py-5 px-9 flex justify-center items-center bg-mustardYellow text-midnightCharcoal text-base font-bold w-full"
-    >
+      class="py-5 px-9 flex justify-center items-center bg-mustardYellow text-midnightCharcoal text-base font-bold w-full">
       Start crafting
     </button>
   </div>

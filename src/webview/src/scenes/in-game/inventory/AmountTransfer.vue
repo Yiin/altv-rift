@@ -3,6 +3,7 @@ import { ref, computed } from "vue";
 import { TransferingAmount, useInventory } from "@/store/inventory.store";
 import { getItemImage } from "@/utils/items";
 import { getItemName, isStackable } from "@shared/modules/items";
+import { ItemSourceOrigin } from "@shared/interfaces";
 
 const props = defineProps<TransferingAmount>();
 
@@ -22,7 +23,8 @@ const itemName = computed(() => getItemName(props.item.item.key));
           width="10rem"
           :src="getItemImage(item.item.key)" />
         <h2 class="text-lg font-bold">
-          {{ to ? "You're moving" : "You're dropping" }} <br><span class="text-red-500">{{ itemName }}</span>
+          {{ to && to.origin !== ItemSourceOrigin.Ground ? "You're moving" : "You're dropping" }} <br><span
+            class="text-red-500">{{ itemName }}</span>
         </h2>
 
         <div
@@ -76,7 +78,7 @@ const itemName = computed(() => getItemName(props.item.item.key));
 
     <div class="mt-4 flex gap-2">
       <button
-        @click="inventory.confirmAmountTransfer(amount)"
+        @click="() => inventory.confirmAmountTransfer(amount)"
         type="button"
         class="rounded bg-green-700 px-4 py-2 text-sm font-medium text-white hover:bg-green-600 transition-all">
         Confirm

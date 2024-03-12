@@ -88,7 +88,7 @@ inventory.registerItemSlot({
       'border-white/50': selected,
       'border-transparent': !selected
     }">
-      <InventoryItemIcon v-if="item" :item="item" @dblclick="useOrEquipItem"
+      <InventoryItemIcon v-if="item && !inventory.isItemHidden(item.source)" :item="item" @dblclick="useOrEquipItem"
         @contextmenu.prevent="(e) => item && inventory.openContextMenu(item, e)" />
     </div>
   </div>

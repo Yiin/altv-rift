@@ -45,7 +45,7 @@ const equipedAmmo = computed(() => [
         class="relative bg-white/5 backdrop-blur-[15px] max-h-135 overflow-auto rounded">
         <template v-for="({ slot, label, key }, index) of equipedAmmo">
           <div @click="() => inventory.unequipItem(slot)"
-            class="py-7 px-5.5 flex gap-5 cursor-pointer hover:bg-white/5"
+            class="pt-4 pb-2.5 px-5.5 flex gap-5 cursor-pointer hover:bg-white/5"
             :class="{ 'border-t-1 border-dashed border-t-white/10': index > 0 }">
             <!-- 42x30 -->
             <div>

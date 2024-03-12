@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { vClickOutside } from "../directives/click-outside";
 import { useWindows } from "../store/windows.store";
 import DragResize from "./DragResize.vue";
 import { rpc } from "@/rpc";
@@ -85,8 +84,7 @@ function stop(rect: { x: number; y: number; width: number; height: number }) {
     v-bind="props"
     @move=""
     :isResizeable="isFocused"
-    :sticks="isFocused ? sticks : []"
-  >
+    :sticks="isFocused ? sticks : []">
     <slot></slot>
   </DragResize>
   <div v-else class="relative" :style="{ zIndex: z }">

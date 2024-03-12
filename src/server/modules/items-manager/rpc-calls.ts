@@ -7,7 +7,7 @@ import { rpc } from "@/core/rpc";
 import { needsToBeInGame } from "@/core/utility/assertions";
 import { removeBaitFromFishingRod, useFishBaitOnFishingRod } from "./items/fishing-rod";
 import { canDropItem, canEquipItems } from "./api/hooks";
-import { dropItem, removeItem, swapItems, canInteractWithItemSource, findItem, useItemFromSource, removeItemFromInventorySlot } from "./api";
+import { dropItem, removeItem, swapItems, canInteractWithItemSource, findItem, useItemFromSource, removeItemFromInventorySlot, addItemToInventory } from "./api";
 import { getStorageInventory, openStorage } from "./storage";
 import { loadWeaponWithAmmo, unloadAmmoFromWeapon } from "./items";
 
@@ -217,7 +217,7 @@ rpc.registerWebview(ServerCall.FromWebview.MOVE_ITEM, (player, from, to, amount 
     if (to.origin === ItemSourceOrigin.PlayerInventory) {
       const itemToAdd = createItem(item.key, { ...item, amount });
 
-      if (player.addItem(itemToAdd, to.inventorySlot)) {
+      if (addItemToInventory(player.character.inventory, itemToAdd, to.inventorySlot)) {
         removeItem(from, amount);
 
         return true;

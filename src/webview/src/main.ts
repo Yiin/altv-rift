@@ -7,11 +7,18 @@ import { router } from "./router";
 import { pinia } from "./store";
 
 import "./main.css";
+import { vClickOutside } from "./directives/click-outside";
+import { vHorizontalScroll } from "./directives/horizontal-scroll";
 // import { DefineComponent } from "vue";
 
 loadFonts();
 
-const app = createApp(App).use(router).use(pinia).use(vuetify);
+const app = createApp(App)
+  .use(router)
+  .use(pinia)
+  .use(vuetify)
+  .directive("click-outside", vClickOutside)
+  .directive("horizontal-scroll", vHorizontalScroll);
 
 // Dynamically import and register all components in the @/components/icons folder
 // const registerIcons = async () => {

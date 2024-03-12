@@ -41,6 +41,7 @@ const draggingStyle = computed(() => {
     return {
       transform: `translate(${x}px, ${y}px)`,
       zIndex: Number.MAX_SAFE_INTEGER,
+      opacity: interaction.hidden ? "0" : "1",
     };
   } else {
     // Item is chilling in its slot
