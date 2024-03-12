@@ -61,7 +61,6 @@ const selectCar = (car) => {
         <Donut :percent="(vehshop.selectedCarInfo.weight * 100) / 10000" label="weight"
           :value="`${vehshop.selectedCarInfo.weight} kg`" />
       </div>
-
     </div>
     <div class="flex w-full gap-1 overflow-x-scroll">
       <div v-for="item in vehshop.carInfo" :key="item" @click="selectCar(item)"

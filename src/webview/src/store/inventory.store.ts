@@ -426,7 +426,7 @@ export const useInventory = defineStore("inventory", {
     swapLocally(from: SlottedItem | undefined, to: SlottedItem | ItemSource) {
       const toSource = "source" in to ? to.source : to;
 
-      if (from.source.origin === ItemSourceOrigin.Ground || toSource.origin === ItemSourceOrigin.Ground) {
+      if (from?.source.origin === ItemSourceOrigin.Ground || toSource.origin === ItemSourceOrigin.Ground) {
         return;
       }
       if (from) {
@@ -469,17 +469,20 @@ export const useInventory = defineStore("inventory", {
     },
     confirmAmountTransfer(amount: number) {
       if (this.currentInteraction.type !== InteractionType.TransferingAmount) {
+        console.log("Not transferring amount");
         return;
       }
 
       const slottedItem = this.currentInteraction.state.item;
 
       if (!slottedItem) {
+        console.log("No item in source");
         this.currentInteraction.state.reject();
         return;
       }
 
       if (amount <= 0) {
+        console.log("Amount is less than 0");
         return;
       }
 
@@ -487,6 +490,7 @@ export const useInventory = defineStore("inventory", {
         amount = slottedItem.item.amount;
       }
 
+      console.log("Amount to transfer", amount);
       this.currentInteraction.state.resolve(amount);
     },
     cancelAmountTransfer() {
@@ -614,6 +618,7 @@ export const useInventory = defineStore("inventory", {
 
         const isFromGroundToGround = from.origin === ItemSourceOrigin.Ground && (!to || to.origin === ItemSourceOrigin.Ground);
         const canMoveItem = !isFromGroundToGround;
+        const fullAmount = isStackable(slottedItem.item) ? slottedItem.item.amount : 1;
 
         let promise;
 
@@ -625,7 +630,7 @@ export const useInventory = defineStore("inventory", {
 
             const amount = isSameOrigin || (isFromGround && isSingleItem)
               // move full amount because we don't split items in the same origin
-              ? (isStackable(slottedItem.item) ? slottedItem.item.amount : 1)
+              ? fullAmount
               // ask for amount to move
               : await this.transferAmount(from, to, { x: e.clientX, y: e.clientY });
 
@@ -649,8 +654,7 @@ export const useInventory = defineStore("inventory", {
           // after picking it up
           const stopWatching = watchEffect(() => {
             const item = this.getItemFromSource(from);
-            if (!item) {
-              clearTimeout(timeout);
+            if (!item || ('amount' in item.item && item.item.amount < fullAmount)) {
               if (this.currentInteraction.type === InteractionType.Dragging) {
                 this.updateInteraction(IDLE);
               }
@@ -660,7 +664,7 @@ export const useInventory = defineStore("inventory", {
           });
 
           // fallback if the item wasn't picked up
-          promise.then((result) => {
+          promise?.then((result) => {
             if (!result) {
               if (this.currentInteraction.type === InteractionType.Dragging) {
                 this.updateInteraction(IDLE);

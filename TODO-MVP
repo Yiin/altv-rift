@@ -113,8 +113,18 @@ Workbench:
     ✘ Create a script to update clothing in the database @cancelled(24-02-28 00:39)
   ☐ Move weapon stats to different file
   ☐ Crafting UI for weapons
-    ☐ UI itself
+    ✔ UI itself @done(24-03-12 04:20)
     ☐ The actual integration of that UI
+
+player prototype:
+  - learn blueprint
+items:
+  ☐ blueprints are items in the game, after using the blueprint item, you consume & learn it.
+  ☐ should registerblueprint automatically register blueprint item?
+  ☐ pistol blueprint item
+  ☐ show only categories of blueprints you have learned
+  ☐ make blueprint categories scroll
+  ☐ list learned blueprints in UI
 
 ------------------------------------------------------------------------------------------------------------------------
 

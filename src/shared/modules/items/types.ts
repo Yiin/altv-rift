@@ -78,6 +78,7 @@ import { NoteItemKey, NoteItem, NoteItemInfo } from "./registry/note.items";
 import { SandItem, SandItemInfo, SandItemKey } from "./registry/materials/sand.items";
 import { WeaponComponentItem, WeaponComponentItemInfo, WeaponComponentItemKey } from "./registry/weapon-components/weapon-component.items";
 import { OreItemKey, OreItem, OreItemInfo } from "./registry/materials/ore.items";
+import { ScrapItemKey, ScrapItem, ScrapItemInfo } from "./registry/materials/scrap.items";
 
 export type StackableItem = Extract<Item, { amount: number }>;
 
@@ -140,6 +141,8 @@ type ItemMapping<T> = T extends FirearmWeaponItemKey
   ? [MetalItem, MetalItemInfo]
   : T extends SandItemKey
   ? [SandItem, SandItemInfo]
+  : T extends ScrapItemKey
+  ? [ScrapItem, ScrapItemInfo]
   : T extends FishBaitItemKey
   ? [FishBaitItem, FishBaitItemInfo]
   : T extends ToolItemKey
