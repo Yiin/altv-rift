@@ -17,7 +17,6 @@ module.exports = {
   rules: {
     "vue/no-unused-vars": "error",
     "vue/multi-word-component-names": "off",
-    endOfLine: "auto",
     "import/order": [
       "error",
       {
