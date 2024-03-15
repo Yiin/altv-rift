@@ -24,11 +24,11 @@ interface Alt {
    */
   off<E extends keyof import("@altv/shared").Events.CustomWebViewToClientEvent>(
     eventName: E,
-    listener: import("@altv/shared").Events.CustomWebViewToClientEvent[E]
+    listener: import("@altv/shared").Events.CustomWebViewToClientEvent[E],
   ): void;
   off<E extends string>(
     eventName: Exclude<E, keyof import("@altv/shared").Events.CustomWebViewToClientEvent>,
-    listener: (...args: unknown[]) => void
+    listener: (...args: unknown[]) => void,
   ): void;
 
   /**
@@ -39,11 +39,11 @@ interface Alt {
    */
   on<E extends keyof import("@altv/shared").Events.CustomClientToWebViewEvent>(
     eventName: E,
-    listener: import("@altv/shared").Events.CustomClientToWebViewEvent[E]
+    listener: import("@altv/shared").Events.CustomClientToWebViewEvent[E],
   ): void;
   on<E extends string>(
     eventName: Exclude<E, keyof import("@altv/shared").Events.CustomClientToWebViewEvent>,
-    listener: (...args: unknown[]) => void
+    listener: (...args: unknown[]) => void,
   ): void;
 
   /**
@@ -54,11 +54,11 @@ interface Alt {
    */
   once<E extends keyof import("@altv/shared").Events.CustomClientToWebViewEvent>(
     eventName: E,
-    listener: import("@altv/shared").Events.CustomClientToWebViewEvent[E]
+    listener: import("@altv/shared").Events.CustomClientToWebViewEvent[E],
   ): void;
   once<E extends string>(
     eventName: Exclude<E, keyof import("@altv/shared").Events.CustomClientToWebViewEvent>,
-    listener: (...args: unknown[]) => void
+    listener: (...args: unknown[]) => void,
   ): void;
 
   readonly listeners: Readonly<Record<string, ((...args: unknown[]) => void)[]>>;
@@ -72,7 +72,7 @@ interface Window {
   alt: Alt;
 }
 
-declare var alt: Alt;
+declare let alt: Alt;
 
 interface FocusableKeyboardEvent {
   keys: Set<string>;

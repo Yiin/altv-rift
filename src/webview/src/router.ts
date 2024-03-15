@@ -17,6 +17,5 @@ export const router = createRouter({
 router.afterEach((to, from) => {
   const toDepth = to.path.split("/").length;
   const fromDepth = from.path.split("/").length;
-  to.meta.transition =
-    toDepth < fromDepth ? "scroll-x-transition" : "scroll-x-reverse-transition";
+  to.meta.transition = toDepth < fromDepth ? "scroll-x-transition" : "scroll-x-reverse-transition";
 });

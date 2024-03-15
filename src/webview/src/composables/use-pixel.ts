@@ -1,4 +1,4 @@
-import { computed, ref } from "vue";
+import { ref } from "vue";
 import { useEventListener } from "./use-event-listener";
 
 const pixelSize = ref<number>(0);
@@ -31,4 +31,4 @@ export function px(value: number) {
   return (value * pixelSize.value) / 4;
 }
 
-// const 
+// const

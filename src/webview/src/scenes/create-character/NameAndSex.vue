@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
-import { useCreateCharacter } from "../../store/create-character.store";
 import { useEventListener } from "@/composables/use-event-listener";
+import { useCreateCharacter } from "../../store/create-character.store";
 
 const createCharacter = useCreateCharacter();
 
@@ -9,7 +9,7 @@ const nameInputRef = ref<HTMLInputElement>();
 const nameInputWidthRef = ref<HTMLSpanElement>();
 const nameInputWidth = ref(0);
 
-useEventListener("pointerup", (e) => {
+useEventListener("pointerup", () => {
   nameInputRef.value?.focus();
 });
 
@@ -21,7 +21,7 @@ watch(
     requestAnimationFrame(() => {
       nameInputWidth.value = nameInputWidthRef.value?.offsetWidth ?? 0;
     });
-  }
+  },
 );
 
 watch(
@@ -30,7 +30,7 @@ watch(
     if (createCharacter.errors.name) {
       nameInputRef.value?.focus();
     }
-  }
+  },
 );
 </script>
 
@@ -43,7 +43,7 @@ watch(
             ref="nameInputRef"
             type="text"
             v-model="createCharacter.name"
-            class="min-w-52 text-4xl rounded-md outline-none"
+            class="min-w-52 rounded-md text-4xl outline-none"
             :style="{
               width: nameInputWidth + 'px',
             }"
@@ -51,24 +51,23 @@ watch(
           />
           <span
             ref="nameInputWidthRef"
-            class="absolute invisible text-4xl h-0 w-fit"
+            class="invisible absolute h-0 w-fit text-4xl"
           >
             {{ createCharacter.name }}
           </span>
           <v-divider
-            :class="[
-              'my-1',
-              createCharacter.errors.name &&
-                'border-red-500 border-1 opacity-100',
-            ]"
+            :class="['my-1', createCharacter.errors.name && 'border-1 border-red-500 opacity-100']"
           />
           <span
             v-if="createCharacter.errors.name"
-            class="uppercase text-sm tracking-wider font-bold text-red-500"
+            class="text-sm font-bold uppercase tracking-wider text-red-500"
           >
             {{ createCharacter.errors.name }}
           </span>
-          <span v-else class="uppercase text-sm tracking-wider">
+          <span
+            v-else
+            class="text-sm uppercase tracking-wider"
+          >
             Name of your character
           </span>
         </div>
@@ -81,7 +80,11 @@ watch(
         icon
         :color="!createCharacter.sex ? 'blue-grey' : 'grey-lighten-1'"
       >
-        <v-icon icon="mdi-gender-male" size="2.5rem" color="white" />
+        <v-icon
+          icon="mdi-gender-male"
+          size="2.5rem"
+          color="white"
+        />
       </v-btn>
       <v-btn
         @click="createCharacter.sex = 1"
@@ -89,7 +92,11 @@ watch(
         icon
         :color="createCharacter.sex ? 'pink-lighten-1' : 'grey-lighten-1'"
       >
-        <v-icon icon="mdi-gender-female" size="2.5rem" color="white" />
+        <v-icon
+          icon="mdi-gender-female"
+          size="2.5rem"
+          color="white"
+        />
       </v-btn>
     </div>
   </div>

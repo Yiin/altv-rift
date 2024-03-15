@@ -2,20 +2,23 @@
   <div
     class="vdr"
     :style="positionStyle"
-    :class="`${active || isActive ? 'active' : 'inactive'} ${
-      contentClass ? contentClass : ''
-    }`"
+    :class="`${active || isActive ? 'active' : 'inactive'} ${contentClass ? contentClass : ''}`"
     @mousedown="bodyDown($event)"
     @touchstart="bodyDown($event)"
     @touchend="up($event)"
     ref="container"
     tabindex="0"
   >
-    <div :style="sizeStyle" class="content-container" ref="container2">
+    <div
+      :style="sizeStyle"
+      class="content-container"
+      ref="container2"
+    >
       <slot></slot>
     </div>
     <div
       v-for="stick in sticks"
+      :key="stick"
       class="vdr-stick"
       :class="['vdr-stick-' + stick, isResizable ? '' : 'not-resizable']"
       @mousedown.stop.prevent="stickDown(stick, $event)"
@@ -53,15 +56,7 @@ function removeEvents(events) {
 export default {
   name: "vue-drag-resize",
 
-  emits: [
-    "clicked",
-    "dragging",
-    "dragstop",
-    "resizing",
-    "resizestop",
-    "activated",
-    "deactivated",
-  ],
+  emits: ["clicked", "dragging", "dragstop", "resizing", "resizestop", "activated", "deactivated"],
 
   props: {
     stickSize: {
@@ -247,12 +242,8 @@ export default {
 
   mounted() {
     this.parentElement = this.$el.parentNode;
-    this.parentWidth = this.parentW
-      ? this.parentW
-      : this.parentElement.clientWidth;
-    this.parentHeight = this.parentH
-      ? this.parentH
-      : this.parentElement.clientHeight;
+    this.parentWidth = this.parentW ? this.parentW : this.parentElement.clientWidth;
+    this.parentHeight = this.parentH ? this.parentH : this.parentElement.clientHeight;
 
     this.left = this.x;
     this.top = this.y;
@@ -285,11 +276,9 @@ export default {
     }
 
     if (this.dragCancel) {
-      [...this.$el.querySelectorAll(this.dragCancel)].forEach(
-        (cancelHandle) => {
-          cancelHandle.setAttribute("data-drag-cancel", this._uid);
-        }
-      );
+      [...this.$el.querySelectorAll(this.dragCancel)].forEach((cancelHandle) => {
+        cancelHandle.setAttribute("data-drag-cancel", this._uid);
+      });
     }
   },
 
@@ -312,10 +301,8 @@ export default {
 
       ev.stopPropagation();
 
-      const pageX =
-        typeof ev.pageX !== "undefined" ? ev.pageX : ev.touches[0].pageX;
-      const pageY =
-        typeof ev.pageY !== "undefined" ? ev.pageY : ev.touches[0].pageY;
+      const pageX = typeof ev.pageX !== "undefined" ? ev.pageX : ev.touches[0].pageX;
+      const pageY = typeof ev.pageY !== "undefined" ? ev.pageY : ev.touches[0].pageY;
 
       const { dimensionsBeforeMove } = this;
 
@@ -365,17 +352,11 @@ export default {
         return;
       }
 
-      if (
-        this.dragHandle &&
-        target.getAttribute("data-drag-handle") !== this._uid.toString()
-      ) {
+      if (this.dragHandle && target.getAttribute("data-drag-handle") !== this._uid.toString()) {
         return;
       }
 
-      if (
-        this.dragCancel &&
-        target.getAttribute("data-drag-cancel") === this._uid.toString()
-      ) {
+      if (this.dragCancel && target.getAttribute("data-drag-cancel") === this._uid.toString()) {
         return;
       }
 
@@ -391,10 +372,8 @@ export default {
         this.bodyDrag = true;
       }
 
-      const pointerX =
-        typeof ev.pageX !== "undefined" ? ev.pageX : ev.touches[0].pageX;
-      const pointerY =
-        typeof ev.pageY !== "undefined" ? ev.pageY : ev.touches[0].pageY;
+      const pointerX = typeof ev.pageX !== "undefined" ? ev.pageX : ev.touches[0].pageX;
+      const pointerY = typeof ev.pageY !== "undefined" ? ev.pageY : ev.touches[0].pageY;
 
       this.saveDimensionsBeforeMove({ pointerX, pointerY });
 
@@ -404,15 +383,7 @@ export default {
     },
 
     bodyMove(delta) {
-      const {
-        dimensionsBeforeMove,
-        parentWidth,
-        parentHeight,
-        gridX,
-        gridY,
-        width,
-        height,
-      } = this;
+      const { dimensionsBeforeMove, parentWidth, parentHeight, gridX, gridY, width, height } = this;
 
       let newTop = dimensionsBeforeMove.top - delta.y;
       let newBottom = dimensionsBeforeMove.bottom + delta.y;
@@ -425,14 +396,9 @@ export default {
 
         let diffT = newTop - Math.floor(newTop / gridY) * gridY;
         let diffB =
-          parentHeight -
-          newBottom -
-          Math.floor((parentHeight - newBottom) / gridY) * gridY;
+          parentHeight - newBottom - Math.floor((parentHeight - newBottom) / gridY) * gridY;
         let diffL = newLeft - Math.floor(newLeft / gridX) * gridX;
-        let diffR =
-          parentWidth -
-          newRight -
-          Math.floor((parentWidth - newRight) / gridX) * gridX;
+        let diffR = parentWidth - newRight - Math.floor((parentWidth - newRight) / gridX) * gridX;
 
         if (diffT > gridY / 2) {
           diffT -= gridY;
@@ -499,10 +465,8 @@ export default {
 
       this.stickDrag = true;
 
-      const pointerX =
-        typeof ev.pageX !== "undefined" ? ev.pageX : ev.touches[0].pageX;
-      const pointerY =
-        typeof ev.pageY !== "undefined" ? ev.pageY : ev.touches[0].pageY;
+      const pointerX = typeof ev.pageX !== "undefined" ? ev.pageX : ev.touches[0].pageX;
+      const pointerY = typeof ev.pageY !== "undefined" ? ev.pageY : ev.touches[0].pageY;
 
       this.saveDimensionsBeforeMove({ pointerX, pointerY });
 
@@ -547,9 +511,7 @@ export default {
           newBottom = dimensionsBeforeMove.bottom + delta.y;
 
           if (snapToGrid) {
-            newBottom =
-              parentHeight -
-              Math.round((parentHeight - newBottom) / gridY) * gridY;
+            newBottom = parentHeight - Math.round((parentHeight - newBottom) / gridY) * gridY;
           }
 
           break;
@@ -571,9 +533,7 @@ export default {
           newRight = dimensionsBeforeMove.right + delta.x;
 
           if (snapToGrid) {
-            newRight =
-              parentWidth -
-              Math.round((parentWidth - newRight) / gridX) * gridX;
+            newRight = parentWidth - Math.round((parentWidth - newRight) / gridX) * gridX;
           }
 
           break;
@@ -598,13 +558,12 @@ export default {
       }));
 
       if (this.aspectRatio) {
-        ({ newLeft, newRight, newTop, newBottom } =
-          this.rectCorrectionByAspectRatio({
-            newLeft,
-            newRight,
-            newTop,
-            newBottom,
-          }));
+        ({ newLeft, newRight, newTop, newBottom } = this.rectCorrectionByAspectRatio({
+          newLeft,
+          newRight,
+          newTop,
+          newBottom,
+        }));
       }
 
       this.left = newLeft;
@@ -644,33 +603,25 @@ export default {
           min: 0,
           max:
             parentWidth -
-            (this.w === "auto"
-              ? this.$refs.container.getBoundingClientRect().width
-              : this.width),
+            (this.w === "auto" ? this.$refs.container.getBoundingClientRect().width : this.width),
         },
         right: {
           min: 0,
           max:
             parentWidth -
-            (this.w === "auto"
-              ? this.$refs.container.getBoundingClientRect().width
-              : this.width),
+            (this.w === "auto" ? this.$refs.container.getBoundingClientRect().width : this.width),
         },
         top: {
           min: 0,
           max:
             parentHeight -
-            (this.h === "auto"
-              ? this.$refs.container.getBoundingClientRect().height
-              : this.height),
+            (this.h === "auto" ? this.$refs.container.getBoundingClientRect().height : this.height),
         },
         bottom: {
           min: 0,
           max:
             parentHeight -
-            (this.h === "auto"
-              ? this.$refs.container.getBoundingClientRect().height
-              : this.height),
+            (this.h === "auto" ? this.$refs.container.getBoundingClientRect().height : this.height),
         },
       };
     },
@@ -771,13 +722,7 @@ export default {
 
     rectCorrectionByAspectRatio(rect) {
       let { newLeft, newRight, newTop, newBottom } = rect;
-      const {
-        parentWidth,
-        parentHeight,
-        currentStick,
-        aspectFactor,
-        dimensionsBeforeMove,
-      } = this;
+      const { parentWidth, parentHeight, currentStick, aspectFactor, dimensionsBeforeMove } = this;
 
       let newWidth = parentWidth - newLeft - newRight;
       let newHeight = parentHeight - newTop - newBottom;
@@ -836,12 +781,8 @@ export default {
           width: `${this.stickSize / this.parentScaleX}px`,
           height: `${this.stickSize / this.parentScaleY}px`,
         };
-        stickStyle[styleMapping.y[stick[0]]] = `${
-          this.stickSize / this.parentScaleX / -2
-        }px`;
-        stickStyle[styleMapping.x[stick[1]]] = `${
-          this.stickSize / this.parentScaleX / -2
-        }px`;
+        stickStyle[styleMapping.y[stick[0]]] = `${this.stickSize / this.parentScaleX / -2}px`;
+        stickStyle[styleMapping.x[stick[1]]] = `${this.stickSize / this.parentScaleX / -2}px`;
         return stickStyle;
       };
     },
@@ -932,11 +873,7 @@ export default {
         const stick = "mr";
         const delta = oldVal - newVal;
 
-        this.stickDown(
-          stick,
-          { pageX: this.right, pageY: this.top + this.height / 2 },
-          true
-        );
+        this.stickDown(stick, { pageX: this.right, pageY: this.top + this.height / 2 }, true);
         this.stickMove({ x: delta, y: 0 });
 
         this.$nextTick(() => {
@@ -954,11 +891,7 @@ export default {
         const stick = "bm";
         const delta = oldVal - newVal;
 
-        this.stickDown(
-          stick,
-          { pageX: this.left + this.width / 2, pageY: this.bottom },
-          true
-        );
+        this.stickDown(stick, { pageX: this.left + this.width / 2, pageY: this.bottom }, true);
         this.stickMove({ x: 0, y: delta });
 
         this.$nextTick(() => {

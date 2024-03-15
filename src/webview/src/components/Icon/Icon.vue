@@ -37,5 +37,6 @@ watchEffect(async () => {
   <component
     :is="iconComponent"
     v-if="iconComponent"
-    :style="{ width: `${width || size}rem`, height: `${height || size}rem` }"></component>
+    :style="{ width: `${width || size}rem`, height: `${height || size}rem` }"
+  ></component>
 </template>

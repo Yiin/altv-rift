@@ -6,12 +6,19 @@ const gameState = useGameState();
 </script>
 
 <template>
-  <template v-if="gameState.storage">
-    <h2 class="uppercase text-white text-2xl font-bold">{{ gameState.storage.label }}</h2>
-    <div class="uppercase text-base text-deepGray"></div>
-    <div class="inline-grid grid-cols-4 gap-2.5 mt-5" @mousedown.stop @touchstart.stop>
-      <InventorySlot v-for="(_, slot) in gameState.storage.size"
-        :source="{ ...gameState.storage.source, inventorySlot: slot }" />
+  <template v-if="gameState.openedStorage">
+    <h2 class="text-2xl font-bold uppercase text-white">{{ gameState.openedStorage.label }}</h2>
+    <div class="text-base uppercase text-deepGray"></div>
+    <div
+      class="mt-5 inline-grid grid-cols-4 gap-2.5"
+      @mousedown.stop
+      @touchstart.stop
+    >
+      <InventorySlot
+        v-for="(_, slot) in gameState.openedStorage.inventory.size"
+        :key="slot"
+        :source="{ ...gameState.openedStorage.source, inventorySlot: slot }"
+      />
     </div>
   </template>
 </template>

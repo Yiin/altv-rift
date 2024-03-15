@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { InteractionType, SlottedGroundItem, SlottedStorageItem, SlottedPlayerInventoryItem, isSameItemSource, useInventory } from "@/store/inventory.store";
+import {
+  InteractionType,
+  type SlottedGroundItem,
+  type SlottedStorageItem,
+  type SlottedPlayerInventoryItem,
+  isSameItemSource,
+  useInventory,
+} from "@/store/inventory.store";
 import ItemIcon from "./ItemIcon.vue";
 
 const props = defineProps<{
@@ -12,14 +19,16 @@ const inventory = useInventory();
 const slottedItem = computed(() => props.item);
 
 const isDraggingOrDropping = computed(() =>
-  [InteractionType.Dragging, InteractionType.TransferingAmount].includes(inventory.currentInteraction.type)
+  [InteractionType.Dragging, InteractionType.TransferingAmount].includes(
+    inventory.currentInteraction.type,
+  ),
 );
 
 const shouldShow = computed(
   () =>
     inventory.currentInteraction.type !== InteractionType.TransferingAmount ||
     !inventory.currentInteraction.state.outside ||
-    !isSameItemSource(slottedItem.value.source, inventory.currentInteraction.state.item.source)
+    !isSameItemSource(slottedItem.value.source, inventory.currentInteraction.state.item.source),
 );
 
 const draggingStyle = computed(() => {
@@ -30,12 +39,8 @@ const draggingStyle = computed(() => {
     !interaction.maybe &&
     isSameItemSource(interaction.state.item.source, slottedItem.value.source)
   ) {
-    const x =
-      interaction.state.currentPosition.x -
-      interaction.state.startPosition.x;
-    const y =
-      interaction.state.currentPosition.y -
-      interaction.state.startPosition.y;
+    const x = interaction.state.currentPosition.x - interaction.state.startPosition.x;
+    const y = interaction.state.currentPosition.y - interaction.state.startPosition.y;
 
     // We're currently dragging this item
     return {
@@ -53,6 +58,10 @@ const draggingStyle = computed(() => {
 </script>
 
 <template>
-  <ItemIcon :item="slottedItem.item" :class="{ 'transition-transform duration-75': !isDraggingOrDropping }"
-    v-show="shouldShow" :style="[draggingStyle]" />
+  <ItemIcon
+    :item="slottedItem.item"
+    :class="{ 'transition-transform duration-75': !isDraggingOrDropping }"
+    v-show="shouldShow"
+    :style="[draggingStyle]"
+  />
 </template>

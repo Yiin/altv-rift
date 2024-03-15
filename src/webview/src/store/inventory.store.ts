@@ -1,32 +1,31 @@
 import { defineStore } from "pinia";
-import { rpc } from "@/rpc";
-import { ServerCall } from "@shared/calls/server";
 import { markRaw, reactive, watchEffect } from "vue";
+import { type Ref } from "vue";
+import { ServerCall } from "@shared/calls/server";
 import { ClientEvents } from "@shared/events/client";
 import {
   CombineType,
-  Equipment,
-  Item,
+  type Equipment,
+  type Item,
   getCombineType,
   isStackable,
 } from "@shared/modules/items";
-
+import {
+  EquipmentSlot,
+  type GroundItemSource,
+  type StorageItemSource,
+  type InventoryItem,
+  type InventoryItemSource,
+  type ItemSource,
+  ItemSourceOrigin,
+  type PlayerEquipmentItemSource,
+  type PlayerInventoryItemSource,
+  type PlayerItemSource,
+} from "@shared/interfaces";
+import { rpc } from "@/rpc";
 import { isCharacterStoreAvailable, useCharacter } from "./synced/character.store";
 import { useGameState } from "./synced/game-state.store";
 import { useClient } from "./synced/client.store";
-import {
-  EquipmentSlot,
-  GroundItemSource,
-  StorageItemSource,
-  InventoryItem,
-  InventoryItemSource,
-  ItemSource,
-  ItemSourceOrigin,
-  PlayerEquipmentItemSource,
-  PlayerInventoryItemSource,
-  PlayerItemSource,
-} from "@shared/interfaces";
-import { Ref } from "vue";
 
 const MOCK_ITEMS = reactive([
   {
@@ -105,25 +104,26 @@ export enum InteractionType {
 export type ItemInteraction =
   | { type: InteractionType.None }
   | {
-    type: InteractionType.Dragging;
-    maybe: boolean;
-    hidden?: boolean;
-    state: Dragging;
-  }
+      type: InteractionType.Dragging;
+      maybe: boolean;
+      hidden?: boolean;
+      state: Dragging;
+    }
   | {
-    type: InteractionType.TransferingAmount;
-    state: TransferingAmount;
-  }
+      type: InteractionType.TransferingAmount;
+      state: TransferingAmount;
+    }
   | {
-    type: InteractionType.Hovering;
-    state: Hovering;
-  }
+      type: InteractionType.Hovering;
+      state: Hovering;
+    }
   | {
-    type: InteractionType.ContextMenu;
-    state: ItemActionMenu;
-  } | {
-    type: InteractionType.AmmunitionPanel;
-  };
+      type: InteractionType.ContextMenu;
+      state: ItemActionMenu;
+    }
+  | {
+      type: InteractionType.AmmunitionPanel;
+    };
 
 const IDLE = { type: InteractionType.None } as const;
 
@@ -151,17 +151,17 @@ export type SlottedStorageItem<T = Item> = {
 export type SlottedItem<S = ItemSource, T = Item> =
   // player inventory
   S extends PlayerInventoryItemSource
-  ? SlottedPlayerInventoryItem<T>
-  : // player equipment
-  S extends PlayerEquipmentItemSource
-  ? SlottedEquipmentItem<T>
-  : // nearby items
-  S extends GroundItemSource
-  ? SlottedGroundItem<T>
-  : // opened storage
-  S extends StorageItemSource
-  ? SlottedStorageItem<T>
-  : never;
+    ? SlottedPlayerInventoryItem<T>
+    : // player equipment
+      S extends PlayerEquipmentItemSource
+      ? SlottedEquipmentItem<T>
+      : // nearby items
+        S extends GroundItemSource
+        ? SlottedGroundItem<T>
+        : // opened storage
+          S extends StorageItemSource
+          ? SlottedStorageItem<T>
+          : never;
 
 export type SlottedEquipment = {
   [K in keyof Equipment]: SlottedItem<PlayerEquipmentItemSource, NonNullable<Equipment[K]>> | null;
@@ -170,28 +170,41 @@ export type SlottedEquipment = {
 export function fromItemSource(source: ItemSource) {
   switch (source.origin) {
     case ItemSourceOrigin.Ground:
-      return {
-
-      };
+      return {};
     default:
       return source;
   }
 }
 
-export function isSameSourceOrigin<A extends ItemSource, B extends ItemSource>(a: A, b: B): boolean {
+export function isSameSourceOrigin<A extends ItemSource, B extends ItemSource>(
+  a: A,
+  b: B,
+): boolean {
   return a.origin === b.origin && a.originId === b.originId;
 }
 
 export function isSameItemSource<A extends ItemSource, B extends ItemSource>(a?: A, b?: B): boolean;
-export function isSameItemSource<A extends ItemSource, B extends Partial<ItemSource>>(a?: A, b?: B): a is A & B;
-export function isSameItemSource<A extends ItemSource, B extends PlayerInventoryItemSource>(a?: A, b?: B): a is A & B;
-export function isSameItemSource<A extends ItemSource, B extends PlayerEquipmentItemSource>(a?: A, b?: B): a is A & B;
-export function isSameItemSource<A extends ItemSource, B extends StorageItemSource>(a?: A, b?: B): a is A & B;
-export function isSameItemSource<A extends ItemSource, B extends GroundItemSource>(a?: A, b?: B): a is A & B;
-export function isSameItemSource(
-  a?: ItemSource,
-  b?: ItemSource
-): boolean {
+export function isSameItemSource<A extends ItemSource, B extends Partial<ItemSource>>(
+  a?: A,
+  b?: B,
+): a is A & B;
+export function isSameItemSource<A extends ItemSource, B extends PlayerInventoryItemSource>(
+  a?: A,
+  b?: B,
+): a is A & B;
+export function isSameItemSource<A extends ItemSource, B extends PlayerEquipmentItemSource>(
+  a?: A,
+  b?: B,
+): a is A & B;
+export function isSameItemSource<A extends ItemSource, B extends StorageItemSource>(
+  a?: A,
+  b?: B,
+): a is A & B;
+export function isSameItemSource<A extends ItemSource, B extends GroundItemSource>(
+  a?: A,
+  b?: B,
+): a is A & B;
+export function isSameItemSource(a?: ItemSource, b?: ItemSource): boolean {
   if (!a || !b) {
     return false;
   }
@@ -272,7 +285,7 @@ export const useInventory = defineStore("inventory", {
        * Player equipment
        */
       const equipmentItems = Object.entries(this.character.equipment ?? {}).filter(
-        ([, item]) => !!item
+        ([, item]) => !!item,
       ) as [EquipmentSlot, Item][];
 
       for (const [equipmentSlot, item] of equipmentItems) {
@@ -322,26 +335,25 @@ export const useInventory = defineStore("inventory", {
     inventoryItems(): SlottedItem<PlayerInventoryItemSource>[] {
       return this.items.filter(
         (item): item is SlottedItem<PlayerInventoryItemSource> =>
-          item.source.origin === ItemSourceOrigin.PlayerInventory
+          item.source.origin === ItemSourceOrigin.PlayerInventory,
       );
     },
     equipmentItems(): SlottedItem<PlayerEquipmentItemSource>[] {
       return this.items.filter(
         (item): item is SlottedItem<PlayerEquipmentItemSource> =>
-          item.source.origin === ItemSourceOrigin.PlayerEquipment
+          item.source.origin === ItemSourceOrigin.PlayerEquipment,
       );
     },
     interactionItems(): SlottedItem<StorageItemSource>[] {
       return this.items.filter(
         (item): item is SlottedItem<StorageItemSource> =>
-          item.source.origin === ItemSourceOrigin.Storage
+          item.source.origin === ItemSourceOrigin.Storage,
       );
     },
     groundItems(): SlottedGroundItem[] {
-      return this.items.filter(
-        (item): item is SlottedGroundItem =>
-          item.source.origin === ItemSourceOrigin.Ground
-      ).slice(0, 24);
+      return this.items
+        .filter((item): item is SlottedGroundItem => item.source.origin === ItemSourceOrigin.Ground)
+        .slice(0, 24);
     },
     equipment(): SlottedEquipment {
       const equipment: SlottedEquipment = {
@@ -407,7 +419,9 @@ export const useInventory = defineStore("inventory", {
       return rpc.callServer(ServerCall.FromWebview.REMOVE_BAIT, source);
     },
     isItemHidden(source: ItemSource) {
-      return [...this.hiddenItems.values()].some(hiddenSource => isSameItemSource(source, hiddenSource));
+      return [...this.hiddenItems.values()].some((hiddenSource) =>
+        isSameItemSource(source, hiddenSource),
+      );
     },
     hideItem(source: SlottedItem | ItemSource) {
       if ("source" in source) {
@@ -426,7 +440,10 @@ export const useInventory = defineStore("inventory", {
     swapLocally(from: SlottedItem | undefined, to: SlottedItem | ItemSource) {
       const toSource = "source" in to ? to.source : to;
 
-      if (from?.source.origin === ItemSourceOrigin.Ground || toSource.origin === ItemSourceOrigin.Ground) {
+      if (
+        from?.source.origin === ItemSourceOrigin.Ground ||
+        toSource.origin === ItemSourceOrigin.Ground
+      ) {
         return;
       }
       if (from) {
@@ -462,7 +479,10 @@ export const useInventory = defineStore("inventory", {
 
         // Hides the item from current slot while we're displaying transfer dialog
         this.hideItem(from);
-        this.updateInteraction({ type: InteractionType.TransferingAmount, state: { item: fromItem, to, resolve, reject, position } });
+        this.updateInteraction({
+          type: InteractionType.TransferingAmount,
+          state: { item: fromItem, to, resolve, reject, position },
+        });
 
         return true;
       });
@@ -501,7 +521,7 @@ export const useInventory = defineStore("inventory", {
     async moveItem(
       from: ItemSource,
       to: ItemSource,
-      options: { localOnly?: boolean; amount?: number } = {}
+      options: { localOnly?: boolean; amount?: number } = {},
     ) {
       const itemInSlotFrom = this.getItemFromSource(from);
       const itemInSlotTo = this.getItemFromSource(to);
@@ -616,7 +636,8 @@ export const useInventory = defineStore("inventory", {
         const from = slottedItem.source;
         const to = this.getItemSourceFromScreenPos(e.clientX, e.clientY);
 
-        const isFromGroundToGround = from.origin === ItemSourceOrigin.Ground && (!to || to.origin === ItemSourceOrigin.Ground);
+        const isFromGroundToGround =
+          from.origin === ItemSourceOrigin.Ground && (!to || to.origin === ItemSourceOrigin.Ground);
         const canMoveItem = !isFromGroundToGround;
         const fullAmount = isStackable(slottedItem.item) ? slottedItem.item.amount : 1;
 
@@ -628,17 +649,22 @@ export const useInventory = defineStore("inventory", {
             const isFromGround = from.origin === ItemSourceOrigin.Ground;
             const isSingleItem = !isStackable(slottedItem.item) || slottedItem.item.amount === 1;
 
-            const amount = isSameOrigin || (isFromGround && isSingleItem)
-              // move full amount because we don't split items in the same origin
-              ? fullAmount
-              // ask for amount to move
-              : await this.transferAmount(from, to, { x: e.clientX, y: e.clientY });
+            const amount =
+              isSameOrigin || (isFromGround && isSingleItem)
+                ? // move full amount because we don't split items in the same origin
+                  fullAmount
+                : // ask for amount to move
+                  await this.transferAmount(from, to, { x: e.clientX, y: e.clientY });
 
             // if we're dropping the item
             if (!to || to.origin === ItemSourceOrigin.Ground) {
               // we can drop it only from either inventory or equipment
-              if ([ItemSourceOrigin.PlayerInventory, ItemSourceOrigin.PlayerEquipment].includes(from.origin)) {
-                await this.dropItem(from as PlayerItemSource, amount)
+              if (
+                [ItemSourceOrigin.PlayerInventory, ItemSourceOrigin.PlayerEquipment].includes(
+                  from.origin,
+                )
+              ) {
+                await this.dropItem(from as PlayerItemSource, amount);
               }
             } else {
               // Move the item or swap with another item
@@ -654,7 +680,7 @@ export const useInventory = defineStore("inventory", {
           // after picking it up
           const stopWatching = watchEffect(() => {
             const item = this.getItemFromSource(from);
-            if (!item || ('amount' in item.item && item.item.amount < fullAmount)) {
+            if (!item || ("amount" in item.item && item.item.amount < fullAmount)) {
               if (this.currentInteraction.type === InteractionType.Dragging) {
                 this.updateInteraction(IDLE);
               }
@@ -716,7 +742,7 @@ export const useInventory = defineStore("inventory", {
         const target = itemInSlot;
         const source = this.selectedItem;
 
-        const [combineType, reverse] = getCombineType(target.item.key, source.item.key);
+        const [combineType] = getCombineType(target.item.key, source.item.key);
 
         if (combineType !== CombineType.None) {
           this.selectedItem = undefined;
@@ -810,7 +836,7 @@ export const useInventory = defineStore("inventory", {
     },
     getItemFromSource<T extends ItemSource>(source: T) {
       return this.items.find((item): item is SlottedItem<T> =>
-        isSameItemSource(item.source, source)
+        isSameItemSource(item.source, source),
       );
     },
     getItemSourceFromScreenPos(x: number, y: number) {
@@ -831,7 +857,7 @@ export const useInventory = defineStore("inventory", {
           return rect ? ([slot.source, rect, distanceToRect(rect, x, y)] as const) : null;
         })
         .filter(
-          (entry): entry is NonNullable<typeof entry> => entry !== null && entry[2] <= MAX_DISTANCE
+          (entry): entry is NonNullable<typeof entry> => entry !== null && entry[2] <= MAX_DISTANCE,
         )
         .sort((a, b) => a[2] - b[2])[0];
 

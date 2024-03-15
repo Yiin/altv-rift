@@ -1,13 +1,4 @@
-import { SlottedEquipmentItem, SlottedGroundItem, SlottedStorageItem } from "@/store/inventory.store";
-import {
-  EquipmentSlot,
-  GroundItemSource,
-  StorageItemSource,
-  InventoryItem,
-  ItemSourceOrigin,
-  PlayerInventoryItemSource,
-} from "@shared/interfaces";
-import { Item, isItemKeyClothing, isItemKeyPants } from "@shared/modules/items";
+import { isItemKeyClothing, isItemKeyPants } from "@shared/modules/items";
 
 export const getItemImage = (key: string) => {
   if (isItemKeyClothing(key)) {
@@ -74,9 +65,12 @@ export function getRandomDescription(itemName: string) {
     "No bells and whistles.",
     "Practicality at its finest.",
     "Elegantly minimalistic.",
-    "All name, no fluff."
+    "All name, no fluff.",
   ];
-  const hash = [...itemName].reduce((hash, char) => ((hash << 5) - hash) + char.charCodeAt(0) | 0, 0);
+  const hash = [...itemName].reduce(
+    (hash, char) => ((hash << 5) - hash + char.charCodeAt(0)) | 0,
+    0,
+  );
   const index = Math.abs(hash % descriptions.length);
   return descriptions[index];
 }

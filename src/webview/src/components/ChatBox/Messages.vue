@@ -1,16 +1,8 @@
 <script setup lang="ts">
+import { computed, nextTick, onMounted, onUnmounted, type Ref, ref, watch } from "vue";
 import { MessageType } from "@/enums";
 import { useChatStore } from "@/store/chat.store";
-import { Message as MessageData } from "@/interfaces";
-import {
-  computed,
-  nextTick,
-  onMounted,
-  onUnmounted,
-  Ref,
-  ref,
-  watch,
-} from "vue";
+import { type Message as MessageData } from "@/interfaces";
 import Message from "./Message.vue";
 
 // --------------------------------------------------------------
@@ -36,14 +28,12 @@ const scrollHeight: Ref<number> = ref(0);
 const maskTopHeight = computed(() =>
   currentScroll.value === 0
     ? "0px"
-    : `${Math.floor((64 * currentScroll.value) / boxHeight.value)}px`
+    : `${Math.floor((64 * currentScroll.value) / boxHeight.value)}px`,
 );
 const maskBottomHeight = computed(() =>
-  currentScroll === boxHeight
+  currentScroll.value === boxHeight.value
     ? "0px"
-    : `${Math.floor(
-      (64 * (boxHeight.value - currentScroll.value)) / boxHeight.value
-    )}px`
+    : `${Math.floor((64 * (boxHeight.value - currentScroll.value)) / boxHeight.value)}px`,
 );
 
 // --------------------------------------------------------------
@@ -63,16 +53,11 @@ const messagesRef = ref<HTMLDivElement>();
  * @param message The message to add.
  * @param type The type of message.
  */
-async function addMessage(
-  message: string,
-  type: MessageType = MessageType.Default
-) {
+async function addMessage(message: string, type: MessageType = MessageType.Default) {
   const newMessages = [...messages.value, { content: message, type }];
   newMessages.length < options.maxMessages
     ? (messages.value = newMessages)
-    : (messages.value = newMessages.slice(
-      newMessages.length - options.maxMessages
-    ));
+    : (messages.value = newMessages.slice(newMessages.length - options.maxMessages));
   await updateBox();
 }
 
@@ -83,9 +68,7 @@ async function addMessage(
 async function loadMessages(_messages: Array<MessageData>) {
   _messages.length < options.maxMessages
     ? (messages.value = _messages)
-    : (messages.value = _messages.slice(
-      _messages.length - options.maxMessages
-    ));
+    : (messages.value = _messages.slice(_messages.length - options.maxMessages));
   await updateBox();
 }
 
@@ -121,9 +104,7 @@ function scrollToBottom(behavior: ScrollBehavior = "smooth") {
  */
 function scrollUp() {
   const scrollTo =
-    currentScroll.value - options.scrollStep < 0
-      ? 0
-      : currentScroll.value - options.scrollStep;
+    currentScroll.value - options.scrollStep < 0 ? 0 : currentScroll.value - options.scrollStep;
   messagesRef.value!.scrollTop = scrollTo;
   currentScroll.value = scrollTo;
 }
@@ -179,8 +160,7 @@ async function updateBox() {
   scrollHeight.value = messagesRef.value!.scrollHeight;
   clientHeight.value = messagesRef.value!.clientHeight;
   boxHeight.value = scrollHeight.value - clientHeight.value;
-  if (focus.value || (!focus.value && currentScroll.value === boxHeight.value))
-    return;
+  if (focus.value || (!focus.value && currentScroll.value === boxHeight.value)) return;
   scrollToBottom();
 }
 
@@ -193,9 +173,7 @@ async function updateBox() {
 // Listens to options changes and removes the messages if the max messages is changed.
 watch(options, async (options) => {
   if (messages.value.length < options.maxMessages) return;
-  messages.value = messages.value.slice(
-    messages.value.length - options.maxMessages
-  );
+  messages.value = messages.value.slice(messages.value.length - options.maxMessages);
   await updateBox();
 });
 
@@ -231,17 +209,20 @@ onUnmounted(() => {
 
 <template>
   <div
-    class="scrollbar mask flex flex-col gap-0.5 h-[320px] w-full mask mb-[16px] pr-2 crisp-shadow"
+    class="scrollbar mask mask crisp-shadow mb-[16px] flex h-[320px] w-full flex-col gap-0.5 pr-2"
     :style="{
       '--scrollbar-opacity': focus && scrollHeight > clientHeight ? 1 : 0,
       '--mask-top-height': maskTopHeight,
       '--mask-bottom-height': maskBottomHeight,
     }"
-    ref="messagesRef">
+    ref="messagesRef"
+  >
     <Message
-      v-for="message in messages"
+      v-for="(message, index) in messages"
+      :key="index"
       :content="message.content"
-      :type="message.type" />
+      :type="message.type"
+    />
   </div>
 </template>
 

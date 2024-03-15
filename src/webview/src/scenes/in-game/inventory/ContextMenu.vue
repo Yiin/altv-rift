@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Window from "@/components/Window.vue";
+import { computed } from "vue";
 import {
   CombineType,
   getCombineType,
@@ -7,12 +7,17 @@ import {
   isItemEquipable,
   isItemUsable,
   isItemFirearmWeapon,
-  isItemFishingRod
+  isItemFishingRod,
 } from "@shared/modules/items";
-import { computed } from "vue";
-import { InteractionType, ItemActionMenu, useInventory } from "@/store/inventory.store";
 import { isItemPreviewable } from "@shared/modules/items/lib/is-item-previewable";
-import { StorageItemSource, ItemSourceOrigin, PlayerInventoryItemSource, PlayerItemSource } from "@shared/interfaces";
+import {
+  type StorageItemSource,
+  ItemSourceOrigin,
+  type PlayerInventoryItemSource,
+  type PlayerItemSource,
+} from "@shared/interfaces";
+import { InteractionType, type ItemActionMenu, useInventory } from "@/store/inventory.store";
+import Window from "@/components/Window.vue";
 import { useShop } from "@/store/shop.store";
 
 const props = defineProps<ItemActionMenu>();
@@ -26,22 +31,57 @@ const itemSource = computed(() => props.item.source);
 const isInShop = computed(() => shop.isInShop);
 const visible = computed(() => inventory.currentInteraction.type === InteractionType.ContextMenu);
 const itemName = computed(() => getItemName(item.value.key));
+
 const isUsable = computed(
-  () => !isInShop.value && [ItemSourceOrigin.PlayerInventory, ItemSourceOrigin.Storage].includes(itemSource.value.origin) && isItemUsable(item.value.key)
+  () =>
+    !isInShop.value &&
+    [ItemSourceOrigin.PlayerInventory, ItemSourceOrigin.Storage].includes(
+      itemSource.value.origin,
+    ) &&
+    isItemUsable(item.value.key),
 );
-const isBuyable = computed(() => isInShop.value && itemSource.value.origin === ItemSourceOrigin.Storage);
-const isSellable = computed(() => isInShop.value && itemSource.value.origin === ItemSourceOrigin.PlayerInventory);
+
+const isBuyable = computed(
+  () => isInShop.value && itemSource.value.origin === ItemSourceOrigin.Storage,
+);
+
+const isSellable = computed(
+  () => isInShop.value && itemSource.value.origin === ItemSourceOrigin.PlayerInventory,
+);
+
 const isEquipable = computed(
-  () => !isInShop.value && [ItemSourceOrigin.PlayerInventory, ItemSourceOrigin.Storage].includes(itemSource.value.origin) && isItemEquipable(item.value.key)
+  () =>
+    !isInShop.value &&
+    [ItemSourceOrigin.PlayerInventory, ItemSourceOrigin.Storage].includes(
+      itemSource.value.origin,
+    ) &&
+    isItemEquipable(item.value.key),
 );
+
 const isUnequipable = computed(() => itemSource.value.origin === ItemSourceOrigin.PlayerEquipment);
-const isDroppable = computed(() => !isInShop.value && [ItemSourceOrigin.PlayerInventory, ItemSourceOrigin.PlayerEquipment].includes(itemSource.value.origin));
-const hasAmmo = computed(() => !isInShop.value && isItemFirearmWeapon(item.value) && !!item.value.clip);
-const hasFishBait = computed(() => !isInShop.value && isItemFishingRod(item.value) && !!item.value.bait);
+
+const isDroppable = computed(
+  () =>
+    !isInShop.value &&
+    [ItemSourceOrigin.PlayerInventory, ItemSourceOrigin.PlayerEquipment].includes(
+      itemSource.value.origin,
+    ),
+);
+
+const hasAmmo = computed(
+  () => !isInShop.value && isItemFirearmWeapon(item.value) && !!item.value.clip,
+);
+
+const hasFishBait = computed(
+  () => !isInShop.value && isItemFishingRod(item.value) && !!item.value.bait,
+);
+
 const isPreviewable = computed(() => !isInShop.value && isItemPreviewable(item.value.key));
 
 const combine = computed(() => {
-  if ([ItemSourceOrigin.PlayerInventory, ItemSourceOrigin.Storage].includes(itemSource.value.origin)) {
+  if (
+    [ItemSourceOrigin.PlayerInventory, ItemSourceOrigin.Storage].includes(itemSource.value.origin)
+  ) {
     return {
       type: CombineType.None,
       reverse: false,
@@ -81,7 +121,11 @@ function executeAction(action: string) {
       inventory.useItem(source);
       break;
     case "equip":
-      if ([ItemSourceOrigin.PlayerInventory, ItemSourceOrigin.Storage].includes(itemSource.value.origin)) {
+      if (
+        [ItemSourceOrigin.PlayerInventory, ItemSourceOrigin.Storage].includes(
+          itemSource.value.origin,
+        )
+      ) {
         return;
       }
       inventory.equipItem(source as PlayerInventoryItemSource | StorageItemSource);
@@ -181,22 +225,39 @@ const actions = computed(() => [
 </script>
 
 <template>
-  <div v-if="visible" :key="ts" class="absolute top-0 left-0 flex justify-start"
-    v-click-outside="inventory.closeActionMenu">
-    <Window v-bind="{ x, y, h: 'auto' }" :is-active="false" :is-draggable="false" @mousedown.stop>
-      <ul class="flex flex-col space-y-2 bg-neutral-800 rounded-lg overflow-hidden shadow-lg">
+  <div
+    v-if="visible"
+    :key="ts"
+    class="absolute left-0 top-0 flex justify-start"
+    v-click-outside="inventory.closeActionMenu"
+  >
+    <Window
+      v-bind="{ x, y, h: 'auto' }"
+      :is-active="false"
+      :is-draggable="false"
+      @mousedown.stop
+    >
+      <ul class="flex flex-col space-y-2 overflow-hidden rounded-lg bg-neutral-800 shadow-lg">
         <li>
-          <strong class="py-3 px-4 block text-sm font-medium uppercase text-neutral-400">
+          <strong class="block px-4 py-3 text-sm font-medium uppercase text-neutral-400">
             {{ itemName }}
           </strong>
           <ul>
-            <template v-for=" action  in  actions ">
-              <li v-if="'enabled' in action === false || action.enabled" @mousedown.stop="action.select"
-                class="border-t border-t-neutral-700">
+            <template v-for="action in actions">
+              <li
+                v-if="'enabled' in action === false || action.enabled"
+                :key="action.name"
+                @mousedown.stop="action.select"
+                class="border-t border-t-neutral-700"
+              >
                 <div
-                  class="flex items-center gap-4 px-4 py-3 bg-neutral-800 text-neutral-200 hover:bg-neutral-700 cursor-pointer">
-                  <v-icon :icon="action.icon" size="sm" />
-                  <span class="text-sm font-medium -mt-0.5">{{ action.name }}</span>
+                  class="flex cursor-pointer items-center gap-4 bg-neutral-800 px-4 py-3 text-neutral-200 hover:bg-neutral-700"
+                >
+                  <v-icon
+                    :icon="action.icon"
+                    size="sm"
+                  />
+                  <span class="-mt-0.5 text-sm font-medium">{{ action.name }}</span>
                 </div>
               </li>
             </template>

@@ -17,6 +17,8 @@ function kickAll() {
   });
 }
 
+// alt.Events.onPlayer()
+
 alt.Events.onPlayerDisconnect(({ reason }) => {
   if (reason === "timed out") {
     ipc.connectTo('watcher', () => {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed, onUnmounted } from 'vue';
-import { ref } from 'vue';
+import { computed, onUnmounted } from "vue";
+import { ref } from "vue";
 
 const props = defineProps<{
   startedAt: number;
@@ -21,9 +21,11 @@ onUnmounted(() => {
 const circumference = Math.PI * 450;
 const yellowLength = Math.PI * props.targetSize * 500;
 
-const target = computed(() => ((currentTime.value - props.startedAt) / props.durationMs));
+const target = computed(() => (currentTime.value - props.startedAt) / props.durationMs);
 
-const dashOffset = computed(() => circumference - props.targetPosition * circumference + yellowLength / 2);
+const dashOffset = computed(
+  () => circumference - props.targetPosition * circumference + yellowLength / 2,
+);
 const targetAngle = computed(() => target.value * 360);
 
 requestAnimationFrame(function update() {
@@ -40,12 +42,36 @@ requestAnimationFrame(function update() {
 </script>
 
 <template>
-  <div class="absolute w-full h-full flex items-center justify-center">
+  <div class="absolute flex h-full w-full items-center justify-center">
     <div class="relative">
-      <svg class="w-80 h-80" viewBox="-25 -25 550 550">
-        <circle cx="250" cy="250" r="227.25" fill="none" stroke="#ffffff33" stroke-width="1" />
-        <circle cx="250" cy="250" r="222.75" fill="none" stroke="#ffffff33" stroke-width="1" />
-        <circle cx="250" cy="250" r="225" fill="none" stroke="#ffffff26" stroke-width="3.5" />
+      <svg
+        class="h-80 w-80"
+        viewBox="-25 -25 550 550"
+      >
+        <circle
+          cx="250"
+          cy="250"
+          r="227.25"
+          fill="none"
+          stroke="#ffffff33"
+          stroke-width="1"
+        />
+        <circle
+          cx="250"
+          cy="250"
+          r="222.75"
+          fill="none"
+          stroke="#ffffff33"
+          stroke-width="1"
+        />
+        <circle
+          cx="250"
+          cy="250"
+          r="225"
+          fill="none"
+          stroke="#ffffff26"
+          stroke-width="3.5"
+        />
         <circle
           class="stroke-blue-500"
           cx="250"
@@ -55,7 +81,8 @@ requestAnimationFrame(function update() {
           stroke-width="10"
           :stroke-dasharray="yellowLength + ' ' + (circumference - yellowLength)"
           :stroke-dashoffset="dashOffset"
-          transform="rotate(-90 250 250)" />
+          transform="rotate(-90 250 250)"
+        />
         <line
           x1="250"
           y1="0"
@@ -64,11 +91,14 @@ requestAnimationFrame(function update() {
           :stroke="isFailed ? '#800' : '#fff'"
           stroke-width="15"
           stroke-linecap="round"
-          :transform="`rotate(${targetAngle} 250 250)`" />
+          :transform="`rotate(${targetAngle} 250 250)`"
+        />
       </svg>
-      <div class="absolute top-0 left-0 w-full h-full flex flex-col justify-center">
-        <div class="text-center text-white text-2xl font-semibold uppercase">you caught a fish!</div>
-        <div class="text-center text-white text-md uppercase">click on time</div>
+      <div class="absolute left-0 top-0 flex h-full w-full flex-col justify-center">
+        <div class="text-center text-2xl font-semibold uppercase text-white">
+          you caught a fish!
+        </div>
+        <div class="text-md text-center uppercase text-white">click on time</div>
       </div>
     </div>
   </div>

@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
+import { type AmmoEquipmentSlot, EquipmentSlot, ItemSourceOrigin } from "@shared/interfaces";
 import { InteractionType, useInventory, isSameItemSource } from "@/store/inventory.store";
-import ItemIcon from "../ItemIcon.vue";
 import { px } from "@/composables/use-pixel";
-
-import { AmmoEquipmentSlot, EquipmentSlot, ItemSourceOrigin } from "@shared/interfaces";
 import { useCombinableItem } from "@/composables/use-combinable-item";
+import ItemIcon from "./ItemIcon.vue";
 
 const equipmentSlots = {
   [EquipmentSlot.Headwear]: {
@@ -108,12 +107,8 @@ const draggingStyle = computed(() => {
     !interaction.maybe &&
     isSameItemSource(interaction.state.item.source, item.value.source)
   ) {
-    const x =
-      interaction.state.currentPosition.x -
-      interaction.state.startPosition.x;
-    const y =
-      interaction.state.currentPosition.y -
-      interaction.state.startPosition.y;
+    const x = interaction.state.currentPosition.x - interaction.state.startPosition.x;
+    const y = interaction.state.currentPosition.y - interaction.state.startPosition.y;
 
     // We're currently dragging this item
     return {
@@ -147,18 +142,29 @@ inventory.registerItemSlot({
 <template>
   <div
     ref="nodeRef"
-    class="flex flex-col relative items-center h-21 w-21 justify-between bg-silverCloud/[0.01] border border-solid border-white/[0.03] flex-basis-21"
+    class="flex-basis-21 relative flex h-21 w-21 flex-col items-center justify-between border border-solid border-white/[0.03] bg-silverCloud/[0.01]"
     :class="{
-      'bg-silverCloud/5': combinableWithHoveredItem || combinableWithOtherItems
-    }">
-    <div v-if="!item" class="w-full h-full bg-[center_35%] text-center pt-14 text-xs" :style="{
-      backgroundImage: 'image' in slot ? `url(${slot.image})` : undefined,
-      backgroundSize: `30%`,
-      filter: `contrast(0) opacity(0.9)`,
-    }">
+      'bg-silverCloud/5': combinableWithHoveredItem || combinableWithOtherItems,
+    }"
+  >
+    <div
+      v-if="!item"
+      class="h-full w-full bg-[center_35%] pt-14 text-center text-xs"
+      :style="{
+        backgroundImage: 'image' in slot ? `url(${slot.image})` : undefined,
+        backgroundSize: `30%`,
+        filter: `contrast(0) opacity(0.9)`,
+      }"
+    >
       {{ slot.label }}
     </div>
-    <ItemIcon v-else :item="item.item" :style="draggingStyle" @mousedown="inventory.handleMouseDown"
-      @dblclick="unequipItem" @contextmenu.prevent="(e) => item && inventory.openContextMenu(item, e)" />
+    <ItemIcon
+      v-else
+      :item="item.item"
+      :style="draggingStyle"
+      @mousedown="inventory.handleMouseDown"
+      @dblclick="unequipItem"
+      @contextmenu.prevent="(e) => item && inventory.openContextMenu(item, e)"
+    />
   </div>
 </template>

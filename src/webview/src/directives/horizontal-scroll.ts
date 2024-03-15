@@ -1,4 +1,4 @@
-import { ObjectDirective } from 'vue';
+import { type ObjectDirective } from "vue";
 
 const handleWheelEvent = (event: WheelEvent) => {
   // event.preventDefault();
@@ -7,15 +7,15 @@ const handleWheelEvent = (event: WheelEvent) => {
     // Apply the vertical scroll event's delta as horizontal scroll
     const toScroll = event.deltaY;
     event.currentTarget.scrollLeft += toScroll;
-    console.log('wheel event', event.currentTarget.scrollLeft, toScroll);
+    console.log("wheel event", event.currentTarget.scrollLeft, toScroll);
   }
 };
 
 export const vHorizontalScroll: ObjectDirective<HTMLElement> = {
   mounted(el) {
-    el.addEventListener('wheel', handleWheelEvent, { passive: false });
+    el.addEventListener("wheel", handleWheelEvent, { passive: false });
   },
   beforeUnmount(el) {
-    el.removeEventListener('wheel', handleWheelEvent);
-  }
+    el.removeEventListener("wheel", handleWheelEvent);
+  },
 };

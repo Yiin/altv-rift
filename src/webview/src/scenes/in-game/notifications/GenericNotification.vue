@@ -9,21 +9,30 @@ defineProps<{
 </script>
 
 <template>
-  <div role="alert" class="rounded-xl border p-4 mb-2 shadow-xl border-neutral-800 bg-neutral-900 w-96">
+  <div
+    role="alert"
+    class="mb-2 w-96 rounded-xl border border-neutral-800 bg-neutral-900 p-4 shadow-xl"
+  >
     <div class="flex items-start gap-4">
-      <span :class="[
-        {
-          error: 'text-red-600',
-          success: 'text-green-600',
-          info: 'text-blue-400',
-        }[type],
-      ]">
-        <v-icon :icon="{
-            error: 'mdi-close-circle-outline',
-            success: 'mdi-check-circle-outline',
-            info: 'mdi-help-circle-outline',
-          }[type]
-          " class="h-6 w-6" />
+      <span
+        :class="[
+          {
+            error: 'text-red-600',
+            success: 'text-green-600',
+            info: 'text-blue-400',
+          }[type],
+        ]"
+      >
+        <v-icon
+          :icon="
+            {
+              error: 'mdi-close-circle-outline',
+              success: 'mdi-check-circle-outline',
+              info: 'mdi-help-circle-outline',
+            }[type]
+          "
+          class="h-6 w-6"
+        />
       </span>
 
       <div class="flex-1">

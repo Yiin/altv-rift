@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { WebviewEvents } from "@shared/events/webview";
 import { useAlt } from "@/composables/use-alt";
 import Screen from "@/components/Screen.vue";
-import { WebviewEvents } from "@shared/events/webview";
 
 const { on } = useAlt();
 
@@ -22,7 +22,7 @@ function beginAuth() {
 </script>
 
 <template>
-  <Screen class="flex justify-center items-center">
+  <Screen class="flex items-center justify-center">
     <v-fade-transition>
       <v-card v-if="authUrl">
         <v-card-text>

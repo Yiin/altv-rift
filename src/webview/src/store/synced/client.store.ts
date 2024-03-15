@@ -1,12 +1,12 @@
 import { defineStore } from "pinia";
-import { getDefaultClientStoreState, QuestInfo } from "@shared/store/client.store";
+import { getDefaultClientStoreState, type QuestInfo } from "@shared/store/client.store";
 import { ClientEvents } from "@shared/events/client";
 import { useCharacter } from "./character.store";
 
 export const useClient = defineStore("client", {
   state: getDefaultClientStoreState,
   getters: {
-    questFacts(state) {
+    questFacts() {
       return (
         useCharacter().questFacts ?? [
           "Quests.Introduction.Facts.GOT_INTRODUCTION",
@@ -27,7 +27,7 @@ export const useClient = defineStore("client", {
           (t) =>
             !t.visibleFact ||
             this.questFacts.includes(t.visibleFact) ||
-            this.questFacts.includes(t.completedFact)
+            this.questFacts.includes(t.completedFact),
         );
 
         if (visibleTasks.length > 0) {
@@ -41,11 +41,11 @@ export const useClient = defineStore("client", {
         ...item,
         inventorySlot: index,
       }));
-    }
+    },
   },
   actions: {
     closeWindow() {
       alt.emit(ClientEvents.FromWebview.CLOSE_WINDOW);
-    }
-  }
+    },
+  },
 });

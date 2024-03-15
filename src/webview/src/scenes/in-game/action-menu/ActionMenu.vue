@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import { ref, computed, watch } from "vue";
+import { ClientEvents } from "@shared/events/client";
+import { type ActionItem } from "@shared/store/client.store";
 import { useEventListener } from "@/composables/use-event-listener";
 import { useClient } from "@/store/synced/client.store";
-import { ClientEvents } from "@shared/events/client";
-import { ActionItem } from "@shared/store/client.store";
-import { ref, computed, watch } from "vue";
 
 type Slice = ActionItem & {
   empty: boolean;
@@ -64,7 +64,7 @@ watch(
     if (!slice.empty) {
       alt.emit(ClientEvents.FromWebview.PLAY_SOUND, "NAV_UP_DOWN", "HUD_FREEMODE_SOUNDSET");
     }
-  }
+  },
 );
 
 useEventListener("mousemove", handleMouseMove);
@@ -119,7 +119,7 @@ function polarToCartesian(
   centerX: number,
   centerY: number,
   radius: number,
-  angleInDegrees: number
+  angleInDegrees: number,
 ) {
   const angleInRadians = (angleInDegrees * Math.PI) / 180.0;
   return {
@@ -134,30 +134,67 @@ function select() {
 </script>
 
 <template>
-  <div class="flex items-center justify-center h-screen cursor-pointer" @mousedown="select">
-    <svg ref="svg" width="500" height="500" class="-ml-[4.55%]">
+  <div
+    class="flex h-screen cursor-pointer items-center justify-center"
+    @mousedown="select"
+  >
+    <svg
+      ref="svg"
+      width="500"
+      height="500"
+      class="-ml-[4.55%]"
+    >
       <!-- Define the pattern -->
       <defs>
-        <pattern id="bg-pattern" patternUnits="userSpaceOnUse" width="500" height="500">
-          <image v-if="!currentSlice.empty" :href="`./assets/actions/${currentSlice.type}.png`"
-            :x="currentSlice.centroid.x - 150" :y="currentSlice.centroid.y - 175" width="350" height="350" opacity="0.7"
-            class="brightness-[0.8]" preserve-aspect-ratio="true" />
+        <pattern
+          id="bg-pattern"
+          patternUnits="userSpaceOnUse"
+          width="500"
+          height="500"
+        >
+          <image
+            v-if="!currentSlice.empty"
+            :href="`./assets/actions/${currentSlice.type}.png`"
+            :x="currentSlice.centroid.x - 150"
+            :y="currentSlice.centroid.y - 175"
+            width="350"
+            height="350"
+            opacity="0.7"
+            class="brightness-[0.8]"
+            preserve-aspect-ratio="true"
+          />
         </pattern>
       </defs>
 
       <!-- Create slices dynamically -->
-      <path v-for="(slice, index) in slices" :key="index" :d="slice.d"
+      <path
+        v-for="(slice, index) in slices"
+        :key="index"
+        :d="slice.d"
         :fill="!slice.empty && hoveredSliceIndex === index ? 'url(#bg-pattern)' : 'rgba(0,0,0,0.3)'"
-        class="transition-transform origin-[250px_250px]"
-        :class="{ 'scale-105': !slice.empty && hoveredSliceIndex === index }" />
+        class="origin-[250px_250px] transition-transform"
+        :class="{ 'scale-105': !slice.empty && hoveredSliceIndex === index }"
+      />
       <!-- Add text labels -->
-      <template v-for="(slice, index) in slices.filter((slice) => !slice.empty)" :key="index">
-        <text :x="slice.labelX" :y="slice.labelY" text-anchor="middle"
-          class="pointer-events-none fill-white uppercase font-bold tracking-widest text-lg">
+      <template
+        v-for="(slice, index) in slices.filter((slice) => !slice.empty)"
+        :key="index"
+      >
+        <text
+          :x="slice.labelX"
+          :y="slice.labelY"
+          text-anchor="middle"
+          class="pointer-events-none fill-white text-lg font-bold uppercase tracking-widest"
+        >
           {{ slice.title }}
         </text>
-        <text v-if="slice.subtitle" :x="slice.labelX" :y="slice.labelY + 20" text-anchor="middle"
-          class="pointer-events-none fill-white uppercase font-semibold tracking-wider text-sm">
+        <text
+          v-if="slice.subtitle"
+          :x="slice.labelX"
+          :y="slice.labelY + 20"
+          text-anchor="middle"
+          class="pointer-events-none fill-white text-sm font-semibold uppercase tracking-wider"
+        >
           {{ slice.subtitle }}
         </text>
       </template>

@@ -5,6 +5,9 @@ import { registerBlueprint } from "../blueprints.registry";
 
 export const PistolBlueprint = makeKeys<PistolBlueprintKey>()({
   PISTOL: "pistol",
+  PISTOL_PLUS: "pistol_plus",
+  PISTOL_PLUS_PLUS: "pistol_plus_plus",
+  PISTOL_PLUS_PLUS_PLUS: "pistol_plus_plus_plus",
 });
 
 export type PistolBlueprintKey = Brand<string, "PistolBlueprintKey">;

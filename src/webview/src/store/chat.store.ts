@@ -1,4 +1,4 @@
-import { reactive, Ref, ref } from "vue";
+import { reactive, type Ref, ref } from "vue";
 import type { CommandSuggestion, Options } from "../interfaces";
 
 const focus: Ref<boolean> = ref(false);

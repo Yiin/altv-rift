@@ -1,25 +1,25 @@
 <script setup lang="ts">
 import { format, differenceInMilliseconds } from "date-fns";
-import { Item } from "@shared/modules/items";
+import { ref } from "vue";
+import { type Item } from "@shared/modules/items";
+import { ServerCall } from "@shared/calls/server";
+import { StorageType } from "@shared/store/game-state.store";
+import { rpc } from "@/rpc";
+import { useClient } from "@/store/synced/client.store";
+import DarkBackground from "../../../components/DarkBackground.vue";
 import LootBoxSlot from "./LootBoxSlot.vue";
 import LootBoxItemInfo from "./LootBoxItemInfo.vue";
-import { ref } from "vue";
 import { useLootBox } from "./loot-box";
-import { rpc } from "@/rpc";
-import { ServerCall } from "@shared/calls/server";
-import { useClient } from "@/store/synced/client.store";
-import { StorageType } from "@shared/store/game-state.store";
-import DarkBackground from "../../../components/DarkBackground.vue"
 
 const hoveredItem = ref<Item | null>(null);
-const timeLeft = ref<string>('');
+const timeLeft = ref<string>("");
 
 const client = useClient();
 const lootBox = useLootBox();
 
 setInterval(() => {
   if (lootBox.type !== StorageType.AirDrop) return;
-  timeLeft.value = format(differenceInMilliseconds(lootBox.validUntil, Date.now()), 'mm:ss');
+  timeLeft.value = format(differenceInMilliseconds(lootBox.validUntil, Date.now()), "mm:ss");
 }, 100);
 
 function handleMouseEnter(item: Item) {
@@ -38,17 +38,17 @@ function takeAllItems() {
 <template>
   <div class="relative w-full px-10 lg:px-1/8 lg:py-16">
     <DarkBackground />
-    <div
-      class="flex max-w-screen-2xl px-6 mx-auto py-8 justify-end items-center gap-7">
-      <button class="uppercase text-sm font-bold text-white">close</button>
+    <div class="mx-auto flex max-w-screen-2xl items-center justify-end gap-7 px-6 py-8">
+      <button class="text-sm font-bold uppercase text-white">close</button>
       <button
-        class="uppercase text-sm font-bold text-white py-3 px-2.5 border border-solid border-white/10">
+        class="border border-solid border-white/10 px-2.5 py-3 text-sm font-bold uppercase text-white"
+      >
         esc
       </button>
     </div>
 
-    <div class="h-full flex justify-center items-center mt-16 text-white">
-      <div class="flex flex-col items-center max-w-lg mx-auto">
+    <div class="mt-16 flex h-full items-center justify-center text-white">
+      <div class="mx-auto flex max-w-lg flex-col items-center">
         <!-- Header -->
         <div class="relative">
           <svg
@@ -56,11 +56,13 @@ function takeAllItems() {
             width="135"
             height="135"
             viewBox="0 0 135 135"
-            fill="none">
+            fill="none"
+          >
             <g filter="url(#filter0_d_12_518)">
               <path
                 d="M54.7438 50L59.3022 54.5584H75.6978L80.2562 50H54.7438ZM54 50.7438V76.2562L58.5584 71.6978V55.3022L54 50.7438ZM81 50.7438L76.4416 55.3022V71.6978L81 76.2562V50.7438ZM57.2118 50.8766C57.3358 50.8766 57.4547 50.9259 57.5424 51.0136C57.63 51.1012 57.6793 51.2202 57.6793 51.3442C57.6793 51.4682 57.63 51.5871 57.5424 51.6748C57.4547 51.7624 57.3358 51.8117 57.2118 51.8117C57.0878 51.8117 56.9689 51.7624 56.8812 51.6748C56.7935 51.5871 56.7442 51.4682 56.7442 51.3442C56.7442 51.2202 56.7935 51.1012 56.8812 51.0136C56.9689 50.9259 57.0878 50.8766 57.2118 50.8766ZM77.7857 50.923C77.9097 50.923 78.0286 50.9722 78.1163 51.0599C78.204 51.1476 78.2532 51.2665 78.2532 51.3905C78.2532 51.5145 78.204 51.6334 78.1163 51.7211C78.0286 51.8088 77.9097 51.858 77.7857 51.858C77.6617 51.858 77.5428 51.8088 77.4551 51.7211C77.3674 51.6334 77.3182 51.5145 77.3182 51.3905C77.3182 51.2665 77.3674 51.1476 77.4551 51.0599C77.5428 50.9722 77.6617 50.923 77.7857 50.923ZM59.0844 52.7468C59.2084 52.7468 59.3273 52.796 59.415 52.8837C59.5027 52.9714 59.5519 53.0903 59.5519 53.2143C59.5519 53.3383 59.5027 53.4572 59.415 53.5449C59.3273 53.6326 59.2084 53.6818 59.0844 53.6818C58.9604 53.6818 58.8415 53.6326 58.7538 53.5449C58.6661 53.4572 58.6169 53.3383 58.6169 53.2143C58.6169 53.0903 58.6661 52.9714 58.7538 52.8837C58.8415 52.796 58.9604 52.7468 59.0844 52.7468ZM75.8834 52.7468C76.0074 52.7468 76.1264 52.796 76.214 52.8837C76.3017 52.9714 76.351 53.0903 76.351 53.2143C76.351 53.3383 76.3017 53.4572 76.214 53.5449C76.1264 53.6326 76.0074 53.6818 75.8834 53.6818C75.7594 53.6818 75.6405 53.6326 75.5528 53.5449C75.4652 53.4572 75.4159 53.3383 75.4159 53.2143C75.4159 53.0903 75.4652 52.9714 75.5528 52.8837C75.6405 52.796 75.7594 52.7468 75.8834 52.7468ZM79.5898 52.7468C79.7138 52.7468 79.8327 52.796 79.9204 52.8837C80.0081 52.9714 80.0573 53.0903 80.0573 53.2143C80.0573 53.3383 80.0081 53.4572 79.9204 53.5449C79.8327 53.6326 79.7138 53.6818 79.5898 53.6818C79.4658 53.6818 79.3469 53.6326 79.2592 53.5449C79.1715 53.4572 79.1223 53.3383 79.1223 53.2143C79.1223 53.0903 79.1715 52.9714 79.2592 52.8837C79.3469 52.796 79.4658 52.7468 79.5898 52.7468ZM55.3442 52.8079C55.4682 52.8079 55.5871 52.8572 55.6748 52.9449C55.7624 53.0326 55.8117 53.1515 55.8117 53.2755C55.8117 53.3995 55.7624 53.5184 55.6748 53.6061C55.5871 53.6937 55.4682 53.743 55.3442 53.743C55.2202 53.743 55.1012 53.6937 55.0136 53.6061C54.9259 53.5184 54.8766 53.3995 54.8766 53.2755C54.8766 53.1515 54.9259 53.0326 55.0136 52.9449C55.1012 52.8572 55.2202 52.8079 55.3442 52.8079ZM57.1789 54.6169C57.3029 54.6169 57.4218 54.6661 57.5095 54.7538C57.5972 54.8415 57.6465 54.9604 57.6465 55.0844C57.6465 55.2084 57.5972 55.3273 57.5095 55.415C57.4218 55.5027 57.3029 55.5519 57.1789 55.5519C57.0549 55.5519 56.936 55.5027 56.8483 55.415C56.7607 55.3273 56.7114 55.2084 56.7114 55.0844C56.7114 54.9604 56.7607 54.8415 56.8483 54.7538C56.936 54.6661 57.0549 54.6169 57.1789 54.6169ZM77.7857 54.6286C77.9097 54.6286 78.0286 54.6778 78.1163 54.7655C78.204 54.8532 78.2532 54.9721 78.2532 55.0961C78.2532 55.2201 78.204 55.339 78.1163 55.4267C78.0286 55.5144 77.9097 55.5636 77.7857 55.5636C77.6617 55.5636 77.5428 55.5144 77.4551 55.4267C77.3674 55.339 77.3182 55.2201 77.3182 55.0961C77.3182 54.9721 77.3674 54.8532 77.4551 54.7655C77.5428 54.6778 77.6617 54.6286 77.7857 54.6286ZM59.6104 55.6104V66.9056L62.7487 63.7673L62.7116 55.6104H59.6104ZM63.7635 55.6104L63.7959 62.72L66.974 59.542V55.6104H63.7635ZM68.026 55.6104V58.49L70.9056 55.6104H68.026ZM72.3931 55.6104L59.6104 68.3931V71.3896H62.6069L75.3896 58.6069V55.6104H72.3931ZM75.3896 60.0944L72.2909 63.1932V71.3896H75.3896V60.0944ZM71.2389 64.2451L68.026 67.4581V71.3896H71.2389V64.2451ZM66.974 68.51L64.0944 71.3896H66.974V68.51ZM57.0956 71.4481C57.2196 71.4481 57.3386 71.4973 57.4262 71.585C57.5139 71.6727 57.5632 71.7916 57.5632 71.9156C57.5632 72.0396 57.5139 72.1585 57.4262 72.2462C57.3386 72.3339 57.2196 72.3831 57.0956 72.3831C56.9717 72.3831 56.8527 72.3339 56.7651 72.2462C56.6774 72.1585 56.6281 72.0396 56.6281 71.9156C56.6281 71.7916 56.6774 71.6727 56.7651 71.585C56.8527 71.4973 56.9717 71.4481 57.0956 71.4481ZM77.7857 71.4865C77.9097 71.4865 78.0286 71.5358 78.1163 71.6234C78.204 71.7111 78.2532 71.83 78.2532 71.954C78.2532 72.078 78.204 72.197 78.1163 72.2846C78.0286 72.3723 77.9097 72.4216 77.7857 72.4216C77.6617 72.4216 77.5428 72.3723 77.4551 72.2846C77.3674 72.197 77.3182 72.078 77.3182 71.954C77.3182 71.83 77.3674 71.7111 77.4551 71.6234C77.5428 71.5358 77.6617 71.4865 77.7857 71.4865ZM59.3022 72.4416L54.7438 77H80.2562L75.6978 72.4416H59.3022ZM55.3442 73.3037C55.4682 73.3037 55.5871 73.3529 55.6748 73.4406C55.7624 73.5283 55.8117 73.6472 55.8117 73.7712C55.8117 73.8952 55.7624 74.0141 55.6748 74.1018C55.5871 74.1895 55.4682 74.2388 55.3442 74.2388C55.2202 74.2388 55.1012 74.1895 55.0136 74.1018C54.9259 74.0141 54.8766 73.8952 54.8766 73.7712C54.8766 73.6472 54.9259 73.5283 55.0136 73.4406C55.1012 73.3529 55.2202 73.3037 55.3442 73.3037ZM59.0844 73.3504C59.2084 73.3504 59.3273 73.3997 59.415 73.4874C59.5027 73.5751 59.5519 73.694 59.5519 73.818C59.5519 73.942 59.5027 74.0609 59.415 74.1486C59.3273 74.2362 59.2084 74.2855 59.0844 74.2855C58.9604 74.2855 58.8415 74.2362 58.7538 74.1486C58.6661 74.0609 58.6169 73.942 58.6169 73.818C58.6169 73.694 58.6661 73.5751 58.7538 73.4874C58.8415 73.3997 58.9604 73.3504 59.0844 73.3504ZM75.9156 73.3921C76.0396 73.3921 76.1585 73.4413 76.2462 73.529C76.3339 73.6167 76.3831 73.7356 76.3831 73.8596C76.3831 73.9836 76.3339 74.1025 76.2462 74.1902C76.1585 74.2779 76.0396 74.3271 75.9156 74.3271C75.7916 74.3271 75.6727 74.2779 75.585 74.1902C75.4973 74.1025 75.4481 73.9836 75.4481 73.8596C75.4481 73.7356 75.4973 73.6167 75.585 73.529C75.6727 73.4413 75.7916 73.3921 75.9156 73.3921ZM79.6558 73.6691C79.7798 73.6691 79.8988 73.7183 79.9864 73.806C80.0741 73.8937 80.1234 74.0126 80.1234 74.1366C80.1234 74.2606 80.0741 74.3795 79.9864 74.4672C79.8988 74.5549 79.7798 74.6041 79.6558 74.6041C79.5318 74.6041 79.4129 74.5549 79.3252 74.4672C79.2376 74.3795 79.1883 74.2606 79.1883 74.1366C79.1883 74.0126 79.2376 73.8937 79.3252 73.806C79.4129 73.7183 79.5318 73.6691 79.6558 73.6691ZM77.7857 75.1883C77.9097 75.1883 78.0286 75.2376 78.1163 75.3252C78.204 75.4129 78.2532 75.5318 78.2532 75.6558C78.2532 75.7798 78.204 75.8988 78.1163 75.9864C78.0286 76.0741 77.9097 76.1234 77.7857 76.1234C77.6617 76.1234 77.5428 76.0741 77.4551 75.9864C77.3674 75.8988 77.3182 75.7798 77.3182 75.6558C77.3182 75.5318 77.3674 75.4129 77.4551 75.3252C77.5428 75.2376 77.6617 75.1883 77.7857 75.1883ZM57.2143 75.3379C57.3383 75.3379 57.4572 75.3872 57.5449 75.4749C57.6326 75.5625 57.6818 75.6815 57.6818 75.8055C57.6818 75.9295 57.6326 76.0484 57.5449 76.136C57.4572 76.2237 57.3383 76.273 57.2143 76.273C57.0903 76.273 56.9714 76.2237 56.8837 76.136C56.796 76.0484 56.7468 75.9295 56.7468 75.8055C56.7468 75.6815 56.796 75.5625 56.8837 75.4749C56.9714 75.3872 57.0903 75.3379 57.2143 75.3379Z"
-                class="fill-main-500" />
+                class="fill-main-500"
+              />
             </g>
             <defs>
               <filter
@@ -70,19 +72,28 @@ function takeAllItems() {
                 width="135"
                 height="135"
                 filterUnits="userSpaceOnUse"
-                color-interpolation-filters="sRGB">
-                <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                color-interpolation-filters="sRGB"
+              >
+                <feFlood
+                  flood-opacity="0"
+                  result="BackgroundImageFix"
+                />
                 <feColorMatrix
                   in="SourceAlpha"
                   type="matrix"
                   values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                  result="hardAlpha" />
+                  result="hardAlpha"
+                />
                 <feOffset dy="4" />
                 <feGaussianBlur stdDeviation="27" />
-                <feComposite in2="hardAlpha" operator="out" />
+                <feComposite
+                  in2="hardAlpha"
+                  operator="out"
+                />
                 <feColorMatrix
                   type="matrix"
-                  values="0 0 0 0 0.937 0 0 0 0 0.447 0 0 0 0 0.180 0 0 0 0.2 0">
+                  values="0 0 0 0 0.937 0 0 0 0 0.447 0 0 0 0 0.180 0 0 0 0.2 0"
+                >
                   <animate
                     attributeName="values"
                     attributeType="XML"
@@ -90,65 +101,81 @@ function takeAllItems() {
                     repeatCount="indefinite"
                     values="0 0 0 0 0.937 0 0 0 0 0.447 0 0 0 0 0.180 0 0 0 0.2 0; 
                             0 0 0 0 0.937 0 0 0 0 0.447 0 0 0 0 0.180 0 0 0 2 0; 
-                            0 0 0 0 0.937 0 0 0 0 0.447 0 0 0 0 0.180 0 0 0 0.2 0" />
+                            0 0 0 0 0.937 0 0 0 0 0.447 0 0 0 0 0.180 0 0 0 0.2 0"
+                  />
                 </feColorMatrix>
                 <feBlend
                   mode="normal"
                   in2="BackgroundImageFix"
-                  result="effect1_dropShadow_12_518" />
+                  result="effect1_dropShadow_12_518"
+                />
                 <feBlend
                   mode="normal"
                   in="SourceGraphic"
                   in2="effect1_dropShadow_12_518"
-                  result="shape" />
+                  result="shape"
+                />
               </filter>
             </defs>
           </svg>
           <div
-            class="absolute w-2/3 h-[66.666667%] bg-transparent border border-solid border-main-500 rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -mt-1 opacity-75">
-          </div>
+            class="absolute left-1/2 top-1/2 -mt-1 h-[66.666667%] w-2/3 -translate-x-1/2 -translate-y-1/2 rounded-full border border-solid border-main-500 bg-transparent opacity-75"
+          ></div>
           <div
-            class="absolute w-full h-full bg-transparent border border-solid border-main-500 rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -mt-1 opacity-35">
-          </div>
+            class="absolute left-1/2 top-1/2 -mt-1 h-full w-full -translate-x-1/2 -translate-y-1/2 rounded-full border border-solid border-main-500 bg-transparent opacity-35"
+          ></div>
           <div
-            class="absolute w-[130%] h-[130%] bg-transparent border border-solid border-main-500 rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -mt-1 opacity-5">
-          </div>
+            class="absolute left-1/2 top-1/2 -mt-1 h-[130%] w-[130%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-solid border-main-500 bg-transparent opacity-5"
+          ></div>
           <div></div>
         </div>
         <!-- Title -->
-        <h1 class="font-normal text-5xl text-center mt-8">
-          You opened <b class="text-main-500 font-extrabold">Military crate</b>
+        <h1 class="mt-8 text-center text-5xl font-normal">
+          You opened
+          <b class="font-extrabold text-main-500">Military crate</b>
         </h1>
         <p class="text-lavenderGray">Faster, someone call FBI.</p>
         <!-- Items -->
-        <div class="grid gap-2.5 my-11 grid-cols-5">
-          <template v-for="(_, index) in 20" :key="index">
-            <LootBoxSlot v-if="lootBox.inventory.items[index]"
+        <div class="my-11 grid grid-cols-5 gap-2.5">
+          <template
+            v-for="(_, index) in 20"
+            :key="index"
+          >
+            <LootBoxSlot
+              v-if="lootBox.inventory.items[index]"
               :source="{ ...lootBox.source, inventorySlot: lootBox.inventory.items[index].slot }"
               :item="lootBox.inventory.items[index].item"
-              @mouseover="handleMouseEnter(lootBox.inventory.items[index].item)" @mouseleave="handleMouseLeave" />
+              @mouseover="handleMouseEnter(lootBox.inventory.items[index].item)"
+              @mouseleave="handleMouseLeave"
+            />
             <LootBoxSlot v-else />
           </template>
         </div>
         <!-- Actions -->
-        <div class="grid w-full grid-cols-2 mt-2.5 gap-2.5">
+        <div class="mt-2.5 grid w-full grid-cols-2 gap-2.5">
           <button
             @click="takeAllItems"
-            class="py-4 flex justify-center items-center bg-main-500 hover:bg-main-600 text-white text-base font-bold transition">
+            class="flex items-center justify-center bg-main-500 py-4 text-base font-bold text-white transition hover:bg-main-600"
+          >
             <span class="-mb-0.5">Take all loot</span>
           </button>
           <button
             @click="client.closeWindow"
-            class="py-4 flex justify-center items-center bg-transparent border border-solid border-white/50 text-white text-base font-bold">
+            class="flex items-center justify-center border border-solid border-white/50 bg-transparent py-4 text-base font-bold text-white"
+          >
             <span class="-mb-0.5">Close crate</span>
           </button>
         </div>
-        <div class="flex justify-center flex-col items-center mt-11">
-          <p class="text-white font-medium text-2xl">Time remaining</p>
-          <span class="text-main-500 font-bold text-4xl">{{ timeLeft }}</span>
+        <div class="mt-11 flex flex-col items-center justify-center">
+          <p class="text-2xl font-medium text-white">Time remaining</p>
+          <span class="text-4xl font-bold text-main-500">{{ timeLeft }}</span>
         </div>
       </div>
     </div>
-    <LootBoxItemInfo v-if="hoveredItem" :item="hoveredItem" action-text="Click to take" />
+    <LootBoxItemInfo
+      v-if="hoveredItem"
+      :item="hoveredItem"
+      action-text="Click to take"
+    />
   </div>
 </template>

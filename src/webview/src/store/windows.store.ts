@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 
-export const useWindows = defineStore('windows', {
+export const useWindows = defineStore("windows", {
   state: () => ({
-    topIndex: 0
+    topIndex: 0,
   }),
-})
+});

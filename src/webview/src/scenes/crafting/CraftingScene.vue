@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import Screen from "@/components/Screen.vue";
 import { computed, ref } from "vue";
+import Screen from "@/components/Screen.vue";
 import Riffle from "./Riffle.vue";
 import RiffleDetails from "./RiffleDetails.vue";
 import RiffleList from "./RiffleList.vue";
-import { RifleType } from "./types";
+import { type RifleType } from "./types";
 
 const Bg = "/assets/bg/crafting-bg.png";
 const Strap10x = "/assets/items/10x-strap.png";
@@ -158,17 +158,17 @@ const activeRifle = computed(() => {
     <div class="fixed inset-0 -z-10">
       <img
         :src="Bg"
-        class="w-full h-full object-cover object-center bg-no-repeat"
+        class="h-full w-full bg-no-repeat object-cover object-center"
         alt="crafting"
       />
-      <div class="bg-subtleDarkRadialGradient absolute inset-0 opacity-95"></div>
-      <div class="bg-black/20 blur-sm absolute inset-0"></div>
+      <div class="absolute inset-0 bg-subtleDarkRadialGradient opacity-95"></div>
+      <div class="absolute inset-0 bg-black/20 blur-sm"></div>
     </div>
 
-    <nav class="flex max-w-screen-2xl px-6 mx-auto py-8 justify-between items-center gap-7">
+    <nav class="mx-auto flex max-w-screen-2xl items-center justify-between gap-7 px-6 py-8">
       <a
         href="#"
-        class="flex gap-6 items-center"
+        class="flex items-center gap-6"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -233,10 +233,10 @@ const activeRifle = computed(() => {
         <div class="h-9 w-0.5 bg-white/30"></div>
         <span class="text-lg font-semibold text-white">Your workspace</span>
       </a>
-      <div class="flex gap-7 items-center">
-        <button class="uppercase text-sm font-bold text-white">close</button>
+      <div class="flex items-center gap-7">
+        <button class="text-sm font-bold uppercase text-white">close</button>
         <button
-          class="uppercase text-sm font-bold text-white py-3 px-2.5 border border-solid border-white/10"
+          class="border border-solid border-white/10 px-2.5 py-3 text-sm font-bold uppercase text-white"
         >
           esc
         </button>
@@ -244,7 +244,7 @@ const activeRifle = computed(() => {
     </nav>
 
     <main
-      class="max-w-screen-2xl p-6 mx-auto flex flex-col lg:flex-row items-start gap-12 h-[calc(100vh_-_131px)] overflow-y-auto"
+      class="mx-auto flex h-[calc(100vh_-_131px)] max-w-screen-2xl flex-col items-start gap-12 overflow-y-auto p-6 lg:flex-row"
     >
       <RiffleList :rifles="rifles" />
       <Riffle :activeRifle="activeRifle" />

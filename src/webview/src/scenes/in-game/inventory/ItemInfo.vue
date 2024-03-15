@@ -1,8 +1,19 @@
 <script setup lang="ts">
 import { computed } from "vue";
+import {
+  CombineType,
+  getCombineType,
+  getItemName,
+  isItemClothing,
+  isUnisexClothing,
+  isFemaleClothing,
+  getWeaponStats,
+  isItemFirearmWeapon,
+  isItemFishingRod,
+  isItemWeapon,
+} from "@shared/modules/items";
 import { useItemDetails } from "@/composables/use-item-details";
-import { CombineType, getCombineType, getItemName, isItemClothing, isUnisexClothing, isFemaleClothing, getWeaponStats, isItemFirearmWeapon, isItemFishingRod, isItemWeapon } from "@shared/modules/items";
-import { Hovering, useInventory } from "@/store/inventory.store";
+import { type Hovering, useInventory } from "@/store/inventory.store";
 import { getRandomDescription } from "@/utils/items";
 
 const props = defineProps<Hovering>();
@@ -10,7 +21,7 @@ const props = defineProps<Hovering>();
 const item = computed(() => props.item.item);
 
 const price = computed(() => {
-  if (props.item && 'price' in props.item) {
+  if (props.item && "price" in props.item) {
     return props.item.price;
   }
   return null;
@@ -50,12 +61,17 @@ const combination = computed(() => {
 </script>
 
 <template>
-  <div class="mx-auto absolute top-0 left-0 pointer-events-none select-none z-max w-72 bg-white text-black p-4"
+  <div
+    class="pointer-events-none absolute left-0 top-0 z-max mx-auto w-72 select-none bg-white p-4 text-black"
     theme="light"
     :style="{
       transform: `translate(${position.x}px, ${position.y}px)`,
-    }">
-    <div v-if="combination" class="text-yellow-500 font-bold mb-2">
+    }"
+  >
+    <div
+      v-if="combination"
+      class="mb-2 font-bold text-yellow-500"
+    >
       {{ combination }}
     </div>
 
@@ -63,16 +79,22 @@ const combination = computed(() => {
       Name and description
      -->
     <div>
-      <div class="text-lg font-bold mb-2 flex justify-between">
+      <div class="mb-2 flex justify-between text-lg font-bold">
         <div class="flex gap-2">
           <div v-if="isItemClothing(item)">
             <span v-if="isUnisexClothing(item.key)">
               <span class="font-bold text-gray-500">U</span>
             </span>
-            <span v-else-if="isFemaleClothing(item.key)" class="font-bold text-pink-400">
+            <span
+              v-else-if="isFemaleClothing(item.key)"
+              class="font-bold text-pink-400"
+            >
               F
             </span>
-            <span v-else class="font-bold text-gray-500">
+            <span
+              v-else
+              class="font-bold text-gray-500"
+            >
               M
             </span>
           </div>
@@ -82,7 +104,10 @@ const combination = computed(() => {
         <!-- 
           Shop price
         -->
-        <div v-if="typeof price === 'number'" class="text-xl font-bold text-yellow-300">
+        <div
+          v-if="typeof price === 'number'"
+          class="text-xl font-bold text-yellow-300"
+        >
           €{{ price }}
         </div>
       </div>
@@ -105,14 +130,20 @@ const combination = computed(() => {
       <!--
         Firearm weapon info
       -->
-      <div v-if="isItemFirearmWeapon(item) && item.clip" class="flex items-center gap-1">
+      <div
+        v-if="isItemFirearmWeapon(item) && item.clip"
+        class="flex items-center gap-1"
+      >
         <v-icon icon="mdi-ammunition" />
         <div>
           <div class="font-bold">
             {{ getItemName(item.clip.key) }}
           </div>
           <div class="flex items-baseline gap-1">
-            <v-icon icon="mdi-close" size="12" />
+            <v-icon
+              icon="mdi-close"
+              size="12"
+            />
             <div class="font-bold text-yellow-500">
               {{ item.clip.amount }}
             </div>
@@ -123,55 +154,61 @@ const combination = computed(() => {
       <!--
         Weapon stats
       -->
-      <div v-if="weaponStats" class="flex flex-col gap-1 mt-2">
-        <div v-if="weaponStats.damage" class="flex align-center justify-between gap-2">
-          <div class="text-md font-bold">
-            DPS
-          </div>
-          <div class="flex align-center gap-2 w-1/2">
+      <div
+        v-if="weaponStats"
+        class="mt-2 flex flex-col gap-1"
+      >
+        <div
+          v-if="weaponStats.damage"
+          class="align-center flex justify-between gap-2"
+        >
+          <div class="text-md font-bold">DPS</div>
+          <div class="align-center flex w-1/2 gap-2">
             <div class="font-semibold">
               {{ (weaponStats.damage * (1 / weaponStats.timeBetweenShots)).toFixed(1) }}
             </div>
           </div>
         </div>
-        <div v-if="weaponStats.damage" class="flex align-center justify-between gap-2">
-          <div class="text-md font-bold">
-            Damage
-          </div>
-          <div class="flex align-center gap-2 w-1/2">
+        <div
+          v-if="weaponStats.damage"
+          class="align-center flex justify-between gap-2"
+        >
+          <div class="text-md font-bold">Damage</div>
+          <div class="align-center flex w-1/2 gap-2">
             <div class="font-semibold">
               {{ (weaponStats.damage * weaponStats.playerDamageModifier).toFixed(0) }}
             </div>
           </div>
         </div>
-        <div class="flex align-center justify-between gap-2">
-          <div class="text-md font-bold">
-            Rate (per second)
-          </div>
-          <div class="flex align-center gap-2 w-1/2">
+        <div class="align-center flex justify-between gap-2">
+          <div class="text-md font-bold">Rate (per second)</div>
+          <div class="align-center flex w-1/2 gap-2">
             <div class="font-semibold">
-              {{ (weaponStats.timeBetweenShots ? (1 / weaponStats.timeBetweenShots) : (1 /
-                weaponStats.animReloadRate)).toFixed(2) }}
+              {{
+                (weaponStats.timeBetweenShots
+                  ? 1 / weaponStats.timeBetweenShots
+                  : 1 / weaponStats.animReloadRate
+                ).toFixed(2)
+              }}
             </div>
           </div>
         </div>
-        <div v-if="weaponStats.accuracySpread" class="flex align-center justify-between gap-2">
-          <div class="text-md font-bold">
-            Accuracy spread
-          </div>
-          <div class="flex align-center gap-2 w-1/2">
+        <div
+          v-if="weaponStats.accuracySpread"
+          class="align-center flex justify-between gap-2"
+        >
+          <div class="text-md font-bold">Accuracy spread</div>
+          <div class="align-center flex w-1/2 gap-2">
             <div class="font-semibold">
-              {{ weaponStats.accuracySpread.toFixed(1).replace('.0', '') }}
+              {{ weaponStats.accuracySpread.toFixed(1).replace(".0", "") }}
             </div>
           </div>
         </div>
-        <div class="flex align-center justify-between gap-2">
-          <div class="text-md font-bold">
-            Range
-          </div>
-          <div class="flex align-center gap-2 w-1/2">
+        <div class="align-center flex justify-between gap-2">
+          <div class="text-md font-bold">Range</div>
+          <div class="align-center flex w-1/2 gap-2">
             <div class="font-semibold">
-              {{ weaponStats.range.toFixed(1).replace('.0', '') }}
+              {{ weaponStats.range.toFixed(1).replace(".0", "") }}
             </div>
           </div>
         </div>
@@ -180,14 +217,20 @@ const combination = computed(() => {
       <!-- 
         Fishing rod info
        -->
-      <div v-else-if="isItemFishingRod(item) && item.bait" class="flex items-center gap-1">
+      <div
+        v-else-if="isItemFishingRod(item) && item.bait"
+        class="flex items-center gap-1"
+      >
         <v-icon icon="mdi-chart-bubble" />
         <div>
           <div class="font-bold">
             {{ getItemName(item.bait.key) }}
           </div>
           <div class="flex items-baseline gap-1">
-            <v-icon icon="mdi-close" size="12" />
+            <v-icon
+              icon="mdi-close"
+              size="12"
+            />
             <div class="font-bold text-yellow-500">
               {{ item.bait.amount }}
             </div>

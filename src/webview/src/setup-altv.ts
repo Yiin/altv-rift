@@ -5,11 +5,11 @@ globalThis.deserialize = deserialize;
 
 if (!("alt" in globalThis)) {
   globalThis.alt = {
-    emit() { },
-    emitRaw() { },
-    off() { },
-    on() { },
-    once() { },
+    emit() {},
+    emitRaw() {},
+    off() {},
+    on() {},
+    once() {},
     listeners: {},
     getVersion: () => "0.0.0",
     getBranch: () => "dev",
@@ -57,9 +57,9 @@ if (!("alt" in globalThis)) {
       handlers.splice(
         handlers.findIndex(
           (item) =>
-            item.eventName === eventName && item.listener === listener && item.handler === handler
+            item.eventName === eventName && item.listener === listener && item.handler === handler,
         ),
-        1
+        1,
       );
       try {
         listener(...args.flatMap((arg) => arg && deserialize(arg)));
@@ -77,7 +77,7 @@ if (!("alt" in globalThis)) {
 
   globalThis.alt.off = function (eventName: string, listener: (...args: any[]) => void) {
     const index = handlers.findIndex(
-      (item) => item.eventName === eventName && item.listener === listener
+      (item) => item.eventName === eventName && item.listener === listener,
     );
     if (index > -1) {
       const { eventName, handler } = handlers[index];
@@ -88,6 +88,7 @@ if (!("alt" in globalThis)) {
 }
 
 declare global {
+  // eslint-disable-next-line no-var
   var altMock: boolean;
 
   interface Alt {
@@ -95,4 +96,4 @@ declare global {
   }
 }
 
-export { };
+export {};

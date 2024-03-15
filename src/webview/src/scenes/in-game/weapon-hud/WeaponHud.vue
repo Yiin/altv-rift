@@ -1,7 +1,14 @@
 <script setup lang="ts">
 import { computed } from "vue";
+import {
+  getItemName,
+  isItemFirearmWeapon,
+  isItemMeleeWeapon,
+  isItemThrowableWeapon,
+  getWeaponAmmoEquipmentSlot,
+  isWeaponWithClip,
+} from "@shared/modules/items";
 import { useInventory } from "@/store/inventory.store";
-import { getItemName, isItemFirearmWeapon, isItemMeleeWeapon, isItemThrowableWeapon, getWeaponAmmoEquipmentSlot, isWeaponWithClip } from "@shared/modules/items";
 import { getItemImage } from "@/utils/items";
 import { useCharacter } from "@/store/synced/character.store";
 
@@ -79,16 +86,31 @@ const weapon = computed(() => {
 </script>
 
 <template>
-  <div v-if="weapon" class="absolute right-0 top-1/3 m-10 flex flex-col items-end gap-2">
-    <v-img :height="57" :width="115" :src="getItemImage(weapon.item.key)" />
-    <div class="font-bold text-2xl text-white">{{ weapon.name }}</div>
+  <div
+    v-if="weapon"
+    class="absolute right-0 top-1/3 m-10 flex flex-col items-end gap-2"
+  >
+    <v-img
+      :height="57"
+      :width="115"
+      :src="getItemImage(weapon.item.key)"
+    />
+    <div class="text-2xl font-bold text-white">{{ weapon.name }}</div>
     <template v-if="weapon.type === 'firearm'">
-      <div v-if="weapon.ammo" class="pt-1 px-2 text-black bg-yellow-500 uppercase rounded font-bold">
+      <div
+        v-if="weapon.ammo"
+        class="rounded bg-yellow-500 px-2 pt-1 font-bold uppercase text-black"
+      >
         {{ getItemName(weapon.ammo.key) }}
       </div>
       <div class="flex items-end gap-2">
         <span class="text-4xl text-white">{{ weapon.clip }}</span>
-        <span v-if="weapon.hasClip" class="text-xl text-white/50">{{ weapon.rest }}</span>
+        <span
+          v-if="weapon.hasClip"
+          class="text-xl text-white/50"
+        >
+          {{ weapon.rest }}
+        </span>
       </div>
     </template>
     <template v-if="weapon.type === 'throwable'">

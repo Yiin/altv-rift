@@ -1,8 +1,9 @@
 <template>
-  <div class="flex gap-7 items-center">
-    <button class="uppercase text-sm font-bold text-white">close</button>
+  <div class="flex items-center gap-7">
+    <button class="text-sm font-bold uppercase text-white">close</button>
     <button
-      class="uppercase text-sm font-bold text-white py-3 px-2.5 border border-solid border-white/10">
+      class="border border-solid border-white/10 px-2.5 py-3 text-sm font-bold uppercase text-white"
+    >
       esc
     </button>
   </div>

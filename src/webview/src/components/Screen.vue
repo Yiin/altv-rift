@@ -1,6 +1,9 @@
 <template>
-  <div class="absolute top-0 left-0 w-full h-full">
-    <div class="relative w-full h-full" data-screen>
+  <div class="absolute left-0 top-0 h-full w-full">
+    <div
+      class="relative h-full w-full"
+      data-screen
+    >
       <slot />
     </div>
   </div>

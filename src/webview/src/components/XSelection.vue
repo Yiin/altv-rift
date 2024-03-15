@@ -18,7 +18,7 @@ const props = withDefaults(
     modelValue: 0,
     min: -1,
     max: 1,
-  }
+  },
 );
 
 const size = computed(() => px(props.size ?? 150));
@@ -44,7 +44,7 @@ watch(
   () => props.modelValue,
   (value) => {
     x.value = denormalize(value);
-  }
+  },
 );
 
 function normalize(value: number) {
@@ -52,7 +52,7 @@ function normalize(value: number) {
   return clamp(
     (value / (size.value - full)) * (props.max - props.min) + props.min,
     props.min,
-    props.max
+    props.max,
   );
 }
 
@@ -61,7 +61,7 @@ function denormalize(value: number) {
   return clamp(
     ((value - props.min) * (size.value - full)) / (props.max - props.min),
     0,
-    size.value - full
+    size.value - full,
   );
 }
 
@@ -102,26 +102,41 @@ function trackDragging(e: PointerEvent) {
 </script>
 
 <template>
-  <div :class="['flex justify-center items-center', !noPadding && 'p-6']">
-    <v-sheet ref="container" @pointerdown="dragstart" color="grey-darken-4"
-      class="overflow-visible relative border-solid border-1-neutral-600 border-1" rounded height="30" :width="size">
+  <div :class="['flex items-center justify-center', !noPadding && 'p-6']">
+    <v-sheet
+      ref="container"
+      @pointerdown="dragstart"
+      color="grey-darken-4"
+      class="border-1-neutral-600 relative overflow-visible border-1 border-solid"
+      rounded
+      height="30"
+      :width="size"
+    >
       <!-- Vertical lines -->
-      <div v-for="left in ['left-1/5', 'left-2/5', 'left-3/5', 'left-4/5']"
-        :class="[left, 'absolute left-1/5 h-full border-solid border-l-neutral-600 border-l-1']" />
+      <div
+        v-for="left in ['left-1/5', 'left-2/5', 'left-3/5', 'left-4/5']"
+        :key="left"
+        :class="[left, 'absolute left-1/5 h-full border-l-1 border-solid border-l-neutral-600']"
+      />
 
       <!-- Pointer -->
-      <v-icon ref="pointer" :class="[
-        'absolute z-10 top-1/2 -translate-y-1/2 transform',
-        !isDragging && 'transition-transform duration-100 ease-linear',
-      ]" :style="{
-  '--tw-translate-x': `${x}px`,
-}" icon="mdi-circle" />
+      <v-icon
+        ref="pointer"
+        :class="[
+          'absolute top-1/2 z-10 -translate-y-1/2 transform',
+          !isDragging && 'transition-transform duration-100 ease-linear',
+        ]"
+        :style="{
+          '--tw-translate-x': `${x}px`,
+        }"
+        icon="mdi-circle"
+      />
 
       <!-- Labels -->
-      <span class="absolute -translate-x-full -translate-y-1/2 -left-2 top-1/2 text-xs">
+      <span class="absolute -left-2 top-1/2 -translate-x-full -translate-y-1/2 text-xs">
         {{ props.labelLeft }}
       </span>
-      <span class="absolute translate-x-full -translate-y-1/2 -right-2 top-1/2 text-xs">
+      <span class="absolute -right-2 top-1/2 -translate-y-1/2 translate-x-full text-xs">
         {{ props.labelRight }}
       </span>
     </v-sheet>

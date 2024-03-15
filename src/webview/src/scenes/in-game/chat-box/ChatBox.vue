@@ -1,17 +1,16 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted } from "vue";
-import { useChatStore } from "../../../store/chat.store";
-import type { CommandSuggestion, Options } from "../../../interfaces";
 import Messages from "@/components/ChatBox/Messages.vue";
 import MessageInput from "@/components/ChatBox/MessageInput.vue";
 import CommandSuggestions from "@/components/ChatBox/CommandSuggestions.vue";
+import { useChatStore } from "../../../store/chat.store";
+import type { CommandSuggestion, Options } from "../../../interfaces";
 
 // --------------------------------------------------------------
 // Chat Store
 // --------------------------------------------------------------
 
-const { setFocus, commandSuggestions, setCommandSuggestions, setOptions } =
-  useChatStore();
+const { setFocus, commandSuggestions, setCommandSuggestions, setOptions } = useChatStore();
 
 // --------------------------------------------------------------
 // Functions
@@ -31,10 +30,7 @@ function toggleFocus(focus: boolean) {
  * Syncs the client settings with the server settings.
  * @param settings The chat window's settings.
  */
-function syncSettings(
-  settings: Options,
-  _commandSuggestions: Array<CommandSuggestion>
-) {
+function syncSettings(settings: Options, _commandSuggestions: Array<CommandSuggestion>) {
   setOptions(settings);
   setCommandSuggestions([...commandSuggestions.value, ..._commandSuggestions]);
   window?.alt?.emitRaw("vchat:mounted");
@@ -71,7 +67,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="fixed top-[16px] left-[16px] w-[640px]">
+  <div class="fixed left-[16px] top-[16px] w-[640px]">
     <Messages />
     <MessageInput />
     <CommandSuggestions />

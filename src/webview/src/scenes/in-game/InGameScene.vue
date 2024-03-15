@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import { UIElement } from "@shared/enums/ui";
+import { WindowType } from "@shared/store/client.store";
 import Screen from "@/components/Screen.vue";
+import { useClient } from "@/store/synced/client.store";
 import ChatBox from "./chat-box/ChatBox.vue";
 import Inventory from "./inventory/Inventory.vue";
 import LootBox from "./loot-box/LootBox.vue";
@@ -12,9 +15,6 @@ import AreaIndicators from "./area-indicators/AreaIndicators.vue";
 import ActionMenu from "./action-menu/ActionMenu.vue";
 import TargetAction from "./target-action/TargetAction.vue";
 import FishingGame from "./fishing-game/FishingGame.vue";
-import { useClient } from "@/store/synced/client.store";
-import { UIElement } from "@shared/enums/ui";
-import { WindowType } from "@shared/store/client.store";
 
 const client = useClient();
 </script>
@@ -22,7 +22,9 @@ const client = useClient();
 <template>
   <Screen>
     <template v-if="client.ui.window">
-      <Inventory v-if="[WindowType.PLAYER_INVENTORY, WindowType.SHOP].includes(client.ui.window.type)" />
+      <Inventory
+        v-if="[WindowType.PLAYER_INVENTORY, WindowType.SHOP].includes(client.ui.window.type)"
+      />
       <LootBox v-if="client.ui.window.type === WindowType.LOOT_BOX" />
     </template>
     <ActionMenu v-else-if="client.ui.elements.has(UIElement.ACTION_MENU)" />

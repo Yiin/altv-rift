@@ -40,10 +40,11 @@ module.exports = {
         ceruleanSky: "#3382FA",
       },
       backgroundImage: {
-        weaponCard: "linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(102,102,102,0.2) 100%), linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.05) 100%)",
-        weaponCardA: "linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(102,102,102,0.2) 100%), linear-gradient(to bottom, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.15) 100%)",
-        darkRadialGradient:
-          "radial-gradient(47.55% 47.55% at 50% 0%, #050623 0%, #00010F 100%)",
+        weaponCard:
+          "linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(102,102,102,0.2) 100%), linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.05) 100%)",
+        weaponCardA:
+          "linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(102,102,102,0.2) 100%), linear-gradient(to bottom, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.15) 100%)",
+        darkRadialGradient: "radial-gradient(47.55% 47.55% at 50% 0%, #050623 0%, #00010F 100%)",
         semiTransparentRadialGradient:
           "radial-gradient(116.43% 121.73% at 0% 0%, rgba(255, 218, 87, 0.20) 0%, rgba(255, 218, 87, 0.00) 100%)",
         subtleDarkRadialGradient:
@@ -70,36 +71,37 @@ module.exports = {
           "linear-gradient(180deg, rgba(185, 240, 69, 0.10) 0%, rgba(185, 240, 69, 0.00) 100%)",
         delicateWhiteVeil:
           "linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.00) 100%)",
-        passionateRubyBlaze: "linear-gradient(180deg, rgba(255, 36, 49, 0.40) 0%, rgba(255, 36, 49, 0.00) 100%)",
-        sunriseYellowToBlack: "linear-gradient(180deg, rgba(255, 218, 87, 0.15) 0%, rgba(255, 218, 87, 0.01) 100%)",
+        passionateRubyBlaze:
+          "linear-gradient(180deg, rgba(255, 36, 49, 0.40) 0%, rgba(255, 36, 49, 0.00) 100%)",
+        sunriseYellowToBlack:
+          "linear-gradient(180deg, rgba(255, 218, 87, 0.15) 0%, rgba(255, 218, 87, 0.01) 100%)",
+        // with variable
+        variable: "var(--bg)",
       },
       borderWidth: {
         1: "1px",
-        "3.5": "3.5px",
+        3.5: "3.5px",
       },
       dropShadow: {
         "glow-simple": "0px 1px 32px rgba(255, 238, 87, 0.15)",
-        glow: [
-          "0 0px 2px rgba(255,255, 255, 0.35)",
-          "0 0px 6px rgba(255, 255,255, 0.2)"
-        ]
+        glow: ["0 0px 2px rgba(255,255, 255, 0.35)", "0 0px 6px rgba(255, 255,255, 0.2)"],
       },
       minWidth: (utils) => utils.theme("spacing"),
       spacing: {
-        "1.75": "0.4375rem",
-        "5.5": "1.375rem",
-        "14.5": "3.625rem",
+        1.75: "0.4375rem",
+        5.5: "1.375rem",
+        14.5: "3.625rem",
         17: "4.25rem",
-        '17.25': '4.3125rem',
-        '17.5': '4.375rem',
-        '17.75': '4.4375rem',
+        17.25: "4.3125rem",
+        17.5: "4.375rem",
+        17.75: "4.4375rem",
         18: "4.5rem",
-        '18.5': '4.625rem',
+        18.5: "4.625rem",
         19: "4.75rem",
         21: "5.25rem",
         22: "5.5rem",
         42: "10.5rem",
-        '44.5': '11.125rem',
+        44.5: "11.125rem",
         49: "12.25rem",
         135: "33.75rem",
         132.5: "33.125rem",
@@ -128,8 +130,8 @@ module.exports = {
         max: 9007199254740000,
       },
       boxShadow: {
-        sunriseYellow: "0px 3px 15px 0px rgba(255, 209, 45, 0.50)"
-      }
+        sunriseYellow: "0px 3px 15px 0px rgba(255, 209, 45, 0.50)",
+      },
     },
   },
   plugins: [
@@ -141,11 +143,11 @@ module.exports = {
           const newVars =
             typeof value === "string"
               ? {
-                [`--color${colorGroup}-${colorKey}`]: value,
-                ...(colorKey === "500" && {
-                  [`--color${colorGroup}`]: value,
-                }),
-              }
+                  [`--color${colorGroup}-${colorKey}`]: value,
+                  ...(colorKey === "500" && {
+                    [`--color${colorGroup}`]: value,
+                  }),
+                }
               : extractColorVars(value, `-${colorKey}`);
 
           return { ...vars, ...newVars };

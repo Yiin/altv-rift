@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import Screen from "@/components/Screen.vue";
 import { ref } from "vue";
+import Screen from "@/components/Screen.vue";
 import AvailableModules from "./AvailableModules.vue";
 import InstalledModules from "./InstalledModules.vue";
 import WeaponryList from "./WeaponryList.vue";
-import { AvailableWeaponModuleType, WeaponModuleType } from "./types";
+import { type AvailableWeaponModuleType, type WeaponModuleType } from "./types";
 
 const Bg = "/assets/bg/weapon-module-bg.png";
 const AdvancedRifle1 = "/assets/items/advancedrifle1.png";
@@ -125,30 +125,33 @@ const availableModules = ref<AvailableWeaponModuleType[]>([
     <div class="fixed inset-0 -z-10">
       <img
         :src="Bg"
-        class="w-full h-full object-cover object-center bg-no-repeat"
-        alt="crafting" />
+        class="h-full w-full bg-no-repeat object-cover object-center"
+        alt="crafting"
+      />
     </div>
 
-    <nav class="flex max-w-screen-2xl px-6 mx-auto py-8 justify-between items-center gap-7">
+    <nav class="mx-auto flex max-w-screen-2xl items-center justify-between gap-7 px-6 py-8">
       <div>
         <a href="#">
-          <p class="font-extrabold text-4xl text-white mb-1">Your weaponry</p>
-          <span class="text-base text-limeZest inline-block max-w-[180px]">
+          <p class="mb-1 text-4xl font-extrabold text-white">Your weaponry</p>
+          <span class="inline-block max-w-[180px] text-base text-limeZest">
             There are listed items you can customize and install new modules
           </span>
         </a>
       </div>
-      <div class="flex gap-7 items-center">
-        <button class="uppercase text-sm font-bold text-white">close</button>
+      <div class="flex items-center gap-7">
+        <button class="text-sm font-bold uppercase text-white">close</button>
         <button
-          class="uppercase text-sm font-bold text-white py-3 px-2.5 border border-solid border-white/10">
+          class="border border-solid border-white/10 px-2.5 py-3 text-sm font-bold uppercase text-white"
+        >
           esc
         </button>
       </div>
     </nav>
 
     <main
-      class="max-w-screen-2xl p-6 mx-auto flex items-start gap-12 h-[calc(100vh_-_98px)] overflow-y-auto">
+      class="mx-auto flex h-[calc(100vh_-_98px)] max-w-screen-2xl items-start gap-12 overflow-y-auto p-6"
+    >
       <WeaponryList :weaponModules="weaponModules" />
       <InstalledModules />
       <AvailableModules :availableModules="availableModules" />

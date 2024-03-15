@@ -88,8 +88,22 @@
         class=""
         opacity="1"
       ></circle>
-      <circle cx="131.842" cy="358.666" r="15.977" style="" fill="#dddbdb" class=""></circle>
-      <circle cx="383.649" cy="358.666" r="15.977" style="" fill="#dddbdb" class=""></circle>
+      <circle
+        cx="131.842"
+        cy="358.666"
+        r="15.977"
+        style=""
+        fill="#dddbdb"
+        class=""
+      ></circle>
+      <circle
+        cx="383.649"
+        cy="358.666"
+        r="15.977"
+        style=""
+        fill="#dddbdb"
+        class=""
+      ></circle>
       <path
         d="M106.583 358.891c0-21.556 15.076-39.578 35.255-44.131-28.337-6.389-55.25 15.117-55.25 44.131 0 29.038 26.935 50.514 55.25 44.131-20.18-4.553-35.255-22.574-35.255-44.131z"
         style=""

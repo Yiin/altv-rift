@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import { nextTick, onMounted, onUnmounted, type Ref, ref, watch } from "vue";
 import { useChatStore } from "@/store/chat.store";
-import { nextTick, onMounted, onUnmounted, Ref, ref, watch } from "vue";
 
 // --------------------------------------------------------------
 // Chat Store
@@ -36,10 +36,7 @@ async function sendMessage(event: KeyboardEvent) {
   if (event.key !== "Enter") return;
 
   window?.alt?.emitRaw("vchat:addMessage", message.value.trim());
-  buffer.value = [message.value, ...buffer.value].splice(
-    0,
-    options.maxMessageBufferLength
-  );
+  buffer.value = [message.value, ...buffer.value].splice(0, options.maxMessageBufferLength);
   currentBufferIndex.value = -1;
   setMessage("");
 
@@ -77,10 +74,7 @@ function handleKeydown(event: KeyboardEvent) {
 
 function processInputChange(event: Event) {
   const value = (event.currentTarget as HTMLInputElement).value;
-  if (
-    options.maxMessageLength !== 0 &&
-    value.length > options.maxMessageLength
-  ) {
+  if (options.maxMessageLength !== 0 && value.length > options.maxMessageLength) {
     setMessage(value.slice(0, options.maxMessageLength));
     return;
   }
@@ -124,11 +118,11 @@ onUnmounted(() => window.removeEventListener("keydown", handleKeydown));
 
 <template>
   <div
-    class="flex gap-4 bg-black bg-opacity-50 text-base text-white px-[16px] py-[8px] w-full"
+    class="flex w-full gap-4 bg-black bg-opacity-50 px-[16px] py-[8px] text-base text-white"
     :class="{ invisible: !focus, visible: focus }"
   >
     <input
-      class="bg-transparent focus:outline-none w-full"
+      class="w-full bg-transparent focus:outline-none"
       :placeholder="options.placeholder"
       v-model="message"
       ref="inputRef"

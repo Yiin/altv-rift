@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import Screen from "@/components/Screen.vue";
 import { ref } from "vue";
-import { RifleType } from "./types";
+import Screen from "@/components/Screen.vue";
+import { type RifleType } from "./types";
 
 const Bg = "/assets/bg/weapon-shop-bg.png";
 const AdvancedRifle1 = "/assets/items/advancedrifle1.png";
@@ -158,18 +158,18 @@ const rifles = ref<RifleType[]>([
     <div class="fixed inset-0 -z-10">
       <img
         :src="Bg"
-        class="w-full h-full object-cover object-center"
+        class="h-full w-full object-cover object-center"
         alt="weapon shop"
       />
-      <div class="bg-subtleDarkRadialGradient absolute inset-0 opacity-95"></div>
+      <div class="absolute inset-0 bg-subtleDarkRadialGradient opacity-95"></div>
 
-      <div class="bg-black/70 blur-sm absolute inset-0"></div>
+      <div class="absolute inset-0 bg-black/70 blur-sm"></div>
     </div>
-    <nav class="flex max-w-screen-2xl px-6 mx-auto justify-between items-center gap-7">
+    <nav class="mx-auto flex max-w-screen-2xl items-center justify-between gap-7 px-6">
       <div class="flex gap-20">
         <a
           href="#"
-          class="flex gap-6 items-center max-w-[181px] w-[40vw]"
+          class="flex w-[40vw] max-w-[181px] items-center gap-6"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -225,86 +225,86 @@ const rifles = ref<RifleType[]>([
           </svg>
         </a>
         <ul class="hidden lg:flex">
-          <li class="h-36 px-10 relative">
+          <li class="relative h-36 px-10">
             <a
               href="#"
-              class="absolute top-[calc(50%_+_12px)] left-1/2 -translate-x-1/2 -translate-y-1/2 font-semibold text-white/[0.35]"
+              class="absolute left-1/2 top-[calc(50%_+_12px)] -translate-x-1/2 -translate-y-1/2 font-semibold text-white/[0.35]"
             >
               Melee
             </a>
           </li>
-          <li class="h-36 px-10 relative">
+          <li class="relative h-36 px-10">
             <a
               href="#"
-              class="absolute top-[calc(50%_+_12px)] left-1/2 -translate-x-1/2 -translate-y-1/2 font-semibold text-white/[0.35]"
+              class="absolute left-1/2 top-[calc(50%_+_12px)] -translate-x-1/2 -translate-y-1/2 font-semibold text-white/[0.35]"
             >
               Pistols
             </a>
           </li>
           <li
-            class="h-36 bg-passionateRubyBlaze px-10 relative after:absolute after:top-0 after:left-0 after:w-full after:h-[3px] after:bg-accentRed before:absolute before:top-0 before:left-1/2 before:-translate-x-1/2 before:bg-accentRed before:w-2.5 before:h-2.5 before:-mt-[5px] before:rotate-45"
+            class="relative h-36 bg-passionateRubyBlaze px-10 before:absolute before:left-1/2 before:top-0 before:-mt-[5px] before:h-2.5 before:w-2.5 before:-translate-x-1/2 before:rotate-45 before:bg-accentRed after:absolute after:left-0 after:top-0 after:h-[3px] after:w-full after:bg-accentRed"
           >
             <a
               href="#"
-              class="absolute top-[calc(50%_+_12px)] left-1/2 -translate-x-1/2 -translate-y-1/2 font-semibold text-white"
+              class="absolute left-1/2 top-[calc(50%_+_12px)] -translate-x-1/2 -translate-y-1/2 font-semibold text-white"
             >
               Rifles
             </a>
           </li>
-          <li class="h-36 px-10 relative">
+          <li class="relative h-36 px-10">
             <a
               href="#"
-              class="absolute top-[calc(50%_+_12px)] left-1/2 -translate-x-1/2 -translate-y-1/2 font-semibold text-white/[0.35]"
+              class="absolute left-1/2 top-[calc(50%_+_12px)] -translate-x-1/2 -translate-y-1/2 font-semibold text-white/[0.35]"
             >
               SMGs
             </a>
           </li>
-          <li class="h-36 px-10 relative">
+          <li class="relative h-36 px-10">
             <a
               href="#"
-              class="absolute top-[calc(50%_+_12px)] left-1/2 -translate-x-1/2 -translate-y-1/2 font-semibold text-white/[0.35]"
+              class="absolute left-1/2 top-[calc(50%_+_12px)] -translate-x-1/2 -translate-y-1/2 font-semibold text-white/[0.35]"
             >
               Shotgun
             </a>
           </li>
-          <li class="h-36 px-10 relative">
+          <li class="relative h-36 px-10">
             <a
               href="#"
-              class="absolute top-[calc(50%_+_12px)] left-1/2 -translate-x-1/2 -translate-y-1/2 font-semibold text-white/[0.35]"
+              class="absolute left-1/2 top-[calc(50%_+_12px)] -translate-x-1/2 -translate-y-1/2 font-semibold text-white/[0.35]"
             >
               Snipers
             </a>
           </li>
-          <li class="h-36 px-10 relative">
+          <li class="relative h-36 px-10">
             <a
               href="#"
-              class="absolute top-[calc(50%_+_12px)] left-1/2 -translate-x-1/2 -translate-y-1/2 font-semibold text-white/[0.35]"
+              class="absolute left-1/2 top-[calc(50%_+_12px)] -translate-x-1/2 -translate-y-1/2 font-semibold text-white/[0.35]"
             >
               Ammo
             </a>
           </li>
-          <li class="h-36 px-10 relative">
+          <li class="relative h-36 px-10">
             <a
               href="#"
-              class="absolute top-[calc(50%_+_12px)] left-1/2 -translate-x-1/2 -translate-y-1/2 font-semibold text-white/[0.35]"
+              class="absolute left-1/2 top-[calc(50%_+_12px)] -translate-x-1/2 -translate-y-1/2 font-semibold text-white/[0.35]"
             >
               Armor
             </a>
           </li>
-          <li class="h-36 px-10 relative">
+          <li class="relative h-36 px-10">
             <a
               href="#"
-              class="absolute top-[calc(50%_+_12px)] left-1/2 -translate-x-1/2 -translate-y-1/2 font-semibold text-white/[0.35]"
+              class="absolute left-1/2 top-[calc(50%_+_12px)] -translate-x-1/2 -translate-y-1/2 font-semibold text-white/[0.35]"
             >
               Mods
             </a>
           </li>
         </ul>
       </div>
-      <div class="flex gap-7 items-center">
-        <button class="uppercase text-sm font-bold text-white">close</button>
+      <div class="flex items-center gap-7">
+        <button class="text-sm font-bold uppercase text-white">close</button>
         <button
-          class="uppercase text-sm font-bold text-white py-3 px-2.5 border border-solid border-white/10"
+          class="border border-solid border-white/10 px-2.5 py-3 text-sm font-bold uppercase text-white"
         >
           esc
         </button>
@@ -313,16 +313,16 @@ const rifles = ref<RifleType[]>([
 
     <!-- Main section -->
     <main
-      class="min-h-[calc(100vh_-_155px)] flex flex-col justify-center pl-6 min-[1536px]:w-[calc(100vw_-_(100vw_-_1536px)_/_2)] ml-auto"
+      class="ml-auto flex min-h-[calc(100vh_-_155px)] flex-col justify-center pl-6 min-[1536px]:w-[calc(100vw_-_(100vw_-_1536px)_/_2)]"
     >
-      <div class="relative flex justify-start items-center w-full">
+      <div class="relative flex w-full items-center justify-start">
         <div
-          class="flex flex-nowrap gap-4 overflow-x-auto pb-4 relative w-full pr-6 snap-x snap-mandatory"
+          class="relative flex w-full snap-x snap-mandatory flex-nowrap gap-4 overflow-x-auto pb-4 pr-6"
         >
           <div
-            v-for="(rifle, index) in rifles"
+            v-for="rifle in rifles"
             :key="rifle.name"
-            class="border-x border-t border-opacity-70 border-[#5e5d5d] flex-[1_0_250px] snap-start"
+            class="flex-[1_0_250px] snap-start border-x border-t border-[#5e5d5d] border-opacity-70"
           >
             <div class="p-4">
               <div class="flex items-center gap-2">
@@ -339,9 +339,9 @@ const rifles = ref<RifleType[]>([
                     fill-opacity="0.35"
                   />
                 </svg>
-                <span class="text-white text-base font-extrabold leading-4">{{ rifle.price }}</span>
+                <span class="text-base font-extrabold leading-4 text-white">{{ rifle.price }}</span>
               </div>
-              <figure class="h-40 mt-14 mb-10 px-6">
+              <figure class="mb-10 mt-14 h-40 px-6">
                 <img
                   :src="rifle.image"
                   :alt="rifle.name"
@@ -349,34 +349,34 @@ const rifles = ref<RifleType[]>([
                 />
               </figure>
               <h1 class="text-xl font-bold text-white">{{ rifle.name }}</h1>
-              <p class="text-[#898989] text-sm font-semibold">{{ rifle.ammo }}</p>
+              <p class="text-sm font-semibold text-[#898989]">{{ rifle.ammo }}</p>
             </div>
-            <hr class="opacity-70 border-[#5e5d5d]" />
+            <hr class="border-[#5e5d5d] opacity-70" />
             <div class="p-4">
               <div class="space-y-6">
                 <div class="flex items-center justify-between text-white">
-                  <p class="uppercase text-sm">Damage</p>
+                  <p class="text-sm uppercase">Damage</p>
                   <p class="text-sm opacity-50">{{ rifle.properties.damage }}</p>
                 </div>
                 <div class="flex items-center justify-between text-white">
-                  <p class="uppercase text-sm">Firerate</p>
+                  <p class="text-sm uppercase">Firerate</p>
                   <p class="text-sm opacity-50">{{ rifle.properties.firerate }}</p>
                 </div>
                 <div class="flex items-center justify-between text-white">
-                  <p class="uppercase text-sm">clip</p>
+                  <p class="text-sm uppercase">clip</p>
                   <p class="text-sm opacity-50">{{ rifle.properties.clip }}</p>
                 </div>
                 <div class="flex items-center justify-between text-white">
-                  <p class="uppercase text-sm">accuracy</p>
+                  <p class="text-sm uppercase">accuracy</p>
                   <p class="text-sm opacity-50">{{ rifle.properties.accuracy }}</p>
                 </div>
               </div>
               <div class="my-6 text-white">
-                <p class="uppercase font-extrabold text-base">included mods</p>
+                <p class="text-base font-extrabold uppercase">included mods</p>
                 <span
                   v-for="mod in rifle.includedMods"
                   :key="mod"
-                  class="opacity-50 text-base font-semibold"
+                  class="text-base font-semibold opacity-50"
                 >
                   {{ mod }}
                 </span>
@@ -386,7 +386,7 @@ const rifles = ref<RifleType[]>([
               :class="{
                 'h-14 w-full font-bold text-white': true,
                 'bg-[#FF2431]': rifle.isInStock,
-                'bg-[#777777] bg-opacity-25 cursor-not-allowed': !rifle.isInStock,
+                'cursor-not-allowed bg-[#777777] bg-opacity-25': !rifle.isInStock,
               }"
             >
               {{ rifle.isInStock ? "Purchase" : "Out of stock" }}
@@ -395,26 +395,26 @@ const rifles = ref<RifleType[]>([
         </div>
       </div>
       <div class="flex items-center gap-6">
-        <div class="text-white flex items-center gap-3">
+        <div class="flex items-center gap-3 text-white">
           <button
-            class="w-12 h-12 flex justify-center items-center border border-solid border-white/10 font-bold"
+            class="flex h-12 w-12 items-center justify-center border border-solid border-white/10 font-bold"
           >
             Q
           </button>
-          <span class="uppercase font-bold">More information</span>
+          <span class="font-bold uppercase">More information</span>
         </div>
-        <div class="text-white flex items-center gap-3">
+        <div class="flex items-center gap-3 text-white">
           <button
-            class="w-12 h-12 flex justify-center items-center border border-solid border-white/10 font-bold"
+            class="flex h-12 w-12 items-center justify-center border border-solid border-white/10 font-bold"
           >
             F
           </button>
-          <span class="uppercase font-bold">inspect gun</span>
+          <span class="font-bold uppercase">inspect gun</span>
         </div>
-        <div class="text-white flex items-center gap-3">
+        <div class="flex items-center gap-3 text-white">
           <div class="flex items-center gap-2">
             <button
-              class="w-12 h-12 flex justify-center items-center border border-solid border-white/10"
+              class="flex h-12 w-12 items-center justify-center border border-solid border-white/10"
             >
               <svg
                 width="5"
@@ -430,7 +430,7 @@ const rifles = ref<RifleType[]>([
               </svg>
             </button>
             <button
-              class="w-12 h-12 flex justify-center items-center border border-solid border-white/10"
+              class="flex h-12 w-12 items-center justify-center border border-solid border-white/10"
             >
               <svg
                 width="5"
@@ -446,11 +446,11 @@ const rifles = ref<RifleType[]>([
               </svg>
             </button>
           </div>
-          <span class="uppercase font-bold">slide</span>
+          <span class="font-bold uppercase">slide</span>
         </div>
       </div>
       <div
-        class="absolute top-0 bottom-0 right-0 max-w-sm w-1/4 bg-gradient-to-r from-transparent to-white/20 pointer-events-none"
+        class="pointer-events-none absolute bottom-0 right-0 top-0 w-1/4 max-w-sm bg-gradient-to-r from-transparent to-white/20"
       ></div>
     </main>
   </Screen>

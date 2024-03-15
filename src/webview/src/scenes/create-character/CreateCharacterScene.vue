@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue";
-import { useCreateCharacter } from "@/store/create-character.store";
 import {
   getRandomHair,
   getRandomHairColor,
@@ -12,17 +11,18 @@ import {
   notRandomizableOverlaysForGender,
   headOverlays,
   getRandomParent,
-  getRandomResemblance
+  getRandomResemblance,
 } from "@shared/modules/character/appearance-data";
+import { ClientEvents } from "@shared/events/client";
+import { useCreateCharacter } from "@/store/create-character.store";
+import { useEventListener } from "@/composables/use-event-listener";
+import Screen from "@/components/Screen.vue";
 import NameAndSex from "./NameAndSex.vue";
 import Features from "./Features.vue";
 import Appearance from "./Appearance.vue";
 import FaceShape from "./FaceShape.vue";
 import FaceSkin from "./FaceSkin.vue";
-import { useEventListener } from "@/composables/use-event-listener";
 import PlayButton from "./PlayButton.vue";
-import Screen from "@/components/Screen.vue";
-import { ClientEvents } from "@shared/events/client";
 
 const createCharacter = useCreateCharacter();
 
@@ -45,7 +45,7 @@ useEventListener("pointerdown", (e) => {
   }
 });
 
-useEventListener("pointerup", (e) => {
+useEventListener("pointerup", () => {
   alt.emit(ClientEvents.FromWebview.CAMERA_MOVE_END);
 });
 
@@ -86,12 +86,13 @@ function randomize() {
 <template>
   <Screen ref="screenRef">
     <NameAndSex
-      class="absolute top-screen-1/10 left-1/2 -translate-x-1/2 flex flex-col justify-center items-center gap-6" />
-    <div class="absolute top-screen-1/10 left-screen-1/10 w-96 flex flex-col gap-8">
+      class="absolute left-1/2 top-screen-1/10 flex -translate-x-1/2 flex-col items-center justify-center gap-6"
+    />
+    <div class="absolute left-screen-1/10 top-screen-1/10 flex w-96 flex-col gap-8">
       <FaceShape />
       <Features />
     </div>
-    <div class="absolute top-screen-1/10 right-screen-1/10 w-96 flex flex-col gap-8">
+    <div class="absolute right-screen-1/10 top-screen-1/10 flex w-96 flex-col gap-8">
       <FaceSkin />
       <Appearance />
     </div>

@@ -1,5 +1,5 @@
-import { ref, onMounted, nextTick, Ref, reactive } from 'vue';
-import { useEventListener } from './use-event-listener';
+import { ref, onMounted, nextTick, type Ref, reactive } from "vue";
+import { useEventListener } from "./use-event-listener";
 
 export function useGapSize(elementRef: Ref<HTMLElement | undefined>) {
   const gapSize = ref(0);
@@ -23,7 +23,7 @@ export function useGapSize(elementRef: Ref<HTMLElement | undefined>) {
   onMounted(calculateGapSize);
 
   // Recalculate when the window resizes
-  useEventListener('resize', calculateGapSize);
+  useEventListener("resize", calculateGapSize);
 
   return { gapSize, widths };
 }

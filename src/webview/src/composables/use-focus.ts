@@ -7,8 +7,7 @@ export const useFocus = () => {
   document.addEventListener(
     "focus",
     () => {
-      isFocused.value =
-        focusRef.value?.contains(document.activeElement) ?? false;
+      isFocused.value = focusRef.value?.contains(document.activeElement) ?? false;
 
       // if (
       //   isFocused.value &&
@@ -18,7 +17,7 @@ export const useFocus = () => {
       //   focusRef.value.focus();
       // }
     },
-    true
+    true,
   );
 
   function focus() {

@@ -1,6 +1,6 @@
-import { Character, EquipmentSlot } from "@shared/interfaces";
+import { type Store, type StoreDefinition } from "pinia";
+import { type Character, EquipmentSlot } from "@shared/interfaces";
 import { Ammo } from "@shared/modules/items";
-import { Store, StoreDefinition } from "pinia";
 
 type CharacterStore = StoreDefinition<"character", Character, {}, {}>;
 
@@ -17,19 +17,20 @@ export function isCharacterStoreAvailable() {
 export const useCharacter = () =>
   "altMock" in globalThis
     ? ({
-      id: "0x",
-      appearance: {
-        sex: 1,
-      },
-      equipment: {
-        [EquipmentSlot.HandgunAmmo]: {
-          key: Ammo.HANDGUN_AMMO,
-          amount: 1000,
-        }
-      },
-      inventory: {
-        size: 30,
-        items: [],
-      },
-    } as any as Store<"character", Character, {}, {}>)
+        id: "0x",
+        appearance: {
+          sex: 1,
+        },
+        equipment: {
+          [EquipmentSlot.HandgunAmmo]: {
+            key: Ammo.HANDGUN_AMMO,
+            amount: 1000,
+          },
+        },
+        inventory: {
+          size: 30,
+          items: [],
+        },
+        blueprints: ["pistol"],
+      } as any as Store<"character", Character, {}, {}>)
     : characterStore?.();

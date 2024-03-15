@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { defineProps, onMounted, ref } from "vue";
-import { RifleType } from "./types";
+import { type RifleType } from "./types";
 
-const props = defineProps({
+defineProps({
   activeRifle: {
     type: Object as () => RifleType,
     default: {} as RifleType,
@@ -43,22 +43,22 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex-1 lg:pl-[300px] w-full lg:w-auto">
+  <div class="w-full flex-1 lg:w-auto lg:pl-[300px]">
     <div class="flex flex-col items-center">
       <div
         v-if="!isWeaponCrafted"
-        class="w-full lg:w-auto flex flex-col items-center"
+        class="flex w-full flex-col items-center lg:w-auto"
       >
         <div
-          class="relative w-full aspect-square lg:h-[476px] lg:w-[476px] max-w-[476px] max-h-[476px] mt-12 lg:mt-0"
+          class="relative mt-12 aspect-square max-h-[476px] w-full max-w-[476px] lg:mt-0 lg:h-[476px] lg:w-[476px]"
         >
           <img
             :src="activeRifle.image"
-            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full"
+            class="absolute left-1/2 top-1/2 w-full -translate-x-1/2 -translate-y-1/2"
             :alt="activeRifle.name"
           />
           <svg
-            class="w-[70%] h-[70%] lg:w-[304px] lg:h-[304px] max-w-[304px] max-h-[304px] -rotate-90 -scale-y-100 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10"
+            class="absolute left-1/2 top-1/2 -z-10 h-[70%] max-h-[304px] w-[70%] max-w-[304px] -translate-x-1/2 -translate-y-1/2 -rotate-90 -scale-y-100 lg:h-[304px] lg:w-[304px]"
             ref="svg"
           >
             <circle
@@ -84,75 +84,75 @@ onMounted(() => {
             />
           </svg>
           <div
-            class="w-[calc(70%-8px)] h-[calc(70%-8px)] lg:w-[288px] lg:h-[288px] max-w-[288px] max-h-[288px] bg-delicateWhiteVeil rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 overflow-hidden"
+            class="absolute left-1/2 top-1/2 -z-10 h-[calc(70%-8px)] max-h-[288px] w-[calc(70%-8px)] max-w-[288px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full bg-delicateWhiteVeil lg:h-[288px] lg:w-[288px]"
           ></div>
           <div
-            class="w-[80%] h-[80%] lg:w-[372px] lg:h-[372px] max-w-[372px] max-h-[372px] bg-transparent border border-solid border-white/[0.35] rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10"
+            class="absolute left-1/2 top-1/2 -z-10 h-[80%] max-h-[372px] w-[80%] max-w-[372px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-solid border-white/[0.35] bg-transparent lg:h-[372px] lg:w-[372px]"
           ></div>
           <div
-            class="w-[90%] h-[90%] lg:w-[422px] lg:h-[422px] max-w-[422px] max-h-[422px] bg-transparent border border-solid border-white/[0.15] rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10"
+            class="absolute left-1/2 top-1/2 -z-10 h-[90%] max-h-[422px] w-[90%] max-w-[422px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-solid border-white/[0.15] bg-transparent lg:h-[422px] lg:w-[422px]"
           ></div>
           <div
-            class="w-full h-full lg:w-[476px] lg:h-[476px] max-w-[476px] max-h-[476px] bg-transparent border border-solid border-white/[0.04] rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10"
+            class="absolute left-1/2 top-1/2 -z-10 h-full max-h-[476px] w-full max-w-[476px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-solid border-white/[0.04] bg-transparent lg:h-[476px] lg:w-[476px]"
           ></div>
         </div>
-        <div class="flex flex-col items-center mt-14">
-          <p class="text-white/50 text-xl mb-2.5">Time remaining</p>
-          <span class="text-white text-3xl font-bold">00:35</span>
+        <div class="mt-14 flex flex-col items-center">
+          <p class="mb-2.5 text-xl text-white/50">Time remaining</p>
+          <span class="text-3xl font-bold text-white">00:35</span>
         </div>
       </div>
       <div
         v-else
-        class="w-full lg:w-auto flex flex-col items-center"
+        class="flex w-full flex-col items-center lg:w-auto"
       >
         <div
-          class="relative w-full aspect-square lg:h-[476px] lg:w-[476px] max-w-[476px] max-h-[476px]"
+          class="relative aspect-square max-h-[476px] w-full max-w-[476px] lg:h-[476px] lg:w-[476px]"
         >
           <img
             :src="activeRifle.image"
-            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+            class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
             :alt="activeRifle.name"
           />
           <div
-            class="w-[70%] h-[70%] lg:w-[293px] lg:h-[293px] max-w-[293px] max-h-[293px] bg-sublimeCitrusHaze border border-solid border-[rgba(185,240,69,0.25)] rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10"
+            class="absolute left-1/2 top-1/2 -z-10 h-[70%] max-h-[293px] w-[70%] max-w-[293px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-solid border-[rgba(185,240,69,0.25)] bg-sublimeCitrusHaze lg:h-[293px] lg:w-[293px]"
           ></div>
           <div
-            class="w-[80%] h-[80%] lg:w-[372px] lg:h-[372px] max-w-[372px] max-h-[372px] bg-transparent border border-solid border-limeZest rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10"
+            class="absolute left-1/2 top-1/2 -z-10 h-[80%] max-h-[372px] w-[80%] max-w-[372px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-solid border-limeZest bg-transparent lg:h-[372px] lg:w-[372px]"
           ></div>
           <div
-            class="w-[90%] h-[90%] lg:w-[422px] lg:h-[422px] max-w-[422px] max-h-[422px] bg-transparent border border-solid border-[rgba(185,240,69,0.20)] rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10"
+            class="absolute left-1/2 top-1/2 -z-10 h-[90%] max-h-[422px] w-[90%] max-w-[422px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-solid border-[rgba(185,240,69,0.20)] bg-transparent lg:h-[422px] lg:w-[422px]"
           ></div>
           <div
-            class="w-full h-full lg:w-[476px] lg:h-[476px] max-w-[476px] max-h-[476px] bg-transparent border border-solid border-[rgba(185,240,69,0.04)] rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10"
+            class="absolute left-1/2 top-1/2 -z-10 h-full max-h-[476px] w-full max-w-[476px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-solid border-[rgba(185,240,69,0.04)] bg-transparent lg:h-[476px] lg:w-[476px]"
           ></div>
         </div>
-        <div class="flex flex-col items-center mt-14 w-full lg:w-[476px] max-w-[476px]">
-          <h2 class="font-semibold text-center text-3xl text-white mb-5">
+        <div class="mt-14 flex w-full max-w-[476px] flex-col items-center lg:w-[476px]">
+          <h2 class="mb-5 text-center text-3xl font-semibold text-white">
             Your weapon crafted
             <br />
             succesfully
           </h2>
-          <div class="grid w-full grid-cols-1 sm:grid-cols-2 mt-2.5 gap-2.5 px-6">
+          <div class="mt-2.5 grid w-full grid-cols-1 gap-2.5 px-6 sm:grid-cols-2">
             <button
-              class="py-4 flex w-full justify-center items-center bg-primaryGreen text-white text-base font-bold"
+              class="flex w-full items-center justify-center bg-primaryGreen py-4 text-base font-bold text-white"
             >
               Drop to inventory
             </button>
             <button
-              class="py-4 flex justify-center items-center bg-transparent border border-solid border-white/50 text-white text-base font-bold"
+              class="flex items-center justify-center border border-solid border-white/50 bg-transparent py-4 text-base font-bold text-white"
             >
               Craft again
             </button>
           </div>
         </div>
       </div>
-      <div class="flex justify-center items-center mt-20">
+      <div class="mt-20 flex items-center justify-center">
         <button
-          class="uppercase text-base font-bold text-white py-3 px-2.5 border border-solid border-white/10"
+          class="border border-solid border-white/10 px-2.5 py-3 text-base font-bold uppercase text-white"
         >
           LMB
         </button>
-        <span class="text-base text-white ml-3">To rotate Weapon</span>
+        <span class="ml-3 text-base text-white">To rotate Weapon</span>
       </div>
     </div>
   </div>

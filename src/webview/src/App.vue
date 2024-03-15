@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ClientEvents } from "@shared/events/client";
 import { onMounted } from "vue";
+import { ClientEvents } from "@shared/events/client";
 import { useEventListener } from "./composables/use-event-listener";
 import { useSceneManager } from "./composables/use-scene-manager";
 import { useSyncedStores } from "./composables/use-synced-stores";
@@ -21,7 +21,7 @@ useEventListener(
       alt.emit(ClientEvents.FromWebview.INPUT_FOCUS, true);
     }
   },
-  true
+  true,
 );
 
 useEventListener(
@@ -31,7 +31,7 @@ useEventListener(
       alt.emit(ClientEvents.FromWebview.INPUT_FOCUS, false);
     }
   },
-  true
+  true,
 );
 
 onMounted(() => {

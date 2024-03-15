@@ -1,12 +1,12 @@
+import { defineStore } from "pinia";
+import { WebviewEvents } from "@shared/events/webview";
+import { updateStoreState } from "@shared/store/utils";
 import { setCharacterStore, useCharacter } from "@/store/synced/character.store";
 import { useClient } from "@/store/synced/client.store";
 import { useGameState } from "@/store/synced/game-state.store";
 import { setUserStore, useUser } from "@/store/synced/user.store";
-import { WebviewEvents } from "@shared/events/webview";
-import { updateStoreState } from "@shared/store/utils";
-import { useAlt } from "./use-alt";
 import { pinia } from "@/store";
-import { defineStore } from "pinia";
+import { useAlt } from "./use-alt";
 
 export function useSyncedStores() {
   const { on } = useAlt();
@@ -41,7 +41,7 @@ export function useSyncedStores() {
       setUserStore(
         defineStore("user", {
           state: () => event,
-        })
+        }),
       );
     } catch (e) {
       console.error("SET_USER_STATE", e);
@@ -69,7 +69,7 @@ export function useSyncedStores() {
       setCharacterStore(
         defineStore("character", {
           state: () => state,
-        })
+        }),
       );
     } catch (e) {
       console.error("SET_CHARACTER_STATE", e);

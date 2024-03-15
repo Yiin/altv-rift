@@ -1,31 +1,14 @@
 {
+  "extends": "@vue/tsconfig/tsconfig.dom.json",
+  "include": [
+    "env.d.ts",
+    "src/**/*",
+    "src/**/*.vue",
+    "../shared/**/*",
+    "../../node_modules/@prisma/client/**/*",
+    "../../custom-types/**/*.d.ts"
+  ],
   "compilerOptions": {
-    "module": "ESNext",
-    "target": "ESNext",
-    "strict": true,
-    "noErrorTruncation": false,
-    "exactOptionalPropertyTypes": false,
-    "noUncheckedIndexedAccess": false,
-    "noPropertyAccessFromIndexSignature": false,
-    "moduleResolution": "Bundler",
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "allowSyntheticDefaultImports": true,
-    "isolatedModules": false,
-    "forceConsistentCasingInFileNames": true,
-    "noImplicitReturns": true,
-    "noImplicitOverride": true,
-    "noImplicitAny": true,
-    "noEmit": true,
-    "preserveWatchOutput": false,
-    "pretty": true,
-    "skipLibCheck": true,
-    "useDefineForClassFields": true,
-    "jsx": "preserve",
-    "allowJs": true,
-    "lib": ["ESNext", "DOM"],
     "typeRoots": [
       "./node_modules/@altv",
       "./node_modules/@types",
@@ -34,9 +17,8 @@
     "paths": {
       "@/*": ["./src/*"],
       "@shared/*": ["../shared/*"],
-      "@prisma/client": ["../../node_modules/@prisma/client"]
+      "@prisma/client": ["../../node_modules/@prisma/client/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "../shared/**/*", "../../node_modules/@prisma/client/**/*.ts", "../../custom-types/**/*.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

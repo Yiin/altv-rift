@@ -1,5 +1,4 @@
 import { useGameState } from "@/store/synced/game-state.store";
-import { StorageType } from "@shared/store/game-state.store";
 
 export function useLootBox() {
   const gameState = useGameState();

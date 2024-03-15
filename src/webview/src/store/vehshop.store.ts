@@ -1,19 +1,8 @@
-import { StorageItemSource, PlayerInventoryItemSource } from "@shared/interfaces";
 import { defineStore } from "pinia";
-
-type State = {
-  action: null;
-  itemSource: null;
-} | {
-  action: "buy" | "sell";
-  itemSource: PlayerInventoryItemSource | StorageItemSource;
-};
 
 export const useVehshop = defineStore("useVehshop", {
   state: (): any => ({
-    carTypes: [
-      "pickups", "sedans", "vans", "sport cars", "motorcycle", "imports"
-    ],
+    carTypes: ["pickups", "sedans", "vans", "sport cars", "motorcycle", "imports"],
     sections: [{ value: 25 }, { value: 25 }],
     selectedCarType: "pickups",
     carInfo: [
@@ -97,7 +86,7 @@ export const useVehshop = defineStore("useVehshop", {
       acceleration: "77",
       breaking: "37",
       weight: "3521",
-    }
+    },
   }),
   actions: {
     selectCarType(carType: string): void {
@@ -107,4 +96,4 @@ export const useVehshop = defineStore("useVehshop", {
       this.selectedCarInfo = carInfo;
     },
   },
-})
+});

@@ -1,9 +1,6 @@
-import { effect, onMounted, onUnmounted, ref, Ref } from "vue";
+import { effect, onMounted, onUnmounted, ref, type Ref } from "vue";
 
-export const useFrame = (
-  handler: FrameRequestCallback,
-  options?: { isActive: Ref<boolean> }
-) => {
+export const useFrame = (handler: FrameRequestCallback, options?: { isActive: Ref<boolean> }) => {
   const isActive = options?.isActive ?? { value: true };
 
   const isMounted = ref(false);

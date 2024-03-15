@@ -1,11 +1,18 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { InteractionType, SlottedGroundItem, SlottedStorageItem, SlottedPlayerInventoryItem, isSameItemSource, useInventory } from "@/store/inventory.store";
-import InventoryItemIcon from "./InventoryItemIcon.vue";
 import { isItemUsable, isItemEquipable } from "@shared/modules/items";
 import { isItemPreviewable } from "@shared/modules/items/lib/is-item-previewable";
+import { type GroundItemSource, type InventoryItemSource } from "@shared/interfaces";
 import { useCombinableItem } from "@/composables/use-combinable-item";
-import { GroundItemSource, InventoryItemSource } from "@shared/interfaces";
+import {
+  InteractionType,
+  type SlottedGroundItem,
+  type SlottedStorageItem,
+  type SlottedPlayerInventoryItem,
+  isSameItemSource,
+  useInventory,
+} from "@/store/inventory.store";
+import InventoryItemIcon from "./InventoryItemIcon.vue";
 
 const props = defineProps<{
   source: InventoryItemSource | GroundItemSource;
@@ -18,8 +25,8 @@ const nodeRef = ref<HTMLDivElement>();
 const item = computed(() =>
   inventory.items.find(
     (item): item is SlottedPlayerInventoryItem | SlottedStorageItem | SlottedGroundItem =>
-      isSameItemSource(item.source, props.source)
-  )
+      isSameItemSource(item.source, props.source),
+  ),
 );
 
 const { combinableWithHoveredItem, combinableWithOtherItems } = useCombinableItem(item);
@@ -28,13 +35,10 @@ const dragging = computed(
   () =>
     inventory.currentInteraction.type === InteractionType.Dragging &&
     !inventory.currentInteraction.maybe &&
-    isSameItemSource(inventory.currentInteraction.state.item.source, props.source)
+    isSameItemSource(inventory.currentInteraction.state.item.source, props.source),
 );
 
-const selected = computed(
-  () =>
-    isSameItemSource(inventory.selectedItem?.source, props.source)
-);
+const selected = computed(() => isSameItemSource(inventory.selectedItem?.source, props.source));
 
 const draggingOver = computed(() => {
   const interaction = inventory.currentInteraction;
@@ -80,16 +84,28 @@ inventory.registerItemSlot({
 
 <template>
   <div
-    class="node-anchor h-21 w-21 border border-solid border-white/[0.03] relative" :class="[
-      combinableWithHoveredItem || combinableWithOtherItems ? `bg-silverCloud/5` : `bg-silverCloud/[0.01]`,
-    ]">
-    <div ref="nodeRef" class="h-19 w-19 border-2 border-solid" :class="{
-      'drop-shadow-[0px_0px_6px_black] scale-105': draggingOver || (item && !dragging),
-      'border-white/50': selected,
-      'border-transparent': !selected
-    }">
-      <InventoryItemIcon v-if="item && !inventory.isItemHidden(item.source)" :item="item" @dblclick="useOrEquipItem"
-        @contextmenu.prevent="(e) => item && inventory.openContextMenu(item, e)" />
+    class="node-anchor relative h-21 w-21 border border-solid border-white/[0.03]"
+    :class="[
+      combinableWithHoveredItem || combinableWithOtherItems
+        ? `bg-silverCloud/5`
+        : `bg-silverCloud/[0.01]`,
+    ]"
+  >
+    <div
+      ref="nodeRef"
+      class="h-19 w-19 border-2 border-solid"
+      :class="{
+        'scale-105 drop-shadow-[0px_0px_6px_black]': draggingOver || (item && !dragging),
+        'border-white/50': selected,
+        'border-transparent': !selected,
+      }"
+    >
+      <InventoryItemIcon
+        v-if="item && !inventory.isItemHidden(item.source)"
+        :item="item"
+        @dblclick="useOrEquipItem"
+        @contextmenu.prevent="(e) => item && inventory.openContextMenu(item, e)"
+      />
     </div>
   </div>
 </template>

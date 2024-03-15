@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { rpc } from "../rpc";
+import { watch } from "vue";
 import {
   featureNames,
   aspects,
@@ -9,9 +9,9 @@ import {
   OverlayType,
 } from "@shared/modules/character/appearance-data";
 import { ServerCall } from "@shared/calls/server";
-import { Appearance } from ".prisma/client";
+import { rpc } from "../rpc";
 import { pinia } from ".";
-import { watch } from "vue";
+import type { Appearance } from "@prisma/client/edge";
 
 const MALE = 0;
 const FEMALE = 1;
@@ -38,7 +38,7 @@ function getDefaultAppearance(sex: 0 | 1) {
           color1: id === OverlayType.Blush ? [...blushColors.keys()][0] : color1?.min ?? null,
           color2: id === OverlayType.Blush ? [...blushColors.keys()][0] : color2?.min ?? null,
         }),
-      new Map<OverlayType, Appearance["headOverlays"][number]>()
+      new Map<OverlayType, Appearance["headOverlays"][number]>(),
     ),
     hair,
     hairCollection,
@@ -100,7 +100,7 @@ watch(
         createCharacter.currentAppearance,
       ];
     }
-  }
+  },
 );
 
 watch(
@@ -109,10 +109,10 @@ watch(
     const createCharacter = useCreateCharacter(pinia);
 
     createCharacter.currentAppearance.hairCollection = aspects(
-      createCharacter.sex
+      createCharacter.sex,
     ).Hair.options.get(current)!.collection;
     createCharacter.currentAppearance.hairOverlay = aspects(createCharacter.sex).Hair.options.get(
-      current
+      current,
     )!.overlay;
-  }
+  },
 );

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { AvailableWeaponModuleType } from "./types";
+import { type AvailableWeaponModuleType } from "./types";
 
 const props = defineProps({
   availableModules: Array<AvailableWeaponModuleType>,
@@ -9,14 +9,15 @@ const activeAvailableModule = props.availableModules?.find((module) => module.is
 </script>
 
 <template>
-  <div class="max-w-xs flex flex-col items-end w-full">
-    <h2 class="text-white text-3xl mb-9">Available Modules</h2>
+  <div class="flex w-full max-w-xs flex-col items-end">
+    <h2 class="mb-9 text-3xl text-white">Available Modules</h2>
     <button
       id="dropdownDefaultButton"
       data-dropdown-toggle="dropdown"
-      class="text-white bg-transparent border border-solid border-white/10 font-bold rounded-md text-base px-5 py-4 text-center flex justify-between items-center mb-2.5 gap-6"
-      type="button">
-      <div class="flex gap-3 items-center">
+      class="mb-2.5 flex items-center justify-between gap-6 rounded-md border border-solid border-white/10 bg-transparent px-5 py-4 text-center text-base font-bold text-white"
+      type="button"
+    >
+      <div class="flex items-center gap-3">
         <p>Attachments</p>
       </div>
       <svg
@@ -24,67 +25,79 @@ const activeAvailableModule = props.availableModules?.find((module) => module.is
         width="8"
         height="6"
         viewBox="0 0 8 6"
-        fill="none">
+        fill="none"
+      >
         <path
           d="M0.5 1L4 4.5L7.5 1"
           stroke="white"
-          stroke-linecap="round"></path>
+          stroke-linecap="round"
+        ></path>
       </svg>
     </button>
-    <div class="w-full flex flex-col gap-1.5 mb-14">
+    <div class="mb-14 flex w-full flex-col gap-1.5">
       <div
-        v-for="(module, index) in props.availableModules"
-        class="bg-weaponCard border border-solid rounded-md px-5 py-4 flex justify-between items-center gap-4 w-full"
-        :class="`${module.isActive ? 'border-white' : 'border-transparent'}`">
+        v-for="module in props.availableModules"
+        :key="module.name"
+        class="flex w-full items-center justify-between gap-4 rounded-md border border-solid bg-weaponCard px-5 py-4"
+        :class="`${module.isActive ? 'border-white' : 'border-transparent'}`"
+      >
         <div>
-          <p class="text-white text-base">{{ module.name }}</p>
-          <span class="text-primaryGreen text-sm">Stage {{ module.stage }}</span>
+          <p class="text-base text-white">{{ module.name }}</p>
+          <span class="text-sm text-primaryGreen">Stage {{ module.stage }}</span>
         </div>
         <div class="w-20">
           <img
             :src="module.image"
             :alt="module.name"
-            class="w-full" />
+            class="w-full"
+          />
         </div>
       </div>
     </div>
     <div class="flex flex-col items-end">
-      <div class="w-52 mb-4">
+      <div class="mb-4 w-52">
         <img
           :src="activeAvailableModule?.image"
           :alt="activeAvailableModule?.name"
-          class="w-full" />
+          class="w-full"
+        />
       </div>
-      <p class="text-primaryGreen text-base font-semibold">Attachments</p>
-      <p class="text-2xl text-white font-bold">{{ activeAvailableModule?.name }}</p>
-      <p class="text-base font-semibold text-steelGray mb-4">
+      <p class="text-base font-semibold text-primaryGreen">Attachments</p>
+      <p class="text-2xl font-bold text-white">{{ activeAvailableModule?.name }}</p>
+      <p class="mb-4 text-base font-semibold text-steelGray">
         {{ activeAvailableModule?.desc }}
       </p>
-      <span class="text-2xl text-primaryGreen font-semibold mb-6">
+      <span class="mb-6 text-2xl font-semibold text-primaryGreen">
         ${{ activeAvailableModule?.price }}
       </span>
       <div class="flex flex-col gap-3">
         <div
           v-for="extra in activeAvailableModule?.extras"
-          class="flex items-center gap-2 mb-14">
+          :key="extra.name"
+          class="mb-14 flex items-center gap-2"
+        >
           <div>
-            <p class="text-base text-white uppercase">{{ extra.name }}</p>
-            <p class="text-sm text-primaryGreen uppercase">{{ extra.desc }}</p>
+            <p class="text-base uppercase text-white">{{ extra.name }}</p>
+            <p class="text-sm uppercase text-primaryGreen">{{ extra.desc }}</p>
           </div>
           <div
-            class="relative bg-weaponCard border border-solid border-white/5 w-10 h-10 flex justify-center items-center">
+            class="relative flex h-10 w-10 items-center justify-center border border-solid border-white/5 bg-weaponCard"
+          >
             <img
               :src="extra.image"
-              :alt="extra.name" />
+              :alt="extra.name"
+            />
             <span
-              class="text-xs bg-primaryGreen text-white text-center rounded-sm px-0.5 font-bold absolute -top-1 -right-1">
+              class="absolute -right-1 -top-1 rounded-sm bg-primaryGreen px-0.5 text-center text-xs font-bold text-white"
+            >
               x{{ extra.x }}
             </span>
           </div>
         </div>
       </div>
       <button
-        class="py-5 px-9 flex justify-center items-center bg-primaryGreen text-white text-base font-bold">
+        class="flex items-center justify-center bg-primaryGreen px-9 py-5 text-base font-bold text-white"
+      >
         Start crafting
       </button>
     </div>

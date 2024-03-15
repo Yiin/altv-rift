@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
-import { useCreateCharacter } from "../../store/create-character.store";
 import { features, getRandomFeatureValue } from "@shared/modules/character/appearance-data";
+import { useCreateCharacter } from "../../store/create-character.store";
 import SliderSelection from "../../components/SliderSelection.vue";
 import Tabs from "../../components/Tabs/Tabs.vue";
 import XYSelection from "../../components/XYSelection.vue";
@@ -26,22 +26,49 @@ const randomize = () => {
 <template>
   <v-card class="v-card--transparent">
     <v-card-item>
-      <div class="text-sm font-bold pb-4 uppercase tracking-wide flex justify-between items-center">
+      <div class="flex items-center justify-between pb-4 text-sm font-bold uppercase tracking-wide">
         Face features
-        <v-btn @click="randomize" color="grey-darken-3" prepend-icon="mdi-shuffle-variant" size="small">
+        <v-btn
+          @click="randomize"
+          color="grey-darken-3"
+          prepend-icon="mdi-shuffle-variant"
+          size="small"
+        >
           Random
         </v-btn>
       </div>
-      <SliderSelection :options="Object.keys(features)" v-model="selectedFeature" />
+      <SliderSelection
+        :options="Object.keys(features)"
+        v-model="selectedFeature"
+      />
       <v-divider />
-      <Tabs v-model="selectedTab" :options="features[selectedFeature].map(({ name }) => name)" fixed-tabs />
+      <Tabs
+        v-model="selectedTab"
+        :options="features[selectedFeature].map(({ name }) => name)"
+        fixed-tabs
+      />
       <v-window v-model="selectedTab">
-        <v-window-item v-for="tab in features[selectedFeature]">
-          <XYSelection v-if="'y' in tab" v-model:x="createCharacter.currentAppearance.features[tab.x[0]]"
-            v-model:y="createCharacter.currentAppearance.features[tab.y[0]]" :label-top="tab.y[1]"
-            :label-bottom="tab.y[2]" :label-left="tab.x[1]" :label-right="tab.x[2]" class="my-2" />
-          <XSelection v-else v-model="createCharacter.currentAppearance.features[tab.x[0]]" :label-left="tab.x[1]"
-            :label-right="tab.x[2]" class="my-2" />
+        <v-window-item
+          v-for="tab in features[selectedFeature]"
+          :key="tab.name"
+        >
+          <XYSelection
+            v-if="'y' in tab"
+            v-model:x="createCharacter.currentAppearance.features[tab.x[0]]"
+            v-model:y="createCharacter.currentAppearance.features[tab.y[0]]"
+            :label-top="tab.y[1]"
+            :label-bottom="tab.y[2]"
+            :label-left="tab.x[1]"
+            :label-right="tab.x[2]"
+            class="my-2"
+          />
+          <XSelection
+            v-else
+            v-model="createCharacter.currentAppearance.features[tab.x[0]]"
+            :label-left="tab.x[1]"
+            :label-right="tab.x[2]"
+            class="my-2"
+          />
         </v-window-item>
       </v-window>
     </v-card-item>

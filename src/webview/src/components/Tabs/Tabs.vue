@@ -15,7 +15,10 @@ const emit = defineEmits<{
     @update:model-value="(value) => emit('update:modelValue', value as number)"
     fixed-tabs
   >
-    <v-tab v-for="tab in options">
+    <v-tab
+      v-for="tab in options"
+      :key="tab"
+    >
       {{ tab }}
     </v-tab>
   </v-tabs>

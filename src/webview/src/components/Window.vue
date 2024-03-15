@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { useWindows } from "../store/windows.store";
-import DragResize from "./DragResize.vue";
-import { rpc } from "@/rpc";
 import { ServerCall } from "@shared/calls/server";
+import { rpc } from "@/rpc";
+import { useWindows } from "../store/windows.store";
+// @ts-expect-error DragResize is javascript component and typescript complains about missing typings
+import DragResize from "./DragResize.vue";
 
 const props = withDefaults(
   defineProps<{
@@ -43,7 +44,7 @@ const props = withDefaults(
     w: (props) => {
       return props.minw ?? 200;
     },
-  }
+  },
 );
 
 const windows = useWindows();
@@ -51,7 +52,7 @@ const windows = useWindows();
 const z = ref(windows.topIndex++);
 const isFocused = ref();
 
-function focus(e: MouseEvent) {
+function focus() {
   if (!props.isActive) return;
   isFocused.value = true;
   z.value = windows.topIndex++;
@@ -82,12 +83,16 @@ function stop(rect: { x: number; y: number; width: number; height: number }) {
     :z="z"
     class="outline-none"
     v-bind="props"
-    @move=""
     :isResizeable="isFocused"
-    :sticks="isFocused ? sticks : []">
+    :sticks="isFocused ? sticks : []"
+  >
     <slot></slot>
   </DragResize>
-  <div v-else class="relative" :style="{ zIndex: z }">
+  <div
+    v-else
+    class="relative"
+    :style="{ zIndex: z }"
+  >
     <slot />
   </div>
 </template>

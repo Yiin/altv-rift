@@ -19,8 +19,19 @@ const hh = window.innerHeight / 2 - 400;
 </script>
 
 <template>
-  <Window v-click-outside="closePreview" :x="hw" :y="hh" :w="800" :h="800" name="item-preview" :is-active="false"
-    :sticks="[]">
-    <img :src="`./assets/item-previews/${item.key}.png`" class="w-full h-full" />
+  <Window
+    v-click-outside="closePreview"
+    :x="hw"
+    :y="hh"
+    :w="800"
+    :h="800"
+    name="item-preview"
+    :is-active="false"
+    :sticks="[]"
+  >
+    <img
+      :src="`./assets/item-previews/${item.key}.png`"
+      class="h-full w-full"
+    />
   </Window>
 </template>

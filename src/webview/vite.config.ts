@@ -1,8 +1,8 @@
+import { fileURLToPath, URL } from "node:url";
 import { defineConfig } from "vite";
 import vuetify from "vite-plugin-vuetify";
 import externalGlobals from "rollup-plugin-external-globals";
 import vue from "@vitejs/plugin-vue";
-import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -19,8 +19,8 @@ export default defineConfig({
   },
   resolve: {
     alias: [
-      { find: "@", replacement: path.resolve(__dirname, "./src") },
-      { find: "@shared", replacement: path.resolve(__dirname, "../shared") },
+      { find: "@", replacement: fileURLToPath(new URL("./src", import.meta.url)) },
+      { find: "@shared", replacement: fileURLToPath(new URL("../shared", import.meta.url)) },
       {
         find: "@altv/shared",
         replacement: "alt",

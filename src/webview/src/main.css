@@ -5,7 +5,8 @@
 @font-face {
   font-family: "Akrobat";
   src: url("/fonts/Akrobat-Thin.eot");
-  src: url("/fonts/Akrobat-Thin.eot?#iefix") format("embedded-opentype"),
+  src:
+    url("/fonts/Akrobat-Thin.eot?#iefix") format("embedded-opentype"),
     url("/fonts/Akrobat-Thin.woff2") format("woff2"),
     url("/fonts/Akrobat-Thin.woff") format("woff"),
     url("/fonts/Akrobat-Thin.ttf") format("truetype");
@@ -16,7 +17,8 @@
 @font-face {
   font-family: "Akrobat";
   src: url("/fonts/Akrobat-ExtraLight.eot");
-  src: url("/fonts/Akrobat-ExtraLight.eot?#iefix") format("embedded-opentype"),
+  src:
+    url("/fonts/Akrobat-ExtraLight.eot?#iefix") format("embedded-opentype"),
     url("/fonts/Akrobat-ExtraLight.woff2") format("woff2"),
     url("/fonts/Akrobat-ExtraLight.woff") format("woff"),
     url("/fonts/Akrobat-ExtraLight.ttf") format("truetype");
@@ -27,7 +29,8 @@
 @font-face {
   font-family: "Akrobat";
   src: url("/fonts/Akrobat-Light.eot");
-  src: url("/fonts/Akrobat-Light.eot?#iefix") format("embedded-opentype"),
+  src:
+    url("/fonts/Akrobat-Light.eot?#iefix") format("embedded-opentype"),
     url("/fonts/Akrobat-Light.woff2") format("woff2"),
     url("/fonts/Akrobat-Light.woff") format("woff"),
     url("/fonts/Akrobat-Light.ttf") format("truetype");
@@ -38,7 +41,8 @@
 @font-face {
   font-family: "Akrobat";
   src: url("/fonts/Akrobat-Regular.eot");
-  src: url("/fonts/Akrobat-Regular.eot?#iefix") format("embedded-opentype"),
+  src:
+    url("/fonts/Akrobat-Regular.eot?#iefix") format("embedded-opentype"),
     url("/fonts/Akrobat-Regular.woff2") format("woff2"),
     url("/fonts/Akrobat-Regular.woff") format("woff"),
     url("/fonts/Akrobat-Regular.ttf") format("truetype");
@@ -49,7 +53,8 @@
 @font-face {
   font-family: "Akrobat";
   src: url("/fonts/Akrobat-SemiBold.eot");
-  src: url("/fonts/Akrobat-SemiBold.eot?#iefix") format("embedded-opentype"),
+  src:
+    url("/fonts/Akrobat-SemiBold.eot?#iefix") format("embedded-opentype"),
     url("/fonts/Akrobat-SemiBold.woff2") format("woff2"),
     url("/fonts/Akrobat-SemiBold.woff") format("woff"),
     url("/fonts/Akrobat-SemiBold.ttf") format("truetype");
@@ -60,7 +65,8 @@
 @font-face {
   font-family: "Akrobat";
   src: url("/fonts/Akrobat-Bold.eot");
-  src: url("/fonts/Akrobat-Bold.eot?#iefix") format("embedded-opentype"),
+  src:
+    url("/fonts/Akrobat-Bold.eot?#iefix") format("embedded-opentype"),
     url("/fonts/Akrobat-Bold.woff2") format("woff2"),
     url("/fonts/Akrobat-Bold.woff") format("woff"),
     url("/fonts/Akrobat-Bold.ttf") format("truetype");
@@ -71,7 +77,8 @@
 @font-face {
   font-family: "Akrobat";
   src: url("/fonts/Akrobat-Black.eot");
-  src: url("/fonts/Akrobat-Black.eot?#iefix") format("embedded-opentype"),
+  src:
+    url("/fonts/Akrobat-Black.eot?#iefix") format("embedded-opentype"),
     url("/fonts/Akrobat-Black.woff2") format("woff2"),
     url("/fonts/Akrobat-Black.woff") format("woff"),
     url("/fonts/Akrobat-Black.ttf") format("truetype");
@@ -93,7 +100,7 @@ body {
 }
 
 body {
-  @apply font-sans scroll-smooth m-0;
+  @apply m-0 scroll-smooth font-sans;
   /* background: #111; */
   /* background-image: url(https://news-cdn.softpedia.com/images/news2/GTA-5-Gets-New-Gorgeous-4K-Screenshots-on-PC-478043-23.jpg); */
   /* background-image: url(/assets/game-scene.png); */
@@ -106,35 +113,35 @@ body {
 }
 
 ::-webkit-scrollbar {
-  @apply w-[14px] h-[18px];
+  @apply h-[18px] w-[14px];
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply border-4 bg-clip-padding rounded-[7px] bg-black/[0.15] shadow-[inset_-1px_-1px_0px_rgba(0,0,0,0.05),inset_1px_1px_0px_rgba(0,0,0,0.05)];
+  @apply rounded-[7px] border-4 bg-black/[0.15] bg-clip-padding shadow-[inset_-1px_-1px_0px_rgba(0,0,0,0.05),inset_1px_1px_0px_rgba(0,0,0,0.05)];
 }
 
 .rifles::-webkit-scrollbar {
-  @apply w-[4px] h-[4px] m-0;
+  @apply m-0 h-[4px] w-[4px];
 }
 
 .rifles::-webkit-scrollbar-thumb {
-  @apply bg-white shadow-none border-none rounded-full bg-clip-content;
+  @apply rounded-full border-none bg-white bg-clip-content shadow-none;
 }
 
 .rifles::-webkit-scrollbar-track {
-  @apply bg-white/[0.03] rounded-full;
+  @apply rounded-full bg-white/[0.03];
 }
 
 .clothes::-webkit-scrollbar {
-  @apply w-[4px] m-0;
+  @apply m-0 w-[4px];
 }
 
 .clothes::-webkit-scrollbar-track {
-  @apply bg-[#D9D9D9]/20 rounded-full;
+  @apply rounded-full bg-[#D9D9D9]/20;
 }
 
 .clothes::-webkit-scrollbar-thumb {
-  @apply bg-sunriseYellow shadow-none border-none rounded-full bg-clip-content;
+  @apply rounded-full border-none bg-sunriseYellow bg-clip-content shadow-none;
 }
 
 .v-application {
@@ -150,67 +157,115 @@ body {
 }
 
 .text-shadow {
-  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000, 0px 2px 0 #000,
-    1px 2px 0 #000, 2px 2px 0 #000;
+  text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000,
+    0px 2px 0 #000,
+    1px 2px 0 #000,
+    2px 2px 0 #000;
 }
 
 .crisp-shadow {
-  text-shadow: -0.81px -0.59px 0 #000, 0.71px -0.71px 0 #000, 1px 0.09px 0 #000,
-    0.89px 0.45px 0 #000, 0.77px -0.64px 0 #000, 0.45px 0.89px 0 #000, -0.64px 0.77px 0 #000,
-    0.16px 0.99px 0 #000, 1px 0px 0 #000, -0.45px 0.89px 0 #000, -0.59px 0.81px 0 #000,
-    -0.95px 0.31px 0 #000, 0.59px -0.81px 0 #000, 0.95px -0.31px 0 #000, 1px -0.09px 0 #000,
-    -0.16px -0.99px 0 #000, 0.64px -0.77px 0 #000, -0.71px 0.71px 0 #000, -0.09px 1px 0 #000,
-    0.81px 0.59px 0 #000, -0.09px -1px 0 #000, -0px -1px 0 #000, 0.09px -1px 0 #000,
-    0.31px -0.95px 0 #000, -0.71px -0.71px 0 #000, 0px 1px 0 #000, 0.09px 1px 0 #000,
-    -0.89px -0.45px 0 #000, -0.45px -0.89px 0 #000, -1px 0.09px 0 #000, 0.45px -0.89px 0 #000,
-    -0.16px 0.99px 0 #000, -0.77px 0.64px 0 #000, -0.99px -0.16px 0 #000, -0.59px -0.81px 0 #000,
-    0.31px 0.95px 0 #000, -0.64px -0.77px 0 #000, -1px 0px 0 #000, -0.95px -0.31px 0 #000,
-    0.81px -0.59px 0 #000, -1px -0.09px 0 #000, 0.99px -0.16px 0 #000, -0.89px 0.45px 0 #000,
-    -0.99px 0.16px 0 #000, 0.77px 0.64px 0 #000, 0.95px 0.31px 0 #000, -0.81px 0.59px 0 #000,
-    0.64px 0.77px 0 #000, -0.77px -0.64px 0 #000, 0.59px 0.81px 0 #000, -0.31px -0.95px 0 #000,
-    0.89px -0.45px 0 #000, 0.99px 0.16px 0 #000, 0.16px -0.99px 0 #000, 0.71px 0.71px 0 #000,
+  text-shadow:
+    -0.81px -0.59px 0 #000,
+    0.71px -0.71px 0 #000,
+    1px 0.09px 0 #000,
+    0.89px 0.45px 0 #000,
+    0.77px -0.64px 0 #000,
+    0.45px 0.89px 0 #000,
+    -0.64px 0.77px 0 #000,
+    0.16px 0.99px 0 #000,
+    1px 0px 0 #000,
+    -0.45px 0.89px 0 #000,
+    -0.59px 0.81px 0 #000,
+    -0.95px 0.31px 0 #000,
+    0.59px -0.81px 0 #000,
+    0.95px -0.31px 0 #000,
+    1px -0.09px 0 #000,
+    -0.16px -0.99px 0 #000,
+    0.64px -0.77px 0 #000,
+    -0.71px 0.71px 0 #000,
+    -0.09px 1px 0 #000,
+    0.81px 0.59px 0 #000,
+    -0.09px -1px 0 #000,
+    -0px -1px 0 #000,
+    0.09px -1px 0 #000,
+    0.31px -0.95px 0 #000,
+    -0.71px -0.71px 0 #000,
+    0px 1px 0 #000,
+    0.09px 1px 0 #000,
+    -0.89px -0.45px 0 #000,
+    -0.45px -0.89px 0 #000,
+    -1px 0.09px 0 #000,
+    0.45px -0.89px 0 #000,
+    -0.16px 0.99px 0 #000,
+    -0.77px 0.64px 0 #000,
+    -0.99px -0.16px 0 #000,
+    -0.59px -0.81px 0 #000,
+    0.31px 0.95px 0 #000,
+    -0.64px -0.77px 0 #000,
+    -1px 0px 0 #000,
+    -0.95px -0.31px 0 #000,
+    0.81px -0.59px 0 #000,
+    -1px -0.09px 0 #000,
+    0.99px -0.16px 0 #000,
+    -0.89px 0.45px 0 #000,
+    -0.99px 0.16px 0 #000,
+    0.77px 0.64px 0 #000,
+    0.95px 0.31px 0 #000,
+    -0.81px 0.59px 0 #000,
+    0.64px 0.77px 0 #000,
+    -0.77px -0.64px 0 #000,
+    0.59px 0.81px 0 #000,
+    -0.31px -0.95px 0 #000,
+    0.89px -0.45px 0 #000,
+    0.99px 0.16px 0 #000,
+    0.16px -0.99px 0 #000,
+    0.71px 0.71px 0 #000,
     -0.31px 0.95px 0 #000;
 }
 
 .yellow-gradient-border {
   border-image: linear-gradient(to bottom, #ffda57, transparent) 1;
-  @apply absolute top-0 left-0 right-0 w-full h-full border border-solid border-transparent bg-clip-padding -z-10;
+  @apply absolute left-0 right-0 top-0 -z-10 h-full w-full border border-solid border-transparent bg-clip-padding;
 }
 
 .yellow-border-bottom {
-  @apply absolute bottom-0 left-[2px] w-full h-[1px] bg-[rgba(102,86,41,0.5)] -rotate-[10deg] origin-[0_0] -z-10;
+  @apply absolute bottom-0 left-[2px] -z-10 h-[1px] w-full origin-[0_0] -rotate-[10deg] bg-[rgba(102,86,41,0.5)];
 }
 
 .blue-gradient-border {
   border-image: linear-gradient(to bottom, #4850ff, transparent) 1;
-  @apply absolute top-0 left-0 w-full h-full border border-solid border-transparent bg-clip-padding -z-10;
+  @apply absolute left-0 top-0 -z-10 h-full w-full border border-solid border-transparent bg-clip-padding;
 }
 
 .blue-border-bottom {
-  @apply absolute top-12 left-[1px] w-full h-[1px] bg-[#4850ff] -rotate-[10deg] origin-[0_0] -z-10;
+  @apply absolute left-[1px] top-12 -z-10 h-[1px] w-full origin-[0_0] -rotate-[10deg] bg-[#4850ff];
 }
 
 .green-gradient-border {
   border-image: linear-gradient(to bottom, #95c82a, transparent) 1;
-  @apply absolute top-0 left-0 w-full h-full border border-solid border-transparent bg-clip-padding -z-10;
+  @apply absolute left-0 top-0 -z-10 h-full w-full border border-solid border-transparent bg-clip-padding;
 }
 
 .cyan-gradient-border {
   border-image: linear-gradient(to bottom, #51c3c3, transparent) 1;
-  @apply absolute top-0 left-0 w-full h-full border border-solid border-transparent bg-clip-padding -z-10;
+  @apply absolute left-0 top-0 -z-10 h-full w-full border border-solid border-transparent bg-clip-padding;
 }
 
 .crimson-gradient-border {
   border-image: linear-gradient(to bottom, #ff4a4a, transparent) 1;
-  @apply absolute top-0 left-0 w-full h-full border border-solid border-transparent bg-clip-padding -z-10;
+  @apply absolute left-0 top-0 -z-10 h-full w-full border border-solid border-transparent bg-clip-padding;
 }
 
 .softwhite-gradient-border {
   border-image: linear-gradient(to bottom, #ffffff6d, transparent) 1;
-  @apply absolute top-0 left-0 w-full h-full border border-solid border-transparent bg-clip-padding -z-10;
+  @apply absolute left-0 top-0 -z-10 h-full w-full border border-solid border-transparent bg-clip-padding;
 }
 
 .white-gradient-border {
   border-image: linear-gradient(to bottom, #fff, transparent) 1;
-  @apply absolute top-0 left-0 w-full h-full border border-solid border-transparent bg-clip-padding -z-10;
+  @apply absolute left-0 top-0 -z-10 h-full w-full border border-solid border-transparent bg-clip-padding;
 }

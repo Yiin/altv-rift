@@ -13,42 +13,33 @@ const emit = defineEmits<{
 }>();
 
 const selected = computed(() =>
-  props.useIndexAsValue
-    ? props.modelValue
-    : props.options.indexOf(props.modelValue)
+  props.useIndexAsValue ? props.modelValue : props.options.indexOf(props.modelValue),
 );
 
 function prev() {
   const index = clamp(selected.value - 1, 0, props.options.length - 1);
-  emit(
-    "update:modelValue",
-    props.useIndexAsValue ? index : props.options[index]
-  );
+  emit("update:modelValue", props.useIndexAsValue ? index : props.options[index]);
 }
 
 function next() {
   const index = clamp(selected.value + 1, 0, props.options.length - 1);
-  emit(
-    "update:modelValue",
-    props.useIndexAsValue ? index : props.options[index]
-  );
+  emit("update:modelValue", props.useIndexAsValue ? index : props.options[index]);
 }
 </script>
 
 <template>
   <div class="mb-2">
-    <div class="flex justify-center items-center gap-4">
+    <div class="flex items-center justify-center gap-4">
       <v-btn
         icon="mdi-chevron-left"
         variant="tonal"
         :disabled="selected === 0"
         @click="prev"
       />
-      <div
-        class="flex justify-center items-center flex-col v-btn min-w-20 text-sm"
-      >
+      <div class="v-btn flex min-w-20 flex-col items-center justify-center text-sm">
         <span
           v-for="(option, index) in options"
+          :key="index"
           :class="selected !== index && 'invisible h-0'"
         >
           {{ option }}
