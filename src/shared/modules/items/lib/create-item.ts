@@ -44,7 +44,6 @@ export function getItemDefaultData(key: ItemKey) {
   } else if (isItemKeyThrowableWeapon(key)) {
     return {
       amount: 1,
-      grade: ItemGrade.BASE,
     } satisfies Partial<ThrowableWeaponItem>;
   } else if (isItemKeyMeleeWeapon(key)) {
     return {

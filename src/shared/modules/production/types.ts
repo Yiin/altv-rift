@@ -1,20 +1,29 @@
 import { Item } from "@shared/modules/items";
-import { HatchetBlueprintKey } from "./blueprints/hatchet.blueprints";
-import { FishingRodBlueprintKey } from "./blueprints/fishing-rod.blueprints";
-import { PickaxeBlueprintKey } from "./blueprints/pickaxe.blueprints";
+import { ToolBlueprintKey } from "./blueprints/tool.blueprints";
+import {
+  FirearmWeaponBlueprintKey,
+  MeleeWeaponBlueprintKey,
+  ThrowableWeaponBlueprintKey,
+} from "./blueprints";
 
 /**
  * Blueprints
  */
 export type BlueprintRecipe = {
-  item: Partial<Item>;
-  parts: Partial<Item>[];
+  item: Item;
+  parts: Item[];
   isUpgrade?: true;
 };
 
 export type Blueprint = {
   key: string;
+  name: string;
+  description?: string;
   recipes: BlueprintRecipe[];
 };
 
-export type BlueprintKey = HatchetBlueprintKey | FishingRodBlueprintKey | PickaxeBlueprintKey;
+export type BlueprintKey =
+  | ToolBlueprintKey
+  | FirearmWeaponBlueprintKey
+  | ThrowableWeaponBlueprintKey
+  | MeleeWeaponBlueprintKey;

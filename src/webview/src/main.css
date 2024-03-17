@@ -104,8 +104,8 @@ body {
   /* background: #111; */
   /* background-image: url(https://news-cdn.softpedia.com/images/news2/GTA-5-Gets-New-Gorgeous-4K-Screenshots-on-PC-478043-23.jpg); */
   /* background-image: url(/assets/game-scene.png); */
-  background-image: url(https://kagi.com/proxy/rare-gta-5-player-completes-no-damage-run-in-nine-hours-he-has-only-1-hp-throughout-his-gameplay.jpg?c=p5frydODQJvzth8KtOJUED5cQXQh7fMuG2ftQI_WpTRKptu5G81HIkQdnxgRwu38g7N9gZ3PbA_qgdUHkD2prX5xYMO0ZAREMmsh_DQ6fA30mvK7qgjuEsHGpwbNbghTUoHGI5kUg13tHC1jjXbxePkkkgORPLN4re7FXVq41wFtaGPCFZ4TEO3JxmVMGmrzFePsYlIBMBtmATocVAMpZMWQORXLinPKW1ShUoaF1Nw%3D);
-  background-size: cover;
+  /* background-image: url(https://kagi.com/proxy/rare-gta-5-player-completes-no-damage-run-in-nine-hours-he-has-only-1-hp-throughout-his-gameplay.jpg?c=p5frydODQJvzth8KtOJUED5cQXQh7fMuG2ftQI_WpTRKptu5G81HIkQdnxgRwu38g7N9gZ3PbA_qgdUHkD2prX5xYMO0ZAREMmsh_DQ6fA30mvK7qgjuEsHGpwbNbghTUoHGI5kUg13tHC1jjXbxePkkkgORPLN4re7FXVq41wFtaGPCFZ4TEO3JxmVMGmrzFePsYlIBMBtmATocVAMpZMWQORXLinPKW1ShUoaF1Nw%3D);
+  background-size: cover; */
 }
 
 *:has(::-webkit-scrollbar) {

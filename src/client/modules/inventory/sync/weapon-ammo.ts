@@ -38,10 +38,6 @@ whileInGame(() => {
 
     const ammoSlot = getWeaponAmmoEquipmentSlot(currentFirearm.value.key);
 
-    if (!ammoSlot) {
-      return null;
-    }
-
     const character = useCharacter();
     const equippedAmmo = character.equipment[ammoSlot];
 

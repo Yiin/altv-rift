@@ -2,8 +2,7 @@ import alt from "@altv/client";
 import game from "@altv/natives";
 import { Appearance } from "@prisma/client";
 import { ClothingComponent } from "@shared/interfaces/clothing";
-import { Pants, Shoes, Top, getItemInfoByKey } from "@shared/modules/items";
-import { getDefaultClothing } from "@shared/modules/items/registry/clothing/clothing-defaults";
+import { getDefaultClothing } from "@shared/modules/items/registry/clothing/get-default-clothing";
 
 export const PedAppearance = {
   /**

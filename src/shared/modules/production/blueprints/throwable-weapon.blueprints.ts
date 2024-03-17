@@ -1,5 +1,13 @@
 import { makeKeys } from "@shared/utility/make-keys";
-import { ItemGrade, Metal, Scrap, ThrowableWeapon, Wood } from "@shared/modules/items";
+import {
+  ThrowableWeapon,
+  ThrowableWeaponItem,
+} from "@shared/modules/items/registry/weapons/throwable-weapon.items";
+import { getItemName } from "@shared/modules/items/lib";
+import { ItemGrade } from "@shared/modules/items/enums";
+import { Scrap } from "@shared/modules/items/registry/materials/scrap.items";
+import { Metal } from "@shared/modules/items/registry/materials/metal.items";
+import { Wood } from "@shared/modules/items/registry/materials/wood.items";
 import { registerBlueprint } from "../blueprints.registry";
 
 // We re-use weapon item key as it's blueprint key for easier management.
@@ -8,70 +16,55 @@ export const ThrowableWeaponBlueprint = makeKeys<ThrowableWeaponBlueprintKey>()(
 export type ThrowableWeaponBlueprintKey = Brand<string, "ThrowableWeaponBlueprintKey">;
 
 registerBlueprint({
-  key: ThrowableWeapon.GRENADE,
+  key: ThrowableWeaponBlueprint.GRENADE,
+  name: `${getItemName(ThrowableWeapon.GRENADE)} blueprint`,
   recipes: [
     {
       item: {
         key: ThrowableWeapon.GRENADE,
         grade: ItemGrade.BASE,
-      },
+        amount: 5,
+      } as ThrowableWeaponItem,
       parts: [
-        {
-          key: Scrap.COMMON_SCRAP,
-          amount: 10,
-        },
-        {
-          key: Metal.COMMON_METAL,
-          amount: 5,
-        },
+        { key: Scrap.COMMON_SCRAP, amount: 10 },
+        { key: Metal.COMMON_METAL, amount: 5 },
       ],
     },
   ],
 });
 
 registerBlueprint({
-  key: ThrowableWeapon.STICKYBOMB,
+  key: ThrowableWeaponBlueprint.STICKYBOMB,
+  name: `${getItemName(ThrowableWeapon.STICKYBOMB)} blueprint`,
   recipes: [
     {
       item: {
         key: ThrowableWeapon.STICKYBOMB,
         grade: ItemGrade.BASE,
-      },
+        amount: 5,
+      } as ThrowableWeaponItem,
       parts: [
-        {
-          key: Metal.COMMON_METAL,
-          amount: 3,
-        },
-        {
-          key: Scrap.COMMON_SCRAP,
-          amount: 2,
-        },
-        {
-          key: Wood.COMMON_WOOD,
-          amount: 1,
-        },
+        { key: Metal.COMMON_METAL, amount: 3 },
+        { key: Scrap.COMMON_SCRAP, amount: 2 },
+        { key: Wood.COMMON_WOOD, amount: 1 },
       ],
     },
   ],
 });
 
 registerBlueprint({
-  key: ThrowableWeapon.SMOKEGRENADE,
+  key: ThrowableWeaponBlueprint.SMOKEGRENADE,
+  name: `${getItemName(ThrowableWeapon.SMOKEGRENADE)} blueprint`,
   recipes: [
     {
       item: {
         key: ThrowableWeapon.SMOKEGRENADE,
         grade: ItemGrade.BASE,
-      },
+        amount: 5,
+      } as ThrowableWeaponItem,
       parts: [
-        {
-          key: Metal.COMMON_METAL,
-          amount: 2,
-        },
-        {
-          key: Scrap.COMMON_SCRAP,
-          amount: 2,
-        },
+        { key: Metal.COMMON_METAL, amount: 2 },
+        { key: Scrap.COMMON_SCRAP, amount: 2 },
       ],
     },
   ],
@@ -79,25 +72,18 @@ registerBlueprint({
 
 registerBlueprint({
   key: ThrowableWeaponBlueprint.JERRYCAN,
+  name: `${getItemName(ThrowableWeapon.JERRYCAN)} blueprint`,
   recipes: [
     {
       item: {
         key: ThrowableWeapon.JERRYCAN,
         grade: ItemGrade.BASE,
-      },
+        amount: 5,
+      } as ThrowableWeaponItem,
       parts: [
-        {
-          key: Metal.COMMON_METAL,
-          amount: 2,
-        },
-        {
-          key: Scrap.COMMON_SCRAP,
-          amount: 2,
-        },
-        {
-          key: Wood.COMMON_WOOD,
-          amount: 1,
-        },
+        { key: Metal.COMMON_METAL, amount: 2 },
+        { key: Scrap.COMMON_SCRAP, amount: 2 },
+        { key: Wood.COMMON_WOOD, amount: 1 },
       ],
     },
   ],
@@ -105,25 +91,18 @@ registerBlueprint({
 
 registerBlueprint({
   key: ThrowableWeaponBlueprint.MOLOTOV,
+  name: `${getItemName(ThrowableWeapon.MOLOTOV)} blueprint`,
   recipes: [
     {
       item: {
         key: ThrowableWeapon.MOLOTOV,
         grade: ItemGrade.BASE,
-      },
+        amount: 5,
+      } as ThrowableWeaponItem,
       parts: [
-        {
-          key: Scrap.COMMON_SCRAP,
-          amount: 3,
-        },
-        {
-          key: Metal.COMMON_METAL,
-          amount: 2,
-        },
-        {
-          key: Wood.COMMON_WOOD,
-          amount: 1,
-        },
+        { key: Scrap.COMMON_SCRAP, amount: 3 },
+        { key: Metal.COMMON_METAL, amount: 2 },
+        { key: Wood.COMMON_WOOD, amount: 1 },
       ],
     },
   ],
@@ -131,21 +110,17 @@ registerBlueprint({
 
 registerBlueprint({
   key: ThrowableWeaponBlueprint.HAZARDCAN,
+  name: `${getItemName(ThrowableWeapon.HAZARDCAN)} blueprint`,
   recipes: [
     {
       item: {
         key: ThrowableWeapon.HAZARDCAN,
         grade: ItemGrade.BASE,
-      },
+        amount: 5,
+      } as ThrowableWeaponItem,
       parts: [
-        {
-          key: Metal.COMMON_METAL,
-          amount: 3,
-        },
-        {
-          key: Scrap.COMMON_SCRAP,
-          amount: 7,
-        },
+        { key: Metal.COMMON_METAL, amount: 3 },
+        { key: Scrap.COMMON_SCRAP, amount: 7 },
       ],
     },
   ],
@@ -153,21 +128,17 @@ registerBlueprint({
 
 registerBlueprint({
   key: ThrowableWeaponBlueprint.BZGAS,
+  name: `${getItemName(ThrowableWeapon.BZGAS)} blueprint`,
   recipes: [
     {
       item: {
         key: ThrowableWeapon.BZGAS,
         grade: ItemGrade.BASE,
-      },
+        amount: 5,
+      } as ThrowableWeaponItem,
       parts: [
-        {
-          key: Scrap.COMMON_SCRAP,
-          amount: 3,
-        },
-        {
-          key: Metal.COMMON_METAL,
-          amount: 2,
-        },
+        { key: Scrap.COMMON_SCRAP, amount: 3 },
+        { key: Metal.COMMON_METAL, amount: 2 },
       ],
     },
   ],
@@ -175,25 +146,18 @@ registerBlueprint({
 
 registerBlueprint({
   key: ThrowableWeaponBlueprint.FLARE,
+  name: `${getItemName(ThrowableWeapon.FLARE)} blueprint`,
   recipes: [
     {
       item: {
         key: ThrowableWeapon.FLARE,
         grade: ItemGrade.BASE,
-      },
+        amount: 5,
+      } as ThrowableWeaponItem,
       parts: [
-        {
-          key: Metal.COMMON_METAL,
-          amount: 2,
-        },
-        {
-          key: Scrap.COMMON_SCRAP,
-          amount: 3,
-        },
-        {
-          key: Wood.COMMON_WOOD,
-          amount: 1,
-        },
+        { key: Metal.COMMON_METAL, amount: 2 },
+        { key: Scrap.COMMON_SCRAP, amount: 3 },
+        { key: Wood.COMMON_WOOD, amount: 1 },
       ],
     },
   ],
@@ -201,21 +165,17 @@ registerBlueprint({
 
 registerBlueprint({
   key: ThrowableWeaponBlueprint.PROXMINE,
+  name: `${getItemName(ThrowableWeapon.PROXMINE)} blueprint`,
   recipes: [
     {
       item: {
         key: ThrowableWeapon.PROXMINE,
         grade: ItemGrade.BASE,
-      },
+        amount: 5,
+      } as ThrowableWeaponItem,
       parts: [
-        {
-          key: Metal.COMMON_METAL,
-          amount: 10,
-        },
-        {
-          key: Scrap.COMMON_SCRAP,
-          amount: 10,
-        },
+        { key: Metal.COMMON_METAL, amount: 10 },
+        { key: Scrap.COMMON_SCRAP, amount: 10 },
       ],
     },
   ],
@@ -223,21 +183,17 @@ registerBlueprint({
 
 registerBlueprint({
   key: ThrowableWeaponBlueprint.PIPEBOMB,
+  name: `${getItemName(ThrowableWeapon.PIPEBOMB)} blueprint`,
   recipes: [
     {
       item: {
         key: ThrowableWeapon.PIPEBOMB,
         grade: ItemGrade.BASE,
-      },
+        amount: 5,
+      } as ThrowableWeaponItem,
       parts: [
-        {
-          key: Metal.COMMON_METAL,
-          amount: 2,
-        },
-        {
-          key: Scrap.COMMON_SCRAP,
-          amount: 3,
-        },
+        { key: Metal.COMMON_METAL, amount: 2 },
+        { key: Scrap.COMMON_SCRAP, amount: 3 },
       ],
     },
   ],

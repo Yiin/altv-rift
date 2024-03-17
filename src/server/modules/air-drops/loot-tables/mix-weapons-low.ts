@@ -78,11 +78,6 @@ export default {
     }
     if (isItemKeyThrowableWeapon(itemKey)) {
       return createItem(itemKey, {
-        grade: rollItem([
-          [50, ItemGrade.ONE],
-          [30, ItemGrade.TWO],
-          [10, ItemGrade.THREE],
-        ]),
         amount: ~~(Math.random() * 5) * 10 + 20,
       });
     }

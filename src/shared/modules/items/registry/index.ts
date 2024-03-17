@@ -1,5 +1,6 @@
 // @index(['./*.items.ts', './**/*.items.ts'], f => `export * from "${f.path}";`)
 export * from "./ammo/ammo.items";
+export * from "./blueprint.items";
 export * from "./clothing/accessory/accessory.items";
 export * from "./clothing/armor/armor.items";
 export * from "./clothing/clothing.items";

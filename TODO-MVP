@@ -125,19 +125,20 @@ Workbench:
       - Used for crafting weapons/ammo/tools
     ☐ Wood(?)
       - Used for ?
-  ☐ Blueprints
+  ✔ Blueprints @done(24-03-17 23:54)
     ✔ Firearm Weapons @done(24-03-17 18:27)
     ✔ Throwable Weapons @done(24-03-17 18:27)
     ✔ Melee Weapons @done(24-03-17 18:27)
-    ☐ Tools
-      ☐ Fishing rod
-      ☐ Hatchet
-      ☐ Pickaxe
-    ☐ Ammo
-    ☐ Clothing
-      ☐ Armor
-    ☐ Materials
-      ☐ Item components
+    ✔ Tools @done(24-03-17 20:48)
+      ✔ Fishing rod @done(24-03-17 20:48)
+      ✔ Hatchet @done(24-03-17 20:48)
+      ✔ Pickaxe @done(24-03-17 20:48)
+    ✔ Ammo @done(24-03-17 23:54)
+    ✔ Clothing @done(24-03-17 20:52)
+      ✔ Armor @done(24-03-17 20:52)
+        For now only 2 types: female & male versions of black utility vest
+    ✔ Materials @done(24-03-17 23:53)
+      ✔ Item components @done(24-03-17 23:53)
   ☐ Crafting UI for weapons
     ✔ UI itself @done(24-03-12 04:20)
     ☐ The actual integration of that UI
@@ -151,11 +152,12 @@ Workbench:
 player prototype:
   - learn blueprint
 items:
-  ☐ blueprints are items in the game, after using the blueprint item, you consume & learn it.
-  ☐ should registerblueprint automatically register blueprint item?
-  ☐ pistol blueprint item
-  ☐ show only categories of blueprints you have learned
-  ☐ make blueprint categories scroll
+  ✔ blueprints are items in the game @done(24-03-17 23:55)
+  ☐ after using the blueprint item ☐ you consume & learn it.
+  ✘ should registerblueprint automatically register blueprint item? @cancelled(24-03-17 23:55)
+  ✔ pistol blueprint item @done(24-03-17 23:54)
+  ✔ show only categories of blueprints you have learned @done(24-03-17 23:55)
+  ✔ make blueprint categories scroll @done(24-03-17 23:54)
   ☐ list learned blueprints in UI
 
 ------------------------------------------------------------------------------------------------------------------------

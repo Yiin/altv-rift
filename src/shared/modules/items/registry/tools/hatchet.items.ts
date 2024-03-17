@@ -1,6 +1,7 @@
 import { registerItems } from "../../items-registry";
 import { makeKeys } from "../../../../utility/make-keys";
 import { Item } from "../../types";
+import { ItemGrade } from "../../enums";
 
 export const Hatchet = makeKeys<HatchetItemKey>()({
   HATCHET: "hatchet",
@@ -10,6 +11,7 @@ export type HatchetItemKey = Brand<string, "HatchetItemKey">;
 
 export type HatchetItem = {
   key: HatchetItemKey;
+  grade: ItemGrade;
 };
 
 export type HatchetItemInfo = {

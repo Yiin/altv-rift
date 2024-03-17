@@ -129,4 +129,5 @@ export function getWeaponAmmoEquipmentSlot(key: FirearmWeaponItemKey) {
     case AmmoGroup.SMOKE_GRANADES:
       return EquipmentSlot.SmokeGranadesAmmo;
   }
+  throw new Error(`Unknown ammo group for weapon: ${key}`);
 }

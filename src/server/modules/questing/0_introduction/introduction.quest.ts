@@ -10,11 +10,7 @@ import {
   TreeLogs,
   createItem,
 } from "@shared/modules/items";
-import {
-  HatchetBlueprint,
-  FishingRodBlueprint,
-  PickaxeBlueprint,
-} from "@shared/modules/production";
+import { ToolBlueprint } from "@shared/modules/production";
 import { PedKey } from "@shared/modules/ped/list";
 import { Note } from "@shared/modules/items/registry/note.items";
 import { isInGame } from "@/core/utility/assertions";
@@ -50,7 +46,7 @@ alt.Events.onPlayer(ServerEvents.FromClient.NOTIFY, (player, questFact) => {
     }
     case Quests.Introduction.Facts.STARTED_WOODCUTTING: {
       if (player.isNearPed(PedKey.WOODCUTTING_TUTOR)) {
-        player.addItem(createItem(Hatchet.BASIC_HATCHET));
+        player.addItem(createItem(Hatchet.HATCHET));
       } else {
         reportAbuse(player);
       }
@@ -64,7 +60,7 @@ alt.Events.onPlayer(ServerEvents.FromClient.NOTIFY, (player, questFact) => {
           Quests.Introduction.Constants.PALM_LOGS_NEEDED,
         )
       ) {
-        player.addBlueprint(HatchetBlueprint.ADVANCED_HATCHET);
+        player.addBlueprint(ToolBlueprint.HATCHET);
       } else {
         reportAbuse(player);
       }
@@ -86,7 +82,7 @@ alt.Events.onPlayer(ServerEvents.FromClient.NOTIFY, (player, questFact) => {
           Quests.Introduction.Constants.RAW_TROUT_NEEDED,
         )
       ) {
-        player.addBlueprint(FishingRodBlueprint.ADVANCED_FISHING_ROD);
+        player.addBlueprint(ToolBlueprint.FISHING_ROD);
       } else {
         reportAbuse(player);
       }
@@ -96,7 +92,7 @@ alt.Events.onPlayer(ServerEvents.FromClient.NOTIFY, (player, questFact) => {
         player.isNearPed(PedKey.MINING_TUTOR) &&
         player.removeInventoryItemByKey(Sand.GRAVEL, Quests.Introduction.Constants.GRAVEL_NEEDED)
       ) {
-        player.addBlueprint(PickaxeBlueprint.BASIC_PICKAXE);
+        player.addBlueprint(ToolBlueprint.PICKAXE);
       } else {
         reportAbuse(player);
       }
