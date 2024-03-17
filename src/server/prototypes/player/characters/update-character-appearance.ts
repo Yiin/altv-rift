@@ -2,7 +2,7 @@ import alt from "@altv/server";
 import { type Appearance } from "@prisma/client";
 import { ClientEvents } from "@shared/events/client";
 import { getTorsoForTop } from "@shared/modules/items/registry/clothing/get-correct-torso";
-import { getDefaultClothing } from "@shared/modules/items/registry/clothing/clothing-defaults";
+import { getDefaultClothing } from "@shared/modules/items/registry/clothing/get-default-clothing";
 
 declare module "@altv/server" {
   export interface Player {

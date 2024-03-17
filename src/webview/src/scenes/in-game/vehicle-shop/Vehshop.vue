@@ -22,7 +22,7 @@ const selectCar = (car: any) => {
     <div class="mx-auto flex w-full items-center justify-between">
       <div class="w-40"><v-img :src="`./assets/vehicles/logo.png`" /></div>
       <div
-        class="disableScrollBar mx-20 flex gap-2.5 overflow-x-auto whitespace-nowrap text-base font-bold uppercase text-white"
+        class="no-scrollbar mx-20 flex gap-2.5 overflow-x-auto whitespace-nowrap text-base font-bold uppercase text-white"
       >
         <button
           v-for="item in vehshop.carTypes"
@@ -123,18 +123,3 @@ const selectCar = (car: any) => {
     </div>
   </div>
 </template>
-
-<style>
-.disableScrollBar {
-  -ms-overflow-style: none;
-  /* Internet Explorer 10+ */
-  scrollbar-width: none;
-  /* Firefox */
-}
-
-.disableScrollBar::-webkit-scrollbar {
-  display: none;
-  /* Safari and Chrome */
-}
-</style>
-../../../components/Donut.vue

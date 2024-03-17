@@ -13,9 +13,10 @@ export enum WeaponGroup {
 export enum AmmoGroup {
   ASSAULT_RIFLE = "Assault Rifle",
   HANDGUN = "Handgun",
-  MACHINE_GUN = "Machine Gun",
+  SMG = "SMG",
   SHOTGUN = "Shotgun",
   SNIPER_RIFLE = "Sniper Rifle",
+  MACHINE_GUN = "Machine Gun",
   ROCKET_LAUNCHER = "Rocket Launcher",
   FIREWORK = "Firework",
   GRENADE_LAUNCHER = "Grenade Launcher",

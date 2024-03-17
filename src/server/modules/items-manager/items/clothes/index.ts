@@ -1,6 +1,15 @@
 import alt from "@altv/server";
 import { ServerEvents } from "@shared/events/server";
-import { isItemClothing, getItemInfoByKey, getItemEquipmentSlot, isFemaleClothing, ClothingItemKey, isUnisexClothing, isMaleClothing, isComponentVariation } from "@shared/modules/items";
+import {
+  isItemClothing,
+  getItemInfoByKey,
+  getItemEquipmentSlot,
+  isFemaleClothing,
+  ClothingItemKey,
+  isUnisexClothing,
+  isMaleClothing,
+  isComponentVariation,
+} from "@shared/modules/items";
 import { getTorsoForTop } from "@shared/modules/items/registry/clothing/get-correct-torso";
 import { on } from "@/core/events/emit";
 

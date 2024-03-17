@@ -31,6 +31,6 @@ export const useCharacter = () =>
           size: 30,
           items: [],
         },
-        blueprints: ["pistol"],
+        blueprints: ["pistol", "pistol_plus", "pistol_plus_plus", "pistol_plus_plus_plus"],
       } as any as Store<"character", Character, {}, {}>)
     : characterStore?.();

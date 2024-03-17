@@ -2,7 +2,7 @@ import { Blueprint } from "./types";
 
 const blueprints = new Map<string, Blueprint>();
 
-export function registerBlueprint(blueprint: Blueprint) {
+export function registerBlueprint<T extends Blueprint>(blueprint: T) {
   blueprints.set(blueprint.key, blueprint);
 }
 

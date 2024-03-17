@@ -1,5 +1,5 @@
 import { registerItems } from "@shared/modules/items";
-import { ItemTier, ItemGrade } from "../../enums";
+import { ItemTier } from "../../enums";
 import { Item } from "../../types";
 import { makeKeys } from "../../../../utility/make-keys";
 import { WeaponGroup } from "./weapon-groups";
@@ -26,7 +26,6 @@ export type ThrowableWeaponItem = {
   key: ThrowableWeaponItemKey;
 
   amount: number;
-  grade: ItemGrade;
 };
 
 export type ThrowableWeaponItemInfo = {

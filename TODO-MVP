@@ -112,9 +112,41 @@ Workbench:
     ✘ Create a script to update weapons in the database @cancelled(24-02-28 00:39)
     ✘ Create a script to update clothing in the database @cancelled(24-02-28 00:39)
   ☐ Move weapon stats to different file
+  ☐ Materials
+    ☐ Item components
+      - Used for crafting weapons/ammo/tools
+    ☐ Scrap
+      - Craft item components using scraps
+    ☐ Ores
+      - Melt ores into metal(?)
+    ☐ Tree logs
+      - Process tree logs into wood(?)
+    ☐ Metal(?)
+      - Used for crafting weapons/ammo/tools
+    ☐ Wood(?)
+      - Used for ?
+  ☐ Blueprints
+    ✔ Firearm Weapons @done(24-03-17 18:27)
+    ✔ Throwable Weapons @done(24-03-17 18:27)
+    ✔ Melee Weapons @done(24-03-17 18:27)
+    ☐ Tools
+      ☐ Fishing rod
+      ☐ Hatchet
+      ☐ Pickaxe
+    ☐ Ammo
+    ☐ Clothing
+      ☐ Armor
+    ☐ Materials
+      ☐ Item components
   ☐ Crafting UI for weapons
     ✔ UI itself @done(24-03-12 04:20)
     ☐ The actual integration of that UI
+      - Crafting of items using blueprints:
+        - Crafting tables
+      - Upgrading items:
+        - Crafting tables
+        - Workbench
+
 
 player prototype:
   - learn blueprint

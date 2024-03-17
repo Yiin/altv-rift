@@ -16,6 +16,12 @@ import {
   EarringsItem,
   EarringsItemInfo,
   EarringsItemKey,
+  FirearmWeaponItem,
+  FirearmWeaponItemInfo,
+  FirearmWeaponItemKey,
+  FishBaitItem,
+  FishBaitItemInfo,
+  FishBaitItemKey,
   FishingRodItem,
   FishingRodItemInfo,
   FishingRodItemKey,
@@ -28,6 +34,9 @@ import {
   GlovesItem,
   GlovesItemInfo,
   GlovesItemKey,
+  HatchetItem,
+  HatchetItemInfo,
+  HatchetItemKey,
   HeadwearItem,
   HeadwearItemInfo,
   HeadwearItemKey,
@@ -38,47 +47,55 @@ import {
   MaskItemInfo,
   MaskItemKey,
   MaterialItemKey,
+  MeleeWeaponItem,
+  MeleeWeaponItemInfo,
+  MeleeWeaponItemKey,
+  MetalItem,
+  MetalItemInfo,
+  MetalItemKey,
+  NoteItem,
+  NoteItemInfo,
+  NoteItemKey,
+  OreItem,
+  OreItemInfo,
+  OreItemKey,
   PantsItem,
   PantsItemInfo,
   PantsItemKey,
+  PickaxeItem,
+  PickaxeItemInfo,
+  PickaxeItemKey,
   RightHandItem,
   RightHandItemInfo,
   RightHandItemKey,
+  SandItem,
+  SandItemInfo,
+  SandItemKey,
+  ScrapItem,
+  ScrapItemInfo,
+  ScrapItemKey,
   ShoesItem,
   ShoesItemInfo,
   ShoesItemKey,
+  ThrowableWeaponItem,
+  ThrowableWeaponItemInfo,
+  ThrowableWeaponItemKey,
+  ToolItem,
+  ToolItemKey,
   TopItem,
   TopItemInfo,
   TopItemKey,
   TreeLogItem,
   TreeLogItemInfo,
   TreeLogItemKey,
+  WeaponComponentItem,
+  WeaponComponentItemInfo,
+  WeaponComponentItemKey,
   WeaponItemKey,
+  WoodItem,
+  WoodItemInfo,
+  WoodItemKey,
 } from "./registry";
-import {
-  FirearmWeaponItemKey,
-  FirearmWeaponItem,
-  FirearmWeaponItemInfo,
-} from "./registry/weapons/firearm-weapon.items";
-import {
-  MeleeWeaponItemKey,
-  MeleeWeaponItem,
-  MeleeWeaponItemInfo,
-} from "./registry/weapons/melee-weapon.items";
-import {
-  ThrowableWeaponItemKey,
-  ThrowableWeaponItem,
-  ThrowableWeaponItemInfo,
-} from "./registry/weapons/throwable-weapon.items";
-import { FishBaitItem, FishBaitItemInfo, FishBaitItemKey } from "./registry/fish-bait.items";
-import { ToolItem, ToolItemInfo, ToolItemKey } from "./registry/tools/tool.items";
-import { WoodItemKey, WoodItem, WoodItemInfo } from "./registry/materials/wood.items";
-import { MetalItemKey, MetalItem, MetalItemInfo } from "./registry/materials/metal.items";
-import { NoteItemKey, NoteItem, NoteItemInfo } from "./registry/note.items";
-import { SandItem, SandItemInfo, SandItemKey } from "./registry/materials/sand.items";
-import { WeaponComponentItem, WeaponComponentItemInfo, WeaponComponentItemKey } from "./registry/weapon-components/weapon-component.items";
-import { OreItemKey, OreItem, OreItemInfo } from "./registry/materials/ore.items";
-import { ScrapItemKey, ScrapItem, ScrapItemInfo } from "./registry/materials/scrap.items";
 
 export type StackableItem = Extract<Item, { amount: number }>;
 
@@ -145,8 +162,10 @@ type ItemMapping<T> = T extends FirearmWeaponItemKey
   ? [ScrapItem, ScrapItemInfo]
   : T extends FishBaitItemKey
   ? [FishBaitItem, FishBaitItemInfo]
-  : T extends ToolItemKey
-  ? [ToolItem, ToolItemInfo]
+  : T extends HatchetItemKey
+  ? [HatchetItem, HatchetItemInfo]
+  : T extends PickaxeItemKey
+  ? [PickaxeItem, PickaxeItemInfo]
   : T extends FishingRodItemKey
   ? [FishingRodItem, FishingRodItemInfo]
   : T extends NoteItemKey
@@ -159,6 +178,7 @@ type ExtractBrand<T> = T extends string & { [brand]: infer U } ? U : never;
 type ExtractMissingKeys<T> = T extends any ? ExtractBrand<T> : never;
 type ItemMappingValidation = MissingKeys extends never ? null : ExtractMissingKeys<MissingKeys>;
 
+// Type 'null' in not assignable to type <MissingItemKeys>.
 const MISSING_ITEM_KEYS: ItemMappingValidation = null;
 
 export type Item = ItemMapping<ItemKey>[0];

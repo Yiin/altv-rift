@@ -77,6 +77,8 @@ module.exports = {
           "linear-gradient(180deg, rgba(255, 218, 87, 0.15) 0%, rgba(255, 218, 87, 0.01) 100%)",
         // with variable
         variable: "var(--bg)",
+        pistol:
+          "url(https://cdn.leonardo.ai/users/dff1175f-28d6-4b1d-9dce-8c6d881d7fd4/generations/31d3f50b-97c1-42a2-957a-95b9189ba2a2/Default_even_sheet_of_army_clothing_texture_wallpaper_1.jpg?w=512)",
       },
       borderWidth: {
         1: "1px",

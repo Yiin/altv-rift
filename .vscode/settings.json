@@ -3,16 +3,22 @@
   "evenBetterToml.schema.associations": {
     "server-(.*).toml": "https://raw.githubusercontent.com/xxshady/altv-config-schemas/main/server-config.schema.json?v=awdassdw"
   },
-  // "html.format.wrapLineLength": 100,
   "editor.tabSize": 2,
-  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
-  "html.format.wrapAttributes": "preserve",
   "[prisma]": {
     "editor.defaultFormatter": "Prisma.prisma"
   },
-  "editor.formatOnSave": true,
+  "editor.formatOnSave": false,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
+    "source.fixAll.eslint": "always"
   },
-  "eslint.validate": ["javascript", "typescript"]
+  "eslint.validate": ["javascript", "typescript"],
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "src/webview": true,
+  }
 }

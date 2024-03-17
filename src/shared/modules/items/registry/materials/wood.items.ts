@@ -3,11 +3,11 @@ import { makeKeys } from "../../../../utility/make-keys";
 import { Item, ItemKey } from "../../types";
 
 export const Wood = makeKeys<WoodItemKey>()({
-  BASIC_WOOD: "basic_wood",
-  ADVANCED_WOOD: "advanced_wood",
-  EXPERT_WOOD: "expert_wood",
-  ELITE_WOOD: "elite_wood",
+  COMMON_WOOD: "common_wood",
+  UNCOMMON_WOOD: "uncommon_wood",
+  RARE_WOOD: "rare_wood",
   EPIC_WOOD: "epic_wood",
+  LEGENDARY_WOOD: "legendary_wood",
 });
 
 export type WoodItemKey = Brand<string, "WoodItemKey">;
@@ -25,32 +25,32 @@ export type WoodItemInfo = {
 
 const woods = registerItems<WoodItemInfo>([
   {
-    key: Wood.BASIC_WOOD,
-    name: "Basic Wood",
+    key: Wood.COMMON_WOOD,
+    name: "Common Wood",
     description:
       "Freshly processed from raw tree logs, this wood is simple yet reliable. Ideal for everyday crafting needs.",
   },
   {
-    key: Wood.ADVANCED_WOOD,
-    name: "Advanced Wood",
+    key: Wood.UNCOMMON_WOOD,
+    name: "Uncommon Wood",
     description:
       "Treated and refined, this wood boasts enhanced durability. Perfect for crafting items requiring precision and resilience.",
   },
   {
-    key: Wood.EXPERT_WOOD,
-    name: "Expert Wood",
+    key: Wood.RARE_WOOD,
+    name: "Rare Wood",
     description:
       "The pinnacle of wood processing, reserved for the most intricate of crafting projects. Its flawless finish speaks of unmatched craftsmanship.",
   },
   {
-    key: Wood.ELITE_WOOD,
-    name: "Elite Wood",
+    key: Wood.EPIC_WOOD,
+    name: "Epic Wood",
     description:
       "Expertly processed and carefully selected, this wood stands out for its superior quality. A favorite among professionals.",
   },
   {
-    key: Wood.EPIC_WOOD,
-    name: "Epic Wood",
+    key: Wood.LEGENDARY_WOOD,
+    name: "Legendary Wood",
     description:
       "Its unmatched quality and rare origin make it the ultimate choice for crafting masterpieces.",
   },
