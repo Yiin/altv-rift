@@ -3,11 +3,7 @@ import { makeKeys } from "../../../../utility/make-keys";
 import { Item } from "../../types";
 
 export const Hatchet = makeKeys<HatchetItemKey>()({
-  BASIC_HATCHET: "basic_hatchet",
-  ADVANCED_HATCHET: "advanced_hatchet",
-  EXPERT_HATCHET: "expert_hatchet",
-  ELITE_HATCHET: "elite_hatchet",
-  EPIC_HATCHET: "epic_hatchet",
+  HATCHET: "hatchet",
 });
 
 export type HatchetItemKey = Brand<string, "HatchetItemKey">;
@@ -24,34 +20,10 @@ export type HatchetItemInfo = {
 
 export const hatchets = registerItems<HatchetItemInfo>([
   {
-    key: Hatchet.BASIC_HATCHET,
+    key: Hatchet.HATCHET,
     name: "Basic Hatchet",
     description:
       "A straightforward tool, forged for simplicity. While it may lack frills, it's reliable for everyday chopping and crafting.",
-  },
-  {
-    key: Hatchet.ADVANCED_HATCHET,
-    name: "Advanced Hatchet",
-    description:
-      "Reinforced with superior metal and a sharper edge, this hatchet ensures cleaner cuts and longer-lasting performance.",
-  },
-  {
-    key: Hatchet.EXPERT_HATCHET,
-    name: "Expert Hatchet",
-    description:
-      "The culmination of tradition and innovation, this hatchet boasts a design that maximizes efficiency and precision. Every swing is a statement of mastery.",
-  },
-  {
-    key: Hatchet.ELITE_HATCHET,
-    name: "Elite Hatchet",
-    description:
-      "Reinforced with superior metal and a sharper edge, this hatchet ensures cleaner cuts and longer-lasting performance.",
-  },
-  {
-    key: Hatchet.EPIC_HATCHET,
-    name: "Epic Hatchet",
-    description:
-      "Carved from the finest materials and imbued with legendary craftsmanship, this hatchet is a masterpiece. Its unparalleled edge and ergonomic design make it an emblem of excellence.",
   },
 ]);
 
