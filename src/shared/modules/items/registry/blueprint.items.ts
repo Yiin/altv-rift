@@ -57,5 +57,7 @@ export function isItemBlueprint(item: Item): item is BlueprintItem {
  * Utils
  */
 function blueprintToBlueprintItemKeys<T extends {}>(obj: T) {
-  return Object.fromEntries(Object.entries(obj).map(([key, value]) => [value, key])) as T;
+  return Object.fromEntries(
+    Object.entries(obj).map(([key, value]) => [value, `blueprint_${key}`]),
+  ) as T;
 }
