@@ -8,7 +8,7 @@ export function drawTexture2D(
   name: string,
   position: alt.IVector2,
   scale: number = 1,
-  opacity: number = 255
+  opacity: number = 255,
 ) {
   if (!game.hasStreamedTextureDictLoaded(dictionary)) {
     game.requestStreamedTextureDict(dictionary, false);
@@ -46,7 +46,7 @@ export function drawTexture2D(
     255,
     opacity,
     false,
-    undefined
+    undefined,
   );
 }
 
@@ -54,7 +54,7 @@ export function drawTexture(
   dictionary: string,
   name: string,
   position: alt.Vector3,
-  scale: number = 1
+  scale: number = 1,
 ) {
   if (!game.hasStreamedTextureDictLoaded(dictionary)) {
     game.requestStreamedTextureDict(dictionary, false);

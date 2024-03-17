@@ -55,7 +55,7 @@ export class WindowService {
   public updateOption(
     player: Player,
     key: keyof (ClientOptions & WindowOptions),
-    value: (ClientOptions & WindowOptions)[keyof (ClientOptions & WindowOptions)]
+    value: (ClientOptions & WindowOptions)[keyof (ClientOptions & WindowOptions)],
   ) {
     return () => player.emitRaw("vchat:updateOption", key, value);
   }

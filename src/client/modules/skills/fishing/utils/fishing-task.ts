@@ -49,7 +49,7 @@ export async function startFishingTask() {
             obj.model === alt.hash("prop_fishing_rod_01")
           );
         })?.scriptID ?? null;
-    }
+    },
   );
 }
 

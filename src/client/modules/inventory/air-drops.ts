@@ -10,7 +10,7 @@ type AirDropData = {
   timer?: alt.Timers.EveryTick;
 };
 
-const airDrops = new Map<alt.VirtualEntity['id'], AirDropData>();
+const airDrops = new Map<alt.VirtualEntity["id"], AirDropData>();
 
 function syncAirDrop(entity: alt.VirtualEntity) {
   if (!entity.streamSyncedMeta.interpolate) {
@@ -41,7 +41,15 @@ function syncAirDrop(entity: alt.VirtualEntity) {
         rot: alt.Vector3.zero,
       });
 
-      parachute.attachTo(lootBox, 0, new alt.Vector3(0, 0, 3.3), alt.Vector3.zero, false, false, false);
+      parachute.attachTo(
+        lootBox,
+        0,
+        new alt.Vector3(0, 0, 3.3),
+        alt.Vector3.zero,
+        false,
+        false,
+        false,
+      );
 
       const timer = alt.Timers.everyTick(() => {
         const airDrop = airDrops.get(entity.id)!;
@@ -57,7 +65,15 @@ function syncAirDrop(entity: alt.VirtualEntity) {
         }
 
         const newPos = interpolateAirDropPosition(entity);
-        game.setEntityCoordsNoOffset(lootBox.scriptID, newPos.x, newPos.y, newPos.z, true, true, true);
+        game.setEntityCoordsNoOffset(
+          lootBox.scriptID,
+          newPos.x,
+          newPos.y,
+          newPos.z,
+          true,
+          true,
+          true,
+        );
       });
 
       airDrops.set(entity.id, { parachute, lootBox, timer });
@@ -74,7 +90,15 @@ function syncAirDrop(entity: alt.VirtualEntity) {
         delete airDrop.parachute;
         delete airDrop.timer;
       } else {
-        game.setEntityCoordsNoOffset(airDrop.lootBox.scriptID, currentPos.x, currentPos.y, currentPos.z, true, true, true);
+        game.setEntityCoordsNoOffset(
+          airDrop.lootBox.scriptID,
+          currentPos.x,
+          currentPos.y,
+          currentPos.z,
+          true,
+          true,
+          true,
+        );
       }
     }
   }
@@ -85,7 +109,9 @@ function getDropPosition(entity: alt.VirtualEntity) {
 }
 
 export function isAirDropInPosition(entity: alt.VirtualEntity) {
-  const { streamSyncedMeta: { interpolate } } = entity;
+  const {
+    streamSyncedMeta: { interpolate },
+  } = entity;
 
   if (!interpolate) {
     throw new Error(`No interpolation data for air drop ${entity.id}`);
@@ -99,7 +125,9 @@ export function isAirDropInPosition(entity: alt.VirtualEntity) {
 }
 
 function interpolateAirDropPosition(entity: alt.VirtualEntity) {
-  const { streamSyncedMeta: { interpolate } } = entity;
+  const {
+    streamSyncedMeta: { interpolate },
+  } = entity;
 
   if (!interpolate) {
     throw new Error(`No interpolation data for air drop ${entity.id}`);
@@ -110,7 +138,7 @@ function interpolateAirDropPosition(entity: alt.VirtualEntity) {
   const to = getDropPosition(entity);
   const elapsed = (alt.getNetTime() - ts) / 1000;
   const distance = from.distanceTo(to);
-  return from.lerp(Math.min(speed * elapsed / distance, 1), to);
+  return from.lerp(Math.min((speed * elapsed) / distance, 1), to);
 }
 
 function getAirDropModel(type: AirDropType) {
@@ -137,10 +165,10 @@ function getAirDropModel(type: AirDropType) {
 
 alt.Events.onStreamSyncedMetaChange(({ entity, key, newValue }) => {
   if (
-    !(entity instanceof alt.VirtualEntity)
-    || entity.streamSyncedMeta.entityType !== "storage"
-    || entity.streamSyncedMeta.storageType !== StorageType.LootBox
-    || key !== "interpolate"
+    !(entity instanceof alt.VirtualEntity) ||
+    entity.streamSyncedMeta.entityType !== "storage" ||
+    entity.streamSyncedMeta.storageType !== StorageType.LootBox ||
+    key !== "interpolate"
   ) {
     return;
   }
@@ -154,9 +182,9 @@ alt.Events.onStreamSyncedMetaChange(({ entity, key, newValue }) => {
 
 alt.Events.onWorldObjectStreamIn(({ object }) => {
   if (
-    !(object instanceof alt.VirtualEntity)
-    || object.streamSyncedMeta.entityType !== "storage"
-    || object.streamSyncedMeta.storageType !== StorageType.AirDrop
+    !(object instanceof alt.VirtualEntity) ||
+    object.streamSyncedMeta.entityType !== "storage" ||
+    object.streamSyncedMeta.storageType !== StorageType.AirDrop
   ) {
     return;
   }
@@ -176,9 +204,9 @@ alt.Events.onWorldObjectStreamIn(({ object }) => {
 
 alt.Events.onWorldObjectStreamOut(({ object }) => {
   if (
-    !(object instanceof alt.VirtualEntity)
-    || object.streamSyncedMeta.entityType !== "storage"
-    || object.streamSyncedMeta.storageType !== StorageType.LootBox
+    !(object instanceof alt.VirtualEntity) ||
+    object.streamSyncedMeta.entityType !== "storage" ||
+    object.streamSyncedMeta.storageType !== StorageType.LootBox
   ) {
     return;
   }

@@ -1,6 +1,7 @@
 import { Item, registerItems } from "@shared/modules/items";
 import { makeKeys } from "@shared/utility/make-keys";
-const GLASSES_ITEMS: Record<string, GlassesItemInfo> = (await import("./glasses.json")).default as any;
+const GLASSES_ITEMS: Record<string, GlassesItemInfo> = (await import("./glasses.json"))
+  .default as any;
 
 export const Glasses = makeKeys<GlassesItemKey>()({
   MaleBlackWraparounds: "SP_M_EYES_1_1",

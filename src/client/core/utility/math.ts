@@ -4,7 +4,7 @@ export function getCrossProduct(v1: alt.Vector3, v2: alt.Vector3): alt.Vector3 {
   return new alt.Vector3(
     v1.y * v2.z - v1.z * v2.y,
     v1.z * v2.x - v1.x * v2.z,
-    v1.x * v2.y - v1.y * v2.x
+    v1.x * v2.y - v1.y * v2.x,
   );
 }
 
@@ -39,7 +39,7 @@ export function getDirectionFromRotation(rotation: alt.IVector3): alt.IVector3 {
 export function getPointsInCircle(
   points: number,
   radius: number,
-  center: alt.IVector2
+  center: alt.IVector2,
 ): alt.IVector2[] {
   const slice = (2 * Math.PI) / points;
   const pointDefs: { x: number; y: number }[] = [];
@@ -79,7 +79,7 @@ export function getHeadingInDegrees(pointA: alt.IVector2, pointB: alt.IVector2) 
 export function getPointNextToPointRelativeToPoint(
   fromPoint: alt.IVector2,
   toPoint: alt.IVector2,
-  offset: number
+  offset: number,
 ) {
   // Calculate the difference in x and y between the player and the tree
   const dx = toPoint.x - fromPoint.x;

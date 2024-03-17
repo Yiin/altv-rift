@@ -1,6 +1,7 @@
 import { Item, ItemGrade, registerItems } from "@shared/modules/items";
 import { makeKeys } from "@shared/utility/make-keys";
-const HEADWEAR_ITEMS: Record<string, HeadwearItemInfo> = (await import("./headwear.json")).default as any;
+const HEADWEAR_ITEMS: Record<string, HeadwearItemInfo> = (await import("./headwear.json"))
+  .default as any;
 
 export const Headwear = makeKeys<HeadwearItemKey>()({
   MaleRedEarDefenders: "SP_M_HEAD_0_0_1",

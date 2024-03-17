@@ -6,7 +6,7 @@ import Raycast from "./raycast";
 export async function getGroundPos(
   point: alt.Vector3,
   surface?: boolean,
-  flags?: LOS_FLAGS
+  flags?: LOS_FLAGS,
 ): Promise<alt.Vector3> {
   alt.FocusData.focusOverridePos = point;
   const startPos = new alt.Vector3(point.x, point.y, 1500);
@@ -32,7 +32,7 @@ export async function getGroundPos(
 
       return true;
     }, 3000);
-  } catch { }
+  } catch {}
 
   if (!groundPos) {
     alt.logWarning("failed to get ground pos for waypoint, trying getGroundZ game...");
@@ -48,7 +48,7 @@ export async function getGroundPos(
         foundZ = z;
         return true;
       }, 3000);
-    } catch { }
+    } catch {}
 
     if (foundZ == null) {
       groundPos = point.sub(0, 0, 1);

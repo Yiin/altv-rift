@@ -1,6 +1,9 @@
 import alt from "@altv/server";
 import { createItem, getWeaponAmmoEquipmentSlot } from "@shared/modules/items";
-import { getWeaponClipSize, isItemFirearmWeapon } from "@shared/modules/items/registry/weapons/firearm-weapon.items";
+import {
+  getWeaponClipSize,
+  isItemFirearmWeapon,
+} from "@shared/modules/items/registry/weapons/firearm-weapon.items";
 import { InGamePlayer, isInGame } from "@/core/utility/assertions";
 
 declare module "@altv/server" {

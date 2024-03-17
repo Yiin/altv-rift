@@ -27,7 +27,7 @@ function renderParsedNode(
   rmlNode: alt.RmlElement | undefined,
   parsedElement: ParsedElement,
   parent: alt.RmlElement,
-  document: alt.RmlDocument
+  document: alt.RmlDocument,
 ) {
   // Initial render or previous render didn't rendered anything
   if (!rmlNode) {
@@ -113,7 +113,7 @@ function renderParsedNode(
             rmlNode.childNodes[i],
             parseChild(result, parsedElement),
             rmlNode,
-            document
+            document,
           );
         }
       });
@@ -131,7 +131,7 @@ interface ElementProps {
 function parseElement(
   tagName: string,
   props: ElementProps,
-  children: (string | ParsedElement)[]
+  children: (string | ParsedElement)[],
 ): ParsedElement {
   const classNames: string[] =
     typeof props.className === "string"

@@ -1,7 +1,7 @@
 import alt from "@altv/client";
+import { Appearance } from "@prisma/client/edge";
 import { PedAppearance } from "@/core/utility/ped-appearance";
 import { setupPeacefulPed } from "@/modules/peds/setup-ped/setup-peaceful-ped";
-import { Appearance } from "@prisma/client/edge";
 
 let isHidden = false;
 let ped: alt.LocalPed | undefined;
@@ -43,7 +43,7 @@ export async function createCharacterPed(isMale: boolean, pos: alt.IVector3, hea
         ped.scriptID,
         ped.pos.distanceTo(alt.Player.local.pos),
         ped.dimension,
-        alt.Player.local.dimension
+        alt.Player.local.dimension,
       );
     }
   }, 1000);

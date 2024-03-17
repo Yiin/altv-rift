@@ -55,7 +55,7 @@ export function randomPointInPolygon(polygon: alt.Vector3[]): alt.Vector3 {
     const b = polygon[triangles[i + 1]];
     const c = polygon[triangles[i + 2]];
     const areaOfTriangle = Math.abs(
-      (a.x * (b.y - c.y) + b.x * (c.y - a.y) + c.x * (a.y - b.y)) / 2.0
+      (a.x * (b.y - c.y) + b.x * (c.y - a.y) + c.x * (a.y - b.y)) / 2.0,
     );
     areas.push(areaOfTriangle);
   }
@@ -70,7 +70,7 @@ export function randomPointInPolygon(polygon: alt.Vector3[]): alt.Vector3 {
       return randomPointInTriangle(
         polygon[triangles[i]],
         polygon[triangles[i + 1]],
-        polygon[triangles[i + 2]]
+        polygon[triangles[i + 2]],
       );
     }
   }

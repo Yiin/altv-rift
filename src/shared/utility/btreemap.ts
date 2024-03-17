@@ -19,22 +19,14 @@ export interface IBTreeMap<T> {
   // data manipulation methods
   has(key: any): boolean;
   set(key: any, value: T): BTreeMap;
-  get(
-    key: any,
-    endKey?: any,
-    inclusive?: boolean
-  ): Array<any> | IterableIterator<Array<any>>;
+  get(key: any, endKey?: any, inclusive?: boolean): Array<any> | IterableIterator<Array<any>>;
   delete(key: any, endKey?: any, inclusive?: boolean): boolean;
   clear(): void;
   // iterators
   [Symbol.iterator](): IterableIterator<Array<any>>;
   keys(start: any, end: any, inclusive: boolean): IterableIterator<any>;
   values(start: any, end: any, inclusive: boolean): IterableIterator<Array<T>>;
-  entries(
-    start: any,
-    end: any,
-    inclusive: boolean
-  ): IterableIterator<Array<any>>;
+  entries(start: any, end: any, inclusive: boolean): IterableIterator<Array<any>>;
   // funcional methods
   forEach(func: Function, start: any, end: any, inclusive: boolean): void;
   toString(): string;
@@ -70,8 +62,7 @@ export class BTreeMap<T = any> implements IBTreeMap<T> {
 
   constructor(options: any = {}) {
     if (options.unique !== undefined) this.#unique = options.unique;
-    if (options.order !== undefined && options.order >= 3)
-      this.#order = options.order;
+    if (options.order !== undefined && options.order >= 3) this.#order = options.order;
     if (options.comparator !== undefined) this.#compare = options.comparator;
     this.#stats = { depth: 0, nodes: 0, leaves: 0, keys: 0, values: 0 };
     this.#map = new Map();
@@ -131,11 +122,7 @@ export class BTreeMap<T = any> implements IBTreeMap<T> {
     return this;
   }
 
-  get(
-    key: any,
-    endKey?: any,
-    inclusive?: boolean
-  ): Array<any> | IterableIterator<Array<any>> {
+  get(key: any, endKey?: any, inclusive?: boolean): Array<any> | IterableIterator<Array<any>> {
     if (endKey) {
       return this.values(key, endKey, inclusive);
     } else {
@@ -188,7 +175,7 @@ export class BTreeMap<T = any> implements IBTreeMap<T> {
   *keys(
     start: any = this.lowest,
     end: any = this.highest,
-    inclusive: boolean = true
+    inclusive: boolean = true,
   ): IterableIterator<any> {
     if (this.#map.size === 0) return;
     let leaf: Leaf | null = this.#root.findLeaf(start);
@@ -198,9 +185,7 @@ export class BTreeMap<T = any> implements IBTreeMap<T> {
         const key = keys[i];
         if (
           this.#compare(key, start) >= 0 &&
-          (inclusive
-            ? this.#compare(key, end) <= 0
-            : this.#compare(key, end) < 0)
+          (inclusive ? this.#compare(key, end) <= 0 : this.#compare(key, end) < 0)
         )
           yield key;
         if (this.#compare(key, end) > 0) break;
@@ -212,7 +197,7 @@ export class BTreeMap<T = any> implements IBTreeMap<T> {
   *values(
     start: any = this.lowest,
     end: any = this.highest,
-    inclusive: boolean = true
+    inclusive: boolean = true,
   ): IterableIterator<Array<T>> {
     if (this.#map.size === 0) return;
     const iterator = this.keys(start, end, inclusive);
@@ -230,7 +215,7 @@ export class BTreeMap<T = any> implements IBTreeMap<T> {
   *entries(
     start: any = this.lowest,
     end: any = this.highest,
-    inclusive: boolean = true
+    inclusive: boolean = true,
   ): IterableIterator<Array<any>> {
     if (this.#map.size === 0) return;
     const iterator = this.keys(start, end, inclusive);
@@ -251,7 +236,7 @@ export class BTreeMap<T = any> implements IBTreeMap<T> {
     func: Function,
     start: any = this.lowest,
     end: any = this.highest,
-    inclusive: boolean = true
+    inclusive: boolean = true,
   ): void {
     if (this.#map.size === 0) return;
     const iterator = this.entries(start, end, inclusive);
@@ -340,9 +325,7 @@ class Node {
   }
 
   findLeaf(key: any): Leaf {
-    return this.children[this.slotOf(key, this.keys, this.compare)].findLeaf(
-      key
-    );
+    return this.children[this.slotOf(key, this.keys, this.compare)].findLeaf(key);
   }
 
   split(): Node {
@@ -438,10 +421,7 @@ class Node {
   }
 
   toString(map: Map<any, any>, level: number = 0): string {
-    let output =
-      "|  ".repeat(level) +
-      (level === 0 ? "Root - " : "Node - ") +
-      String(this.keys);
+    let output = "|  ".repeat(level) + (level === 0 ? "Root - " : "Node - ") + String(this.keys);
     for (let i = 0, length = this.children.length; i < length; i++) {
       output += "\n" + this.children[i].toString(map, level + 1);
     }
@@ -458,11 +438,7 @@ class Leaf {
   next: Leaf | null;
   stats: Record<string, number>;
 
-  constructor(
-    order: number,
-    comparator: Function,
-    stats: Record<string, number>
-  ) {
+  constructor(order: number, comparator: Function, stats: Record<string, number>) {
     this.order = order;
     this.compare = comparator;
     this.min = Math.ceil(order / 2);
@@ -548,12 +524,7 @@ class Leaf {
   toString(map: Map<any, any>, level: number = 0): string {
     let output = "|  ".repeat(level) + "Leaf";
     for (const key of this.keys) {
-      output +=
-        "\n" +
-        "|  ".repeat(level + 1) +
-        String(key) +
-        ": " +
-        String(map.get(key));
+      output += "\n" + "|  ".repeat(level + 1) + String(key) + ": " + String(map.get(key));
     }
     if (this.next) output += " --> " + String(this.next.lowest);
     return output;

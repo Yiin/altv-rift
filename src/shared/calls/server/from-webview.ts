@@ -1,6 +1,12 @@
 import { Appearance, ScreenPosition } from "@prisma/client/edge";
 import { z } from "zod";
-import { EquipmentSlot, StorageItemSource, StorageSource, ItemSource, PlayerInventoryItemSource } from "../../interfaces";
+import {
+  EquipmentSlot,
+  StorageItemSource,
+  StorageSource,
+  ItemSource,
+  PlayerInventoryItemSource,
+} from "../../interfaces";
 import { schema } from "../validation";
 
 export const FromWebview = {
@@ -21,25 +27,25 @@ export const FromWebview = {
 } as const;
 
 export interface CallFromWebview<
-  P extends import("@altv/server").Player = import("@altv/server").Player
+  P extends import("@altv/server").Player = import("@altv/server").Player,
 > {
   [FromWebview.CREATE_CHARACTER]: (
     player: import("@altv/server").Player,
     data: {
       name: string;
       appearance: Appearance;
-    }
+    },
   ) => boolean;
   [FromWebview.MOVE_WINDOW]: (
     player: import("@altv/server").Player,
     name: string,
-    screen: ScreenPosition
+    screen: ScreenPosition,
   ) => void;
   [FromWebview.MOVE_ITEM]: (
     player: import("@altv/server").Player,
     from: ItemSource,
     toSlot: ItemSource,
-    amount?: number
+    amount?: number,
   ) => boolean;
   [FromWebview.USE_ITEM]: (player: P, source: ItemSource) => boolean;
   [FromWebview.EQUIP_ITEM]: (player: P, source: ItemSource) => boolean;
@@ -49,7 +55,12 @@ export interface CallFromWebview<
   [FromWebview.UNLOAD_AMMO]: (player: P, source: ItemSource) => boolean;
   [FromWebview.REMOVE_BAIT]: (player: P, source: ItemSource) => boolean;
   [FromWebview.BUY_ITEM]: (player: P, source: StorageItemSource, amount: number) => boolean;
-  [FromWebview.SELL_ITEM]: (player: P, shopSource: StorageSource, itemSource: PlayerInventoryItemSource, amount: number) => boolean;
+  [FromWebview.SELL_ITEM]: (
+    player: P,
+    shopSource: StorageSource,
+    itemSource: PlayerInventoryItemSource,
+    amount: number,
+  ) => boolean;
   [FromWebview.TAKE_ITEM]: (player: P, source: StorageItemSource) => void;
   [FromWebview.TAKE_ALL_ITEMS]: (player: P, source: StorageSource) => void;
 }
@@ -63,7 +74,14 @@ export const FromWebviewValidation = {
     args: [z.string(), z.object({ x: z.number(), y: z.number(), w: z.number(), h: z.number() })],
   },
   [FromWebview.MOVE_ITEM]: {
-    args: [schema.itemSource, schema.itemSource, z.number().optional().default(() => 1)],
+    args: [
+      schema.itemSource,
+      schema.itemSource,
+      z
+        .number()
+        .optional()
+        .default(() => 1),
+    ],
     returns: z.boolean(),
   },
   [FromWebview.USE_ITEM]: {
@@ -108,4 +126,7 @@ export const FromWebviewValidation = {
   [FromWebview.TAKE_ALL_ITEMS]: {
     args: [schema.storageSource],
   },
-} satisfies Record<keyof typeof FromWebview, { args?: [z.ZodTypeAny, ...z.ZodTypeAny[]], returns?: z.ZodTypeAny }>;
+} satisfies Record<
+  keyof typeof FromWebview,
+  { args?: [z.ZodTypeAny, ...z.ZodTypeAny[]]; returns?: z.ZodTypeAny }
+>;

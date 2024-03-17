@@ -1,7 +1,24 @@
 import alt from "@altv/server";
 import { addSeconds, minutesToSeconds } from "date-fns";
 import _ from "lodash";
-import { AmmoItemKey, ITEMS_REGISTRY, Item, ItemGrade, ItemKey, ItemTier, WeaponItem, WeaponItemKey, createItem, getAllItemKeys, getItemTier, isItemKeyAmmo, isItemKeyFirearmWeapon, isItemKeyMeleeWeapon, isItemKeyThrowableWeapon, isItemKeyWeapon } from "@shared/modules/items";
+import {
+  AmmoItemKey,
+  ITEMS_REGISTRY,
+  Item,
+  ItemGrade,
+  ItemKey,
+  ItemTier,
+  WeaponItem,
+  WeaponItemKey,
+  createItem,
+  getAllItemKeys,
+  getItemTier,
+  isItemKeyAmmo,
+  isItemKeyFirearmWeapon,
+  isItemKeyMeleeWeapon,
+  isItemKeyThrowableWeapon,
+  isItemKeyWeapon,
+} from "@shared/modules/items";
 import { StorageType } from "@shared/store/game-state.store";
 import { AirDropType } from "@shared/modules/air-drops";
 import { registerCmd } from "../chat";
@@ -43,11 +60,17 @@ function buildAirDropLootTable() {
 
   return {
     type: lootTable.type,
-    items
+    items,
   };
 }
 
-export function spawnAirDrop(options: { type: AirDropType, label: string; pos: alt.IVector3, items: Item[], durationInSeconds: number }) {
+export function spawnAirDrop(options: {
+  type: AirDropType;
+  label: string;
+  pos: alt.IVector3;
+  items: Item[];
+  durationInSeconds: number;
+}) {
   const lootBoxStorage = createStorage({
     type: StorageType.AirDrop,
     pos: new alt.Vector3(options.pos).sub(0, 0, 0.7),
@@ -61,7 +84,7 @@ export function spawnAirDrop(options: { type: AirDropType, label: string; pos: a
     airDropType: options.type,
     meta: {
       validUntil: addSeconds(Date.now(), options.durationInSeconds).getTime(),
-    }
+    },
   });
 
   alt.Timers.setTimeout(() => {
@@ -71,7 +94,7 @@ export function spawnAirDrop(options: { type: AirDropType, label: string; pos: a
 
 alt.Events.onBaseObjectRemove;
 
-registerCmd('x', (player) => {
+registerCmd("x", (player) => {
   const lootTable = buildAirDropLootTable();
 
   spawnAirDrop({

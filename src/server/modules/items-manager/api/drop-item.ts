@@ -5,7 +5,11 @@ import { dropItemOnTheGround } from "../dropped-items";
 import { findItem } from "./find-item";
 import { removeItem } from "./remove-item";
 
-export function dropItem(player: InGamePlayer, source: PlayerItemSource, options: { pos?: alt.IVector3, amount?: number } = {}) {
+export function dropItem(
+  player: InGamePlayer,
+  source: PlayerItemSource,
+  options: { pos?: alt.IVector3; amount?: number } = {},
+) {
   if (source.origin === ItemSourceOrigin.PlayerEquipment) {
     const item = findItem(source, player);
 

@@ -24,7 +24,7 @@ export function drawText2D(
   scale: number,
   color: alt.RGBA,
   alignment: number = 0,
-  padding: number = 0
+  padding: number = 0,
 ) {
   if (scale > 2) {
     scale = 2;
@@ -97,7 +97,7 @@ export function addTemporaryText(
   g: number,
   b: number,
   a: number,
-  ms: number
+  ms: number,
 ) {
   const index = temporaryText.findIndex((data) => data.identifier === identifier);
 
@@ -105,7 +105,7 @@ export function addTemporaryText(
     try {
       temporaryText[index].timeout?.destroy();
       temporaryText[index].timeout = null;
-    } catch (err) { }
+    } catch (err) {}
 
     temporaryText.splice(index, 1);
   }
@@ -147,7 +147,7 @@ function handleDrawTemporaryText(): void {
       data.msg,
       { x: data.x, y: data.y },
       data.scale,
-      new alt.RGBA(data.r, data.g, data.b, data.a)
+      new alt.RGBA(data.r, data.g, data.b, data.a),
     );
   }
 }

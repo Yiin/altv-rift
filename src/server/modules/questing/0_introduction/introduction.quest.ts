@@ -33,7 +33,7 @@ alt.Events.onPlayer(ServerEvents.FromClient.NOTIFY, (player, questFact) => {
         player.addItem(
           createItem(Consumable.SIMPLE_MEDKIT, {
             amount: 1,
-          })
+          }),
         );
       } else {
         reportAbuse(player);
@@ -61,7 +61,7 @@ alt.Events.onPlayer(ServerEvents.FromClient.NOTIFY, (player, questFact) => {
         player.isNearPed(PedKey.WOODCUTTING_TUTOR) &&
         player.removeInventoryItemByKey(
           TreeLogs.PALM_LOGS,
-          Quests.Introduction.Constants.PALM_LOGS_NEEDED
+          Quests.Introduction.Constants.PALM_LOGS_NEEDED,
         )
       ) {
         player.addBlueprint(HatchetBlueprint.ADVANCED_HATCHET);
@@ -83,7 +83,7 @@ alt.Events.onPlayer(ServerEvents.FromClient.NOTIFY, (player, questFact) => {
         player.isNearPed(PedKey.FISHING_TUTOR) &&
         player.removeInventoryItemByKey(
           FoodIngredient.RAW_TROUT,
-          Quests.Introduction.Constants.RAW_TROUT_NEEDED
+          Quests.Introduction.Constants.RAW_TROUT_NEEDED,
         )
       ) {
         player.addBlueprint(FishingRodBlueprint.ADVANCED_FISHING_ROD);

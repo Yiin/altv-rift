@@ -34,7 +34,7 @@ function displayHit(position: alt.Vector3, damage: number, type: "health" | "arm
       const { x, y } = alt.worldToScreen(pos);
       damageDiv.style.top = `${y}px`;
       damageDiv.style.left = `${x}px`;
-    }
+    },
   );
 
   // Remove the div after the animation is done
@@ -108,5 +108,5 @@ alt.Events.onServer(
         break;
       }
     }
-  }
+  },
 );

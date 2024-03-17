@@ -4,5 +4,5 @@ interface ReadonlyMap<T extends readonly [PropertyKey, any], K extends T[0]>
 }
 
 export const ReadonlyMap = Map as new <T extends readonly [PropertyKey, any], K extends T[0]>(
-  entries: ReadonlyArray<T>
+  entries: ReadonlyArray<T>,
 ) => ReadonlyMap<T, K>;

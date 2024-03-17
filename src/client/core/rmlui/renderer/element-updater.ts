@@ -13,7 +13,7 @@ export const frameDataMap = new Map<AnchorEntity, FrameData>();
 
 let screenRes = alt.getScreenResolution().div(
   2.2, // 2.2 feels a bit more natural, as the player ped is not in the center of the screen, but a bit left from it
-  2
+  2,
 );
 
 alt.Events.onWindowResolutionChange(({ newResolution }) => {
@@ -124,7 +124,7 @@ export function prepareEntityElements(entity: AnchorEntity) {
           onTrigger() {
             node.isFresh = true;
           },
-        }
+        },
       );
 
       container.appendChild(node);

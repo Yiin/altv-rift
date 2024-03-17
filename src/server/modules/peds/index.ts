@@ -51,5 +51,5 @@ const peds = [
     heading: -0.7918211817741394,
   },
 ].map(({ key, model, pos, heading, ...meta }) =>
-  createStaticPed(key, { model, pos, heading: heading ?? 0 }, meta)
+  createStaticPed(key, { model, pos, heading: heading ?? 0 }, meta),
 );

@@ -28,7 +28,7 @@ const scraps = registerItems<ScrapItemInfo>([
   {
     key: Scrap.COMMON_SCRAP,
     name: "Basic Scrap",
-    description: "You can craft base level items using these scraps."
+    description: "You can craft base level items using these scraps.",
   },
   {
     key: Scrap.UNCOMMON_SCRAP,
@@ -61,11 +61,11 @@ export function isItemScrap(item: Item): item is ScrapItem {
 }
 
 export function getScrapItemGrade(key: ScrapItemKey): ItemGrade {
-  return ({
+  return {
     [Scrap.COMMON_SCRAP]: ItemGrade.BASE,
     [Scrap.UNCOMMON_SCRAP]: ItemGrade.ONE,
     [Scrap.RARE_SCRAP]: ItemGrade.TWO,
     [Scrap.EPIC_SCRAP]: ItemGrade.THREE,
     [Scrap.LEGENDARY_SCRAP]: ItemGrade.FOUR,
-  }[key]);
+  }[key];
 }

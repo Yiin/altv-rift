@@ -21,7 +21,7 @@ async function fillMissingCharacterFieldsWithDefaultData() {
     // pick keys that are in default character data but not in the character:
     const missingKeys = _.difference(
       Object.keys(getDefaultCharacterData()),
-      Object.keys(character)
+      Object.keys(character),
     );
 
     // construct an object with the missing keys and their default values:

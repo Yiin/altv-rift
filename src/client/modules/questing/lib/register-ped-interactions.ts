@@ -9,7 +9,7 @@ const pedInteractions = new Map<PedKey, PedInteractionRegistration[]>();
 
 export function registerPedInteractions(
   pedKey: PedKey,
-  pedInteraction: PedInteractionRegistration
+  pedInteraction: PedInteractionRegistration,
 ) {
   if (!pedInteractions.has(pedKey)) {
     pedInteractions.set(pedKey, []);

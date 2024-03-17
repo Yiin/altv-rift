@@ -8,7 +8,7 @@ const Raycast = {
     end: alt.IVector3,
     flags = 524287,
     radius: number = 5,
-    useShapeTest = false
+    useShapeTest = false,
   ) {
     let raycast: number;
 
@@ -27,7 +27,7 @@ const Raycast = {
         end.z,
         flags,
         alt.Player.local,
-        0
+        0,
       );
     } else {
       raycast = game.startShapeTestCapsule(
@@ -40,7 +40,7 @@ const Raycast = {
         radius,
         flags,
         alt.Player.local,
-        7
+        7,
       );
     }
 
@@ -68,7 +68,7 @@ const Raycast = {
   positionFromCamera(
     flags: number = -1,
     useShapeTest: boolean = false,
-    radius: number = 5
+    radius: number = 5,
   ): alt.IVector3 | null {
     const start = alt.Cam.pos;
     const forwardVector = rotationToDirection(game.getFinalRenderedCamRot(2));
@@ -83,7 +83,7 @@ const Raycast = {
       end,
       flags,
       radius,
-      useShapeTest
+      useShapeTest,
     );
 
     if (!didComplete || !didHit) {
@@ -101,7 +101,7 @@ const Raycast = {
     flags: number = -1,
     maxDistance = 25,
     useShapeTest: boolean = true,
-    radius: number = 2
+    radius: number = 2,
   ): {
     didComplete: boolean;
     didHit?: boolean;
@@ -121,7 +121,7 @@ const Raycast = {
       end,
       flags,
       radius,
-      useShapeTest
+      useShapeTest,
     );
 
     if (!didHit) {
@@ -143,7 +143,7 @@ const Raycast = {
     flags: number = -1,
     maxDistance = 25,
     useShapeTest: boolean = true,
-    radius: number = 2
+    radius: number = 2,
   ): {
     didComplete: boolean;
     didHit?: boolean;
@@ -163,7 +163,7 @@ const Raycast = {
       end,
       flags,
       radius,
-      useShapeTest
+      useShapeTest,
     );
 
     if (!didComplete || !didHit) {
@@ -184,7 +184,7 @@ const Raycast = {
   positionFromPlayer(
     flags: number = -1,
     useShapeTest: boolean = false,
-    radius: number = 5
+    radius: number = 5,
   ): alt.IVector3 | null {
     const start = alt.Player.local.pos;
     const forwardVector = game.getEntityForwardVector(alt.Player.local);
@@ -199,7 +199,7 @@ const Raycast = {
       end,
       flags,
       radius,
-      useShapeTest
+      useShapeTest,
     );
 
     if (!didComplete || !didHit) {
@@ -222,7 +222,7 @@ const Raycast = {
       headPosition.z,
       offsetPosition.x,
       offsetPosition.y,
-      offsetPosition.z
+      offsetPosition.z,
     );
 
     if (!hit) {

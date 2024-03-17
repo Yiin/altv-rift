@@ -40,23 +40,26 @@ alt.Events.onConsoleCommand(({ command }) => {
   } else if (command === "client") {
     alt.log(JSON.stringify(clientState.$state), null, 2);
   } else if (command === "weapondata") {
-    _.chunk(alt.WeaponData.all.map((x) => ({
-      [x.nameHash]: {
-        recoilShakeAmplitude: x.recoilShakeAmplitude,
-        recoilAccuracyMax: x.recoilAccuracyMax,
-        recoilAccuracyToAllowHeadshotPlayer: x.recoilAccuracyToAllowHeadshotPlayer,
-        recoilRecoveryRate: x.recoilRecoveryRate,
-        animReloadRate: x.animReloadRate,
-        vehicleReloadTime: x.vehicleReloadTime,
-        lockOnRange: x.lockOnRange,
-        accuracySpread: x.accuracySpread,
-        range: x.range,
-        damage: x.damage,
-        clipSize: x.clipSize,
-        timeBetweenShots: x.timeBetweenShots,
-        headshotDamageModifier: x.headshotDamageModifier,
-        playerDamageModifier: x.playerDamageModifier,
-      }
-    })), 10).map((x) => alt.log(JSON.stringify(x)));
+    _.chunk(
+      alt.WeaponData.all.map((x) => ({
+        [x.nameHash]: {
+          recoilShakeAmplitude: x.recoilShakeAmplitude,
+          recoilAccuracyMax: x.recoilAccuracyMax,
+          recoilAccuracyToAllowHeadshotPlayer: x.recoilAccuracyToAllowHeadshotPlayer,
+          recoilRecoveryRate: x.recoilRecoveryRate,
+          animReloadRate: x.animReloadRate,
+          vehicleReloadTime: x.vehicleReloadTime,
+          lockOnRange: x.lockOnRange,
+          accuracySpread: x.accuracySpread,
+          range: x.range,
+          damage: x.damage,
+          clipSize: x.clipSize,
+          timeBetweenShots: x.timeBetweenShots,
+          headshotDamageModifier: x.headshotDamageModifier,
+          playerDamageModifier: x.playerDamageModifier,
+        },
+      })),
+      10,
+    ).map((x) => alt.log(JSON.stringify(x)));
   }
 });

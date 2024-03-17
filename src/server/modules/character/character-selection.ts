@@ -42,12 +42,14 @@ rpc.registerWebview(ServerCall.FromWebview.CREATE_CHARACTER, async (player, data
   /**
    * More comprehensive validation of the character name.
    */
-  const name = z.string()
+  const name = z
+    .string()
     .min(2, "Character name must be at least 2 characters long")
     .max(20, "Character name must be no more than 20 characters long")
     .regex(/^[a-zA-Z]/, "Character name must start with a letter")
     .regex(/[a-zA-Z0-9 ]+$/, "Valid characters are a-z, A-Z, 0-9 and space")
-    .and(isUnique("character", "name", "This name is already taken :(")).parse(data.name);
+    .and(isUnique("character", "name", "This name is already taken :("))
+    .parse(data.name);
 
   const character = await player.createCharacter({
     name,

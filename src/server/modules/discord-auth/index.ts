@@ -56,7 +56,7 @@ alt.Events.onPlayer(ServerEvents.FromClient.DISCORD_AUTH_DONE, (player, token) =
 // native altv discord auth
 // webserver based discord auth
 on(ServerEvents.FromServer.MANUAL_DISCORD_AUTH_DONE, (player, token) =>
-  onDiscordAuthDone(player, token)
+  onDiscordAuthDone(player, token),
 );
 
 async function onDiscordAuthDone(player: alt.Player, token: string) {

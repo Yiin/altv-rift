@@ -44,5 +44,5 @@ export function getLevelProgress(xp: number) {
     return 100;
   }
 
-  return (xp - start) / (next - start) * 100;
+  return ((xp - start) / (next - start)) * 100;
 }

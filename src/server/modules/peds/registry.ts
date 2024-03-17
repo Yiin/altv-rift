@@ -24,7 +24,7 @@ export function getPedByKey(key: string) {
 export function createStaticPed<T extends { name?: string; flags?: PedFlags }>(
   pedKey: PedKey,
   options: alt.PedCreateOptions,
-  data: T
+  data: T,
 ) {
   const ped = alt.Ped.create(options);
 
@@ -41,7 +41,7 @@ export function createStaticPed<T extends { name?: string; flags?: PedFlags }>(
 
 export function createTerroristPed(
   options: alt.PedCreateOptions,
-  data: { name?: string; flags?: PedFlags; weapon: number, health?: number }
+  data: { name?: string; flags?: PedFlags; weapon: number; health?: number },
 ) {
   const ped = alt.Ped.create(options);
 

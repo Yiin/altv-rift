@@ -17,7 +17,7 @@ function makeList(...items: string[]) {
   return new Map(
     items
       .map((value, id) => [id, value] as const)
-      .filter(([, value]) => typeof value !== "undefined")
+      .filter(([, value]) => typeof value !== "undefined"),
   );
 }
 
@@ -62,12 +62,12 @@ export const hiddenOverlaysForGender = (gender: 0 | 1) => {
 export const notRandomizableOverlaysForGender = (gender: 0 | 1) => {
   const forMale = ["Blemishes", "Makeup", "Lipstick"].map(
     headOverlayNames.indexOf,
-    headOverlayNames
+    headOverlayNames,
   );
 
   const forFemale = ["Facial Hair", "Ageing", "Sun Damage", "Moles & Freckles", "Chest Hair"].map(
     headOverlayNames.indexOf,
-    headOverlayNames
+    headOverlayNames,
   );
 
   return {

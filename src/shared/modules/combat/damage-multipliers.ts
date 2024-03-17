@@ -17,7 +17,7 @@ const DamageMultiplier = {
   [alt.Enums.BodyPart.CHEST]: 0.9,
   [alt.Enums.BodyPart.UNDER_NECK]: 1.2,
 
-  [alt.Enums.BodyPart.UNKNOWN]: 1
+  [alt.Enums.BodyPart.UNKNOWN]: 1,
 };
 
 export function getBodyPartDamageMultiplier(bodyPart: alt.Enums.BodyPart): number {

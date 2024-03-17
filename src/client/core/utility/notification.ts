@@ -16,5 +16,5 @@ export const Notification = {
 
 alt.Events.onServer(
   ClientEvents.FromServer.PLAYER_EMIT_NOTIFICATION,
-  NotificationConst.notification
+  NotificationConst.notification,
 );

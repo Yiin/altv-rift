@@ -6,7 +6,7 @@ declare module "@altv/server" {
   export interface Player {
     getEquipedItemInSlot<T extends keyof Equipment>(
       this: InGamePlayer,
-      slot: T
+      slot: T,
     ): Equipment[T] | undefined;
   }
 }

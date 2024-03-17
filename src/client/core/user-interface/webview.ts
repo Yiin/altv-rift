@@ -89,7 +89,7 @@ export function showCursor(state?: boolean) {
       alt.Cursor.visible = state;
       cursors = Math.max(0, state ? cursors + 1 : cursors - 1);
     }
-  } catch { }
+  } catch {}
 
   alt.Timers.nextTick(() => {
     if (cursors) {
@@ -156,7 +156,7 @@ alt.Events.onServer(
 
     if (url.includes("localhost")) {
       alt.logWarning(
-        `Running WebService in Development Mode. Nobody can see these pages but the host computer.`
+        `Running WebService in Development Mode. Nobody can see these pages but the host computer.`,
       );
     }
 
@@ -174,7 +174,7 @@ alt.Events.onServer(
       game.playSoundFrontend(-1, audioName, ref, true);
     });
     webview.on(ClientEvents.FromWebview.CLOSE_WINDOW, closeWindow);
-  }
+  },
 );
 
 alt.Events.onDisconnect(() => {

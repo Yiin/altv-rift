@@ -5,7 +5,7 @@
 export function findMissingElements<T extends Record<any, any>>(
   a: T[],
   b: T[],
-  propertyName: string
+  propertyName: string,
 ): T[] {
   const missing: T[] = [];
 

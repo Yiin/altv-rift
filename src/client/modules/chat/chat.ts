@@ -12,21 +12,21 @@ export class Chat {
     @inject(MessageHistoryService)
     private readonly messageHistoryService: MessageHistoryService,
     @inject(OptionsService) private readonly optionsService: OptionsService,
-    @inject(WindowService) private readonly windowService: WindowService
-  ) { }
+    @inject(WindowService) private readonly windowService: WindowService,
+  ) {}
 
   public start() {
     this.eventService.onServer("vchat:toggleVisibility", this.toggleWindowVisibility.bind(this));
     this.eventService.onServer("vchat:toggleFocus", this.toggleWindowFocus.bind(this));
     this.eventService.onServer(
       "vchat:toggleFocusEnabled",
-      this.toggleWindowFocusEnabled.bind(this)
+      this.toggleWindowFocusEnabled.bind(this),
     );
     this.eventService.onServer("vchat:addMessage", this.addMessageToWindow.bind(this));
     this.eventService.onServer("vchat:addSuggestion", this.addSuggestionToWindow.bind(this));
     this.eventService.onServer(
       "vchat:removeSuggestions",
-      this.removeSuggestionsFromWindow.bind(this.windowService)
+      this.removeSuggestionsFromWindow.bind(this.windowService),
     );
     this.eventService.onServer("vchat:clearMessages", this.clearWindowMessages.bind(this));
     this.eventService.onServer("vchat:clearMessageHistory", this.clearMessageHistory.bind(this));
@@ -78,7 +78,7 @@ export class Chat {
 
   public syncSettings(
     options: ClientOptions & WindowOptions,
-    commandSuggestions: Array<CommandSuggestion>
+    commandSuggestions: Array<CommandSuggestion>,
   ) {
     this.optionsService.update(options);
 
@@ -87,7 +87,7 @@ export class Chat {
 
   public updateOption(
     key: keyof ClientOptions & WindowOptions,
-    value: (ClientOptions & WindowOptions)[keyof (ClientOptions & WindowOptions)]
+    value: (ClientOptions & WindowOptions)[keyof (ClientOptions & WindowOptions)],
   ) {
     this.optionsService.set(key, value);
     this.windowService.updateOptions(this.optionsService.getWindowOptions());

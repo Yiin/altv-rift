@@ -23,8 +23,8 @@ export class Chat {
     @inject(CommandService) private readonly commandService: CommandService,
     @inject(EventService) private readonly eventService: EventService,
     @inject(LoggerService) private readonly loggerService: LoggerService,
-    @inject(OptionsService) private readonly optionsService: OptionsService
-  ) { }
+    @inject(OptionsService) private readonly optionsService: OptionsService,
+  ) {}
 
   public start() {
     this.eventService.onPlayer("vchat:sendMessage", this.onChatMessage.bind(this));
@@ -56,7 +56,7 @@ export class Chat {
           .replace("{0}", cmdName);
         this.mountService.waitForMount(
           player,
-          this.windowService.send(player, unknownCommandMessage, MessageType.Error)
+          this.windowService.send(player, unknownCommandMessage, MessageType.Error),
         );
       }
     } else {
@@ -64,7 +64,7 @@ export class Chat {
         const muteMessage = this.optionsService.getOption("muteMessage");
         this.mountService.waitForMount(
           player,
-          this.windowService.send(player, muteMessage, MessageType.Error)
+          this.windowService.send(player, muteMessage, MessageType.Error),
         );
         return;
       }
@@ -84,7 +84,7 @@ export class Chat {
       message = this.processMessage(message);
 
       alt.Player.all.forEach((player) =>
-        this.mountService.waitForMount(player, this.windowService.send(player, message))
+        this.mountService.waitForMount(player, this.windowService.send(player, message)),
       );
     }
   }
@@ -97,7 +97,7 @@ export class Chat {
         ...this.optionsService.getClientOptions(),
         ...this.optionsService.getWindowOptions(),
       },
-      this.optionsService.getCommandSuggestions()
+      this.optionsService.getCommandSuggestions(),
     );
   }
 
@@ -131,7 +131,7 @@ export class Chat {
           .replace("{1}", emoji.extension ?? "png");
       message = message.replace(
         regex,
-        `<img src="${src}" alt="${emoji.name}" width="24" height="24" style="display: inline-block;" />`
+        `<img src="${src}" alt="${emoji.name}" width="24" height="24" style="display: inline-block;" />`,
       );
     });
 

@@ -25,46 +25,50 @@ export enum FishingGameType {
 
 export interface GameState {
   flags: Set<PlayerFlags>;
-  openedStorage: {
-    type: StorageType.Storage;
-    label: string;
-    source: StorageSource;
-    inventory: Inventory;
-  } | {
-    type: StorageType.LootBox;
-    label: string;
-    source: StorageSource;
-    validUntil: number;
-    inventory: Inventory;
-  } | {
-    type: StorageType.AirDrop;
-    label: string;
-    source: StorageSource;
-    validUntil: number;
-    inventory: Inventory;
-  } | null;
-  fishingProgress:
-  // | {
+  openedStorage:
+    | {
+        type: StorageType.Storage;
+        label: string;
+        source: StorageSource;
+        inventory: Inventory;
+      }
+    | {
+        type: StorageType.LootBox;
+        label: string;
+        source: StorageSource;
+        validUntil: number;
+        inventory: Inventory;
+      }
+    | {
+        type: StorageType.AirDrop;
+        label: string;
+        source: StorageSource;
+        validUntil: number;
+        inventory: Inventory;
+      }
+    | null;
+  fishingProgress: // | {
   //   baitKey: FishBaitItemKey;
   //   gameType: FishingGameType.HoldBalance;
   //   balance: number;
   // }
   | {
-    baitKey: FishBaitItemKey;
-    gameType: FishingGameType.TimeClick;
-    startedAt: number;
-    durationMs: number;
-    targetPosition: number; // 0-1
-    targetSize: number; // 0-1
-  }
-  | {
-    baitKey: FishBaitItemKey;
-    gameType: FishingGameType.Keys;
-    startedAt: number;
-    durationMs: number;
-    keys: alt.Enums.KeyCode[];
-    pressedKeys: alt.Enums.KeyCode[];
-  } | null;
+        baitKey: FishBaitItemKey;
+        gameType: FishingGameType.TimeClick;
+        startedAt: number;
+        durationMs: number;
+        targetPosition: number; // 0-1
+        targetSize: number; // 0-1
+      }
+    | {
+        baitKey: FishBaitItemKey;
+        gameType: FishingGameType.Keys;
+        startedAt: number;
+        durationMs: number;
+        keys: alt.Enums.KeyCode[];
+        pressedKeys: alt.Enums.KeyCode[];
+      }
+    | null;
 }
 
 export const getDefaultGameState = (): GameState => ({

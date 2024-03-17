@@ -17,7 +17,7 @@ let zoom = 1;
 let camera: number | undefined;
 let pedPosition: alt.Vector3;
 let cameraControlInterval: alt.Timers.EveryTick | undefined;
-let unfocusPed = () => { };
+let unfocusPed = () => {};
 
 export function createCharacterCreationCamera(ped: alt.LocalPed) {
   const fov = 60;
@@ -29,7 +29,7 @@ export function createCharacterCreationCamera(ped: alt.LocalPed) {
     ...vec3ToArr(alt.Vector3.zero),
     fov,
     true,
-    0
+    0,
   );
 
   game.setCamActive(camera, true);
@@ -58,7 +58,7 @@ export function createCharacterCreationCamera(ped: alt.LocalPed) {
         0, // -Math.cos(cameraHorizontalOffset) / 3,
         0, // -Math.sin(cameraHorizontalOffset) / 3,
         0.1,
-        true
+        true,
       );
 
       pedPosition = ped.pos;
@@ -78,7 +78,7 @@ export function createCharacterCreationCamera(ped: alt.LocalPed) {
         () => {
           game.drawLightWithRange(front.x, front.y, front.z, 255, 234, 207, 5, 2);
           game.drawLightWithRange(back.x, back.y, back.z, 255, 234, 207, 5, 2);
-        }
+        },
       );
 
       everyTickWhile(
@@ -87,7 +87,7 @@ export function createCharacterCreationCamera(ped: alt.LocalPed) {
           if (
             game.isDisabledControlJustPressed(
               ControlType.PLAYER_CONTROL,
-              Control.INPUT_WEAPON_WHEEL_PREV
+              Control.INPUT_WEAPON_WHEEL_PREV,
             )
           ) {
             zoom = Math.max(0.35, zoom - 0.05);
@@ -95,32 +95,36 @@ export function createCharacterCreationCamera(ped: alt.LocalPed) {
           if (
             game.isDisabledControlJustPressed(
               ControlType.PLAYER_CONTROL,
-              Control.INPUT_WEAPON_WHEEL_NEXT
+              Control.INPUT_WEAPON_WHEEL_NEXT,
             )
           ) {
             zoom = Math.min(1.5, zoom + 0.05);
           }
           updateCharacterCreationCameraPosition();
-        }
+        },
       );
-    }
+    },
   );
 
-  useWebview(webview => webview.on(ClientEvents.FromWebview.CAMERA_MOVE_START, () => {
-    if (cameraControlInterval) {
-      cameraControlInterval.destroy();
-      cameraControlInterval = undefined;
-    }
-    mouseStartPos = alt.Cursor.pos;
-    cameraControlInterval = alt.Timers.everyTick(moveCharacterCreationCamera);
-  }));
+  useWebview((webview) =>
+    webview.on(ClientEvents.FromWebview.CAMERA_MOVE_START, () => {
+      if (cameraControlInterval) {
+        cameraControlInterval.destroy();
+        cameraControlInterval = undefined;
+      }
+      mouseStartPos = alt.Cursor.pos;
+      cameraControlInterval = alt.Timers.everyTick(moveCharacterCreationCamera);
+    }),
+  );
 
-  useWebview(webview => webview.on(ClientEvents.FromWebview.CAMERA_MOVE_END, () => {
-    if (cameraControlInterval) {
-      cameraControlInterval.destroy();
-      cameraControlInterval = undefined;
-    }
-  }));
+  useWebview((webview) =>
+    webview.on(ClientEvents.FromWebview.CAMERA_MOVE_END, () => {
+      if (cameraControlInterval) {
+        cameraControlInterval.destroy();
+        cameraControlInterval = undefined;
+      }
+    }),
+  );
 }
 
 let mouseStartPos: alt.Vector2 | undefined;
@@ -167,7 +171,7 @@ export function updateCharacterCreationCameraPosition() {
       0, // -Math.cos(cameraHorizontalOffset) / 3,
       0, // -Math.sin(cameraHorizontalOffset) / 3,
       0.1,
-      true
+      true,
     );
   }
 }
@@ -183,7 +187,7 @@ export function destroyCharacterCreationCamera() {
   game.destroyAllCams(true);
   game.renderScriptCams(false, false, 0, false, false, 0);
 
-  unfocusPed = () => { };
+  unfocusPed = () => {};
   cameraHorizontalOffset = 0;
   cameraVerticalOffset = 0;
   camera = undefined;

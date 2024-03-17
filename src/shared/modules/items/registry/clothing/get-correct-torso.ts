@@ -20,14 +20,18 @@ function getTorso(obj: any, drawableId: number, textureId: number) {
 
 export function getTorsoForTop(model: number, topDrawableId: number, topTextureId: number) {
   if (alt.hash("mp_m_freemode_01") === model) {
-    return getTorso(TORSO_MALE, topDrawableId, topTextureId) || {
-      drawableId: 15,
-      textureId: 0,
-    };
+    return (
+      getTorso(TORSO_MALE, topDrawableId, topTextureId) || {
+        drawableId: 15,
+        textureId: 0,
+      }
+    );
   } else {
-    return getTorso(TORSO_FEMALE, topDrawableId, topTextureId) || {
-      drawableId: 4,
-      textureId: 0,
-    };
+    return (
+      getTorso(TORSO_FEMALE, topDrawableId, topTextureId) || {
+        drawableId: 4,
+        textureId: 0,
+      }
+    );
   }
 }

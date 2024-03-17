@@ -12,16 +12,13 @@ import { ClothingItem, isItemKeyClothing } from "../registry/clothing/clothing.i
 import { ConsumableItem, isItemKeyConsumable } from "../registry/consumables/consumable.items";
 import { MaterialItem, isItemKeyMaterial } from "../registry/materials/material.items";
 import { AmmoItem, isItemKeyAmmo } from "../registry/ammo/ammo.items";
-import {
-  FishBaitItem,
-  isItemKeyFishBait,
-} from "../registry";
+import { FishBaitItem, isItemKeyFishBait } from "../registry";
 import { ItemGrade } from "../enums";
 import { isItemKeyStackable } from "./get-item-flags";
 
 export function createItem<T extends ItemKey, D = ItemByKey<T>>(
   key: T,
-  data?: Omit<Partial<D>, "key">
+  data?: Omit<Partial<D>, "key">,
 ) {
   // Delete amount if item is not stackable
   if (!isItemKeyStackable(key) && data && "amount" in data) {
@@ -42,12 +39,12 @@ export function getItemDefaultData(key: ItemKey) {
       customName: null,
       components: [],
       tint: 0,
-      grade: ItemGrade.BASE
+      grade: ItemGrade.BASE,
     } satisfies Partial<FirearmWeaponItem>;
   } else if (isItemKeyThrowableWeapon(key)) {
     return {
       amount: 1,
-      grade: ItemGrade.BASE
+      grade: ItemGrade.BASE,
     } satisfies Partial<ThrowableWeaponItem>;
   } else if (isItemKeyMeleeWeapon(key)) {
     return {
@@ -55,7 +52,7 @@ export function getItemDefaultData(key: ItemKey) {
       customName: null,
       components: [],
       tint: 0,
-      grade: ItemGrade.BASE
+      grade: ItemGrade.BASE,
     } satisfies Partial<MeleeWeaponItem>;
   } else if (isItemKeyAmmo(key)) {
     return {

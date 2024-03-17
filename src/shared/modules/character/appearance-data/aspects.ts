@@ -149,7 +149,7 @@ function makeList(...items: string[]) {
   return new Map(
     items
       .map((value, id) => [id, value] as const)
-      .filter(([, value]) => typeof value !== "undefined")
+      .filter(([, value]) => typeof value !== "undefined"),
   );
 }
 
@@ -423,19 +423,19 @@ export const getRandomBlushColor = () =>
 export const getRandomLipstickColor = () => randomIndex(MAX_LIPSTICK_COLOR);
 export const getRandomChestHairColor = () => randomIndex(MAX_HAIR_COLOR);
 export const getRandomOverlayColor = (overlayId: OverlayType) =>
-((
-  {
-    [OverlayType.FacialHair]: getRandomBeardColor,
-    [OverlayType.Eyebrows]: getRandomEyebrowColor,
-    [OverlayType.Blush]: getRandomBlushColor,
-    [OverlayType.Lipstick]: getRandomLipstickColor,
-    [OverlayType.ChestHair]: getRandomChestHairColor,
-  } as Record<OverlayType, () => number>
-)[overlayId]?.() ?? randomIndex(overlayColors.length));
+  (
+    ({
+      [OverlayType.FacialHair]: getRandomBeardColor,
+      [OverlayType.Eyebrows]: getRandomEyebrowColor,
+      [OverlayType.Blush]: getRandomBlushColor,
+      [OverlayType.Lipstick]: getRandomLipstickColor,
+      [OverlayType.ChestHair]: getRandomChestHairColor,
+    }) as Record<OverlayType, () => number>
+  )[overlayId]?.() ?? randomIndex(overlayColors.length);
 
 export const getRandomOverlayItemValue = (overlayId: OverlayType) => {
   const aspect = Object.values(aspects()).find(
-    (aspect) => "overlayId" in aspect && aspect.overlayId === overlayId
+    (aspect) => "overlayId" in aspect && aspect.overlayId === overlayId,
   );
   return randomIndex(Array.from(aspect!.options.keys()));
 };
@@ -461,5 +461,9 @@ export const getRandomOverlayItemOpacity = (overlayId: OverlayType) => {
 export const isValidHair = (sex: 0 | 1, hair: number, collection: string, overlayName: string) => {
   const options = aspects(sex)[Aspect.Hair].options;
 
-  return options.has(hair) && options.get(hair)?.collection === collection && options.get(hair)?.overlay === overlayName;
+  return (
+    options.has(hair) &&
+    options.get(hair)?.collection === collection &&
+    options.get(hair)?.overlay === overlayName
+  );
 };

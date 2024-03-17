@@ -10,18 +10,20 @@ export function openActionMenu() {
   }
   toggleElement(UIElement.ACTION_MENU, true);
 
-  useWebview(webview => webview.once(ClientEvents.FromWebview.ACTION_MENU_SELECT, (title) => {
-    toggleElement(UIElement.ACTION_MENU, false);
-    game.playSoundFrontend(-1, "SELECT", "HUD_FREEMODE_SOUNDSET", true);
+  useWebview((webview) =>
+    webview.once(ClientEvents.FromWebview.ACTION_MENU_SELECT, (title) => {
+      toggleElement(UIElement.ACTION_MENU, false);
+      game.playSoundFrontend(-1, "SELECT", "HUD_FREEMODE_SOUNDSET", true);
 
-    const action = actions.value.find(({ item }) => item.title === title);
+      const action = actions.value.find(({ item }) => item.title === title);
 
-    if (!action) {
-      return;
-    }
+      if (!action) {
+        return;
+      }
 
-    action.onSelect();
-  }));
+      action.onSelect();
+    }),
+  );
 }
 
 export function closeActionMenu() {

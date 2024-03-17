@@ -8,14 +8,15 @@ export const focusableElements = new Map<AnchorType, ElementRegistration<AnchorT
 
 // Register an element
 export const registerElement = <T extends AnchorType, X>(
-  registration: ElementRegistration<T, X>
+  registration: ElementRegistration<T, X>,
 ) => {
   if (registration.focusable) {
     const focusableElementForAnchorType = focusableElements.get(registration.anchorType);
     if (focusableElementForAnchorType) {
       throw new Error(
-        `Can't register ${registration.key} as focusable element because ${focusableElementForAnchorType.key
-        } is already registered as focusable element for ${AnchorType[registration.anchorType]}`
+        `Can't register ${registration.key} as focusable element because ${
+          focusableElementForAnchorType.key
+        } is already registered as focusable element for ${AnchorType[registration.anchorType]}`,
       );
     }
     focusableElements.set(registration.anchorType, registration);

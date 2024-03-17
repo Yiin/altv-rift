@@ -16,7 +16,7 @@ rpc.registerClient(
     } else {
       vehicle.setDoorState(doorId, 7);
     }
-  }
+  },
 );
 
 //

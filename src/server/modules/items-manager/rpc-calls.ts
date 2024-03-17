@@ -7,7 +7,16 @@ import { rpc } from "@/core/rpc";
 import { needsToBeInGame } from "@/core/utility/assertions";
 import { removeBaitFromFishingRod, useFishBaitOnFishingRod } from "./items/fishing-rod";
 import { canDropItem, canEquipItems } from "./api/hooks";
-import { dropItem, removeItem, swapItems, canInteractWithItemSource, findItem, useItemFromSource, removeItemFromInventorySlot, addItemToInventory } from "./api";
+import {
+  dropItem,
+  removeItem,
+  swapItems,
+  canInteractWithItemSource,
+  findItem,
+  useItemFromSource,
+  removeItemFromInventorySlot,
+  addItemToInventory,
+} from "./api";
 import { getStorageInventory, openStorage } from "./storage";
 import { loadWeaponWithAmmo, unloadAmmoFromWeapon } from "./items";
 
@@ -56,7 +65,10 @@ rpc.registerWebview(ServerCall.FromWebview.BUY_ITEM, (player, itemSource) => {
 rpc.registerWebview(ServerCall.FromWebview.EQUIP_ITEM, (player, itemSource) => {
   needsToBeInGame(player);
 
-  if (itemSource.origin !== ItemSourceOrigin.Ground && itemSource.origin !== ItemSourceOrigin.PlayerInventory) {
+  if (
+    itemSource.origin !== ItemSourceOrigin.Ground &&
+    itemSource.origin !== ItemSourceOrigin.PlayerInventory
+  ) {
     return false;
   }
 
@@ -162,7 +174,10 @@ rpc.registerClient(ServerCall.FromClient.RELOAD_WEAPON, (player) => {
 rpc.registerWebview(ServerCall.FromWebview.DROP_ITEM, (player, itemSource, amount) => {
   needsToBeInGame(player);
 
-  if (itemSource.origin !== ItemSourceOrigin.PlayerInventory && itemSource.origin !== ItemSourceOrigin.PlayerEquipment) {
+  if (
+    itemSource.origin !== ItemSourceOrigin.PlayerInventory &&
+    itemSource.origin !== ItemSourceOrigin.PlayerEquipment
+  ) {
     // we can only drop items that we have on the player
     return false;
   }
@@ -182,7 +197,10 @@ rpc.registerWebview(ServerCall.FromWebview.MOVE_ITEM, (player, from, to, amount 
   }
 
   if (to.origin === ItemSourceOrigin.Ground) {
-    if (from.origin !== ItemSourceOrigin.PlayerInventory && from.origin !== ItemSourceOrigin.PlayerEquipment) {
+    if (
+      from.origin !== ItemSourceOrigin.PlayerInventory &&
+      from.origin !== ItemSourceOrigin.PlayerEquipment
+    ) {
       // can't drop item that's not on the player
       return false;
     }
@@ -229,7 +247,10 @@ rpc.registerWebview(ServerCall.FromWebview.MOVE_ITEM, (player, from, to, amount 
   /**
    * Between equipment slots
    */
-  if (from.origin === ItemSourceOrigin.PlayerEquipment && to.origin === ItemSourceOrigin.PlayerEquipment) {
+  if (
+    from.origin === ItemSourceOrigin.PlayerEquipment &&
+    to.origin === ItemSourceOrigin.PlayerEquipment
+  ) {
     // There is no reason to move item between equipment slots
     return false;
   }
@@ -237,7 +258,10 @@ rpc.registerWebview(ServerCall.FromWebview.MOVE_ITEM, (player, from, to, amount 
   /**
    * From inventory to equipment
    */
-  if (from.origin === ItemSourceOrigin.PlayerInventory && to.origin === ItemSourceOrigin.PlayerEquipment) {
+  if (
+    from.origin === ItemSourceOrigin.PlayerInventory &&
+    to.origin === ItemSourceOrigin.PlayerEquipment
+  ) {
     if (!canEquipItems.call(player)) {
       return false;
     }
@@ -248,14 +272,20 @@ rpc.registerWebview(ServerCall.FromWebview.MOVE_ITEM, (player, from, to, amount 
   /**
    * From equipment to inventory
    */
-  if (from.origin === ItemSourceOrigin.PlayerEquipment && to.origin === ItemSourceOrigin.PlayerInventory) {
+  if (
+    from.origin === ItemSourceOrigin.PlayerEquipment &&
+    to.origin === ItemSourceOrigin.PlayerInventory
+  ) {
     return player.unequipItem(from.equipmentSlot, to);
   }
 
   /**
    * Between inventory slots
    */
-  if (from.origin === ItemSourceOrigin.PlayerInventory && to.origin === ItemSourceOrigin.PlayerInventory) {
+  if (
+    from.origin === ItemSourceOrigin.PlayerInventory &&
+    to.origin === ItemSourceOrigin.PlayerInventory
+  ) {
     return swapItems(from, to);
   }
 

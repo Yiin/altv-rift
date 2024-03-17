@@ -9,7 +9,7 @@ declare module "@altv/server" {
     removeInventoryItemByKey<T extends ItemKey>(
       this: InGamePlayer,
       key: T,
-      amount?: number
+      amount?: number,
     ): boolean;
   }
 }

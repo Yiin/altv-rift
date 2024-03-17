@@ -13,7 +13,7 @@ export function drawMarker(
   color: alt.RGBA,
   bobUpAndDown: boolean = false,
   faceCamera: boolean = true,
-  rotate: boolean = false
+  rotate: boolean = false,
 ) {
   game.drawMarker(
     type,
@@ -39,6 +39,6 @@ export function drawMarker(
     rotate,
     "",
     "",
-    false
+    false,
   );
 }

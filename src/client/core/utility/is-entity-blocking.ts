@@ -8,7 +8,7 @@ import { distance, distance2d } from "@shared/utility/vector";
 export function isEntityBlockingPosition(
   pos: alt.IVector3,
   range = 0.8,
-  maxDistance = 100
+  maxDistance = 100,
 ): boolean {
   const closestPlayers = alt.Player.all.filter((target) => {
     const dist = distance2d(target.pos, pos);
@@ -42,11 +42,11 @@ export function isEntityBlockingPosition(
     }
 
     const isPlayerBlocking = closestPlayers.find(
-      (target) => distance(target.pos, finalPos) <= range
+      (target) => distance(target.pos, finalPos) <= range,
     );
 
     const isVehicleBlocking = closestVehicles.find(
-      (target) => distance(target.pos, finalPos) <= range
+      (target) => distance(target.pos, finalPos) <= range,
     );
 
     if (!isPlayerBlocking && !isVehicleBlocking) {

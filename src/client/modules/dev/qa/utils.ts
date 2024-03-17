@@ -18,7 +18,7 @@ namespace Utils {
     return new alt.Vector3(
       -Math.sin(adjustedRotation.z) * Math.abs(Math.cos(adjustedRotation.x)),
       Math.cos(adjustedRotation.z) * Math.abs(Math.cos(adjustedRotation.x)),
-      Math.sin(adjustedRotation.x)
+      Math.sin(adjustedRotation.x),
     );
   }
 
@@ -28,7 +28,7 @@ namespace Utils {
     textScale: number,
     color: alt.RGBA = new alt.RGBA(255, 255, 255, 255),
     font = 0,
-    outline = true
+    outline = true,
   ): void {
     natives.beginTextCommandDisplayText("STRING");
     natives.addTextComponentSubstringPlayerName(text);
@@ -80,7 +80,7 @@ namespace Utils {
     red: number,
     green: number,
     blue: number,
-    alpha: number
+    alpha: number,
   ): void {
     natives.drawPoly(v6.x, v6.y, v6.z, v5.x, v5.y, v5.z, v1.x, v1.y, v1.z, red, green, blue, alpha);
     natives.drawPoly(v1.x, v1.y, v1.z, v2.x, v2.y, v2.z, v6.x, v6.y, v6.z, red, green, blue, alpha);
@@ -112,7 +112,7 @@ namespace Utils {
     red: number,
     green: number,
     blue: number,
-    alpha: number
+    alpha: number,
   ): void {
     natives.drawLine(v1.x, v1.y, v1.z, v2.x, v2.y, v2.z, red, green, blue, alpha);
     natives.drawLine(v1.x, v1.y, v1.z, v3.x, v3.y, v3.z, red, green, blue, alpha);
@@ -141,7 +141,7 @@ alt.Vector3.prototype.radiansToDirection = function (): alt.Vector3 {
   return new alt.Vector3(
     -Math.sin(this.z) * Math.abs(Math.cos(this.x)),
     Math.cos(this.z) * Math.abs(Math.cos(this.x)),
-    Math.sin(this.x)
+    Math.sin(this.x),
   );
 };
 

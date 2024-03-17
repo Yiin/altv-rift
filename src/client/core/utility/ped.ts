@@ -22,7 +22,7 @@ export function isPedUnderVehicle(ped: number): boolean {
     {
       distance: Number.MAX_SAFE_INTEGER,
       vehicle: null as alt.Vehicle | null,
-    }
+    },
   );
   if (!closestVehicle.vehicle) {
     return false;
@@ -32,7 +32,7 @@ export function isPedUnderVehicle(ped: number): boolean {
     closestVehicle.vehicle,
     front.x,
     front.y,
-    0
+    0,
   );
   const backPos = game.getOffsetFromEntityInWorldCoords(closestVehicle.vehicle, back.x, back.y, 0);
   const frontDist = game.getDistanceBetweenCoords(
@@ -42,7 +42,7 @@ export function isPedUnderVehicle(ped: number): boolean {
     frontPos.x,
     frontPos.y,
     frontPos.z,
-    true
+    true,
   );
   const centerDist = game.getDistanceBetweenCoords(
     x,
@@ -51,7 +51,7 @@ export function isPedUnderVehicle(ped: number): boolean {
     closestVehicle.vehicle.pos.x,
     closestVehicle.vehicle.pos.y,
     closestVehicle.vehicle.pos.z,
-    true
+    true,
   );
   const backDist = game.getDistanceBetweenCoords(x, y, z, backPos.x, backPos.y, backPos.z, true);
 
@@ -66,7 +66,7 @@ export function getCurrentAnimation(ped: number) {
   }
 
   const possibleDicts = ANIM_DICTS.filter((anim) =>
-    anim.DictionaryName.includes(currentScenario[0].toLowerCase())
+    anim.DictionaryName.includes(currentScenario[0].toLowerCase()),
   );
 
   for (const dict of possibleDicts) {

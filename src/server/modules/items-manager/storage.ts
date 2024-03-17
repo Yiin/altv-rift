@@ -1,44 +1,47 @@
-import alt from '@altv/server';
-import { reactive, UnwrapNestedRefs } from 'vue';
-import { addMinutes } from 'date-fns';
-import { Inventory, ItemSourceOrigin } from '@shared/interfaces';
-import { StorageType } from '@shared/store/game-state.store';
-import { Ammo, createItem } from '@shared/modules/items';
-import { ServerEvents } from '@shared/events/server';
-import { AirDropType } from '@shared/modules/air-drops';
-import { InGamePlayer } from '@/core/utility/assertions';
-import { addItemToInventory, removeItemFromInventorySlot } from './api';
+import alt from "@altv/server";
+import { reactive, UnwrapNestedRefs } from "vue";
+import { addMinutes } from "date-fns";
+import { Inventory, ItemSourceOrigin } from "@shared/interfaces";
+import { StorageType } from "@shared/store/game-state.store";
+import { Ammo, createItem } from "@shared/modules/items";
+import { ServerEvents } from "@shared/events/server";
+import { AirDropType } from "@shared/modules/air-drops";
+import { InGamePlayer } from "@/core/utility/assertions";
+import { addItemToInventory, removeItemFromInventorySlot } from "./api";
 
 export const storageGroup = alt.VirtualEntityGroup.create({ maxEntitiesInStream: 50 });
-export const storageItems: Record<alt.VirtualEntity['id'], {
-  label: string;
-  inventory: UnwrapNestedRefs<Inventory>;
-  meta?: Record<string, any>;
-}> = {};
+export const storageItems: Record<
+  alt.VirtualEntity["id"],
+  {
+    label: string;
+    inventory: UnwrapNestedRefs<Inventory>;
+    meta?: Record<string, any>;
+  }
+> = {};
 
 export function createStorage(options: {
   type?: StorageType;
   pos: alt.IVector3;
   inventory: Inventory;
-  label: string,
+  label: string;
   interpolate?: {
     ts: number;
     from: alt.IVector3;
     speed: number;
   };
-  airDropType?: AirDropType
-  meta?: Record<string, any>
+  airDropType?: AirDropType;
+  meta?: Record<string, any>;
 }): alt.VirtualEntity {
   const storage = alt.VirtualEntity.create({
     group: storageGroup,
     pos: options.pos,
     streamingDistance: 100,
     data: {
-      entityType: 'storage',
+      entityType: "storage",
       storageType: options.type ?? StorageType.Storage,
       interpolate: options.interpolate,
       airDropType: options.airDropType,
-    }
+    },
   });
 
   storageItems[storage.id] = {
@@ -50,19 +53,19 @@ export function createStorage(options: {
   return storage;
 }
 
-export function getStorageEntity(id: alt.VirtualEntity['id']): alt.VirtualEntity | null {
+export function getStorageEntity(id: alt.VirtualEntity["id"]): alt.VirtualEntity | null {
   return alt.VirtualEntity.getByID(id);
 }
 
-export function getStorage(id: alt.VirtualEntity['id']) {
+export function getStorage(id: alt.VirtualEntity["id"]) {
   return storageItems[id];
 }
 
-export function getStorageInventory(id: alt.VirtualEntity['id']): Inventory {
+export function getStorageInventory(id: alt.VirtualEntity["id"]): Inventory {
   return storageItems[id]?.inventory;
 }
 
-export function openStorage(player: InGamePlayer, storageId: alt.VirtualEntity['id']) {
+export function openStorage(player: InGamePlayer, storageId: alt.VirtualEntity["id"]) {
   const ve = alt.VirtualEntity.getByID(storageId);
 
   if (!ve) {

@@ -8,5 +8,7 @@ export function registerUpgrade(upgrade: Upgrade) {
 }
 
 export function getUpgrade(baseItem: ItemKey, itemGrade: ItemGrade) {
-  return Array.from(upgrades).find((upgrade) => upgrade.baseItem === baseItem && upgrade.baseGrade === itemGrade);
+  return Array.from(upgrades).find(
+    (upgrade) => upgrade.baseItem === baseItem && upgrade.baseGrade === itemGrade,
+  );
 }

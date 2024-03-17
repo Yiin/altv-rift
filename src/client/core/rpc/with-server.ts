@@ -15,7 +15,7 @@ import { createPayload } from "@shared/utility/create-payload";
 const serverProcedures = new Map<string, (...args: any[]) => any>();
 const serverHandlers = new Map<
   string,
-  { name: string, resolve: (result: any) => void; reject: (err: any) => void }
+  { name: string; resolve: (result: any) => void; reject: (err: any) => void }
 >();
 
 // call server from client
@@ -45,13 +45,17 @@ alt.Events.onServer(CALL_SERVER_FROM_CLIENT_RESPONSE, (response) => {
   }
 
   if (handler.name in ServerCall.FromClientValidation) {
-    const schema = ServerCall.FromClientValidation[handler.name as keyof typeof ServerCall.FromClientValidation];
+    const schema =
+      ServerCall.FromClientValidation[handler.name as keyof typeof ServerCall.FromClientValidation];
 
-    if ('returns' in schema) {
+    if ("returns" in schema) {
       const result = schema.returns.safeParse(response.result);
 
       if (!result.success) {
-        alt.logError(`CALL_SERVER_FROM_CLIENT_RESPONSE: Validation error in ${handler.name}:`, result.error);
+        alt.logError(
+          `CALL_SERVER_FROM_CLIENT_RESPONSE: Validation error in ${handler.name}:`,
+          result.error,
+        );
         handler.reject(result.error);
       }
     }
@@ -65,7 +69,7 @@ alt.Events.onServer(CALL_SERVER_FROM_CLIENT_RESPONSE, (response) => {
 // handle call from server on client
 export const registerServer = <T extends keyof typeof ClientCall.FromServer>(
   name: T,
-  handler: CallFromServer[T]
+  handler: CallFromServer[T],
 ) => {
   if (serverProcedures.has(name)) {
     throw new Error(`registerServer: Procedure ${name} already exists`);
@@ -88,9 +92,10 @@ alt.Events.onServer(CALL_CLIENT_FROM_SERVER, async (payload) => {
     }
 
     if (name in ClientCall.FromServerValidation) {
-      const schema = ClientCall.FromServerValidation[name as keyof typeof ClientCall.FromServerValidation];
+      const schema =
+        ClientCall.FromServerValidation[name as keyof typeof ClientCall.FromServerValidation];
 
-      if ('args' in schema) {
+      if ("args" in schema) {
         z.tuple(schema.args).parse(args);
       }
     } else {

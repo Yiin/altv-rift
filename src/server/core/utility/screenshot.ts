@@ -53,7 +53,7 @@ export class Screenshot {
    */
   static async buildData(
     player: alt.Player,
-    { data, i, totalLength }: { data: string; i: number; totalLength: number }
+    { data, i, totalLength }: { data: string; i: number; totalLength: number },
   ) {
     if (!pendingScreenshots[player.id]) {
       pendingScreenshots[player.id] = {

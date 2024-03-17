@@ -389,7 +389,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 94989220,
     model: "w_at_ar_flsh",
     name: "Flashlight",
-    description: "Aids low light target acquisition."
+    description: "Aids low light target acquisition.",
   },
   {
     key: WeaponComponent.COMBATSHOTGUN_SUPP,
@@ -397,7 +397,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 94989220,
     model: "w_at_ar_supp",
     name: "Suppressor",
-    description: "Reduces noise and muzzle flash."
+    description: "Reduces noise and muzzle flash.",
   },
   {
     key: WeaponComponent.COMBATSHOTGUN_SHELL,
@@ -405,7 +405,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 94989220,
     model: "w_sg_pumpshotgunh4_mag1",
     name: "Default Shells",
-    description: "Standard shotgun ammunition."
+    description: "Standard shotgun ammunition.",
   },
   {
     key: WeaponComponent.SNIPERRIFLE_SUPP,
@@ -413,7 +413,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 100416529,
     model: "w_at_ar_supp_02",
     name: "Suppressor",
-    description: "Reduces noise and muzzle flash."
+    description: "Reduces noise and muzzle flash.",
   },
   {
     key: WeaponComponent.SNIPERRIFLE_SCOPE_MAX,
@@ -421,7 +421,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 100416529,
     model: "w_at_scope_max",
     name: "Advanced Scope",
-    description: "Maximum zoom functionality."
+    description: "Maximum zoom functionality.",
   },
   {
     key: WeaponComponent.SNIPERRIFLE_SCOPE_LRG,
@@ -429,7 +429,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 100416529,
     model: "w_at_scope_large",
     name: "Scope",
-    description: "Long-range zoom functionality."
+    description: "Long-range zoom functionality.",
   },
   {
     key: WeaponComponent.VINTAGEPISTOL_CLIP2,
@@ -437,7 +437,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 137902532,
     model: "w_pi_vintage_pistol_mag2",
     name: "Extended Clip",
-    description: "Extended capacity for Vintage Pistol."
+    description: "Extended capacity for Vintage Pistol.",
   },
   {
     key: WeaponComponent.VINTAGEPISTOL_CLIP1,
@@ -445,7 +445,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 137902532,
     model: "w_pi_vintage_pistol_mag1",
     name: "Default Clip",
-    description: "Standard capacity for Vintage Pistol."
+    description: "Standard capacity for Vintage Pistol.",
   },
   {
     key: WeaponComponent.VINTAGEPISTOL_SUPP,
@@ -453,7 +453,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 137902532,
     model: "w_at_pi_supp",
     name: "Suppressor",
-    description: "Reduces noise and muzzle flash."
+    description: "Reduces noise and muzzle flash.",
   },
   {
     key: WeaponComponent.COMBATPDW_GRIP,
@@ -461,7 +461,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 171789620,
     model: "w_at_ar_afgrip",
     name: "Grip",
-    description: "Improves weapon accuracy."
+    description: "Improves weapon accuracy.",
   },
   {
     key: WeaponComponent.COMBATPDW_CLIP2,
@@ -469,7 +469,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 171789620,
     model: "W_SB_PDW_Mag2",
     name: "Extended Clip",
-    description: "Extended capacity for Combat PDW."
+    description: "Extended capacity for Combat PDW.",
   },
   {
     key: WeaponComponent.COMBATPDW_CLIP1,
@@ -477,7 +477,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 171789620,
     model: "W_SB_PDW_Mag1",
     name: "Default Clip",
-    description: "Standard capacity for Combat PDW."
+    description: "Standard capacity for Combat PDW.",
   },
   {
     key: WeaponComponent.COMBATPDW_CLIP_DRM,
@@ -485,7 +485,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 171789620,
     model: "w_sb_pdw_boxmag",
     name: "Drum Magazine",
-    description: "Expanded capacity and slower reload."
+    description: "Expanded capacity and slower reload.",
   },
   {
     key: WeaponComponent.COMBATPDW_FLASH,
@@ -493,7 +493,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 171789620,
     model: "w_at_ar_flsh",
     name: "Flashlight",
-    description: "Aids low light target acquisition."
+    description: "Aids low light target acquisition.",
   },
   {
     key: WeaponComponent.COMBATPDW_SCOPE_SML,
@@ -501,7 +501,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 171789620,
     model: "w_at_scope_small",
     name: "Scope",
-    description: "Medium-range zoom functionality."
+    description: "Medium-range zoom functionality.",
   },
   {
     key: WeaponComponent.HEAVYSNIPER_MK2_CLIP_INC,
@@ -509,7 +509,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 177293209,
     model: "w_sr_heavysnipermk2_mag_inc",
     name: "Incendiary Rounds",
-    description: "Bullets which set targets on fire when shot. Reduced capacity."
+    description: "Bullets which set targets on fire when shot. Reduced capacity.",
   },
   {
     key: WeaponComponent.HEAVYSNIPER_MK2_BARR2,
@@ -517,7 +517,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 177293209,
     model: "w_at_sr_barrel_2",
     name: "Heavy Barrel",
-    description: "Increases damage dealt to long-range targets."
+    description: "Increases damage dealt to long-range targets.",
   },
   {
     key: WeaponComponent.HEAVYSNIPER_MK2_CLIP2,
@@ -525,7 +525,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 177293209,
     model: "w_sr_heavysnipermk2_mag2",
     name: "Extended Clip",
-    description: "Extended capacity for regular ammo."
+    description: "Extended capacity for regular ammo.",
   },
   {
     key: WeaponComponent.HEAVYSNIPER_MK2_SCOPE_TH,
@@ -533,7 +533,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 177293209,
     model: "w_at_scope_nv",
     name: "Thermal Scope",
-    description: "Long-range zoom with toggleable thermal vision."
+    description: "Long-range zoom with toggleable thermal vision.",
   },
   {
     key: WeaponComponent.HEAVYSNIPER_MK2_CLIP_FMJ,
@@ -541,7 +541,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 177293209,
     model: "w_sr_heavysnipermk2_mag_fmj",
     name: "Full Metal Jacket Rounds",
-    description: "Increased damage to vehicles. Also penetrates bullet resistant and bulletproof vehicle glass. Reduced capacity."
+    description:
+      "Increased damage to vehicles. Also penetrates bullet resistant and bulletproof vehicle glass. Reduced capacity.",
   },
   {
     key: WeaponComponent.HEAVYSNIPER_MK2_MUZZ8,
@@ -549,7 +550,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 177293209,
     model: "w_at_muzzle_8_xm17",
     name: "Squared Muzzle Brake",
-    description: "Reduces recoil when firing."
+    description: "Reduces recoil when firing.",
   },
   {
     key: WeaponComponent.HEAVYSNIPER_MK2_MUZZ9,
@@ -557,7 +558,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 177293209,
     model: "w_at_muzzle_9",
     name: "Bell-End Muzzle Brake",
-    description: "Reduces recoil when firing."
+    description: "Reduces recoil when firing.",
   },
   {
     key: WeaponComponent.HEAVYSNIPER_MK2_SCOPE_LRG2,
@@ -565,7 +566,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 177293209,
     model: "w_at_scope_large",
     name: "Zoom Scope",
-    description: "Long-range zoom functionality."
+    description: "Long-range zoom functionality.",
   },
   {
     key: WeaponComponent.HEAVYSNIPER_MK2_CLIP_EX,
@@ -573,7 +574,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 177293209,
     model: "w_sr_heavysnipermk2_mag_ap2",
     name: "Explosive Rounds",
-    description: "Bullets which explode on impact. Reduced capacity."
+    description: "Bullets which explode on impact. Reduced capacity.",
   },
   {
     key: WeaponComponent.HEAVYSNIPER_MK2_BARR,
@@ -581,7 +582,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 177293209,
     model: "w_at_sr_barrel_1",
     name: "Default Barrel",
-    description: "Stock barrel attachment."
+    description: "Stock barrel attachment.",
   },
   {
     key: WeaponComponent.HEAVYSNIPER_MK2_SUPP,
@@ -589,7 +590,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 177293209,
     model: "w_at_sr_supp3",
     name: "Suppressor",
-    description: "Reduces noise and muzzle flash."
+    description: "Reduces noise and muzzle flash.",
   },
   {
     key: WeaponComponent.HEAVYSNIPER_MK2_SCOPE_NV,
@@ -597,7 +598,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 177293209,
     model: "w_at_scope_nv",
     name: "Night Vision Scope",
-    description: "Long-range zoom with toggleable night vision."
+    description: "Long-range zoom with toggleable night vision.",
   },
   {
     key: WeaponComponent.HEAVYSNIPER_MK2_SCOPE_MAX,
@@ -605,7 +606,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 177293209,
     model: "w_at_scope_max",
     name: "Advanced Scope",
-    description: "Maximum zoom functionality."
+    description: "Maximum zoom functionality.",
   },
   {
     key: WeaponComponent.HEAVYSNIPER_MK2_CLIP_AP,
@@ -613,7 +614,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 177293209,
     model: "w_sr_heavysnipermk2_mag_ap",
     name: "Armor Piercing Rounds",
-    description: "Increased penetration of Body Armor. Reduced capacity."
+    description: "Increased penetration of Body Armor. Reduced capacity.",
   },
   {
     key: WeaponComponent.HEAVYSNIPER_MK2_CLIP1,
@@ -621,7 +622,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 177293209,
     model: "w_sr_heavysnipermk2_mag1",
     name: "Default Clip",
-    description: "Standard capacity for regular ammo."
+    description: "Standard capacity for regular ammo.",
   },
   {
     key: WeaponComponent.HEAVYSNIPER_SCOPE_MAX,
@@ -629,7 +630,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 205991906,
     model: "w_at_scope_max",
     name: "Advanced Scope",
-    description: "Maximum zoom functionality."
+    description: "Maximum zoom functionality.",
   },
   {
     key: WeaponComponent.HEAVYSNIPER_SCOPE_LRG,
@@ -637,7 +638,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 205991906,
     model: "w_at_scope_large",
     name: "Scope",
-    description: "Long-range zoom functionality."
+    description: "Long-range zoom functionality.",
   },
   {
     key: WeaponComponent.MICROSMG_CLIP2,
@@ -645,7 +646,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 324215364,
     model: "w_sb_microsmg_mag2",
     name: "Extended Clip",
-    description: "Extended capacity for Micro SMG."
+    description: "Extended capacity for Micro SMG.",
   },
   {
     key: WeaponComponent.MICROSMG_FLASH,
@@ -653,7 +654,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 324215364,
     model: "w_at_pi_flsh",
     name: "Flashlight",
-    description: "Aids low light target acquisition."
+    description: "Aids low light target acquisition.",
   },
   {
     key: WeaponComponent.MICROSMG_SCOPE_MAC,
@@ -661,7 +662,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 324215364,
     model: "w_at_scope_macro",
     name: "Scope",
-    description: "Standard-range zoom functionality."
+    description: "Standard-range zoom functionality.",
   },
   {
     key: WeaponComponent.MICROSMG_SUPP,
@@ -669,7 +670,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 324215364,
     model: "w_at_ar_supp_02",
     name: "Suppressor",
-    description: "Reduces noise and muzzle flash."
+    description: "Reduces noise and muzzle flash.",
   },
   {
     key: WeaponComponent.MICROSMG_CLIP1,
@@ -677,7 +678,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 324215364,
     model: "w_sb_microsmg_mag1",
     name: "Default Clip",
-    description: "Standard capacity for Micro SMG."
+    description: "Standard capacity for Micro SMG.",
   },
   {
     key: WeaponComponent.PISTOL_FLASH,
@@ -685,7 +686,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 453432689,
     model: "w_at_pi_flsh",
     name: "Flashlight",
-    description: "Aids low light target acquisition."
+    description: "Aids low light target acquisition.",
   },
   {
     key: WeaponComponent.PISTOL_SUPP,
@@ -693,7 +694,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 453432689,
     model: "w_at_pi_supp_2",
     name: "Suppressor",
-    description: "Reduces noise and muzzle flash."
+    description: "Reduces noise and muzzle flash.",
   },
   {
     key: WeaponComponent.PISTOL_CLIP2,
@@ -701,7 +702,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 453432689,
     model: "w_pi_pistol_mag2",
     name: "Extended Clip",
-    description: "Extended capacity for Pistol."
+    description: "Extended capacity for Pistol.",
   },
   {
     key: WeaponComponent.PISTOL_CLIP1,
@@ -709,7 +710,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 453432689,
     model: "w_pi_pistol_mag1",
     name: "Default Clip",
-    description: "Standard capacity for Pistol."
+    description: "Standard capacity for Pistol.",
   },
   {
     key: WeaponComponent.PISTOLXM3_CLIP1,
@@ -717,7 +718,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 465894841,
     model: "W_PI_Pistol_XM3_Mag1",
     name: "Default Clip",
-    description: "Standard capacity for the WM 29 Pistol."
+    description: "Standard capacity for the WM 29 Pistol.",
   },
   {
     key: WeaponComponent.PISTOLXM3_SUPP,
@@ -725,7 +726,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 465894841,
     model: "W_PI_Pistol_XM3_Supp",
     name: "Suppressor",
-    description: "Reduces noise and muzzle flash."
+    description: "Reduces noise and muzzle flash.",
   },
   {
     key: WeaponComponent.PUMPSHOTGUN_FLASH,
@@ -733,7 +734,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 487013001,
     model: "w_at_ar_flsh",
     name: "Flashlight",
-    description: "Aids low light target acquisition."
+    description: "Aids low light target acquisition.",
   },
   {
     key: WeaponComponent.PUMPSHOTGUN_SUPP,
@@ -741,7 +742,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 487013001,
     model: "w_at_sr_supp_2",
     name: "Suppressor",
-    description: "Reduces noise and muzzle flash."
+    description: "Reduces noise and muzzle flash.",
   },
   {
     key: WeaponComponent.APPISTOL_CLIP2,
@@ -749,7 +750,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 584646201,
     model: "w_pi_appistol_mag2",
     name: "Extended Clip",
-    description: "Extended capacity for AP Pistol."
+    description: "Extended capacity for AP Pistol.",
   },
   {
     key: WeaponComponent.APPISTOL_CLIP1,
@@ -757,7 +758,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 584646201,
     model: "w_pi_appistol_mag1",
     name: "Default Clip",
-    description: "Standard capacity for AP Pistol."
+    description: "Standard capacity for AP Pistol.",
   },
   {
     key: WeaponComponent.APPISTOL_FLASH,
@@ -765,7 +766,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 584646201,
     model: "w_at_pi_flsh",
     name: "Flashlight",
-    description: "Aids low light target acquisition."
+    description: "Aids low light target acquisition.",
   },
   {
     key: WeaponComponent.APPISTOL_SUPP,
@@ -773,7 +774,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 584646201,
     model: "w_at_pi_supp",
     name: "Suppressor",
-    description: "Reduces noise and muzzle flash."
+    description: "Reduces noise and muzzle flash.",
   },
   {
     key: WeaponComponent.CERAMICPISTOL_CLIP1,
@@ -781,7 +782,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 727643628,
     model: "W_PI_Ceramic_Mag1",
     name: "Default Clip",
-    description: "Standard capacity for regular ammo."
+    description: "Standard capacity for regular ammo.",
   },
   {
     key: WeaponComponent.CERAMICPISTOL_CLIP2,
@@ -789,7 +790,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 727643628,
     model: "w_pi_sns_pistol_mag2",
     name: "Extended Clip",
-    description: "Extended capacity for regular ammo."
+    description: "Extended capacity for regular ammo.",
   },
   {
     key: WeaponComponent.CERAMICPISTOL_SUPP,
@@ -797,7 +798,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 727643628,
     model: "W_PI_Ceramic_Supp",
     name: "Suppressor",
-    description: "Reduces noise and muzzle flash."
+    description: "Reduces noise and muzzle flash.",
   },
   {
     key: WeaponComponent.SMG_CLIP1,
@@ -805,7 +806,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 736523883,
     model: "w_sb_smg_mag1",
     name: "Default Clip",
-    description: "Standard capacity for SMG."
+    description: "Standard capacity for SMG.",
   },
   {
     key: WeaponComponent.SMG_CLIP2,
@@ -813,7 +814,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 736523883,
     model: "w_sb_smg_mag2",
     name: "Extended Clip",
-    description: "Extended capacity for SMG."
+    description: "Extended capacity for SMG.",
   },
   {
     key: WeaponComponent.SMG_SCOPE_MAC,
@@ -821,7 +822,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 736523883,
     model: "w_at_scope_macro_2",
     name: "Scope",
-    description: "Standard-range zoom functionality."
+    description: "Standard-range zoom functionality.",
   },
   {
     key: WeaponComponent.SMG_CLIP_DRM,
@@ -829,7 +830,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 736523883,
     model: "w_sb_smg_boxmag",
     name: "Drum Magazine",
-    description: "Expanded capacity and slower reload."
+    description: "Expanded capacity and slower reload.",
   },
   {
     key: WeaponComponent.SMG_FLASH,
@@ -837,7 +838,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 736523883,
     model: "w_at_ar_flsh",
     name: "Flashlight",
-    description: "Aids low light target acquisition."
+    description: "Aids low light target acquisition.",
   },
   {
     key: WeaponComponent.SMG_SUPP,
@@ -845,7 +846,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 736523883,
     model: "w_at_pi_supp",
     name: "Suppressor",
-    description: "Reduces noise and muzzle flash."
+    description: "Reduces noise and muzzle flash.",
   },
   {
     key: WeaponComponent.ASSAULTRIFLE_MK2_MUZZ5,
@@ -853,7 +854,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 961495388,
     model: "w_at_muzzle_5",
     name: "Heavy Duty Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.ASSAULTRIFLE_MK2_SCOPE_MAC2,
@@ -861,7 +862,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 961495388,
     model: "w_at_scope_macro",
     name: "Small Scope",
-    description: "Standard-range zoom functionality."
+    description: "Standard-range zoom functionality.",
   },
   {
     key: WeaponComponent.ASSAULTRIFLE_MK2_MUZZ6,
@@ -869,7 +870,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 961495388,
     model: "w_at_muzzle_6",
     name: "Slanted Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.ASSAULTRIFLE_MK2_HOLO,
@@ -877,7 +878,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 961495388,
     model: "w_at_sights_1",
     name: "Holographic Sight",
-    description: "Accurate sight for close quarters combat."
+    description: "Accurate sight for close quarters combat.",
   },
   {
     key: WeaponComponent.ASSAULTRIFLE_MK2_BARR,
@@ -885,7 +886,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 961495388,
     model: "w_at_ar_barrel_1",
     name: "Default Barrel",
-    description: "Stock barrel attachment."
+    description: "Stock barrel attachment.",
   },
   {
     key: WeaponComponent.ASSAULTRIFLE_MK2_MUZZ7,
@@ -893,7 +894,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 961495388,
     model: "w_at_muzzle_7",
     name: "Split-End Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.ASSAULTRIFLE_MK2_BARR2,
@@ -901,7 +902,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 961495388,
     model: "w_at_ar_barrel_2",
     name: "Heavy Barrel",
-    description: "Increases damage dealt to long-range targets."
+    description: "Increases damage dealt to long-range targets.",
   },
   {
     key: WeaponComponent.ASSAULTRIFLE_MK2_CLIP_FMJ,
@@ -909,7 +910,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 961495388,
     model: "w_ar_assaultriflemk2_mag_fmj",
     name: "Full Metal Jacket Rounds",
-    description: "Increased damage to vehicles. Also penetrates bullet resistant and bulletproof vehicle glass. Reduced capacity."
+    description:
+      "Increased damage to vehicles. Also penetrates bullet resistant and bulletproof vehicle glass. Reduced capacity.",
   },
   {
     key: WeaponComponent.ASSAULTRIFLE_MK2_FLASH,
@@ -917,7 +919,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 961495388,
     model: "w_at_ar_flsh",
     name: "Flashlight",
-    description: "Aids low light target acquisition."
+    description: "Aids low light target acquisition.",
   },
   {
     key: WeaponComponent.ASSAULTRIFLE_MK2_CLIP1,
@@ -925,7 +927,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 961495388,
     model: "w_ar_assaultriflemk2_mag1",
     name: "Default Clip",
-    description: "Standard capacity for regular ammo."
+    description: "Standard capacity for regular ammo.",
   },
   {
     key: WeaponComponent.ASSAULTRIFLE_MK2_GRIP,
@@ -933,7 +935,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 961495388,
     model: "w_at_afgrip_2",
     name: "Grip",
-    description: "Improves weapon accuracy."
+    description: "Improves weapon accuracy.",
   },
   {
     key: WeaponComponent.ASSAULTRIFLE_MK2_SUPP,
@@ -941,7 +943,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 961495388,
     model: "w_at_ar_supp_02",
     name: "Suppressor",
-    description: "Reduces noise and muzzle flash."
+    description: "Reduces noise and muzzle flash.",
   },
   {
     key: WeaponComponent.ASSAULTRIFLE_MK2_CLIP_AP,
@@ -949,7 +951,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 961495388,
     model: "w_ar_assaultriflemk2_mag_ap",
     name: "Armor Piercing Rounds",
-    description: "Increased penetration of Body Armor. Reduced capacity."
+    description: "Increased penetration of Body Armor. Reduced capacity.",
   },
   {
     key: WeaponComponent.ASSAULTRIFLE_MK2_MUZZ1,
@@ -957,7 +959,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 961495388,
     model: "w_at_muzzle_1",
     name: "Flat Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.ASSAULTRIFLE_MK2_SCOPE_MED2,
@@ -965,7 +967,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 961495388,
     model: "w_at_scope_medium_2",
     name: "Large Scope",
-    description: "Extended-range zoom functionality."
+    description: "Extended-range zoom functionality.",
   },
   {
     key: WeaponComponent.ASSAULTRIFLE_MK2_MUZZ2,
@@ -973,7 +975,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 961495388,
     model: "w_at_muzzle_2",
     name: "Tactical Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.ASSAULTRIFLE_MK2_CLIP2,
@@ -981,7 +983,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 961495388,
     model: "w_ar_assaultriflemk2_mag2",
     name: "Extended Clip",
-    description: "Extended capacity for regular ammo."
+    description: "Extended capacity for regular ammo.",
   },
   {
     key: WeaponComponent.ASSAULTRIFLE_MK2_MUZZ3,
@@ -989,7 +991,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 961495388,
     model: "w_at_muzzle_3",
     name: "Fat-End Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.ASSAULTRIFLE_MK2_MUZZ4,
@@ -997,7 +999,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 961495388,
     model: "w_at_muzzle_4",
     name: "Precision Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.ASSAULTRIFLE_MK2_CLIP_TR,
@@ -1005,7 +1007,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 961495388,
     model: "w_ar_assaultriflemk2_mag_tr",
     name: "Tracer Rounds",
-    description: "Bullets with bright visible markers that match the tint of the gun. Standard capacity."
+    description:
+      "Bullets with bright visible markers that match the tint of the gun. Standard capacity.",
   },
   {
     key: WeaponComponent.ASSAULTRIFLE_MK2_CLIP_INC,
@@ -1013,7 +1016,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 961495388,
     model: "w_ar_assaultriflemk2_mag_inc",
     name: "Incendiary Rounds",
-    description: "Bullets which include a chance to set targets on fire when shot. Reduced capacity."
+    description:
+      "Bullets which include a chance to set targets on fire when shot. Reduced capacity.",
   },
   {
     key: WeaponComponent.HEAVYSHOTGUN_GRIP,
@@ -1021,7 +1025,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 984333226,
     model: "w_at_ar_afgrip",
     name: "Grip",
-    description: "Improves weapon accuracy."
+    description: "Improves weapon accuracy.",
   },
   {
     key: WeaponComponent.HEAVYSHOTGUN_CLIP1,
@@ -1029,7 +1033,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 984333226,
     model: "w_sg_heavyshotgun_mag1",
     name: "Default Clip",
-    description: "Standard capacity for Heavy Shotgun."
+    description: "Standard capacity for Heavy Shotgun.",
   },
   {
     key: WeaponComponent.HEAVYSHOTGUN_FLASH,
@@ -1037,7 +1041,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 984333226,
     model: "w_at_ar_flsh",
     name: "Flashlight",
-    description: "Aids low light target acquisition."
+    description: "Aids low light target acquisition.",
   },
   {
     key: WeaponComponent.HEAVYSHOTGUN_CLIP_DRM,
@@ -1045,7 +1049,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 984333226,
     model: "w_sg_heavyshotgun_boxmag",
     name: "Drum Magazine",
-    description: "Expanded capacity and slower reload."
+    description: "Expanded capacity and slower reload.",
   },
   {
     key: WeaponComponent.HEAVYSHOTGUN_CLIP2,
@@ -1053,7 +1057,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 984333226,
     model: "w_sg_heavyshotgun_mag2",
     name: "Extended Clip",
-    description: "Extended capacity for Heavy Shotgun."
+    description: "Extended capacity for Heavy Shotgun.",
   },
   {
     key: WeaponComponent.HEAVYSHOTGUN_SUPP,
@@ -1061,7 +1065,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 984333226,
     model: "w_at_ar_supp_02",
     name: "Suppressor",
-    description: "Reduces noise and muzzle flash."
+    description: "Reduces noise and muzzle flash.",
   },
   {
     key: WeaponComponent.GRENADELAUNCHER_SMOKE_GRIP,
@@ -1069,7 +1073,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1305664598,
     model: "w_at_ar_afgrip",
     name: "Grip",
-    description: "Improves weapon accuracy."
+    description: "Improves weapon accuracy.",
   },
   {
     key: WeaponComponent.GRENADELAUNCHER_SMOKE_FLASH,
@@ -1077,7 +1081,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1305664598,
     model: "w_at_ar_flsh",
     name: "Flashlight",
-    description: "Aids low light target acquisition."
+    description: "Aids low light target acquisition.",
   },
   {
     key: WeaponComponent.GRENADELAUNCHER_SMOKE_SCOPE_SML,
@@ -1085,7 +1089,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1305664598,
     model: "w_at_scope_small",
     name: "Scope",
-    description: "Medium-range zoom functionality."
+    description: "Medium-range zoom functionality.",
   },
   {
     key: WeaponComponent.PUMPSHOTGUN_MK2_SCOPE_MAC2,
@@ -1093,7 +1097,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1432025498,
     model: "w_at_scope_macro",
     name: "Small Scope",
-    description: "Standard-range zoom functionality."
+    description: "Standard-range zoom functionality.",
   },
   {
     key: WeaponComponent.PUMPSHOTGUN_MK2_SHELL_EX,
@@ -1101,7 +1105,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1432025498,
     model: "w_sg_pumpshotgunmk2_mag_exp",
     name: "Explosive Slugs",
-    description: "Projectile which explodes on impact."
+    description: "Projectile which explodes on impact.",
   },
   {
     key: WeaponComponent.PUMPSHOTGUN_MK2_SCOPE_SML2,
@@ -1109,7 +1113,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1432025498,
     model: "w_at_scope_small",
     name: "Medium Scope",
-    description: "Medium-range zoom functionality."
+    description: "Medium-range zoom functionality.",
   },
   {
     key: WeaponComponent.PUMPSHOTGUN_MK2_HOLO,
@@ -1117,7 +1121,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1432025498,
     model: "w_at_sights_1",
     name: "Holographic Sight",
-    description: "Accurate sight for close quarters combat."
+    description: "Accurate sight for close quarters combat.",
   },
   {
     key: WeaponComponent.PUMPSHOTGUN_MK2_SHELL_AP,
@@ -1125,7 +1129,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1432025498,
     model: "w_sg_pumpshotgunmk2_mag_ap",
     name: "Steel Buckshot Shells",
-    description: "Increased penetration of Body Armor."
+    description: "Increased penetration of Body Armor.",
   },
   {
     key: WeaponComponent.PUMPSHOTGUN_MK2_MUZZ8,
@@ -1133,7 +1137,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1432025498,
     model: "w_at_muzzle_8_xm17",
     name: "Squared Muzzle Brake",
-    description: "Reduces recoil when firing."
+    description: "Reduces recoil when firing.",
   },
   {
     key: WeaponComponent.PUMPSHOTGUN_MK2_FLASH,
@@ -1141,7 +1145,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1432025498,
     model: "w_at_ar_flsh",
     name: "Flashlight",
-    description: "Aids low light target acquisition."
+    description: "Aids low light target acquisition.",
   },
   {
     key: WeaponComponent.PUMPSHOTGUN_MK2_SHELL_INC,
@@ -1149,7 +1153,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1432025498,
     model: "w_sg_pumpshotgunmk2_mag_inc",
     name: "Dragon's Breath Shells",
-    description: "Has a chance to set targets on fire when shot."
+    description: "Has a chance to set targets on fire when shot.",
   },
   {
     key: WeaponComponent.PUMPSHOTGUN_MK2_SUPP,
@@ -1157,7 +1161,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1432025498,
     model: "w_at_sr_supp3",
     name: "Suppressor",
-    description: "Reduces noise and muzzle flash."
+    description: "Reduces noise and muzzle flash.",
   },
   {
     key: WeaponComponent.PUMPSHOTGUN_MK2_SHELL,
@@ -1165,7 +1169,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1432025498,
     model: "w_sg_pumpshotgunmk2_mag1",
     name: "Default Shells",
-    description: "Standard shotgun ammunition."
+    description: "Standard shotgun ammunition.",
   },
   {
     key: WeaponComponent.PUMPSHOTGUN_MK2_SHELL_HP,
@@ -1173,7 +1177,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1432025498,
     model: "w_sg_pumpshotgunmk2_mag_hp",
     name: "Flechette Shells",
-    description: "Increased damage to targets without Body Armor."
+    description: "Increased damage to targets without Body Armor.",
   },
   {
     key: WeaponComponent.COMBATPISTOL_CLIP1,
@@ -1181,7 +1185,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1593441988,
     model: "w_pi_combatpistol_mag1",
     name: "Default Clip",
-    description: "Standard capacity for Combat Pistol."
+    description: "Standard capacity for Combat Pistol.",
   },
   {
     key: WeaponComponent.COMBATPISTOL_FLASH,
@@ -1189,7 +1193,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1593441988,
     model: "w_at_pi_flsh",
     name: "Flashlight",
-    description: "Aids low light target acquisition."
+    description: "Aids low light target acquisition.",
   },
   {
     key: WeaponComponent.COMBATPISTOL_SUPP,
@@ -1197,7 +1201,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1593441988,
     model: "w_at_pi_supp",
     name: "Suppressor",
-    description: "Reduces noise and muzzle flash."
+    description: "Reduces noise and muzzle flash.",
   },
   {
     key: WeaponComponent.COMBATPISTOL_CLIP2,
@@ -1205,7 +1209,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1593441988,
     model: "w_pi_combatpistol_mag2",
     name: "Extended Clip",
-    description: "Extended capacity for Combat Pistol."
+    description: "Extended capacity for Combat Pistol.",
   },
   {
     key: WeaponComponent.GUSENBERG_CLIP1,
@@ -1213,7 +1217,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1627465347,
     model: "w_sb_gusenberg_mag1",
     name: "Default Clip",
-    description: "Standard capacity for Gusenberg Sweeper."
+    description: "Standard capacity for Gusenberg Sweeper.",
   },
   {
     key: WeaponComponent.GUSENBERG_CLIP2,
@@ -1221,7 +1225,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1627465347,
     model: "w_sb_gusenberg_mag2",
     name: "Extended Clip",
-    description: "Extended capacity for Gusenberg Sweeper."
+    description: "Extended capacity for Gusenberg Sweeper.",
   },
   {
     key: WeaponComponent.COMPACTRIFLE_CLIP1,
@@ -1229,7 +1233,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1649403952,
     model: "w_ar_assaultrifle_smg_mag1",
     name: "Default Clip",
-    description: "Standard capacity for Compact Rifle."
+    description: "Standard capacity for Compact Rifle.",
   },
   {
     key: WeaponComponent.COMPACTRIFLE_CLIP2,
@@ -1237,7 +1241,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1649403952,
     model: "w_ar_assaultrifle_smg_mag2",
     name: "Extended Clip",
-    description: "Extended capacity for Compact Rifle."
+    description: "Extended capacity for Compact Rifle.",
   },
   {
     key: WeaponComponent.COMPACTRIFLE_CLIP_DRM,
@@ -1245,7 +1249,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1649403952,
     model: "w_ar_assaultrifle_boxmag",
     name: "Drum Magazine",
-    description: "Expanded capacity and slower reload."
+    description: "Expanded capacity and slower reload.",
   },
   {
     key: WeaponComponent.MARKSMANRIFLE_MK2_MUZZ5,
@@ -1253,7 +1257,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1785463520,
     model: "w_at_muzzle_5",
     name: "Heavy Duty Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.MARKSMANRIFLE_MK2_MUZZ6,
@@ -1261,7 +1265,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1785463520,
     model: "w_at_muzzle_6",
     name: "Slanted Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.MARKSMANRIFLE_MK2_BARR,
@@ -1269,7 +1273,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1785463520,
     model: "w_sr_mr_mk2_barrel_1",
     name: "Default Barrel",
-    description: "Stock barrel attachment."
+    description: "Stock barrel attachment.",
   },
   {
     key: WeaponComponent.MARKSMANRIFLE_MK2_HOLO,
@@ -1277,7 +1281,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1785463520,
     model: "w_at_sights_1",
     name: "Holographic Sight",
-    description: "Accurate sight for close quarters combat."
+    description: "Accurate sight for close quarters combat.",
   },
   {
     key: WeaponComponent.MARKSMANRIFLE_MK2_MUZZ7,
@@ -1285,7 +1289,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1785463520,
     model: "w_at_muzzle_7",
     name: "Split-End Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.MARKSMANRIFLE_MK2_SCOPE_LRG2,
@@ -1293,7 +1297,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1785463520,
     model: "w_at_scope_large",
     name: "Zoom Scope",
-    description: "Long-range fixed zoom functionality."
+    description: "Long-range fixed zoom functionality.",
   },
   {
     key: WeaponComponent.MARKSMANRIFLE_MK2_BARR2,
@@ -1301,7 +1305,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1785463520,
     model: "w_sr_mr_mk2_barrel_2",
     name: "Heavy Barrel",
-    description: "Increases damage dealt to long-range targets."
+    description: "Increases damage dealt to long-range targets.",
   },
   {
     key: WeaponComponent.MARKSMANRIFLE_MK2_CLIP_INC,
@@ -1309,7 +1313,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1785463520,
     model: "w_sr_marksmanriflemk2_mag_inc",
     name: "Incendiary Rounds",
-    description: "Bullets which include a chance to set targets on fire when shot. Reduced capacity."
+    description:
+      "Bullets which include a chance to set targets on fire when shot. Reduced capacity.",
   },
   {
     key: WeaponComponent.MARKSMANRIFLE_MK2_FLASH,
@@ -1317,7 +1322,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1785463520,
     model: "w_at_ar_flsh",
     name: "Flashlight",
-    description: "Aids low light target acquisition."
+    description: "Aids low light target acquisition.",
   },
   {
     key: WeaponComponent.MARKSMANRIFLE_MK2_SUPP,
@@ -1325,7 +1330,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1785463520,
     model: "w_at_ar_supp",
     name: "Suppressor",
-    description: "Reduces noise and muzzle flash."
+    description: "Reduces noise and muzzle flash.",
   },
   {
     key: WeaponComponent.MARKSMANRIFLE_MK2_CLIP1,
@@ -1333,7 +1338,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1785463520,
     model: "w_sr_marksmanriflemk2_mag1",
     name: "Default Clip",
-    description: "Standard capacity for regular ammo."
+    description: "Standard capacity for regular ammo.",
   },
   {
     key: WeaponComponent.MARKSMANRIFLE_MK2_GRIP,
@@ -1341,7 +1346,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1785463520,
     model: "w_at_afgrip_2",
     name: "Grip",
-    description: "Improves weapon accuracy."
+    description: "Improves weapon accuracy.",
   },
   {
     key: WeaponComponent.MARKSMANRIFLE_MK2_MUZZ1,
@@ -1349,7 +1354,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1785463520,
     model: "w_at_muzzle_1",
     name: "Flat Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.MARKSMANRIFLE_MK2_SCOPE_MED2,
@@ -1357,7 +1362,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1785463520,
     model: "w_at_scope_medium_2",
     name: "Large Scope",
-    description: "Extended-range zoom functionality."
+    description: "Extended-range zoom functionality.",
   },
   {
     key: WeaponComponent.MARKSMANRIFLE_MK2_MUZZ2,
@@ -1365,7 +1370,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1785463520,
     model: "w_at_muzzle_2",
     name: "Tactical Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.MARKSMANRIFLE_MK2_CLIP_TR,
@@ -1373,7 +1378,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1785463520,
     model: "w_sr_marksmanriflemk2_mag_tr",
     name: "Tracer Rounds",
-    description: "Bullets with bright visible markers that match the tint of the gun. Standard capacity."
+    description:
+      "Bullets with bright visible markers that match the tint of the gun. Standard capacity.",
   },
   {
     key: WeaponComponent.MARKSMANRIFLE_MK2_MUZZ3,
@@ -1381,7 +1387,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1785463520,
     model: "w_at_muzzle_3",
     name: "Fat-End Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.MARKSMANRIFLE_MK2_CLIP_FMJ,
@@ -1389,7 +1395,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1785463520,
     model: "w_sr_marksmanriflemk2_mag_fmj",
     name: "Full Metal Jacket Rounds",
-    description: "Increased damage to vehicles. Also penetrates bullet resistant and bulletproof vehicle glass. Reduced capacity."
+    description:
+      "Increased damage to vehicles. Also penetrates bullet resistant and bulletproof vehicle glass. Reduced capacity.",
   },
   {
     key: WeaponComponent.MARKSMANRIFLE_MK2_CLIP2,
@@ -1397,7 +1404,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1785463520,
     model: "w_sr_marksmanriflemk2_mag2",
     name: "Extended Clip",
-    description: "Extended capacity for regular ammo."
+    description: "Extended capacity for regular ammo.",
   },
   {
     key: WeaponComponent.MARKSMANRIFLE_MK2_MUZZ4,
@@ -1405,7 +1412,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1785463520,
     model: "w_at_muzzle_4",
     name: "Precision Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.MARKSMANRIFLE_MK2_CLIP_AP,
@@ -1413,7 +1420,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1785463520,
     model: "w_sr_marksmanriflemk2_mag_ap",
     name: "Armor Piercing Rounds",
-    description: "Increased penetration of Body Armor. Reduced capacity."
+    description: "Increased penetration of Body Armor. Reduced capacity.",
   },
   {
     key: WeaponComponent.RAILGUN_CLIP1,
@@ -1421,7 +1428,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1834241177,
     model: "w_ar_railgun_mag1",
     name: "Default Clip",
-    description: "Standard capacity for Railgun."
+    description: "Standard capacity for Railgun.",
   },
   {
     key: WeaponComponent.PRECISIONRIFLE_CLIP1,
@@ -1429,7 +1436,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 1853742572,
     model: "w_sr_w_sr_precisionrifle_reh_mag1",
     name: "Default Clip",
-    description: "Standard capacity for Carbine Rifle."
+    description: "Standard capacity for Carbine Rifle.",
   },
   {
     key: WeaponComponent.SMG_MK2_MUZZ5,
@@ -1437,7 +1444,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2024373456,
     model: "w_at_muzzle_5",
     name: "Heavy Duty Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.SMG_MK2_CLIP_FMJ,
@@ -1445,7 +1452,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2024373456,
     model: "w_sb_smgmk2_mag_fmj",
     name: "Full Metal Jacket Rounds",
-    description: "Increased damage to vehicles. Also penetrates bullet resistant and bulletproof vehicle glass. Reduced capacity."
+    description:
+      "Increased damage to vehicles. Also penetrates bullet resistant and bulletproof vehicle glass. Reduced capacity.",
   },
   {
     key: WeaponComponent.SMG_MK2_MUZZ6,
@@ -1453,7 +1461,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2024373456,
     model: "w_at_muzzle_6",
     name: "Slanted Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.SMG_MK2_CLIP_HP,
@@ -1461,7 +1469,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2024373456,
     model: "w_sb_smgmk2_mag_hp",
     name: "Hollow Point Rounds",
-    description: "Increased damage to targets without Body Armor. Reduced capacity."
+    description: "Increased damage to targets without Body Armor. Reduced capacity.",
   },
   {
     key: WeaponComponent.SMG_MK2_SCOPE_SML2,
@@ -1469,7 +1477,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2024373456,
     model: "w_at_scope_small_mk2",
     name: "Medium Scope",
-    description: "Medium-range zoom functionality."
+    description: "Medium-range zoom functionality.",
   },
   {
     key: WeaponComponent.SMG_MK2_CLIP1,
@@ -1477,7 +1485,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2024373456,
     model: "w_sb_smgmk2_mag1",
     name: "Default Clip",
-    description: "Standard capacity for regular ammo."
+    description: "Standard capacity for regular ammo.",
   },
   {
     key: WeaponComponent.SMG_MK2_MUZZ7,
@@ -1485,7 +1493,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2024373456,
     model: "w_at_muzzle_7",
     name: "Split-End Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.SMG_MK2_FLASH,
@@ -1493,7 +1501,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2024373456,
     model: "w_at_ar_flsh",
     name: "Flashlight",
-    description: "Aids low light target acquisition."
+    description: "Aids low light target acquisition.",
   },
   {
     key: WeaponComponent.SMG_MK2_CLIP_TR,
@@ -1501,7 +1509,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2024373456,
     model: "w_sb_smgmk2_mag_tr",
     name: "Tracer Rounds",
-    description: "Bullets with bright visible markers that match the tint of the gun. Standard capacity."
+    description:
+      "Bullets with bright visible markers that match the tint of the gun. Standard capacity.",
   },
   {
     key: WeaponComponent.SMG_MK2_HOLO,
@@ -1509,7 +1518,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2024373456,
     model: "w_at_sights_smg",
     name: "Holographic Sight",
-    description: "Accurate sight for close quarters combat."
+    description: "Accurate sight for close quarters combat.",
   },
   {
     key: WeaponComponent.SMG_MK2_BARR2,
@@ -1517,7 +1526,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2024373456,
     model: "w_at_sb_barrel_2",
     name: "Heavy Barrel",
-    description: "Increases damage dealt to long-range targets."
+    description: "Increases damage dealt to long-range targets.",
   },
   {
     key: WeaponComponent.SMG_MK2_CLIP2,
@@ -1525,7 +1534,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2024373456,
     model: "w_sb_smgmk2_mag2",
     name: "Extended Clip",
-    description: "Extended capacity for regular ammo."
+    description: "Extended capacity for regular ammo.",
   },
   {
     key: WeaponComponent.SMG_MK2_MUZZ1,
@@ -1533,7 +1542,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2024373456,
     model: "w_at_muzzle_1",
     name: "Flat Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.SMG_MK2_SUPP,
@@ -1541,7 +1550,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2024373456,
     model: "w_at_pi_supp",
     name: "Suppressor",
-    description: "Reduces noise and muzzle flash."
+    description: "Reduces noise and muzzle flash.",
   },
   {
     key: WeaponComponent.SMG_MK2_MUZZ2,
@@ -1549,7 +1558,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2024373456,
     model: "w_at_muzzle_2",
     name: "Tactical Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.SMG_MK2_BARR,
@@ -1557,7 +1566,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2024373456,
     model: "w_at_sb_barrel_1",
     name: "Default Barrel",
-    description: "Stock barrel attachment."
+    description: "Stock barrel attachment.",
   },
   {
     key: WeaponComponent.SMG_MK2_CLIP_INC,
@@ -1565,7 +1574,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2024373456,
     model: "w_sb_smgmk2_mag_inc",
     name: "Incendiary Rounds",
-    description: "Bullets which include a chance to set targets on fire when shot. Reduced capacity."
+    description:
+      "Bullets which include a chance to set targets on fire when shot. Reduced capacity.",
   },
   {
     key: WeaponComponent.SMG_MK2_MUZZ3,
@@ -1573,7 +1583,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2024373456,
     model: "w_at_muzzle_3",
     name: "Fat-End Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.SMG_MK2_SCOPE_MAC2,
@@ -1581,7 +1591,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2024373456,
     model: "w_at_scope_macro_2_mk2",
     name: "Small Scope",
-    description: "Standard-range zoom functionality."
+    description: "Standard-range zoom functionality.",
   },
   {
     key: WeaponComponent.SMG_MK2_MUZZ4,
@@ -1589,7 +1599,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2024373456,
     model: "w_at_muzzle_4",
     name: "Precision Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.BULLPUPRIFLE_GRIP,
@@ -1597,7 +1607,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2132975508,
     model: "w_at_ar_afgrip",
     name: "Grip",
-    description: "Improves weapon accuracy."
+    description: "Improves weapon accuracy.",
   },
   {
     key: WeaponComponent.BULLPUPRIFLE_FLASH,
@@ -1605,7 +1615,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2132975508,
     model: "w_at_ar_flsh",
     name: "Flashlight",
-    description: "Aids low light target acquisition."
+    description: "Aids low light target acquisition.",
   },
   {
     key: WeaponComponent.BULLPUPRIFLE_SUPP,
@@ -1613,7 +1623,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2132975508,
     model: "w_at_ar_supp",
     name: "Suppressor",
-    description: "Reduces noise and muzzle flash."
+    description: "Reduces noise and muzzle flash.",
   },
   {
     key: WeaponComponent.BULLPUPRIFLE_SCOPE_SML,
@@ -1621,7 +1631,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2132975508,
     model: "w_at_scope_small",
     name: "Scope",
-    description: "Medium-range zoom functionality."
+    description: "Medium-range zoom functionality.",
   },
   {
     key: WeaponComponent.BULLPUPRIFLE_CLIP2,
@@ -1629,7 +1639,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2132975508,
     model: "w_ar_bullpuprifle_mag2",
     name: "Extended Clip",
-    description: "Extended capacity for Bullpup Rifle."
+    description: "Extended capacity for Bullpup Rifle.",
   },
   {
     key: WeaponComponent.BULLPUPRIFLE_CLIP1,
@@ -1637,7 +1647,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2132975508,
     model: "w_ar_bullpuprifle_mag1",
     name: "Default Clip",
-    description: "Standard capacity for Bullpup Rifle."
+    description: "Standard capacity for Bullpup Rifle.",
   },
   {
     key: WeaponComponent.FIREWORK_CLIP1,
@@ -1645,7 +1655,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2138347493,
     model: "",
     name: "Default Clip",
-    description: "Standard capacity for Firework Launcher."
+    description: "Standard capacity for Firework Launcher.",
   },
   {
     key: WeaponComponent.COMBATMG_GRIP,
@@ -1653,7 +1663,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2144741730,
     model: "w_at_ar_afgrip",
     name: "Grip",
-    description: "Improves weapon accuracy."
+    description: "Improves weapon accuracy.",
   },
   {
     key: WeaponComponent.COMBATMG_SCOPE_LRG,
@@ -1661,7 +1671,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2144741730,
     model: "w_at_scope_medium",
     name: "Scope",
-    description: "Long-range zoom functionality."
+    description: "Long-range zoom functionality.",
   },
   {
     key: WeaponComponent.COMBATMG_CLIP2,
@@ -1669,7 +1679,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2144741730,
     model: "w_mg_combatmg_mag2",
     name: "Extended Clip",
-    description: "Extended capacity for Combat MG."
+    description: "Extended capacity for Combat MG.",
   },
   {
     key: WeaponComponent.COMBATMG_CLIP1,
@@ -1677,7 +1687,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2144741730,
     model: "w_mg_combatmg_mag1",
     name: "Default Clip",
-    description: "Standard capacity for Combat MG."
+    description: "Standard capacity for Combat MG.",
   },
   {
     key: WeaponComponent.CARBINERIFLE_GRIP,
@@ -1685,7 +1695,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2210333304,
     model: "w_at_ar_afgrip",
     name: "Grip",
-    description: "Improves weapon accuracy."
+    description: "Improves weapon accuracy.",
   },
   {
     key: WeaponComponent.CARBINERIFLE_FLASH,
@@ -1693,7 +1703,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2210333304,
     model: "w_at_ar_flsh",
     name: "Flashlight",
-    description: "Aids low light target acquisition."
+    description: "Aids low light target acquisition.",
   },
   {
     key: WeaponComponent.CARBINERIFLE_SUPP,
@@ -1701,7 +1711,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2210333304,
     model: "w_at_ar_supp",
     name: "Suppressor",
-    description: "Reduces noise and muzzle flash."
+    description: "Reduces noise and muzzle flash.",
   },
   {
     key: WeaponComponent.CARBINERIFLE_CLIP2,
@@ -1709,7 +1719,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2210333304,
     model: "w_ar_carbinerifle_mag2",
     name: "Extended Clip",
-    description: "Extended capacity for Carbine Rifle."
+    description: "Extended capacity for Carbine Rifle.",
   },
   {
     key: WeaponComponent.CARBINERIFLE_CLIP1,
@@ -1717,7 +1727,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2210333304,
     model: "w_ar_carbinerifle_mag1",
     name: "Default Clip",
-    description: "Standard capacity for Carbine Rifle."
+    description: "Standard capacity for Carbine Rifle.",
   },
   {
     key: WeaponComponent.CARBINERIFLE_SCOPE_LRG,
@@ -1725,7 +1735,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2210333304,
     model: "w_at_scope_medium",
     name: "Scope",
-    description: "Long-range zoom functionality."
+    description: "Long-range zoom functionality.",
   },
   {
     key: WeaponComponent.CARBINERIFLE_CLIP_BOX,
@@ -1733,7 +1743,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2210333304,
     model: "w_ar_carbinerifle_boxmag",
     name: "Box Magazine",
-    description: "Expanded capacity and slower reload."
+    description: "Expanded capacity and slower reload.",
   },
   {
     key: WeaponComponent.BULLPUPRIFLE_MK2_CLIP1,
@@ -1741,7 +1751,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2228681469,
     model: "w_ar_bullpupriflemk2_mag1",
     name: "Default Clip",
-    description: "Standard capacity for regular ammo."
+    description: "Standard capacity for regular ammo.",
   },
   {
     key: WeaponComponent.BULLPUPRIFLE_MK2_MUZZ5,
@@ -1749,7 +1759,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2228681469,
     model: "w_at_muzzle_5",
     name: "Heavy Duty Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.BULLPUPRIFLE_MK2_MUZZ6,
@@ -1757,7 +1767,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2228681469,
     model: "w_at_muzzle_6",
     name: "Slanted Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.BULLPUPRIFLE_MK2_BARR2,
@@ -1765,7 +1775,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2228681469,
     model: "W_AR_BP_MK2_Barrel2",
     name: "Heavy Barrel",
-    description: "Increases damage dealt to long-range targets."
+    description: "Increases damage dealt to long-range targets.",
   },
   {
     key: WeaponComponent.BULLPUPRIFLE_MK2_SCOPE_SML2,
@@ -1773,7 +1783,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2228681469,
     model: "w_at_scope_small",
     name: "Medium Scope",
-    description: "Medium-range zoom functionality."
+    description: "Medium-range zoom functionality.",
   },
   {
     key: WeaponComponent.BULLPUPRIFLE_MK2_HOLO,
@@ -1781,7 +1791,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2228681469,
     model: "w_at_sights_1",
     name: "Holographic Sight",
-    description: "Accurate sight for close quarters combat."
+    description: "Accurate sight for close quarters combat.",
   },
   {
     key: WeaponComponent.BULLPUPRIFLE_MK2_CLIP_FMJ,
@@ -1789,7 +1799,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2228681469,
     model: "W_AR_BullpupRifleMK2_Mag_FMJ",
     name: "Full Metal Jacket Rounds",
-    description: "Increased damage to vehicles. Also penetrates bullet resistant and bulletproof vehicle glass. Reduced capacity."
+    description:
+      "Increased damage to vehicles. Also penetrates bullet resistant and bulletproof vehicle glass. Reduced capacity.",
   },
   {
     key: WeaponComponent.BULLPUPRIFLE_MK2_MUZZ7,
@@ -1797,7 +1808,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2228681469,
     model: "w_at_muzzle_7",
     name: "Split-End Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.BULLPUPRIFLE_MK2_BARR,
@@ -1805,7 +1816,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2228681469,
     model: "W_AR_BP_MK2_Barrel1",
     name: "Default Barrel",
-    description: "Stock barrel attachment."
+    description: "Stock barrel attachment.",
   },
   {
     key: WeaponComponent.BULLPUPRIFLE_MK2_FLASH,
@@ -1813,7 +1824,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2228681469,
     model: "w_at_ar_flsh",
     name: "Flashlight",
-    description: "Aids low light target acquisition."
+    description: "Aids low light target acquisition.",
   },
   {
     key: WeaponComponent.BULLPUPRIFLE_MK2_CLIP_TR,
@@ -1821,7 +1832,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2228681469,
     model: "W_AR_BullpupRifleMK2_Mag_TR",
     name: "Tracer Rounds",
-    description: "Bullets with bright visible markers that match the tint of the gun. Standard capacity."
+    description:
+      "Bullets with bright visible markers that match the tint of the gun. Standard capacity.",
   },
   {
     key: WeaponComponent.BULLPUPRIFLE_MK2_SUPP,
@@ -1829,7 +1841,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2228681469,
     model: "w_at_ar_supp",
     name: "Suppressor",
-    description: "Reduces noise and muzzle flash."
+    description: "Reduces noise and muzzle flash.",
   },
   {
     key: WeaponComponent.BULLPUPRIFLE_MK2_GRIP,
@@ -1837,7 +1849,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2228681469,
     model: "w_at_afgrip_2",
     name: "Grip",
-    description: "Improves weapon accuracy."
+    description: "Improves weapon accuracy.",
   },
   {
     key: WeaponComponent.BULLPUPRIFLE_MK2_CLIP_INC,
@@ -1845,7 +1857,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2228681469,
     model: "W_AR_BullpupRifleMK2_Mag_INC",
     name: "Incendiary Rounds",
-    description: "Bullets which include a chance to set targets on fire when shot. Reduced capacity."
+    description:
+      "Bullets which include a chance to set targets on fire when shot. Reduced capacity.",
   },
   {
     key: WeaponComponent.BULLPUPRIFLE_MK2_MUZZ1,
@@ -1853,7 +1866,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2228681469,
     model: "w_at_muzzle_1",
     name: "Flat Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.BULLPUPRIFLE_MK2_SCOPE_MAC2,
@@ -1861,7 +1874,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2228681469,
     model: "w_at_scope_macro_2",
     name: "Small Scope",
-    description: "Standard-range zoom functionality."
+    description: "Standard-range zoom functionality.",
   },
   {
     key: WeaponComponent.BULLPUPRIFLE_MK2_MUZZ2,
@@ -1869,7 +1882,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2228681469,
     model: "w_at_muzzle_2",
     name: "Tactical Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.BULLPUPRIFLE_MK2_MUZZ3,
@@ -1877,7 +1890,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2228681469,
     model: "w_at_muzzle_3",
     name: "Fat-End Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.BULLPUPRIFLE_MK2_MUZZ4,
@@ -1885,7 +1898,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2228681469,
     model: "w_at_muzzle_4",
     name: "Precision Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.BULLPUPRIFLE_MK2_CLIP2,
@@ -1893,7 +1906,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2228681469,
     model: "w_ar_bullpupriflemk2_mag2",
     name: "Extended Clip",
-    description: "Extended capacity for regular ammo."
+    description: "Extended capacity for regular ammo.",
   },
   {
     key: WeaponComponent.BULLPUPRIFLE_MK2_CLIP_AP,
@@ -1901,7 +1914,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2228681469,
     model: "W_AR_BullpupRifleMK2_Mag_AP",
     name: "Armor Piercing Rounds",
-    description: "Increased penetration of Body Armor. Reduced capacity."
+    description: "Increased penetration of Body Armor. Reduced capacity.",
   },
   {
     key: WeaponComponent.SNSPISTOL_MK2_CLIP1,
@@ -1909,7 +1922,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2285322324,
     model: "w_pi_sns_pistolmk2_mag1",
     name: "Default Clip",
-    description: "Standard capacity for regular ammo."
+    description: "Standard capacity for regular ammo.",
   },
   {
     key: WeaponComponent.SNSPISTOL_MK2_SCOPE_PI,
@@ -1917,7 +1930,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2285322324,
     model: "w_at_pi_rail_2",
     name: "Mounted Scope",
-    description: "Standard-range zoom functionality."
+    description: "Standard-range zoom functionality.",
   },
   {
     key: WeaponComponent.SNSPISTOL_MK2_FLASH,
@@ -1925,7 +1938,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2285322324,
     model: "w_at_pi_snsmk2_flsh_1",
     name: "Flashlight",
-    description: "Aids low light target acquisition."
+    description: "Aids low light target acquisition.",
   },
   {
     key: WeaponComponent.SNSPISTOL_MK2_SUPP,
@@ -1933,7 +1946,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2285322324,
     model: "w_at_pi_supp_2",
     name: "Suppressor",
-    description: "Reduces noise and muzzle flash."
+    description: "Reduces noise and muzzle flash.",
   },
   {
     key: WeaponComponent.SNSPISTOL_MK2_CLIP_HP,
@@ -1941,7 +1954,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2285322324,
     model: "W_PI_SNS_PistolMK2_Mag_HP",
     name: "Hollow Point Rounds",
-    description: "Increased damage to targets without Body Armor."
+    description: "Increased damage to targets without Body Armor.",
   },
   {
     key: WeaponComponent.SNSPISTOL_MK2_CLIP_TR,
@@ -1949,7 +1962,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2285322324,
     model: "W_PI_SNS_PistolMK2_Mag_TR",
     name: "Tracer Rounds",
-    description: "Bullets with bright visible markers that match the tint of the gun."
+    description: "Bullets with bright visible markers that match the tint of the gun.",
   },
   {
     key: WeaponComponent.SNSPISTOL_MK2_COMP,
@@ -1957,7 +1970,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2285322324,
     model: "w_at_pi_comp_2",
     name: "Compensator",
-    description: "Reduces recoil for rapid fire."
+    description: "Reduces recoil for rapid fire.",
   },
   {
     key: WeaponComponent.SNSPISTOL_MK2_CLIP_FMJ,
@@ -1965,7 +1978,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2285322324,
     model: "W_PI_SNS_PistolMK2_Mag_FMJ",
     name: "Full Metal Jacket Rounds",
-    description: "Increased damage to vehicles. Also penetrates bullet resistant and bulletproof vehicle glass."
+    description:
+      "Increased damage to vehicles. Also penetrates bullet resistant and bulletproof vehicle glass.",
   },
   {
     key: WeaponComponent.SNSPISTOL_MK2_CLIP2,
@@ -1973,7 +1987,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2285322324,
     model: "w_pi_sns_pistolmk2_mag2",
     name: "Extended Clip",
-    description: "Extended capacity for regular ammo."
+    description: "Extended capacity for regular ammo.",
   },
   {
     key: WeaponComponent.SNSPISTOL_MK2_CLIP_INC,
@@ -1981,7 +1995,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2285322324,
     model: "W_PI_SNS_PistolMK2_Mag_INC",
     name: "Incendiary Rounds",
-    description: "Bullets which include a chance to set targets on fire when shot."
+    description: "Bullets which include a chance to set targets on fire when shot.",
   },
   {
     key: WeaponComponent.FLASHLIGHT_FLASH,
@@ -1989,7 +2003,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2343591895,
     model: "w_me_flashlight_flash",
     name: "Flashlight",
-    description: "Aids low light target acquisition."
+    description: "Aids low light target acquisition.",
   },
   {
     key: WeaponComponent.SPECIALCARBINE_MK2_MUZZ5,
@@ -1997,7 +2011,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2526821735,
     model: "w_at_muzzle_5",
     name: "Heavy Duty Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.SPECIALCARBINE_MK2_SCOPE_MAC2,
@@ -2005,7 +2019,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2526821735,
     model: "w_at_scope_macro",
     name: "Small Scope",
-    description: "Standard-range zoom functionality."
+    description: "Standard-range zoom functionality.",
   },
   {
     key: WeaponComponent.SPECIALCARBINE_MK2_CLIP1,
@@ -2013,7 +2027,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2526821735,
     model: "w_ar_specialcarbinemk2_mag1",
     name: "Default Clip",
-    description: "Standard capacity for regular ammo."
+    description: "Standard capacity for regular ammo.",
   },
   {
     key: WeaponComponent.SPECIALCARBINE_MK2_MUZZ6,
@@ -2021,7 +2035,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2526821735,
     model: "w_at_muzzle_6",
     name: "Slanted Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.SPECIALCARBINE_MK2_HOLO,
@@ -2029,7 +2043,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2526821735,
     model: "w_at_sights_1",
     name: "Holographic Sight",
-    description: "Accurate sight for close quarters combat."
+    description: "Accurate sight for close quarters combat.",
   },
   {
     key: WeaponComponent.SPECIALCARBINE_MK2_MUZZ7,
@@ -2037,7 +2051,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2526821735,
     model: "w_at_muzzle_7",
     name: "Split-End Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.SPECIALCARBINE_MK2_CLIP_FMJ,
@@ -2045,7 +2059,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2526821735,
     model: "w_ar_specialcarbinemk2_mag_fmj",
     name: "Full Metal Jacket Rounds",
-    description: "Increased damage to vehicles. Also penetrates bullet resistant and bulletproof vehicle glass. Reduced capacity."
+    description:
+      "Increased damage to vehicles. Also penetrates bullet resistant and bulletproof vehicle glass. Reduced capacity.",
   },
   {
     key: WeaponComponent.SPECIALCARBINE_MK2_CLIP_AP,
@@ -2053,7 +2068,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2526821735,
     model: "w_ar_specialcarbinemk2_mag_ap",
     name: "Armor Piercing Rounds",
-    description: "Increased penetration of Body Armor. Reduced capacity."
+    description: "Increased penetration of Body Armor. Reduced capacity.",
   },
   {
     key: WeaponComponent.SPECIALCARBINE_MK2_FLASH,
@@ -2061,7 +2076,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2526821735,
     model: "w_at_ar_flsh",
     name: "Flashlight",
-    description: "Aids low light target acquisition."
+    description: "Aids low light target acquisition.",
   },
   {
     key: WeaponComponent.SPECIALCARBINE_MK2_CLIP_TR,
@@ -2069,7 +2084,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2526821735,
     model: "w_ar_specialcarbinemk2_mag_tr",
     name: "Tracer Rounds",
-    description: "Bullets with bright visible markers that match the tint of the gun. Standard capacity."
+    description:
+      "Bullets with bright visible markers that match the tint of the gun. Standard capacity.",
   },
   {
     key: WeaponComponent.SPECIALCARBINE_MK2_GRIP,
@@ -2077,7 +2093,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2526821735,
     model: "w_at_afgrip_2",
     name: "Grip",
-    description: "Improves weapon accuracy."
+    description: "Improves weapon accuracy.",
   },
   {
     key: WeaponComponent.SPECIALCARBINE_MK2_SUPP,
@@ -2085,7 +2101,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2526821735,
     model: "w_at_ar_supp_02",
     name: "Suppressor",
-    description: "Reduces noise and muzzle flash."
+    description: "Reduces noise and muzzle flash.",
   },
   {
     key: WeaponComponent.SPECIALCARBINE_MK2_MUZZ1,
@@ -2093,7 +2109,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2526821735,
     model: "w_at_muzzle_1",
     name: "Flat Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.SPECIALCARBINE_MK2_SCOPE_MED2,
@@ -2101,7 +2117,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2526821735,
     model: "w_at_scope_medium_2",
     name: "Large Scope",
-    description: "Extended-range zoom functionality."
+    description: "Extended-range zoom functionality.",
   },
   {
     key: WeaponComponent.SPECIALCARBINE_MK2_MUZZ2,
@@ -2109,7 +2125,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2526821735,
     model: "w_at_muzzle_2",
     name: "Tactical Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.SPECIALCARBINE_MK2_CLIP_INC,
@@ -2117,7 +2133,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2526821735,
     model: "w_ar_specialcarbinemk2_mag_inc",
     name: "Incendiary Rounds",
-    description: "Bullets which include a chance to set targets on fire when shot. Reduced capacity."
+    description:
+      "Bullets which include a chance to set targets on fire when shot. Reduced capacity.",
   },
   {
     key: WeaponComponent.SPECIALCARBINE_MK2_MUZZ3,
@@ -2125,7 +2142,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2526821735,
     model: "w_at_muzzle_3",
     name: "Fat-End Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.SPECIALCARBINE_MK2_CLIP2,
@@ -2133,7 +2150,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2526821735,
     model: "w_ar_specialcarbinemk2_mag2",
     name: "Extended Clip",
-    description: "Extended capacity for regular ammo."
+    description: "Extended capacity for regular ammo.",
   },
   {
     key: WeaponComponent.SPECIALCARBINE_MK2_BARR,
@@ -2141,7 +2158,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2526821735,
     model: "w_ar_sc_barrel_1",
     name: "Default Barrel",
-    description: "Stock barrel attachment."
+    description: "Stock barrel attachment.",
   },
   {
     key: WeaponComponent.SPECIALCARBINE_MK2_MUZZ4,
@@ -2149,7 +2166,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2526821735,
     model: "w_at_muzzle_4",
     name: "Precision Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.SPECIALCARBINE_MK2_BARR2,
@@ -2157,7 +2174,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2526821735,
     model: "w_ar_sc_barrel_2",
     name: "Heavy Barrel",
-    description: "Increases damage dealt to long-range targets."
+    description: "Increases damage dealt to long-range targets.",
   },
   {
     key: WeaponComponent.DOUBLEACTION_CLIP1,
@@ -2165,7 +2182,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2548703416,
     model: "w_pi_wep1_mag1",
     name: "Default Clip",
-    description: "Standard ammo capacity."
+    description: "Standard ammo capacity.",
   },
   {
     key: WeaponComponent.PISTOL50_CLIP1,
@@ -2173,7 +2190,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2578377531,
     model: "W_PI_PISTOL50_Mag1",
     name: "Default Clip",
-    description: "Standard capacity for Pistol .50."
+    description: "Standard capacity for Pistol .50.",
   },
   {
     key: WeaponComponent.PISTOL50_FLASH,
@@ -2181,7 +2198,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2578377531,
     model: "w_at_pi_flsh",
     name: "Flashlight",
-    description: "Aids low light target acquisition."
+    description: "Aids low light target acquisition.",
   },
   {
     key: WeaponComponent.PISTOL50_SUPP,
@@ -2189,7 +2206,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2578377531,
     model: "w_at_ar_supp_02",
     name: "Suppressor",
-    description: "Reduces noise and muzzle flash."
+    description: "Reduces noise and muzzle flash.",
   },
   {
     key: WeaponComponent.PISTOL50_CLIP2,
@@ -2197,7 +2214,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2578377531,
     model: "W_PI_PISTOL50_Mag2",
     name: "Extended Clip",
-    description: "Extended capacity for Pistol .50."
+    description: "Extended capacity for Pistol .50.",
   },
   {
     key: WeaponComponent.MG_SCOPE_SML,
@@ -2205,7 +2222,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2634544996,
     model: "w_at_scope_small_2",
     name: "Scope",
-    description: "Medium-range zoom functionality."
+    description: "Medium-range zoom functionality.",
   },
   {
     key: WeaponComponent.MG_CLIP2,
@@ -2213,7 +2230,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2634544996,
     model: "w_mg_mg_mag2",
     name: "Extended Clip",
-    description: "Extended capacity for MG."
+    description: "Extended capacity for MG.",
   },
   {
     key: WeaponComponent.MG_CLIP1,
@@ -2221,7 +2238,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2634544996,
     model: "w_mg_mg_mag1",
     name: "Default Clip",
-    description: "Standard capacity for MG."
+    description: "Standard capacity for MG.",
   },
   {
     key: WeaponComponent.MILITARYRIFLE_CLIP1,
@@ -2229,7 +2246,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2636060646,
     model: "w_ar_bullpuprifleh4_mag1",
     name: "Default Clip",
-    description: "Standard capacity for regular ammo."
+    description: "Standard capacity for regular ammo.",
   },
   {
     key: WeaponComponent.MILITARYRIFLE_CLIP2,
@@ -2237,7 +2254,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2636060646,
     model: "w_ar_bullpuprifleh4_mag2",
     name: "Extended Clip",
-    description: "Extended capacity for regular ammo."
+    description: "Extended capacity for regular ammo.",
   },
   {
     key: WeaponComponent.MILITARYRIFLE_MRFL_SIGHT,
@@ -2245,7 +2262,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2636060646,
     model: "w_ar_bullpuprifleh4_sight",
     name: "Iron Sights",
-    description: "Default rail-mounted iron sights."
+    description: "Default rail-mounted iron sights.",
   },
   {
     key: WeaponComponent.MILITARYRIFLE_FLASH,
@@ -2253,7 +2270,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2636060646,
     model: "w_at_ar_flsh",
     name: "Flashlight",
-    description: "Aids low light target acquisition."
+    description: "Aids low light target acquisition.",
   },
   {
     key: WeaponComponent.MILITARYRIFLE_SUPP,
@@ -2261,7 +2278,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2636060646,
     model: "w_at_ar_supp",
     name: "Suppressor",
-    description: "Reduces noise and muzzle flash."
+    description: "Reduces noise and muzzle flash.",
   },
   {
     key: WeaponComponent.MILITARYRIFLE_SCOPE_SML,
@@ -2269,7 +2286,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2636060646,
     model: "w_at_scope_small",
     name: "Scope",
-    description: "Medium-range zoom functionality."
+    description: "Medium-range zoom functionality.",
   },
   {
     key: WeaponComponent.BULLPUPSHOTGUN_GRIP,
@@ -2277,7 +2294,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2640438543,
     model: "w_at_ar_afgrip",
     name: "Grip",
-    description: "Improves weapon accuracy."
+    description: "Improves weapon accuracy.",
   },
   {
     key: WeaponComponent.BULLPUPSHOTGUN_FLASH,
@@ -2285,7 +2302,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2640438543,
     model: "w_at_ar_flsh",
     name: "Flashlight",
-    description: "Aids low light target acquisition."
+    description: "Aids low light target acquisition.",
   },
   {
     key: WeaponComponent.BULLPUPSHOTGUN_SUPP,
@@ -2293,7 +2310,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2640438543,
     model: "w_at_ar_supp_02",
     name: "Suppressor",
-    description: "Reduces noise and muzzle flash."
+    description: "Reduces noise and muzzle flash.",
   },
   {
     key: WeaponComponent.GRENADELAUNCHER_GRIP,
@@ -2301,7 +2318,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2726580491,
     model: "w_at_ar_afgrip",
     name: "Grip",
-    description: "Improves weapon accuracy."
+    description: "Improves weapon accuracy.",
   },
   {
     key: WeaponComponent.GRENADELAUNCHER_FLASH,
@@ -2309,7 +2326,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2726580491,
     model: "w_at_ar_flsh",
     name: "Flashlight",
-    description: "Aids low light target acquisition."
+    description: "Aids low light target acquisition.",
   },
   {
     key: WeaponComponent.GRENADELAUNCHER_SCOPE_SML,
@@ -2317,7 +2334,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2726580491,
     model: "w_at_scope_small",
     name: "Scope",
-    description: "Medium-range zoom functionality."
+    description: "Medium-range zoom functionality.",
   },
   {
     key: WeaponComponent.MUSKET_CLIP1,
@@ -2325,7 +2342,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2828843422,
     model: "p_w_ar_musket_chrg",
     name: "Default Clip",
-    description: "Standard capacity for Musket."
+    description: "Standard capacity for Musket.",
   },
   {
     key: WeaponComponent.ADVANCEDRIFLE_FLASH,
@@ -2333,7 +2350,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2937143193,
     model: "w_at_ar_flsh",
     name: "Flashlight",
-    description: "Aids low light target acquisition."
+    description: "Aids low light target acquisition.",
   },
   {
     key: WeaponComponent.ADVANCEDRIFLE_SUPP,
@@ -2341,7 +2358,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2937143193,
     model: "w_at_ar_supp",
     name: "Suppressor",
-    description: "Reduces noise and muzzle flash."
+    description: "Reduces noise and muzzle flash.",
   },
   {
     key: WeaponComponent.ADVANCEDRIFLE_CLIP2,
@@ -2349,7 +2366,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2937143193,
     model: "w_ar_advancedrifle_mag2",
     name: "Extended Clip",
-    description: "Extended capacity for Assault Rifle."
+    description: "Extended capacity for Assault Rifle.",
   },
   {
     key: WeaponComponent.ADVANCEDRIFLE_SCOPE_SML,
@@ -2357,7 +2374,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2937143193,
     model: "w_at_scope_small",
     name: "Scope",
-    description: "Medium-range zoom functionality."
+    description: "Medium-range zoom functionality.",
   },
   {
     key: WeaponComponent.ADVANCEDRIFLE_CLIP1,
@@ -2365,7 +2382,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2937143193,
     model: "w_ar_advancedrifle_mag1",
     name: "Default Clip",
-    description: "Standard capacity for Assault Rifle."
+    description: "Standard capacity for Assault Rifle.",
   },
   {
     key: WeaponComponent.RAYPISTOL_VAR_RAY18,
@@ -2373,7 +2390,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 2939590305,
     model: "w_pi_raygun_ev",
     name: "Festive tint",
-    description: "The Festive tint for the Up-n-Atomizer."
+    description: "The Festive tint for the Up-n-Atomizer.",
   },
   {
     key: WeaponComponent.MINISMG_CLIP1,
@@ -2381,7 +2398,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3173288789,
     model: "w_sb_minismg_mag1",
     name: "Default Clip",
-    description: "Standard capacity for Mini SMG."
+    description: "Standard capacity for Mini SMG.",
   },
   {
     key: WeaponComponent.MINISMG_CLIP2,
@@ -2389,7 +2406,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3173288789,
     model: "w_sb_minismg_mag2",
     name: "Extended Clip",
-    description: "Extended capacity for Mini SMG."
+    description: "Extended capacity for Mini SMG.",
   },
   {
     key: WeaponComponent.SNSPISTOL_CLIP2,
@@ -2397,7 +2414,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3218215474,
     model: "w_pi_sns_pistol_mag2",
     name: "Extended Clip",
-    description: "Extended capacity for SNS Pistol."
+    description: "Extended capacity for SNS Pistol.",
   },
   {
     key: WeaponComponent.SNSPISTOL_CLIP1,
@@ -2405,7 +2422,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3218215474,
     model: "w_pi_sns_pistol_mag1",
     name: "Default Clip",
-    description: "Standard capacity for SNS Pistol."
+    description: "Standard capacity for SNS Pistol.",
   },
   {
     key: WeaponComponent.PISTOL_MK2_COMP,
@@ -2413,7 +2430,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3219281620,
     model: "w_at_pi_comp_1",
     name: "Compensator",
-    description: "Reduces recoil for rapid fire."
+    description: "Reduces recoil for rapid fire.",
   },
   {
     key: WeaponComponent.PISTOL_MK2_CLIP_TR,
@@ -2421,7 +2438,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3219281620,
     model: "w_pi_pistolmk2_mag_tr",
     name: "Tracer Rounds",
-    description: "Bullets with bright visible markers that match the tint of the gun. Standard capacity."
+    description:
+      "Bullets with bright visible markers that match the tint of the gun. Standard capacity.",
   },
   {
     key: WeaponComponent.PISTOL_MK2_CLIP_INC,
@@ -2429,7 +2447,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3219281620,
     model: "w_pi_pistolmk2_mag_inc",
     name: "Incendiary Rounds",
-    description: "Bullets which include a chance to set targets on fire when shot. Reduced capacity."
+    description:
+      "Bullets which include a chance to set targets on fire when shot. Reduced capacity.",
   },
   {
     key: WeaponComponent.PISTOL_MK2_FLASH,
@@ -2437,7 +2456,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3219281620,
     model: "w_at_pi_flsh_2",
     name: "Flashlight",
-    description: "Aids low light target acquisition."
+    description: "Aids low light target acquisition.",
   },
   {
     key: WeaponComponent.PISTOL_MK2_CLIP_FMJ,
@@ -2445,7 +2464,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3219281620,
     model: "w_pi_pistolmk2_mag_fmj",
     name: "Full Metal Jacket Rounds",
-    description: "Increased damage to vehicles. Also penetrates bullet resistant and bulletproof vehicle glass. Reduced capacity."
+    description:
+      "Increased damage to vehicles. Also penetrates bullet resistant and bulletproof vehicle glass. Reduced capacity.",
   },
   {
     key: WeaponComponent.PISTOL_MK2_CLIP2,
@@ -2453,7 +2473,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3219281620,
     model: "w_pi_pistolmk2_mag2",
     name: "Extended Clip",
-    description: "Extended capacity for regular ammo."
+    description: "Extended capacity for regular ammo.",
   },
   {
     key: WeaponComponent.PISTOL_MK2_SUPP,
@@ -2461,7 +2481,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3219281620,
     model: "w_at_pi_supp_2",
     name: "Suppressor",
-    description: "Reduces noise and muzzle flash."
+    description: "Reduces noise and muzzle flash.",
   },
   {
     key: WeaponComponent.PISTOL_MK2_CLIP_HP,
@@ -2469,7 +2489,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3219281620,
     model: "w_pi_pistolmk2_mag_hp",
     name: "Hollow Point Rounds",
-    description: "Increased damage to targets without Body Armor. Reduced capacity."
+    description: "Increased damage to targets without Body Armor. Reduced capacity.",
   },
   {
     key: WeaponComponent.PISTOL_MK2_SCOPE_PI,
@@ -2477,7 +2497,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3219281620,
     model: "w_at_pi_rail_1",
     name: "Mounted Scope",
-    description: "Standard-range zoom functionality."
+    description: "Standard-range zoom functionality.",
   },
   {
     key: WeaponComponent.PISTOL_MK2_CLIP1,
@@ -2485,7 +2505,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3219281620,
     model: "w_pi_pistolmk2_mag1",
     name: "Default Clip",
-    description: "Standard capacity for regular ammo."
+    description: "Standard capacity for regular ammo.",
   },
   {
     key: WeaponComponent.ASSAULTRIFLE_GRIP,
@@ -2493,7 +2513,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3220176749,
     model: "w_at_ar_afgrip",
     name: "Grip",
-    description: "Improves weapon accuracy."
+    description: "Improves weapon accuracy.",
   },
   {
     key: WeaponComponent.ASSAULTRIFLE_FLASH,
@@ -2501,7 +2521,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3220176749,
     model: "w_at_ar_flsh",
     name: "Flashlight",
-    description: "Aids low light target acquisition."
+    description: "Aids low light target acquisition.",
   },
   {
     key: WeaponComponent.ASSAULTRIFLE_SCOPE_MAC,
@@ -2509,7 +2529,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3220176749,
     model: "w_at_scope_macro",
     name: "Scope",
-    description: "Standard-range zoom functionality."
+    description: "Standard-range zoom functionality.",
   },
   {
     key: WeaponComponent.ASSAULTRIFLE_SUPP,
@@ -2517,7 +2537,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3220176749,
     model: "w_at_ar_supp_02",
     name: "Suppressor",
-    description: "Reduces noise and muzzle flash."
+    description: "Reduces noise and muzzle flash.",
   },
   {
     key: WeaponComponent.ASSAULTRIFLE_CLIP2,
@@ -2525,7 +2545,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3220176749,
     model: "w_ar_assaultrifle_mag2",
     name: "Extended Clip",
-    description: "Extended capacity for Assault Rifle."
+    description: "Extended capacity for Assault Rifle.",
   },
   {
     key: WeaponComponent.ASSAULTRIFLE_CLIP1,
@@ -2533,7 +2553,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3220176749,
     model: "w_ar_assaultrifle_mag1",
     name: "Default Clip",
-    description: "Standard capacity for Assault Rifle."
+    description: "Standard capacity for Assault Rifle.",
   },
   {
     key: WeaponComponent.ASSAULTRIFLE_CLIP_DRM,
@@ -2541,7 +2561,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3220176749,
     model: "w_ar_assaultrifle_boxmag",
     name: "Drum Magazine",
-    description: "Expanded capacity and slower reload."
+    description: "Expanded capacity and slower reload.",
   },
   {
     key: WeaponComponent.SPECIALCARBINE_GRIP,
@@ -2549,7 +2569,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3231910285,
     model: "w_at_ar_afgrip",
     name: "Grip",
-    description: "Improves weapon accuracy."
+    description: "Improves weapon accuracy.",
   },
   {
     key: WeaponComponent.SPECIALCARBINE_CLIP_DRM,
@@ -2557,7 +2577,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3231910285,
     model: "w_ar_specialcarbine_boxmag",
     name: "Drum Magazine",
-    description: "Expanded capacity and slower reload."
+    description: "Expanded capacity and slower reload.",
   },
   {
     key: WeaponComponent.SPECIALCARBINE_FLASH,
@@ -2565,7 +2585,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3231910285,
     model: "w_at_ar_flsh",
     name: "Flashlight",
-    description: "Aids low light target acquisition."
+    description: "Aids low light target acquisition.",
   },
   {
     key: WeaponComponent.SPECIALCARBINE_CLIP2,
@@ -2573,7 +2593,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3231910285,
     model: "w_ar_specialcarbine_mag2",
     name: "Extended Clip",
-    description: "Extended capacity for Special Carbine."
+    description: "Extended capacity for Special Carbine.",
   },
   {
     key: WeaponComponent.SPECIALCARBINE_SCOPE_LRG,
@@ -2581,7 +2601,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3231910285,
     model: "w_at_scope_medium",
     name: "Scope",
-    description: "Long-range zoom functionality."
+    description: "Long-range zoom functionality.",
   },
   {
     key: WeaponComponent.SPECIALCARBINE_SUPP,
@@ -2589,7 +2609,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3231910285,
     model: "w_at_ar_supp_02",
     name: "Suppressor",
-    description: "Reduces noise and muzzle flash."
+    description: "Reduces noise and muzzle flash.",
   },
   {
     key: WeaponComponent.SPECIALCARBINE_CLIP1,
@@ -2597,7 +2617,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3231910285,
     model: "w_ar_specialcarbine_mag1",
     name: "Default Clip",
-    description: "Standard capacity for Special Carbine."
+    description: "Standard capacity for Special Carbine.",
   },
   {
     key: WeaponComponent.MARKSMANRIFLE_GRIP,
@@ -2605,7 +2625,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3342088282,
     model: "w_at_ar_afgrip",
     name: "Grip",
-    description: "Improves weapon accuracy."
+    description: "Improves weapon accuracy.",
   },
   {
     key: WeaponComponent.MARKSMANRIFLE_SCOPE_LRG,
@@ -2613,7 +2633,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3342088282,
     model: "w_at_scope_large",
     name: "Scope",
-    description: "Long-range fixed zoom functionality."
+    description: "Long-range fixed zoom functionality.",
   },
   {
     key: WeaponComponent.MARKSMANRIFLE_FLASH,
@@ -2621,7 +2641,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3342088282,
     model: "w_at_ar_flsh",
     name: "Flashlight",
-    description: "Aids low light target acquisition."
+    description: "Aids low light target acquisition.",
   },
   {
     key: WeaponComponent.MARKSMANRIFLE_SUPP,
@@ -2629,7 +2649,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3342088282,
     model: "w_at_ar_supp",
     name: "Suppressor",
-    description: "Reduces noise and muzzle flash."
+    description: "Reduces noise and muzzle flash.",
   },
   {
     key: WeaponComponent.MARKSMANRIFLE_CLIP2,
@@ -2637,7 +2657,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3342088282,
     model: "w_sr_marksmanrifle_mag2",
     name: "Extended Clip",
-    description: "Extended capacity for Marksman Rifle."
+    description: "Extended capacity for Marksman Rifle.",
   },
   {
     key: WeaponComponent.MARKSMANRIFLE_CLIP1,
@@ -2645,7 +2665,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3342088282,
     model: "w_sr_marksmanrifle_mag1",
     name: "Default Clip",
-    description: "Standard capacity for Marksman Rifle."
+    description: "Standard capacity for Marksman Rifle.",
   },
   {
     key: WeaponComponent.HEAVYRIFLE_GRIP,
@@ -2653,7 +2673,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3347935668,
     model: "w_at_ar_afgrip",
     name: "Grip",
-    description: "Improves weapon accuracy."
+    description: "Improves weapon accuracy.",
   },
   {
     key: WeaponComponent.HEAVYRIFLE_CLIP1,
@@ -2661,7 +2681,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3347935668,
     model: "W_AR_SpecialCarbine_mag1",
     name: "Default Clip",
-    description: "Standard capacity for Heavy Rifle."
+    description: "Standard capacity for Heavy Rifle.",
   },
   {
     key: WeaponComponent.HEAVYRIFLE_CLIP2,
@@ -2669,7 +2689,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3347935668,
     model: "W_AR_SpecialCarbine_mag2",
     name: "Extended Clip",
-    description: "Extended capacity for Heavy Rifle."
+    description: "Extended capacity for Heavy Rifle.",
   },
   {
     key: WeaponComponent.HEAVYRIFLE_FLASH,
@@ -2677,7 +2697,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3347935668,
     model: "w_at_ar_flsh",
     name: "Flashlight",
-    description: "Aids low light target acquisition."
+    description: "Aids low light target acquisition.",
   },
   {
     key: WeaponComponent.HEAVYRIFLE_SUPP,
@@ -2685,7 +2705,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3347935668,
     model: "w_at_ar_supp",
     name: "Suppressor",
-    description: "Reduces noise and muzzle flash."
+    description: "Reduces noise and muzzle flash.",
   },
   {
     key: WeaponComponent.HEAVYRIFLE_SCOPE_LRG,
@@ -2693,7 +2713,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3347935668,
     model: "w_at_scope_medium",
     name: "Scope",
-    description: "Long-range zoom functionality."
+    description: "Long-range zoom functionality.",
   },
   {
     key: WeaponComponent.HEAVYRIFLE_HVYRFLE_SIG,
@@ -2701,7 +2721,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3347935668,
     model: "W_AR_HeavyRifleH_Sight",
     name: "Iron Sights",
-    description: "Default rail-mounted iron sights."
+    description: "Default rail-mounted iron sights.",
   },
   {
     key: WeaponComponent.REVOLVER_MK2_CLIP_INC,
@@ -2709,7 +2729,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3415619887,
     model: "w_pi_revolvermk2_mag3",
     name: "Incendiary Rounds",
-    description: "Bullets which set targets on fire when shot."
+    description: "Bullets which set targets on fire when shot.",
   },
   {
     key: WeaponComponent.REVOLVER_MK2_SCOPE_MAC2,
@@ -2717,7 +2737,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3415619887,
     model: "w_at_scope_macro",
     name: "Small Scope",
-    description: "Standard-range zoom functionality."
+    description: "Standard-range zoom functionality.",
   },
   {
     key: WeaponComponent.REVOLVER_MK2_CLIP_FMJ,
@@ -2725,7 +2745,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3415619887,
     model: "w_pi_revolvermk2_mag5",
     name: "Full Metal Jacket Rounds",
-    description: "Increased damage to vehicles. Also penetrates bullet resistant and bulletproof vehicle glass."
+    description:
+      "Increased damage to vehicles. Also penetrates bullet resistant and bulletproof vehicle glass.",
   },
   {
     key: WeaponComponent.REVOLVER_MK2_CLIP_HP,
@@ -2733,7 +2754,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3415619887,
     model: "w_pi_revolvermk2_mag2",
     name: "Hollow Point Rounds",
-    description: "Increased damage to targets without Body Armor."
+    description: "Increased damage to targets without Body Armor.",
   },
   {
     key: WeaponComponent.REVOLVER_MK2_COMP,
@@ -2741,7 +2762,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3415619887,
     model: "w_at_pi_comp_3",
     name: "Compensator",
-    description: "Reduces recoil for rapid fire."
+    description: "Reduces recoil for rapid fire.",
   },
   {
     key: WeaponComponent.REVOLVER_MK2_FLASH,
@@ -2749,7 +2770,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3415619887,
     model: "w_at_pi_flsh",
     name: "Flashlight",
-    description: "Aids low light target acquisition."
+    description: "Aids low light target acquisition.",
   },
   {
     key: WeaponComponent.REVOLVER_MK2_HOLO,
@@ -2757,7 +2778,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3415619887,
     model: "w_at_sights_1",
     name: "Holographic Sight",
-    description: "Accurate sight for close quarters combat."
+    description: "Accurate sight for close quarters combat.",
   },
   {
     key: WeaponComponent.REVOLVER_MK2_CLIP1_RV,
@@ -2765,7 +2786,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3415619887,
     model: "w_pi_revolvermk2_mag1",
     name: "Default Rounds",
-    description: "Standard revolver ammunition."
+    description: "Standard revolver ammunition.",
   },
   {
     key: WeaponComponent.REVOLVER_MK2_CLIP_TR,
@@ -2773,7 +2794,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3415619887,
     model: "w_pi_revolvermk2_mag4",
     name: "Tracer Rounds",
-    description: "Bullets with bright visible markers that match the tint of the gun."
+    description: "Bullets with bright visible markers that match the tint of the gun.",
   },
   {
     key: WeaponComponent.TACTICALRIFLE_GRIP,
@@ -2781,7 +2802,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3520460075,
     model: "w_at_ar_afgrip",
     name: "Grip",
-    description: "Improves weapon accuracy."
+    description: "Improves weapon accuracy.",
   },
   {
     key: WeaponComponent.TACTICALRIFLE_CLIP1,
@@ -2789,7 +2810,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3520460075,
     model: "w_ar_carbinerifle_mag1",
     name: "Default Clip",
-    description: "Standard capacity for Carbine Rifle."
+    description: "Standard capacity for Carbine Rifle.",
   },
   {
     key: WeaponComponent.TACTICALRIFLE_CLIP2,
@@ -2797,7 +2818,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3520460075,
     model: "w_ar_carbinerifle_mag2",
     name: "Extended Clip",
-    description: "Extended capacity for Carbine Rifle."
+    description: "Extended capacity for Carbine Rifle.",
   },
   {
     key: WeaponComponent.TACTICALRIFLE_FLASH,
@@ -2805,7 +2826,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3520460075,
     model: "W_AT_AR_Flsh_REH",
     name: "Flashlight",
-    description: "Aids low light target acquisition."
+    description: "Aids low light target acquisition.",
   },
   {
     key: WeaponComponent.TACTICALRIFLE_SUPP,
@@ -2813,7 +2834,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3520460075,
     model: "w_at_ar_supp_02",
     name: "Suppressor",
-    description: "Reduces noise and muzzle flash."
+    description: "Reduces noise and muzzle flash.",
   },
   {
     key: WeaponComponent.HEAVYPISTOL_CLIP1,
@@ -2821,7 +2842,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3523564046,
     model: "w_pi_heavypistol_mag1",
     name: "Default Clip",
-    description: "Standard capacity for Heavy Pistol."
+    description: "Standard capacity for Heavy Pistol.",
   },
   {
     key: WeaponComponent.HEAVYPISTOL_FLASH,
@@ -2829,7 +2850,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3523564046,
     model: "w_at_pi_flsh",
     name: "Flashlight",
-    description: "Aids low light target acquisition."
+    description: "Aids low light target acquisition.",
   },
   {
     key: WeaponComponent.HEAVYPISTOL_CLIP2,
@@ -2837,7 +2858,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3523564046,
     model: "w_pi_heavypistol_mag2",
     name: "Extended Clip",
-    description: "Extended capacity for Heavy Pistol."
+    description: "Extended capacity for Heavy Pistol.",
   },
   {
     key: WeaponComponent.HEAVYPISTOL_SUPP,
@@ -2845,7 +2866,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3523564046,
     model: "w_at_pi_supp",
     name: "Suppressor",
-    description: "Reduces noise and muzzle flash."
+    description: "Reduces noise and muzzle flash.",
   },
   {
     key: WeaponComponent.MACHINEPISTOL_CLIP1,
@@ -2853,7 +2874,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3675956304,
     model: "w_sb_compactsmg_mag1",
     name: "Default Clip",
-    description: "Standard capacity for Machine Pistol."
+    description: "Standard capacity for Machine Pistol.",
   },
   {
     key: WeaponComponent.MACHINEPISTOL_CLIP_DRM,
@@ -2861,7 +2882,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3675956304,
     model: "w_sb_compactsmg_boxmag",
     name: "Drum Magazine",
-    description: "Expanded capacity and slower reload."
+    description: "Expanded capacity and slower reload.",
   },
   {
     key: WeaponComponent.MACHINEPISTOL_CLIP2,
@@ -2869,7 +2890,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3675956304,
     model: "w_sb_compactsmg_mag2",
     name: "Extended Clip",
-    description: "Extended capacity for Machine Pistol."
+    description: "Extended capacity for Machine Pistol.",
   },
   {
     key: WeaponComponent.MACHINEPISTOL_SUPP,
@@ -2877,7 +2898,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3675956304,
     model: "w_at_pi_supp",
     name: "Suppressor",
-    description: "Reduces noise and muzzle flash."
+    description: "Reduces noise and muzzle flash.",
   },
   {
     key: WeaponComponent.COMBATMG_MK2_MUZZ5,
@@ -2885,7 +2906,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3686625920,
     model: "w_at_muzzle_5",
     name: "Heavy Duty Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.COMBATMG_MK2_CLIP2,
@@ -2893,7 +2914,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3686625920,
     model: "w_mg_combatmgmk2_mag2",
     name: "Extended Clip",
-    description: "Extended capacity for regular ammo."
+    description: "Extended capacity for regular ammo.",
   },
   {
     key: WeaponComponent.COMBATMG_MK2_CLIP_AP,
@@ -2901,7 +2922,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3686625920,
     model: "w_mg_combatmgmk2_mag_ap",
     name: "Armor Piercing Rounds",
-    description: "Increased penetration of Body Armor. Reduced capacity."
+    description: "Increased penetration of Body Armor. Reduced capacity.",
   },
   {
     key: WeaponComponent.COMBATMG_MK2_MUZZ6,
@@ -2909,7 +2930,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3686625920,
     model: "w_at_muzzle_6",
     name: "Slanted Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.COMBATMG_MK2_SCOPE_SML2,
@@ -2917,7 +2938,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3686625920,
     model: "w_at_scope_small",
     name: "Medium Scope",
-    description: "Medium-range zoom functionality."
+    description: "Medium-range zoom functionality.",
   },
   {
     key: WeaponComponent.COMBATMG_MK2_HOLO,
@@ -2925,7 +2946,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3686625920,
     model: "w_at_sights_1",
     name: "Holographic Sight",
-    description: "Accurate sight for close quarters combat."
+    description: "Accurate sight for close quarters combat.",
   },
   {
     key: WeaponComponent.COMBATMG_MK2_CLIP1,
@@ -2933,7 +2954,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3686625920,
     model: "w_mg_combatmgmk2_mag1",
     name: "Default Clip",
-    description: "Standard capacity for regular ammo."
+    description: "Standard capacity for regular ammo.",
   },
   {
     key: WeaponComponent.COMBATMG_MK2_MUZZ7,
@@ -2941,7 +2962,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3686625920,
     model: "w_at_muzzle_7",
     name: "Split-End Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.COMBATMG_MK2_CLIP_FMJ,
@@ -2949,7 +2970,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3686625920,
     model: "w_mg_combatmgmk2_mag_fmj",
     name: "Full Metal Jacket Rounds",
-    description: "Increased damage to vehicles. Also penetrates bullet resistant and bulletproof vehicle glass. Reduced capacity."
+    description:
+      "Increased damage to vehicles. Also penetrates bullet resistant and bulletproof vehicle glass. Reduced capacity.",
   },
   {
     key: WeaponComponent.COMBATMG_MK2_GRIP,
@@ -2957,7 +2979,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3686625920,
     model: "w_at_afgrip_2",
     name: "Grip",
-    description: "Improves weapon accuracy."
+    description: "Improves weapon accuracy.",
   },
   {
     key: WeaponComponent.COMBATMG_MK2_BARR2,
@@ -2965,7 +2987,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3686625920,
     model: "w_at_mg_barrel_2",
     name: "Heavy Barrel",
-    description: "Increases damage dealt to long-range targets."
+    description: "Increases damage dealt to long-range targets.",
   },
   {
     key: WeaponComponent.COMBATMG_MK2_MUZZ1,
@@ -2973,7 +2995,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3686625920,
     model: "w_at_muzzle_1",
     name: "Flat Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.COMBATMG_MK2_CLIP_INC,
@@ -2981,7 +3003,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3686625920,
     model: "w_mg_combatmgmk2_mag_inc",
     name: "Incendiary Rounds",
-    description: "Bullets which include a chance to set targets on fire when shot. Reduced capacity."
+    description:
+      "Bullets which include a chance to set targets on fire when shot. Reduced capacity.",
   },
   {
     key: WeaponComponent.COMBATMG_MK2_BARR,
@@ -2989,7 +3012,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3686625920,
     model: "w_at_mg_barrel_1",
     name: "Default Barrel",
-    description: "Stock barrel attachment."
+    description: "Stock barrel attachment.",
   },
   {
     key: WeaponComponent.COMBATMG_MK2_SCOPE_MED2,
@@ -2997,7 +3020,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3686625920,
     model: "w_at_scope_medium_2",
     name: "Large Scope",
-    description: "Extended-range zoom functionality."
+    description: "Extended-range zoom functionality.",
   },
   {
     key: WeaponComponent.COMBATMG_MK2_MUZZ2,
@@ -3005,7 +3028,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3686625920,
     model: "w_at_muzzle_2",
     name: "Tactical Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.COMBATMG_MK2_MUZZ3,
@@ -3013,7 +3036,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3686625920,
     model: "w_at_muzzle_3",
     name: "Fat-End Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.COMBATMG_MK2_MUZZ4,
@@ -3021,7 +3044,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3686625920,
     model: "w_at_muzzle_4",
     name: "Precision Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.COMBATMG_MK2_CLIP_TR,
@@ -3029,7 +3052,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3686625920,
     model: "w_mg_combatmgmk2_mag_tr",
     name: "Tracer Rounds",
-    description: "Bullets with bright visible markers that match the tint of the gun. Standard capacity."
+    description:
+      "Bullets with bright visible markers that match the tint of the gun. Standard capacity.",
   },
   {
     key: WeaponComponent.ASSAULTSHOTGUN_GRIP,
@@ -3037,7 +3061,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3800352039,
     model: "w_at_ar_afgrip",
     name: "Grip",
-    description: "Improves weapon accuracy."
+    description: "Improves weapon accuracy.",
   },
   {
     key: WeaponComponent.ASSAULTSHOTGUN_FLASH,
@@ -3045,7 +3069,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3800352039,
     model: "w_at_ar_flsh",
     name: "Flashlight",
-    description: "Aids low light target acquisition."
+    description: "Aids low light target acquisition.",
   },
   {
     key: WeaponComponent.ASSAULTSHOTGUN_SUPP,
@@ -3053,7 +3077,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3800352039,
     model: "w_at_ar_supp",
     name: "Suppressor",
-    description: "Reduces noise and muzzle flash."
+    description: "Reduces noise and muzzle flash.",
   },
   {
     key: WeaponComponent.ASSAULTSHOTGUN_CLIP2,
@@ -3061,7 +3085,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3800352039,
     model: "w_sg_assaultshotgun_mag2",
     name: "Extended Clip",
-    description: "Extended capacity for Assault Shotgun."
+    description: "Extended capacity for Assault Shotgun.",
   },
   {
     key: WeaponComponent.ASSAULTSHOTGUN_CLIP1,
@@ -3069,7 +3093,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 3800352039,
     model: "w_sg_assaultshotgun_mag1",
     name: "Default Clip",
-    description: "Standard capacity for Assault Shotgun."
+    description: "Standard capacity for Assault Shotgun.",
   },
   {
     key: WeaponComponent.ASSAULTSMG_FLASH,
@@ -3077,7 +3101,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 4024951519,
     model: "w_at_ar_flsh",
     name: "Flashlight",
-    description: "Aids low light target acquisition."
+    description: "Aids low light target acquisition.",
   },
   {
     key: WeaponComponent.ASSAULTSMG_SCOPE_MAC,
@@ -3085,7 +3109,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 4024951519,
     model: "w_at_scope_macro",
     name: "Scope",
-    description: "Standard-range zoom functionality."
+    description: "Standard-range zoom functionality.",
   },
   {
     key: WeaponComponent.ASSAULTSMG_SUPP,
@@ -3093,7 +3117,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 4024951519,
     model: "w_at_ar_supp_02",
     name: "Suppressor",
-    description: "Reduces noise and muzzle flash."
+    description: "Reduces noise and muzzle flash.",
   },
   {
     key: WeaponComponent.CARBINERIFLE_MK2_MUZZ5,
@@ -3101,7 +3125,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 4208062921,
     model: "w_at_muzzle_5",
     name: "Heavy Duty Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.CARBINERIFLE_MK2_SCOPE_MAC2,
@@ -3109,7 +3133,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 4208062921,
     model: "w_at_scope_macro",
     name: "Small Scope",
-    description: "Standard-range zoom functionality."
+    description: "Standard-range zoom functionality.",
   },
   {
     key: WeaponComponent.CARBINERIFLE_MK2_CLIP_TR,
@@ -3117,7 +3141,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 4208062921,
     model: "w_ar_carbineriflemk2_mag_tr",
     name: "Tracer Rounds",
-    description: "Bullets with bright visible markers that match the tint of the gun. Standard capacity."
+    description:
+      "Bullets with bright visible markers that match the tint of the gun. Standard capacity.",
   },
   {
     key: WeaponComponent.CARBINERIFLE_MK2_CLIP_AP,
@@ -3125,7 +3150,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 4208062921,
     model: "w_ar_carbineriflemk2_mag_ap",
     name: "Armor Piercing Rounds",
-    description: "Increased penetration of Body Armor. Reduced capacity."
+    description: "Increased penetration of Body Armor. Reduced capacity.",
   },
   {
     key: WeaponComponent.CARBINERIFLE_MK2_MUZZ6,
@@ -3133,7 +3158,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 4208062921,
     model: "w_at_muzzle_6",
     name: "Slanted Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.CARBINERIFLE_MK2_CLIP_INC,
@@ -3141,7 +3166,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 4208062921,
     model: "w_ar_carbineriflemk2_mag_inc",
     name: "Incendiary Rounds",
-    description: "Bullets which include a chance to set targets on fire when shot. Reduced capacity."
+    description:
+      "Bullets which include a chance to set targets on fire when shot. Reduced capacity.",
   },
   {
     key: WeaponComponent.CARBINERIFLE_MK2_HOLO,
@@ -3149,7 +3175,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 4208062921,
     model: "w_at_sights_1",
     name: "Holographic Sight",
-    description: "Accurate sight for close quarters combat."
+    description: "Accurate sight for close quarters combat.",
   },
   {
     key: WeaponComponent.CARBINERIFLE_MK2_CLIP_FMJ,
@@ -3157,7 +3183,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 4208062921,
     model: "w_ar_carbineriflemk2_mag_fmj",
     name: "Full Metal Jacket Rounds",
-    description: "Increased damage to vehicles. Also penetrates bullet resistant and bulletproof vehicle glass. Reduced capacity."
+    description:
+      "Increased damage to vehicles. Also penetrates bullet resistant and bulletproof vehicle glass. Reduced capacity.",
   },
   {
     key: WeaponComponent.CARBINERIFLE_MK2_CLIP1,
@@ -3165,7 +3192,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 4208062921,
     model: "w_ar_carbineriflemk2_mag1",
     name: "Default Clip",
-    description: "Standard capacity for regular ammo."
+    description: "Standard capacity for regular ammo.",
   },
   {
     key: WeaponComponent.CARBINERIFLE_MK2_MUZZ7,
@@ -3173,7 +3200,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 4208062921,
     model: "w_at_muzzle_7",
     name: "Split-End Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.CARBINERIFLE_MK2_CLIP2,
@@ -3181,7 +3208,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 4208062921,
     model: "w_ar_carbineriflemk2_mag2",
     name: "Extended Clip",
-    description: "Extended capacity for regular ammo."
+    description: "Extended capacity for regular ammo.",
   },
   {
     key: WeaponComponent.CARBINERIFLE_MK2_FLASH,
@@ -3189,7 +3216,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 4208062921,
     model: "w_at_ar_flsh",
     name: "Flashlight",
-    description: "Aids low light target acquisition."
+    description: "Aids low light target acquisition.",
   },
   {
     key: WeaponComponent.CARBINERIFLE_MK2_BARR,
@@ -3197,7 +3224,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 4208062921,
     model: "w_at_cr_barrel_1",
     name: "Default Barrel",
-    description: "Stock barrel attachment."
+    description: "Stock barrel attachment.",
   },
   {
     key: WeaponComponent.CARBINERIFLE_MK2_SUPP,
@@ -3205,7 +3232,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 4208062921,
     model: "w_at_ar_supp",
     name: "Suppressor",
-    description: "Reduces noise and muzzle flash."
+    description: "Reduces noise and muzzle flash.",
   },
   {
     key: WeaponComponent.CARBINERIFLE_MK2_BARR2,
@@ -3213,7 +3240,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 4208062921,
     model: "w_at_cr_barrel_2",
     name: "Heavy Barrel",
-    description: "Increases damage dealt to long-range targets."
+    description: "Increases damage dealt to long-range targets.",
   },
   {
     key: WeaponComponent.CARBINERIFLE_MK2_GRIP,
@@ -3221,7 +3248,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 4208062921,
     model: "w_at_afgrip_2",
     name: "Grip",
-    description: "Improves weapon accuracy."
+    description: "Improves weapon accuracy.",
   },
   {
     key: WeaponComponent.CARBINERIFLE_MK2_MUZZ1,
@@ -3229,7 +3256,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 4208062921,
     model: "w_at_muzzle_1",
     name: "Flat Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.CARBINERIFLE_MK2_SCOPE_MED2,
@@ -3237,7 +3264,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 4208062921,
     model: "w_at_scope_medium_2",
     name: "Large Scope",
-    description: "Extended-range zoom functionality."
+    description: "Extended-range zoom functionality.",
   },
   {
     key: WeaponComponent.CARBINERIFLE_MK2_MUZZ2,
@@ -3245,7 +3272,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 4208062921,
     model: "w_at_muzzle_2",
     name: "Tactical Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.CARBINERIFLE_MK2_MUZZ3,
@@ -3253,7 +3280,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 4208062921,
     model: "w_at_muzzle_3",
     name: "Fat-End Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.CARBINERIFLE_MK2_MUZZ4,
@@ -3261,7 +3288,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 4208062921,
     model: "w_at_muzzle_4",
     name: "Precision Muzzle Brake",
-    description: "Reduces recoil during rapid fire."
+    description: "Reduces recoil during rapid fire.",
   },
   {
     key: WeaponComponent.RAILGUNXM3_CLIP1,
@@ -3269,8 +3296,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
     weaponHash: 4272043364,
     model: "w_ar_railgun_mag1",
     name: "Default Clip",
-    description: "Standard capacity for Railgun."
-  }
+    description: "Standard capacity for Railgun.",
+  },
 ]);
 
 export function isItemKeyWeaponComponent(key: ItemKey): key is WeaponComponentItemKey {

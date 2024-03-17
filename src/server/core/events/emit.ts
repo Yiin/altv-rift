@@ -5,7 +5,7 @@ const eventHandlers = new Map<string, Function[]>();
 
 export function on<E extends keyof CustomServerEvent>(
   eventName: E,
-  handler: alt.Events.CustomEventCallback<Parameters<CustomServerEvent[E]>>
+  handler: alt.Events.CustomEventCallback<Parameters<CustomServerEvent[E]>>,
 ) {
   const events = eventHandlers.get(eventName);
 

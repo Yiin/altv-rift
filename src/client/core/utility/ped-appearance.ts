@@ -29,7 +29,7 @@ export const PedAppearance = {
       parseFloat(appearance.faceMix.toString()),
       parseFloat(appearance.skinMix.toString()),
       0,
-      false
+      false,
     );
 
     // Facial Features
@@ -49,7 +49,7 @@ export const PedAppearance = {
           +id,
           [1, 2, 10].includes(+id) ? 1 : [5, 8].includes(+id) ? 2 : 0,
           overlay.color1,
-          overlay.color2 ?? overlay.color1
+          overlay.color2 ?? overlay.color1,
         );
       }
     }
@@ -60,7 +60,7 @@ export const PedAppearance = {
         const collection = alt.hash(appearance.hairCollection);
         const overlay = alt.hash(appearance.hairOverlay);
         alt.log(
-          `Adding ped decoration. ${appearance.hairCollection} (${collection}), ${appearance.hairOverlay} (${overlay})`
+          `Adding ped decoration. ${appearance.hairCollection} (${collection}), ${appearance.hairOverlay} (${overlay})`,
         );
         game.addPedDecorationFromHashes(ped, collection, overlay);
       } catch {

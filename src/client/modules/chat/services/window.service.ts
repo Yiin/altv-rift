@@ -3,11 +3,7 @@ import { CommandSuggestion, MessageType, WindowOptions } from "@shared/modules/c
 import { bind } from "@shared/decorators";
 import { UIElement } from "@shared/enums/ui";
 import { deserialize } from "@shared/utility/serializer";
-import {
-  doesElementHaveCursor,
-  useWebview,
-  toggleElement,
-} from "@/core/user-interface/webview";
+import { doesElementHaveCursor, useWebview, toggleElement } from "@/core/user-interface/webview";
 import type { Message } from "../interfaces";
 
 let isFocused = false;
@@ -103,7 +99,7 @@ export class WindowService {
 
   public once(event: string, listener: (...args: any[]) => void) {
     useWebview((webview) =>
-      webview.once(event, (...args) => listener(...args.flatMap(deserialize)))
+      webview.once(event, (...args) => listener(...args.flatMap(deserialize))),
     );
   }
 }

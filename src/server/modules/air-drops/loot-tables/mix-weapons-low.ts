@@ -1,6 +1,22 @@
 import _ from "lodash";
 import { AirDropType } from "@shared/modules/air-drops";
-import { ItemKey, WeaponItemKey, AmmoItemKey, ItemTier, getItemTier, isItemKeyAmmo, isItemKeyFirearmWeapon, createItem, ItemGrade, isItemKeyThrowableWeapon, isItemKeyMeleeWeapon, Ammo, getWeaponAmmoGroup, getAmmoKeyForAmmoGroup, getWeaponClipSize } from "@shared/modules/items";
+import {
+  ItemKey,
+  WeaponItemKey,
+  AmmoItemKey,
+  ItemTier,
+  getItemTier,
+  isItemKeyAmmo,
+  isItemKeyFirearmWeapon,
+  createItem,
+  ItemGrade,
+  isItemKeyThrowableWeapon,
+  isItemKeyMeleeWeapon,
+  Ammo,
+  getWeaponAmmoGroup,
+  getAmmoKeyForAmmoGroup,
+  getWeaponClipSize,
+} from "@shared/modules/items";
 import { rollItem } from "@shared/utility/random";
 
 export default {
@@ -10,22 +26,40 @@ export default {
     return _.random(7, 10);
   },
   filterItemKey(itemKey: ItemKey, seed: number): itemKey is WeaponItemKey | AmmoItemKey {
-    const matchesWeapon = (
-      isItemKeyFirearmWeapon(itemKey)
-      && getItemTier(itemKey) === rollItem([[50, ItemTier.F], [30, ItemTier.E], [20, ItemTier.D]], seed)
-    ) || (
-        isItemKeyThrowableWeapon(itemKey)
-        && getItemTier(itemKey) === rollItem([[30, ItemTier.E], [20, ItemTier.D]], seed)
-      ) || (
-        isItemKeyMeleeWeapon(itemKey)
-        && getItemTier(itemKey) === rollItem([[10, ItemTier.F], [30, ItemTier.E], [20, ItemTier.D], [20, ItemTier.C]], seed)
-      );
+    const matchesWeapon =
+      (isItemKeyFirearmWeapon(itemKey) &&
+        getItemTier(itemKey) ===
+          rollItem(
+            [
+              [50, ItemTier.F],
+              [30, ItemTier.E],
+              [20, ItemTier.D],
+            ],
+            seed,
+          )) ||
+      (isItemKeyThrowableWeapon(itemKey) &&
+        getItemTier(itemKey) ===
+          rollItem(
+            [
+              [30, ItemTier.E],
+              [20, ItemTier.D],
+            ],
+            seed,
+          )) ||
+      (isItemKeyMeleeWeapon(itemKey) &&
+        getItemTier(itemKey) ===
+          rollItem(
+            [
+              [10, ItemTier.F],
+              [30, ItemTier.E],
+              [20, ItemTier.D],
+              [20, ItemTier.C],
+            ],
+            seed,
+          ));
 
-    const matchesAmmo = (
-      isItemKeyAmmo(itemKey) && [
-        ItemTier.E, ItemTier.D, ItemTier.C,
-      ].includes(getItemTier(itemKey))
-    );
+    const matchesAmmo =
+      isItemKeyAmmo(itemKey) && [ItemTier.E, ItemTier.D, ItemTier.C].includes(getItemTier(itemKey));
 
     return matchesWeapon || matchesAmmo;
   },
@@ -59,7 +93,7 @@ export default {
           [30, ItemGrade.TWO],
           [10, ItemGrade.THREE],
           [5, ItemGrade.FOUR],
-        ])
+        ]),
       });
     }
     if (isItemKeyAmmo(itemKey)) {
@@ -68,5 +102,5 @@ export default {
       });
     }
     throw new Error(`Invalid item key ${itemKey}`);
-  }
-}
+  },
+};

@@ -14,10 +14,10 @@ whileInGame(() => {
         }
         if (getLevel(newXp) > getLevel(prevXp)) {
           addSuccessMessage(
-            `You have advanced a Woodcutting level! You are now level ${getLevel(newXp)}.`
+            `You have advanced a Woodcutting level! You are now level ${getLevel(newXp)}.`,
           );
         }
-      }
+      },
     ),
     watch(
       () => useCharacter().skills.fishing,
@@ -27,10 +27,10 @@ whileInGame(() => {
         }
         if (getLevel(newXp) > getLevel(prevXp)) {
           addSuccessMessage(
-            `You have advanced a Fishing level! You are now level ${getLevel(newXp)}.`
+            `You have advanced a Fishing level! You are now level ${getLevel(newXp)}.`,
           );
         }
-      }
+      },
     ),
   ];
 

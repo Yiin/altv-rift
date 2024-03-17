@@ -5,10 +5,7 @@ export const FromServer = {
 } as const;
 
 export interface CallFromServer {
-  [FromServer.ENTITYSET_IS_ACTIVE]: (
-    interior: number,
-    entitySetName: string
-  ) => boolean;
+  [FromServer.ENTITYSET_IS_ACTIVE]: (interior: number, entitySetName: string) => boolean;
 }
 
 export const FromServerValidation = {
@@ -16,4 +13,7 @@ export const FromServerValidation = {
     args: [z.number(), z.string()],
     returns: z.boolean(),
   },
-} satisfies Record<keyof typeof FromServer, { args?: [z.ZodTypeAny, ...z.ZodTypeAny[]], returns?: z.ZodTypeAny }>;
+} satisfies Record<
+  keyof typeof FromServer,
+  { args?: [z.ZodTypeAny, ...z.ZodTypeAny[]]; returns?: z.ZodTypeAny }
+>;

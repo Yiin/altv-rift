@@ -1,10 +1,6 @@
 import { isEqual } from "lodash";
 
-export function findPath(
-  obj: any,
-  value: any,
-  path: string[] = []
-): string[] | null {
+export function findPath(obj: any, value: any, path: string[] = []): string[] | null {
   if (obj === value) {
     return path;
   }
@@ -19,11 +15,7 @@ export function findPath(
   return null;
 }
 
-export function findPathApproximate(
-  obj: any,
-  value: any,
-  path: string[] = []
-): string[] | null {
+export function findPathApproximate(obj: any, value: any, path: string[] = []): string[] | null {
   if (isEqual(obj, value)) {
     return path;
   }

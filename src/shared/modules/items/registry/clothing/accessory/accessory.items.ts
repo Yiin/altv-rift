@@ -1,6 +1,7 @@
 import { Item, registerItems } from "@shared/modules/items";
 import { makeKeys } from "@shared/utility/make-keys";
-const ACCESSORY_ITEMS: Record<string, AccessoryItemInfo> = (await import("./accessory.json")).default as any;
+const ACCESSORY_ITEMS: Record<string, AccessoryItemInfo> = (await import("./accessory.json"))
+  .default as any;
 
 export const Accessory = makeKeys<AccessoryItemKey>()({
   MaleNoTie: "SP_M_TEEF_0_0",

@@ -1,8 +1,27 @@
 import alt from "@altv/server";
 import { ServerEvents } from "@shared/events/server";
-import { AmmoItem, Item, createItem, getAmmoKeyForAmmoGroup, getItemInfoByKey, getWeaponAmmoEquipmentSlot, getWeaponAmmoGroup, isItemAmmo } from "@shared/modules/items";
-import { FirearmWeaponItem, getWeaponClipSize, isItemFirearmWeapon, isWeaponWithClip } from "@shared/modules/items/registry/weapons/firearm-weapon.items";
-import { ItemSource, InventoryItemSource, GroundItemSource, ItemSourceOrigin } from "@shared/interfaces";
+import {
+  AmmoItem,
+  Item,
+  createItem,
+  getAmmoKeyForAmmoGroup,
+  getItemInfoByKey,
+  getWeaponAmmoEquipmentSlot,
+  getWeaponAmmoGroup,
+  isItemAmmo,
+} from "@shared/modules/items";
+import {
+  FirearmWeaponItem,
+  getWeaponClipSize,
+  isItemFirearmWeapon,
+  isWeaponWithClip,
+} from "@shared/modules/items/registry/weapons/firearm-weapon.items";
+import {
+  ItemSource,
+  InventoryItemSource,
+  GroundItemSource,
+  ItemSourceOrigin,
+} from "@shared/interfaces";
 import { getInventoryItemByKey } from "@shared/modules/inventory";
 import { InGamePlayer, isInGame } from "@/core/utility/assertions";
 import { on } from "@/core/events/emit";
@@ -78,11 +97,12 @@ alt.Events.onPlayer(ServerEvents.FromClient.WEAPON_SHOOT, (player) => {
  */
 export function loadWeaponWithAmmo(
   weaponSource: ItemSource,
-  ammoSource: InventoryItemSource | GroundItemSource
+  ammoSource: InventoryItemSource | GroundItemSource,
 ): boolean {
   const weapon = findItem(weaponSource);
   const ammo = findItem(ammoSource);
-  const ammoInventory = ammoSource.origin === ItemSourceOrigin.Ground ? null : findInventoryByItemSource(ammoSource);
+  const ammoInventory =
+    ammoSource.origin === ItemSourceOrigin.Ground ? null : findInventoryByItemSource(ammoSource);
 
   if (!weapon || !ammo || (ammoSource.origin !== ItemSourceOrigin.Ground && !ammoInventory)) {
     return false;
@@ -143,7 +163,7 @@ export function unloadAmmoFromWeapon(source: ItemSource) {
   // Weapon is equipped
   if (source.origin === ItemSourceOrigin.PlayerEquipment) {
     const player = alt.Player.all.find(
-      (player): player is InGamePlayer => player.character?.id === source.originId
+      (player): player is InGamePlayer => player.character?.id === source.originId,
     );
 
     if (!player) {
@@ -188,10 +208,7 @@ export function unloadAmmoFromWeapon(source: ItemSource) {
 /**
  * Loads weapon item with ammo item and returns previous ammo item if any.
  */
-export function loadWeaponItemWithAmmoItem(
-  weapon: FirearmWeaponItem,
-  ammo: AmmoItem
-): boolean {
+export function loadWeaponItemWithAmmoItem(weapon: FirearmWeaponItem, ammo: AmmoItem): boolean {
   const clipSize = getWeaponClipSize(weapon.key);
 
   if (!weapon.clip) {

@@ -1,7 +1,7 @@
 import { getShopsRegistry } from "./registry";
 
 export function getShop(shopId: string) {
-    const shops = getShopsRegistry();
+  const shops = getShopsRegistry();
 
-    return shops.get(shopId);
+  return shops.get(shopId);
 }

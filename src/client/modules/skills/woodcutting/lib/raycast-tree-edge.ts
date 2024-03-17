@@ -9,7 +9,7 @@ const player = alt.Player.local;
 export function raycastTreeEdge(
   playerPos: alt.Vector3,
   treePos: alt.IVector3,
-  offset: number
+  offset: number,
 ): alt.Vector3 | null {
   const flags = LOS_FLAGS.INCLUDE_ALL;
   const options = 0;
@@ -44,7 +44,7 @@ export function raycastTreeEdge(
       endPos.z,
       flags,
       player,
-      options
+      options,
     );
     const [_didComplete, didHit, position, _surfaceNormal, materialHash, _entityHit] =
       game.getShapeTestResultIncludingMaterial(hitTest);

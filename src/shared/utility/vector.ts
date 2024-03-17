@@ -6,7 +6,7 @@ export function distance(vector1: alt.IVector3, vector2: alt.IVector3) {
   }
 
   return Math.sqrt(
-    (vector1.x - vector2.x) ** 2 + (vector1.y - vector2.y) ** 2 + (vector1.z - vector2.z) ** 2
+    (vector1.x - vector2.x) ** 2 + (vector1.y - vector2.y) ** 2 + (vector1.z - vector2.z) ** 2,
   );
 }
 
@@ -27,7 +27,7 @@ export function getClosestVector(pos: alt.IVector3, arrayOfPositions: alt.IVecto
 export function getClosestVectorByPos<T extends Record<string, alt.Vector3>>(
   pos: alt.IVector3,
   arrayOfPositions: T[],
-  posVariable: string = "pos"
+  posVariable: string = "pos",
 ): T {
   arrayOfPositions.sort((a, b) => distance(pos, a[posVariable]!) - distance(pos, b[posVariable]!));
 
@@ -57,7 +57,7 @@ export function getClosestTypes<T extends { pos: alt.IVector3; valid: boolean }>
   elements: T[],
   maxDistance: number,
   mustHaveProperties: (keyof T)[] = [],
-  positionName: keyof T = "pos"
+  positionName: keyof T = "pos",
 ): T[] {
   const newElements: T[] = [];
 
@@ -98,7 +98,7 @@ export function vectorLerp(
   vector1: alt.IVector3,
   vector2: alt.IVector3,
   l: number,
-  clamp: boolean
+  clamp: boolean,
 ) {
   if (clamp) {
     if (l < 0.0) {

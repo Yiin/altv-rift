@@ -32,7 +32,7 @@ async function growTrees() {
             tree.pos.x === Position.X &&
             tree.pos.y === Position.Y &&
             tree.pos.z === Position.Z &&
-            tree.type === type
+            tree.type === type,
         )
       ) {
         skippedTrees++;
@@ -99,7 +99,7 @@ alt.Events.onPlayer("ignoretree", (player, treeId) => {
     // save to file as well
     fs.writeFileSync(
       path.join(__dirname, "../../src/shared/modules/woodcutting/trees-to-ignore.json"),
-      JSON.stringify(IGNORED_TREES, null, 2)
+      JSON.stringify(IGNORED_TREES, null, 2),
     );
   }
 });
@@ -123,7 +123,7 @@ rpc.registerClient(ServerCall.FromClient.BEGIN_TREE_HIT, (player, virtualTreeId)
     0,
     false,
     false,
-    false
+    false,
   );
 
   return cooldown;
@@ -191,7 +191,7 @@ rpc.registerClient(ServerCall.FromClient.TREE_HIT, (player, virtualTreeId) => {
       sendChatMessage(
         player,
         "You have reached woodcutting level " + newLevel + "!",
-        MessageType.Success
+        MessageType.Success,
       );
     }
     player.addItem(createItem(getTreeLogs(treeType), { amount: logs }));

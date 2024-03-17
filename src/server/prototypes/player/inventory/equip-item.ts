@@ -1,7 +1,17 @@
 import alt from "@altv/server";
-import { EquipmentSlot, GroundItemSource, InventoryItemSource, ItemSourceOrigin } from "@shared/interfaces";
+import {
+  EquipmentSlot,
+  GroundItemSource,
+  InventoryItemSource,
+  ItemSourceOrigin,
+} from "@shared/interfaces";
 import { ServerEvents } from "@shared/events/server";
-import { getItemEquipmentSlot, isItemKeyClothing, isMaleClothing, isUnisexClothing } from "@shared/modules/items";
+import {
+  getItemEquipmentSlot,
+  isItemKeyClothing,
+  isMaleClothing,
+  isUnisexClothing,
+} from "@shared/modules/items";
 import { isItemFishBait } from "@shared/modules/items/registry/fish-bait.items";
 import { InGamePlayer } from "@/core/utility/assertions";
 import {
@@ -39,7 +49,8 @@ alt.Player.prototype.equipItem = function (source) {
     return false;
   }
 
-  const inventory = source.origin === ItemSourceOrigin.Ground ? null : findInventoryByItemSource(source);
+  const inventory =
+    source.origin === ItemSourceOrigin.Ground ? null : findInventoryByItemSource(source);
 
   if (source.origin !== ItemSourceOrigin.Ground && !inventory) {
     return false;
@@ -53,7 +64,7 @@ alt.Player.prototype.equipItem = function (source) {
           origin: ItemSourceOrigin.PlayerEquipment,
           originId: this.character.id,
         },
-        source
+        source,
       )
     ) {
       return false;
@@ -64,13 +75,14 @@ alt.Player.prototype.equipItem = function (source) {
     const equipmentSlot = equipmentSlotOrFishbait;
 
     if (
-      isItemKeyClothing(item.key)
+      isItemKeyClothing(item.key) &&
       // If player gender doesn't match with clothing gender, don't equip
-      && (
-        (this.model === alt.hash("mp_f_freemode_01") && isMaleClothing(item.key) && !isUnisexClothing(item.key))
-        ||
-        (this.model === alt.hash("mp_m_freemode_01") && !isMaleClothing(item.key) && !isUnisexClothing(item.key))
-      )
+      ((this.model === alt.hash("mp_f_freemode_01") &&
+        isMaleClothing(item.key) &&
+        !isUnisexClothing(item.key)) ||
+        (this.model === alt.hash("mp_m_freemode_01") &&
+          !isMaleClothing(item.key) &&
+          !isUnisexClothing(item.key)))
     ) {
       return false;
     }

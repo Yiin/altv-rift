@@ -23,7 +23,7 @@ alt.Ped.prototype.taskTurnPedToFaceCoord = function (pos, duration) {
     pos.x,
     pos.y,
     pos.z,
-    duration
+    duration,
   );
 };
 

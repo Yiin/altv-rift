@@ -9,7 +9,7 @@ import { MountService } from "../services/mount.service";
  */
 export function addSuggestion(
   player: Player,
-  suggestion: CommandSuggestion | Array<CommandSuggestion>
+  suggestion: CommandSuggestion | Array<CommandSuggestion>,
 ) {
   container
     .resolve(MountService)

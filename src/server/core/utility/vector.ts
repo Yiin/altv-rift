@@ -43,7 +43,7 @@ export function getVectorInFrontOfPlayer(player: alt.Player, distance: number): 
 export function isBetweenVectors(
   pos: alt.Vector3,
   vector1: alt.Vector3,
-  vector2: alt.Vector3
+  vector2: alt.Vector3,
 ): boolean {
   const validX = pos.x > vector1.x && pos.x < vector2.x;
   const validY = pos.y > vector1.y && pos.y < vector2.y;
@@ -84,7 +84,7 @@ export function getClosestEntity<T extends { pos: alt.IVector3; valid?: boolean 
   rot: alt.IVector3,
   entities: T[],
   dist: number,
-  checkBackwards: boolean = false
+  checkBackwards: boolean = false,
 ): T | null {
   const fwdVector = getForwardVector(rot);
   let position;

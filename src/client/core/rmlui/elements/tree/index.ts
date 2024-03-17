@@ -53,9 +53,9 @@ registerElement({
               br([]),
               div({ style: { "font-size": "10pt" } }, [`Level ${level}`]),
             ]),
-          ]
+          ],
         ),
-      ]
+      ],
     );
   },
 });

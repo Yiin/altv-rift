@@ -13,9 +13,12 @@ export function findItem(itemSource: ItemSource, player?: InGamePlayer) {
   /**
    * Player source
    */
-  if (itemSource.origin === ItemSourceOrigin.PlayerEquipment || itemSource.origin === ItemSourceOrigin.PlayerInventory) {
+  if (
+    itemSource.origin === ItemSourceOrigin.PlayerEquipment ||
+    itemSource.origin === ItemSourceOrigin.PlayerInventory
+  ) {
     const sourcePlayer = alt.Player.all.find(
-      (p): p is InGamePlayer => p.character?.id === itemSource.originId
+      (p): p is InGamePlayer => p.character?.id === itemSource.originId,
     );
 
     if (!sourcePlayer) {
@@ -31,7 +34,8 @@ export function findItem(itemSource: ItemSource, player?: InGamePlayer) {
     }
 
     return (
-      getInventoryItemInSlot(sourcePlayer.character.inventory, itemSource.inventorySlot)?.item ?? null
+      getInventoryItemInSlot(sourcePlayer.character.inventory, itemSource.inventorySlot)?.item ??
+      null
     );
   }
 

@@ -20,7 +20,7 @@ export async function alignPlayerToTree(requiredHeading: number) {
       } else {
         game.setEntityHeading(player, currentHeading - 5);
       }
-    }
+    },
   );
   await alt.Utils.waitFor(() => angle <= 10, 3000);
 }

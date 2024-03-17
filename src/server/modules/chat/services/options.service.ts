@@ -41,7 +41,7 @@ export class OptionsService {
       process.cwd(),
       "resources",
       Resource.current.name,
-      "options.json"
+      "options.json",
     );
     if (!fs.existsSync(optionsPath)) return;
     this.options = JSON.parse(fs.readFileSync(optionsPath, "utf8"));
@@ -53,11 +53,11 @@ export class OptionsService {
       process.cwd(),
       "resources",
       Resource.current.name,
-      "commands.json"
+      "commands.json",
     );
     if (!fs.existsSync(commandSuggestionsPath)) return;
     this.commandSuggestions = JSON.parse(
-      fs.readFileSync(commandSuggestionsPath, "utf8")
+      fs.readFileSync(commandSuggestionsPath, "utf8"),
     ).commandSuggestions;
     this.loggerService.log(`Loaded command suggestions from ${commandSuggestionsPath}`);
   }

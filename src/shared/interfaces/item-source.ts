@@ -16,12 +16,12 @@ export enum ItemSourceOrigin {
  */
 export type PlayerInventorySource = {
   origin: ItemSourceOrigin.PlayerInventory;
-  originId: Character['id'];
+  originId: Character["id"];
 };
 
 export type PlayerEquipmentSource = {
   origin: ItemSourceOrigin.PlayerEquipment;
-  originId: Character['id'];
+  originId: Character["id"];
 };
 
 export type StorageSource = {
@@ -54,4 +54,8 @@ export type GroundItemSource = {
 export type InventoryItemSource = PlayerInventoryItemSource | StorageItemSource;
 
 export type PlayerItemSource = PlayerInventoryItemSource | PlayerEquipmentItemSource;
-export type ItemSource = PlayerInventoryItemSource | PlayerEquipmentItemSource | GroundItemSource | StorageItemSource;
+export type ItemSource =
+  | PlayerInventoryItemSource
+  | PlayerEquipmentItemSource
+  | GroundItemSource
+  | StorageItemSource;

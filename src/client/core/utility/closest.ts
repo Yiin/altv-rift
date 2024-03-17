@@ -9,7 +9,7 @@ import { getClosestOfType } from "@shared/utility/closest";
  */
 export function getClosestVehicle(pos: alt.IVector3): alt.Vehicle | undefined {
   const vehicles = alt.Vehicle.all.filter(
-    (p) => p && p.valid && p.pos.x !== 0 && p.pos.y !== 0 && p.pos.z !== 0
+    (p) => p && p.valid && p.pos.x !== 0 && p.pos.y !== 0 && p.pos.z !== 0,
   );
   return getClosestOfType<alt.Vehicle>(pos, vehicles);
 }
@@ -22,7 +22,7 @@ export function getClosestVehicle(pos: alt.IVector3): alt.Vehicle | undefined {
  */
 export function getClosestPlayer(pos: alt.IVector3): alt.Player | undefined {
   const players = alt.Player.all.filter(
-    (p) => p && p.valid && p.pos.x !== 0 && p.pos.y !== 0 && p.pos.z !== 0
+    (p) => p && p.valid && p.pos.x !== 0 && p.pos.y !== 0 && p.pos.z !== 0,
   );
   return getClosestOfType<alt.Player>(pos, players);
 }

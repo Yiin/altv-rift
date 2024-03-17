@@ -12,7 +12,7 @@ type Vertexes = [
   alt.IVector3,
   alt.IVector3,
   alt.IVector3,
-  alt.IVector3
+  alt.IVector3,
 ];
 
 interface ObjectInfo {
@@ -73,7 +73,7 @@ export default class ModelInspectorController {
     if (!this._currentObject) {
       natives.beginTextCommandDisplayHelp("STRING");
       natives.addTextComponentSubstringPlayerName(
-        `Use the crosshair or mouse pointer (F2) to select the target object`
+        `Use the crosshair or mouse pointer (F2) to select the target object`,
       );
       natives.endTextCommandDisplayHelp(0, false, false, 0);
       return;
@@ -105,7 +105,7 @@ export default class ModelInspectorController {
       end.z,
       511,
       alt.Player.local.scriptID,
-      4
+      4,
     );
     const [, hit, endCoords, , entityHit] = natives.getShapeTestResult(raycast);
 

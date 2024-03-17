@@ -30,10 +30,14 @@ whileCreatingCharacter(async () => {
   game.doScreenFadeIn(1000);
   game.disableScreenblurFade();
 
-  useWebview(webview => webview.on(ClientEvents.FromWebview.UPDATE_CHARACTER_APPEARANCE, updateAppearance));
+  useWebview((webview) =>
+    webview.on(ClientEvents.FromWebview.UPDATE_CHARACTER_APPEARANCE, updateAppearance),
+  );
 
   return () => {
-    useWebview(webview => webview.off(ClientEvents.FromWebview.UPDATE_CHARACTER_APPEARANCE, updateAppearance));
+    useWebview((webview) =>
+      webview.off(ClientEvents.FromWebview.UPDATE_CHARACTER_APPEARANCE, updateAppearance),
+    );
     destroyCharacterCreationCamera();
 
     if (ped && ped.valid) {

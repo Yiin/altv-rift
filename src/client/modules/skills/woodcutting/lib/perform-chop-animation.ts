@@ -33,7 +33,7 @@ export async function performChopAnimation(tree: alt.VirtualEntity) {
     false,
     false,
     false,
-    false
+    false,
   );
   const logs = await rpc.callServer(ServerCall.FromClient.TREE_HIT, tree.remoteID);
 
@@ -47,7 +47,7 @@ export async function performChopAnimation(tree: alt.VirtualEntity) {
       "GTAO_FM_Events_Soundset",
       false,
       0,
-      false
+      false,
     );
   }
 

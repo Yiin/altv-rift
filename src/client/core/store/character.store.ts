@@ -22,7 +22,7 @@ export const useCharacter = () => {
 };
 
 alt.Events.onServer(ClientEvents.FromServer.UPDATE_CHARACTER_STATE, (event: any) => {
-  useWebview(webview => webview.emitRaw(WebviewEvents.FromClient.UPDATE_CHARACTER_STATE, event));
+  useWebview((webview) => webview.emitRaw(WebviewEvents.FromClient.UPDATE_CHARACTER_STATE, event));
 
   const character = useCharacter();
 
@@ -30,7 +30,7 @@ alt.Events.onServer(ClientEvents.FromServer.UPDATE_CHARACTER_STATE, (event: any)
 });
 
 alt.Events.onServer(ClientEvents.FromServer.SET_CHARACTER_STATE, (state: any) => {
-  useWebview(webview => webview.emitRaw(WebviewEvents.FromClient.SET_CHARACTER_STATE, state));
+  useWebview((webview) => webview.emitRaw(WebviewEvents.FromClient.SET_CHARACTER_STATE, state));
 
   if (characterStore) {
     const character = useCharacter();

@@ -40,7 +40,7 @@ alt.Events.onGameEntityCreate(({ entity }) => {
   entity.interactions = computed(() =>
     getPedInteractions(key)
       .map((registration) => registration(entity))
-      .flat()
+      .flat(),
   );
   entity.cleanupFns.push(() => {
     entity.interactions.effect.stop();
@@ -67,7 +67,7 @@ alt.Events.onGameEntityCreate(({ entity }) => {
 
       // Set the blip color based on if we are tracking the quest task this ped is responsible for
       const trackingSameQuest = interactions.some(
-        (interaction) => interaction.key === clientState.trackingQuest
+        (interaction) => interaction.key === clientState.trackingQuest,
       );
       if (trackingSameQuest) {
         game.setBlipColour(entity.blip, alt.Enums.BlipColor.YELLOW_ORANGE);

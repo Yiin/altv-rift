@@ -129,7 +129,10 @@ const menuControls: MenuControls<any> = {
     }
 
     // Air drops are special cases, they need to be in position before we can interact with them.
-    if (currentEntity instanceof alt.VirtualEntity && currentEntity.streamSyncedMeta.storageType === StorageType.AirDrop) {
+    if (
+      currentEntity instanceof alt.VirtualEntity &&
+      currentEntity.streamSyncedMeta.storageType === StorageType.AirDrop
+    ) {
       if (!isAirDropInPosition(currentEntity)) {
         return false;
       }
@@ -141,7 +144,9 @@ const menuControls: MenuControls<any> = {
       return false;
     }
 
-    return currentMenu.drawDistance ? currentMenu.drawDistance > alt.Player.local.pos.distanceTo(currentEntity.pos) : true;
+    return currentMenu.drawDistance
+      ? currentMenu.drawDistance > alt.Player.local.pos.distanceTo(currentEntity.pos)
+      : true;
   },
 };
 
@@ -173,7 +178,9 @@ alt.Timers.everyTick(() => {
   game.disableControlAction(ControlType.PLAYER_CONTROL, Control.INPUT_WEAPON_WHEEL_NEXT, true);
   game.disableControlAction(ControlType.PLAYER_CONTROL, Control.INPUT_WEAPON_WHEEL_PREV, true);
 
-  if (game.isDisabledControlJustPressed(ControlType.PLAYER_CONTROL, Control.INPUT_WEAPON_WHEEL_PREV)) {
+  if (
+    game.isDisabledControlJustPressed(ControlType.PLAYER_CONTROL, Control.INPUT_WEAPON_WHEEL_PREV)
+  ) {
     menuControls.selectPrevious();
   } else if (
     game.isDisabledControlJustPressed(ControlType.PLAYER_CONTROL, Control.INPUT_WEAPON_WHEEL_NEXT)

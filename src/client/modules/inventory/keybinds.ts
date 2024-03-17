@@ -34,7 +34,7 @@ whileInGame(() => {
       ).map((visibleSlot) => useCharacter().equipment[visibleSlot]),
     () => {
       alt.Timers.setTimeout(updatePlayerPedPreview, 300);
-    }
+    },
   );
 
   return () => {

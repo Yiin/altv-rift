@@ -48,7 +48,7 @@ function setupGameSettings() {
 }
 
 alt.Events.onSpawned(() => {
-  setupGameSettings()
+  setupGameSettings();
 });
 
 alt.Timers.everyTick(() => {

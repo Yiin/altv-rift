@@ -10,4 +10,4 @@ alt.Events.onPlayerDeath(({ player }) => {
   }, 2000);
 });
 
-alt.Events.onPlayerHeal(({ }) => { })
+alt.Events.onPlayerHeal(({}) => {});

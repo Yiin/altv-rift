@@ -20,7 +20,7 @@ export function testProbeAgainstWaterInFrontOfPlayer() {
       alt.Player.local,
       horizontal,
       10 + vertical,
-      -10
+      -10,
     );
     [hit, pos] = game.testProbeAgainstWater(from.x, from.y, from.z, target.x, target.y, target.z);
 

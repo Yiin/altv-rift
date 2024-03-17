@@ -20,12 +20,12 @@ import { WebviewCall } from "@shared/calls/webview";
 const clientProcedures = new Map<string, (player: alt.Player, ...args: any[]) => any>();
 const clientHandlers = new Map<
   string,
-  { name: string, resolve: (result: any) => void; reject: (err: any) => void }
+  { name: string; resolve: (result: any) => void; reject: (err: any) => void }
 >();
 const webviewProcedures = new Map<string, (...args: any[]) => any>();
 const webviewHandlers = new Map<
   string,
-  { name: string, resolve: (result: any) => void; reject: (err: any) => void }
+  { name: string; resolve: (result: any) => void; reject: (err: any) => void }
 >();
 
 // call client from server
@@ -51,13 +51,17 @@ alt.Events.onPlayer(CALL_CLIENT_FROM_SERVER_RESPONSE, (_, response) => {
   }
 
   if (handler.name in ClientCall.FromServerValidation) {
-    const schema = ClientCall.FromServerValidation[handler.name as keyof typeof ClientCall.FromServerValidation];
+    const schema =
+      ClientCall.FromServerValidation[handler.name as keyof typeof ClientCall.FromServerValidation];
 
-    if ('returns' in schema) {
+    if ("returns" in schema) {
       const result = schema.returns.safeParse(response.result);
 
       if (!result.success) {
-        alt.logError(`CALL_CLIENT_FROM_SERVER_RESPONSE: Validation error in ${handler.name}:`, result.error);
+        alt.logError(
+          `CALL_CLIENT_FROM_SERVER_RESPONSE: Validation error in ${handler.name}:`,
+          result.error,
+        );
         handler.reject(result.error);
       }
     }
@@ -71,7 +75,7 @@ alt.Events.onPlayer(CALL_CLIENT_FROM_SERVER_RESPONSE, (_, response) => {
 // receive from client on server
 const registerClient = <T extends keyof typeof ServerCall.FromClient>(
   name: T,
-  callback: Asyncify<CallFromClient>[T]
+  callback: Asyncify<CallFromClient>[T],
 ) => {
   if (clientProcedures.has(name)) {
     throw new Error(`registerClient: Procedure ${name} already exists`);
@@ -93,9 +97,10 @@ alt.Events.onPlayer(CALL_SERVER_FROM_CLIENT, async (player, payload) => {
     }
 
     if (name in ServerCall.FromClientValidation) {
-      const schema = ServerCall.FromClientValidation[name as keyof typeof ServerCall.FromClientValidation];
+      const schema =
+        ServerCall.FromClientValidation[name as keyof typeof ServerCall.FromClientValidation];
 
-      if ('args' in schema) {
+      if ("args" in schema) {
         z.tuple(schema.args).parse(args);
       }
     } else {
@@ -139,14 +144,20 @@ alt.Events.onPlayer(CALL_WEBVIEW_FROM_SERVER_RESPONSE, (_, response) => {
   }
 
   if (handler.name in WebviewCall.FromServerValidation) {
-    const schema = WebviewCall.FromServerValidation[handler.name as keyof typeof WebviewCall.FromServerValidation];
+    const schema =
+      WebviewCall.FromServerValidation[
+        handler.name as keyof typeof WebviewCall.FromServerValidation
+      ];
 
-    if ('returns' in schema) {
+    if ("returns" in schema) {
       // @ts-expect-error remove this comment if needed
       const result = schema.returns.safeParse(response.result);
 
       if (!result.success) {
-        alt.logError(`CALL_WEBVIEW_FROM_SERVER_RESPONSE: Validation error in ${handler.name}:`, result.error);
+        alt.logError(
+          `CALL_WEBVIEW_FROM_SERVER_RESPONSE: Validation error in ${handler.name}:`,
+          result.error,
+        );
         handler.reject(result.error);
       }
     }
@@ -160,7 +171,7 @@ alt.Events.onPlayer(CALL_WEBVIEW_FROM_SERVER_RESPONSE, (_, response) => {
 // receive from webview on server
 const registerWebview = <T extends keyof typeof FromWebview>(
   name: T,
-  callback: Asyncify<CallFromWebview>[T]
+  callback: Asyncify<CallFromWebview>[T],
 ) => {
   if (webviewProcedures.has(name)) {
     throw new Error(`registerWebview: Procedure ${name} already exists`);
@@ -182,9 +193,10 @@ alt.Events.onPlayer(CALL_SERVER_FROM_WEBVIEW, async (player, payload) => {
     }
 
     if (name in ServerCall.FromWebviewValidation) {
-      const schema = ServerCall.FromWebviewValidation[name as keyof typeof ServerCall.FromWebviewValidation];
+      const schema =
+        ServerCall.FromWebviewValidation[name as keyof typeof ServerCall.FromWebviewValidation];
 
-      if ('args' in schema) {
+      if ("args" in schema) {
         z.tuple(schema.args).parse(args);
       }
     } else {
@@ -199,7 +211,7 @@ alt.Events.onPlayer(CALL_SERVER_FROM_WEBVIEW, async (player, payload) => {
   } catch (error) {
     player.emitRaw(CALL_SERVER_FROM_WEBVIEW_RESPONSE, {
       id,
-      error: error instanceof z.ZodError ? error.issues.map(issue => issue.message) : error,
+      error: error instanceof z.ZodError ? error.issues.map((issue) => issue.message) : error,
     });
   }
 });

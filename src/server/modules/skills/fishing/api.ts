@@ -18,16 +18,19 @@ import { sendChatMessage } from "@/modules/chat";
  */
 export function startFishing(player: InGamePlayer) {
   if (!player.getEquipedItemInSlot(EquipmentSlot.Tool)) {
-    const bestFishingRod = player.character.inventory.items.reduce((best, next) => {
-      if (best && isItemFishingRod(next.item)) {
-        return best.item.key > next.item.key
-          ? (best as InventoryItem<FishingRodItem>)
-          : (next as InventoryItem<FishingRodItem>);
-      } else if (!best && isItemFishingRod(next.item)) {
-        return next as InventoryItem<FishingRodItem>;
-      }
-      return null;
-    }, null as InventoryItem<FishingRodItem> | null);
+    const bestFishingRod = player.character.inventory.items.reduce(
+      (best, next) => {
+        if (best && isItemFishingRod(next.item)) {
+          return best.item.key > next.item.key
+            ? (best as InventoryItem<FishingRodItem>)
+            : (next as InventoryItem<FishingRodItem>);
+        } else if (!best && isItemFishingRod(next.item)) {
+          return next as InventoryItem<FishingRodItem>;
+        }
+        return null;
+      },
+      null as InventoryItem<FishingRodItem> | null,
+    );
 
     if (!bestFishingRod) {
       sendChatMessage(player, `You don't have a fishing rod!`);
@@ -55,7 +58,7 @@ export function startFishing(player: InGamePlayer) {
 
   if (!fishingRod.bait) {
     const firstBait = player.character.inventory.items.find(
-      (item): item is InventoryItem<FishBaitItem> => isItemFishBait(item.item)
+      (item): item is InventoryItem<FishBaitItem> => isItemFishBait(item.item),
     );
 
     if (!firstBait) {
@@ -125,7 +128,7 @@ export function startCatchingFish(player: InGamePlayer, baitKey: FishBaitItemKey
         startedAt: Date.now(),
         durationMs,
         targetPosition,
-        targetSize
+        targetSize,
       };
 
       const timeout = alt.Timers.setTimeout(() => {
@@ -138,13 +141,10 @@ export function startCatchingFish(player: InGamePlayer, baitKey: FishBaitItemKey
 
       const stopWatching = watchEffect(() => {
         const notCatchingAFish = !player.gameState.flags.has(PlayerFlags.IsCatchingAFish);
-        const isWrongGame = player.gameState.fishingProgress?.gameType !== FishingGameType.TimeClick;
+        const isWrongGame =
+          player.gameState.fishingProgress?.gameType !== FishingGameType.TimeClick;
 
-        if (
-          !isInGame(player)
-          || notCatchingAFish
-          || isWrongGame
-        ) {
+        if (!isInGame(player) || notCatchingAFish || isWrongGame) {
           timeout.destroy();
           stopWatching();
         }
@@ -159,12 +159,14 @@ export function startCatchingFish(player: InGamePlayer, baitKey: FishBaitItemKey
         gameType,
         startedAt: Date.now(),
         durationMs,
-        keys: Array.from({ length: 10 }).map(() => rollItem([
-          [1, alt.Enums.KeyCode.W],
-          [1, alt.Enums.KeyCode.A],
-          [1, alt.Enums.KeyCode.S],
-          [1, alt.Enums.KeyCode.D],
-        ])),
+        keys: Array.from({ length: 10 }).map(() =>
+          rollItem([
+            [1, alt.Enums.KeyCode.W],
+            [1, alt.Enums.KeyCode.A],
+            [1, alt.Enums.KeyCode.S],
+            [1, alt.Enums.KeyCode.D],
+          ]),
+        ),
         pressedKeys: [],
       };
 
@@ -180,11 +182,7 @@ export function startCatchingFish(player: InGamePlayer, baitKey: FishBaitItemKey
         const notCatchingAFish = !player.gameState.flags.has(PlayerFlags.IsCatchingAFish);
         const isWrongGame = player.gameState.fishingProgress?.gameType !== FishingGameType.Keys;
 
-        if (
-          !isInGame(player)
-          || notCatchingAFish
-          || isWrongGame
-        ) {
+        if (!isInGame(player) || notCatchingAFish || isWrongGame) {
           timeout.destroy();
           stopWatching();
         }

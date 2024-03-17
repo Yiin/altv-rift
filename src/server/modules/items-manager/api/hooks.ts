@@ -27,15 +27,13 @@ export const useItem = createHookableFunction<(player: InGamePlayer, item: Item)
         emit(ServerEvents.FromServer.ITEM_USE, player, item);
       }
     },
-  }
+  },
 );
 
 /**
  * Can player equip items? E.g. if player is dying or immobilized, he can't equip anything.
  */
-export const canEquipItems = createHookableFunction<
-  (player: InGamePlayer) => boolean
->({
+export const canEquipItems = createHookableFunction<(player: InGamePlayer) => boolean>({
   name: "canEquipItems",
   defaultReturn: true,
 });

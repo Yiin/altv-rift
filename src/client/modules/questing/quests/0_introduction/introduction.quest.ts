@@ -32,8 +32,8 @@ import MINING_TUTOR_COMPLETE from "./conversations/14_MINING_TUTOR_COMPLETE.yaml
 whileEntityIsStreamedIn(
   (entity): entity is alt.Ped => entity instanceof alt.Ped,
   (entity) => {
-    return () => { };
-  }
+    return () => {};
+  },
 );
 
 registerQuest(Quests.Introduction.Key, {
@@ -146,7 +146,7 @@ registerPedInteractions(PedKey.CAL_BURNETT, (ped) => {
           if (option?.value === "accept") {
             alt.Events.emitServerRaw(
               ServerEvents.FromClient.NOTIFY,
-              Quests.Introduction.Facts.GOT_INTRODUCTION
+              Quests.Introduction.Facts.GOT_INTRODUCTION,
             );
           }
         });
@@ -189,7 +189,7 @@ registerPedInteractions(PedKey.CAL_BURNETT, (ped) => {
           if (option?.value === "confirm") {
             alt.Events.emitServerRaw(
               ServerEvents.FromClient.NOTIFY,
-              Quests.Introduction.Facts.GOT_DIRECTIONS
+              Quests.Introduction.Facts.GOT_DIRECTIONS,
             );
           }
         });
@@ -273,7 +273,7 @@ registerPedInteractions(PedKey.DIEGO_MOREIRA, (ped) => {
         }).then(() => {
           alt.Events.emitServerRaw(
             ServerEvents.FromClient.NOTIFY,
-            Quests.Introduction.Facts.DIEGO_INTRO
+            Quests.Introduction.Facts.DIEGO_INTRO,
           );
           openTaskSelection();
         });
@@ -313,7 +313,7 @@ registerPedInteractions(PedKey.DIEGO_MOREIRA, (ped) => {
             }).then(() => {
               alt.Events.emitServerRaw(
                 ServerEvents.FromClient.NOTIFY,
-                Quests.Introduction.Facts.COMPLETED_ALL
+                Quests.Introduction.Facts.COMPLETED_ALL,
               );
             });
           },
@@ -347,7 +347,7 @@ registerPedInteractions(PedKey.FISHING_TUTOR, (ped) => {
           if (option?.value === "accept") {
             alt.Events.emitServerRaw(
               ServerEvents.FromClient.NOTIFY,
-              Quests.Introduction.Facts.STARTED_FISHING
+              Quests.Introduction.Facts.STARTED_FISHING,
             );
           }
         });
@@ -375,7 +375,7 @@ registerPedInteractions(PedKey.FISHING_TUTOR, (ped) => {
             if (option?.value === "complete") {
               alt.Events.emitServerRaw(
                 ServerEvents.FromClient.NOTIFY,
-                Quests.Introduction.Facts.COMPLETED_FISHING
+                Quests.Introduction.Facts.COMPLETED_FISHING,
               );
             }
           });
@@ -409,7 +409,7 @@ registerPedInteractions(PedKey.MINING_TUTOR, (ped) => {
           if (option?.value === "accept") {
             alt.Events.emitServerRaw(
               ServerEvents.FromClient.NOTIFY,
-              Quests.Introduction.Facts.STARTED_MINING
+              Quests.Introduction.Facts.STARTED_MINING,
             );
           }
         });
@@ -437,7 +437,7 @@ registerPedInteractions(PedKey.MINING_TUTOR, (ped) => {
             if (option?.value === "complete") {
               alt.Events.emitServerRaw(
                 ServerEvents.FromClient.NOTIFY,
-                Quests.Introduction.Facts.COMPLETED_MINING
+                Quests.Introduction.Facts.COMPLETED_MINING,
               );
             }
           });
@@ -471,7 +471,7 @@ registerPedInteractions(PedKey.WOODCUTTING_TUTOR, (ped) => {
           if (option?.value === "accept") {
             alt.Events.emitServerRaw(
               ServerEvents.FromClient.NOTIFY,
-              Quests.Introduction.Facts.STARTED_WOODCUTTING
+              Quests.Introduction.Facts.STARTED_WOODCUTTING,
             );
           }
         });
@@ -499,7 +499,7 @@ registerPedInteractions(PedKey.WOODCUTTING_TUTOR, (ped) => {
             if (option?.value === "complete") {
               alt.Events.emitServerRaw(
                 ServerEvents.FromClient.NOTIFY,
-                Quests.Introduction.Facts.COMPLETED_WOODCUTTING
+                Quests.Introduction.Facts.COMPLETED_WOODCUTTING,
               );
             }
           });
@@ -533,7 +533,7 @@ registerPedInteractions(PedKey.CRAFTING_TUTOR, (ped) => {
           if (option?.value === "accept") {
             alt.Events.emitServerRaw(
               ServerEvents.FromClient.NOTIFY,
-              Quests.Introduction.Facts.STARTED_CRAFTING
+              Quests.Introduction.Facts.STARTED_CRAFTING,
             );
           }
         });

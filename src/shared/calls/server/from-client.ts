@@ -17,15 +17,12 @@ export const FromClient = {
 } as const;
 
 export interface CallFromClient<
-  Player extends import("@altv/server").Player = import("@altv/server").Player
+  Player extends import("@altv/server").Player = import("@altv/server").Player,
 > {
   [FromClient.GET_DISCORD_AUTH_URL]: (player: Player) => string;
   [FromClient.TRY_CACHED_TOKEN]: (player: Player, token: string) => boolean;
   [FromClient.BEGIN_TREE_HIT]: (player: Player, virtualTreeId: number) => number;
-  [FromClient.TREE_HIT]: (
-    player: Player,
-    virtualTreeId: number
-  ) => number;
+  [FromClient.TREE_HIT]: (player: Player, virtualTreeId: number) => number;
   [FromClient.RELOAD_WEAPON]: (player: Player) => boolean;
   [FromClient.START_FISHING]: (player: Player) => void;
   [FromClient.STOP_FISHING]: (player: Player) => void;
@@ -35,7 +32,7 @@ export interface CallFromClient<
     player: Player,
     vehicleId: number,
     doorId: number,
-    shouldClose?: boolean
+    shouldClose?: boolean,
   ) => void;
   [FromClient.OPEN_STORAGE]: (player: Player, storageId: number) => boolean;
   [FromClient.REGISTER_KEY_PRESS]: (player: Player, key: alt.Enums.KeyCode) => void;
@@ -74,4 +71,7 @@ export const FromClientValidation = {
   [FromClient.REGISTER_KEY_PRESS]: {
     args: [z.number()],
   },
-} satisfies Record<keyof typeof FromClient, { args?: [z.ZodTypeAny, ...z.ZodTypeAny[]], returns?: z.ZodTypeAny }>;
+} satisfies Record<
+  keyof typeof FromClient,
+  { args?: [z.ZodTypeAny, ...z.ZodTypeAny[]]; returns?: z.ZodTypeAny }
+>;

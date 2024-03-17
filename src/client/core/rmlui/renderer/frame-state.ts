@@ -7,5 +7,5 @@ export const notRenderedElements = new Set<alt.RmlElement>();
 export const visibleElementsHeap = new FixedReverseHeap<alt.RmlElement>(
   Array,
   (a, b) => b.zIndex - a.zIndex,
-  MAX_RENDERED_ELEMENTS
+  MAX_RENDERED_ELEMENTS,
 );

@@ -31,7 +31,7 @@ export function everyTickWhile(
   condition: () => boolean,
   callback: () => void,
   onEnd?: () => void,
-  options: { skipFirstCheck?: boolean } = {}
+  options: { skipFirstCheck?: boolean } = {},
 ) {
   const tick = alt.Timers.everyTick(() => {
     if (!options.skipFirstCheck && !condition()) {
@@ -69,7 +69,7 @@ export function waitUntil(condition: () => boolean, timeoutMS = 10000) {
       try {
         timeout.destroy();
         tick.destroy();
-      } catch { }
+      } catch {}
       ticks.splice(ticks.indexOf(tick), 1);
       resolve();
     });

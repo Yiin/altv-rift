@@ -4,7 +4,10 @@ import { computed, watchEffect } from "vue";
 import { ServerEvents } from "@shared/events/server";
 import { ServerCall } from "@shared/calls/server";
 import { getItemInfoByKey, getWeaponAmmoEquipmentSlot } from "@shared/modules/items";
-import { isItemFirearmWeapon, isWeaponWithClip } from "@shared/modules/items/registry/weapons/firearm-weapon.items";
+import {
+  isItemFirearmWeapon,
+  isWeaponWithClip,
+} from "@shared/modules/items/registry/weapons/firearm-weapon.items";
 import { rpc } from "@/core/rpc";
 import { useCharacter } from "@/core/store/character.store";
 import { Control, ControlType } from "@/core/constants/controls";
@@ -110,10 +113,9 @@ whileInGame(() => {
       allowShooting();
     }
 
-    alt.Utils.waitFor(
-      () => !game.isPedSwitchingWeapon(player),
-      3000
-    ).then(() => alt.Utils.wait(1000)).finally(handleAmmoChange);
+    alt.Utils.waitFor(() => !game.isPedSwitchingWeapon(player), 3000)
+      .then(() => alt.Utils.wait(1000))
+      .finally(handleAmmoChange);
   }
 
   /**
@@ -159,7 +161,11 @@ whileInGame(() => {
     const disableMeleeAttackLight_R = alt.Timers.everyTick(() => {
       game.disableControlAction(ControlType.PLAYER_CONTROL, Control.INPUT_MELEE_ATTACK_LIGHT, true);
       game.disableControlAction(ControlType.PLAYER_CONTROL, Control.INPUT_MELEE_ATTACK_HEAVY, true);
-      game.disableControlAction(ControlType.PLAYER_CONTROL, Control.INPUT_MELEE_ATTACK_ALTERNATE, true);
+      game.disableControlAction(
+        ControlType.PLAYER_CONTROL,
+        Control.INPUT_MELEE_ATTACK_ALTERNATE,
+        true,
+      );
     });
 
     try {

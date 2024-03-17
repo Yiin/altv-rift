@@ -8,7 +8,7 @@ import { sleep } from "./sleep";
  */
 export async function switchToMultiSecondpart(
   duration: number,
-  switchType: SWITCHOUT_TYPES = SWITCHOUT_TYPES.THREE_STEPS
+  switchType: SWITCHOUT_TYPES = SWITCHOUT_TYPES.THREE_STEPS,
 ): Promise<boolean> {
   if (!game.isPlayerSwitchInProgress()) {
     game.switchToMultiFirstpart(alt.Player.local, 0, switchType);

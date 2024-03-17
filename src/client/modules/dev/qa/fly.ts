@@ -57,7 +57,7 @@ export default class FlyController {
         player.rot.z * Utils.Rad2Deg,
         50,
         false,
-        2
+        2,
       );
       natives.setCamActive(this._cam, true);
       natives.renderScriptCams(true, false, 0, true, false, 0);
@@ -96,7 +96,7 @@ export default class FlyController {
           natives.getGroundZFor3dCoord(coord.x, coord.y, coord.z, 0, false, false)[1],
           false,
           false,
-          false
+          false,
         );
       }
     }
@@ -174,7 +174,7 @@ export default class FlyController {
       new alt.Vector3(
         pos.x - movementVector.x + rightVector.x,
         pos.y - movementVector.y + rightVector.y,
-        pos.z - movementVector.z + vertSpeed
+        pos.z - movementVector.z + vertSpeed,
       ),
     ];
   }
@@ -195,7 +195,7 @@ export default class FlyController {
       newPos.z,
       true,
       true,
-      true
+      true,
     );
     if (natives.getFollowPedCamZoomLevel() !== 4) natives.setEntityHeading(entity.scriptID, rot.z);
   };

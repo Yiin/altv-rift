@@ -19,9 +19,7 @@ registerElement({
   anchorType: AnchorType.Storage,
   focusable: true,
   render({ entity: ve }) {
-    const menu = useMenu([
-      { text: "Open", value: "open" },
-    ], {
+    const menu = useMenu([{ text: "Open", value: "open" }], {
       async onSelect(interaction) {
         if (interaction.value === "open") {
           if (ve.streamSyncedMeta.storageType === StorageType.AirDrop) {
@@ -35,7 +33,7 @@ registerElement({
           }
         }
       },
-      drawDistance: 2
+      drawDistance: 2,
     });
 
     const currentMenuIndex = menu.currentIndex();
@@ -52,46 +50,51 @@ registerElement({
             const { x, y } = alt.worldToScreen(pos);
             return `translate(-50%, -50%) translate(${x}px, ${y}px)`;
           }),
-          display: everyFrame(() => isAirDropInPosition(ve) ? "block" : "none"),
+          display: everyFrame(() => (isAirDropInPosition(ve) ? "block" : "none")),
         },
       },
       [
-        div([
-          Indicator()
-        ]),
+        div([Indicator()]),
         div(
           {
             className: "interaction-content",
             style: {
               transform: `translate(55px, -47px)`,
-              opacity: everyFrame(() => menu.isActive ? 1 : 0),
+              opacity: everyFrame(() => (menu.isActive ? 1 : 0)),
             },
           },
           [
             ...menu.interactions.map((interaction, index) =>
               div([
-                div({
-                  style: {
-                    display: "flex",
-                    "align-items": "center",
-                    "justify-content": "center",
-                    gap: "5px",
-                  }
-                }, [
-                  div([
-                    div(
-                      {
-                        className: ["interaction", "interaction--storage", currentMenuIndex === index && "interaction--selected"],
-                      },
-                      [span({ className: "label" }, [interaction.text])]
-                    )
-                  ]),
-                ])
-              ])
-            )
-          ]
+                div(
+                  {
+                    style: {
+                      display: "flex",
+                      "align-items": "center",
+                      "justify-content": "center",
+                      gap: "5px",
+                    },
+                  },
+                  [
+                    div([
+                      div(
+                        {
+                          className: [
+                            "interaction",
+                            "interaction--storage",
+                            currentMenuIndex === index && "interaction--selected",
+                          ],
+                        },
+                        [span({ className: "label" }, [interaction.text])],
+                      ),
+                    ]),
+                  ],
+                ),
+              ]),
+            ),
+          ],
         ),
-      ]
+      ],
     );
   },
 });

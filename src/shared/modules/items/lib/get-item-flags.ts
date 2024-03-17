@@ -1,6 +1,13 @@
 import { ItemFlags } from "../enums";
 import { getItemInfoByKey } from "../items-registry";
-import { isItemKeyAmmo, isItemKeyConsumable, isItemKeyFishBait, isItemKeyMaterial, isItemKeyNote, isItemKeyThrowableWeapon } from "../registry";
+import {
+  isItemKeyAmmo,
+  isItemKeyConsumable,
+  isItemKeyFishBait,
+  isItemKeyMaterial,
+  isItemKeyNote,
+  isItemKeyThrowableWeapon,
+} from "../registry";
 import { Item, ItemKey, StackableItem } from "../types";
 import { getItemKeyEquipmentSlot } from "./get-item-equipment-slot";
 
@@ -11,12 +18,18 @@ export function getItemFlagsByKey(key: ItemKey): ItemFlags {
     return ItemFlags.None;
   }
 
-  let flags = 'flags' in info ? info.flags : ItemFlags.None;
+  let flags = "flags" in info ? info.flags : ItemFlags.None;
 
   if (getItemKeyEquipmentSlot(key)) {
     flags |= ItemFlags.IsEquippable;
   }
-  if (isItemKeyThrowableWeapon(key) || isItemKeyAmmo(key) || isItemKeyConsumable(key) || isItemKeyMaterial(key) || isItemKeyFishBait(key)) {
+  if (
+    isItemKeyThrowableWeapon(key) ||
+    isItemKeyAmmo(key) ||
+    isItemKeyConsumable(key) ||
+    isItemKeyMaterial(key) ||
+    isItemKeyFishBait(key)
+  ) {
     flags |= ItemFlags.IsStackable;
   }
   if (isItemKeyConsumable(key) || isItemKeyNote(key)) {
@@ -46,7 +59,7 @@ export function isItemUsable(key: ItemKey) {
   return checkItemFlagsByKey(key, ItemFlags.IsUsable);
 }
 
-export function isItemKeyStackable(key: ItemKey): key is StackableItem['key'] {
+export function isItemKeyStackable(key: ItemKey): key is StackableItem["key"] {
   return checkItemFlagsByKey(key, ItemFlags.IsStackable);
 }
 

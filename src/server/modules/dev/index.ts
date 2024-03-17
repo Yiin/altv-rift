@@ -32,7 +32,7 @@ registerCmd("s", (player) => {
     streamingDistance: 300,
     data: {
       entityType: "storage",
-      items
-    }
+      items,
+    },
   });
 });

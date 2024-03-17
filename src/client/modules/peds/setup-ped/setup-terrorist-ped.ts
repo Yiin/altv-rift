@@ -90,7 +90,7 @@ export async function setupTerroristPed(ped: alt.Ped) {
     ped.pos.z,
     0,
     5 + Math.random() * 5,
-    -1
+    -1,
   );
 
   if (ped.streamSyncedMeta.weapon) {
@@ -104,6 +104,6 @@ export async function setupTerroristPed(ped: alt.Ped) {
       game.setPedResetFlag(ped, PED_RESET_FLAG.BlockWeaponReactionsUnlessDead, true);
       game.setPedResetFlag(ped, PED_RESET_FLAG.DisablePotentialBlastReactions, true);
       game.setPedResetFlag(ped, PED_RESET_FLAG.PreventAllMeleeTakedowns, true);
-    }
+    },
   );
 }

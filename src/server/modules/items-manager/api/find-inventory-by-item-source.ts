@@ -5,7 +5,7 @@ import { InGamePlayer } from "@/core/utility/assertions";
 export function findInventoryByItemSource(source: ItemSource): Inventory | null {
   if (source.origin === ItemSourceOrigin.PlayerInventory) {
     const player = alt.Player.all.find(
-      (player): player is InGamePlayer => player.character?.id === source.originId
+      (player): player is InGamePlayer => player.character?.id === source.originId,
     );
 
     if (!player) {
@@ -19,4 +19,4 @@ export function findInventoryByItemSource(source: ItemSource): Inventory | null 
     return null;
   }
   return null;
-};
+}

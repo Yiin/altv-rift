@@ -6,5 +6,5 @@ alt.Events.onServer(ClientEvents.FromServer.CALL_NATIVE, (native, ...args) => {
   try {
     // @ts-expect-error
     game[native]?.(...args);
-  } catch { }
+  } catch {}
 });

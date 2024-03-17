@@ -37,7 +37,7 @@ export function stopConversation(option?: ConversationOption) {
 
 export async function startConversation(
   ped: alt.Ped,
-  { pages, topic, options: finalOptions }: ConversationInfo
+  { pages, topic, options: finalOptions }: ConversationInfo,
 ) {
   currentPage = 0;
 

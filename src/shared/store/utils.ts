@@ -1,36 +1,29 @@
 import { get, set } from "lodash-es";
 import { Store } from "pinia";
-import {
-  TriggerOpTypes,
-  toRaw,
-  isRef,
-  isReactive,
-  isProxy,
-  DebuggerEvent
-} from "@vue/reactivity";
+import { TriggerOpTypes, toRaw, isRef, isReactive, isProxy, DebuggerEvent } from "@vue/reactivity";
 import { findPath, findPathApproximate } from "@shared/utility/object";
 
 export type StoreUpdatePayload =
   | {
-    type: TriggerOpTypes.ADD;
-    path: string | undefined;
-    target: object;
-  }
+      type: TriggerOpTypes.ADD;
+      path: string | undefined;
+      target: object;
+    }
   | {
-    type: TriggerOpTypes.SET;
-    path: string | undefined;
-    key: any;
-    newValue: any;
-  }
+      type: TriggerOpTypes.SET;
+      path: string | undefined;
+      key: any;
+      newValue: any;
+    }
   | {
-    type: TriggerOpTypes.DELETE;
-    path: string | undefined;
-    key: any;
-  }
+      type: TriggerOpTypes.DELETE;
+      path: string | undefined;
+      key: any;
+    }
   | {
-    type: TriggerOpTypes.CLEAR;
-    path: string | undefined;
-  };
+      type: TriggerOpTypes.CLEAR;
+      path: string | undefined;
+    };
 
 export function subscribeToStore<T extends Store>(
   store: T,
@@ -40,7 +33,7 @@ export function subscribeToStore<T extends Store>(
   }: {
     onSetState: (state: any) => void;
     onUpdateState: (payload: StoreUpdatePayload) => void;
-  }
+  },
 ) {
   onSetState(toRaw(store.$state));
 
@@ -53,7 +46,9 @@ export function subscribeToStore<T extends Store>(
       const events = Array.isArray(mutation.events) ? mutation.events : [mutation.events];
 
       for (const event of events) {
-        const path = findPath(toRaw(state), event.target)?.join(".") ?? findPathApproximate(toRaw(state), event.target)?.join(".");
+        const path =
+          findPath(toRaw(state), event.target)?.join(".") ??
+          findPathApproximate(toRaw(state), event.target)?.join(".");
 
         const { type, target, key, newValue } = event;
 
@@ -77,7 +72,7 @@ export function subscribeToStore<T extends Store>(
         }
       }
     },
-    { immediate: true, flush: "sync" }
+    { immediate: true, flush: "sync" },
   );
 }
 
@@ -126,9 +121,15 @@ export function deepToRaw<T extends Record<string, any>>(sourceObj: T): T {
   const objectIterator = (input: any): any => {
     if (Array.isArray(input)) {
       return input.map((item) => objectIterator(item));
-    } if (isRef(input) || isReactive(input) || isProxy(input)) {
+    }
+    if (isRef(input) || isReactive(input) || isProxy(input)) {
       return objectIterator(toRaw(input));
-    } if (input && typeof input === 'object' && (input.constructor === Object || input.constructor === null)) {
+    }
+    if (
+      input &&
+      typeof input === "object" &&
+      (input.constructor === Object || input.constructor === null)
+    ) {
       return Object.keys(input).reduce((acc, key) => {
         acc[key as keyof typeof acc] = objectIterator(input[key]);
         return acc;

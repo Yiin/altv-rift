@@ -1,4 +1,3 @@
-
 import alt from "@altv/server";
 import { EquipmentSlot } from "@shared/interfaces";
 import { isItemFishingRod, BAIT_TO_FISH_MAP, createItem, getItemName } from "@shared/modules/items";

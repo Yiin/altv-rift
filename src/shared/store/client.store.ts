@@ -86,18 +86,20 @@ export interface ClientState {
 export const getDefaultClientStoreState = (): ClientState => ({
   ui: {
     scene: null,
-    elements: 'altMock' in globalThis
-      // browser context
-      ? new Set()
-      // game context
-      : new Set(),
-    window: 'altMock' in globalThis
-      // browser context
-      ? {
-        type: WindowType.PLAYER_INVENTORY,
-      }
-      // game context
-      : null,
+    elements:
+      "altMock" in globalThis
+        ? // browser context
+          new Set()
+        : // game context
+          new Set(),
+    window:
+      "altMock" in globalThis
+        ? // browser context
+          {
+            type: WindowType.PLAYER_INVENTORY,
+          }
+        : // game context
+          null,
   },
   conversation: null,
   trackingQuest: null,

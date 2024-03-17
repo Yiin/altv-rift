@@ -11,7 +11,7 @@ export function loadSceneAtCoords(pos: alt.IVector3): Promise<boolean> {
       pos.y,
       pos.z ?? game.getApproxHeightForPoint(pos.x, pos.y),
       2,
-      1
+      1,
     );
 
     timerHandle = alt.Timers.setInterval(() => {

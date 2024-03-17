@@ -3,7 +3,7 @@ import { ref } from "vue";
 
 export function whileEntityIsStreamedIn<T extends alt.Entity>(
   check: (entity: alt.Entity) => entity is T,
-  fn: (entity: T) => MaybePromise<void | (() => void)>
+  fn: (entity: T) => MaybePromise<void | (() => void)>,
 ) {
   const cleanup = ref<void | (() => void)>();
 

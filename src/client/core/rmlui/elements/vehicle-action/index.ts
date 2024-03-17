@@ -31,7 +31,7 @@ function getVehiclePartPosition(vehicle: alt.Vehicle, part: (typeof PARTS)[numbe
       const [, front] = game.getVehicleSize(vehicle);
       const { z } = game.getWorldPositionOfEntityBone(
         vehicle,
-        game.getEntityBoneIndexByName(vehicle, VehicleBones.BONNET)
+        game.getEntityBoneIndexByName(vehicle, VehicleBones.BONNET),
       );
       const { x, y } = game.getOffsetFromEntityInWorldCoords(vehicle, 0, front.y - 0.2, 0);
       return new alt.Vector3(x, y, z);
@@ -40,7 +40,7 @@ function getVehiclePartPosition(vehicle: alt.Vehicle, part: (typeof PARTS)[numbe
       const [back] = game.getVehicleSize(vehicle);
       const { z } = game.getWorldPositionOfEntityBone(
         vehicle,
-        game.getEntityBoneIndexByName(vehicle, VehicleBones.BOOT)
+        game.getEntityBoneIndexByName(vehicle, VehicleBones.BOOT),
       );
       const { x, y } = game.getOffsetFromEntityInWorldCoords(vehicle, 0, back.y + 0.2, 0);
       return new alt.Vector3(x, y, z);
@@ -148,7 +148,7 @@ alt.Events.onKeyDown(({ key }) => {
       ServerCall.FromClient.TOGGLE_VEHICLE_DOOR,
       closestVehicle.remoteID,
       door,
-      shouldClose
+      shouldClose,
     );
   }
 });
@@ -208,12 +208,12 @@ registerElement({
                 [VehicleBones.HANDLE_DSIDE_R]: "car-door",
                 [VehicleBones.HANDLE_PSIDE_R]: "car-door",
               } as const
-            )[part]
+            )[part],
           );
         }),
         br([]),
         div({ className: "vehicle-action__text" }, [`[E]`]),
-      ]
+      ],
     );
   },
 });

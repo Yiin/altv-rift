@@ -12,7 +12,7 @@ export const ClientParticles = {
     pos: alt.IVector3,
     duration: number = 5000,
     color: alt.RGBA = new alt.RGBA(255, 255, 255, 255),
-    clearInstantly = false
+    clearInstantly = false,
   ): Promise<void> {
     if (name.includes("scr")) {
       return;
@@ -37,7 +37,7 @@ export const ClientParticles = {
         scale,
         false,
         false,
-        false
+        false,
       );
     }, 100);
 

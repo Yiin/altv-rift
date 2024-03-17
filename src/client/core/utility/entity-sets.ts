@@ -9,7 +9,7 @@ alt.Events.onServer(
   (interior: number, entitySetName: string) => {
     game.activateInteriorEntitySet(interior, entitySetName);
     game.refreshInterior(interior);
-  }
+  },
 );
 
 alt.Events.onServer(
@@ -17,11 +17,11 @@ alt.Events.onServer(
   (interior: number, entitySetName: string) => {
     game.deactivateInteriorEntitySet(interior, entitySetName);
     game.refreshInterior(interior);
-  }
+  },
 );
 
 rpc.registerServer(
   ClientCall.FromServer.ENTITYSET_IS_ACTIVE,
   (interior: number, entitySetName: string) =>
-    game.isInteriorEntitySetActive(interior, entitySetName)
+    game.isInteriorEntitySetActive(interior, entitySetName),
 );

@@ -13,7 +13,7 @@ import { CHAT_PLAYER_NAME_METADATA } from "../consts";
 export function sendChatMessage(
   player: Player,
   message: string,
-  type: MessageType = MessageType.Default
+  type: MessageType = MessageType.Default,
 ) {
   const useChatFormattingInAPI = container
     .resolve(OptionsService)

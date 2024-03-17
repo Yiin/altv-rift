@@ -28,7 +28,7 @@ async function beginAuth() {
     alt.log("Cached token found, trying it...");
     const success = await rpc.callServer(
       ServerCall.FromClient.TRY_CACHED_TOKEN,
-      alt.LocalStorage.get("token")
+      alt.LocalStorage.get("token"),
     );
 
     if (success) {

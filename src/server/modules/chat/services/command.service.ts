@@ -27,7 +27,7 @@ export class CommandService {
 
   public addSuggestion(
     player: alt.Player,
-    suggestion: CommandSuggestion | Array<CommandSuggestion>
+    suggestion: CommandSuggestion | Array<CommandSuggestion>,
   ) {
     if (!Array.isArray(suggestion)) suggestion = [suggestion];
     const result = suggestion.some((s) => validateCommandSuggestion(s));

@@ -30,14 +30,15 @@ rpc.registerClient(ServerCall.FromClient.REGISTER_KEY_PRESS, (player, key) => {
   switch (player.gameState.fishingProgress?.gameType) {
     case FishingGameType.TimeClick: {
       const currentTime = Date.now();
-      const { startedAt, durationMs, targetPosition, targetSize } = player.gameState.fishingProgress;
+      const { startedAt, durationMs, targetPosition, targetSize } =
+        player.gameState.fishingProgress;
 
       const timePassed = (currentTime - startedAt) / durationMs;
 
       // target limits
       const errorMargin = (player.ping + 50) / durationMs;
-      const min = targetPosition - (targetSize / 2) - errorMargin;
-      const max = targetPosition + (targetSize / 2) + errorMargin;
+      const min = targetPosition - targetSize / 2 - errorMargin;
+      const max = targetPosition + targetSize / 2 + errorMargin;
 
       const hitTheTarget = timePassed >= min && timePassed <= max;
 

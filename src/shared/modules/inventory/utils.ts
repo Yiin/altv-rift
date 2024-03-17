@@ -12,7 +12,7 @@ export function getInventoryItem(inventory: Inventory, item: Item) {
 
 export function getInventoryItemByKey<K extends ItemKey>(
   inventory: Inventory,
-  key: K
+  key: K,
 ): InventoryItem<ItemByKey<K>> | undefined {
   return inventory.items.find((item) => item.item.key === key);
 }

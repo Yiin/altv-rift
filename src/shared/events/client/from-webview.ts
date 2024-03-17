@@ -16,7 +16,7 @@ declare module "@altv/shared" {
     interface CustomWebViewToClientEvent {
       [FromWebview.VIEW_READY]: () => void;
       [FromWebview.UPDATE_CHARACTER_APPEARANCE]: (
-        appearance: import("@prisma/client/edge").Appearance
+        appearance: import("@prisma/client/edge").Appearance,
       ) => void;
       [FromWebview.INPUT_FOCUS]: (isFocused: boolean) => void;
       [FromWebview.CAMERA_MOVE_START]: () => void;

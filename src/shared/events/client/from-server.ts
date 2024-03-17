@@ -49,7 +49,7 @@ declare module "@altv/shared" {
       [FromServer.CANCEL_CHARACTER_CREATION]: () => void;
       [FromServer.CHARACTER_CREATED]: () => void;
       [FromServer.SET_PLAYER_DECORATIONS]: (
-        decorations: { collection: number; overlay: number }[]
+        decorations: { collection: number; overlay: number }[],
       ) => void;
       [FromServer.START_GAME]: () => void;
       [FromServer.SETUP_WEBVIEW]: (url?: string) => void;
@@ -63,7 +63,7 @@ declare module "@altv/shared" {
         model: string,
         start: alt.IVector3,
         end: alt.IVector3,
-        speed: number
+        speed: number,
       ) => void;
       [FromServer.IPL_LOAD]: (name: string) => void;
       [FromServer.IPL_UNLOAD]: (name: string) => void;
@@ -82,7 +82,7 @@ declare module "@altv/shared" {
         entityType: number,
         entityRemoteID: number,
         damage: number,
-        type: "health" | "armor"
+        type: "health" | "armor",
       ) => void;
       [FromServer.INVENTORY_ITEM_ADD]: (item: Item) => void;
     }

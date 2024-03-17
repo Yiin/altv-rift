@@ -29,7 +29,7 @@ function hideGameCursor() {
     () => start + 2000 > Date.now(),
     () => {
       game.setMouseCursorVisible(false);
-    }
+    },
   );
 }
 
@@ -67,7 +67,7 @@ async function createPedPreview() {
     alt.Player.local.pos.z - 50,
     false,
     false,
-    false
+    false,
   );
 
   await alt.Utils.wait(200);
@@ -104,7 +104,7 @@ async function clearPedPreview() {
       previousHudColor.r,
       previousHudColor.g,
       previousHudColor.b,
-      previousHudColor.a
+      previousHudColor.a,
     );
   }
   if (equipmentPed) {
@@ -121,5 +121,5 @@ watch(
     } else {
       clearPedPreview();
     }
-  }
+  },
 );

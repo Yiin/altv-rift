@@ -48,7 +48,7 @@ for (const font of googleFonts) {
     alt.loadRmlFontFace(
       join(__relativedirname, `${normalizedFontName}/${font.name}-${variant}.ttf`),
       rcssFontName,
-      variant.endsWith("Italic") ? true : undefined
+      variant.endsWith("Italic") ? true : undefined,
     );
   }
 }

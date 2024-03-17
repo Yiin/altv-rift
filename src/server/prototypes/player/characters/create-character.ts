@@ -8,7 +8,7 @@ declare module "@altv/server" {
   export interface Player {
     createCharacter(
       this: Player,
-      characterData: import("@prisma/client").Prisma.CharacterCreateInput
+      characterData: import("@prisma/client").Prisma.CharacterCreateInput,
     ): Promise<import("@prisma/client").Character>;
   }
 }

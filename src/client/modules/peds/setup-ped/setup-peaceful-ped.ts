@@ -18,6 +18,6 @@ export function setupPeacefulPed(ped: alt.Ped) {
       game.setPedResetFlag(ped, PED_RESET_FLAG.BlockFallTaskFromExplosionDamage, true);
       game.setPedResetFlag(ped, PED_RESET_FLAG.BlockWeaponReactionsUnlessDead, true);
       game.setPedResetFlag(ped, PED_RESET_FLAG.DisablePotentialBlastReactions, true);
-    }
+    },
   );
 }

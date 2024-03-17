@@ -28,7 +28,7 @@ export const callWebview = async <T extends keyof typeof WebviewCall.FromClient>
   return new Promise<ReturnType<CallFromClient[T]>>((resolve, reject) => {
     const payload = createPayload(name, args);
 
-    useWebview(webview => webview.emitRaw(CALL_WEBVIEW_FROM_CLIENT, payload));
+    useWebview((webview) => webview.emitRaw(CALL_WEBVIEW_FROM_CLIENT, payload));
     webviewHandlers.set(payload.id, { name, resolve, reject });
   });
 };
@@ -50,14 +50,20 @@ useWebview((webview) =>
     }
 
     if (handler.name in WebviewCall.FromClientValidation) {
-      const schema = WebviewCall.FromClientValidation[handler.name as keyof typeof WebviewCall.FromClientValidation];
+      const schema =
+        WebviewCall.FromClientValidation[
+          handler.name as keyof typeof WebviewCall.FromClientValidation
+        ];
 
-      if ('returns' in schema) {
+      if ("returns" in schema) {
         // @ts-expect-error remove this comment if needed
         const result = schema.returns.safeParse(response.result);
 
         if (!result.success) {
-          alt.logError(`CALL_WEBVIEW_FROM_CLIENT_RESPONSE: Validation error in ${handler.name}:`, result.error);
+          alt.logError(
+            `CALL_WEBVIEW_FROM_CLIENT_RESPONSE: Validation error in ${handler.name}:`,
+            result.error,
+          );
           handler.reject(result.error);
         }
       }
@@ -66,13 +72,13 @@ useWebview((webview) =>
     }
 
     handler.resolve(response.result);
-  })
+  }),
 );
 
 // receive from webview on client
 export const registerWebview = <T extends keyof typeof ClientCall.FromWebview>(
   name: T,
-  handler: Asyncify<CallFromWebview>[T]
+  handler: Asyncify<CallFromWebview>[T],
 ) => {
   if (webviewProcedures.has(name)) {
     throw new Error(`registerWebview: Procedure ${name} already exists`);
@@ -96,9 +102,10 @@ useWebview((webview) => {
       }
 
       if (name in ClientCall.FromWebviewValidation) {
-        const schema = ClientCall.FromWebviewValidation[name as keyof typeof ClientCall.FromWebviewValidation];
+        const schema =
+          ClientCall.FromWebviewValidation[name as keyof typeof ClientCall.FromWebviewValidation];
 
-        if ('args' in schema) {
+        if ("args" in schema) {
           // @ts-ignore
           z.tuple(schema).parse(args);
         }

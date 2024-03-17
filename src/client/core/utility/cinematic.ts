@@ -116,7 +116,7 @@ const InternalFunctions = {
         0,
         90,
         true,
-        0
+        0,
       );
 
       camNumber = cam2;
@@ -132,7 +132,7 @@ const InternalFunctions = {
         0,
         90,
         true,
-        0
+        0,
       );
 
       game.setCamActive(cam1, true);
@@ -154,7 +154,7 @@ const InternalFunctions = {
         camNumber,
         node.positionToTrack.x,
         node.positionToTrack.y,
-        node.positionToTrack.z
+        node.positionToTrack.z,
       );
     }
 
@@ -177,7 +177,7 @@ const InternalFunctions = {
         offset.x,
         offset.y,
         offset.z,
-        false
+        false,
       );
     }
 
@@ -190,7 +190,7 @@ const InternalFunctions = {
         offset.x,
         offset.y,
         offset.z,
-        true
+        true,
       );
     }
 
@@ -225,7 +225,7 @@ const InternalFunctions = {
 
           isUpdating = false;
         },
-        node.easeTime ? node.easeTime * 2 : 0
+        node.easeTime ? node.easeTime * 2 : 0,
       );
     });
   },
@@ -343,7 +343,7 @@ export const CinematicCam = {
         38.68716812133789,
         false,
         false,
-        false
+        false,
       );
 
       const points = getPointsInCircle(8, 2, {

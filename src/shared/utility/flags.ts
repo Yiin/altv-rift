@@ -3,10 +3,7 @@ type Flags = Permissions;
 /**
  * Verify if a bitwise flag is enabled.
  */
-export function isFlagEnabled(
-  flags: Flags | number,
-  flagToCheck: Flags | number
-): boolean {
+export function isFlagEnabled(flags: Flags | number, flagToCheck: Flags | number): boolean {
   const currentFlags: number = flags as number;
   const currentFlagToCheck: number = flagToCheck as number;
 

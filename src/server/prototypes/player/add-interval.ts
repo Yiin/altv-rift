@@ -5,7 +5,7 @@ declare module "@altv/server" {
     addInterval: (
       this: Player,
       callback: (...args: any[]) => void,
-      interval: number
+      interval: number,
     ) => alt.Timers.Interval;
   }
 }

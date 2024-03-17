@@ -8,7 +8,7 @@ export function drawBar(
   r: number,
   g: number,
   b: number,
-  a: number
+  a: number,
 ) {
   const healthWidth = value * 0.0005 * scale;
   game.drawRect(
@@ -20,7 +20,7 @@ export function drawBar(
     g,
     b,
     a,
-    false
+    false,
   );
 }
 
@@ -32,7 +32,7 @@ export function drawBarBackground(
   r: number,
   g: number,
   b: number,
-  a: number
+  a: number,
 ) {
   const width = value * 0.0005 * scale;
   game.drawRect(
@@ -44,7 +44,7 @@ export function drawBarBackground(
     0,
     0,
     255,
-    false
+    false,
   );
   game.drawRect(0, lineHeight + position * lineHeight, width, lineHeight / 3, r, g, b, a, false);
 }

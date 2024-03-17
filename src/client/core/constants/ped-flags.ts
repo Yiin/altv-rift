@@ -65,7 +65,7 @@ export enum PED_CONFIG_FLAG {
   InVehicle, // is in a vehicle
   OnMount,
   AttachedToVehicle, // is attached to a vehicle
-  IsSwimming, // is ped swimming in water  
+  IsSwimming, // is ped swimming in water
   WasSwimming, // was the ped swimming in water last frame
   IsSkiing, // is the ped skiing
   IsSitting, // is the ped sitting
@@ -116,9 +116,9 @@ export enum PED_CONFIG_FLAG {
   KeepWeaponHolsteredUnlessFired, // Ignores the creation of the weapon object unless the gun is shot.
   ForceScriptControlledKnockout, // Forces a melee knockout state for the victim ped
   FallOutOfVehicleWhenKilled, // Forces a ped to fall out of a vehicle when killed
-  GetOutBurningVehicle, // If set, a ped will escape a burning vehicle they are inside 
+  GetOutBurningVehicle, // If set, a ped will escape a burning vehicle they are inside
   BumpedByPlayer, // Whether this ped has been bumped by the player.
-  RunFromFiresAndExplosions, // If set, a ped will run away from fires or potential explosions 
+  RunFromFiresAndExplosions, // If set, a ped will run away from fires or potential explosions
   TreatAsPlayerDuringTargeting, // If set, the ped will be given the same boost a player gets in the targeting scoring system.
   IsHandCuffed, // indicates if the ped is currently hand cuffed
   IsAnkleCuffed, // indicates if the ped is currently ankle cuffed
@@ -323,7 +323,7 @@ export enum PED_CONFIG_FLAG {
   ForcePoseCharacterCloth, // If set, default cloth pose will be applied if is available in the character cloth when the cloth is created.
   HasClothCollisionBounds, // If set, ped will use cloth collision bounds.
   HasHighHeels, // Set when the ped has high heels
-  TreatAsAmbientPedForDriverLockOn, // If set, this force player ped to treat this ped as an ambient target rather than a mission ped for driver lock on 
+  TreatAsAmbientPedForDriverLockOn, // If set, this force player ped to treat this ped as an ambient target rather than a mission ped for driver lock on
   DontBehaveLikeLaw, // Currently used to prevent security peds from behaving like police (they will not report wanted position, can attack without WL, etc)
   SpawnedAtScenario, // If set, the ped was originally spawned at a scenario point.
   DisablePoliceInvestigatingBody, // If set, police will not perform the CTaskShockingPoliceInvestigate Behavior on the ped
@@ -400,7 +400,7 @@ export enum PED_CONFIG_FLAG {
   KeepTargetLossResponseOnCleanup, // On cleanup the ped will not reset their target loss response
   PlayersDontDragMeOutOfCar, // Similar to DontDragMeOutCar except it only prevents players from dragging the ped out and allows AI to still do so
   BroadcastRepondedToThreatWhenGoingToPointShooting, // Whenever the ped starts shooting while going to a point, it trigger a responded to threat broadcast
-  IgnorePedTypeForIsFriendlyWith, // If this is set then IsFriendlyWith will ignore the ped type checks (i.e. two PEDTYPE_COP peds are not automatically friendly) 
+  IgnorePedTypeForIsFriendlyWith, // If this is set then IsFriendlyWith will ignore the ped type checks (i.e. two PEDTYPE_COP peds are not automatically friendly)
   TreatNonFriendlyAsHateWhenInCombat, // Any non friendly ped will be considered as hated instead
   DontLeaveVehicleIfLeaderNotInVehicle, // Supresses exit vehicle task being created in CEventLeaderExitedCarAsDriver::CreateResponseTask."
   ChangeFromPermanentToAmbientPopTypeOnMigration, // Change ped to ambient pop type on migration."
@@ -907,7 +907,7 @@ export enum PED_RESET_FLAG {
   DisableMotionBaseVelocityOverride,
   FPSSwimUseSwimMotionTask, // Set to true when we are pressing forward on the left stick in FPS mode so we switch from Aiming to Swimmimg/Diving motion tasks
   FPSSwimUseAimingMotionTask, // Set to true when we are strafing in water in FPS mode so we use the motion aiming task
-  FiringWeaponWhenReady, // set when ped has decided to fire weapon when ready, used in FPS mode      
+  FiringWeaponWhenReady, // set when ped has decided to fire weapon when ready, used in FPS mode
   IsBlindFiring, // True if the blind fire task is running
   IsPeekingFromCover, // True if the ped is peeking in cover
   TaskSkipProcessPreComputeImpacts, // True to bail out of ProcessPreComputeImpacts
@@ -921,15 +921,15 @@ export enum PED_RESET_FLAG {
   InContactWithDeepSurface, // ped is in contact with GTA_DEEP_SURFACE_TYPE bounds
   DontSuppressUseNavMeshToNavigateToVehicleDoorWhenVehicleInWater,
   IncludePedReferenceVelocityWhenFiringProjectiles, // Add on the ped's velocity to the projectile's initial velocity.
-  IsDoingCoverOutroToPeek, //     
+  IsDoingCoverOutroToPeek, //
   InstantBlendToAimNoSettle,
   ForcePreCameraAnimUpdate, // Force a pre camera animation update if the ped is the first person camera target during the pre camera update
   DisableHelmetCullFPS, // Disables PV_FLAG_HIDE_IN_FIRST_PERSON from culling the prop in CPedPropsMgr::RenderPropsInternal
-  ShouldIgnoreCoverAutoHeadingCorrection, //  
+  ShouldIgnoreCoverAutoHeadingCorrection, //
   DisableReticuleInCoverThisFrame,
   ForceScriptedCameraLowCoverAngleWhenEnteringCover,
   DisableCameraConstraintFallBackThisFrame,
-  DisableFPSArmIK, // Disables FPS arm IK in CTaskPlayerOnFoot::IsStateValidForFPSIK    
+  DisableFPSArmIK, // Disables FPS arm IK in CTaskPlayerOnFoot::IsStateValidForFPSIK
   DisableRightArmIKInCoverOutroFPS, // Turn off right arm IK during cover outros in FPS mode when set
   DoFPSSprintBreakOut,
   DoFPSJumpBreakOut,

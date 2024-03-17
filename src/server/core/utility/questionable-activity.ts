@@ -3,7 +3,7 @@ import { Player } from "@altv/server";
 export function checkForQuestionableActivity(
   player: Player,
   isQuestionable: boolean,
-  context: string
+  context: string,
 ) {
   if (isQuestionable) {
     player.kick(`Questionable activity. (${context})`);

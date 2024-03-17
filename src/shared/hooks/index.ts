@@ -24,7 +24,7 @@ interface Hookable<F extends (...args: any) => any> {
 }
 
 export function createHookableFunction<F extends (...args: any) => any>(
-  options: HookableFunctionOptions<F> = { defaultReturn: undefined as ReturnType<F> }
+  options: HookableFunctionOptions<F> = { defaultReturn: undefined as ReturnType<F> },
 ): Hookable<F> {
   const handlers: HookFunction<F>[] = [];
 

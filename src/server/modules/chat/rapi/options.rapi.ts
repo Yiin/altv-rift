@@ -9,7 +9,7 @@ import { MountService, WindowService } from "../services";
 export function updateOption(
   player: Player,
   key: keyof (ClientOptions & WindowOptions),
-  value: (ClientOptions & WindowOptions)[keyof (ClientOptions & WindowOptions)]
+  value: (ClientOptions & WindowOptions)[keyof (ClientOptions & WindowOptions)],
 ) {
   container
     .resolve(MountService)
@@ -21,7 +21,7 @@ export function updateOption(
  */
 export function updateOptionAll(
   key: keyof (ClientOptions & WindowOptions),
-  value: (ClientOptions & WindowOptions)[keyof (ClientOptions & WindowOptions)]
+  value: (ClientOptions & WindowOptions)[keyof (ClientOptions & WindowOptions)],
 ) {
   Player.all.forEach((player) => updateOption(player, key, value));
 }

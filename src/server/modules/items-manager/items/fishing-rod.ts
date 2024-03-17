@@ -1,6 +1,11 @@
 import alt from "@altv/server";
 import { toRaw } from "vue";
-import { GroundItemSource, InventoryItemSource, ItemSource, ItemSourceOrigin } from "@shared/interfaces";
+import {
+  GroundItemSource,
+  InventoryItemSource,
+  ItemSource,
+  ItemSourceOrigin,
+} from "@shared/interfaces";
 import {
   FishBaitItem,
   FishingRodItem,
@@ -13,13 +18,20 @@ import { dropItemOnTheGround } from "../dropped-items";
 
 export function useFishBaitOnFishingRod(
   fishingRodSource: ItemSource,
-  fishBaitSource: InventoryItemSource | GroundItemSource
+  fishBaitSource: InventoryItemSource | GroundItemSource,
 ) {
   const fishingRod = findItem(fishingRodSource);
   const fishBait = findItem(fishBaitSource);
-  const fishBaitInventory = fishBaitSource.origin === ItemSourceOrigin.Ground ? null : findInventoryByItemSource(fishBaitSource);
+  const fishBaitInventory =
+    fishBaitSource.origin === ItemSourceOrigin.Ground
+      ? null
+      : findInventoryByItemSource(fishBaitSource);
 
-  if (!fishingRod || !fishBait || (fishBaitSource.origin !== ItemSourceOrigin.Ground && !fishBaitInventory)) {
+  if (
+    !fishingRod ||
+    !fishBait ||
+    (fishBaitSource.origin !== ItemSourceOrigin.Ground && !fishBaitInventory)
+  ) {
     return false;
   }
 
@@ -27,7 +39,10 @@ export function useFishBaitOnFishingRod(
     return false;
   }
 
-  const droppedItemPos = fishBaitSource.origin === ItemSourceOrigin.Ground ? alt.VirtualEntity.getByID(fishBaitSource.originId)?.pos : null;
+  const droppedItemPos =
+    fishBaitSource.origin === ItemSourceOrigin.Ground
+      ? alt.VirtualEntity.getByID(fishBaitSource.originId)?.pos
+      : null;
 
   removeItem(fishBaitSource);
 
@@ -77,7 +92,7 @@ export function removeBaitFromFishingRod(source: ItemSource) {
   // Fishing rod is equipped
   if (source.origin === ItemSourceOrigin.PlayerEquipment) {
     const player = alt.Player.all.find(
-      (player): player is InGamePlayer => player.character?.id === source.originId
+      (player): player is InGamePlayer => player.character?.id === source.originId,
     );
 
     if (!player) {
@@ -121,7 +136,7 @@ export function removeBaitFromFishingRod(source: ItemSource) {
 
 export function useFishBaitItemOnFishingRoadItem(
   fishingRod: FishingRodItem,
-  fishBait: FishBaitItem
+  fishBait: FishBaitItem,
 ) {
   // Different kind of bait, swap
   if (fishingRod.bait && fishingRod.bait.key !== fishBait.key) {

@@ -89,7 +89,7 @@ function searchForAction() {
             const [inScreen, x, y] = game.getScreenCoordFromWorldCoord(
               trunkPosition.x,
               trunkPosition.y,
-              trunkPosition.z
+              trunkPosition.z,
             );
 
             if (inScreen) {
@@ -99,7 +99,7 @@ function searchForAction() {
                   text: "Open trunk",
                   screenPos: { x: x * getScreenResolution().x, y: y * getScreenResolution().y },
                 },
-                onAction() { },
+                onAction() {},
               };
               return;
             }
@@ -109,7 +109,7 @@ function searchForAction() {
         searchForAction,
         {
           skipFirstCheck: true,
-        }
+        },
       );
     }
   }, 300);

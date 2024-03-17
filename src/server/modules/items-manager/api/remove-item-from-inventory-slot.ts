@@ -5,7 +5,7 @@ import { Item, isStackable, createItem } from "@shared/modules/items";
 export function removeItemFromInventorySlot(
   inventory: Inventory,
   slot: number,
-  amount = 0
+  amount = 0,
 ): Item | null {
   const inventoryItem = getInventoryItemInSlot(inventory, slot);
 
@@ -22,7 +22,7 @@ export function removeItemFromInventorySlot(
   if (!isStackable(item) || item.amount - amount === 0 || amount <= 0) {
     inventory.items.splice(
       inventory.items.findIndex((item) => item.slot === slot),
-      1
+      1,
     );
     return item;
   }

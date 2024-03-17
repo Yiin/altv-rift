@@ -1,6 +1,7 @@
 import { Item, registerItems } from "@shared/modules/items";
 import { makeKeys } from "@shared/utility/make-keys";
-const RIGHTHAND_ITEMS: Record<string, RightHandItemInfo> = (await import("./righthand.json")).default as any;
+const RIGHTHAND_ITEMS: Record<string, RightHandItemInfo> = (await import("./righthand.json"))
+  .default as any;
 
 export const RightHand = makeKeys<RightHandItemKey>()({
   MaleAquaHippyBracelet: "DLC_MP_SUM23_M_PRIGHT_WRIST_0_0",

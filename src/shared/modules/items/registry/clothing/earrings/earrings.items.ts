@@ -1,6 +1,7 @@
 import { Item, registerItems } from "@shared/modules/items";
 import { makeKeys } from "@shared/utility/make-keys";
-const EARRINGS_ITEMS: Record<string, EarringsItemInfo> = (await import("./earrings.json")).default as any;
+const EARRINGS_ITEMS: Record<string, EarringsItemInfo> = (await import("./earrings.json"))
+  .default as any;
 
 export const Earrings = makeKeys<EarringsItemKey>()({
   FemaleGrayEarpiece: "DLC_MP_HEIST_F_EAR0_0",

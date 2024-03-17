@@ -1,6 +1,22 @@
 import _ from "lodash";
 import { AirDropType } from "@shared/modules/air-drops";
-import { ItemKey, WeaponItemKey, AmmoItemKey, ItemTier, getItemTier, isItemKeyAmmo, isItemKeyFirearmWeapon, createItem, ItemGrade, isItemKeyThrowableWeapon, isItemKeyMeleeWeapon, FirearmWeaponItemKey, getAmmoKeyForAmmoGroup, getWeaponAmmoGroup, getWeaponClipSize } from "@shared/modules/items";
+import {
+  ItemKey,
+  WeaponItemKey,
+  AmmoItemKey,
+  ItemTier,
+  getItemTier,
+  isItemKeyAmmo,
+  isItemKeyFirearmWeapon,
+  createItem,
+  ItemGrade,
+  isItemKeyThrowableWeapon,
+  isItemKeyMeleeWeapon,
+  FirearmWeaponItemKey,
+  getAmmoKeyForAmmoGroup,
+  getWeaponAmmoGroup,
+  getWeaponClipSize,
+} from "@shared/modules/items";
 import { rollItem } from "@shared/utility/random";
 
 /**
@@ -13,20 +29,23 @@ export default {
     return _.random(6, 10);
   },
   filterItemKey(itemKey: ItemKey, seed: number): itemKey is WeaponItemKey | AmmoItemKey {
-    const matchesWeapon = (
-      isItemKeyFirearmWeapon(itemKey)
-      && getItemTier(itemKey) === rollItem([
-        [1, ItemTier.S],
-        [3, ItemTier.A],
-        [5, ItemTier.B]
-      ], seed)
-    );
+    const matchesWeapon =
+      isItemKeyFirearmWeapon(itemKey) &&
+      getItemTier(itemKey) ===
+        rollItem(
+          [
+            [1, ItemTier.S],
+            [3, ItemTier.A],
+            [5, ItemTier.B],
+          ],
+          seed,
+        );
 
-    const matchesAmmo = (
-      isItemKeyAmmo(itemKey) && [
-        ItemTier.E, ItemTier.D, ItemTier.C, ItemTier.B, ItemTier.A, ItemTier.S
-      ].includes(getItemTier(itemKey))
-    );
+    const matchesAmmo =
+      isItemKeyAmmo(itemKey) &&
+      [ItemTier.E, ItemTier.D, ItemTier.C, ItemTier.B, ItemTier.A, ItemTier.S].includes(
+        getItemTier(itemKey),
+      );
 
     return matchesWeapon || matchesAmmo;
   },
@@ -46,5 +65,5 @@ export default {
     return createItem(itemKey, {
       amount: ~~(Math.random() * 8) * 100 + 200,
     });
-  }
-}
+  },
+};

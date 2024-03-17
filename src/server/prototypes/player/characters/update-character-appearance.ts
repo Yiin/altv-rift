@@ -119,7 +119,7 @@ alt.Player.prototype.updateCharacterAppearance = function (appearance: Appearanc
         +id,
         [1, 2, 10].includes(+id) ? 1 : [5, 8].includes(+id) ? 2 : 0,
         overlay.color1!,
-        overlay.color2 ?? overlay.color1!
+        overlay.color2 ?? overlay.color1!,
       );
     }
   }

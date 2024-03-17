@@ -24,7 +24,6 @@ const positions = [
   { x: 4942.02294921875, y: -5206.12158203125, z: 2.4374868869781494 },
 ];
 
-
 // "CS_JohnnyKlebitz",
 // "CS_Josef",
 // "CSB_HelmsmanPavel",
