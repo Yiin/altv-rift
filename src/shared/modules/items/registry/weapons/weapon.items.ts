@@ -46,6 +46,20 @@ export function getWeaponStats(key: WeaponItemKey) {
   return getWeaponDataByItemKey(key)?.Stats;
 }
 
+export function getWeaponModel(key: WeaponItemKey) {
+  const data = getWeaponDataByItemKey(key);
+
+  if (!data) {
+    return;
+  }
+
+  if (!("ModelHashKey" in data)) {
+    return;
+  }
+
+  return data.ModelHashKey;
+}
+
 export function getWeaponHash(key: WeaponItemKey) {
   return getItemInfoByKey(key).hash;
 }
@@ -58,7 +72,7 @@ export function getWeaponAmmoGroup(key: FirearmWeaponItemKey) {
   return getItemInfoByKey(key).ammoGroup;
 }
 
-export function isItemKeyWeapon(key: ItemKey): key is WeaponItemKey {
+export function isItemKeyWeapon(key: string): key is WeaponItemKey {
   return isItemKeyFirearmWeapon(key) || isItemKeyThrowableWeapon(key) || isItemKeyMeleeWeapon(key);
 }
 

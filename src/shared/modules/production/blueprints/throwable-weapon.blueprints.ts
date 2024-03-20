@@ -20,6 +20,7 @@ registerBlueprint({
   name: `${getItemName(ThrowableWeapon.GRENADE)} blueprint`,
   recipes: [
     {
+      durationSeconds: 3,
       item: {
         key: ThrowableWeapon.GRENADE,
         grade: ItemGrade.BASE,
@@ -38,6 +39,7 @@ registerBlueprint({
   name: `${getItemName(ThrowableWeapon.STICKYBOMB)} blueprint`,
   recipes: [
     {
+      durationSeconds: 3,
       item: {
         key: ThrowableWeapon.STICKYBOMB,
         grade: ItemGrade.BASE,
@@ -57,6 +59,7 @@ registerBlueprint({
   name: `${getItemName(ThrowableWeapon.SMOKEGRENADE)} blueprint`,
   recipes: [
     {
+      durationSeconds: 3,
       item: {
         key: ThrowableWeapon.SMOKEGRENADE,
         grade: ItemGrade.BASE,
@@ -75,6 +78,7 @@ registerBlueprint({
   name: `${getItemName(ThrowableWeapon.JERRYCAN)} blueprint`,
   recipes: [
     {
+      durationSeconds: 3,
       item: {
         key: ThrowableWeapon.JERRYCAN,
         grade: ItemGrade.BASE,
@@ -94,6 +98,7 @@ registerBlueprint({
   name: `${getItemName(ThrowableWeapon.MOLOTOV)} blueprint`,
   recipes: [
     {
+      durationSeconds: 3,
       item: {
         key: ThrowableWeapon.MOLOTOV,
         grade: ItemGrade.BASE,
@@ -113,6 +118,7 @@ registerBlueprint({
   name: `${getItemName(ThrowableWeapon.HAZARDCAN)} blueprint`,
   recipes: [
     {
+      durationSeconds: 3,
       item: {
         key: ThrowableWeapon.HAZARDCAN,
         grade: ItemGrade.BASE,
@@ -131,6 +137,7 @@ registerBlueprint({
   name: `${getItemName(ThrowableWeapon.BZGAS)} blueprint`,
   recipes: [
     {
+      durationSeconds: 3,
       item: {
         key: ThrowableWeapon.BZGAS,
         grade: ItemGrade.BASE,
@@ -149,6 +156,7 @@ registerBlueprint({
   name: `${getItemName(ThrowableWeapon.FLARE)} blueprint`,
   recipes: [
     {
+      durationSeconds: 3,
       item: {
         key: ThrowableWeapon.FLARE,
         grade: ItemGrade.BASE,
@@ -168,6 +176,7 @@ registerBlueprint({
   name: `${getItemName(ThrowableWeapon.PROXMINE)} blueprint`,
   recipes: [
     {
+      durationSeconds: 3,
       item: {
         key: ThrowableWeapon.PROXMINE,
         grade: ItemGrade.BASE,
@@ -186,6 +195,7 @@ registerBlueprint({
   name: `${getItemName(ThrowableWeapon.PIPEBOMB)} blueprint`,
   recipes: [
     {
+      durationSeconds: 3,
       item: {
         key: ThrowableWeapon.PIPEBOMB,
         grade: ItemGrade.BASE,

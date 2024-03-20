@@ -29,6 +29,7 @@ watch(
   () => {
     if (item.value?.key.endsWith(`_logs`)) {
       noImage.value = true;
+      return;
     }
 
     fetch(getItemImage(item.value.key)).then((result) => {

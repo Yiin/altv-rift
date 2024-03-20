@@ -535,6 +535,7 @@ Object.entries({
     name: `${getItemName(weaponItemKey)} components blueprint`,
     description: `Lets you craft weapon components for ${getItemName(weaponItemKey)}`,
     recipes: components.map((component) => ({
+      durationSeconds: 2,
       item: {
         key: component,
       },

@@ -509,6 +509,24 @@ export const firearmWeapons = registerItems<FirearmWeaponItemInfo>([
     },
   },
   {
+    key: FirearmWeapon.EMPLAUNCHER,
+    hash: 3676729658,
+    name: getWeaponData(3676729658).Name,
+    description: getWeaponData(3676729658).Description,
+    group: WeaponGroup.HEAVY,
+    ammoGroup: AmmoGroup.GRENADE_LAUNCHER,
+    clipSize: 1,
+    price: 65000,
+    tier: ItemTier.S,
+    comparisonStats: {
+      damage: 95,
+      rate: 10,
+      accuracy: 15,
+      range: 55,
+      overall: 39,
+    },
+  },
+  {
     key: FirearmWeapon.FIREEXTINGUISHER,
     hash: 101631238,
     name: getWeaponData(101631238).Name,
@@ -650,6 +668,24 @@ export const firearmWeapons = registerItems<FirearmWeaponItemInfo>([
       accuracy: 50,
       range: 35,
       overall: 37,
+    },
+  },
+  {
+    key: FirearmWeapon.HEAVYRIFLE,
+    hash: 3347935668,
+    name: getWeaponData(3347935668).Name,
+    description: getWeaponData(3347935668).Description,
+    group: WeaponGroup.ASSAULT_RIFLE,
+    ammoGroup: AmmoGroup.ASSAULT_RIFLE,
+    clipSize: 30,
+    price: 450000,
+    tier: ItemTier.S,
+    comparisonStats: {
+      damage: 40,
+      rate: 50,
+      accuracy: 40,
+      range: 45,
+      overall: 43.0,
     },
   },
   {
@@ -974,6 +1010,24 @@ export const firearmWeapons = registerItems<FirearmWeaponItemInfo>([
       accuracy: 40,
       range: 25,
       overall: 30.6,
+    },
+  },
+  {
+    key: FirearmWeapon.PRECISIONRIFLE,
+    hash: 1853742572,
+    name: getWeaponData(1853742572).Name,
+    description: getWeaponData(1853742572).Description,
+    group: WeaponGroup.SNIPER_RIFLE,
+    ammoGroup: AmmoGroup.SNIPER_RIFLE,
+    clipSize: 10,
+    price: 450000,
+    tier: ItemTier.B,
+    comparisonStats: {
+      damage: 88,
+      rate: 27,
+      accuracy: 70,
+      range: 95,
+      overall: 58,
     },
   },
   {
@@ -1323,7 +1377,7 @@ export const firearmWeapons = registerItems<FirearmWeaponItemInfo>([
 /**
  * Type guards for firearm weapons.
  */
-export function isItemKeyFirearmWeapon(key: ItemKey): key is FirearmWeaponItemKey {
+export function isItemKeyFirearmWeapon(key: string): key is FirearmWeaponItemKey {
   return firearmWeapons.has(key as FirearmWeaponItemKey);
 }
 

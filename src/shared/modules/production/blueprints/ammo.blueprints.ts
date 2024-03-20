@@ -35,6 +35,7 @@ export type AmmoBlueprintKey = Brand<string, "AmmoBlueprintKey">;
     name: `${getItemName(itemKey)} blueprint`,
     recipes: [
       {
+        durationSeconds: 2,
         item: {
           key: itemKey,
           amount: 10,
@@ -57,6 +58,7 @@ export type AmmoBlueprintKey = Brand<string, "AmmoBlueprintKey">;
     name: `${getItemName(itemKey)} blueprint`,
     recipes: [
       {
+        durationSeconds: 2,
         item: {
           key: itemKey,
           amount: 10,
@@ -83,6 +85,7 @@ export type AmmoBlueprintKey = Brand<string, "AmmoBlueprintKey">;
     name: `${getItemName(itemKey)} blueprint`,
     recipes: [
       {
+        durationSeconds: 2,
         item: {
           key: itemKey,
           amount: 5,

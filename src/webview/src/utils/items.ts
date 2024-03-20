@@ -1,8 +1,17 @@
-import { isItemKeyClothing, isItemKeyPants } from "@shared/modules/items";
+import {
+  isItemKeyClothing,
+  isItemKeyFirearmWeapon,
+  isItemKeyPants,
+  isItemKeyThrowableWeapon,
+  isItemKeyWeapon,
+} from "@shared/modules/items";
 
-export const getItemImage = (key: string) => {
+export const getItemImage = (key: string, fullSize = false) => {
   if (isItemKeyClothing(key)) {
     return `./assets/items/clothing/${key}.png`;
+  }
+  if (isItemKeyWeapon(key) && !fullSize) {
+    return `./assets/items/${key}-icon.png`;
   }
   return `./assets/items/${key}.png`;
 };
@@ -25,6 +34,9 @@ export const getItemIconScale = (item: { key: string }) => {
   if (isItemKeyClothing(item.key)) {
     return "contain";
   }
+  if (isItemKeyFirearmWeapon(item.key)) {
+    return "contain";
+  }
   return (
     {
       snowball: "40%",
@@ -42,6 +54,12 @@ export function getItemIconPosition(item: { key: string }) {
 export function getItemClasses(item: { key: string }) {
   if (isItemKeyClothing(item.key)) {
     return "brightness-125";
+  }
+  if (isItemKeyFirearmWeapon(item.key)) {
+    return "brightness-200";
+  }
+  if (isItemKeyThrowableWeapon(item.key)) {
+    return "scale-50";
   }
   return;
 }

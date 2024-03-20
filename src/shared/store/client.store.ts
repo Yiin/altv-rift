@@ -59,6 +59,8 @@ export enum WindowType {
   PLAYER_INVENTORY,
   SHOP,
   LOOT_BOX,
+  WORKBENCH,
+  VEHICLE_SHOP,
 }
 
 export type CurrentWindow = {
@@ -95,10 +97,11 @@ export const getDefaultClientStoreState = (): ClientState => ({
     window:
       "altMock" in globalThis
         ? // browser context
-          {
-            type: WindowType.PLAYER_INVENTORY,
-          }
-        : // game context
+          null
+        : // {
+          //   type: WindowType.PLAYER_INVENTORY,
+          // }
+          // game context
           null,
   },
   conversation: null,

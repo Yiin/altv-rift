@@ -15,6 +15,8 @@ import AreaIndicators from "./area-indicators/AreaIndicators.vue";
 import ActionMenu from "./action-menu/ActionMenu.vue";
 import TargetAction from "./target-action/TargetAction.vue";
 import FishingGame from "./fishing-game/FishingGame.vue";
+import Workbench from "./workbench/Workbench.vue";
+import VehicleShop from "./vehicle-shop/VehicleShop.vue";
 
 const client = useClient();
 </script>
@@ -26,6 +28,8 @@ const client = useClient();
         v-if="[WindowType.PLAYER_INVENTORY, WindowType.SHOP].includes(client.ui.window.type)"
       />
       <LootBox v-if="client.ui.window.type === WindowType.LOOT_BOX" />
+      <VehicleShop v-if="client.ui.window.type === WindowType.VEHICLE_SHOP" />
+      <Workbench v-if="client.ui.window.type === WindowType.WORKBENCH" />
     </template>
     <ActionMenu v-else-if="client.ui.elements.has(UIElement.ACTION_MENU)" />
     <template v-else>

@@ -132,19 +132,19 @@ const combination = computed(() => {
       -->
       <div
         v-if="isItemFirearmWeapon(item) && item.clip"
-        class="flex items-center gap-1"
+        class="mt-2 flex items-center gap-2"
       >
         <v-icon icon="mdi-ammunition" />
         <div>
           <div class="font-bold">
             {{ getItemName(item.clip.key) }}
           </div>
-          <div class="flex items-baseline gap-1">
+          <div class="flex items-baseline">
             <v-icon
               icon="mdi-close"
               size="12"
             />
-            <div class="font-bold text-yellow-500">
+            <div class="-mt-1 font-bold text-yellow-500">
               {{ item.clip.amount }}
             </div>
           </div>

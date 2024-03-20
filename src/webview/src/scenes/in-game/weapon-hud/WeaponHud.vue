@@ -9,7 +9,7 @@ import {
   isWeaponWithClip,
 } from "@shared/modules/items";
 import { useInventory } from "@/store/inventory.store";
-import { getItemImage } from "@/utils/items";
+import { getItemClasses, getItemImage } from "@/utils/items";
 import { useCharacter } from "@/store/synced/character.store";
 
 const inventory = useInventory();
@@ -90,10 +90,12 @@ const weapon = computed(() => {
     v-if="weapon"
     class="absolute right-0 top-1/3 m-10 flex flex-col items-end gap-2"
   >
-    <v-img
-      :height="57"
-      :width="115"
-      :src="getItemImage(weapon.item.key)"
+    <div
+      class="z-max h-40 w-40 origin-bottom-right bg-contain bg-right-bottom"
+      :class="[getItemClasses(weapon.item)]"
+      :style="{
+        backgroundImage: `url(${getItemImage(weapon.item.key, true)})`,
+      }"
     />
     <div class="text-2xl font-bold text-white">{{ weapon.name }}</div>
     <template v-if="weapon.type === 'firearm'">

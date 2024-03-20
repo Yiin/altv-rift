@@ -37,7 +37,7 @@ const MOCK_ITEMS = reactive([
   {
     slot: 4,
     item: {
-      key: "appistol",
+      key: "specialcarbine",
       durability: 100,
       ammo: null,
       components: [],
@@ -364,7 +364,23 @@ export const useInventory = defineStore("inventory", {
         top: null,
         armor: null,
         accessory: null,
-        weapon: null,
+        weapon:
+          "altMock" in globalThis
+            ? ({
+                item: {
+                  key: "grenade",
+                  durability: 100,
+                  ammo: null,
+                  components: [],
+                  tint: 0,
+                },
+                source: {
+                  origin: ItemSourceOrigin.PlayerEquipment,
+                  originId: this.playerId,
+                  equipmentSlot: "weapon",
+                },
+              } as any)
+            : null,
         gloves: null,
         lefthand: null,
         pants: null,
@@ -645,7 +661,14 @@ export const useInventory = defineStore("inventory", {
 
         if (canMoveItem) {
           try {
-            const isSameOrigin = to && isSameSourceOrigin(from, to);
+            const isSameOrigin =
+              to &&
+              (isSameSourceOrigin(from, to) ||
+                [from, to].every((s) =>
+                  [ItemSourceOrigin.PlayerEquipment, ItemSourceOrigin.PlayerInventory].includes(
+                    s.origin,
+                  ),
+                ));
             const isFromGround = from.origin === ItemSourceOrigin.Ground;
             const isSingleItem = !isStackable(slottedItem.item) || slottedItem.item.amount === 1;
 

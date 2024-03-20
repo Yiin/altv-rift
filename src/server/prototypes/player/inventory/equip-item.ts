@@ -91,19 +91,26 @@ alt.Player.prototype.equipItem = function (source) {
 
     const unequippedItem = this.character.equipment[equipmentSlot];
 
-    if (unequippedItem) {
-      if (inventory) {
-        if (!addItemToInventory(inventory, unequippedItem)) {
-          return false;
-        }
-      } else {
-        dropItemOnTheGround(unequippedItem, this.pos);
-      }
-    }
+    const isSameAmmo = unequippedItem?.key === item.key;
 
-    // @ts-expect-error item is guaranteed to be of correct type,
-    // but TS is complaining that e.g. ClothingItem might be on weapon slot
-    this.character.equipment[equipmentSlot] = item;
+    if (isSameAmmo) {
+      // @ts-expect-error
+      this.character.equipment[equipmentSlot].amount += item.amount;
+    } else {
+      if (unequippedItem) {
+        if (inventory) {
+          if (!addItemToInventory(inventory, unequippedItem)) {
+            return false;
+          }
+        } else {
+          dropItemOnTheGround(unequippedItem, this.pos);
+        }
+      }
+
+      // @ts-expect-error item is guaranteed to be of correct type,
+      // but TS is complaining that e.g. ClothingItem might be on weapon slot
+      this.character.equipment[equipmentSlot] = item;
+    }
   }
 
   emit(ServerEvents.FromServer.ITEM_EQUIP, this, item);

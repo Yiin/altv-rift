@@ -18,6 +18,7 @@ registerBlueprint({
   name: `${getItemName(Armor.FemaleBlackUtilityVest)} (F) Blueprint`,
   recipes: [
     {
+      durationSeconds: 5,
       item: {
         key: Armor.FemaleBlackUtilityVest,
         grade: ItemGrade.BASE,
@@ -36,6 +37,7 @@ registerBlueprint({
   name: `${getItemName(Armor.MaleBlackUtilityVest)} (M) Blueprint`,
   recipes: [
     {
+      durationSeconds: 5,
       item: {
         key: Armor.MaleBlackUtilityVest,
         grade: ItemGrade.BASE,

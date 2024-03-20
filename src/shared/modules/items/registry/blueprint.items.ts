@@ -13,13 +13,13 @@ import { makeKeys } from "@shared/utility/make-keys";
 import { Item } from "../types";
 
 export const UnlearnedBlueprint = makeKeys<UnlearnedBlueprintItemKey>()({
-  ...blueprintToBlueprintItemKeys(AmmoBlueprint),
-  ...blueprintToBlueprintItemKeys(ClothingBlueprint),
-  ...blueprintToBlueprintItemKeys(FirearmWeaponBlueprint),
-  ...blueprintToBlueprintItemKeys(ThrowableWeaponBlueprint),
-  ...blueprintToBlueprintItemKeys(MeleeWeaponBlueprint),
-  ...blueprintToBlueprintItemKeys(ToolBlueprint),
-  ...blueprintToBlueprintItemKeys(WeaponComponentBlueprint),
+  ...blueprintKeysToBlueprintItemKeys(AmmoBlueprint),
+  ...blueprintKeysToBlueprintItemKeys(ClothingBlueprint),
+  ...blueprintKeysToBlueprintItemKeys(FirearmWeaponBlueprint),
+  ...blueprintKeysToBlueprintItemKeys(ThrowableWeaponBlueprint),
+  ...blueprintKeysToBlueprintItemKeys(MeleeWeaponBlueprint),
+  ...blueprintKeysToBlueprintItemKeys(ToolBlueprint),
+  ...blueprintKeysToBlueprintItemKeys(WeaponComponentBlueprint),
 });
 
 export type UnlearnedBlueprintItemKey = Brand<string, "UnlearnedBlueprintItemKey">;
@@ -36,7 +36,7 @@ export type BlueprintItemInfo = {
 
 export const blueprints = registerItems<BlueprintItemInfo>(
   getBlueprints().map(({ key, name, description }) => ({
-    key: key as UnlearnedBlueprintItemKey,
+    key: `blueprint_${key}` as UnlearnedBlueprintItemKey,
     name,
     description,
   })),
@@ -56,8 +56,8 @@ export function isItemBlueprint(item: Item): item is BlueprintItem {
 /**
  * Utils
  */
-function blueprintToBlueprintItemKeys<T extends {}>(obj: T) {
+function blueprintKeysToBlueprintItemKeys<T extends {}>(obj: T) {
   return Object.fromEntries(
-    Object.entries(obj).map(([key, value]) => [value, `blueprint_${key}`]),
+    Object.entries(obj).map(([key, value]) => [`blueprint_${key}`, value]),
   ) as T;
 }
