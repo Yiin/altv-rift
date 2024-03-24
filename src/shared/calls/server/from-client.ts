@@ -1,5 +1,7 @@
 import alt from "@altv/shared";
 import { z } from "zod";
+import { EquipmentSlot } from "@shared/interfaces";
+import { schema } from "../validation";
 
 export const FromClient = {
   GET_DISCORD_AUTH_URL: "GET_DISCORD_AUTH_URL",
@@ -14,6 +16,7 @@ export const FromClient = {
   TOGGLE_VEHICLE_DOOR: "TOGGLE_VEHICLE_DOOR",
   OPEN_STORAGE: "OPEN_STORAGE",
   REGISTER_KEY_PRESS: "REGISTER_KEY_PRESS",
+  USE_QUICK_SLOT: "USE_QUICK_SLOT",
 } as const;
 
 export interface CallFromClient<
@@ -36,6 +39,7 @@ export interface CallFromClient<
   ) => void;
   [FromClient.OPEN_STORAGE]: (player: Player, storageId: number) => boolean;
   [FromClient.REGISTER_KEY_PRESS]: (player: Player, key: alt.Enums.KeyCode) => void;
+  [FromClient.USE_QUICK_SLOT]: (player: Player, slot: EquipmentSlot) => boolean;
 }
 
 export const FromClientValidation = {
@@ -70,6 +74,10 @@ export const FromClientValidation = {
   },
   [FromClient.REGISTER_KEY_PRESS]: {
     args: [z.number()],
+  },
+  [FromClient.USE_QUICK_SLOT]: {
+    args: [schema.equipmentSlot],
+    returns: z.boolean(),
   },
 } satisfies Record<
   keyof typeof FromClient,

@@ -34,6 +34,10 @@ export function getWeaponDataByItemKey(key: WeaponItemKey) {
   return WEAPON_DATA[getWeaponHash(key).toString() as WeaponHash];
 }
 
+export function getWeaponHashKey(key: WeaponItemKey) {
+  return getWeaponDataByItemKey(key)?.HashKey;
+}
+
 export function getWeaponComponents(key: WeaponItemKey) {
   return getWeaponDataByItemKey(key)?.Components;
 }

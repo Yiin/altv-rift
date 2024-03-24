@@ -147,7 +147,14 @@ Workbench:
       - Upgrading items:
         - Crafting tables
         - Workbench
-
+  ☐ Quick slots
+    ☐ Weapons
+    ☐ Clothing
+    ☐ Ammo
+    ☐ Tools
+      - Equips the uten and puts previous item in quick slot position
+    ☐ Materials
+      - Can't be equipped
 
 player prototype:
   - learn blueprint
@@ -159,47 +166,3 @@ items:
   ✔ show only categories of blueprints you have learned @done(24-03-17 23:55)
   ✔ make blueprint categories scroll @done(24-03-17 23:54)
   ☐ list learned blueprints in UI
-
-------------------------------------------------------------------------------------------------------------------------
-
-✔ Core Gameplay Mechanics:
-  ✔ NPC Interaction Menu @done
-  ☐ Simplified Quest System
-  ☐ Main Quests - Heists, Races, Bounties
-  ☐ Skill System - Driving, Shooting, Stealth
-  ✔ Personal Inventory System @done
-    ✔ Weapons, Health Kits, Special Items @done
-
-✔ Engagement Features:
-  ☐ Daily Challenges System
-  ☐ Random NPC Tasks
-  ☐ Limited Professions
-
-
-☐ PvP and Team Play:
-  ☐ Basic Territory Control System
-  ☐ Simple Raid Events
-
-☐ Economy and Progression:
-  ☐ Basic Trade System
-  ☐ Simple Upgrade System for Vehicles and Weapons
-  ☐ Clear Rewards and Progression Path
-
-☐ Social and Community Elements:
-  ☐ Player Interaction Mechanisms
-  ☐ Regular Community Events and Competitions
-
-☐ Technical Aspects:
-  ☐ Server Stability and Performance Optimization
-  ☐ Player Feedback System
-
-☐ Launch Preparation:
-  ☐ Final Testing and Debugging
-  ☐ Marketing and Promotion Strategy
-  ☐ Player Guides and Tutorials
-  ☐ Launch Date Announcement
-
-Post-Launch:
-  ☐ Monitor Server Performance
-  ☐ Collect and Analyze Player Feedback
-  ☐ Plan for Post-Launch Updates and Features

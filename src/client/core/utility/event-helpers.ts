@@ -83,7 +83,7 @@ export function everyTick(callback: () => void) {
   ticks.push(tick);
 }
 
-export function onKeyDown(key: alt.Enums.KeyCode, callback: () => void) {
+export function onKeyDown<T extends alt.Enums.KeyCode>(key: T, callback: (key: T) => void) {
   if (registeredKeyDownKeys?.has(key)) {
     throw new Error(`KeyDown ${key} is already registered.`);
   }
@@ -94,7 +94,7 @@ export function onKeyDown(key: alt.Enums.KeyCode, callback: () => void) {
       return;
     }
     if (keyPressed === key) {
-      callback();
+      callback(key);
     }
   });
 

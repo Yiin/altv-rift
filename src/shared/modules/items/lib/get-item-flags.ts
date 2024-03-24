@@ -7,6 +7,7 @@ import {
   isItemKeyMaterial,
   isItemKeyNote,
   isItemKeyThrowableWeapon,
+  isItemKeyWeaponComponent,
 } from "../registry";
 import { Item, ItemKey, StackableItem } from "../types";
 import { getItemKeyEquipmentSlot } from "./get-item-equipment-slot";
@@ -28,7 +29,8 @@ export function getItemFlagsByKey(key: ItemKey): ItemFlags {
     isItemKeyAmmo(key) ||
     isItemKeyConsumable(key) ||
     isItemKeyMaterial(key) ||
-    isItemKeyFishBait(key)
+    isItemKeyFishBait(key) ||
+    isItemKeyWeaponComponent(key)
   ) {
     flags |= ItemFlags.IsStackable;
   }

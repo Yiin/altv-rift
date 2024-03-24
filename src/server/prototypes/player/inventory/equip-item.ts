@@ -4,6 +4,7 @@ import {
   GroundItemSource,
   InventoryItemSource,
   ItemSourceOrigin,
+  PlayerEquipmentItemSource,
 } from "@shared/interfaces";
 import { ServerEvents } from "@shared/events/server";
 import {
@@ -26,7 +27,11 @@ import { dropItemOnTheGround } from "@/modules/items-manager/dropped-items";
 
 declare module "@altv/server" {
   export interface Player {
-    equipItem(this: InGamePlayer, source: InventoryItemSource | GroundItemSource): boolean;
+    equipItem(
+      this: InGamePlayer,
+      source: PlayerEquipmentItemSource | InventoryItemSource | GroundItemSource,
+      equipmentSlot?: EquipmentSlot,
+    ): boolean;
   }
 }
 
@@ -36,14 +41,34 @@ declare module "@altv/server" {
  * NOTE:
  *   This method doesn't check if the source is available for the player.
  */
-alt.Player.prototype.equipItem = function (source) {
+alt.Player.prototype.equipItem = function (source, equipmentSlot) {
   const item = findItem(source, this);
 
   if (!item) {
     return false;
   }
 
-  const equipmentSlotOrFishbait = isItemFishBait(item) ? "fishbait" : getItemEquipmentSlot(item);
+  const isFromQuickSlot =
+    source.origin === ItemSourceOrigin.PlayerEquipment &&
+    [
+      EquipmentSlot.QuickSlot1,
+      EquipmentSlot.QuickSlot2,
+      EquipmentSlot.QuickSlot3,
+      EquipmentSlot.QuickSlot4,
+    ].includes(source.equipmentSlot);
+
+  const isToQuickSlot = [
+    EquipmentSlot.QuickSlot1,
+    EquipmentSlot.QuickSlot2,
+    EquipmentSlot.QuickSlot3,
+    EquipmentSlot.QuickSlot4,
+  ].includes(equipmentSlot);
+
+  const equipmentSlotOrFishbait = isToQuickSlot
+    ? equipmentSlot
+    : isItemFishBait(item)
+      ? "fishbait"
+      : getItemEquipmentSlot(item);
 
   if (!equipmentSlotOrFishbait) {
     return false;
@@ -98,6 +123,15 @@ alt.Player.prototype.equipItem = function (source) {
       this.character.equipment[equipmentSlot].amount += item.amount;
     } else {
       if (unequippedItem) {
+        const isQuickSlot =
+          source.origin === ItemSourceOrigin.PlayerEquipment &&
+          [
+            EquipmentSlot.QuickSlot1,
+            EquipmentSlot.QuickSlot2,
+            EquipmentSlot.QuickSlot3,
+            EquipmentSlot.QuickSlot4,
+          ].includes(source.equipmentSlot);
+
         if (inventory) {
           if (!addItemToInventory(inventory, unequippedItem)) {
             return false;
@@ -113,6 +147,8 @@ alt.Player.prototype.equipItem = function (source) {
     }
   }
 
-  emit(ServerEvents.FromServer.ITEM_EQUIP, this, item);
+  if (!isToQuickSlot) {
+    emit(ServerEvents.FromServer.ITEM_EQUIP, this, item);
+  }
   return true;
 };

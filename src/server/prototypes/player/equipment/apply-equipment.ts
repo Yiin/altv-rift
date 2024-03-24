@@ -1,21 +1,25 @@
 import alt from "@altv/server";
 import { ServerEvents } from "@shared/events/server";
-import { Equipment } from "@shared/modules/items";
+import { EquipmentSlot } from "@shared/interfaces";
 import { InGamePlayer, isInGame } from "@/core/utility/assertions";
 import { emit } from "@/core/events/emit";
 
 declare module "@altv/server" {
   export interface Player {
-    applyEquipment(this: InGamePlayer): void;
+    applyEquipment(this: InGamePlayer, equipmentSlot?: EquipmentSlot): void;
   }
 }
 
-alt.Player.prototype.applyEquipment = function () {
+alt.Player.prototype.applyEquipment = function (equipmentSlot) {
   for (const equipmentSlot in this.character.equipment) {
-    const slot = equipmentSlot as keyof Equipment;
+    const slot = equipmentSlot as EquipmentSlot;
     const item = this.getEquipedItemInSlot(slot);
 
     if (!item) {
+      continue;
+    }
+
+    if (equipmentSlot && equipmentSlot !== slot) {
       continue;
     }
 

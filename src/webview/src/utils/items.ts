@@ -1,4 +1,5 @@
 import {
+  getWeaponHashKey,
   isItemKeyClothing,
   isItemKeyFirearmWeapon,
   isItemKeyPants,
@@ -11,7 +12,7 @@ export const getItemImage = (key: string, fullSize = false) => {
     return `./assets/items/clothing/${key}.png`;
   }
   if (isItemKeyWeapon(key) && !fullSize) {
-    return `./assets/items/${key}-icon.png`;
+    return `./assets/items/weapons/${getWeaponHashKey(key)}.png`;
   }
   return `./assets/items/${key}.png`;
 };
@@ -56,7 +57,7 @@ export function getItemClasses(item: { key: string }) {
     return "brightness-125";
   }
   if (isItemKeyFirearmWeapon(item.key)) {
-    return "brightness-200";
+    return "brightness-150";
   }
   if (isItemKeyThrowableWeapon(item.key)) {
     return "scale-50";

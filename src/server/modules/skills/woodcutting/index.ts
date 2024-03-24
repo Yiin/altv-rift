@@ -1,3 +1,5 @@
 //// @index('./*.ts', f => `import "${f.path}";`)
-import "./woodcutting.skill";
+import "./woodcutting.api";
+import "./woodcutting.controller";
+import "./woodcutting.module";
 // @endindex

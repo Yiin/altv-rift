@@ -1,7 +1,14 @@
 import alt from "@altv/server";
 import { ServerCall } from "@shared/calls/server";
-import { CombineType, createItem, getCombineType } from "@shared/modules/items";
-import { ItemSourceOrigin } from "@shared/interfaces";
+import {
+  CombineType,
+  createItem,
+  getCombineType,
+  isItemEquipable,
+  isItemUsable,
+  isItemWeapon,
+} from "@shared/modules/items";
+import { EquipmentSlot, ItemSourceOrigin } from "@shared/interfaces";
 import { getInventoryItemInSlot } from "@shared/modules/inventory";
 import { rpc } from "@/core/rpc";
 import { needsToBeInGame } from "@/core/utility/assertions";
@@ -226,7 +233,7 @@ rpc.registerWebview(ServerCall.FromWebview.MOVE_ITEM, (player, from, to, amount 
         return false;
       }
 
-      return player.equipItem(from);
+      return player.equipItem(from, to.equipmentSlot);
     }
 
     /**
@@ -266,7 +273,7 @@ rpc.registerWebview(ServerCall.FromWebview.MOVE_ITEM, (player, from, to, amount 
       return false;
     }
 
-    return player.equipItem(from);
+    return player.equipItem(from, to.equipmentSlot);
   }
 
   /**
@@ -370,4 +377,41 @@ rpc.registerWebview(ServerCall.FromWebview.TAKE_ALL_ITEMS, async (player, storag
       removeItemFromInventorySlot(storageInventory, item.slot);
     }
   }
+});
+
+rpc.registerClient(ServerCall.FromClient.USE_QUICK_SLOT, (player, slot) => {
+  needsToBeInGame(player);
+
+  const isQuickSlot = [
+    EquipmentSlot.QuickSlot1,
+    EquipmentSlot.QuickSlot2,
+    EquipmentSlot.QuickSlot3,
+    EquipmentSlot.QuickSlot4,
+  ].includes(slot);
+
+  if (!isQuickSlot) {
+    return false;
+  }
+
+  const item = player.getEquipedItemInSlot(slot);
+
+  if (!item) {
+    return false;
+  }
+
+  const source = {
+    origin: ItemSourceOrigin.PlayerEquipment,
+    originId: player.character.id,
+    equipmentSlot: slot,
+  } as const;
+
+  if (isItemEquipable(item.key)) {
+    return player.equipItem(source);
+  }
+
+  if (isItemUsable(item.key)) {
+    return useItemFromSource(player, source);
+  }
+
+  return false;
 });

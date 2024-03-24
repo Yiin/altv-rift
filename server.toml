@@ -2,7 +2,7 @@ name = "yolo"
 
 modules = ['js-module-v2']
 
-resources = ["resource-control", "main", "nolodlights", "dlc-chameleoncolor", "dlc-licenseplates", "qa-tools"]
+resources = ["resource-control", "main", "dlc-chameleoncolor", "dlc-licenseplates", "qa-tools"]
 
 debug = true
 

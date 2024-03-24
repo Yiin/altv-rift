@@ -5,6 +5,7 @@ import {
   InventoryItemSource,
   ItemSource,
   ItemSourceOrigin,
+  PlayerEquipmentItemSource,
 } from "@shared/interfaces";
 import {
   FishBaitItem,
@@ -18,7 +19,7 @@ import { dropItemOnTheGround } from "../dropped-items";
 
 export function useFishBaitOnFishingRod(
   fishingRodSource: ItemSource,
-  fishBaitSource: InventoryItemSource | GroundItemSource,
+  fishBaitSource: InventoryItemSource | PlayerEquipmentItemSource | GroundItemSource,
 ) {
   const fishingRod = findItem(fishingRodSource);
   const fishBait = findItem(fishBaitSource);

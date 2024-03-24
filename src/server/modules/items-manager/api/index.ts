@@ -1,6 +1,6 @@
 // @index('./*', f => `export * from "${f.path}";`)
 export * from "./add-item-to-inventory";
-export * from "./can-interact-with-item";
+export * from "./can-interact-with-item-source";
 export * from "./create-inventory";
 export * from "./drop-item";
 export * from "./find-free-inventory-slot";

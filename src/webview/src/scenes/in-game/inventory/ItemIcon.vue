@@ -56,7 +56,7 @@ watch(
       />
       <div
         v-else
-        class="text-center text-sm font-bold tracking-wider"
+        class="z-max text-center text-sm font-bold tracking-wider"
       >
         {{ itemDetails.customName ?? itemDetails.name }}
       </div>
