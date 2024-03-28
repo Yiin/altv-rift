@@ -56,7 +56,7 @@ const metals = registerItems<MetalItemInfo>([
   },
 ]);
 
-export function isItemKeyMetal(key: ItemKey): key is MetalItemKey {
+export function isItemKeyMetal(key: string): key is MetalItemKey {
   return metals.has(key as MetalItemKey);
 }
 

@@ -1,5 +1,3 @@
-import { ReadonlyMap } from "@shared/utility/readonly-map";
-
 export enum OverlayType {
   Blemishes = 0,
   FacialHair = 1,
@@ -15,7 +13,7 @@ export enum OverlayType {
   BodyBlemish = 11,
 }
 
-export const headOverlays = new ReadonlyMap([
+export const headOverlays = new Map([
   [
     OverlayType.Blemishes,
     {
@@ -252,9 +250,9 @@ export const headOverlays = new ReadonlyMap([
       },
     },
   ],
-] as const);
+]);
 
-export function isValidOverlay(overlay: number, type: OverlayType) {
+export function isValidOverlay(overlay: number, type: OverlayType): boolean {
   const overlayData = headOverlays.get(type);
 
   if (!overlayData) {
@@ -264,7 +262,7 @@ export function isValidOverlay(overlay: number, type: OverlayType) {
   return overlay >= overlayData.min && overlay <= overlayData.max;
 }
 
-export function isValidOverlayColor(overlayColor: number, type: OverlayType) {
+export function isValidOverlayColor(overlayColor: number, type: OverlayType): boolean {
   const overlayData = headOverlays.get(type);
 
   if (!overlayData) {
@@ -282,7 +280,7 @@ export function isValidOverlayColor(overlayColor: number, type: OverlayType) {
   return true;
 }
 
-export function isValidOverlayOpacity(overlayOpacity: number, type: OverlayType) {
+export function isValidOverlayOpacity(overlayOpacity: number, type: OverlayType): boolean {
   const overlayData = headOverlays.get(type);
 
   if (!overlayData) {

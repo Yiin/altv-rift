@@ -4,7 +4,7 @@ import { isInVehicle } from "./in-vehicle.state";
 
 export const isInDriverSeat = computed(() => isInVehicle.value && alt.Player.local.seat === 1);
 
-export function whileInDriverSeat(fn: () => MaybePromise<(() => void) | void>) {
+export function whileInDriverSeat(fn: () => MaybePromise<(() => void) | void>): void {
   const cleanup = ref<(() => void) | void>();
 
   watch(isInDriverSeat, async (value) => {

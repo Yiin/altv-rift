@@ -39,7 +39,7 @@ export type MaterialItem =
   | OreItem
   | ScrapItem;
 
-export function isItemKeyMaterial(key: ItemKey): key is MaterialItemKey {
+export function isItemKeyMaterial(key: string): key is MaterialItemKey {
   return (
     isItemKeyFoodIngredient(key) ||
     isItemKeyTreeLog(key) ||

@@ -1,4 +1,4 @@
-import { EquipmentSlot } from "@shared/interfaces";
+import { AmmoEquipmentSlot, EquipmentSlot } from "@shared/interfaces";
 import {
   isItemKeyAmmo,
   isItemKeyClothing,
@@ -100,11 +100,11 @@ export function getItemKeyEquipmentSlot(key: ItemKey): EquipmentSlot | undefined
   return;
 }
 
-export function getItemEquipmentSlot(item: Item) {
+export function getItemEquipmentSlot(item: Item): EquipmentSlot | undefined {
   return getItemKeyEquipmentSlot(item.key);
 }
 
-export function getWeaponAmmoEquipmentSlot(key: FirearmWeaponItemKey) {
+export function getWeaponAmmoEquipmentSlot(key: FirearmWeaponItemKey): AmmoEquipmentSlot {
   switch (getWeaponAmmoGroup(key)) {
     case AmmoGroup.ASSAULT_RIFLE:
       return EquipmentSlot.AssaultRifleAmmo;

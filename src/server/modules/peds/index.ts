@@ -1,7 +1,8 @@
 import alt from "@altv/server";
-import { PedFlags, PedType } from "@shared/modules/ped";
+import { PedFlags } from "@shared/modules/ped";
 import { PedKey } from "@shared/modules/ped/list";
-import { createStaticPed, createTerroristPed } from "./registry";
+import { createStaticPed } from "./registry";
+import "./shops";
 
 const peds = [
   {
@@ -51,5 +52,5 @@ const peds = [
     heading: -0.7918211817741394,
   },
 ].map(({ key, model, pos, heading, ...meta }) =>
-  createStaticPed(key, { model, pos, heading: heading ?? 0 }, meta),
+  createStaticPed({ key, model, pos, heading: heading ?? 0, ...meta }),
 );

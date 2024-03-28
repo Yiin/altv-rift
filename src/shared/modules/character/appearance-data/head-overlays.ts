@@ -78,6 +78,6 @@ export const notRandomizableOverlaysForGender = (gender: 0 | 1) => {
   }[gender];
 };
 
-export function isValidHeadOverlay(overlay: number) {
+export function isValidHeadOverlay(overlay: number): boolean {
   return overlay >= 0 && overlay < headOverlayNames.length;
 }

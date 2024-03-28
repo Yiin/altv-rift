@@ -34,7 +34,7 @@ export function subscribeToStore<T extends Store>(
     onSetState: (state: any) => void;
     onUpdateState: (payload: StoreUpdatePayload) => void;
   },
-) {
+): () => void {
   onSetState(toRaw(store.$state));
 
   return store.$subscribe(
@@ -76,7 +76,7 @@ export function subscribeToStore<T extends Store>(
   );
 }
 
-export function updateStoreState<S extends Store>(store: S, event: StoreUpdatePayload) {
+export function updateStoreState<S extends Store>(store: S, event: StoreUpdatePayload): void {
   switch (event.type) {
     case "add": {
       const { path, target } = event;

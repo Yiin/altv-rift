@@ -47,7 +47,7 @@ alt.Events.onNetOwnerChange(({ entity, newOwner }) => {
   }
 });
 
-export async function setupTerroristPed(ped: alt.Ped) {
+export async function setupTerroristPed(ped: alt.Ped): Promise<void> {
   if (ped.netOwner !== alt.Player.local) {
     return;
   }

@@ -1,22 +1,14 @@
-import fs from "fs";
-import path from "path";
 import alt from "@altv/server";
-import { minutesToMilliseconds } from "date-fns";
-import { ServerCall } from "@shared/calls/server";
 import * as trees from "@shared/modules/woodcutting/trees";
 import IGNORED_TREES from "@shared/modules/woodcutting/trees-to-ignore.json";
 import { getLevel } from "@shared/modules/experience/experience-table";
-import { getTreeLevel, getTreeLogs, getTreeLogXp } from "@shared/modules/woodcutting/functions";
-import { MessageType } from "@shared/modules/chat";
-import { createItem } from "@shared/modules/items";
-import { rpc } from "@/core/rpc";
-import { sendChatMessage } from "@/modules/chat";
-import { InGamePlayer, needsToBeInGame } from "@/core/utility/assertions";
+import { getTreeLevel } from "@shared/modules/woodcutting/functions";
+import { InGamePlayer } from "@/core/utility/assertions";
 
 export const virtualTreeGroup = alt.VirtualEntityGroup.create({ maxEntitiesInStream: 30 });
 export const playerHittingTree: WeakMap<InGamePlayer, number> = new WeakMap();
 
-export async function growTrees() {
+export async function growTrees(): Promise<void> {
   let skippedTrees = 0;
   let validTrees = 0;
 
@@ -61,12 +53,12 @@ export async function growTrees() {
   }
 }
 
-export function isPlayerNearTree(player: InGamePlayer, virtualTree: alt.VirtualEntity) {
+export function isPlayerNearTree(player: InGamePlayer, virtualTree: alt.VirtualEntity): boolean {
   const dist = new alt.Vector2(player.pos).distanceTo(virtualTree.pos);
   return dist < 5;
 }
 
-export function canPlayerHitTheTree(player: InGamePlayer, virtualTree: alt.VirtualEntity) {
+export function canPlayerHitTheTree(player: InGamePlayer, virtualTree: alt.VirtualEntity): boolean {
   const treeType = virtualTree.streamSyncedMeta.treeType;
 
   if (!treeType) {
@@ -79,6 +71,6 @@ export function canPlayerHitTheTree(player: InGamePlayer, virtualTree: alt.Virtu
   return true;
 }
 
-export function refillTree(virtualTree: alt.VirtualEntity) {
+export function refillTree(virtualTree: alt.VirtualEntity): void {
   virtualTree.meta.capacity = ~~(Math.random() * 50) + 100;
 }

@@ -5,7 +5,7 @@ import { Item } from "@shared/modules/items";
 
 export const droppedItemsGroup = alt.VirtualEntityGroup.create({ maxEntitiesInStream: 50 });
 
-export function dropItemOnTheGround(item: Item, position: alt.IVector3) {
+export function dropItemOnTheGround(item: Item, position: alt.IVector3): alt.VirtualEntity {
   const ve = alt.VirtualEntity.create({
     group: droppedItemsGroup,
     pos: position,
@@ -23,7 +23,7 @@ export function dropItemOnTheGround(item: Item, position: alt.IVector3) {
   return ve;
 }
 
-export function cleanupDroppedItem(id: alt.VirtualEntity["id"]) {
+export function cleanupDroppedItem(id: alt.VirtualEntity["id"]): void {
   const ve = alt.VirtualEntity.getByID(id);
 
   if (!ve) {

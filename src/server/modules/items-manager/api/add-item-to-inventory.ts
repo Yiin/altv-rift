@@ -6,7 +6,7 @@ import { Inventory } from "@shared/interfaces";
 import { emit } from "@/core/events/emit";
 import { findFreeInventorySlot } from "./find-free-inventory-slot";
 
-export function addItemToInventory(inventory: Inventory, item: Item, slot?: number) {
+export function addItemToInventory(inventory: Inventory, item: Item, slot?: number): boolean {
   if (isStackable(item)) {
     const existingItem = getInventoryItemByKey(inventory, item.key);
 

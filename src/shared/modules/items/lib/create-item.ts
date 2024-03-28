@@ -1,4 +1,4 @@
-import { ItemByKey, ItemKey } from "../types";
+import { Item, ItemByKey, ItemKey } from "../types";
 import {
   FirearmWeaponItem,
   isItemKeyFirearmWeapon,
@@ -19,7 +19,7 @@ import { isItemKeyStackable } from "./get-item-flags";
 export function createItem<T extends ItemKey, D = ItemByKey<T>>(
   key: T,
   data?: Omit<Partial<D>, "key">,
-) {
+): ItemByKey<T> {
   // Delete amount if item is not stackable
   if (!isItemKeyStackable(key) && data && "amount" in data) {
     delete data.amount;
@@ -29,10 +29,10 @@ export function createItem<T extends ItemKey, D = ItemByKey<T>>(
     ...getItemDefaultData(key),
     ...(data ?? {}),
     key,
-  } as any as ItemByKey<T>;
+  } as any;
 }
 
-export function getItemDefaultData(key: ItemKey) {
+export function getItemDefaultData(key: ItemKey): Partial<Item> {
   if (isItemKeyFirearmWeapon(key)) {
     return {
       durability: 100,

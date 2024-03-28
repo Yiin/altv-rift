@@ -20,7 +20,7 @@ import { dropItemOnTheGround } from "../dropped-items";
 export function useFishBaitOnFishingRod(
   fishingRodSource: ItemSource,
   fishBaitSource: InventoryItemSource | PlayerEquipmentItemSource | GroundItemSource,
-) {
+): boolean {
   const fishingRod = findItem(fishingRodSource);
   const fishBait = findItem(fishBaitSource);
   const fishBaitInventory =
@@ -60,7 +60,7 @@ export function useFishBaitOnFishingRod(
   return true;
 }
 
-export function removeBaitFromFishingRod(source: ItemSource) {
+export function removeBaitFromFishingRod(source: ItemSource): boolean {
   const fishingRod = findItem(source);
 
   if (!fishingRod) {
@@ -138,7 +138,7 @@ export function removeBaitFromFishingRod(source: ItemSource) {
 export function useFishBaitItemOnFishingRoadItem(
   fishingRod: FishingRodItem,
   fishBait: FishBaitItem,
-) {
+): FishBaitItem | null {
   // Different kind of bait, swap
   if (fishingRod.bait && fishingRod.bait.key !== fishBait.key) {
     const unequippedItem = fishingRod.bait;
@@ -161,7 +161,7 @@ export function useFishBaitItemOnFishingRoadItem(
   }
 }
 
-export function removeBaitFromFishingRodItem(item: FishingRodItem) {
+export function removeBaitFromFishingRodItem(item: FishingRodItem): FishBaitItem | null {
   const bait = item.bait;
 
   if (!bait) {

@@ -12,19 +12,19 @@ watch(currentlyFocusedEntity, (entity) => {
   game.setPedCanSwitchWeapon(alt.Player.local, entity === null);
 });
 
-export function resetFocusedEntity() {
+export function resetFocusedEntity(): void {
   entityToFocus = null;
   closestDistance = Number.MAX_SAFE_INTEGER;
 }
 
-export function updateFocusedEntity(entity: AnchorEntity, distanceToCenter: number) {
+export function updateFocusedEntity(entity: AnchorEntity, distanceToCenter: number): void {
   if (distanceToCenter < getScreenResolution().x / 8 && distanceToCenter < closestDistance) {
     entityToFocus = entity;
     closestDistance = distanceToCenter;
   }
 }
 
-export function getFocusedEntity() {
+export function getFocusedEntity(): Raw<AnchorEntity> | null {
   if (entityToFocus !== currentlyFocusedEntity.value) {
     currentlyFocusedEntity.value = entityToFocus ? markRaw(entityToFocus) : null;
   }
@@ -34,6 +34,6 @@ export function getFocusedEntity() {
   return null;
 }
 
-export function getFocusedEntityDistance() {
+export function getFocusedEntityDistance(): number {
   return closestDistance;
 }

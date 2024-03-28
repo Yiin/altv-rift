@@ -1,18 +1,34 @@
 import {
   getWeaponHashKey,
+  isItemKeyAmmo,
   isItemKeyClothing,
   isItemKeyFirearmWeapon,
+  isItemKeyMaterial,
   isItemKeyPants,
   isItemKeyThrowableWeapon,
+  isItemKeyTool,
   isItemKeyWeapon,
+  isItemKeyWeaponComponent,
 } from "@shared/modules/items";
 
-export const getItemImage = (key: string, fullSize = false) => {
+export const getItemImage = (key: string) => {
   if (isItemKeyClothing(key)) {
     return `./assets/items/clothing/${key}.png`;
   }
-  if (isItemKeyWeapon(key) && !fullSize) {
+  if (isItemKeyWeapon(key)) {
     return `./assets/items/weapons/${getWeaponHashKey(key)}.png`;
+  }
+  if (isItemKeyAmmo(key)) {
+    return `./assets/items/ammo/${key}.png`;
+  }
+  if (isItemKeyMaterial(key)) {
+    return `./assets/items/materials/${key}.png`;
+  }
+  if (isItemKeyTool(key)) {
+    return `./assets/items/tools/${key}.png`;
+  }
+  if (isItemKeyWeaponComponent(key)) {
+    return `./assets/items/weapon-components/${key}.png`;
   }
   return `./assets/items/${key}.png`;
 };
@@ -35,7 +51,7 @@ export const getItemIconScale = (item: { key: string }) => {
   if (isItemKeyClothing(item.key)) {
     return "contain";
   }
-  if (isItemKeyFirearmWeapon(item.key)) {
+  if (isItemKeyWeapon(item.key)) {
     return "contain";
   }
   return (

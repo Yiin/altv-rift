@@ -144,7 +144,7 @@ export const ammo = registerItems<AmmoItemInfo>([
   },
 ]);
 
-export function isItemKeyAmmo(key: ItemKey): key is AmmoItemKey {
+export function isItemKeyAmmo(key: string): key is AmmoItemKey {
   return ammo.has(key as AmmoItemKey);
 }
 
@@ -152,7 +152,7 @@ export function isItemAmmo(item: Item): item is AmmoItem {
   return isItemKeyAmmo(item.key);
 }
 
-export function getAmmoKeyForAmmoGroup(ammoGroup: AmmoGroup) {
+export function getAmmoKeyForAmmoGroup(ammoGroup: AmmoGroup): AmmoItemKey {
   for (const ammoItemInfo of ammo.values()) {
     if (ammoItemInfo.group === ammoGroup) {
       return ammoItemInfo.key;
@@ -161,10 +161,10 @@ export function getAmmoKeyForAmmoGroup(ammoGroup: AmmoGroup) {
   throw new Error(`No ammo found for group ${ammoGroup}`);
 }
 
-export function getAmmoGroup(ammoKey: AmmoItemKey) {
+export function getAmmoGroup(ammoKey: AmmoItemKey): AmmoGroup {
   return ammo.get(ammoKey)!.group;
 }
 
-export function getAmmoDamageMultiplier(ammoKey: AmmoItemKey) {
+export function getAmmoDamageMultiplier(ammoKey: AmmoItemKey): number {
   return ammo.get(ammoKey)!.damagemultiplier;
 }

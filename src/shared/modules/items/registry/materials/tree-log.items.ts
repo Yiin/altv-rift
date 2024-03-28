@@ -135,7 +135,7 @@ export const treeLogs = registerItems<TreeLogItemInfo>([
   },
 ]);
 
-export function isItemKeyTreeLog(key: ItemKey): key is TreeLogItemKey {
+export function isItemKeyTreeLog(key: string): key is TreeLogItemKey {
   return treeLogs.has(key as TreeLogItemKey);
 }
 

@@ -1,6 +1,7 @@
 import { div, img } from "../../renderer/rml-tags";
+import { ParsedElement } from "../../renderer/types";
 
-export function Indicator() {
+export function Indicator(): ParsedElement {
   return div(
     {
       className: "indicator",

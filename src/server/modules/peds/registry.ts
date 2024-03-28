@@ -10,31 +10,38 @@ alt.Events.onResourceStop(() => {
   }
 });
 
-export function registerPed(key: string, ped: alt.Ped) {
+export function registerPed(key: string, ped: alt.Ped): void {
   if (pedsMap.has(key)) {
     throw new Error(`Ped with key "${key}" is already registered`);
   }
   pedsMap.set(key, ped);
 }
 
-export function getPedByKey(key: string) {
+export function getPedByKey(key: string): alt.Ped | undefined {
   return pedsMap.get(key);
 }
 
-export function createStaticPed<T extends { name?: string; flags?: PedFlags }>(
-  pedKey: PedKey,
-  options: alt.PedCreateOptions,
-  data: T,
-) {
-  const ped = alt.Ped.create(options);
+export function createStaticPed({
+  key,
+  flags,
+  name,
+  ...pedCreateOptions
+}: {
+  key?: PedKey;
+  flags?: PedFlags;
+  name?: string;
+} & alt.PedCreateOptions): alt.Ped {
+  const ped = alt.Ped.create(pedCreateOptions);
 
   ped.frozen = true;
   ped.collision = false;
 
-  ped.streamSyncedMeta.key = pedKey;
-  Object.assign(ped.streamSyncedMeta, data);
+  ped.streamSyncedMeta.key = key;
+  Object.assign(ped.streamSyncedMeta, { key, flags, name });
 
-  registerPed(pedKey, ped);
+  if (key) {
+    registerPed(key, ped);
+  }
 
   return ped;
 }
@@ -42,7 +49,7 @@ export function createStaticPed<T extends { name?: string; flags?: PedFlags }>(
 export function createTerroristPed(
   options: alt.PedCreateOptions,
   data: { name?: string; flags?: PedFlags; weapon: number; health?: number },
-) {
+): alt.Ped {
   const ped = alt.Ped.create(options);
 
   const { health, ...meta } = data;

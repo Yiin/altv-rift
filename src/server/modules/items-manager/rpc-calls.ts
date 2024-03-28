@@ -4,12 +4,12 @@ import {
   CombineType,
   createItem,
   getCombineType,
+  getItemKeyEquipmentSlot,
   isItemEquipable,
   isItemUsable,
-  isItemWeapon,
 } from "@shared/modules/items";
 import { EquipmentSlot, ItemSourceOrigin } from "@shared/interfaces";
-import { getInventoryItemInSlot } from "@shared/modules/inventory";
+import { getInventoryItemInSlot, isEquipmentSlotQuickSlot } from "@shared/modules/inventory";
 import { rpc } from "@/core/rpc";
 import { needsToBeInGame } from "@/core/utility/assertions";
 import { removeBaitFromFishingRod, useFishBaitOnFishingRod } from "./items/fishing-rod";
@@ -17,7 +17,7 @@ import { canDropItem, canEquipItems } from "./api/hooks";
 import {
   dropItem,
   removeItem,
-  swapItems,
+  swapInventoryItems,
   canInteractWithItemSource,
   findItem,
   useItemFromSource,
@@ -30,7 +30,7 @@ import { loadWeaponWithAmmo, unloadAmmoFromWeapon } from "./items";
 /**
  * Player tries to use an item.
  */
-rpc.registerWebview(ServerCall.FromWebview.USE_ITEM, (player, itemSource) => {
+rpc.registerWebview(ServerCall.FromWebview.USE_ITEM, (player, itemSource): boolean => {
   needsToBeInGame(player);
 
   if (!canInteractWithItemSource(player, itemSource)) {
@@ -47,7 +47,7 @@ rpc.registerWebview(ServerCall.FromWebview.USE_ITEM, (player, itemSource) => {
 /**
  * Player tries to buy an item.
  */
-rpc.registerWebview(ServerCall.FromWebview.BUY_ITEM, (player, itemSource) => {
+rpc.registerWebview(ServerCall.FromWebview.BUY_ITEM, (player, itemSource): boolean => {
   needsToBeInGame(player);
 
   if (itemSource.origin !== ItemSourceOrigin.Storage) {
@@ -69,7 +69,7 @@ rpc.registerWebview(ServerCall.FromWebview.BUY_ITEM, (player, itemSource) => {
 /**
  * Player tries to equip an item.
  */
-rpc.registerWebview(ServerCall.FromWebview.EQUIP_ITEM, (player, itemSource) => {
+rpc.registerWebview(ServerCall.FromWebview.EQUIP_ITEM, (player, itemSource): boolean => {
   needsToBeInGame(player);
 
   if (
@@ -99,13 +99,13 @@ rpc.registerWebview(ServerCall.FromWebview.EQUIP_ITEM, (player, itemSource) => {
 /**
  * Player tries to unequip an item.
  */
-rpc.registerWebview(ServerCall.FromWebview.UNEQUIP_ITEM, (player, equipmentSlot) => {
+rpc.registerWebview(ServerCall.FromWebview.UNEQUIP_ITEM, (player, equipmentSlot): boolean => {
   needsToBeInGame(player);
 
   return player.unequipItem(equipmentSlot);
 });
 
-rpc.registerWebview(ServerCall.FromWebview.COMBINE_ITEMS, (player, sourceA, sourceB) => {
+rpc.registerWebview(ServerCall.FromWebview.COMBINE_ITEMS, (player, sourceA, sourceB): boolean => {
   needsToBeInGame(player);
 
   if (sourceA.origin === ItemSourceOrigin.Ground || sourceB.origin === ItemSourceOrigin.Ground) {
@@ -130,12 +130,6 @@ rpc.registerWebview(ServerCall.FromWebview.COMBINE_ITEMS, (player, sourceA, sour
     case CombineType.EquipAmmo: {
       const [weaponSource, ammoSource] = reverse ? [sourceB, sourceA] : [sourceA, sourceB];
 
-      // Do not support equiping already equiped ammo
-      // Player should first unload ammo from the weapon before loading it into another weapon
-      if (ammoSource.origin === ItemSourceOrigin.PlayerEquipment) {
-        return false;
-      }
-
       return loadWeaponWithAmmo(weaponSource, ammoSource);
     }
     case CombineType.EquipFishBait: {
@@ -152,7 +146,7 @@ rpc.registerWebview(ServerCall.FromWebview.COMBINE_ITEMS, (player, sourceA, sour
   return false;
 });
 
-rpc.registerWebview(ServerCall.FromWebview.UNLOAD_AMMO, (player, itemSource) => {
+rpc.registerWebview(ServerCall.FromWebview.UNLOAD_AMMO, (player, itemSource): boolean => {
   needsToBeInGame(player);
 
   if (!canInteractWithItemSource(player, itemSource)) {
@@ -162,7 +156,7 @@ rpc.registerWebview(ServerCall.FromWebview.UNLOAD_AMMO, (player, itemSource) => 
   return unloadAmmoFromWeapon(itemSource);
 });
 
-rpc.registerWebview(ServerCall.FromWebview.REMOVE_BAIT, (player, itemSource) => {
+rpc.registerWebview(ServerCall.FromWebview.REMOVE_BAIT, (player, itemSource): boolean => {
   needsToBeInGame(player);
 
   if (!canInteractWithItemSource(player, itemSource)) {
@@ -172,13 +166,13 @@ rpc.registerWebview(ServerCall.FromWebview.REMOVE_BAIT, (player, itemSource) => 
   return removeBaitFromFishingRod(itemSource);
 });
 
-rpc.registerClient(ServerCall.FromClient.RELOAD_WEAPON, (player) => {
+rpc.registerClient(ServerCall.FromClient.RELOAD_WEAPON, (player): boolean => {
   needsToBeInGame(player);
 
   return player.reloadWeapon();
 });
 
-rpc.registerWebview(ServerCall.FromWebview.DROP_ITEM, (player, itemSource, amount) => {
+rpc.registerWebview(ServerCall.FromWebview.DROP_ITEM, (player, itemSource, amount): boolean => {
   needsToBeInGame(player);
 
   if (
@@ -196,7 +190,7 @@ rpc.registerWebview(ServerCall.FromWebview.DROP_ITEM, (player, itemSource, amoun
   return dropItem(player, itemSource, { amount });
 });
 
-rpc.registerWebview(ServerCall.FromWebview.MOVE_ITEM, (player, from, to, amount = 1) => {
+rpc.registerWebview(ServerCall.FromWebview.MOVE_ITEM, (player, from, to, amount = 1): boolean => {
   needsToBeInGame(player);
 
   if (!canInteractWithItemSource(player, from) || !canInteractWithItemSource(player, to)) {
@@ -252,17 +246,6 @@ rpc.registerWebview(ServerCall.FromWebview.MOVE_ITEM, (player, from, to, amount 
   }
 
   /**
-   * Between equipment slots
-   */
-  if (
-    from.origin === ItemSourceOrigin.PlayerEquipment &&
-    to.origin === ItemSourceOrigin.PlayerEquipment
-  ) {
-    // There is no reason to move item between equipment slots
-    return false;
-  }
-
-  /**
    * From inventory to equipment
    */
   if (
@@ -293,7 +276,61 @@ rpc.registerWebview(ServerCall.FromWebview.MOVE_ITEM, (player, from, to, amount 
     from.origin === ItemSourceOrigin.PlayerInventory &&
     to.origin === ItemSourceOrigin.PlayerInventory
   ) {
-    return swapItems(from, to);
+    return swapInventoryItems(from, to);
+  }
+
+  if (
+    from.origin === ItemSourceOrigin.PlayerEquipment &&
+    to.origin === ItemSourceOrigin.PlayerEquipment
+  ) {
+    const fromSlot = from.equipmentSlot;
+    const toSlot = to.equipmentSlot;
+
+    const betweenQuickSlots =
+      isEquipmentSlotQuickSlot(fromSlot) && isEquipmentSlotQuickSlot(toSlot);
+    const betweenQuickSlotAndEquipment = [
+      [fromSlot, toSlot],
+      [toSlot, fromSlot],
+    ].some(([a, b]) => isEquipmentSlotQuickSlot(a) && !isEquipmentSlotQuickSlot(b));
+
+    if (betweenQuickSlots) {
+      [player.character.equipment[fromSlot]!, player.character.equipment[toSlot]!] = [
+        player.character.equipment[toSlot]!,
+        player.character.equipment[fromSlot]!,
+      ];
+      return true;
+    } else if (betweenQuickSlotAndEquipment) {
+      const fromItem = player.character.equipment[fromSlot];
+      const toItem = player.character.equipment[fromSlot];
+
+      if (!fromItem || !toItem) {
+        if (!fromItem) {
+          // @ts-expect-error
+          player.character.equipment[fromSlot] = player.character.equipment[toSlot];
+          player.character.equipment[toSlot] = undefined;
+          return true;
+        } else if (!toItem) {
+          // @ts-expect-error
+          player.character.equipment[toSlot] = player.character.equipment[fromSlot];
+          player.character.equipment[fromSlot] = undefined;
+          return true;
+        }
+        return false;
+      }
+
+      const equipmentSlotFrom = getItemKeyEquipmentSlot(fromItem.key);
+      const equipmentSlotTo = getItemKeyEquipmentSlot(toItem.key);
+
+      if (equipmentSlotFrom !== equipmentSlotTo) {
+        return false;
+      }
+
+      // @ts-expect-error
+      [player.character.equipment[fromSlot], player.character.equipment[toSlot]] = [
+        toItem,
+        fromItem,
+      ];
+    }
   }
 
   // TS doesn't know that all cases are covered
@@ -303,7 +340,7 @@ rpc.registerWebview(ServerCall.FromWebview.MOVE_ITEM, (player, from, to, amount 
 /**
  * Check if player can open the storage
  */
-rpc.registerClient(ServerCall.FromClient.OPEN_STORAGE, (player, storageId) => {
+rpc.registerClient(ServerCall.FromClient.OPEN_STORAGE, (player, storageId): boolean => {
   needsToBeInGame(player);
 
   const ve = alt.VirtualEntity.getByID(storageId);
@@ -319,7 +356,7 @@ rpc.registerClient(ServerCall.FromClient.OPEN_STORAGE, (player, storageId) => {
   return openStorage(player, storageId);
 });
 
-rpc.registerWebview(ServerCall.FromWebview.TAKE_ITEM, (player, itemSource) => {
+rpc.registerWebview(ServerCall.FromWebview.TAKE_ITEM, (player, itemSource): void => {
   needsToBeInGame(player);
 
   if (itemSource.origin !== ItemSourceOrigin.Storage) {
@@ -347,7 +384,7 @@ rpc.registerWebview(ServerCall.FromWebview.TAKE_ITEM, (player, itemSource) => {
   }
 });
 
-rpc.registerWebview(ServerCall.FromWebview.TAKE_ALL_ITEMS, async (player, storageSource) => {
+rpc.registerWebview(ServerCall.FromWebview.TAKE_ALL_ITEMS, (player, storageSource): void => {
   needsToBeInGame(player);
 
   if (storageSource.origin !== ItemSourceOrigin.Storage) {
@@ -379,7 +416,7 @@ rpc.registerWebview(ServerCall.FromWebview.TAKE_ALL_ITEMS, async (player, storag
   }
 });
 
-rpc.registerClient(ServerCall.FromClient.USE_QUICK_SLOT, (player, slot) => {
+rpc.registerClient(ServerCall.FromClient.USE_QUICK_SLOT, (player, slot): boolean => {
   needsToBeInGame(player);
 
   const isQuickSlot = [

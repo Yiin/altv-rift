@@ -1,13 +1,11 @@
 import alt from "@altv/client";
-import game from "@altv/natives";
 import { PedFlags } from "@shared/modules/ped/constants";
-import { waitUntil } from "@/core/utility/event-helpers";
 import { setupPeacefulPed } from "./setup-ped/setup-peaceful-ped";
 import { setupTerroristPed } from "./setup-ped/setup-terrorist-ped";
 
 alt.Events.onGameEntityCreate(async ({ entity }) => {
   if (entity instanceof alt.Ped) {
-    await waitUntil(() => entity.visible && game.isEntityVisibleToScript(entity));
+    await alt.Utils.waitFor(() => entity.valid && entity.scriptID !== 0);
 
     const flags = entity.streamSyncedMeta.flags as PedFlags;
 

@@ -56,7 +56,7 @@ export const ore = registerItems<OreItemInfo>([
   },
 ]);
 
-export function isItemKeyOre(key: ItemKey): key is OreItemKey {
+export function isItemKeyOre(key: string): key is OreItemKey {
   return ore.has(key as OreItemKey);
 }
 

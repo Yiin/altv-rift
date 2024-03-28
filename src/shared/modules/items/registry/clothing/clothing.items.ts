@@ -119,15 +119,15 @@ export function isMaleClothing(key: ClothingItemKey): boolean {
   return info.ped === "mp_m_freemode_01";
 }
 
-export function isUnisexClothing(key: ClothingItemKey) {
+export function isUnisexClothing(key: ClothingItemKey): boolean {
   const info = getItemInfoByKey(key);
 
   const slot = getItemKeyEquipmentSlot(key);
 
-  return slot && isComponentVariation(slot) && [1, 5].includes(info.componentId);
+  return !!slot && isComponentVariation(slot) && [1, 5].includes(info.componentId);
 }
 
-export function isComponentVariation(equipmentSlot: string) {
+export function isComponentVariation(equipmentSlot: string): boolean {
   return [
     "mask",
     "top",

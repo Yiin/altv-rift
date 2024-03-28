@@ -28,7 +28,7 @@ const waterZones = WATER_ZONES.map((zone) => {
   return colshape;
 });
 
-export function getWaterZones() {
+export function getWaterZones(): alt.ColShapeCircle[] {
   return waterZones;
 }
 

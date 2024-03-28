@@ -16,6 +16,7 @@ type IsPropOptional<T, P extends keyof T> = (
   ? false
   : true;
 
+/* eslint-disable prettier/prettier */
 type UnwrapLiteralType<T> = T extends object
   ? { [K in keyof T]: UnwrapLiteralType<T[K]> }
   : T extends string

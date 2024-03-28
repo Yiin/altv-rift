@@ -1,6 +1,7 @@
 import alt from "@altv/server";
 import { getInventoryItemInSlot } from "@shared/modules/inventory";
 import { ItemSource, ItemSourceOrigin } from "@shared/interfaces";
+import { Item } from "@shared/modules/items";
 import { InGamePlayer } from "@/core/utility/assertions";
 import { getStorageInventory } from "../storage";
 
@@ -9,7 +10,7 @@ import { getStorageInventory } from "../storage";
  * If player is provided, it will only search items accessible by the player.
  * Accessible to the player doesn't mean the player can interact with it.
  */
-export function findItem(itemSource: ItemSource, player?: InGamePlayer) {
+export function findItem(itemSource: ItemSource, player?: InGamePlayer): Item | null {
   /**
    * Player source
    */

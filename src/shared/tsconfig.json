@@ -6,5 +6,8 @@
       "@shared/*": ["./*"]
     }
   },
-  "include": ["./**/*", "../../custom-types", "../../node_modules/@altv/shared", "../../node_modules/@altv/client", "../../node_modules/@altv/server"]
+  "include": [
+    "./**/*",
+    "../../custom-types"
+  ]
 }

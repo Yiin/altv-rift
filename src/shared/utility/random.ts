@@ -4,14 +4,14 @@ import earcut from "earcut";
 /**
  * Get a random number between min and max (max excluded)
  */
-export function randomNumberBetween(min: number, max: number) {
+export function randomNumberBetween(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min) + min);
 }
 
 /**
  * Get a random number between min and max (max included)
  */
-export function randomNumberBetweenInclusive(min: number, max: number) {
+export function randomNumberBetweenInclusive(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
@@ -78,7 +78,11 @@ export function randomPointInPolygon(polygon: alt.Vector3[]): alt.Vector3 {
   throw new Error("Failed to generate random point in polygon.");
 }
 
-export function rollItem<T>(items: [weight: number, item: T][], seed = Math.random()) {
+export function rollItem<T>(items: [weight: number, item: T][], seed = Math.random()): T {
+  if (items.length === 0) {
+    return undefined as T;
+  }
+
   const totalWeight = items.reduce((acc, [weight]) => acc + weight, 0);
   const randomNumber = seed * totalWeight;
 
@@ -91,5 +95,5 @@ export function rollItem<T>(items: [weight: number, item: T][], seed = Math.rand
     }
   }
 
-  return items[items.length - 1]?.[1];
+  return items[items.length - 1][1];
 }

@@ -3355,7 +3355,7 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
 ]);
 
-export function isItemKeyWeaponComponent(key: ItemKey): key is WeaponComponentItemKey {
+export function isItemKeyWeaponComponent(key: string): key is WeaponComponentItemKey {
   return weaponComponent.has(key as WeaponComponentItemKey);
 }
 

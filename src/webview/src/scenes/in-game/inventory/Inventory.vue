@@ -219,4 +219,3 @@ onUnmounted(() => {
   />
   <!-- <Confirmation v-if="inventory.transfer" /> -->
 </template>
-./EquipmentSlot.vue

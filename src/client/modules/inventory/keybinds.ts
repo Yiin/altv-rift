@@ -75,15 +75,15 @@ function handleQuickSlot(
     | alt.Enums.KeyCode.KEY3
     | alt.Enums.KeyCode.KEY4,
 ) {
-  rpc.callServer(
-    ServerCall.FromClient.USE_QUICK_SLOT,
-    (
-      {
-        [alt.Enums.KeyCode.KEY1]: EquipmentSlot.QuickSlot1,
-        [alt.Enums.KeyCode.KEY2]: EquipmentSlot.QuickSlot2,
-        [alt.Enums.KeyCode.KEY3]: EquipmentSlot.QuickSlot3,
-        [alt.Enums.KeyCode.KEY4]: EquipmentSlot.QuickSlot4,
-      } as const
-    )[key],
-  );
+  const quickSlot = (
+    {
+      [alt.Enums.KeyCode.KEY1]: EquipmentSlot.QuickSlot1,
+      [alt.Enums.KeyCode.KEY2]: EquipmentSlot.QuickSlot2,
+      [alt.Enums.KeyCode.KEY3]: EquipmentSlot.QuickSlot3,
+      [alt.Enums.KeyCode.KEY4]: EquipmentSlot.QuickSlot4,
+    } as const
+  )[key];
+  alt.log("Handling quick slot", quickSlot);
+
+  rpc.callServer(ServerCall.FromClient.USE_QUICK_SLOT, quickSlot);
 }
