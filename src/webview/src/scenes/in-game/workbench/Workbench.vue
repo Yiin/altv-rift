@@ -21,7 +21,7 @@ const view = ref<View>(View.CRAFTING);
 
 <template>
   <div class="relative flex h-full w-full flex-col px-20 py-20">
-    <DarkBackground />
+    <DarkBackground bg-class="bg-neutral-900" />
     <div class="mx-auto flex w-full items-center justify-between">
       <div class="w-40">
         <v-img :src="`./assets/workbench/logo.svg`" />
