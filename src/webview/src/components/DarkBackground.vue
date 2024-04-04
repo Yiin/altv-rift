@@ -1,12 +1,24 @@
 <script setup lang="ts">
 import { useWindowSize } from "@/composables/use-window-size";
 
+withDefaults(
+  defineProps<{
+    bgClass?: string;
+  }>(),
+  {
+    bgClass: "bg-darkRadialGradient",
+  },
+);
+
 const windowSize = useWindowSize();
 </script>
 
 <template>
   <div class="fixed inset-0 -z-10">
-    <div class="absolute inset-0 left-0 top-0 bg-darkRadialGradient opacity-95"></div>
+    <div
+      class="absolute inset-0 left-0 top-0 opacity-95"
+      :class="[bgClass]"
+    ></div>
     <svg
       class="absolute inset-0 left-0 top-0"
       xmlns="http://www.w3.org/2000/svg"
