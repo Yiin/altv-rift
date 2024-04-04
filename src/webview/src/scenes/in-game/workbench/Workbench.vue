@@ -3,6 +3,7 @@ import { ref } from "vue";
 import BackButtons from "@/components/buttons/BackButtons.vue";
 import DarkBackground from "@/components/DarkBackground.vue";
 import CraftingView from "@/scenes/in-game/workbench/CraftingView.vue";
+import UpgradesView from "@/scenes/in-game/workbench/UpgradesView.vue";
 import GearIcon from "./icons/GearIcon.vue";
 import WrenchIcon from "./icons/WrenchIcon.vue";
 

@@ -95,8 +95,6 @@ const recipesByCategory = computed(() => {
     : { [categories[categoryFilter.value].name]: recipes[categories[categoryFilter.value].name] };
 });
 
-const queue = reactive<any[]>([]);
-
 // function fulfillsRequirement(part: Item) {
 //   const inventoryItem = character.inventory.items.find(({ item }) =>
 //     Object.entries(part).every(([key, value]) => item[key as keyof typeof item] === value),
@@ -107,23 +105,8 @@ const queue = reactive<any[]>([]);
 
 const selectedRecipe = ref<BlueprintRecipe>();
 
-function beginCrafting() {
-  // TODO add check for material availability
-  for (let i = 0; i < quantity.value; i++) {
-    queue.push(selectedRecipe.value);
-  }
-  quantity.value = 1;
-}
-
-const quantity = ref<number>(1);
-
-function increaseQuantity() {
-  quantity.value++;
-}
-function decreaseQuantity() {
-  if (quantity.value > 1) {
-    quantity.value--;
-  }
+function upgrade() {
+  //TODO add logic
 }
 </script>
 
@@ -172,9 +155,13 @@ function decreaseQuantity() {
               @click="selectedRecipe = recipe"
               v-for="(recipe, index) in recipes"
               :key="`${recipe.item.key}-${index}`"
-              class="h-20 w-20 p-0"
-              :selected="JSON.stringify(selectedRecipe) === JSON.stringify(recipe)"
+              class="relative h-20 w-20 p-0"
+              :selected="selectedRecipe === recipe"
             >
+              <div
+                v-if="recipe.isUpgrade"
+                class="absolute right-1 top-1 h-2 w-2 rounded-full bg-red-500"
+              ></div>
               <ItemIcon :item="recipe.item" />
             </WorkbenchSlot>
           </div>
@@ -182,30 +169,11 @@ function decreaseQuantity() {
       </div>
     </div>
     <div class="align-self-center max-w-[47.5rem] items-start justify-center text-center">
-      <div :class="[queue.length > 0 ? 'visible' : 'invisible']">
-        <h2 class="text-2xl font-extrabold">In queue</h2>
-        <div class="mb-4 flex justify-center">
-          <img
-            :src="`./assets/workbench/ornament.svg`"
-            class="align-self-center"
-          />
-        </div>
-        <div class="mb-11 flex flex-wrap justify-center gap-4">
-          <WorkbenchSlot
-            v-for="(item, i) in queue"
-            :key="i"
-            class="h-20 w-20"
-            :selected="false"
-          >
-            <ItemIcon :item="item.item" />
-          </WorkbenchSlot>
-        </div>
-      </div>
       <template v-if="selectedRecipe">
         <div>
           <div class="mb-6 flex justify-center">
             <img
-              :src="`./assets/workbench/weapon-ornament.svg`"
+              :src="`./assets/workbench/upgrade-ornament.svg`"
               class="align-self-center h-[17.4375rem] w-[12.1875rem]"
             />
             <v-img
@@ -215,46 +183,8 @@ function decreaseQuantity() {
           </div>
           <v-progress-linear model-value="20" />
           <div class="text-grey mb-6 mt-3">
-            Now is crafting
+            Upgrading
             <span class="text-white">{{ getItemName(selectedRecipe.item.key) }}</span>
-          </div>
-          <div class="mb-4 flex justify-center gap-3.5">
-            <WorkbenchSlot
-              class="h-24 w-24 flex-col"
-              static
-            >
-              <h3 class="text-3xl font-bold text-red-500">
-                {{ getWeaponStats(selectedRecipe.item.key).timeBetweenShots.toFixed(2) }}
-              </h3>
-              Fire rate
-            </WorkbenchSlot>
-            <WorkbenchSlot
-              class="h-24 w-24 flex-col"
-              static
-            >
-              <h3 class="text-3xl font-bold text-red-500">
-                {{ getWeaponStats(selectedRecipe.item.key).accuracySpread.toFixed(2) }}
-              </h3>
-              Accuracy
-            </WorkbenchSlot>
-            <WorkbenchSlot
-              class="h-24 w-24 flex-col"
-              static
-            >
-              <h3 class="text-3xl font-bold text-red-500">
-                {{ getWeaponStats(selectedRecipe.item.key).damage }}
-              </h3>
-              Damage
-            </WorkbenchSlot>
-            <WorkbenchSlot
-              class="h-24 w-24 flex-col"
-              static
-            >
-              <h3 class="text-3xl font-bold text-red-500">
-                {{ getWeaponStats(selectedRecipe.item.key).clipSize }}
-              </h3>
-              Clip
-            </WorkbenchSlot>
           </div>
         </div>
         <div>
@@ -275,7 +205,6 @@ function decreaseQuantity() {
     <div class="self-right w-[17.5rem] text-right">
       <template v-if="selectedRecipe">
         <div class="text-3xl font-bold">{{ getItemName(selectedRecipe.item.key) }}</div>
-        <div class="text-xl font-medium text-gray-500">Crafting recipe</div>
         <div class="mt-4 text-right font-medium text-white">
           {{ getItemDescription(selectedRecipe.item.key) }}
         </div>
@@ -301,44 +230,23 @@ function decreaseQuantity() {
             </div>
           </WorkbenchSlot>
         </div>
-        <h2 class="mb-4 text-2xl font-bold">Crafting information</h2>
+        <h2 class="mb-4 text-2xl font-bold">Upgrade information</h2>
         <div class="mb-4 flex justify-end gap-2">
-          <div
-            class="w-32 rounded-md border border-solid border-neutral-400/10 bg-neutral-400/5 p-4 font-bold text-gray-500"
-          >
+          <div class="w-32 rounded-md border border-solid border-neutral-400/10 bg-neutral-400/5 p-4 font-bold text-gray-500">
             Success rate
             <div class="text-right text-yellow-500">32%</div>
           </div>
-          <div
-            class="w-32 rounded-md border border-solid border-neutral-400/10 bg-neutral-400/5 p-4 font-bold text-gray-500"
-          >
-            Crafting time
+          <div class="w-32 rounded-md border border-solid border-neutral-400/10 bg-neutral-400/5 p-4 font-bold text-gray-500">
+            Upgrade time
             <div class="text-white">{{ selectedRecipe.durationSeconds }} s</div>
-          </div>
-        </div>
-        <div
-          class="flex justify-between rounded-md border border-solid border-neutral-400/10 bg-neutral-400/5 p-4 text-3xl"
-        >
-          <div
-            @click="decreaseQuantity"
-            class="cursor-pointer px-4"
-          >
-            -
-          </div>
-          <div>{{ quantity }}</div>
-          <div
-            @click="increaseQuantity"
-            class="cursor-pointer px-4"
-          >
-            +
           </div>
         </div>
         <div class="flex">
           <button
             class="button mt-2.5 flex w-100 justify-center p-4 text-center text-xl font-extrabold"
-            @click="beginCrafting"
+            @click="upgrade"
           >
-            Begin Crafting
+            Upgrade
           </button>
         </div>
       </template>
