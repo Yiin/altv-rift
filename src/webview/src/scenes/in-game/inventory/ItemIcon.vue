@@ -2,7 +2,7 @@
 import { computed, ref, watch } from "vue";
 import { type Item, ItemGrade, type TreeLogItemKey } from "@shared/modules/items";
 import { useItemDetails } from "@/composables/use-item-details";
-import { getItemIconScale, getItemImage, getItemIconPosition, getItemClasses } from "@/utils/items";
+import { getItemImage, getItemIconPosition, getItemClasses } from "@/utils/items";
 import { px } from "@/composables/use-pixel";
 import LogIcon from "./dynamic-icons/LogIcon.vue";
 
@@ -63,11 +63,10 @@ watch(
     </template>
     <div
       v-else
-      class="relative h-full w-full"
+      class="relative h-full w-full bg-contain"
       :class="[getItemClasses(item)]"
       :style="{
         backgroundImage: `url(${getItemImage(item.key)})`,
-        backgroundSize: getItemIconScale(item),
         backgroundPosition: getItemIconPosition(item),
       }"
     />

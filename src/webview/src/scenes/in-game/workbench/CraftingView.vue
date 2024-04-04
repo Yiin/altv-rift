@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, reactive, ref } from "vue";
 import {
   FirearmWeaponBlueprint,
   MeleeWeaponBlueprint,
@@ -11,9 +11,17 @@ import {
   getBlueprint,
   type BlueprintRecipe,
 } from "@shared/modules/production";
-import {getItemName, getWeaponStats, type Item} from "@shared/modules/items";
+import {
+  getItemName,
+  getWeaponStats,
+  ItemGrade,
+  type Item,
+  getItemDescription,
+} from "@shared/modules/items";
 import { getItemImage } from "@/utils/items";
 import { useCharacter } from "@/store/synced/character.store";
+import ItemIcon from "../inventory/ItemIcon.vue";
+import WorkbenchSlot from "./components/WorkbenchSlot.vue";
 
 const CategoryFilter = {
   ALL: "all",
@@ -27,254 +35,243 @@ const CategoryFilter = {
 } as const;
 
 const categories = {
-  [CategoryFilter.FIREARM_WEAPONS]: FirearmWeaponBlueprint,
-  [CategoryFilter.MELEE_WEAPONS]: MeleeWeaponBlueprint,
-  [CategoryFilter.THROWABLE_WEAPONS]: ThrowableWeaponBlueprint,
-  [CategoryFilter.GATHERING_TOOLS]: ToolBlueprint,
-  [CategoryFilter.WEAPON_AMMO]: AmmoBlueprint,
-  [CategoryFilter.CLOTHING]: ClothingBlueprint,
-  [CategoryFilter.WEAPON_COMPONENTS]: WeaponComponentBlueprint,
+  [CategoryFilter.FIREARM_WEAPONS]: {
+    blueprints: FirearmWeaponBlueprint,
+    name: "Firearm weapons",
+  },
+  [CategoryFilter.MELEE_WEAPONS]: {
+    blueprints: MeleeWeaponBlueprint,
+    name: "Melee weapons",
+  },
+  [CategoryFilter.THROWABLE_WEAPONS]: {
+    blueprints: ThrowableWeaponBlueprint,
+    name: "Throwable weapons",
+  },
+  [CategoryFilter.GATHERING_TOOLS]: {
+    blueprints: ToolBlueprint,
+    name: "Gathering tools",
+  },
+  [CategoryFilter.WEAPON_AMMO]: {
+    blueprints: AmmoBlueprint,
+    name: "Weapon Ammo",
+  },
+  [CategoryFilter.CLOTHING]: {
+    blueprints: ClothingBlueprint,
+    name: "Clothing",
+  },
+  [CategoryFilter.WEAPON_COMPONENTS]: {
+    blueprints: WeaponComponentBlueprint,
+    name: "Weapon Components",
+  },
 };
+
+const character = useCharacter();
 
 const categoryFilter = ref<(typeof CategoryFilter)[keyof typeof CategoryFilter]>(
   CategoryFilter.ALL,
 );
 
-const categoryBlueprints = computed(() => {
-  if (categoryFilter.value === CategoryFilter.ALL) {
-    return Object.values(categories).flatMap((category) => Object.values(category));
-  }
-  return Object.values(categories[categoryFilter.value]);
-});
-
-const character = useCharacter();
-
-const recipes = computed(() =>
-  character.blueprints
-    .filter((blueprint) => categoryBlueprints.value.includes(blueprint))
-    .flatMap((blueprint) => getBlueprint(blueprint)?.recipes ?? []),
-);
-
-function fulfillsRequirement(part: Item) {
-  const inventoryItem = character.inventory.items.find(({ item }) =>
-    Object.entries(part).every(([key, value]) => item[key as keyof typeof item] === value),
-  );
-
-  return inventoryItem;
+function getBlueprintRecipes(blueprint: string) {
+  return (getBlueprint(blueprint)?.recipes ?? []).filter((recipe) => !recipe.isUpgrade);
 }
 
-const selectedItem: BlueprintRecipe = ref({
-  isUpgrade: false,
-  item: { key: "", grade: "" },
-  parts: [],
-  durationSeconds: 0,
+const recipesByCategory = computed(() => {
+  const recipes = Object.values(categories).reduce(
+    (acc, { name, blueprints }) => {
+      const blueprintRecipes = Object.values(blueprints)
+        .filter((blueprint) => character.blueprints.includes(blueprint))
+        .flatMap((blueprint) => getBlueprintRecipes(blueprint));
+
+      if (blueprintRecipes.length > 0) {
+        acc[name] = blueprintRecipes;
+      }
+      return acc;
+    },
+    {} as Record<string, BlueprintRecipe[]>,
+  );
+
+  return categoryFilter.value === CategoryFilter.ALL
+    ? recipes
+    : { [categories[categoryFilter.value].name]: recipes[categories[categoryFilter.value].name] };
 });
+
+const queue = reactive<any[]>([]);
+
+// function fulfillsRequirement(part: Item) {
+//   const inventoryItem = character.inventory.items.find(({ item }) =>
+//     Object.entries(part).every(([key, value]) => item[key as keyof typeof item] === value),
+//   );
+
+//   return inventoryItem;
+// }
+
+const selectedRecipe = ref<BlueprintRecipe>();
 </script>
 
 <template>
   <div class="mt-40 flex justify-between gap-10 text-white">
-    <div>
-      <h1 class="mb-4 text-4xl font-extrabold">Search</h1>
+    <div class="self-start">
+      <div class="text-4xl font-extrabold">Search</div>
       <input
         type="text"
-        class="mb-4 w-[300px] rounded border border-solid border-white/10 p-8"
+        class="mb-[1.125rem] w-[18.75rem] rounded border border-solid border-white/10 p-5"
         placeholder="Type name of..."
       />
       <div>
         <div class="mb-6 flex flex-wrap items-center justify-between">
           <div class="flex flex-wrap gap-2.5">
-            <button
+            <WorkbenchSlot
               v-for="category in Object.values(CategoryFilter)"
               :key="category"
               @click="categoryFilter = category"
-              class="h-16 w-16 rounded-md border border-solid border-white/30 p-2"
-              :class="{
-                'border-[#EE2E24]/[0.5] bg-gradient-to-t from-[#EE2E24]/[0.5]':
-                  categoryFilter === category,
-                'hover:border-[#929292] hover:bg-[#929292]/[0.5]': categoryFilter !== category,
-              }"
+              :selected="category === categoryFilter"
+              class="h-11 w-11 p-2"
             >
               <img
                 v-if="category !== 'all'"
                 :src="`./assets/workbench/categories/${category}.svg`"
-                alt=""
+                class="h-4 w-4"
               />
-              <span v-else>All</span>
-            </button>
+              <span
+                v-else
+                class="-mb-1"
+              >
+                All
+              </span>
+            </WorkbenchSlot>
           </div>
         </div>
       </div>
-      <div>
-        <div class="mt-10">
-          <div class="flex flex-wrap gap-2.5">
-            <div
-              @click="selectedItem = recipe"
+      <div class="max-h-[45rem] overflow-auto">
+        <div
+          v-for="(recipes, category) in recipesByCategory"
+          :key="category"
+        >
+          <h2 class="mb-3 text-3xl font-bold">{{ category }}</h2>
+          <div class="max-w-110 mb-5 flex flex-wrap gap-2.5">
+            <WorkbenchSlot
+              @click="selectedRecipe = recipe"
               v-for="(recipe, index) in recipes"
               :key="`${recipe.item.key}-${index}`"
-              class="flex h-20 w-20 rounded-md border border-white/30"
-              :class="{
-                'border-[#EE2E24]/[0.5] bg-gradient-to-t from-[#EE2E24]/[0.5]':
-                  selectedItem.item.key + selectedItem.item.grade ===
-                  recipe.item.key + recipe.item.grade,
-                'hover:border-[#929292] hover:bg-[#929292]/[0.5]':
-                  selectedItem.item.key + selectedItem.item.grade !==
-                  recipe.item.key + recipe.item.grade,
-              }"
+              class="h-20 w-20 p-0"
+              :selected="selectedRecipe === recipe"
             >
-              <v-img :src="getItemImage(recipe.item.key)" />
-              <!--                          <div class="text-center text-white">{{ getItemName(recipe.item.key) }}</div>-->
-
-              <!--                          <div class="flex gap-5">-->
-              <!--                            <div class="flex flex-col gap-2">-->
-              <!--                              &lt;!&ndash; Requirements &ndash;&gt;-->
-              <!--                              <div class="text-white">Requirements</div>-->
-              <!--                              <div class="flex flex-col gap-1">-->
-              <!--                                <div-->
-              <!--                                  v-for="(part, index) in recipe.parts"-->
-              <!--                                  :key="`${part.key}-${index}`"-->
-              <!--                                  class="flex items-center gap-2"-->
-              <!--                                >-->
-              <!--                                  <v-img :src="getItemImage(part.key)" />-->
-              <!--                                  <div class="text-sm text-white">{{ getItemName(part.key) }}</div>-->
-              <!--&lt;!&ndash;&ndash;&gt;-->
-              <!--                                  <div-->
-              <!--                                    v-if="'amount' in part"-->
-              <!--                                    class="text-sm text-white"-->
-              <!--                                  >-->
-              <!--                                    {{ part.amount }}-->
-              <!--                                  </div>-->
-              <!--&lt;!&ndash;&ndash;&gt;-->
-              <!--                                  <div-->
-              <!--                                    class="rounded-md border border-solid border-white/30 px-3 py-1 uppercase"-->
-              <!--                                    :class="{-->
-              <!--              // &lt;!&ndash;                        'bg-sunriseYellow text-black shadow-sunriseYellow':&ndash;&gt;-->
-              <!--              // &lt;!&ndash;                          fulfillsRequirement(part),&ndash;&gt;-->
-              <!--              // &lt;!&ndash;                        'transition duration-200 hover:bg-white/10': !fulfillsRequirement(part),&ndash;&gt;-->
-              <!--                                    }"-->
-              <!--                                  >-->
-              <!--                                    {{ fulfillsRequirement(part) ? "✓" : "x" }}-->
-              <!--                                  </div>-->
-              <!--                                </div>-->
-              <!--                              </div>-->
-            </div>
+              <ItemIcon :item="recipe.item" />
+            </WorkbenchSlot>
           </div>
         </div>
       </div>
     </div>
-
-    <!--        <h2 class="mb-4 text-4xl font-extrabold">Handguns</h2>-->
-    <!--        <div class="flex">-->
-    <!--          <div class="mr-4 h-20 w-20 border border-white/10"></div>-->
-    <!--          <div class="mr-4 h-20 w-20 border border-white/10"></div>-->
-    <!--          <div class="mr-4 h-20 w-20 border border-white/10"></div>-->
-    <!--          <div class="mr-4 h-20 w-20 border border-white/10"></div>-->
-    <!--        </div>-->
-    <!--      </div>-->
-    <!--      <div>-->
-    <!--        <h2 class="mb-4 text-4xl font-extrabold">SMGs</h2>-->
-    <!--        <div class="flex">-->
-    <!--          <div class="mr-4 h-20 w-20 border border-white/10"></div>-->
-    <!--          <div class="mr-4 h-20 w-20 border border-white/10"></div>-->
-    <!--          <div class="mr-4 h-20 w-20 border border-white/10"></div>-->
-    <!--          <div class="mr-4 h-20 w-20 border border-white/10"></div>-->
-    <!--        </div>-->
-    <!--      </div>-->
-    <!--    </div>-->
-    <div class="justify-center text-center">
-      <h2 class="text-2xl font-extrabold">In queue</h2>
-      <div class="mb-4 flex justify-center">
-        <img
-          :src="`./assets/workbench/ornament.svg`"
-          class="align-self-center"
-        />
-      </div>
-      <div class="mb-4 flex justify-center">
-        <div class="mr-4 h-20 w-20 border border-white/10"></div>
-        <div class="mr-4 h-20 w-20 border border-white/10"></div>
-        <div class="mr-4 h-20 w-20 border border-white/10"></div>
-        <div class="mr-4 h-20 w-20 border border-white/10"></div>
-        <div class="mr-4 h-20 w-20 border border-white/10"></div>
-        <div class="mr-4 h-20 w-20 border border-white/10"></div>
-        <div class="mr-4 h-20 w-20 border border-white/10"></div>
-      </div>
-      <div>
-        <div class="mb-6 flex justify-center">
-          <v-img
-            class="absolute"
-            :src="getItemImage(selectedItem.item.key)"
-          />
-          <img
-            :src="`./assets/workbench/weapon-ornament.svg`"
-            class="align-self-center"
-          />
-        </div>
-        <v-progress-linear model-value="20" />
-        <p class="text-grey mb-6">
-          Now is crafting
-          <span class="text-white">Pistol</span>
-        </p>
-<!--        {{ getWeaponStats(selectedItem.item.key) }}-->
+    <div class="align-self-center items-start justify-center text-center">
+      <div :class="[queue.length > 0 ? 'visible' : 'invisible']">
+        <h2 class="text-2xl font-extrabold">In queue</h2>
         <div class="mb-4 flex justify-center">
-          <div class="mr-4 h-24 w-24 border border-white/10">
-            <h3 class="pt-4 text-3xl text-red-500">120</h3>
-            Fire rate
-          </div>
-          <div class="mr-4 h-24 w-24 border border-white/10">
-            <h3 class="pt-4 text-3xl text-red-500">90</h3>
-            Accuracy
-          </div>
-          <div class="mr-4 h-24 w-24 border border-white/10">
-            <h3 class="pt-4 text-3xl text-red-500">60</h3>
-            Damage
-          </div>
-          <div class="mr-4 h-24 w-24 border border-white/10">
-            <h3 class="pt-4 text-3xl text-red-500">80</h3>
-            Clip
-          </div>
-        </div>
-      </div>
-      <div>
-        <h2 class="text-2xl font-bold">Item description</h2>
-        <div class="my-4 flex justify-center">
           <img
             :src="`./assets/workbench/ornament.svg`"
             class="align-self-center"
           />
         </div>
-        <p class="text-grey">
-          It is a long established fact that a reader will be distracted by the readable content of
-          a page when looking at its layout.
-        </p>
+        <div class="mb-11 flex justify-center gap-4">
+          <WorkbenchSlot
+            v-for="(_, i) in queue"
+            :key="i"
+            class="h-20 w-20"
+            :selected="false"
+          />
+        </div>
       </div>
+      <template v-if="selectedRecipe">
+        <div>
+          <div class="mb-6 flex justify-center">
+            <img
+              :src="`./assets/workbench/weapon-ornament.svg`"
+              class="align-self-center h-[17.4375rem] w-[12.1875rem]"
+            />
+            <v-img
+              class="absolute h-[16.625rem] w-135"
+              :src="getItemImage(selectedRecipe.item.key)"
+            />
+          </div>
+          <v-progress-linear model-value="20" />
+          <div class="text-grey mb-6 mt-3">
+            Now is crafting
+            <span class="text-white">{{ getItemName(selectedRecipe.item.key) }}</span>
+          </div>
+          <!--        {{ getWeaponStats(selectedItem.item.key) }}-->
+          <div class="mb-4 flex justify-center gap-3.5">
+            <WorkbenchSlot
+              class="h-24 w-24 flex-col"
+              static
+            >
+              <h3 class="text-3xl font-bold text-red-500">120</h3>
+              Fire rate
+            </WorkbenchSlot>
+            <WorkbenchSlot
+              class="h-24 w-24 flex-col"
+              static
+            >
+              <h3 class="text-3xl font-bold text-red-500">90</h3>
+              Accuracy
+            </WorkbenchSlot>
+            <WorkbenchSlot
+              class="h-24 w-24 flex-col"
+              static
+            >
+              <h3 class="text-3xl font-bold text-red-500">60</h3>
+              Damage
+            </WorkbenchSlot>
+            <WorkbenchSlot
+              class="h-24 w-24 flex-col"
+              static
+            >
+              <h3 class="text-3xl font-bold text-red-500">80</h3>
+              Clip
+            </WorkbenchSlot>
+          </div>
+        </div>
+        <div>
+          <h2 class="text-2xl font-bold">Item description</h2>
+          <div class="my-4 flex justify-center">
+            <img
+              :src="`./assets/workbench/ornament.svg`"
+              class="align-self-center"
+            />
+          </div>
+          <p class="text-grey">
+            It is a long established fact that a reader will be distracted by the readable content
+            of a page when looking at its layout.
+          </p>
+        </div>
+      </template>
     </div>
-    <div class="w-[280px] text-right">
-      <div v-show="!!selectedItem">
-        <h2 class="text-4xl font-extrabold">{{ getItemName(selectedItem.item.key) }}</h2>
-        <h3 class="font-medium text-gray-500">Crafting recipe</h3>
-        <p>
-          Standard handgun. A .45 caliber combat pistol with a magazine capacity of 12 rounds that
-          can be extended to 16.
-        </p>
-        <div class="mb-12 flex flex-wrap items-center gap-2">
-          <div
-            v-for="(part, index) in selectedItem.parts"
+    <div class="self-right w-[17.5rem] text-right">
+      <template v-if="selectedRecipe">
+        <div class="text-3xl font-bold">{{ getItemName(selectedRecipe.item.key) }}</div>
+        <div class="text-xl font-medium text-gray-500">Crafting recipe</div>
+        <div class="mt-4 text-right font-medium text-white">
+          {{ getItemDescription(selectedRecipe.item.key) }}
+        </div>
+        <div class="mb-12 mt-5 flex flex-wrap items-center justify-end gap-2">
+          <WorkbenchSlot
+            v-for="(part, index) in selectedRecipe.parts"
             :key="`${part.key}-${index}`"
-            class="h-28 w-28 rounded-md border border-white/10"
+            class="relative h-28 w-28"
+            :selected="false"
           >
-            <v-img :src="getItemImage(part.key)" />
-            <div class="text-sm text-white">{{ getItemName(part.key) }}</div>
-            <!---->
+            <ItemIcon
+              :item="part"
+              hide-amount
+            />
+            <div class="absolute left-2.5 top-2.5 max-w-24 text-left text-sm text-white">
+              {{ getItemName(part.key) }}
+            </div>
             <div
               v-if="'amount' in part"
-              class="text-sm text-white"
+              class="absolute bottom-1 right-1 rounded bg-red-600 px-1.5 pb-1 pt-1.5 text-sm font-extrabold text-white"
             >
-              {{ part.amount }}
+              x{{ part.amount }}
             </div>
-            <!---->
-            <!--            <div class="rounded-md border border-solid border-white/30 px-3 py-1 uppercase">-->
-            <!--              {{ fulfillsRequirement(part) ? "✓" : "x" }}-->
-            <!--            </div>-->
-          </div>
+          </WorkbenchSlot>
         </div>
         <h2 class="mb-4 text-2xl font-bold">Crafting information</h2>
         <div class="mb-4 flex justify-end gap-2">
@@ -284,7 +281,7 @@ const selectedItem: BlueprintRecipe = ref({
           </div>
           <div class="w-32 border border-white/30 p-4 font-bold text-gray-500">
             Crafting time
-            <div class="text-white">{{ selectedItem.durationSeconds }} s</div>
+            <div class="text-white">{{ selectedRecipe.durationSeconds }} s</div>
           </div>
         </div>
         <div class="justify-space-between flex border border-white/30 p-4">
@@ -293,12 +290,12 @@ const selectedItem: BlueprintRecipe = ref({
           <div>+</div>
         </div>
         <button class="button flex p-4 text-xl font-extrabold">Begin Crafting</button>
-      </div>
+      </template>
     </div>
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .button {
   border-radius: 4px;
   border: 1px solid rgba(238, 46, 36, 0.3);
