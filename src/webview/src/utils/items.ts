@@ -47,20 +47,6 @@ export const getItemImage = (key: string) => {
 
 // }
 
-export const getItemIconScale = (item: { key: string }) => {
-  if (isItemKeyClothing(item.key)) {
-    return "contain";
-  }
-  if (isItemKeyWeapon(item.key)) {
-    return "contain";
-  }
-  return (
-    {
-      snowball: "40%",
-    }[item.key] || "90%"
-  );
-};
-
 export function getItemIconPosition(item: { key: string }) {
   if (isItemKeyPants(item.key)) {
     return "top center";

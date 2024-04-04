@@ -63,7 +63,7 @@ alt.on(WebviewEvents.FromClient.INVENTORY_ITEM_ADD, async (item) => {
   <transition-group
     name="notification"
     tag="div"
-    class="absolute top-2/3 flex h-full w-full items-start justify-center"
+    class="pointer-events-none absolute top-2/3 flex h-full w-full items-start justify-center"
   >
     <ItemReceivedNotification
       v-if="addedItem"
