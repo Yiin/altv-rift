@@ -10,7 +10,7 @@ declare module "@altv/server" {
   }
 }
 
-alt.Player.prototype.applyEquipment = function (equipmentSlot) {
+alt.Player.prototype.applyEquipment = function (specificEquipmentSlot) {
   for (const equipmentSlot in this.character.equipment) {
     const slot = equipmentSlot as EquipmentSlot;
     const item = this.getEquipedItemInSlot(slot);
@@ -19,7 +19,18 @@ alt.Player.prototype.applyEquipment = function (equipmentSlot) {
       continue;
     }
 
-    if (equipmentSlot && equipmentSlot !== slot) {
+    if (specificEquipmentSlot && specificEquipmentSlot !== slot) {
+      continue;
+    }
+
+    const isQuickSlot = [
+      EquipmentSlot.QuickSlot1,
+      EquipmentSlot.QuickSlot2,
+      EquipmentSlot.QuickSlot3,
+      EquipmentSlot.QuickSlot4,
+    ].includes(slot);
+
+    if (isQuickSlot) {
       continue;
     }
 

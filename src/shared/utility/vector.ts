@@ -1,6 +1,6 @@
 import alt from "@altv/shared";
 
-export function distance(vector1: alt.IVector3, vector2: alt.IVector3) {
+export function distance(vector1: alt.IVector3, vector2: alt.IVector3): number {
   if (vector1 === undefined || vector2 === undefined) {
     throw new Error("AddVector => vector1 or vector2 is undefined");
   }
@@ -10,7 +10,7 @@ export function distance(vector1: alt.IVector3, vector2: alt.IVector3) {
   );
 }
 
-export function distance2d(vector1: alt.IVector2, vector2: alt.IVector2) {
+export function distance2d(vector1: alt.IVector2, vector2: alt.IVector2): number {
   if (vector1 === undefined || vector2 === undefined) {
     throw new Error("AddVector => vector1 or vector2 is undefined");
   }
@@ -18,7 +18,10 @@ export function distance2d(vector1: alt.IVector2, vector2: alt.IVector2) {
   return Math.sqrt((vector1.x - vector2.x) ** 2 + (vector1.y - vector2.y) ** 2);
 }
 
-export function getClosestVector(pos: alt.IVector3, arrayOfPositions: alt.IVector3[]) {
+export function getClosestVector(
+  pos: alt.IVector3,
+  arrayOfPositions: alt.IVector3[],
+): alt.IVector3 {
   arrayOfPositions.sort((a, b) => distance(pos, a) - distance(pos, b));
 
   return arrayOfPositions[0];
@@ -34,7 +37,10 @@ export function getClosestVectorByPos<T extends Record<string, alt.Vector3>>(
   return arrayOfPositions[0]!;
 }
 
-export function getClosest<T extends { pos: alt.IVector3 }>(pos: alt.Vector3, nodes: T[]) {
+export function getClosest<T extends { pos: alt.IVector3 }>(
+  pos: alt.Vector3,
+  nodes: T[],
+): T | null {
   let closest: T | null = null;
   let closestDistance = Infinity;
 
@@ -90,7 +96,7 @@ export function getClosestTypes<T extends { pos: alt.IVector3; valid: boolean }>
   return newElements;
 }
 
-export function lerp(a: number, b: number, t: number) {
+export function lerp(a: number, b: number, t: number): number {
   return (1 - t) * a + t * b;
 }
 

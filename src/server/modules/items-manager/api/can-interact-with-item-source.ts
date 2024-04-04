@@ -2,7 +2,7 @@ import alt from "@altv/server";
 import { ItemSource, ItemSourceOrigin } from "@shared/interfaces";
 import { InGamePlayer } from "@/core/utility/assertions";
 
-export function canInteractWithItemSource(player: InGamePlayer, itemSource: ItemSource) {
+export function canInteractWithItemSource(player: InGamePlayer, itemSource: ItemSource): boolean {
   switch (itemSource.origin) {
     case ItemSourceOrigin.PlayerInventory:
     case ItemSourceOrigin.PlayerEquipment:

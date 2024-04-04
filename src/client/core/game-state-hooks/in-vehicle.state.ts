@@ -28,7 +28,7 @@ whileInGame(() => {
   };
 });
 
-export function whileInVehicle(fn: () => MaybePromise<(() => void) | void>) {
+export function whileInVehicle(fn: () => MaybePromise<(() => void) | void>): void {
   const cleanup = ref<(() => void) | void>();
 
   watch(isInVehicle, async (value) => {

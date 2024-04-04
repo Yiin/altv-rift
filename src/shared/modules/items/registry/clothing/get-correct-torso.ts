@@ -2,7 +2,14 @@ import alt from "@altv/shared";
 import TORSO_MALE from "./torso_male.json";
 import TORSO_FEMALE from "./torso_female.json";
 
-function getTorso(obj: any, drawableId: number, textureId: number) {
+function getTorso(
+  obj: any,
+  drawableId: number,
+  textureId: number,
+): {
+  drawableId: number;
+  textureId: number;
+} | null {
   if (obj[drawableId] === undefined || obj[drawableId][textureId] === undefined) {
     console.error(`Invalid top: ${drawableId} ${textureId}`);
     return null;
@@ -18,7 +25,14 @@ function getTorso(obj: any, drawableId: number, textureId: number) {
   return null;
 }
 
-export function getTorsoForTop(model: number, topDrawableId: number, topTextureId: number) {
+export function getTorsoForTop(
+  model: number,
+  topDrawableId: number,
+  topTextureId: number,
+): {
+  drawableId: number;
+  textureId: number;
+} {
   if (alt.hash("mp_m_freemode_01") === model) {
     return (
       getTorso(TORSO_MALE, topDrawableId, topTextureId) || {

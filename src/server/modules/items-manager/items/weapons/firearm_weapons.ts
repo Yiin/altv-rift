@@ -4,10 +4,8 @@ import {
   AmmoItem,
   Item,
   createItem,
-  getAmmoKeyForAmmoGroup,
   getItemInfoByKey,
   getWeaponAmmoEquipmentSlot,
-  getWeaponAmmoGroup,
   isItemAmmo,
 } from "@shared/modules/items";
 import {
@@ -16,13 +14,7 @@ import {
   isItemFirearmWeapon,
   isWeaponWithClip,
 } from "@shared/modules/items/registry/weapons/firearm-weapon.items";
-import {
-  ItemSource,
-  InventoryItemSource,
-  GroundItemSource,
-  ItemSourceOrigin,
-} from "@shared/interfaces";
-import { getInventoryItemByKey } from "@shared/modules/inventory";
+import { ItemSource, ItemSourceOrigin } from "@shared/interfaces";
 import { InGamePlayer, isInGame } from "@/core/utility/assertions";
 import { on } from "@/core/events/emit";
 import { findItem, findInventoryByItemSource, removeItem, addItemToInventory } from "../../api";
@@ -95,25 +87,21 @@ alt.Events.onPlayer(ServerEvents.FromClient.WEAPON_SHOOT, (player) => {
 /**
  * Loads ammo from inventory into weapon.
  */
-export function loadWeaponWithAmmo(
-  weaponSource: ItemSource,
-  ammoSource: InventoryItemSource | GroundItemSource,
-): boolean {
+export function loadWeaponWithAmmo(weaponSource: ItemSource, ammoSource: ItemSource): boolean {
   const weapon = findItem(weaponSource);
   const ammo = findItem(ammoSource);
-  const ammoInventory =
-    ammoSource.origin === ItemSourceOrigin.Ground ? null : findInventoryByItemSource(ammoSource);
 
-  if (!weapon || !ammo || (ammoSource.origin !== ItemSourceOrigin.Ground && !ammoInventory)) {
+  const hasInventory =
+    ammoSource.origin === ItemSourceOrigin.PlayerInventory ||
+    ammoSource.origin === ItemSourceOrigin.Storage;
+
+  const ammoInventory = hasInventory ? findInventoryByItemSource(ammoSource) : null;
+
+  if (!weapon || !ammo || (hasInventory && !ammoInventory)) {
     return false;
   }
 
   if (!isItemFirearmWeapon(weapon) || !isItemAmmo(ammo)) {
-    return false;
-  }
-
-  if (weapon.clip) {
-    // Weapon already has a clip
     return false;
   }
 
@@ -129,7 +117,7 @@ export function loadWeaponWithAmmo(
 /**
  * Unloads ammo from weapon to its inventory (or players inventory if equiped).
  */
-export function unloadAmmoFromWeapon(source: ItemSource) {
+export function unloadAmmoFromWeapon(source: ItemSource): boolean {
   const weapon = findItem(source);
 
   if (!weapon) {
@@ -228,7 +216,7 @@ export function loadWeaponItemWithAmmoItem(weapon: FirearmWeaponItem, ammo: Ammo
 /**
  * Unloads ammo from weapon item and returns ammo item.
  */
-export function unloadWeaponItemAmmo(item: Item) {
+export function unloadWeaponItemAmmo(item: Item): AmmoItem | null {
   if (!isItemFirearmWeapon(item)) {
     return null;
   }

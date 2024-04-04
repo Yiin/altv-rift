@@ -32,7 +32,7 @@ function applyGenderClothing(player: alt.Player, key: ClothingItemKey): Clothing
   return key;
 }
 
-export function isProp(equipmentSlot: string) {
+export function isProp(equipmentSlot: string): boolean {
   return ["glasses", "headwear", "earrings", "lefthand", "righthand"].includes(equipmentSlot);
 }
 

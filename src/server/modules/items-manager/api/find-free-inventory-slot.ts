@@ -1,6 +1,6 @@
 import { Inventory } from "@shared/interfaces";
 
-export function findFreeInventorySlot(inventory: Inventory, slot?: number) {
+export function findFreeInventorySlot(inventory: Inventory, slot?: number): number {
   if (typeof slot !== "undefined") {
     if (!inventory.items.some((item) => item.slot === slot)) {
       return slot;

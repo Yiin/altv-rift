@@ -24,7 +24,7 @@ const diggingZones = DIGGING_ZONES.map((zone) => {
   return colshape;
 });
 
-export function getDiggingZones() {
+export function getDiggingZones(): alt.ColShapeCircle[] {
   return diggingZones;
 }
 

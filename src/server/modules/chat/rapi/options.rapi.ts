@@ -29,7 +29,10 @@ export function updateOptionAll(
 /**
  * Updates the specified options for the specified player.
  */
-export function updateOptions(player: Player, options: Partial<ClientOptions & WindowOptions>) {
+export function updateOptions(
+  player: Player,
+  options: Partial<ClientOptions & WindowOptions>,
+): void {
   container
     .resolve(MountService)
     .waitForMount(player, container.resolve(WindowService).updateOptions(player, options));
@@ -38,6 +41,6 @@ export function updateOptions(player: Player, options: Partial<ClientOptions & W
 /**
  * Updates the specified options for all players.
  */
-export function updateOptionsAll(options: Partial<ClientOptions & WindowOptions>) {
+export function updateOptionsAll(options: Partial<ClientOptions & WindowOptions>): void {
   Player.all.forEach((player) => updateOptions(player, options));
 }

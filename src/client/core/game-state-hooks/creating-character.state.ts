@@ -10,7 +10,7 @@ export const isCreatingCharacter = computed(() => {
   );
 });
 
-export function whileCreatingCharacter(fn: () => MaybePromise<(() => void) | void>) {
+export function whileCreatingCharacter(fn: () => MaybePromise<(() => void) | void>): void {
   const cleanup = ref<(() => void) | void>();
 
   watch(isCreatingCharacter, async () => {

@@ -26,7 +26,7 @@ export const renderer = createRenderer(document);
 /**
  * Tries to render the element
  */
-export function renderElement(node: alt.RmlElement) {
+export function renderElement(node: alt.RmlElement): void {
   if (!node.valid) {
     return;
   }
@@ -63,7 +63,7 @@ export function renderElement(node: alt.RmlElement) {
   notRenderedElements.delete(node);
 }
 
-export function calculateElementScale(camDistToPed: number) {
+export function calculateElementScale(camDistToPed: number): number {
   const { x: screenX, y: screenY } = alt.getScreenResolution();
   const aspectRatio = screenX / screenY; // Aspect ratio of the screen
   const screenDiagonal = Math.sqrt(screenX ** 2 + screenY ** 2);
@@ -79,7 +79,7 @@ export function calculateElementScale(camDistToPed: number) {
   return Math.min(1, scaleFactor * aspectRatio) * scale;
 }
 
-export function markElementAsVisible(element: alt.RmlElement) {
+export function markElementAsVisible(element: alt.RmlElement): void {
   if (element.shown) {
     return;
   }
@@ -88,7 +88,7 @@ export function markElementAsVisible(element: alt.RmlElement) {
   element.shown = true;
 }
 
-export function markElementAsHidden(element: alt.RmlElement) {
+export function markElementAsHidden(element: alt.RmlElement): void {
   if (!element.shown) {
     return;
   }

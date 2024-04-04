@@ -23,19 +23,19 @@ export const EXPERIENCE_TABLE = [
   0xeb57d5fa,
 ];
 
-export function getLevel(xp: number) {
+export function getLevel(xp: number): number {
   for (let i = 0; i < EXPERIENCE_TABLE.length; i++) {
     if (EXPERIENCE_TABLE[i] > xp) return i;
   }
   return EXPERIENCE_TABLE.length + 1;
 }
 
-export function getMissingExperience(xp: number) {
+export function getMissingExperience(xp: number): number {
   const level = getLevel(xp) - 1;
   return EXPERIENCE_TABLE[level] - xp;
 }
 
-export function getLevelProgress(xp: number) {
+export function getLevelProgress(xp: number): number {
   const level = getLevel(xp) - 1;
   const start = EXPERIENCE_TABLE[level];
   const next = EXPERIENCE_TABLE[level + 1];

@@ -9,15 +9,14 @@ import { AirDropType } from "@shared/modules/air-drops";
 import { InGamePlayer } from "@/core/utility/assertions";
 import { addItemToInventory, removeItemFromInventorySlot } from "./api";
 
+interface StorageData {
+  label: string;
+  inventory: UnwrapNestedRefs<Inventory>;
+  meta?: Record<string, any>;
+}
+
 export const storageGroup = alt.VirtualEntityGroup.create({ maxEntitiesInStream: 50 });
-export const storageItems: Record<
-  alt.VirtualEntity["id"],
-  {
-    label: string;
-    inventory: UnwrapNestedRefs<Inventory>;
-    meta?: Record<string, any>;
-  }
-> = {};
+export const storageItems: Record<alt.VirtualEntity["id"], StorageData> = {};
 
 export function createStorage(options: {
   type?: StorageType;
@@ -57,7 +56,7 @@ export function getStorageEntity(id: alt.VirtualEntity["id"]): alt.VirtualEntity
   return alt.VirtualEntity.getByID(id);
 }
 
-export function getStorage(id: alt.VirtualEntity["id"]) {
+export function getStorage(id: alt.VirtualEntity["id"]): StorageData | undefined {
   return storageItems[id];
 }
 
@@ -65,7 +64,7 @@ export function getStorageInventory(id: alt.VirtualEntity["id"]): Inventory {
   return storageItems[id]?.inventory;
 }
 
-export function openStorage(player: InGamePlayer, storageId: alt.VirtualEntity["id"]) {
+export function openStorage(player: InGamePlayer, storageId: alt.VirtualEntity["id"]): boolean {
   const ve = alt.VirtualEntity.getByID(storageId);
 
   if (!ve) {

@@ -22,14 +22,10 @@
     "preserveWatchOutput": false,
     "pretty": true,
     "skipLibCheck": true,
-    "incremental": false,
+    "incremental": true,
     "typeRoots": [
       "./node_modules/@types",
-      "./node_modules/reflect-metadata/*.d.ts",
-      "./custom-types/game",
-      "./custom-types/prisma",
-      "./custom-types/utils",
-      "./custom-types/vendor",
+      "./node_modules/reflect-metadata/*.d.ts"
     ],
   },
   "exclude": [

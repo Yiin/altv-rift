@@ -1,10 +1,12 @@
 import alt from "@altv/server";
 import { ItemSource, ItemSourceOrigin } from "@shared/interfaces";
 import { Item, isStackable, createItem } from "@shared/modules/items";
+import { isEquipmentSlotQuickSlot } from "@shared/modules/inventory";
 import { isInGame } from "@/core/utility/assertions";
 import { cleanupDroppedItem } from "../dropped-items";
 import { removeItemFromInventorySlot } from "./remove-item-from-inventory-slot";
 import { findInventoryByItemSource } from "./find-inventory-by-item-source";
+import { findItem } from "./find-item";
 
 /**
  * Removes item from given source and returns it
@@ -51,7 +53,27 @@ export function removeItem(source: ItemSource, amount = 0): Item | null {
       return null;
     }
 
-    return player.removeEquipedItem(source.equipmentSlot);
+    if (isEquipmentSlotQuickSlot(source.equipmentSlot)) {
+      const item = findItem(source);
+
+      if (!item) {
+        return null;
+      }
+
+      if (isStackable(item) && item.amount - amount < 0) {
+        return null;
+      }
+
+      if (!isStackable(item) || item.amount - amount === 0 || amount <= 0) {
+        return player.removeEquipedItem(source.equipmentSlot);
+      }
+
+      item.amount -= amount;
+
+      return createItem(item.key, { ...item, amount });
+    } else {
+      return player.removeEquipedItem(source.equipmentSlot);
+    }
   }
 
   /**

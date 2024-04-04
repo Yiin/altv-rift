@@ -9,7 +9,12 @@ const damageContainer = document.createElement("div");
 
 document.body.appendChild(damageContainer);
 
-function displayHit(position: alt.Vector3, damage: number, type: "health" | "armor", ped: alt.Ped) {
+function displayHit(
+  position: alt.Vector3,
+  damage: number,
+  type: "health" | "armor",
+  ped: alt.Ped,
+): void {
   // Create a new div element for damage number
   const damageDiv = document.createElement("div");
 

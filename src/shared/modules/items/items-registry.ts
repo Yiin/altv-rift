@@ -5,7 +5,7 @@ export const ITEMS_REGISTRY: Map<ItemKey, ItemInfo> = new Map();
 /**
  * Register an item in the items registry so it's available for use.
  */
-export function registerItem(info: ItemInfo) {
+export function registerItem(info: ItemInfo): void {
   if (ITEMS_REGISTRY.has(info.key)) {
     throw new Error(
       `Item with key "${info.key}" is already registered: ${JSON.stringify(ITEMS_REGISTRY.get(info.key))} -> ${JSON.stringify(info)}`,
@@ -44,14 +44,14 @@ export function getItemInfoByKey<K extends ItemKey>(key: K): ItemInfoByKey<K> {
 /**
  * Gives the summary description for an item by it's key.
  */
-export function getItemDescription(key: ItemKey) {
+export function getItemDescription(key: ItemKey): string {
   const itemInfo = getItemInfoByKey(key);
-  return itemInfo && "description" in itemInfo ? itemInfo.description : "";
+  return itemInfo && "description" in itemInfo && itemInfo.description ? itemInfo.description : "";
 }
 
 /**
  * Returns all registered item keys.
  */
-export function getAllItemKeys() {
+export function getAllItemKeys(): ItemKey[] {
   return Array.from(ITEMS_REGISTRY.keys());
 }

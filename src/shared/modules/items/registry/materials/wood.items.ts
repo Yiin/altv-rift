@@ -56,7 +56,7 @@ const woods = registerItems<WoodItemInfo>([
   },
 ]);
 
-export function isItemKeyWood(key: ItemKey): key is WoodItemKey {
+export function isItemKeyWood(key: string): key is WoodItemKey {
   return woods.has(key as WoodItemKey);
 }
 

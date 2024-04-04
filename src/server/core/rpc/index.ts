@@ -29,7 +29,7 @@ const webviewHandlers = new Map<
 >();
 
 // call client from server
-const callClient = (player: alt.Player, name: string, ...args: any[]) => {
+const callClient = (player: alt.Player, name: string, ...args: any[]): Promise<any> => {
   return new Promise((resolve, reject) => {
     const payload = createPayload(name, args);
 
@@ -76,14 +76,14 @@ alt.Events.onPlayer(CALL_CLIENT_FROM_SERVER_RESPONSE, (_, response) => {
 const registerClient = <T extends keyof typeof ServerCall.FromClient>(
   name: T,
   callback: Asyncify<CallFromClient>[T],
-) => {
+): void => {
   if (clientProcedures.has(name)) {
     throw new Error(`registerClient: Procedure ${name} already exists`);
   }
   clientProcedures.set(name, callback);
 };
 
-const unregisterClient = (name: string) => {
+const unregisterClient = (name: string): void => {
   clientProcedures.delete(name);
 };
 
@@ -122,7 +122,7 @@ alt.Events.onPlayer(CALL_SERVER_FROM_CLIENT, async (player, payload) => {
 });
 
 // call webview from server
-const callWebview = (player: alt.Player, name: string, ...args: any[]) => {
+const callWebview = (player: alt.Player, name: string, ...args: any[]): Promise<any> => {
   return new Promise((resolve, reject) => {
     const payload = createPayload(name, args);
 
@@ -172,14 +172,14 @@ alt.Events.onPlayer(CALL_WEBVIEW_FROM_SERVER_RESPONSE, (_, response) => {
 const registerWebview = <T extends keyof typeof FromWebview>(
   name: T,
   callback: Asyncify<CallFromWebview>[T],
-) => {
+): void => {
   if (webviewProcedures.has(name)) {
     throw new Error(`registerWebview: Procedure ${name} already exists`);
   }
   webviewProcedures.set(name, callback);
 };
 
-const unregisterWebview = (name: string) => {
+const unregisterWebview = (name: string): void => {
   webviewProcedures.delete(name);
 };
 

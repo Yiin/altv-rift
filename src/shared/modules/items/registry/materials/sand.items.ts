@@ -34,7 +34,7 @@ const sands = registerItems<SandItemInfo>([
   },
 ]);
 
-export function isItemKeySand(key: ItemKey): key is SandItemKey {
+export function isItemKeySand(key: string): key is SandItemKey {
   return sands.has(key as SandItemKey);
 }
 

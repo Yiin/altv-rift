@@ -3,10 +3,10 @@ import { PedKey } from "@shared/modules/ped/list";
 import { createStaticPed } from "@/modules/peds/registry";
 import { getShopsRegistry } from "../registry";
 
-export function setupShop(shop: Shop) {
+export function setupShop(shop: Shop): void {
   getShopsRegistry().set(shop.id, shop as Shop);
 
-  createStaticPed(shop.id as PedKey, shop.ped, {
-    name: shop.name,
-  });
+  // createStaticPed(shop.id as PedKey, shop.ped, {
+  //   name: shop.name,
+  // });
 }

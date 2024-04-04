@@ -1,4 +1,5 @@
-import { div, img } from "../../renderer/rml-tags";
+import { img } from "../../renderer/rml-tags";
+import { ParsedElement } from "../../renderer/types";
 
 export type IconName =
   // @index(['./assets/*.png'], (f, _, e) => `| '${f.name.replace('icon-', '')}'`)
@@ -14,7 +15,7 @@ export type IconName =
   | "trade";
 // @endindex
 
-export function Icon(name: IconName) {
+export function Icon(name: IconName): ParsedElement {
   return img({
     className: "icon",
     src: `components/icon/assets/icon-${name}.png`,

@@ -52,7 +52,7 @@ const scraps = registerItems<ScrapItemInfo>([
   },
 ]);
 
-export function isItemKeyScrap(key: ItemKey): key is ScrapItemKey {
+export function isItemKeyScrap(key: string): key is ScrapItemKey {
   return scraps.has(key as ScrapItemKey);
 }
 

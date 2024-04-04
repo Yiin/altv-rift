@@ -7,6 +7,9 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["./**/*", "../shared/**/*", "../../custom-types", "../../node_modules/@altv/server"],
-  "exclude": ["../webview/**/*", "../client/**/*"]
+  "include": [
+    "./**/*",
+    "../shared/**/*",
+    "../../custom-types"
+  ]
 }

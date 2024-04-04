@@ -1,4 +1,3 @@
-import { makeEnum } from "@shared/utility/make-enum";
 import { ItemKey } from "../types";
 import { getItemInfoByKey } from "../items-registry";
 import { isItemKeyFishingRod, isItemKeyWeapon } from "../registry";
@@ -6,13 +5,17 @@ import { isItemKeyAmmo } from "../registry/ammo/ammo.items";
 import { isItemKeyFirearmWeapon } from "../registry/weapons/firearm-weapon.items";
 import { isItemKeyFishBait } from "../registry/fish-bait.items";
 
-export const CombineType = makeEnum({
-  None: "None",
-  EquipAmmo: "EquipAmmo",
-  EquipFishBait: "EquipFishBait",
-});
+export enum CombineType {
+  None = "None",
+  EquipAmmo = "EquipAmmo",
+  EquipFishBait = "EquipFishBait",
+}
 
-export function getCombineType(target: ItemKey, source: ItemKey, reverse = false) {
+export function getCombineType(
+  target: ItemKey,
+  source: ItemKey,
+  reverse = false,
+): [CombineType, boolean] {
   // Weapon - Ammo
   if (isItemKeyWeapon(target) && isItemKeyAmmo(source)) {
     if (!isItemKeyFirearmWeapon(target)) {

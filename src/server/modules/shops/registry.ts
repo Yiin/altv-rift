@@ -11,7 +11,7 @@ prisma.shop.findMany().then((shops) => {
   }
 });
 
-export function getShopsRegistry() {
+export function getShopsRegistry(): Map<string, Shop> {
   return registry;
 }
 

@@ -3,7 +3,7 @@ import { isUserStoreAvailable } from "@/core/store/user.store";
 
 export const isAuthenticating = computed(() => !isUserStoreAvailable.value);
 
-export function whileAuthenticating(fn: () => MaybePromise<(() => void) | void>) {
+export function whileAuthenticating(fn: () => MaybePromise<(() => void) | void>): void {
   const cleanup = ref<(() => void) | void>();
 
   watch(isAuthenticating, async (value) => {

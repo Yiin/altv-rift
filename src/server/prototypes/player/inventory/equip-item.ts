@@ -9,6 +9,7 @@ import {
 import { ServerEvents } from "@shared/events/server";
 import {
   getItemEquipmentSlot,
+  isItemAmmo,
   isItemKeyClothing,
   isMaleClothing,
   isUnisexClothing,
@@ -45,6 +46,7 @@ alt.Player.prototype.equipItem = function (source, equipmentSlot) {
   const item = findItem(source, this);
 
   if (!item) {
+    alt.log(`[equipItem] Item not found in source: ${JSON.stringify(source)}`);
     return false;
   }
 
@@ -71,13 +73,18 @@ alt.Player.prototype.equipItem = function (source, equipmentSlot) {
       : getItemEquipmentSlot(item);
 
   if (!equipmentSlotOrFishbait) {
+    alt.log(`[equipItem] Item ${item.key} doesn't have equipment slot.`);
     return false;
   }
 
-  const inventory =
-    source.origin === ItemSourceOrigin.Ground ? null : findInventoryByItemSource(source);
+  const hasInventory =
+    source.origin === ItemSourceOrigin.PlayerInventory ||
+    source.origin === ItemSourceOrigin.Storage;
 
-  if (source.origin !== ItemSourceOrigin.Ground && !inventory) {
+  const inventory = hasInventory ? findInventoryByItemSource(source) : null;
+
+  if (hasInventory && !inventory) {
+    alt.log(`[equipItem] Inventory not found for source: ${JSON.stringify(source)}`);
     return false;
   }
 
@@ -109,6 +116,7 @@ alt.Player.prototype.equipItem = function (source, equipmentSlot) {
           !isMaleClothing(item.key) &&
           !isUnisexClothing(item.key)))
     ) {
+      alt.log(`[equipItem] Player model doesn't match with clothing`);
       return false;
     }
 
@@ -116,24 +124,16 @@ alt.Player.prototype.equipItem = function (source, equipmentSlot) {
 
     const unequippedItem = this.character.equipment[equipmentSlot];
 
-    const isSameAmmo = unequippedItem?.key === item.key;
+    const isSameAmmo = isItemAmmo(item) && unequippedItem?.key === item.key;
 
     if (isSameAmmo) {
       // @ts-expect-error
       this.character.equipment[equipmentSlot].amount += item.amount;
     } else {
-      if (unequippedItem) {
-        const isQuickSlot =
-          source.origin === ItemSourceOrigin.PlayerEquipment &&
-          [
-            EquipmentSlot.QuickSlot1,
-            EquipmentSlot.QuickSlot2,
-            EquipmentSlot.QuickSlot3,
-            EquipmentSlot.QuickSlot4,
-          ].includes(source.equipmentSlot);
-
+      if (unequippedItem && !isFromQuickSlot) {
         if (inventory) {
           if (!addItemToInventory(inventory, unequippedItem)) {
+            alt.log(`[equipItem] Failed to add unequipped item to inventory`);
             return false;
           }
         } else {
@@ -144,6 +144,16 @@ alt.Player.prototype.equipItem = function (source, equipmentSlot) {
       // @ts-expect-error item is guaranteed to be of correct type,
       // but TS is complaining that e.g. ClothingItem might be on weapon slot
       this.character.equipment[equipmentSlot] = item;
+
+      if (isFromQuickSlot) {
+        // @ts-expect-error
+        this.character.equipment[source.equipmentSlot] = unequippedItem;
+
+        alt.log(`[equipItem] Moved item from quick slot to equipment slot`, {
+          from: source.equipmentSlot,
+          to: equipmentSlot,
+        });
+      }
     }
   }
 

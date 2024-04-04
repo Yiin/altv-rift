@@ -3,7 +3,7 @@ import { getInventoryItemInSlot } from "@shared/modules/inventory";
 import { addItemToInventory } from "./add-item-to-inventory";
 import { findInventoryByItemSource } from "./find-inventory-by-item-source";
 
-export function swapItems(from: InventoryItemSource, to: InventoryItemSource) {
+export function swapInventoryItems(from: InventoryItemSource, to: InventoryItemSource): boolean {
   const fromInventory = findInventoryByItemSource(from);
   const toInventory = findInventoryByItemSource(to);
 

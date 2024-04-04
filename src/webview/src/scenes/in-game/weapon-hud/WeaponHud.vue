@@ -94,7 +94,7 @@ const weapon = computed(() => {
       class="z-max h-40 w-40 origin-bottom-right bg-contain bg-right-bottom"
       :class="[getItemClasses(weapon.item)]"
       :style="{
-        backgroundImage: `url(${getItemImage(weapon.item.key, true)})`,
+        backgroundImage: `url(${getItemImage(weapon.item.key)})`,
       }"
     />
     <div class="text-2xl font-bold text-white">{{ weapon.name }}</div>

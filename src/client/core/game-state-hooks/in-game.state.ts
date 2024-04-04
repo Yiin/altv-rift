@@ -3,7 +3,7 @@ import { isCharacterStoreAvailable } from "@/core/store/character.store";
 
 export const isInGame = computed(() => isCharacterStoreAvailable.value);
 
-export function whileInGame(fn: () => MaybePromise<(() => void) | void>) {
+export function whileInGame(fn: () => MaybePromise<(() => void) | void>): void {
   const cleanup = ref<(() => void) | void>();
 
   watch(isInGame, async (value) => {

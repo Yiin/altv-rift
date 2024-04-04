@@ -6,4 +6,5 @@ export enum PedType {
 export enum PedFlags {
   None = 0,
   Peaceful = 1 << 0,
+  ShopKeeper = 1 << 1,
 }

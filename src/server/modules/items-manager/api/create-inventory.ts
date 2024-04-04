@@ -1,3 +1,4 @@
+import { Inventory } from "@shared/interfaces";
 import { Item } from "@shared/modules/items";
 
 export function createInventory(
@@ -5,7 +6,7 @@ export function createInventory(
     | { items: Item[] }
     | { pricedItems: { item: Item; price: number }[] }
   ),
-) {
+): Inventory {
   return {
     size: options.size,
     items:

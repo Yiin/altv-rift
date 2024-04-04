@@ -41,23 +41,15 @@ export function getItemFlagsByKey(key: ItemKey): ItemFlags {
   return flags;
 }
 
-export function getItemFlags(item: Item) {
-  return getItemFlagsByKey(item.key);
-}
-
-export function checkItemFlagsByKey(key: ItemKey, flags: ItemFlags) {
+export function checkItemFlagsByKey(key: ItemKey, flags: ItemFlags): boolean {
   return (getItemFlagsByKey(key) & flags) === flags;
 }
 
-export function checkItemFlags(item: Item, flags: ItemFlags) {
-  return checkItemFlagsByKey(item.key, flags);
-}
-
-export function isItemEquipable(key: ItemKey) {
+export function isItemEquipable(key: ItemKey): boolean {
   return checkItemFlagsByKey(key, ItemFlags.IsEquippable);
 }
 
-export function isItemUsable(key: ItemKey) {
+export function isItemUsable(key: ItemKey): boolean {
   return checkItemFlagsByKey(key, ItemFlags.IsUsable);
 }
 

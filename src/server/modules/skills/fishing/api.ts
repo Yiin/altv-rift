@@ -16,7 +16,7 @@ import { sendChatMessage } from "@/modules/chat";
 /**
  * Start fishing action for the player.
  */
-export function startFishing(player: InGamePlayer) {
+export function startFishing(player: InGamePlayer): void {
   if (!player.getEquipedItemInSlot(EquipmentSlot.Tool)) {
     const bestFishingRod = player.character.inventory.items.reduce(
       (best, next) => {
@@ -85,7 +85,7 @@ export function startFishing(player: InGamePlayer) {
 /**
  * Stop fishing action for the player.
  */
-export function stopFishing(player: InGamePlayer) {
+export function stopFishing(player: InGamePlayer): void {
   stopCatchingAFish(player);
   player.gameState.flags.delete(PlayerFlags.IsFishing);
   player.clearTasks();
@@ -96,7 +96,7 @@ export function stopFishing(player: InGamePlayer) {
 /**
  * Start catching a fish.
  */
-export function startCatchingFish(player: InGamePlayer, baitKey: FishBaitItemKey) {
+export function startCatchingFish(player: InGamePlayer, baitKey: FishBaitItemKey): void {
   if (!player.gameState.flags.has(PlayerFlags.IsFishing)) {
     // Player is not fishing
     return;
@@ -192,12 +192,12 @@ export function startCatchingFish(player: InGamePlayer, baitKey: FishBaitItemKey
   }
 }
 
-export function stopCatchingAFish(player: InGamePlayer) {
+export function stopCatchingAFish(player: InGamePlayer): void {
   player.gameState.flags.delete(PlayerFlags.IsCatchingAFish);
   player.gameState.fishingProgress = null;
 }
 
-export function catchAFish(player: InGamePlayer, baitKey: FishBaitItemKey) {
+export function catchAFish(player: InGamePlayer, baitKey: FishBaitItemKey): void {
   const possibleCatch = BAIT_TO_FISH_MAP.get(baitKey);
 
   if (!possibleCatch) {

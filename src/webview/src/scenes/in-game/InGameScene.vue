@@ -17,6 +17,7 @@ import TargetAction from "./target-action/TargetAction.vue";
 import FishingGame from "./fishing-game/FishingGame.vue";
 import Workbench from "./workbench/Workbench.vue";
 import VehicleShop from "./vehicle-shop/VehicleShop.vue";
+import QuickAccess from "./quick-access/QuickAccess.vue";
 
 const client = useClient();
 </script>
@@ -41,6 +42,7 @@ const client = useClient();
       <AreaIndicators />
       <WeaponHud />
       <FishingGame />
+      <QuickAccess />
     </template>
     <Notifications />
   </Screen>

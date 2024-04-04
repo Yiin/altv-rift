@@ -1,0 +1,56 @@
+<svg
+  viewBox="0 0 45 45"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <rect
+    x="0.5"
+    y="0.5"
+    width="44"
+    height="44"
+    rx="3.5"
+    fill="url(#paint0_linear_750_458)"
+    stroke="url(#paint1_linear_750_458)"
+  />
+  <defs>
+    <linearGradient
+      id="paint0_linear_750_458"
+      x1="22.5"
+      y1="0"
+      x2="22.5"
+      y2="45"
+      gradientUnits="userSpaceOnUse"
+    >
+      <stop
+        stop-color="#EE2E24"
+        stop-opacity="0"
+      />
+      <stop
+        offset="0.9999"
+        stop-color="#EE2E24"
+        stop-opacity="0.5"
+      />
+      <stop
+        offset="1"
+        stop-color="#EE2E24"
+      />
+    </linearGradient>
+    <linearGradient
+      id="paint1_linear_750_458"
+      x1="22.5"
+      y1="0"
+      x2="22.5"
+      y2="45"
+      gradientUnits="userSpaceOnUse"
+    >
+      <stop
+        stop-color="#EE2E24"
+        stop-opacity="0.2"
+      />
+      <stop
+        offset="1"
+        stop-color="#EE2E24"
+      />
+    </linearGradient>
+  </defs>
+</svg>

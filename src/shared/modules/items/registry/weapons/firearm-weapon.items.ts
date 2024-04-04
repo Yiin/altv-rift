@@ -1389,6 +1389,6 @@ export function getWeaponClipSize(key: FirearmWeaponItemKey): number {
   return firearmWeapons.get(key)?.clipSize ?? 0;
 }
 
-export function isWeaponWithClip(key: FirearmWeaponItemKey) {
+export function isWeaponWithClip(key: FirearmWeaponItemKey): boolean {
   return getWeaponClipSize(key) > 0;
 }

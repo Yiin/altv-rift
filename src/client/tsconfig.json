@@ -2,8 +2,6 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "jsx": "preserve",
-    "jsxFactory": "createElement",
     "paths": {
       "@shared/*": ["../shared/*"],
       "@/*": ["./*"]
@@ -12,16 +10,6 @@
   "include": [
     "./**/*",
     "../shared/**/*",
-    "../../custom-types",
-    "../../node_modules/@altv/shared",
-    "../../node_modules/@altv/client",
-    "../../node_modules/@altv/server",
-    "../../node_modules/@altv/natives"
-  ],
-  "exclude": [
-    "../webview/**/*",
-    "../server/**/*",
-    "../shared/events/server/index.ts",
-    "../shared/events/server/from-server.ts"
+    "../../custom-types"
   ]
 }
