@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive, ref } from "vue";
+import { computed, ref } from "vue";
 import {
   FirearmWeaponBlueprint,
   MeleeWeaponBlueprint,
@@ -11,13 +11,7 @@ import {
   getBlueprint,
   type BlueprintRecipe,
 } from "@shared/modules/production";
-import {
-  getItemName,
-  getWeaponStats,
-  ItemGrade,
-  type Item,
-  getItemDescription,
-} from "@shared/modules/items";
+import { getItemName, getItemDescription } from "@shared/modules/items";
 import { getItemImage } from "@/utils/items";
 import { useCharacter } from "@/store/synced/character.store";
 import ItemIcon from "../inventory/ItemIcon.vue";
@@ -116,7 +110,7 @@ function upgrade() {
       <div class="text-4xl font-extrabold">Search</div>
       <input
         type="text"
-        class="mb-[1.125rem] w-[18.75rem] rounded border border-solid border-white/10 p-5"
+        class="mb-4.5 w-75 rounded border border-solid border-white/10 p-5"
         placeholder="Type name of..."
       />
       <div>
@@ -144,7 +138,7 @@ function upgrade() {
           </div>
         </div>
       </div>
-      <div class="max-h-[45rem] overflow-auto">
+      <div class="max-h-180 overflow-auto">
         <div
           v-for="(recipes, category) in recipesByCategory"
           :key="category"
@@ -168,16 +162,16 @@ function upgrade() {
         </div>
       </div>
     </div>
-    <div class="align-self-center max-w-[47.5rem] items-start justify-center text-center">
+    <div class="align-self-center max-w-190 items-start justify-center text-center">
       <template v-if="selectedRecipe">
         <div>
           <div class="mb-6 flex justify-center">
             <img
               :src="`./assets/workbench/upgrade-ornament.svg`"
-              class="align-self-center h-[17.4375rem] w-[12.1875rem]"
+              class="align-self-center h-69.5 w-48.75"
             />
             <v-img
-              class="absolute h-[16.625rem] w-135"
+              class="absolute h-66.5 w-135"
               :src="getItemImage(selectedRecipe.item.key)"
             />
           </div>
@@ -192,7 +186,7 @@ function upgrade() {
           <div class="my-4 flex justify-center">
             <img
               :src="`./assets/workbench/ornament.svg`"
-              class="align-self-center"
+              class="align-self-center h-3 w-18.5"
             />
           </div>
           <p class="text-grey">
@@ -202,7 +196,7 @@ function upgrade() {
         </div>
       </template>
     </div>
-    <div class="self-right w-[17.5rem] text-right">
+    <div class="self-right w-70 text-right">
       <template v-if="selectedRecipe">
         <div class="text-3xl font-bold">{{ getItemName(selectedRecipe.item.key) }}</div>
         <div class="mt-4 text-right font-medium text-white">
@@ -232,11 +226,15 @@ function upgrade() {
         </div>
         <h2 class="mb-4 text-2xl font-bold">Upgrade information</h2>
         <div class="mb-4 flex justify-end gap-2">
-          <div class="w-32 rounded-md border border-solid border-neutral-400/10 bg-neutral-400/5 p-4 font-bold text-gray-500">
+          <div
+            class="w-32 rounded-md border border-solid border-neutral-400/10 bg-neutral-400/5 p-4 font-bold text-gray-500"
+          >
             Success rate
             <div class="text-right text-yellow-500">32%</div>
           </div>
-          <div class="w-32 rounded-md border border-solid border-neutral-400/10 bg-neutral-400/5 p-4 font-bold text-gray-500">
+          <div
+            class="w-32 rounded-md border border-solid border-neutral-400/10 bg-neutral-400/5 p-4 font-bold text-gray-500"
+          >
             Upgrade time
             <div class="text-white">{{ selectedRecipe.durationSeconds }} s</div>
           </div>

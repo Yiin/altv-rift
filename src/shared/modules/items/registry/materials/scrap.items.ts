@@ -27,7 +27,7 @@ export type ScrapItemInfo = {
 const scraps = registerItems<ScrapItemInfo>([
   {
     key: Scrap.COMMON_SCRAP,
-    name: "Basic Scrap",
+    name: "Common Scrap",
     description: "You can craft base level items using these scraps.",
   },
   {

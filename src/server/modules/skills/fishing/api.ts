@@ -109,10 +109,7 @@ export function startCatchingFish(player: InGamePlayer, baitKey: FishBaitItemKey
 
   player.gameState.flags.add(PlayerFlags.IsCatchingAFish);
 
-  const gameType = rollItem([
-    [1, FishingGameType.TimeClick],
-    // [1, FishingGameType.Keys]
-  ]);
+  const gameType = rollItem([[1, FishingGameType.TimeClick]]);
 
   switch (gameType) {
     case FishingGameType.TimeClick: {
@@ -150,43 +147,6 @@ export function startCatchingFish(player: InGamePlayer, baitKey: FishBaitItemKey
         }
       });
 
-      break;
-    }
-    case FishingGameType.Keys: {
-      const durationMs = 5000;
-      player.gameState.fishingProgress = {
-        baitKey,
-        gameType,
-        startedAt: Date.now(),
-        durationMs,
-        keys: Array.from({ length: 10 }).map(() =>
-          rollItem([
-            [1, alt.Enums.KeyCode.W],
-            [1, alt.Enums.KeyCode.A],
-            [1, alt.Enums.KeyCode.S],
-            [1, alt.Enums.KeyCode.D],
-          ]),
-        ),
-        pressedKeys: [],
-      };
-
-      const timeout = alt.Timers.setTimeout(() => {
-        if (!player.gameState.flags.has(PlayerFlags.IsCatchingAFish)) {
-          return;
-        }
-
-        stopFishing(player);
-      }, durationMs + 1000);
-
-      const stopWatching = watchEffect(() => {
-        const notCatchingAFish = !player.gameState.flags.has(PlayerFlags.IsCatchingAFish);
-        const isWrongGame = player.gameState.fishingProgress?.gameType !== FishingGameType.Keys;
-
-        if (!isInGame(player) || notCatchingAFish || isWrongGame) {
-          timeout.destroy();
-          stopWatching();
-        }
-      });
       break;
     }
   }

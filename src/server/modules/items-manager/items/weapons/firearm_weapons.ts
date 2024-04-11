@@ -15,10 +15,11 @@ import {
   isWeaponWithClip,
 } from "@shared/modules/items/registry/weapons/firearm-weapon.items";
 import { ItemSource, ItemSourceOrigin } from "@shared/interfaces";
+import { addItemToInventory } from "@shared/modules/inventory/api";
 import { InGamePlayer, isInGame } from "@/core/utility/assertions";
 import { on } from "@/core/events/emit";
-import { findItem, findInventoryByItemSource, removeItem, addItemToInventory } from "../../api";
 import { dropItemOnTheGround } from "../../dropped-items";
+import { findItem, findInventoryByItemSource, removeItem } from "../../api";
 
 on(ServerEvents.FromServer.ITEM_EQUIP, (player, item) => {
   if (!isItemFirearmWeapon(item)) {

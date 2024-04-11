@@ -4,90 +4,56 @@
 
 @font-face {
   font-family: "Akrobat";
-  src: url("/fonts/Akrobat-Thin.eot");
-  src:
-    url("/fonts/Akrobat-Thin.eot?#iefix") format("embedded-opentype"),
-    url("/fonts/Akrobat-Thin.woff2") format("woff2"),
-    url("/fonts/Akrobat-Thin.woff") format("woff"),
-    url("/fonts/Akrobat-Thin.ttf") format("truetype");
+  src: url("/fonts/Akrobat-Thin.otf") format("opentype");
   font-style: normal;
   font-weight: 100;
 }
 
 @font-face {
   font-family: "Akrobat";
-  src: url("/fonts/Akrobat-ExtraLight.eot");
-  src:
-    url("/fonts/Akrobat-ExtraLight.eot?#iefix") format("embedded-opentype"),
-    url("/fonts/Akrobat-ExtraLight.woff2") format("woff2"),
-    url("/fonts/Akrobat-ExtraLight.woff") format("woff"),
-    url("/fonts/Akrobat-ExtraLight.ttf") format("truetype");
+  src: url("/fonts/Akrobat-ExtraLight.otf") format("opentype");
   font-style: normal;
   font-weight: 200;
 }
 
 @font-face {
   font-family: "Akrobat";
-  src: url("/fonts/Akrobat-Light.eot");
-  src:
-    url("/fonts/Akrobat-Light.eot?#iefix") format("embedded-opentype"),
-    url("/fonts/Akrobat-Light.woff2") format("woff2"),
-    url("/fonts/Akrobat-Light.woff") format("woff"),
-    url("/fonts/Akrobat-Light.ttf") format("truetype");
+  src: url("/fonts/Akrobat-Light.otf") format("opentype");
   font-style: normal;
   font-weight: 300;
 }
 
 @font-face {
   font-family: "Akrobat";
-  src: url("/fonts/Akrobat-Regular.eot");
-  src:
-    url("/fonts/Akrobat-Regular.eot?#iefix") format("embedded-opentype"),
-    url("/fonts/Akrobat-Regular.woff2") format("woff2"),
-    url("/fonts/Akrobat-Regular.woff") format("woff"),
-    url("/fonts/Akrobat-Regular.ttf") format("truetype");
+  src: url("/fonts/Akrobat-Regular.otf") format("opentype");
   font-style: normal;
   font-weight: 400;
 }
 
 @font-face {
   font-family: "Akrobat";
-  src: url("/fonts/Akrobat-SemiBold.eot");
-  src:
-    url("/fonts/Akrobat-SemiBold.eot?#iefix") format("embedded-opentype"),
-    url("/fonts/Akrobat-SemiBold.woff2") format("woff2"),
-    url("/fonts/Akrobat-SemiBold.woff") format("woff"),
-    url("/fonts/Akrobat-SemiBold.ttf") format("truetype");
+  src: url("/fonts/Akrobat-SemiBold.otf") format("opentype");
   font-style: normal;
   font-weight: 600;
 }
 
 @font-face {
   font-family: "Akrobat";
-  src: url("/fonts/Akrobat-Bold.eot");
-  src:
-    url("/fonts/Akrobat-Bold.eot?#iefix") format("embedded-opentype"),
-    url("/fonts/Akrobat-Bold.woff2") format("woff2"),
-    url("/fonts/Akrobat-Bold.woff") format("woff"),
-    url("/fonts/Akrobat-Bold.ttf") format("truetype");
+  src: url("/fonts/Akrobat-Bold.otf") format("opentype");
   font-style: normal;
   font-weight: 700;
 }
 
 @font-face {
   font-family: "Akrobat";
-  src: url("/fonts/Akrobat-Black.eot");
-  src:
-    url("/fonts/Akrobat-Black.eot?#iefix") format("embedded-opentype"),
-    url("/fonts/Akrobat-Black.woff2") format("woff2"),
-    url("/fonts/Akrobat-Black.woff") format("woff"),
-    url("/fonts/Akrobat-Black.ttf") format("truetype");
+  src: url("/fonts/Akrobat-Black.otf") format("opentype");
   font-style: normal;
   font-weight: 800;
 }
 
 :root {
-  font-size: max(10px, 1.2vh);
+  /* makes 1rem = 16px at 1080px height */
+  font-size: max(10px, 1.4814814814814814vh);
 }
 
 :main {
@@ -104,8 +70,9 @@ body {
   /* background: #111; */
   /* background-image: url(https://news-cdn.softpedia.com/images/news2/GTA-5-Gets-New-Gorgeous-4K-Screenshots-on-PC-478043-23.jpg); */
   /* background-image: url(/assets/game-scene.png); */
-  /* background-image: url(https://kagi.com/proxy/rare-gta-5-player-completes-no-damage-run-in-nine-hours-he-has-only-1-hp-throughout-his-gameplay.jpg?c=p5frydODQJvzth8KtOJUED5cQXQh7fMuG2ftQI_WpTRKptu5G81HIkQdnxgRwu38g7N9gZ3PbA_qgdUHkD2prX5xYMO0ZAREMmsh_DQ6fA30mvK7qgjuEsHGpwbNbghTUoHGI5kUg13tHC1jjXbxePkkkgORPLN4re7FXVq41wFtaGPCFZ4TEO3JxmVMGmrzFePsYlIBMBtmATocVAMpZMWQORXLinPKW1ShUoaF1Nw%3D);
-  background-size: cover; */
+  /* background-image: url(https://kagi.com/proxy/rare-gta-5-player-completes-no-damage-run-in-nine-hours-he-has-only-1-hp-throughout-his-gameplay.jpg?c=p5frydODQJvzth8KtOJUED5cQXQh7fMuG2ftQI_WpTRKptu5G81HIkQdnxgRwu38g7N9gZ3PbA_qgdUHkD2prX5xYMO0ZAREMmsh_DQ6fA30mvK7qgjuEsHGpwbNbghTUoHGI5kUg13tHC1jjXbxePkkkgORPLN4re7FXVq41wFtaGPCFZ4TEO3JxmVMGmrzFePsYlIBMBtmATocVAMpZMWQORXLinPKW1ShUoaF1Nw%3D); */
+  background-image: url(https://media.discordapp.net/attachments/542059113983508490/1227058217016627200/x9fZicF.png?ex=66270604&is=66149104&hm=e2f5b95b23c70fe38ec7b977b6ebac6ea4187ab84098c765e8252bbf161b736f&=&format=webp&quality=lossless&width=1851&height=1041);
+  background-size: cover;
 }
 
 *:has(::-webkit-scrollbar) {
@@ -120,32 +87,68 @@ body {
   @apply rounded-[7px] border-4 bg-black/[0.15] bg-clip-padding shadow-[inset_-1px_-1px_0px_rgba(0,0,0,0.05),inset_1px_1px_0px_rgba(0,0,0,0.05)];
 }
 
-.rifles::-webkit-scrollbar {
-  @apply m-0 h-[4px] w-[4px];
+.rifles{
+  &::-webkit-scrollbar {
+    @apply m-0 h-[4px] w-[4px];
+  }
+
+  &::-webkit-scrollbar-thumb {
+    @apply rounded-full border-none bg-white bg-clip-content shadow-none;
+  }
+
+  &::-webkit-scrollbar-track {
+    @apply rounded-full bg-white/[0.03];
+  }
 }
 
-.rifles::-webkit-scrollbar-thumb {
-  @apply rounded-full border-none bg-white bg-clip-content shadow-none;
+.clothes {
+  &::-webkit-scrollbar {
+    @apply m-0 w-[4px];
+  }
+
+  &::-webkit-scrollbar-track {
+    @apply rounded-full bg-[#D9D9D9]/20;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    @apply rounded-full border-none bg-sunriseYellow bg-clip-content shadow-none;
+  }
 }
 
-.rifles::-webkit-scrollbar-track {
-  @apply rounded-full bg-white/[0.03];
+.scrollbar-red {
+  &::-webkit-scrollbar-thumb {
+    @apply bg-[#9b2727];
+  }
+
+  &::-webkit-scrollbar-track {
+    @apply bg-[#D9D9D9]/20;
+  }
 }
 
-.clothes::-webkit-scrollbar {
-  @apply m-0 w-[4px];
+.scrollbar-white {
+  &::-webkit-scrollbar-thumb {
+    @apply bg-white;
+  }
+
+  &::-webkit-scrollbar-track {
+    @apply bg-[#D9D9D9]/20;
+  }
 }
 
-.clothes::-webkit-scrollbar-track {
-  @apply rounded-full bg-[#D9D9D9]/20;
+.scrollbar-horizontal::-webkit-scrollbar {
+  @apply h-1.25;
 }
 
-.clothes::-webkit-scrollbar-thumb {
-  @apply rounded-full border-none bg-sunriseYellow bg-clip-content shadow-none;
+.scrollbar-vertical::-webkit-scrollbar {
+  @apply w-[3px];
 }
 
-.crafting-items ::-webkit-scrollbar {
-  @apply h-[4px] w-[14px] -mb-10;
+.scrollbar-left {
+  direction: rtl;
+}
+
+.scrollbar-left > * {
+  direction: ltr;
 }
 
 .no-scrollbar {

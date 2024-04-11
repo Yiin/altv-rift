@@ -1,9 +1,5 @@
 type Asyncify<T> =
-  | {
-      [K in keyof T]: T[K] extends (...args: infer A) => infer R
-        ? (...args: A) => Promise<R>
-        : T[K];
-    }
+  | (T extends (...args: infer A) => infer R ? (...args: A) => Promise<R> : never)
   | T;
 
 type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (k: infer I) => void

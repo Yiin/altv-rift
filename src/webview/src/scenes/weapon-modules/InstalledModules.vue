@@ -1,5 +1,5 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="flex-1 pl-[31rem]"></div>
+  <div class="pl-124 flex-1"></div>
 </template>

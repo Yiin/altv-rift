@@ -23,7 +23,7 @@ import { StorageType } from "@shared/store/game-state.store";
 import { AirDropType } from "@shared/modules/air-drops";
 import { registerCmd } from "../chat";
 import { createStorage } from "../items-manager/storage";
-import { createInventory } from "../items-manager/api";
+import { createInventory } from "../../../shared/modules/inventory/api";
 import lootTables from "./loot-tables";
 
 const airDropLocations: alt.Vector3[] = [];

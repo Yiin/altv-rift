@@ -7,7 +7,7 @@ import { Ammo, createItem } from "@shared/modules/items";
 import { ServerEvents } from "@shared/events/server";
 import { AirDropType } from "@shared/modules/air-drops";
 import { InGamePlayer } from "@/core/utility/assertions";
-import { addItemToInventory, removeItemFromInventorySlot } from "./api";
+import { addItemToInventory, removeItemFromInventorySlot } from "../../../shared/modules/inventory/api";
 
 interface StorageData {
   label: string;

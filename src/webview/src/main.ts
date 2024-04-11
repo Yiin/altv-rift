@@ -13,10 +13,23 @@ loadFonts();
 
 const app = createApp(App)
   .use(router)
-  // @ts-expect-error might be typescript bug
   .use(pinia)
   .use(vuetify)
   .directive("click-outside", vClickOutside)
   .directive("horizontal-scroll", vHorizontalScroll);
 
 app.mount("#app");
+
+function adjustUIBaseFontSize() {
+  const targetAspectRatio = 16 / 9;
+  const currentAspectRatio = window.innerWidth / window.innerHeight;
+  const aspectRatioDeviation = currentAspectRatio / targetAspectRatio;
+
+  const baseFontSize = Math.max(10, (1.4814814814814814 * window.innerHeight) / 100);
+  const adjustedFontSize = baseFontSize * Math.min(1, aspectRatioDeviation);
+
+  document.documentElement.style.fontSize = `${adjustedFontSize}px`;
+}
+
+adjustUIBaseFontSize();
+window.addEventListener("resize", adjustUIBaseFontSize);

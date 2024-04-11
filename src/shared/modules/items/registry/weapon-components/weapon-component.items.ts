@@ -185,8 +185,6 @@ export const WeaponComponent = makeKeys<WeaponComponentItemKey>()({
   BULLPUPRIFLE_CLIP2: "bullpuprifleclip2",
   BULLPUPRIFLE_CLIP1: "bullpuprifleclip1",
 
-  FIREWORK_CLIP1: "fireworkclip1",
-
   COMBATMG_GRIP: "combatmggrip",
   COMBATMG_SCOPE_LRG: "combatmgscopelrg",
   COMBATMG_CLIP2: "combatmgclip2",
@@ -430,7 +428,8 @@ export type WeaponComponentItem = {
 
 export type WeaponComponentItemInfo = {
   key: WeaponComponentItemKey;
-  componentHash: number;
+  hash: number;
+  hashKey: string;
   weaponHash: number;
   model: string;
   name: string;
@@ -440,7 +439,8 @@ export type WeaponComponentItemInfo = {
 export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   {
     key: WeaponComponent.COMBATSHOTGUN_FLASH,
-    componentHash: 2076495324,
+    hash: 2076495324,
+    hashKey: "COMPONENT_AT_AR_FLSH",
     weaponHash: 94989220,
     model: "w_at_ar_flsh",
     name: "Flashlight",
@@ -448,7 +448,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.COMBATSHOTGUN_SUPP,
-    componentHash: 2205435306,
+    hash: 2205435306,
+    hashKey: "COMPONENT_AT_AR_SUPP",
     weaponHash: 94989220,
     model: "w_at_ar_supp",
     name: "Suppressor",
@@ -456,7 +457,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.COMBATSHOTGUN_SHELL,
-    componentHash: 3323278933,
+    hash: 3323278933,
+    hashKey: "COMPONENT_COMBATSHOTGUN_CLIP_01",
     weaponHash: 94989220,
     model: "w_sg_pumpshotgunh4_mag1",
     name: "Default Shells",
@@ -464,7 +466,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SNIPERRIFLE_SUPP,
-    componentHash: 2805810788,
+    hash: 2805810788,
+    hashKey: "COMPONENT_AT_AR_SUPP_02",
     weaponHash: 100416529,
     model: "w_at_ar_supp_02",
     name: "Suppressor",
@@ -472,7 +475,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SNIPERRIFLE_SCOPE_MAX,
-    componentHash: 3159677559,
+    hash: 3159677559,
+    hashKey: "COMPONENT_AT_SCOPE_MAX",
     weaponHash: 100416529,
     model: "w_at_scope_max",
     name: "Advanced Scope",
@@ -480,7 +484,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SNIPERRIFLE_SCOPE_LRG,
-    componentHash: 3527687644,
+    hash: 3527687644,
+    hashKey: "COMPONENT_AT_SCOPE_LARGE",
     weaponHash: 100416529,
     model: "w_at_scope_large",
     name: "Scope",
@@ -488,7 +493,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.VINTAGEPISTOL_CLIP2,
-    componentHash: 867832552,
+    hash: 867832552,
+    hashKey: "COMPONENT_VINTAGEPISTOL_CLIP_02",
     weaponHash: 137902532,
     model: "w_pi_vintage_pistol_mag2",
     name: "Extended Clip",
@@ -496,7 +502,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.VINTAGEPISTOL_CLIP1,
-    componentHash: 1168357051,
+    hash: 1168357051,
+    hashKey: "COMPONENT_VINTAGEPISTOL_CLIP_01",
     weaponHash: 137902532,
     model: "w_pi_vintage_pistol_mag1",
     name: "Default Clip",
@@ -504,7 +511,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.VINTAGEPISTOL_SUPP,
-    componentHash: 3271853210,
+    hash: 3271853210,
+    hashKey: "COMPONENT_AT_PI_SUPP",
     weaponHash: 137902532,
     model: "w_at_pi_supp",
     name: "Suppressor",
@@ -512,7 +520,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.COMBATPDW_GRIP,
-    componentHash: 202788691,
+    hash: 202788691,
+    hashKey: "COMPONENT_AT_AR_AFGRIP",
     weaponHash: 171789620,
     model: "w_at_ar_afgrip",
     name: "Grip",
@@ -520,7 +529,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.COMBATPDW_CLIP2,
-    componentHash: 860508675,
+    hash: 860508675,
+    hashKey: "COMPONENT_COMBATPDW_CLIP_02",
     weaponHash: 171789620,
     model: "W_SB_PDW_Mag2",
     name: "Extended Clip",
@@ -528,7 +538,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.COMBATPDW_CLIP1,
-    componentHash: 1125642654,
+    hash: 1125642654,
+    hashKey: "COMPONENT_COMBATPDW_CLIP_01",
     weaponHash: 171789620,
     model: "W_SB_PDW_Mag1",
     name: "Default Clip",
@@ -536,7 +547,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.COMBATPDW_CLIP_DRM,
-    componentHash: 1857603803,
+    hash: 1857603803,
+    hashKey: "COMPONENT_COMBATPDW_CLIP_03",
     weaponHash: 171789620,
     model: "w_sb_pdw_boxmag",
     name: "Drum Magazine",
@@ -544,7 +556,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.COMBATPDW_FLASH,
-    componentHash: 2076495324,
+    hash: 2076495324,
+    hashKey: "COMPONENT_AT_AR_FLSH",
     weaponHash: 171789620,
     model: "w_at_ar_flsh",
     name: "Flashlight",
@@ -552,7 +565,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.COMBATPDW_SCOPE_SML,
-    componentHash: 2855028148,
+    hash: 2855028148,
+    hashKey: "COMPONENT_AT_SCOPE_SMALL",
     weaponHash: 171789620,
     model: "w_at_scope_small",
     name: "Scope",
@@ -560,7 +574,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.HEAVYSNIPERMK2_CLIP_INC,
-    componentHash: 247526935,
+    hash: 247526935,
+    hashKey: "COMPONENT_HEAVYSNIPER_MK2_CLIP_INCENDIARY",
     weaponHash: 177293209,
     model: "w_sr_heavysnipermk2_mag_inc",
     name: "Incendiary Rounds",
@@ -568,7 +583,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.HEAVYSNIPERMK2_BARR2,
-    componentHash: 277524638,
+    hash: 277524638,
+    hashKey: "COMPONENT_AT_SR_BARREL_02",
     weaponHash: 177293209,
     model: "w_at_sr_barrel_2",
     name: "Heavy Barrel",
@@ -576,7 +592,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.HEAVYSNIPERMK2_CLIP2,
-    componentHash: 752418717,
+    hash: 752418717,
+    hashKey: "COMPONENT_HEAVYSNIPER_MK2_CLIP_02",
     weaponHash: 177293209,
     model: "w_sr_heavysnipermk2_mag2",
     name: "Extended Clip",
@@ -584,7 +601,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.HEAVYSNIPERMK2_SCOPE_TH,
-    componentHash: 776198721,
+    hash: 776198721,
+    hashKey: "COMPONENT_AT_SCOPE_THERMAL",
     weaponHash: 177293209,
     model: "w_at_scope_nv",
     name: "Thermal Scope",
@@ -592,7 +610,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.HEAVYSNIPERMK2_CLIP_FMJ,
-    componentHash: 1005144310,
+    hash: 1005144310,
+    hashKey: "COMPONENT_HEAVYSNIPER_MK2_CLIP_FMJ",
     weaponHash: 177293209,
     model: "w_sr_heavysnipermk2_mag_fmj",
     name: "Full Metal Jacket Rounds",
@@ -601,7 +620,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.HEAVYSNIPERMK2_MUZZ8,
-    componentHash: 1602080333,
+    hash: 1602080333,
+    hashKey: "COMPONENT_AT_MUZZLE_08",
     weaponHash: 177293209,
     model: "w_at_muzzle_8_xm17",
     name: "Squared Muzzle Brake",
@@ -609,7 +629,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.HEAVYSNIPERMK2_MUZZ9,
-    componentHash: 1764221345,
+    hash: 1764221345,
+    hashKey: "COMPONENT_AT_MUZZLE_09",
     weaponHash: 177293209,
     model: "w_at_muzzle_9",
     name: "Bell-End Muzzle Brake",
@@ -617,7 +638,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.HEAVYSNIPERMK2_SCOPE_LRG2,
-    componentHash: 2193687427,
+    hash: 2193687427,
+    hashKey: "COMPONENT_AT_SCOPE_LARGE_MK2",
     weaponHash: 177293209,
     model: "w_at_scope_large",
     name: "Zoom Scope",
@@ -625,7 +647,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.HEAVYSNIPERMK2_CLIP_EX,
-    componentHash: 2313935527,
+    hash: 2313935527,
+    hashKey: "COMPONENT_HEAVYSNIPER_MK2_CLIP_EXPLOSIVE",
     weaponHash: 177293209,
     model: "w_sr_heavysnipermk2_mag_ap2",
     name: "Explosive Rounds",
@@ -633,7 +656,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.HEAVYSNIPERMK2_BARR,
-    componentHash: 2425761975,
+    hash: 2425761975,
+    hashKey: "COMPONENT_AT_SR_BARREL_01",
     weaponHash: 177293209,
     model: "w_at_sr_barrel_1",
     name: "Default Barrel",
@@ -641,7 +665,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.HEAVYSNIPERMK2_SUPP,
-    componentHash: 2890063729,
+    hash: 2890063729,
+    hashKey: "COMPONENT_AT_SR_SUPP_03",
     weaponHash: 177293209,
     model: "w_at_sr_supp3",
     name: "Suppressor",
@@ -649,7 +674,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.HEAVYSNIPERMK2_SCOPE_NV,
-    componentHash: 3061846192,
+    hash: 3061846192,
+    hashKey: "COMPONENT_AT_SCOPE_NV",
     weaponHash: 177293209,
     model: "w_at_scope_nv",
     name: "Night Vision Scope",
@@ -657,7 +683,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.HEAVYSNIPERMK2_SCOPE_MAX,
-    componentHash: 3159677559,
+    hash: 3159677559,
+    hashKey: "COMPONENT_AT_SCOPE_MAX",
     weaponHash: 177293209,
     model: "w_at_scope_max",
     name: "Advanced Scope",
@@ -665,7 +692,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.HEAVYSNIPERMK2_CLIP_AP,
-    componentHash: 4164277972,
+    hash: 4164277972,
+    hashKey: "COMPONENT_HEAVYSNIPER_MK2_CLIP_ARMORPIERCING",
     weaponHash: 177293209,
     model: "w_sr_heavysnipermk2_mag_ap",
     name: "Armor Piercing Rounds",
@@ -673,7 +701,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.HEAVYSNIPERMK2_CLIP1,
-    componentHash: 4196276776,
+    hash: 4196276776,
+    hashKey: "COMPONENT_HEAVYSNIPER_MK2_CLIP_01",
     weaponHash: 177293209,
     model: "w_sr_heavysnipermk2_mag1",
     name: "Default Clip",
@@ -681,7 +710,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.HEAVYSNIPER_SCOPE_MAX,
-    componentHash: 3159677559,
+    hash: 3159677559,
+    hashKey: "COMPONENT_AT_SCOPE_MAX",
     weaponHash: 205991906,
     model: "w_at_scope_max",
     name: "Advanced Scope",
@@ -689,7 +719,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.HEAVYSNIPER_SCOPE_LRG,
-    componentHash: 3527687644,
+    hash: 3527687644,
+    hashKey: "COMPONENT_AT_SCOPE_LARGE",
     weaponHash: 205991906,
     model: "w_at_scope_large",
     name: "Scope",
@@ -697,7 +728,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MICROSMG_CLIP2,
-    componentHash: 283556395,
+    hash: 283556395,
+    hashKey: "COMPONENT_MICROSMG_CLIP_02",
     weaponHash: 324215364,
     model: "w_sb_microsmg_mag2",
     name: "Extended Clip",
@@ -705,7 +737,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MICROSMG_FLASH,
-    componentHash: 899381934,
+    hash: 899381934,
+    hashKey: "COMPONENT_AT_PI_FLSH",
     weaponHash: 324215364,
     model: "w_at_pi_flsh",
     name: "Flashlight",
@@ -713,7 +746,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MICROSMG_SCOPE_MAC,
-    componentHash: 2637152041,
+    hash: 2637152041,
+    hashKey: "COMPONENT_AT_SCOPE_MACRO",
     weaponHash: 324215364,
     model: "w_at_scope_macro",
     name: "Scope",
@@ -721,7 +755,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MICROSMG_SUPP,
-    componentHash: 2805810788,
+    hash: 2805810788,
+    hashKey: "COMPONENT_AT_AR_SUPP_02",
     weaponHash: 324215364,
     model: "w_at_ar_supp_02",
     name: "Suppressor",
@@ -729,7 +764,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MICROSMG_CLIP1,
-    componentHash: 3410538224,
+    hash: 3410538224,
+    hashKey: "COMPONENT_MICROSMG_CLIP_01",
     weaponHash: 324215364,
     model: "w_sb_microsmg_mag1",
     name: "Default Clip",
@@ -737,7 +773,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.PISTOL_FLASH,
-    componentHash: 899381934,
+    hash: 899381934,
+    hashKey: "COMPONENT_AT_PI_FLSH",
     weaponHash: 453432689,
     model: "w_at_pi_flsh",
     name: "Flashlight",
@@ -745,7 +782,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.PISTOL_SUPP,
-    componentHash: 1709866683,
+    hash: 1709866683,
+    hashKey: "COMPONENT_AT_PI_SUPP_02",
     weaponHash: 453432689,
     model: "w_at_pi_supp_2",
     name: "Suppressor",
@@ -753,7 +791,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.PISTOL_CLIP2,
-    componentHash: 3978713628,
+    hash: 3978713628,
+    hashKey: "COMPONENT_PISTOL_CLIP_02",
     weaponHash: 453432689,
     model: "w_pi_pistol_mag2",
     name: "Extended Clip",
@@ -761,7 +800,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.PISTOL_CLIP1,
-    componentHash: 4275109233,
+    hash: 4275109233,
+    hashKey: "COMPONENT_PISTOL_CLIP_01",
     weaponHash: 453432689,
     model: "w_pi_pistol_mag1",
     name: "Default Clip",
@@ -769,7 +809,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.PISTOLXM3_CLIP1,
-    componentHash: 375646046,
+    hash: 375646046,
+    hashKey: "COMPONENT_PISTOLXM3_CLIP_01",
     weaponHash: 465894841,
     model: "W_PI_Pistol_XM3_Mag1",
     name: "Default Clip",
@@ -777,7 +818,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.PISTOLXM3_SUPP,
-    componentHash: 503494624,
+    hash: 503494624,
+    hashKey: "COMPONENT_PISTOLXM3_SUPP",
     weaponHash: 465894841,
     model: "W_PI_Pistol_XM3_Supp",
     name: "Suppressor",
@@ -785,7 +827,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.PUMPSHOTGUN_FLASH,
-    componentHash: 2076495324,
+    hash: 2076495324,
+    hashKey: "COMPONENT_AT_AR_FLSH",
     weaponHash: 487013001,
     model: "w_at_ar_flsh",
     name: "Flashlight",
@@ -793,7 +836,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.PUMPSHOTGUN_SUPP,
-    componentHash: 3859329886,
+    hash: 3859329886,
+    hashKey: "COMPONENT_AT_SR_SUPP",
     weaponHash: 487013001,
     model: "w_at_sr_supp_2",
     name: "Suppressor",
@@ -801,7 +845,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.APPISTOL_CLIP2,
-    componentHash: 614078421,
+    hash: 614078421,
+    hashKey: "COMPONENT_APPISTOL_CLIP_02",
     weaponHash: 584646201,
     model: "w_pi_appistol_mag2",
     name: "Extended Clip",
@@ -809,7 +854,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.APPISTOL_CLIP1,
-    componentHash: 834974250,
+    hash: 834974250,
+    hashKey: "COMPONENT_APPISTOL_CLIP_01",
     weaponHash: 584646201,
     model: "w_pi_appistol_mag1",
     name: "Default Clip",
@@ -817,7 +863,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.APPISTOL_FLASH,
-    componentHash: 899381934,
+    hash: 899381934,
+    hashKey: "COMPONENT_AT_PI_FLSH",
     weaponHash: 584646201,
     model: "w_at_pi_flsh",
     name: "Flashlight",
@@ -825,7 +872,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.APPISTOL_SUPP,
-    componentHash: 3271853210,
+    hash: 3271853210,
+    hashKey: "COMPONENT_AT_PI_SUPP",
     weaponHash: 584646201,
     model: "w_at_pi_supp",
     name: "Suppressor",
@@ -833,7 +881,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.CERAMICPISTOL_CLIP1,
-    componentHash: 1423184737,
+    hash: 1423184737,
+    hashKey: "COMPONENT_CERAMICPISTOL_CLIP_01",
     weaponHash: 727643628,
     model: "W_PI_Ceramic_Mag1",
     name: "Default Clip",
@@ -841,7 +890,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.CERAMICPISTOL_CLIP2,
-    componentHash: 2172153001,
+    hash: 2172153001,
+    hashKey: "COMPONENT_CERAMICPISTOL_CLIP_02",
     weaponHash: 727643628,
     model: "w_pi_sns_pistol_mag2",
     name: "Extended Clip",
@@ -849,7 +899,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.CERAMICPISTOL_SUPP,
-    componentHash: 2466764538,
+    hash: 2466764538,
+    hashKey: "COMPONENT_CERAMICPISTOL_SUPP",
     weaponHash: 727643628,
     model: "W_PI_Ceramic_Supp",
     name: "Suppressor",
@@ -857,7 +908,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SMG_CLIP1,
-    componentHash: 643254679,
+    hash: 643254679,
+    hashKey: "COMPONENT_SMG_CLIP_01",
     weaponHash: 736523883,
     model: "w_sb_smg_mag1",
     name: "Default Clip",
@@ -865,7 +917,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SMG_CLIP2,
-    componentHash: 889808635,
+    hash: 889808635,
+    hashKey: "COMPONENT_SMG_CLIP_02",
     weaponHash: 736523883,
     model: "w_sb_smg_mag2",
     name: "Extended Clip",
@@ -873,7 +926,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SMG_SCOPE_MAC,
-    componentHash: 1019656791,
+    hash: 1019656791,
+    hashKey: "COMPONENT_AT_SCOPE_MACRO_02",
     weaponHash: 736523883,
     model: "w_at_scope_macro_2",
     name: "Scope",
@@ -881,7 +935,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SMG_CLIP_DRM,
-    componentHash: 2043113590,
+    hash: 2043113590,
+    hashKey: "COMPONENT_SMG_CLIP_03",
     weaponHash: 736523883,
     model: "w_sb_smg_boxmag",
     name: "Drum Magazine",
@@ -889,7 +944,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SMG_FLASH,
-    componentHash: 2076495324,
+    hash: 2076495324,
+    hashKey: "COMPONENT_AT_AR_FLSH",
     weaponHash: 736523883,
     model: "w_at_ar_flsh",
     name: "Flashlight",
@@ -897,7 +953,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SMG_SUPP,
-    componentHash: 3271853210,
+    hash: 3271853210,
+    hashKey: "COMPONENT_AT_PI_SUPP",
     weaponHash: 736523883,
     model: "w_at_pi_supp",
     name: "Suppressor",
@@ -905,7 +962,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.ASSAULTRIFLEMK2_MUZZ5,
-    componentHash: 48731514,
+    hash: 48731514,
+    hashKey: "COMPONENT_AT_MUZZLE_05",
     weaponHash: 961495388,
     model: "w_at_muzzle_5",
     name: "Heavy Duty Muzzle Brake",
@@ -913,7 +971,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.ASSAULTRIFLEMK2_SCOPE_MAC2,
-    componentHash: 77277509,
+    hash: 77277509,
+    hashKey: "COMPONENT_AT_SCOPE_MACRO_MK2",
     weaponHash: 961495388,
     model: "w_at_scope_macro",
     name: "Small Scope",
@@ -921,7 +980,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.ASSAULTRIFLEMK2_MUZZ6,
-    componentHash: 880736428,
+    hash: 880736428,
+    hashKey: "COMPONENT_AT_MUZZLE_06",
     weaponHash: 961495388,
     model: "w_at_muzzle_6",
     name: "Slanted Muzzle Brake",
@@ -929,7 +989,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.ASSAULTRIFLEMK2_HOLO,
-    componentHash: 1108334355,
+    hash: 1108334355,
+    hashKey: "COMPONENT_AT_SIGHTS",
     weaponHash: 961495388,
     model: "w_at_sights_1",
     name: "Holographic Sight",
@@ -937,7 +998,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.ASSAULTRIFLEMK2_BARR,
-    componentHash: 1134861606,
+    hash: 1134861606,
+    hashKey: "COMPONENT_AT_AR_BARREL_01",
     weaponHash: 961495388,
     model: "w_at_ar_barrel_1",
     name: "Default Barrel",
@@ -945,7 +1007,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.ASSAULTRIFLEMK2_MUZZ7,
-    componentHash: 1303784126,
+    hash: 1303784126,
+    hashKey: "COMPONENT_AT_MUZZLE_07",
     weaponHash: 961495388,
     model: "w_at_muzzle_7",
     name: "Split-End Muzzle Brake",
@@ -953,7 +1016,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.ASSAULTRIFLEMK2_BARR2,
-    componentHash: 1447477866,
+    hash: 1447477866,
+    hashKey: "COMPONENT_AT_AR_BARREL_02",
     weaponHash: 961495388,
     model: "w_at_ar_barrel_2",
     name: "Heavy Barrel",
@@ -961,7 +1025,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.ASSAULTRIFLEMK2_CLIP_FMJ,
-    componentHash: 1675665560,
+    hash: 1675665560,
+    hashKey: "COMPONENT_ASSAULTRIFLE_MK2_CLIP_FMJ",
     weaponHash: 961495388,
     model: "w_ar_assaultriflemk2_mag_fmj",
     name: "Full Metal Jacket Rounds",
@@ -970,7 +1035,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.ASSAULTRIFLEMK2_FLASH,
-    componentHash: 2076495324,
+    hash: 2076495324,
+    hashKey: "COMPONENT_AT_AR_FLSH",
     weaponHash: 961495388,
     model: "w_at_ar_flsh",
     name: "Flashlight",
@@ -978,7 +1044,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.ASSAULTRIFLEMK2_CLIP1,
-    componentHash: 2249208895,
+    hash: 2249208895,
+    hashKey: "COMPONENT_ASSAULTRIFLE_MK2_CLIP_01",
     weaponHash: 961495388,
     model: "w_ar_assaultriflemk2_mag1",
     name: "Default Clip",
@@ -986,7 +1053,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.ASSAULTRIFLEMK2_GRIP,
-    componentHash: 2640679034,
+    hash: 2640679034,
+    hashKey: "COMPONENT_AT_AR_AFGRIP_02",
     weaponHash: 961495388,
     model: "w_at_afgrip_2",
     name: "Grip",
@@ -994,7 +1062,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.ASSAULTRIFLEMK2_SUPP,
-    componentHash: 2805810788,
+    hash: 2805810788,
+    hashKey: "COMPONENT_AT_AR_SUPP_02",
     weaponHash: 961495388,
     model: "w_at_ar_supp_02",
     name: "Suppressor",
@@ -1002,7 +1071,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.ASSAULTRIFLEMK2_CLIP_AP,
-    componentHash: 2816286296,
+    hash: 2816286296,
+    hashKey: "COMPONENT_ASSAULTRIFLE_MK2_CLIP_ARMORPIERCING",
     weaponHash: 961495388,
     model: "w_ar_assaultriflemk2_mag_ap",
     name: "Armor Piercing Rounds",
@@ -1010,7 +1080,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.ASSAULTRIFLEMK2_MUZZ1,
-    componentHash: 3113485012,
+    hash: 3113485012,
+    hashKey: "COMPONENT_AT_MUZZLE_01",
     weaponHash: 961495388,
     model: "w_at_muzzle_1",
     name: "Flat Muzzle Brake",
@@ -1018,7 +1089,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.ASSAULTRIFLEMK2_SCOPE_MED2,
-    componentHash: 3328927042,
+    hash: 3328927042,
+    hashKey: "COMPONENT_AT_SCOPE_MEDIUM_MK2",
     weaponHash: 961495388,
     model: "w_at_scope_medium_2",
     name: "Large Scope",
@@ -1026,7 +1098,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.ASSAULTRIFLEMK2_MUZZ2,
-    componentHash: 3362234491,
+    hash: 3362234491,
+    hashKey: "COMPONENT_AT_MUZZLE_02",
     weaponHash: 961495388,
     model: "w_at_muzzle_2",
     name: "Tactical Muzzle Brake",
@@ -1034,7 +1107,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.ASSAULTRIFLEMK2_CLIP2,
-    componentHash: 3509242479,
+    hash: 3509242479,
+    hashKey: "COMPONENT_ASSAULTRIFLE_MK2_CLIP_02",
     weaponHash: 961495388,
     model: "w_ar_assaultriflemk2_mag2",
     name: "Extended Clip",
@@ -1042,7 +1116,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.ASSAULTRIFLEMK2_MUZZ3,
-    componentHash: 3725708239,
+    hash: 3725708239,
+    hashKey: "COMPONENT_AT_MUZZLE_03",
     weaponHash: 961495388,
     model: "w_at_muzzle_3",
     name: "Fat-End Muzzle Brake",
@@ -1050,7 +1125,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.ASSAULTRIFLEMK2_MUZZ4,
-    componentHash: 3968886988,
+    hash: 3968886988,
+    hashKey: "COMPONENT_AT_MUZZLE_04",
     weaponHash: 961495388,
     model: "w_at_muzzle_4",
     name: "Precision Muzzle Brake",
@@ -1058,7 +1134,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.ASSAULTRIFLEMK2_CLIP_TR,
-    componentHash: 4012669121,
+    hash: 4012669121,
+    hashKey: "COMPONENT_ASSAULTRIFLE_MK2_CLIP_TRACER",
     weaponHash: 961495388,
     model: "w_ar_assaultriflemk2_mag_tr",
     name: "Tracer Rounds",
@@ -1067,7 +1144,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.ASSAULTRIFLEMK2_CLIP_INC,
-    componentHash: 4218476627,
+    hash: 4218476627,
+    hashKey: "COMPONENT_ASSAULTRIFLE_MK2_CLIP_INCENDIARY",
     weaponHash: 961495388,
     model: "w_ar_assaultriflemk2_mag_inc",
     name: "Incendiary Rounds",
@@ -1076,7 +1154,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.HEAVYSHOTGUN_GRIP,
-    componentHash: 202788691,
+    hash: 202788691,
+    hashKey: "COMPONENT_AT_AR_AFGRIP",
     weaponHash: 984333226,
     model: "w_at_ar_afgrip",
     name: "Grip",
@@ -1084,7 +1163,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.HEAVYSHOTGUN_CLIP1,
-    componentHash: 844049759,
+    hash: 844049759,
+    hashKey: "COMPONENT_HEAVYSHOTGUN_CLIP_01",
     weaponHash: 984333226,
     model: "w_sg_heavyshotgun_mag1",
     name: "Default Clip",
@@ -1092,7 +1172,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.HEAVYSHOTGUN_FLASH,
-    componentHash: 2076495324,
+    hash: 2076495324,
+    hashKey: "COMPONENT_AT_AR_FLSH",
     weaponHash: 984333226,
     model: "w_at_ar_flsh",
     name: "Flashlight",
@@ -1100,7 +1181,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.HEAVYSHOTGUN_CLIP_DRM,
-    componentHash: 2294798931,
+    hash: 2294798931,
+    hashKey: "COMPONENT_HEAVYSHOTGUN_CLIP_03",
     weaponHash: 984333226,
     model: "w_sg_heavyshotgun_boxmag",
     name: "Drum Magazine",
@@ -1108,7 +1190,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.HEAVYSHOTGUN_CLIP2,
-    componentHash: 2535257853,
+    hash: 2535257853,
+    hashKey: "COMPONENT_HEAVYSHOTGUN_CLIP_02",
     weaponHash: 984333226,
     model: "w_sg_heavyshotgun_mag2",
     name: "Extended Clip",
@@ -1116,7 +1199,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.HEAVYSHOTGUN_SUPP,
-    componentHash: 2805810788,
+    hash: 2805810788,
+    hashKey: "COMPONENT_AT_AR_SUPP_02",
     weaponHash: 984333226,
     model: "w_at_ar_supp_02",
     name: "Suppressor",
@@ -1124,7 +1208,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.GRENADELAUNCHERSMOKE_GRIP,
-    componentHash: 202788691,
+    hash: 202788691,
+    hashKey: "COMPONENT_AT_AR_AFGRIP",
     weaponHash: 1305664598,
     model: "w_at_ar_afgrip",
     name: "Grip",
@@ -1132,7 +1217,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.GRENADELAUNCHERSMOKE_FLASH,
-    componentHash: 2076495324,
+    hash: 2076495324,
+    hashKey: "COMPONENT_AT_AR_FLSH",
     weaponHash: 1305664598,
     model: "w_at_ar_flsh",
     name: "Flashlight",
@@ -1140,7 +1226,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.GRENADELAUNCHERSMOKE_SCOPE_SML,
-    componentHash: 2855028148,
+    hash: 2855028148,
+    hashKey: "COMPONENT_AT_SCOPE_SMALL",
     weaponHash: 1305664598,
     model: "w_at_scope_small",
     name: "Scope",
@@ -1148,7 +1235,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.PUMPSHOTGUNMK2_SCOPE_MAC2,
-    componentHash: 77277509,
+    hash: 77277509,
+    hashKey: "COMPONENT_AT_SCOPE_MACRO_MK2",
     weaponHash: 1432025498,
     model: "w_at_scope_macro",
     name: "Small Scope",
@@ -1156,7 +1244,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.PUMPSHOTGUNMK2_SHELL_EX,
-    componentHash: 1004815965,
+    hash: 1004815965,
+    hashKey: "COMPONENT_PUMPSHOTGUN_MK2_CLIP_EXPLOSIVE",
     weaponHash: 1432025498,
     model: "w_sg_pumpshotgunmk2_mag_exp",
     name: "Explosive Slugs",
@@ -1164,7 +1253,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.PUMPSHOTGUNMK2_SCOPE_SML2,
-    componentHash: 1060929921,
+    hash: 1060929921,
+    hashKey: "COMPONENT_AT_SCOPE_SMALL_MK2",
     weaponHash: 1432025498,
     model: "w_at_scope_small",
     name: "Medium Scope",
@@ -1172,7 +1262,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.PUMPSHOTGUNMK2_HOLO,
-    componentHash: 1108334355,
+    hash: 1108334355,
+    hashKey: "COMPONENT_AT_SIGHTS",
     weaponHash: 1432025498,
     model: "w_at_sights_1",
     name: "Holographic Sight",
@@ -1180,7 +1271,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.PUMPSHOTGUNMK2_SHELL_AP,
-    componentHash: 1315288101,
+    hash: 1315288101,
+    hashKey: "COMPONENT_PUMPSHOTGUN_MK2_CLIP_ARMORPIERCING",
     weaponHash: 1432025498,
     model: "w_sg_pumpshotgunmk2_mag_ap",
     name: "Steel Buckshot Shells",
@@ -1188,7 +1280,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.PUMPSHOTGUNMK2_MUZZ8,
-    componentHash: 1602080333,
+    hash: 1602080333,
+    hashKey: "COMPONENT_AT_MUZZLE_08",
     weaponHash: 1432025498,
     model: "w_at_muzzle_8_xm17",
     name: "Squared Muzzle Brake",
@@ -1196,7 +1289,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.PUMPSHOTGUNMK2_FLASH,
-    componentHash: 2076495324,
+    hash: 2076495324,
+    hashKey: "COMPONENT_AT_AR_FLSH",
     weaponHash: 1432025498,
     model: "w_at_ar_flsh",
     name: "Flashlight",
@@ -1204,7 +1298,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.PUMPSHOTGUNMK2_SHELL_INC,
-    componentHash: 2676628469,
+    hash: 2676628469,
+    hashKey: "COMPONENT_PUMPSHOTGUN_MK2_CLIP_INCENDIARY",
     weaponHash: 1432025498,
     model: "w_sg_pumpshotgunmk2_mag_inc",
     name: "Dragon's Breath Shells",
@@ -1212,7 +1307,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.PUMPSHOTGUNMK2_SUPP,
-    componentHash: 2890063729,
+    hash: 2890063729,
+    hashKey: "COMPONENT_AT_SR_SUPP_03",
     weaponHash: 1432025498,
     model: "w_at_sr_supp3",
     name: "Suppressor",
@@ -1220,7 +1316,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.PUMPSHOTGUNMK2_SHELL,
-    componentHash: 3449028929,
+    hash: 3449028929,
+    hashKey: "COMPONENT_PUMPSHOTGUN_MK2_CLIP_01",
     weaponHash: 1432025498,
     model: "w_sg_pumpshotgunmk2_mag1",
     name: "Default Shells",
@@ -1228,7 +1325,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.PUMPSHOTGUNMK2_SHELL_HP,
-    componentHash: 3914869031,
+    hash: 3914869031,
+    hashKey: "COMPONENT_PUMPSHOTGUN_MK2_CLIP_HOLLOWPOINT",
     weaponHash: 1432025498,
     model: "w_sg_pumpshotgunmk2_mag_hp",
     name: "Flechette Shells",
@@ -1236,7 +1334,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.COMBATPISTOL_CLIP1,
-    componentHash: 119648377,
+    hash: 119648377,
+    hashKey: "COMPONENT_COMBATPISTOL_CLIP_01",
     weaponHash: 1593441988,
     model: "w_pi_combatpistol_mag1",
     name: "Default Clip",
@@ -1244,7 +1343,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.COMBATPISTOL_FLASH,
-    componentHash: 899381934,
+    hash: 899381934,
+    hashKey: "COMPONENT_AT_PI_FLSH",
     weaponHash: 1593441988,
     model: "w_at_pi_flsh",
     name: "Flashlight",
@@ -1252,7 +1352,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.COMBATPISTOL_SUPP,
-    componentHash: 3271853210,
+    hash: 3271853210,
+    hashKey: "COMPONENT_AT_PI_SUPP",
     weaponHash: 1593441988,
     model: "w_at_pi_supp",
     name: "Suppressor",
@@ -1260,7 +1361,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.COMBATPISTOL_CLIP2,
-    componentHash: 3598405421,
+    hash: 3598405421,
+    hashKey: "COMPONENT_COMBATPISTOL_CLIP_02",
     weaponHash: 1593441988,
     model: "w_pi_combatpistol_mag2",
     name: "Extended Clip",
@@ -1268,7 +1370,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.GUSENBERG_CLIP1,
-    componentHash: 484812453,
+    hash: 484812453,
+    hashKey: "COMPONENT_GUSENBERG_CLIP_01",
     weaponHash: 1627465347,
     model: "w_sb_gusenberg_mag1",
     name: "Default Clip",
@@ -1276,7 +1379,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.GUSENBERG_CLIP2,
-    componentHash: 3939025520,
+    hash: 3939025520,
+    hashKey: "COMPONENT_GUSENBERG_CLIP_02",
     weaponHash: 1627465347,
     model: "w_sb_gusenberg_mag2",
     name: "Extended Clip",
@@ -1284,7 +1388,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.COMPACTRIFLE_CLIP1,
-    componentHash: 1363085923,
+    hash: 1363085923,
+    hashKey: "COMPONENT_COMPACTRIFLE_CLIP_01",
     weaponHash: 1649403952,
     model: "w_ar_assaultrifle_smg_mag1",
     name: "Default Clip",
@@ -1292,7 +1397,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.COMPACTRIFLE_CLIP2,
-    componentHash: 1509923832,
+    hash: 1509923832,
+    hashKey: "COMPONENT_COMPACTRIFLE_CLIP_02",
     weaponHash: 1649403952,
     model: "w_ar_assaultrifle_smg_mag2",
     name: "Extended Clip",
@@ -1300,7 +1406,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.COMPACTRIFLE_CLIP_DRM,
-    componentHash: 3322377230,
+    hash: 3322377230,
+    hashKey: "COMPONENT_COMPACTRIFLE_CLIP_03",
     weaponHash: 1649403952,
     model: "w_ar_assaultrifle_boxmag",
     name: "Drum Magazine",
@@ -1308,7 +1415,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MARKSMANRIFLEMK2_MUZZ5,
-    componentHash: 48731514,
+    hash: 48731514,
+    hashKey: "COMPONENT_AT_MUZZLE_05",
     weaponHash: 1785463520,
     model: "w_at_muzzle_5",
     name: "Heavy Duty Muzzle Brake",
@@ -1316,7 +1424,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MARKSMANRIFLEMK2_MUZZ6,
-    componentHash: 880736428,
+    hash: 880736428,
+    hashKey: "COMPONENT_AT_MUZZLE_06",
     weaponHash: 1785463520,
     model: "w_at_muzzle_6",
     name: "Slanted Muzzle Brake",
@@ -1324,15 +1433,17 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MARKSMANRIFLEMK2_BARR,
-    componentHash: 941317513,
+    hash: 941317513,
+    hashKey: "COMPONENT_AT_MRFL_BARREL_01",
     weaponHash: 1785463520,
-    model: "w_sr_mrmk2_barrel_1",
+    model: "w_sr_mr_mk2_barrel_1",
     name: "Default Barrel",
     description: "Stock barrel attachment.",
   },
   {
     key: WeaponComponent.MARKSMANRIFLEMK2_HOLO,
-    componentHash: 1108334355,
+    hash: 1108334355,
+    hashKey: "COMPONENT_AT_SIGHTS",
     weaponHash: 1785463520,
     model: "w_at_sights_1",
     name: "Holographic Sight",
@@ -1340,7 +1451,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MARKSMANRIFLEMK2_MUZZ7,
-    componentHash: 1303784126,
+    hash: 1303784126,
+    hashKey: "COMPONENT_AT_MUZZLE_07",
     weaponHash: 1785463520,
     model: "w_at_muzzle_7",
     name: "Split-End Muzzle Brake",
@@ -1348,7 +1460,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MARKSMANRIFLEMK2_SCOPE_LRG2,
-    componentHash: 1528590652,
+    hash: 1528590652,
+    hashKey: "COMPONENT_AT_SCOPE_LARGE_FIXED_ZOOM_MK2",
     weaponHash: 1785463520,
     model: "w_at_scope_large",
     name: "Zoom Scope",
@@ -1356,15 +1469,17 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MARKSMANRIFLEMK2_BARR2,
-    componentHash: 1748450780,
+    hash: 1748450780,
+    hashKey: "COMPONENT_AT_MRFL_BARREL_02",
     weaponHash: 1785463520,
-    model: "w_sr_mrmk2_barrel_2",
+    model: "w_sr_mr_mk2_barrel_2",
     name: "Heavy Barrel",
     description: "Increases damage dealt to long-range targets.",
   },
   {
     key: WeaponComponent.MARKSMANRIFLEMK2_CLIP_INC,
-    componentHash: 1842849902,
+    hash: 1842849902,
+    hashKey: "COMPONENT_MARKSMANRIFLE_MK2_CLIP_INCENDIARY",
     weaponHash: 1785463520,
     model: "w_sr_marksmanriflemk2_mag_inc",
     name: "Incendiary Rounds",
@@ -1373,7 +1488,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MARKSMANRIFLEMK2_FLASH,
-    componentHash: 2076495324,
+    hash: 2076495324,
+    hashKey: "COMPONENT_AT_AR_FLSH",
     weaponHash: 1785463520,
     model: "w_at_ar_flsh",
     name: "Flashlight",
@@ -1381,7 +1497,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MARKSMANRIFLEMK2_SUPP,
-    componentHash: 2205435306,
+    hash: 2205435306,
+    hashKey: "COMPONENT_AT_AR_SUPP",
     weaponHash: 1785463520,
     model: "w_at_ar_supp",
     name: "Suppressor",
@@ -1389,7 +1506,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MARKSMANRIFLEMK2_CLIP1,
-    componentHash: 2497785294,
+    hash: 2497785294,
+    hashKey: "COMPONENT_MARKSMANRIFLE_MK2_CLIP_01",
     weaponHash: 1785463520,
     model: "w_sr_marksmanriflemk2_mag1",
     name: "Default Clip",
@@ -1397,7 +1515,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MARKSMANRIFLEMK2_GRIP,
-    componentHash: 2640679034,
+    hash: 2640679034,
+    hashKey: "COMPONENT_AT_AR_AFGRIP_02",
     weaponHash: 1785463520,
     model: "w_at_afgrip_2",
     name: "Grip",
@@ -1405,7 +1524,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MARKSMANRIFLEMK2_MUZZ1,
-    componentHash: 3113485012,
+    hash: 3113485012,
+    hashKey: "COMPONENT_AT_MUZZLE_01",
     weaponHash: 1785463520,
     model: "w_at_muzzle_1",
     name: "Flat Muzzle Brake",
@@ -1413,7 +1533,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MARKSMANRIFLEMK2_SCOPE_MED2,
-    componentHash: 3328927042,
+    hash: 3328927042,
+    hashKey: "COMPONENT_AT_SCOPE_MEDIUM_MK2",
     weaponHash: 1785463520,
     model: "w_at_scope_medium_2",
     name: "Large Scope",
@@ -1421,7 +1542,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MARKSMANRIFLEMK2_MUZZ2,
-    componentHash: 3362234491,
+    hash: 3362234491,
+    hashKey: "COMPONENT_AT_MUZZLE_02",
     weaponHash: 1785463520,
     model: "w_at_muzzle_2",
     name: "Tactical Muzzle Brake",
@@ -1429,7 +1551,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MARKSMANRIFLEMK2_CLIP_TR,
-    componentHash: 3615105746,
+    hash: 3615105746,
+    hashKey: "COMPONENT_MARKSMANRIFLE_MK2_CLIP_TRACER",
     weaponHash: 1785463520,
     model: "w_sr_marksmanriflemk2_mag_tr",
     name: "Tracer Rounds",
@@ -1438,7 +1561,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MARKSMANRIFLEMK2_MUZZ3,
-    componentHash: 3725708239,
+    hash: 3725708239,
+    hashKey: "COMPONENT_AT_MUZZLE_03",
     weaponHash: 1785463520,
     model: "w_at_muzzle_3",
     name: "Fat-End Muzzle Brake",
@@ -1446,7 +1570,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MARKSMANRIFLEMK2_CLIP_FMJ,
-    componentHash: 3779763923,
+    hash: 3779763923,
+    hashKey: "COMPONENT_MARKSMANRIFLE_MK2_CLIP_FMJ",
     weaponHash: 1785463520,
     model: "w_sr_marksmanriflemk2_mag_fmj",
     name: "Full Metal Jacket Rounds",
@@ -1455,7 +1580,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MARKSMANRIFLEMK2_CLIP2,
-    componentHash: 3872379306,
+    hash: 3872379306,
+    hashKey: "COMPONENT_MARKSMANRIFLE_MK2_CLIP_02",
     weaponHash: 1785463520,
     model: "w_sr_marksmanriflemk2_mag2",
     name: "Extended Clip",
@@ -1463,7 +1589,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MARKSMANRIFLEMK2_MUZZ4,
-    componentHash: 3968886988,
+    hash: 3968886988,
+    hashKey: "COMPONENT_AT_MUZZLE_04",
     weaponHash: 1785463520,
     model: "w_at_muzzle_4",
     name: "Precision Muzzle Brake",
@@ -1471,7 +1598,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MARKSMANRIFLEMK2_CLIP_AP,
-    componentHash: 4100968569,
+    hash: 4100968569,
+    hashKey: "COMPONENT_MARKSMANRIFLE_MK2_CLIP_ARMORPIERCING",
     weaponHash: 1785463520,
     model: "w_sr_marksmanriflemk2_mag_ap",
     name: "Armor Piercing Rounds",
@@ -1479,7 +1607,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.RAILGUN_CLIP1,
-    componentHash: 59044840,
+    hash: 59044840,
+    hashKey: "COMPONENT_RAILGUN_CLIP_01",
     weaponHash: 1834241177,
     model: "w_ar_railgun_mag1",
     name: "Default Clip",
@@ -1487,7 +1616,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.PRECISIONRIFLE_CLIP1,
-    componentHash: 4075474698,
+    hash: 4075474698,
+    hashKey: "COMPONENT_PRECISIONRIFLE_CLIP_01",
     weaponHash: 1853742572,
     model: "w_sr_w_sr_precisionrifle_reh_mag1",
     name: "Default Clip",
@@ -1495,7 +1625,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SMGMK2_MUZZ5,
-    componentHash: 48731514,
+    hash: 48731514,
+    hashKey: "COMPONENT_AT_MUZZLE_05",
     weaponHash: 2024373456,
     model: "w_at_muzzle_5",
     name: "Heavy Duty Muzzle Brake",
@@ -1503,7 +1634,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SMGMK2_CLIP_FMJ,
-    componentHash: 190476639,
+    hash: 190476639,
+    hashKey: "COMPONENT_SMG_MK2_CLIP_FMJ",
     weaponHash: 2024373456,
     model: "w_sb_smgmk2_mag_fmj",
     name: "Full Metal Jacket Rounds",
@@ -1512,7 +1644,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SMGMK2_MUZZ6,
-    componentHash: 880736428,
+    hash: 880736428,
+    hashKey: "COMPONENT_AT_MUZZLE_06",
     weaponHash: 2024373456,
     model: "w_at_muzzle_6",
     name: "Slanted Muzzle Brake",
@@ -1520,7 +1653,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SMGMK2_CLIP_HP,
-    componentHash: 974903034,
+    hash: 974903034,
+    hashKey: "COMPONENT_SMG_MK2_CLIP_HOLLOWPOINT",
     weaponHash: 2024373456,
     model: "w_sb_smgmk2_mag_hp",
     name: "Hollow Point Rounds",
@@ -1528,15 +1662,17 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SMGMK2_SCOPE_SML2,
-    componentHash: 1038927834,
+    hash: 1038927834,
+    hashKey: "COMPONENT_AT_SCOPE_SMALL_SMG_MK2",
     weaponHash: 2024373456,
-    model: "w_at_scope_smallmk2",
+    model: "w_at_scope_small_mk2",
     name: "Medium Scope",
     description: "Medium-range zoom functionality.",
   },
   {
     key: WeaponComponent.SMGMK2_CLIP1,
-    componentHash: 1277460590,
+    hash: 1277460590,
+    hashKey: "COMPONENT_SMG_MK2_CLIP_01",
     weaponHash: 2024373456,
     model: "w_sb_smgmk2_mag1",
     name: "Default Clip",
@@ -1544,7 +1680,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SMGMK2_MUZZ7,
-    componentHash: 1303784126,
+    hash: 1303784126,
+    hashKey: "COMPONENT_AT_MUZZLE_07",
     weaponHash: 2024373456,
     model: "w_at_muzzle_7",
     name: "Split-End Muzzle Brake",
@@ -1552,7 +1689,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SMGMK2_FLASH,
-    componentHash: 2076495324,
+    hash: 2076495324,
+    hashKey: "COMPONENT_AT_AR_FLSH",
     weaponHash: 2024373456,
     model: "w_at_ar_flsh",
     name: "Flashlight",
@@ -1560,7 +1698,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SMGMK2_CLIP_TR,
-    componentHash: 2146055916,
+    hash: 2146055916,
+    hashKey: "COMPONENT_SMG_MK2_CLIP_TRACER",
     weaponHash: 2024373456,
     model: "w_sb_smgmk2_mag_tr",
     name: "Tracer Rounds",
@@ -1569,7 +1708,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SMGMK2_HOLO,
-    componentHash: 2681951826,
+    hash: 2681951826,
+    hashKey: "COMPONENT_AT_SIGHTS_SMG",
     weaponHash: 2024373456,
     model: "w_at_sights_smg",
     name: "Holographic Sight",
@@ -1577,7 +1717,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SMGMK2_BARR2,
-    componentHash: 2774849419,
+    hash: 2774849419,
+    hashKey: "COMPONENT_AT_SB_BARREL_02",
     weaponHash: 2024373456,
     model: "w_at_sb_barrel_2",
     name: "Heavy Barrel",
@@ -1585,7 +1726,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SMGMK2_CLIP2,
-    componentHash: 3112393518,
+    hash: 3112393518,
+    hashKey: "COMPONENT_SMG_MK2_CLIP_02",
     weaponHash: 2024373456,
     model: "w_sb_smgmk2_mag2",
     name: "Extended Clip",
@@ -1593,7 +1735,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SMGMK2_MUZZ1,
-    componentHash: 3113485012,
+    hash: 3113485012,
+    hashKey: "COMPONENT_AT_MUZZLE_01",
     weaponHash: 2024373456,
     model: "w_at_muzzle_1",
     name: "Flat Muzzle Brake",
@@ -1601,7 +1744,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SMGMK2_SUPP,
-    componentHash: 3271853210,
+    hash: 3271853210,
+    hashKey: "COMPONENT_AT_PI_SUPP",
     weaponHash: 2024373456,
     model: "w_at_pi_supp",
     name: "Suppressor",
@@ -1609,7 +1753,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SMGMK2_MUZZ2,
-    componentHash: 3362234491,
+    hash: 3362234491,
+    hashKey: "COMPONENT_AT_MUZZLE_02",
     weaponHash: 2024373456,
     model: "w_at_muzzle_2",
     name: "Tactical Muzzle Brake",
@@ -1617,7 +1762,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SMGMK2_BARR,
-    componentHash: 3641720545,
+    hash: 3641720545,
+    hashKey: "COMPONENT_AT_SB_BARREL_01",
     weaponHash: 2024373456,
     model: "w_at_sb_barrel_1",
     name: "Default Barrel",
@@ -1625,7 +1771,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SMGMK2_CLIP_INC,
-    componentHash: 3650233061,
+    hash: 3650233061,
+    hashKey: "COMPONENT_SMG_MK2_CLIP_INCENDIARY",
     weaponHash: 2024373456,
     model: "w_sb_smgmk2_mag_inc",
     name: "Incendiary Rounds",
@@ -1634,7 +1781,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SMGMK2_MUZZ3,
-    componentHash: 3725708239,
+    hash: 3725708239,
+    hashKey: "COMPONENT_AT_MUZZLE_03",
     weaponHash: 2024373456,
     model: "w_at_muzzle_3",
     name: "Fat-End Muzzle Brake",
@@ -1642,15 +1790,17 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SMGMK2_SCOPE_MAC2,
-    componentHash: 3842157419,
+    hash: 3842157419,
+    hashKey: "COMPONENT_AT_SCOPE_MACRO_02_SMG_MK2",
     weaponHash: 2024373456,
-    model: "w_at_scope_macro_2mk2",
+    model: "w_at_scope_macro_2_mk2",
     name: "Small Scope",
     description: "Standard-range zoom functionality.",
   },
   {
     key: WeaponComponent.SMGMK2_MUZZ4,
-    componentHash: 3968886988,
+    hash: 3968886988,
+    hashKey: "COMPONENT_AT_MUZZLE_04",
     weaponHash: 2024373456,
     model: "w_at_muzzle_4",
     name: "Precision Muzzle Brake",
@@ -1658,7 +1808,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.BULLPUPRIFLE_GRIP,
-    componentHash: 202788691,
+    hash: 202788691,
+    hashKey: "COMPONENT_AT_AR_AFGRIP",
     weaponHash: 2132975508,
     model: "w_at_ar_afgrip",
     name: "Grip",
@@ -1666,7 +1817,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.BULLPUPRIFLE_FLASH,
-    componentHash: 2076495324,
+    hash: 2076495324,
+    hashKey: "COMPONENT_AT_AR_FLSH",
     weaponHash: 2132975508,
     model: "w_at_ar_flsh",
     name: "Flashlight",
@@ -1674,7 +1826,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.BULLPUPRIFLE_SUPP,
-    componentHash: 2205435306,
+    hash: 2205435306,
+    hashKey: "COMPONENT_AT_AR_SUPP",
     weaponHash: 2132975508,
     model: "w_at_ar_supp",
     name: "Suppressor",
@@ -1682,7 +1835,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.BULLPUPRIFLE_SCOPE_SML,
-    componentHash: 2855028148,
+    hash: 2855028148,
+    hashKey: "COMPONENT_AT_SCOPE_SMALL",
     weaponHash: 2132975508,
     model: "w_at_scope_small",
     name: "Scope",
@@ -1690,7 +1844,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.BULLPUPRIFLE_CLIP2,
-    componentHash: 3009973007,
+    hash: 3009973007,
+    hashKey: "COMPONENT_BULLPUPRIFLE_CLIP_02",
     weaponHash: 2132975508,
     model: "w_ar_bullpuprifle_mag2",
     name: "Extended Clip",
@@ -1698,23 +1853,17 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.BULLPUPRIFLE_CLIP1,
-    componentHash: 3315675008,
+    hash: 3315675008,
+    hashKey: "COMPONENT_BULLPUPRIFLE_CLIP_01",
     weaponHash: 2132975508,
     model: "w_ar_bullpuprifle_mag1",
     name: "Default Clip",
     description: "Standard capacity for Bullpup Rifle.",
   },
   {
-    key: WeaponComponent.FIREWORK_CLIP1,
-    componentHash: 3840197261,
-    weaponHash: 2138347493,
-    model: "",
-    name: "Default Clip",
-    description: "Standard capacity for Firework Launcher.",
-  },
-  {
     key: WeaponComponent.COMBATMG_GRIP,
-    componentHash: 202788691,
+    hash: 202788691,
+    hashKey: "COMPONENT_AT_AR_AFGRIP",
     weaponHash: 2144741730,
     model: "w_at_ar_afgrip",
     name: "Grip",
@@ -1722,7 +1871,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.COMBATMG_SCOPE_LRG,
-    componentHash: 2698550338,
+    hash: 2698550338,
+    hashKey: "COMPONENT_AT_SCOPE_MEDIUM",
     weaponHash: 2144741730,
     model: "w_at_scope_medium",
     name: "Scope",
@@ -1730,7 +1880,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.COMBATMG_CLIP2,
-    componentHash: 3603274966,
+    hash: 3603274966,
+    hashKey: "COMPONENT_COMBATMG_CLIP_02",
     weaponHash: 2144741730,
     model: "w_mg_combatmg_mag2",
     name: "Extended Clip",
@@ -1738,7 +1889,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.COMBATMG_CLIP1,
-    componentHash: 3791631178,
+    hash: 3791631178,
+    hashKey: "COMPONENT_COMBATMG_CLIP_01",
     weaponHash: 2144741730,
     model: "w_mg_combatmg_mag1",
     name: "Default Clip",
@@ -1746,7 +1898,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.CARBINERIFLE_GRIP,
-    componentHash: 202788691,
+    hash: 202788691,
+    hashKey: "COMPONENT_AT_AR_AFGRIP",
     weaponHash: 2210333304,
     model: "w_at_ar_afgrip",
     name: "Grip",
@@ -1754,7 +1907,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.CARBINERIFLE_FLASH,
-    componentHash: 2076495324,
+    hash: 2076495324,
+    hashKey: "COMPONENT_AT_AR_FLSH",
     weaponHash: 2210333304,
     model: "w_at_ar_flsh",
     name: "Flashlight",
@@ -1762,7 +1916,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.CARBINERIFLE_SUPP,
-    componentHash: 2205435306,
+    hash: 2205435306,
+    hashKey: "COMPONENT_AT_AR_SUPP",
     weaponHash: 2210333304,
     model: "w_at_ar_supp",
     name: "Suppressor",
@@ -1770,7 +1925,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.CARBINERIFLE_CLIP2,
-    componentHash: 2433783441,
+    hash: 2433783441,
+    hashKey: "COMPONENT_CARBINERIFLE_CLIP_02",
     weaponHash: 2210333304,
     model: "w_ar_carbinerifle_mag2",
     name: "Extended Clip",
@@ -1778,7 +1934,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.CARBINERIFLE_CLIP1,
-    componentHash: 2680042476,
+    hash: 2680042476,
+    hashKey: "COMPONENT_CARBINERIFLE_CLIP_01",
     weaponHash: 2210333304,
     model: "w_ar_carbinerifle_mag1",
     name: "Default Clip",
@@ -1786,7 +1943,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.CARBINERIFLE_SCOPE_LRG,
-    componentHash: 2698550338,
+    hash: 2698550338,
+    hashKey: "COMPONENT_AT_SCOPE_MEDIUM",
     weaponHash: 2210333304,
     model: "w_at_scope_medium",
     name: "Scope",
@@ -1794,7 +1952,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.CARBINERIFLE_CLIP_BOX,
-    componentHash: 3127044405,
+    hash: 3127044405,
+    hashKey: "COMPONENT_CARBINERIFLE_CLIP_03",
     weaponHash: 2210333304,
     model: "w_ar_carbinerifle_boxmag",
     name: "Box Magazine",
@@ -1802,7 +1961,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.BULLPUPRIFLEMK2_CLIP1,
-    componentHash: 25766362,
+    hash: 25766362,
+    hashKey: "COMPONENT_BULLPUPRIFLE_MK2_CLIP_01",
     weaponHash: 2228681469,
     model: "w_ar_bullpupriflemk2_mag1",
     name: "Default Clip",
@@ -1810,7 +1970,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.BULLPUPRIFLEMK2_MUZZ5,
-    componentHash: 48731514,
+    hash: 48731514,
+    hashKey: "COMPONENT_AT_MUZZLE_05",
     weaponHash: 2228681469,
     model: "w_at_muzzle_5",
     name: "Heavy Duty Muzzle Brake",
@@ -1818,7 +1979,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.BULLPUPRIFLEMK2_MUZZ6,
-    componentHash: 880736428,
+    hash: 880736428,
+    hashKey: "COMPONENT_AT_MUZZLE_06",
     weaponHash: 2228681469,
     model: "w_at_muzzle_6",
     name: "Slanted Muzzle Brake",
@@ -1826,15 +1988,17 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.BULLPUPRIFLEMK2_BARR2,
-    componentHash: 1005743559,
+    hash: 1005743559,
+    hashKey: "COMPONENT_AT_BP_BARREL_02",
     weaponHash: 2228681469,
-    model: "W_AR_BPMK2_Barrel2",
+    model: "W_AR_BP_MK2_Barrel2",
     name: "Heavy Barrel",
     description: "Increases damage dealt to long-range targets.",
   },
   {
     key: WeaponComponent.BULLPUPRIFLEMK2_SCOPE_SML2,
-    componentHash: 1060929921,
+    hash: 1060929921,
+    hashKey: "COMPONENT_AT_SCOPE_SMALL_MK2",
     weaponHash: 2228681469,
     model: "w_at_scope_small",
     name: "Medium Scope",
@@ -1842,7 +2006,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.BULLPUPRIFLEMK2_HOLO,
-    componentHash: 1108334355,
+    hash: 1108334355,
+    hashKey: "COMPONENT_AT_SIGHTS",
     weaponHash: 2228681469,
     model: "w_at_sights_1",
     name: "Holographic Sight",
@@ -1850,7 +2015,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.BULLPUPRIFLEMK2_CLIP_FMJ,
-    componentHash: 1130501904,
+    hash: 1130501904,
+    hashKey: "COMPONENT_BULLPUPRIFLE_MK2_CLIP_FMJ",
     weaponHash: 2228681469,
     model: "W_AR_BullpupRifleMK2_Mag_FMJ",
     name: "Full Metal Jacket Rounds",
@@ -1859,7 +2025,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.BULLPUPRIFLEMK2_MUZZ7,
-    componentHash: 1303784126,
+    hash: 1303784126,
+    hashKey: "COMPONENT_AT_MUZZLE_07",
     weaponHash: 2228681469,
     model: "w_at_muzzle_7",
     name: "Split-End Muzzle Brake",
@@ -1867,15 +2034,17 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.BULLPUPRIFLEMK2_BARR,
-    componentHash: 1704640795,
+    hash: 1704640795,
+    hashKey: "COMPONENT_AT_BP_BARREL_01",
     weaponHash: 2228681469,
-    model: "W_AR_BPMK2_Barrel1",
+    model: "W_AR_BP_MK2_Barrel1",
     name: "Default Barrel",
     description: "Stock barrel attachment.",
   },
   {
     key: WeaponComponent.BULLPUPRIFLEMK2_FLASH,
-    componentHash: 2076495324,
+    hash: 2076495324,
+    hashKey: "COMPONENT_AT_AR_FLSH",
     weaponHash: 2228681469,
     model: "w_at_ar_flsh",
     name: "Flashlight",
@@ -1883,7 +2052,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.BULLPUPRIFLEMK2_CLIP_TR,
-    componentHash: 2183159977,
+    hash: 2183159977,
+    hashKey: "COMPONENT_BULLPUPRIFLE_MK2_CLIP_TRACER",
     weaponHash: 2228681469,
     model: "W_AR_BullpupRifleMK2_Mag_TR",
     name: "Tracer Rounds",
@@ -1892,7 +2062,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.BULLPUPRIFLEMK2_SUPP,
-    componentHash: 2205435306,
+    hash: 2205435306,
+    hashKey: "COMPONENT_AT_AR_SUPP",
     weaponHash: 2228681469,
     model: "w_at_ar_supp",
     name: "Suppressor",
@@ -1900,7 +2071,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.BULLPUPRIFLEMK2_GRIP,
-    componentHash: 2640679034,
+    hash: 2640679034,
+    hashKey: "COMPONENT_AT_AR_AFGRIP_02",
     weaponHash: 2228681469,
     model: "w_at_afgrip_2",
     name: "Grip",
@@ -1908,7 +2080,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.BULLPUPRIFLEMK2_CLIP_INC,
-    componentHash: 2845636954,
+    hash: 2845636954,
+    hashKey: "COMPONENT_BULLPUPRIFLE_MK2_CLIP_INCENDIARY",
     weaponHash: 2228681469,
     model: "W_AR_BullpupRifleMK2_Mag_INC",
     name: "Incendiary Rounds",
@@ -1917,7 +2090,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.BULLPUPRIFLEMK2_MUZZ1,
-    componentHash: 3113485012,
+    hash: 3113485012,
+    hashKey: "COMPONENT_AT_MUZZLE_01",
     weaponHash: 2228681469,
     model: "w_at_muzzle_1",
     name: "Flat Muzzle Brake",
@@ -1925,7 +2099,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.BULLPUPRIFLEMK2_SCOPE_MAC2,
-    componentHash: 3350057221,
+    hash: 3350057221,
+    hashKey: "COMPONENT_AT_SCOPE_MACRO_02_MK2",
     weaponHash: 2228681469,
     model: "w_at_scope_macro_2",
     name: "Small Scope",
@@ -1933,7 +2108,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.BULLPUPRIFLEMK2_MUZZ2,
-    componentHash: 3362234491,
+    hash: 3362234491,
+    hashKey: "COMPONENT_AT_MUZZLE_02",
     weaponHash: 2228681469,
     model: "w_at_muzzle_2",
     name: "Tactical Muzzle Brake",
@@ -1941,7 +2117,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.BULLPUPRIFLEMK2_MUZZ3,
-    componentHash: 3725708239,
+    hash: 3725708239,
+    hashKey: "COMPONENT_AT_MUZZLE_03",
     weaponHash: 2228681469,
     model: "w_at_muzzle_3",
     name: "Fat-End Muzzle Brake",
@@ -1949,7 +2126,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.BULLPUPRIFLEMK2_MUZZ4,
-    componentHash: 3968886988,
+    hash: 3968886988,
+    hashKey: "COMPONENT_AT_MUZZLE_04",
     weaponHash: 2228681469,
     model: "w_at_muzzle_4",
     name: "Precision Muzzle Brake",
@@ -1957,7 +2135,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.BULLPUPRIFLEMK2_CLIP2,
-    componentHash: 4021290536,
+    hash: 4021290536,
+    hashKey: "COMPONENT_BULLPUPRIFLE_MK2_CLIP_02",
     weaponHash: 2228681469,
     model: "w_ar_bullpupriflemk2_mag2",
     name: "Extended Clip",
@@ -1965,7 +2144,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.BULLPUPRIFLEMK2_CLIP_AP,
-    componentHash: 4205311469,
+    hash: 4205311469,
+    hashKey: "COMPONENT_BULLPUPRIFLE_MK2_CLIP_ARMORPIERCING",
     weaponHash: 2228681469,
     model: "W_AR_BullpupRifleMK2_Mag_AP",
     name: "Armor Piercing Rounds",
@@ -1973,7 +2153,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SNSPISTOLMK2_CLIP1,
-    componentHash: 21392614,
+    hash: 21392614,
+    hashKey: "COMPONENT_SNSPISTOL_MK2_CLIP_01",
     weaponHash: 2285322324,
     model: "w_pi_sns_pistolmk2_mag1",
     name: "Default Clip",
@@ -1981,7 +2162,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SNSPISTOLMK2_SCOPE_PI,
-    componentHash: 1205768792,
+    hash: 1205768792,
+    hashKey: "COMPONENT_AT_PI_RAIL_02",
     weaponHash: 2285322324,
     model: "w_at_pi_rail_2",
     name: "Mounted Scope",
@@ -1989,7 +2171,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SNSPISTOLMK2_FLASH,
-    componentHash: 1246324211,
+    hash: 1246324211,
+    hashKey: "COMPONENT_AT_PI_FLSH_03",
     weaponHash: 2285322324,
     model: "w_at_pi_snsmk2_flsh_1",
     name: "Flashlight",
@@ -1997,7 +2180,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SNSPISTOLMK2_SUPP,
-    componentHash: 1709866683,
+    hash: 1709866683,
+    hashKey: "COMPONENT_AT_PI_SUPP_02",
     weaponHash: 2285322324,
     model: "w_at_pi_supp_2",
     name: "Suppressor",
@@ -2005,7 +2189,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SNSPISTOLMK2_CLIP_HP,
-    componentHash: 2366665730,
+    hash: 2366665730,
+    hashKey: "COMPONENT_SNSPISTOL_MK2_CLIP_HOLLOWPOINT",
     weaponHash: 2285322324,
     model: "W_PI_SNS_PistolMK2_Mag_HP",
     name: "Hollow Point Rounds",
@@ -2013,7 +2198,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SNSPISTOLMK2_CLIP_TR,
-    componentHash: 2418909806,
+    hash: 2418909806,
+    hashKey: "COMPONENT_SNSPISTOL_MK2_CLIP_TRACER",
     weaponHash: 2285322324,
     model: "W_PI_SNS_PistolMK2_Mag_TR",
     name: "Tracer Rounds",
@@ -2021,7 +2207,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SNSPISTOLMK2_COMP,
-    componentHash: 2860680127,
+    hash: 2860680127,
+    hashKey: "COMPONENT_AT_PI_COMP_02",
     weaponHash: 2285322324,
     model: "w_at_pi_comp_2",
     name: "Compensator",
@@ -2029,7 +2216,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SNSPISTOLMK2_CLIP_FMJ,
-    componentHash: 3239176998,
+    hash: 3239176998,
+    hashKey: "COMPONENT_SNSPISTOL_MK2_CLIP_FMJ",
     weaponHash: 2285322324,
     model: "W_PI_SNS_PistolMK2_Mag_FMJ",
     name: "Full Metal Jacket Rounds",
@@ -2038,7 +2226,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SNSPISTOLMK2_CLIP2,
-    componentHash: 3465283442,
+    hash: 3465283442,
+    hashKey: "COMPONENT_SNSPISTOL_MK2_CLIP_02",
     weaponHash: 2285322324,
     model: "w_pi_sns_pistolmk2_mag2",
     name: "Extended Clip",
@@ -2046,7 +2235,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SNSPISTOLMK2_CLIP_INC,
-    componentHash: 3870121849,
+    hash: 3870121849,
+    hashKey: "COMPONENT_SNSPISTOL_MK2_CLIP_INCENDIARY",
     weaponHash: 2285322324,
     model: "W_PI_SNS_PistolMK2_Mag_INC",
     name: "Incendiary Rounds",
@@ -2054,7 +2244,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.FLASHLIGHT_FLASH,
-    componentHash: 3719772431,
+    hash: 3719772431,
+    hashKey: "COMPONENT_FLASHLIGHT_LIGHT",
     weaponHash: 2343591895,
     model: "w_me_flashlight_flash",
     name: "Flashlight",
@@ -2062,7 +2253,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SPECIALCARBINEMK2_MUZZ5,
-    componentHash: 48731514,
+    hash: 48731514,
+    hashKey: "COMPONENT_AT_MUZZLE_05",
     weaponHash: 2526821735,
     model: "w_at_muzzle_5",
     name: "Heavy Duty Muzzle Brake",
@@ -2070,7 +2262,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SPECIALCARBINEMK2_SCOPE_MAC2,
-    componentHash: 77277509,
+    hash: 77277509,
+    hashKey: "COMPONENT_AT_SCOPE_MACRO_MK2",
     weaponHash: 2526821735,
     model: "w_at_scope_macro",
     name: "Small Scope",
@@ -2078,7 +2271,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SPECIALCARBINEMK2_CLIP1,
-    componentHash: 382112385,
+    hash: 382112385,
+    hashKey: "COMPONENT_SPECIALCARBINE_MK2_CLIP_01",
     weaponHash: 2526821735,
     model: "w_ar_specialcarbinemk2_mag1",
     name: "Default Clip",
@@ -2086,7 +2280,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SPECIALCARBINEMK2_MUZZ6,
-    componentHash: 880736428,
+    hash: 880736428,
+    hashKey: "COMPONENT_AT_MUZZLE_06",
     weaponHash: 2526821735,
     model: "w_at_muzzle_6",
     name: "Slanted Muzzle Brake",
@@ -2094,7 +2289,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SPECIALCARBINEMK2_HOLO,
-    componentHash: 1108334355,
+    hash: 1108334355,
+    hashKey: "COMPONENT_AT_SIGHTS",
     weaponHash: 2526821735,
     model: "w_at_sights_1",
     name: "Holographic Sight",
@@ -2102,7 +2298,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SPECIALCARBINEMK2_MUZZ7,
-    componentHash: 1303784126,
+    hash: 1303784126,
+    hashKey: "COMPONENT_AT_MUZZLE_07",
     weaponHash: 2526821735,
     model: "w_at_muzzle_7",
     name: "Split-End Muzzle Brake",
@@ -2110,7 +2307,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SPECIALCARBINEMK2_CLIP_FMJ,
-    componentHash: 1346235024,
+    hash: 1346235024,
+    hashKey: "COMPONENT_SPECIALCARBINE_MK2_CLIP_FMJ",
     weaponHash: 2526821735,
     model: "w_ar_specialcarbinemk2_mag_fmj",
     name: "Full Metal Jacket Rounds",
@@ -2119,7 +2317,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SPECIALCARBINEMK2_CLIP_AP,
-    componentHash: 1362433589,
+    hash: 1362433589,
+    hashKey: "COMPONENT_SPECIALCARBINE_MK2_CLIP_ARMORPIERCING",
     weaponHash: 2526821735,
     model: "w_ar_specialcarbinemk2_mag_ap",
     name: "Armor Piercing Rounds",
@@ -2127,7 +2326,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SPECIALCARBINEMK2_FLASH,
-    componentHash: 2076495324,
+    hash: 2076495324,
+    hashKey: "COMPONENT_AT_AR_FLSH",
     weaponHash: 2526821735,
     model: "w_at_ar_flsh",
     name: "Flashlight",
@@ -2135,7 +2335,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SPECIALCARBINEMK2_CLIP_TR,
-    componentHash: 2271594122,
+    hash: 2271594122,
+    hashKey: "COMPONENT_SPECIALCARBINE_MK2_CLIP_TRACER",
     weaponHash: 2526821735,
     model: "w_ar_specialcarbinemk2_mag_tr",
     name: "Tracer Rounds",
@@ -2144,7 +2345,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SPECIALCARBINEMK2_GRIP,
-    componentHash: 2640679034,
+    hash: 2640679034,
+    hashKey: "COMPONENT_AT_AR_AFGRIP_02",
     weaponHash: 2526821735,
     model: "w_at_afgrip_2",
     name: "Grip",
@@ -2152,7 +2354,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SPECIALCARBINEMK2_SUPP,
-    componentHash: 2805810788,
+    hash: 2805810788,
+    hashKey: "COMPONENT_AT_AR_SUPP_02",
     weaponHash: 2526821735,
     model: "w_at_ar_supp_02",
     name: "Suppressor",
@@ -2160,7 +2363,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SPECIALCARBINEMK2_MUZZ1,
-    componentHash: 3113485012,
+    hash: 3113485012,
+    hashKey: "COMPONENT_AT_MUZZLE_01",
     weaponHash: 2526821735,
     model: "w_at_muzzle_1",
     name: "Flat Muzzle Brake",
@@ -2168,7 +2372,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SPECIALCARBINEMK2_SCOPE_MED2,
-    componentHash: 3328927042,
+    hash: 3328927042,
+    hashKey: "COMPONENT_AT_SCOPE_MEDIUM_MK2",
     weaponHash: 2526821735,
     model: "w_at_scope_medium_2",
     name: "Large Scope",
@@ -2176,7 +2381,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SPECIALCARBINEMK2_MUZZ2,
-    componentHash: 3362234491,
+    hash: 3362234491,
+    hashKey: "COMPONENT_AT_MUZZLE_02",
     weaponHash: 2526821735,
     model: "w_at_muzzle_2",
     name: "Tactical Muzzle Brake",
@@ -2184,7 +2390,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SPECIALCARBINEMK2_CLIP_INC,
-    componentHash: 3724612230,
+    hash: 3724612230,
+    hashKey: "COMPONENT_SPECIALCARBINE_MK2_CLIP_INCENDIARY",
     weaponHash: 2526821735,
     model: "w_ar_specialcarbinemk2_mag_inc",
     name: "Incendiary Rounds",
@@ -2193,7 +2400,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SPECIALCARBINEMK2_MUZZ3,
-    componentHash: 3725708239,
+    hash: 3725708239,
+    hashKey: "COMPONENT_AT_MUZZLE_03",
     weaponHash: 2526821735,
     model: "w_at_muzzle_3",
     name: "Fat-End Muzzle Brake",
@@ -2201,7 +2409,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SPECIALCARBINEMK2_CLIP2,
-    componentHash: 3726614828,
+    hash: 3726614828,
+    hashKey: "COMPONENT_SPECIALCARBINE_MK2_CLIP_02",
     weaponHash: 2526821735,
     model: "w_ar_specialcarbinemk2_mag2",
     name: "Extended Clip",
@@ -2209,7 +2418,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SPECIALCARBINEMK2_BARR,
-    componentHash: 3879097257,
+    hash: 3879097257,
+    hashKey: "COMPONENT_AT_SC_BARREL_01",
     weaponHash: 2526821735,
     model: "w_ar_sc_barrel_1",
     name: "Default Barrel",
@@ -2217,7 +2427,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SPECIALCARBINEMK2_MUZZ4,
-    componentHash: 3968886988,
+    hash: 3968886988,
+    hashKey: "COMPONENT_AT_MUZZLE_04",
     weaponHash: 2526821735,
     model: "w_at_muzzle_4",
     name: "Precision Muzzle Brake",
@@ -2225,7 +2436,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SPECIALCARBINEMK2_BARR2,
-    componentHash: 4185880635,
+    hash: 4185880635,
+    hashKey: "COMPONENT_AT_SC_BARREL_02",
     weaponHash: 2526821735,
     model: "w_ar_sc_barrel_2",
     name: "Heavy Barrel",
@@ -2233,7 +2445,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.DOUBLEACTION_CLIP1,
-    componentHash: 1328622785,
+    hash: 1328622785,
+    hashKey: "COMPONENT_DOUBLEACTION_CLIP_01",
     weaponHash: 2548703416,
     model: "w_pi_wep1_mag1",
     name: "Default Clip",
@@ -2241,7 +2454,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.PISTOL50_CLIP1,
-    componentHash: 580369945,
+    hash: 580369945,
+    hashKey: "COMPONENT_PISTOL50_CLIP_01",
     weaponHash: 2578377531,
     model: "W_PI_PISTOL50_Mag1",
     name: "Default Clip",
@@ -2249,7 +2463,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.PISTOL50_FLASH,
-    componentHash: 899381934,
+    hash: 899381934,
+    hashKey: "COMPONENT_AT_PI_FLSH",
     weaponHash: 2578377531,
     model: "w_at_pi_flsh",
     name: "Flashlight",
@@ -2257,7 +2472,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.PISTOL50_SUPP,
-    componentHash: 2805810788,
+    hash: 2805810788,
+    hashKey: "COMPONENT_AT_AR_SUPP_02",
     weaponHash: 2578377531,
     model: "w_at_ar_supp_02",
     name: "Suppressor",
@@ -2265,7 +2481,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.PISTOL50_CLIP2,
-    componentHash: 3654528146,
+    hash: 3654528146,
+    hashKey: "COMPONENT_PISTOL50_CLIP_02",
     weaponHash: 2578377531,
     model: "W_PI_PISTOL50_Mag2",
     name: "Extended Clip",
@@ -2273,7 +2490,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MG_SCOPE_SML,
-    componentHash: 1006677997,
+    hash: 1006677997,
+    hashKey: "COMPONENT_AT_SCOPE_SMALL_02",
     weaponHash: 2634544996,
     model: "w_at_scope_small_2",
     name: "Scope",
@@ -2281,7 +2499,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MG_CLIP2,
-    componentHash: 2182449991,
+    hash: 2182449991,
+    hashKey: "COMPONENT_MG_CLIP_02",
     weaponHash: 2634544996,
     model: "w_mg_mg_mag2",
     name: "Extended Clip",
@@ -2289,7 +2508,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MG_CLIP1,
-    componentHash: 4097109892,
+    hash: 4097109892,
+    hashKey: "COMPONENT_MG_CLIP_01",
     weaponHash: 2634544996,
     model: "w_mg_mg_mag1",
     name: "Default Clip",
@@ -2297,7 +2517,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MILITARYRIFLE_CLIP1,
-    componentHash: 759617595,
+    hash: 759617595,
+    hashKey: "COMPONENT_MILITARYRIFLE_CLIP_01",
     weaponHash: 2636060646,
     model: "w_ar_bullpuprifleh4_mag1",
     name: "Default Clip",
@@ -2305,7 +2526,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MILITARYRIFLE_CLIP2,
-    componentHash: 1749732930,
+    hash: 1749732930,
+    hashKey: "COMPONENT_MILITARYRIFLE_CLIP_02",
     weaponHash: 2636060646,
     model: "w_ar_bullpuprifleh4_mag2",
     name: "Extended Clip",
@@ -2313,7 +2535,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MILITARYRIFLE_MRFL_SIGHT,
-    componentHash: 1803744149,
+    hash: 1803744149,
+    hashKey: "COMPONENT_MILITARYRIFLE_SIGHT_01",
     weaponHash: 2636060646,
     model: "w_ar_bullpuprifleh4_sight",
     name: "Iron Sights",
@@ -2321,7 +2544,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MILITARYRIFLE_FLASH,
-    componentHash: 2076495324,
+    hash: 2076495324,
+    hashKey: "COMPONENT_AT_AR_FLSH",
     weaponHash: 2636060646,
     model: "w_at_ar_flsh",
     name: "Flashlight",
@@ -2329,7 +2553,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MILITARYRIFLE_SUPP,
-    componentHash: 2205435306,
+    hash: 2205435306,
+    hashKey: "COMPONENT_AT_AR_SUPP",
     weaponHash: 2636060646,
     model: "w_at_ar_supp",
     name: "Suppressor",
@@ -2337,7 +2562,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MILITARYRIFLE_SCOPE_SML,
-    componentHash: 2855028148,
+    hash: 2855028148,
+    hashKey: "COMPONENT_AT_SCOPE_SMALL",
     weaponHash: 2636060646,
     model: "w_at_scope_small",
     name: "Scope",
@@ -2345,7 +2571,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.BULLPUPSHOTGUN_GRIP,
-    componentHash: 202788691,
+    hash: 202788691,
+    hashKey: "COMPONENT_AT_AR_AFGRIP",
     weaponHash: 2640438543,
     model: "w_at_ar_afgrip",
     name: "Grip",
@@ -2353,7 +2580,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.BULLPUPSHOTGUN_FLASH,
-    componentHash: 2076495324,
+    hash: 2076495324,
+    hashKey: "COMPONENT_AT_AR_FLSH",
     weaponHash: 2640438543,
     model: "w_at_ar_flsh",
     name: "Flashlight",
@@ -2361,7 +2589,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.BULLPUPSHOTGUN_SUPP,
-    componentHash: 2805810788,
+    hash: 2805810788,
+    hashKey: "COMPONENT_AT_AR_SUPP_02",
     weaponHash: 2640438543,
     model: "w_at_ar_supp_02",
     name: "Suppressor",
@@ -2369,7 +2598,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.GRENADELAUNCHER_GRIP,
-    componentHash: 202788691,
+    hash: 202788691,
+    hashKey: "COMPONENT_AT_AR_AFGRIP",
     weaponHash: 2726580491,
     model: "w_at_ar_afgrip",
     name: "Grip",
@@ -2377,7 +2607,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.GRENADELAUNCHER_FLASH,
-    componentHash: 2076495324,
+    hash: 2076495324,
+    hashKey: "COMPONENT_AT_AR_FLSH",
     weaponHash: 2726580491,
     model: "w_at_ar_flsh",
     name: "Flashlight",
@@ -2385,7 +2616,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.GRENADELAUNCHER_SCOPE_SML,
-    componentHash: 2855028148,
+    hash: 2855028148,
+    hashKey: "COMPONENT_AT_SCOPE_SMALL",
     weaponHash: 2726580491,
     model: "w_at_scope_small",
     name: "Scope",
@@ -2393,7 +2625,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MUSKET_CLIP1,
-    componentHash: 1322387263,
+    hash: 1322387263,
+    hashKey: "COMPONENT_MUSKET_CLIP_01",
     weaponHash: 2828843422,
     model: "p_w_ar_musket_chrg",
     name: "Default Clip",
@@ -2401,7 +2634,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.ADVANCEDRIFLE_FLASH,
-    componentHash: 2076495324,
+    hash: 2076495324,
+    hashKey: "COMPONENT_AT_AR_FLSH",
     weaponHash: 2937143193,
     model: "w_at_ar_flsh",
     name: "Flashlight",
@@ -2409,7 +2643,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.ADVANCEDRIFLE_SUPP,
-    componentHash: 2205435306,
+    hash: 2205435306,
+    hashKey: "COMPONENT_AT_AR_SUPP",
     weaponHash: 2937143193,
     model: "w_at_ar_supp",
     name: "Suppressor",
@@ -2417,7 +2652,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.ADVANCEDRIFLE_CLIP2,
-    componentHash: 2395064697,
+    hash: 2395064697,
+    hashKey: "COMPONENT_ADVANCEDRIFLE_CLIP_02",
     weaponHash: 2937143193,
     model: "w_ar_advancedrifle_mag2",
     name: "Extended Clip",
@@ -2425,7 +2661,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.ADVANCEDRIFLE_SCOPE_SML,
-    componentHash: 2855028148,
+    hash: 2855028148,
+    hashKey: "COMPONENT_AT_SCOPE_SMALL",
     weaponHash: 2937143193,
     model: "w_at_scope_small",
     name: "Scope",
@@ -2433,7 +2670,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.ADVANCEDRIFLE_CLIP1,
-    componentHash: 4203716879,
+    hash: 4203716879,
+    hashKey: "COMPONENT_ADVANCEDRIFLE_CLIP_01",
     weaponHash: 2937143193,
     model: "w_ar_advancedrifle_mag1",
     name: "Default Clip",
@@ -2441,7 +2679,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.RAYPISTOL_VAR_RAY18,
-    componentHash: 3621517063,
+    hash: 3621517063,
+    hashKey: "COMPONENT_RAYPISTOL_VARMOD_XMAS18",
     weaponHash: 2939590305,
     model: "w_pi_raygun_ev",
     name: "Festive tint",
@@ -2449,7 +2688,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MINISMG_CLIP1,
-    componentHash: 2227745491,
+    hash: 2227745491,
+    hashKey: "COMPONENT_MINISMG_CLIP_01",
     weaponHash: 3173288789,
     model: "w_sb_minismg_mag1",
     name: "Default Clip",
@@ -2457,7 +2697,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MINISMG_CLIP2,
-    componentHash: 2474561719,
+    hash: 2474561719,
+    hashKey: "COMPONENT_MINISMG_CLIP_02",
     weaponHash: 3173288789,
     model: "w_sb_minismg_mag2",
     name: "Extended Clip",
@@ -2465,7 +2706,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SNSPISTOL_CLIP2,
-    componentHash: 2063610803,
+    hash: 2063610803,
+    hashKey: "COMPONENT_SNSPISTOL_CLIP_02",
     weaponHash: 3218215474,
     model: "w_pi_sns_pistol_mag2",
     name: "Extended Clip",
@@ -2473,7 +2715,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SNSPISTOL_CLIP1,
-    componentHash: 4169150169,
+    hash: 4169150169,
+    hashKey: "COMPONENT_SNSPISTOL_CLIP_01",
     weaponHash: 3218215474,
     model: "w_pi_sns_pistol_mag1",
     name: "Default Clip",
@@ -2481,7 +2724,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.PISTOLMK2_COMP,
-    componentHash: 568543123,
+    hash: 568543123,
+    hashKey: "COMPONENT_AT_PI_COMP",
     weaponHash: 3219281620,
     model: "w_at_pi_comp_1",
     name: "Compensator",
@@ -2489,7 +2733,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.PISTOLMK2_CLIP_TR,
-    componentHash: 634039983,
+    hash: 634039983,
+    hashKey: "COMPONENT_PISTOL_MK2_CLIP_TRACER",
     weaponHash: 3219281620,
     model: "w_pi_pistolmk2_mag_tr",
     name: "Tracer Rounds",
@@ -2498,7 +2743,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.PISTOLMK2_CLIP_INC,
-    componentHash: 733837882,
+    hash: 733837882,
+    hashKey: "COMPONENT_PISTOL_MK2_CLIP_INCENDIARY",
     weaponHash: 3219281620,
     model: "w_pi_pistolmk2_mag_inc",
     name: "Incendiary Rounds",
@@ -2507,7 +2753,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.PISTOLMK2_FLASH,
-    componentHash: 1140676955,
+    hash: 1140676955,
+    hashKey: "COMPONENT_AT_PI_FLSH_02",
     weaponHash: 3219281620,
     model: "w_at_pi_flsh_2",
     name: "Flashlight",
@@ -2515,7 +2762,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.PISTOLMK2_CLIP_FMJ,
-    componentHash: 1329061674,
+    hash: 1329061674,
+    hashKey: "COMPONENT_PISTOL_MK2_CLIP_FMJ",
     weaponHash: 3219281620,
     model: "w_pi_pistolmk2_mag_fmj",
     name: "Full Metal Jacket Rounds",
@@ -2524,7 +2772,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.PISTOLMK2_CLIP2,
-    componentHash: 1591132456,
+    hash: 1591132456,
+    hashKey: "COMPONENT_PISTOL_MK2_CLIP_02",
     weaponHash: 3219281620,
     model: "w_pi_pistolmk2_mag2",
     name: "Extended Clip",
@@ -2532,7 +2781,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.PISTOLMK2_SUPP,
-    componentHash: 1709866683,
+    hash: 1709866683,
+    hashKey: "COMPONENT_AT_PI_SUPP_02",
     weaponHash: 3219281620,
     model: "w_at_pi_supp_2",
     name: "Suppressor",
@@ -2540,7 +2790,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.PISTOLMK2_CLIP_HP,
-    componentHash: 2248057097,
+    hash: 2248057097,
+    hashKey: "COMPONENT_PISTOL_MK2_CLIP_HOLLOWPOINT",
     weaponHash: 3219281620,
     model: "w_pi_pistolmk2_mag_hp",
     name: "Hollow Point Rounds",
@@ -2548,7 +2799,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.PISTOLMK2_SCOPE_PI,
-    componentHash: 2396306288,
+    hash: 2396306288,
+    hashKey: "COMPONENT_AT_PI_RAIL",
     weaponHash: 3219281620,
     model: "w_at_pi_rail_1",
     name: "Mounted Scope",
@@ -2556,7 +2808,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.PISTOLMK2_CLIP1,
-    componentHash: 2499030370,
+    hash: 2499030370,
+    hashKey: "COMPONENT_PISTOL_MK2_CLIP_01",
     weaponHash: 3219281620,
     model: "w_pi_pistolmk2_mag1",
     name: "Default Clip",
@@ -2564,7 +2817,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.ASSAULTRIFLE_GRIP,
-    componentHash: 202788691,
+    hash: 202788691,
+    hashKey: "COMPONENT_AT_AR_AFGRIP",
     weaponHash: 3220176749,
     model: "w_at_ar_afgrip",
     name: "Grip",
@@ -2572,7 +2826,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.ASSAULTRIFLE_FLASH,
-    componentHash: 2076495324,
+    hash: 2076495324,
+    hashKey: "COMPONENT_AT_AR_FLSH",
     weaponHash: 3220176749,
     model: "w_at_ar_flsh",
     name: "Flashlight",
@@ -2580,7 +2835,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.ASSAULTRIFLE_SCOPE_MAC,
-    componentHash: 2637152041,
+    hash: 2637152041,
+    hashKey: "COMPONENT_AT_SCOPE_MACRO",
     weaponHash: 3220176749,
     model: "w_at_scope_macro",
     name: "Scope",
@@ -2588,7 +2844,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.ASSAULTRIFLE_SUPP,
-    componentHash: 2805810788,
+    hash: 2805810788,
+    hashKey: "COMPONENT_AT_AR_SUPP_02",
     weaponHash: 3220176749,
     model: "w_at_ar_supp_02",
     name: "Suppressor",
@@ -2596,7 +2853,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.ASSAULTRIFLE_CLIP2,
-    componentHash: 2971750299,
+    hash: 2971750299,
+    hashKey: "COMPONENT_ASSAULTRIFLE_CLIP_02",
     weaponHash: 3220176749,
     model: "w_ar_assaultrifle_mag2",
     name: "Extended Clip",
@@ -2604,7 +2862,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.ASSAULTRIFLE_CLIP1,
-    componentHash: 3193891350,
+    hash: 3193891350,
+    hashKey: "COMPONENT_ASSAULTRIFLE_CLIP_01",
     weaponHash: 3220176749,
     model: "w_ar_assaultrifle_mag1",
     name: "Default Clip",
@@ -2612,7 +2871,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.ASSAULTRIFLE_CLIP_DRM,
-    componentHash: 3689981245,
+    hash: 3689981245,
+    hashKey: "COMPONENT_ASSAULTRIFLE_CLIP_03",
     weaponHash: 3220176749,
     model: "w_ar_assaultrifle_boxmag",
     name: "Drum Magazine",
@@ -2620,7 +2880,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SPECIALCARBINE_GRIP,
-    componentHash: 202788691,
+    hash: 202788691,
+    hashKey: "COMPONENT_AT_AR_AFGRIP",
     weaponHash: 3231910285,
     model: "w_at_ar_afgrip",
     name: "Grip",
@@ -2628,7 +2889,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SPECIALCARBINE_CLIP_DRM,
-    componentHash: 1801039530,
+    hash: 1801039530,
+    hashKey: "COMPONENT_SPECIALCARBINE_CLIP_03",
     weaponHash: 3231910285,
     model: "w_ar_specialcarbine_boxmag",
     name: "Drum Magazine",
@@ -2636,7 +2898,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SPECIALCARBINE_FLASH,
-    componentHash: 2076495324,
+    hash: 2076495324,
+    hashKey: "COMPONENT_AT_AR_FLSH",
     weaponHash: 3231910285,
     model: "w_at_ar_flsh",
     name: "Flashlight",
@@ -2644,7 +2907,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SPECIALCARBINE_CLIP2,
-    componentHash: 2089537806,
+    hash: 2089537806,
+    hashKey: "COMPONENT_SPECIALCARBINE_CLIP_02",
     weaponHash: 3231910285,
     model: "w_ar_specialcarbine_mag2",
     name: "Extended Clip",
@@ -2652,7 +2916,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SPECIALCARBINE_SCOPE_LRG,
-    componentHash: 2698550338,
+    hash: 2698550338,
+    hashKey: "COMPONENT_AT_SCOPE_MEDIUM",
     weaponHash: 3231910285,
     model: "w_at_scope_medium",
     name: "Scope",
@@ -2660,7 +2925,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SPECIALCARBINE_SUPP,
-    componentHash: 2805810788,
+    hash: 2805810788,
+    hashKey: "COMPONENT_AT_AR_SUPP_02",
     weaponHash: 3231910285,
     model: "w_at_ar_supp_02",
     name: "Suppressor",
@@ -2668,7 +2934,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.SPECIALCARBINE_CLIP1,
-    componentHash: 3334989185,
+    hash: 3334989185,
+    hashKey: "COMPONENT_SPECIALCARBINE_CLIP_01",
     weaponHash: 3231910285,
     model: "w_ar_specialcarbine_mag1",
     name: "Default Clip",
@@ -2676,7 +2943,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MARKSMANRIFLE_GRIP,
-    componentHash: 202788691,
+    hash: 202788691,
+    hashKey: "COMPONENT_AT_AR_AFGRIP",
     weaponHash: 3342088282,
     model: "w_at_ar_afgrip",
     name: "Grip",
@@ -2684,7 +2952,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MARKSMANRIFLE_SCOPE_LRG,
-    componentHash: 471997210,
+    hash: 471997210,
+    hashKey: "COMPONENT_AT_SCOPE_LARGE_FIXED_ZOOM",
     weaponHash: 3342088282,
     model: "w_at_scope_large",
     name: "Scope",
@@ -2692,7 +2961,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MARKSMANRIFLE_FLASH,
-    componentHash: 2076495324,
+    hash: 2076495324,
+    hashKey: "COMPONENT_AT_AR_FLSH",
     weaponHash: 3342088282,
     model: "w_at_ar_flsh",
     name: "Flashlight",
@@ -2700,7 +2970,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MARKSMANRIFLE_SUPP,
-    componentHash: 2205435306,
+    hash: 2205435306,
+    hashKey: "COMPONENT_AT_AR_SUPP",
     weaponHash: 3342088282,
     model: "w_at_ar_supp",
     name: "Suppressor",
@@ -2708,7 +2979,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MARKSMANRIFLE_CLIP2,
-    componentHash: 3439143621,
+    hash: 3439143621,
+    hashKey: "COMPONENT_MARKSMANRIFLE_CLIP_02",
     weaponHash: 3342088282,
     model: "w_sr_marksmanrifle_mag2",
     name: "Extended Clip",
@@ -2716,7 +2988,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MARKSMANRIFLE_CLIP1,
-    componentHash: 3627761985,
+    hash: 3627761985,
+    hashKey: "COMPONENT_MARKSMANRIFLE_CLIP_01",
     weaponHash: 3342088282,
     model: "w_sr_marksmanrifle_mag1",
     name: "Default Clip",
@@ -2724,7 +2997,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.HEAVYRIFLE_GRIP,
-    componentHash: 202788691,
+    hash: 202788691,
+    hashKey: "COMPONENT_AT_AR_AFGRIP",
     weaponHash: 3347935668,
     model: "w_at_ar_afgrip",
     name: "Grip",
@@ -2732,7 +3006,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.HEAVYRIFLE_CLIP1,
-    componentHash: 1525977990,
+    hash: 1525977990,
+    hashKey: "COMPONENT_HEAVYRIFLE_CLIP_01",
     weaponHash: 3347935668,
     model: "W_AR_SpecialCarbine_mag1",
     name: "Default Clip",
@@ -2740,7 +3015,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.HEAVYRIFLE_CLIP2,
-    componentHash: 1824470811,
+    hash: 1824470811,
+    hashKey: "COMPONENT_HEAVYRIFLE_CLIP_02",
     weaponHash: 3347935668,
     model: "W_AR_SpecialCarbine_mag2",
     name: "Extended Clip",
@@ -2748,7 +3024,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.HEAVYRIFLE_FLASH,
-    componentHash: 2076495324,
+    hash: 2076495324,
+    hashKey: "COMPONENT_AT_AR_FLSH",
     weaponHash: 3347935668,
     model: "w_at_ar_flsh",
     name: "Flashlight",
@@ -2756,7 +3033,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.HEAVYRIFLE_SUPP,
-    componentHash: 2205435306,
+    hash: 2205435306,
+    hashKey: "COMPONENT_AT_AR_SUPP",
     weaponHash: 3347935668,
     model: "w_at_ar_supp",
     name: "Suppressor",
@@ -2764,7 +3042,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.HEAVYRIFLE_SCOPE_LRG,
-    componentHash: 2698550338,
+    hash: 2698550338,
+    hashKey: "COMPONENT_AT_SCOPE_MEDIUM",
     weaponHash: 3347935668,
     model: "w_at_scope_medium",
     name: "Scope",
@@ -2772,7 +3051,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.HEAVYRIFLE_HVYRFLE_SIG,
-    componentHash: 3017917522,
+    hash: 3017917522,
+    hashKey: "COMPONENT_HEAVYRIFLE_SIGHT_01",
     weaponHash: 3347935668,
     model: "W_AR_HeavyRifleH_Sight",
     name: "Iron Sights",
@@ -2780,7 +3060,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.REVOLVERMK2_CLIP_INC,
-    componentHash: 15712037,
+    hash: 15712037,
+    hashKey: "COMPONENT_REVOLVER_MK2_CLIP_INCENDIARY",
     weaponHash: 3415619887,
     model: "w_pi_revolvermk2_mag3",
     name: "Incendiary Rounds",
@@ -2788,7 +3069,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.REVOLVERMK2_SCOPE_MAC2,
-    componentHash: 77277509,
+    hash: 77277509,
+    hashKey: "COMPONENT_AT_SCOPE_MACRO_MK2",
     weaponHash: 3415619887,
     model: "w_at_scope_macro",
     name: "Small Scope",
@@ -2796,7 +3078,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.REVOLVERMK2_CLIP_FMJ,
-    componentHash: 231258687,
+    hash: 231258687,
+    hashKey: "COMPONENT_REVOLVER_MK2_CLIP_FMJ",
     weaponHash: 3415619887,
     model: "w_pi_revolvermk2_mag5",
     name: "Full Metal Jacket Rounds",
@@ -2805,7 +3088,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.REVOLVERMK2_CLIP_HP,
-    componentHash: 284438159,
+    hash: 284438159,
+    hashKey: "COMPONENT_REVOLVER_MK2_CLIP_HOLLOWPOINT",
     weaponHash: 3415619887,
     model: "w_pi_revolvermk2_mag2",
     name: "Hollow Point Rounds",
@@ -2813,7 +3097,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.REVOLVERMK2_COMP,
-    componentHash: 654802123,
+    hash: 654802123,
+    hashKey: "COMPONENT_AT_PI_COMP_03",
     weaponHash: 3415619887,
     model: "w_at_pi_comp_3",
     name: "Compensator",
@@ -2821,7 +3106,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.REVOLVERMK2_FLASH,
-    componentHash: 899381934,
+    hash: 899381934,
+    hashKey: "COMPONENT_AT_PI_FLSH",
     weaponHash: 3415619887,
     model: "w_at_pi_flsh",
     name: "Flashlight",
@@ -2829,7 +3115,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.REVOLVERMK2_HOLO,
-    componentHash: 1108334355,
+    hash: 1108334355,
+    hashKey: "COMPONENT_AT_SIGHTS",
     weaponHash: 3415619887,
     model: "w_at_sights_1",
     name: "Holographic Sight",
@@ -2837,7 +3124,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.REVOLVERMK2_CLIP1_RV,
-    componentHash: 3122911422,
+    hash: 3122911422,
+    hashKey: "COMPONENT_REVOLVER_MK2_CLIP_01",
     weaponHash: 3415619887,
     model: "w_pi_revolvermk2_mag1",
     name: "Default Rounds",
@@ -2845,7 +3133,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.REVOLVERMK2_CLIP_TR,
-    componentHash: 3336103030,
+    hash: 3336103030,
+    hashKey: "COMPONENT_REVOLVER_MK2_CLIP_TRACER",
     weaponHash: 3415619887,
     model: "w_pi_revolvermk2_mag4",
     name: "Tracer Rounds",
@@ -2853,7 +3142,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.TACTICALRIFLE_GRIP,
-    componentHash: 202788691,
+    hash: 202788691,
+    hashKey: "COMPONENT_AT_AR_AFGRIP",
     weaponHash: 3520460075,
     model: "w_at_ar_afgrip",
     name: "Grip",
@@ -2861,7 +3151,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.TACTICALRIFLE_CLIP1,
-    componentHash: 927578299,
+    hash: 927578299,
+    hashKey: "COMPONENT_TACTICALRIFLE_CLIP_01",
     weaponHash: 3520460075,
     model: "w_ar_carbinerifle_mag1",
     name: "Default Clip",
@@ -2869,7 +3160,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.TACTICALRIFLE_CLIP2,
-    componentHash: 2241090895,
+    hash: 2241090895,
+    hashKey: "COMPONENT_TACTICALRIFLE_CLIP_02",
     weaponHash: 3520460075,
     model: "w_ar_carbinerifle_mag2",
     name: "Extended Clip",
@@ -2877,7 +3169,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.TACTICALRIFLE_FLASH,
-    componentHash: 2645680163,
+    hash: 2645680163,
+    hashKey: "COMPONENT_AT_AR_FLSH_REH",
     weaponHash: 3520460075,
     model: "W_AT_AR_Flsh_REH",
     name: "Flashlight",
@@ -2885,7 +3178,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.TACTICALRIFLE_SUPP,
-    componentHash: 2805810788,
+    hash: 2805810788,
+    hashKey: "COMPONENT_AT_AR_SUPP_02",
     weaponHash: 3520460075,
     model: "w_at_ar_supp_02",
     name: "Suppressor",
@@ -2893,7 +3187,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.HEAVYPISTOL_CLIP1,
-    componentHash: 222992026,
+    hash: 222992026,
+    hashKey: "COMPONENT_HEAVYPISTOL_CLIP_01",
     weaponHash: 3523564046,
     model: "w_pi_heavypistol_mag1",
     name: "Default Clip",
@@ -2901,7 +3196,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.HEAVYPISTOL_FLASH,
-    componentHash: 899381934,
+    hash: 899381934,
+    hashKey: "COMPONENT_AT_PI_FLSH",
     weaponHash: 3523564046,
     model: "w_at_pi_flsh",
     name: "Flashlight",
@@ -2909,7 +3205,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.HEAVYPISTOL_CLIP2,
-    componentHash: 1694090795,
+    hash: 1694090795,
+    hashKey: "COMPONENT_HEAVYPISTOL_CLIP_02",
     weaponHash: 3523564046,
     model: "w_pi_heavypistol_mag2",
     name: "Extended Clip",
@@ -2917,7 +3214,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.HEAVYPISTOL_SUPP,
-    componentHash: 3271853210,
+    hash: 3271853210,
+    hashKey: "COMPONENT_AT_PI_SUPP",
     weaponHash: 3523564046,
     model: "w_at_pi_supp",
     name: "Suppressor",
@@ -2925,7 +3223,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MACHINEPISTOL_CLIP1,
-    componentHash: 1198425599,
+    hash: 1198425599,
+    hashKey: "COMPONENT_MACHINEPISTOL_CLIP_01",
     weaponHash: 3675956304,
     model: "w_sb_compactsmg_mag1",
     name: "Default Clip",
@@ -2933,7 +3232,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MACHINEPISTOL_CLIP_DRM,
-    componentHash: 2850671348,
+    hash: 2850671348,
+    hashKey: "COMPONENT_MACHINEPISTOL_CLIP_03",
     weaponHash: 3675956304,
     model: "w_sb_compactsmg_boxmag",
     name: "Drum Magazine",
@@ -2941,7 +3241,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MACHINEPISTOL_CLIP2,
-    componentHash: 3106695545,
+    hash: 3106695545,
+    hashKey: "COMPONENT_MACHINEPISTOL_CLIP_02",
     weaponHash: 3675956304,
     model: "w_sb_compactsmg_mag2",
     name: "Extended Clip",
@@ -2949,7 +3250,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.MACHINEPISTOL_SUPP,
-    componentHash: 3271853210,
+    hash: 3271853210,
+    hashKey: "COMPONENT_AT_PI_SUPP",
     weaponHash: 3675956304,
     model: "w_at_pi_supp",
     name: "Suppressor",
@@ -2957,7 +3259,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.COMBATMGMK2_MUZZ5,
-    componentHash: 48731514,
+    hash: 48731514,
+    hashKey: "COMPONENT_AT_MUZZLE_05",
     weaponHash: 3686625920,
     model: "w_at_muzzle_5",
     name: "Heavy Duty Muzzle Brake",
@@ -2965,7 +3268,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.COMBATMGMK2_CLIP2,
-    componentHash: 400507625,
+    hash: 400507625,
+    hashKey: "COMPONENT_COMBATMG_MK2_CLIP_02",
     weaponHash: 3686625920,
     model: "w_mg_combatmgmk2_mag2",
     name: "Extended Clip",
@@ -2973,7 +3277,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.COMBATMGMK2_CLIP_AP,
-    componentHash: 696788003,
+    hash: 696788003,
+    hashKey: "COMPONENT_COMBATMG_MK2_CLIP_ARMORPIERCING",
     weaponHash: 3686625920,
     model: "w_mg_combatmgmk2_mag_ap",
     name: "Armor Piercing Rounds",
@@ -2981,7 +3286,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.COMBATMGMK2_MUZZ6,
-    componentHash: 880736428,
+    hash: 880736428,
+    hashKey: "COMPONENT_AT_MUZZLE_06",
     weaponHash: 3686625920,
     model: "w_at_muzzle_6",
     name: "Slanted Muzzle Brake",
@@ -2989,7 +3295,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.COMBATMGMK2_SCOPE_SML2,
-    componentHash: 1060929921,
+    hash: 1060929921,
+    hashKey: "COMPONENT_AT_SCOPE_SMALL_MK2",
     weaponHash: 3686625920,
     model: "w_at_scope_small",
     name: "Medium Scope",
@@ -2997,7 +3304,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.COMBATMGMK2_HOLO,
-    componentHash: 1108334355,
+    hash: 1108334355,
+    hashKey: "COMPONENT_AT_SIGHTS",
     weaponHash: 3686625920,
     model: "w_at_sights_1",
     name: "Holographic Sight",
@@ -3005,7 +3313,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.COMBATMGMK2_CLIP1,
-    componentHash: 1227564412,
+    hash: 1227564412,
+    hashKey: "COMPONENT_COMBATMG_MK2_CLIP_01",
     weaponHash: 3686625920,
     model: "w_mg_combatmgmk2_mag1",
     name: "Default Clip",
@@ -3013,7 +3322,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.COMBATMGMK2_MUZZ7,
-    componentHash: 1303784126,
+    hash: 1303784126,
+    hashKey: "COMPONENT_AT_MUZZLE_07",
     weaponHash: 3686625920,
     model: "w_at_muzzle_7",
     name: "Split-End Muzzle Brake",
@@ -3021,7 +3331,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.COMBATMGMK2_CLIP_FMJ,
-    componentHash: 1475288264,
+    hash: 1475288264,
+    hashKey: "COMPONENT_COMBATMG_MK2_CLIP_FMJ",
     weaponHash: 3686625920,
     model: "w_mg_combatmgmk2_mag_fmj",
     name: "Full Metal Jacket Rounds",
@@ -3030,7 +3341,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.COMBATMGMK2_GRIP,
-    componentHash: 2640679034,
+    hash: 2640679034,
+    hashKey: "COMPONENT_AT_AR_AFGRIP_02",
     weaponHash: 3686625920,
     model: "w_at_afgrip_2",
     name: "Grip",
@@ -3038,7 +3350,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.COMBATMGMK2_BARR2,
-    componentHash: 3051509595,
+    hash: 3051509595,
+    hashKey: "COMPONENT_AT_MG_BARREL_02",
     weaponHash: 3686625920,
     model: "w_at_mg_barrel_2",
     name: "Heavy Barrel",
@@ -3046,7 +3359,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.COMBATMGMK2_MUZZ1,
-    componentHash: 3113485012,
+    hash: 3113485012,
+    hashKey: "COMPONENT_AT_MUZZLE_01",
     weaponHash: 3686625920,
     model: "w_at_muzzle_1",
     name: "Flat Muzzle Brake",
@@ -3054,7 +3368,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.COMBATMGMK2_CLIP_INC,
-    componentHash: 3274096058,
+    hash: 3274096058,
+    hashKey: "COMPONENT_COMBATMG_MK2_CLIP_INCENDIARY",
     weaponHash: 3686625920,
     model: "w_mg_combatmgmk2_mag_inc",
     name: "Incendiary Rounds",
@@ -3063,7 +3378,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.COMBATMGMK2_BARR,
-    componentHash: 3276730932,
+    hash: 3276730932,
+    hashKey: "COMPONENT_AT_MG_BARREL_01",
     weaponHash: 3686625920,
     model: "w_at_mg_barrel_1",
     name: "Default Barrel",
@@ -3071,7 +3387,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.COMBATMGMK2_SCOPE_MED2,
-    componentHash: 3328927042,
+    hash: 3328927042,
+    hashKey: "COMPONENT_AT_SCOPE_MEDIUM_MK2",
     weaponHash: 3686625920,
     model: "w_at_scope_medium_2",
     name: "Large Scope",
@@ -3079,7 +3396,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.COMBATMGMK2_MUZZ2,
-    componentHash: 3362234491,
+    hash: 3362234491,
+    hashKey: "COMPONENT_AT_MUZZLE_02",
     weaponHash: 3686625920,
     model: "w_at_muzzle_2",
     name: "Tactical Muzzle Brake",
@@ -3087,7 +3405,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.COMBATMGMK2_MUZZ3,
-    componentHash: 3725708239,
+    hash: 3725708239,
+    hashKey: "COMPONENT_AT_MUZZLE_03",
     weaponHash: 3686625920,
     model: "w_at_muzzle_3",
     name: "Fat-End Muzzle Brake",
@@ -3095,7 +3414,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.COMBATMGMK2_MUZZ4,
-    componentHash: 3968886988,
+    hash: 3968886988,
+    hashKey: "COMPONENT_AT_MUZZLE_04",
     weaponHash: 3686625920,
     model: "w_at_muzzle_4",
     name: "Precision Muzzle Brake",
@@ -3103,7 +3423,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.COMBATMGMK2_CLIP_TR,
-    componentHash: 4133787461,
+    hash: 4133787461,
+    hashKey: "COMPONENT_COMBATMG_MK2_CLIP_TRACER",
     weaponHash: 3686625920,
     model: "w_mg_combatmgmk2_mag_tr",
     name: "Tracer Rounds",
@@ -3112,7 +3433,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.ASSAULTSHOTGUN_GRIP,
-    componentHash: 202788691,
+    hash: 202788691,
+    hashKey: "COMPONENT_AT_AR_AFGRIP",
     weaponHash: 3800352039,
     model: "w_at_ar_afgrip",
     name: "Grip",
@@ -3120,7 +3442,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.ASSAULTSHOTGUN_FLASH,
-    componentHash: 2076495324,
+    hash: 2076495324,
+    hashKey: "COMPONENT_AT_AR_FLSH",
     weaponHash: 3800352039,
     model: "w_at_ar_flsh",
     name: "Flashlight",
@@ -3128,7 +3451,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.ASSAULTSHOTGUN_SUPP,
-    componentHash: 2205435306,
+    hash: 2205435306,
+    hashKey: "COMPONENT_AT_AR_SUPP",
     weaponHash: 3800352039,
     model: "w_at_ar_supp",
     name: "Suppressor",
@@ -3136,7 +3460,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.ASSAULTSHOTGUN_CLIP2,
-    componentHash: 2260565874,
+    hash: 2260565874,
+    hashKey: "COMPONENT_ASSAULTSHOTGUN_CLIP_02",
     weaponHash: 3800352039,
     model: "w_sg_assaultshotgun_mag2",
     name: "Extended Clip",
@@ -3144,7 +3469,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.ASSAULTSHOTGUN_CLIP1,
-    componentHash: 2498239431,
+    hash: 2498239431,
+    hashKey: "COMPONENT_ASSAULTSHOTGUN_CLIP_01",
     weaponHash: 3800352039,
     model: "w_sg_assaultshotgun_mag1",
     name: "Default Clip",
@@ -3152,7 +3478,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.ASSAULTSMG_FLASH,
-    componentHash: 2076495324,
+    hash: 2076495324,
+    hashKey: "COMPONENT_AT_AR_FLSH",
     weaponHash: 4024951519,
     model: "w_at_ar_flsh",
     name: "Flashlight",
@@ -3160,7 +3487,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.ASSAULTSMG_SCOPE_MAC,
-    componentHash: 2637152041,
+    hash: 2637152041,
+    hashKey: "COMPONENT_AT_SCOPE_MACRO",
     weaponHash: 4024951519,
     model: "w_at_scope_macro",
     name: "Scope",
@@ -3168,7 +3496,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.ASSAULTSMG_SUPP,
-    componentHash: 2805810788,
+    hash: 2805810788,
+    hashKey: "COMPONENT_AT_AR_SUPP_02",
     weaponHash: 4024951519,
     model: "w_at_ar_supp_02",
     name: "Suppressor",
@@ -3176,7 +3505,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.CARBINERIFLEMK2_MUZZ5,
-    componentHash: 48731514,
+    hash: 48731514,
+    hashKey: "COMPONENT_AT_MUZZLE_05",
     weaponHash: 4208062921,
     model: "w_at_muzzle_5",
     name: "Heavy Duty Muzzle Brake",
@@ -3184,7 +3514,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.CARBINERIFLEMK2_SCOPE_MAC2,
-    componentHash: 77277509,
+    hash: 77277509,
+    hashKey: "COMPONENT_AT_SCOPE_MACRO_MK2",
     weaponHash: 4208062921,
     model: "w_at_scope_macro",
     name: "Small Scope",
@@ -3192,7 +3523,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.CARBINERIFLEMK2_CLIP_TR,
-    componentHash: 391640422,
+    hash: 391640422,
+    hashKey: "COMPONENT_CARBINERIFLE_MK2_CLIP_TRACER",
     weaponHash: 4208062921,
     model: "w_ar_carbineriflemk2_mag_tr",
     name: "Tracer Rounds",
@@ -3201,7 +3533,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.CARBINERIFLEMK2_CLIP_AP,
-    componentHash: 626875735,
+    hash: 626875735,
+    hashKey: "COMPONENT_CARBINERIFLE_MK2_CLIP_ARMORPIERCING",
     weaponHash: 4208062921,
     model: "w_ar_carbineriflemk2_mag_ap",
     name: "Armor Piercing Rounds",
@@ -3209,7 +3542,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.CARBINERIFLEMK2_MUZZ6,
-    componentHash: 880736428,
+    hash: 880736428,
+    hashKey: "COMPONENT_AT_MUZZLE_06",
     weaponHash: 4208062921,
     model: "w_at_muzzle_6",
     name: "Slanted Muzzle Brake",
@@ -3217,7 +3551,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.CARBINERIFLEMK2_CLIP_INC,
-    componentHash: 1025884839,
+    hash: 1025884839,
+    hashKey: "COMPONENT_CARBINERIFLE_MK2_CLIP_INCENDIARY",
     weaponHash: 4208062921,
     model: "w_ar_carbineriflemk2_mag_inc",
     name: "Incendiary Rounds",
@@ -3226,7 +3561,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.CARBINERIFLEMK2_HOLO,
-    componentHash: 1108334355,
+    hash: 1108334355,
+    hashKey: "COMPONENT_AT_SIGHTS",
     weaponHash: 4208062921,
     model: "w_at_sights_1",
     name: "Holographic Sight",
@@ -3234,7 +3570,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.CARBINERIFLEMK2_CLIP_FMJ,
-    componentHash: 1141059345,
+    hash: 1141059345,
+    hashKey: "COMPONENT_CARBINERIFLE_MK2_CLIP_FMJ",
     weaponHash: 4208062921,
     model: "w_ar_carbineriflemk2_mag_fmj",
     name: "Full Metal Jacket Rounds",
@@ -3243,7 +3580,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.CARBINERIFLEMK2_CLIP1,
-    componentHash: 1283078430,
+    hash: 1283078430,
+    hashKey: "COMPONENT_CARBINERIFLE_MK2_CLIP_01",
     weaponHash: 4208062921,
     model: "w_ar_carbineriflemk2_mag1",
     name: "Default Clip",
@@ -3251,7 +3589,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.CARBINERIFLEMK2_MUZZ7,
-    componentHash: 1303784126,
+    hash: 1303784126,
+    hashKey: "COMPONENT_AT_MUZZLE_07",
     weaponHash: 4208062921,
     model: "w_at_muzzle_7",
     name: "Split-End Muzzle Brake",
@@ -3259,7 +3598,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.CARBINERIFLEMK2_CLIP2,
-    componentHash: 1574296533,
+    hash: 1574296533,
+    hashKey: "COMPONENT_CARBINERIFLE_MK2_CLIP_02",
     weaponHash: 4208062921,
     model: "w_ar_carbineriflemk2_mag2",
     name: "Extended Clip",
@@ -3267,7 +3607,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.CARBINERIFLEMK2_FLASH,
-    componentHash: 2076495324,
+    hash: 2076495324,
+    hashKey: "COMPONENT_AT_AR_FLSH",
     weaponHash: 4208062921,
     model: "w_at_ar_flsh",
     name: "Flashlight",
@@ -3275,7 +3616,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.CARBINERIFLEMK2_BARR,
-    componentHash: 2201368575,
+    hash: 2201368575,
+    hashKey: "COMPONENT_AT_CR_BARREL_01",
     weaponHash: 4208062921,
     model: "w_at_cr_barrel_1",
     name: "Default Barrel",
@@ -3283,7 +3625,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.CARBINERIFLEMK2_SUPP,
-    componentHash: 2205435306,
+    hash: 2205435306,
+    hashKey: "COMPONENT_AT_AR_SUPP",
     weaponHash: 4208062921,
     model: "w_at_ar_supp",
     name: "Suppressor",
@@ -3291,7 +3634,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.CARBINERIFLEMK2_BARR2,
-    componentHash: 2335983627,
+    hash: 2335983627,
+    hashKey: "COMPONENT_AT_CR_BARREL_02",
     weaponHash: 4208062921,
     model: "w_at_cr_barrel_2",
     name: "Heavy Barrel",
@@ -3299,7 +3643,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.CARBINERIFLEMK2_GRIP,
-    componentHash: 2640679034,
+    hash: 2640679034,
+    hashKey: "COMPONENT_AT_AR_AFGRIP_02",
     weaponHash: 4208062921,
     model: "w_at_afgrip_2",
     name: "Grip",
@@ -3307,7 +3652,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.CARBINERIFLEMK2_MUZZ1,
-    componentHash: 3113485012,
+    hash: 3113485012,
+    hashKey: "COMPONENT_AT_MUZZLE_01",
     weaponHash: 4208062921,
     model: "w_at_muzzle_1",
     name: "Flat Muzzle Brake",
@@ -3315,7 +3661,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.CARBINERIFLEMK2_SCOPE_MED2,
-    componentHash: 3328927042,
+    hash: 3328927042,
+    hashKey: "COMPONENT_AT_SCOPE_MEDIUM_MK2",
     weaponHash: 4208062921,
     model: "w_at_scope_medium_2",
     name: "Large Scope",
@@ -3323,7 +3670,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.CARBINERIFLEMK2_MUZZ2,
-    componentHash: 3362234491,
+    hash: 3362234491,
+    hashKey: "COMPONENT_AT_MUZZLE_02",
     weaponHash: 4208062921,
     model: "w_at_muzzle_2",
     name: "Tactical Muzzle Brake",
@@ -3331,7 +3679,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.CARBINERIFLEMK2_MUZZ3,
-    componentHash: 3725708239,
+    hash: 3725708239,
+    hashKey: "COMPONENT_AT_MUZZLE_03",
     weaponHash: 4208062921,
     model: "w_at_muzzle_3",
     name: "Fat-End Muzzle Brake",
@@ -3339,7 +3688,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.CARBINERIFLEMK2_MUZZ4,
-    componentHash: 3968886988,
+    hash: 3968886988,
+    hashKey: "COMPONENT_AT_MUZZLE_04",
     weaponHash: 4208062921,
     model: "w_at_muzzle_4",
     name: "Precision Muzzle Brake",
@@ -3347,7 +3697,8 @@ export const weaponComponent = registerItems<WeaponComponentItemInfo>([
   },
   {
     key: WeaponComponent.RAILGUNXM3_CLIP1,
-    componentHash: 1130760338,
+    hash: 1130760338,
+    hashKey: "COMPONENT_RAILGUNXM3_CLIP_01",
     weaponHash: 4272043364,
     model: "w_ar_railgun_mag1",
     name: "Default Clip",
@@ -3361,4 +3712,8 @@ export function isItemKeyWeaponComponent(key: string): key is WeaponComponentIte
 
 export function isItemWeaponComponent(item: Item): item is WeaponComponentItem {
   return isItemKeyWeaponComponent(item.key);
+}
+
+export function getWeaponComponentHashKey(key: WeaponComponentItemKey): string {
+  return weaponComponent.get(key)?.hashKey!;
 }

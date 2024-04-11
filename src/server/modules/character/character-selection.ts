@@ -4,11 +4,11 @@ import { ClientEvents } from "@shared/events/client";
 import { ServerCall } from "@shared/calls/server";
 import { ServerEvents } from "@shared/events/server";
 import { isValidItem } from "@shared/modules/items";
+import { removeItemFromInventorySlot } from "@shared/modules/inventory";
 import { isUnique } from "@/core/validator";
 import { rpc } from "@/core/rpc";
 import { LoggedInPlayer, isInGame, isLoggedIn, needsToBeLoggedIn } from "@/core/utility/assertions";
 import { on } from "@/core/events/emit";
-import { removeItemFromInventorySlot } from "../items-manager";
 import { getDefaultCharacterData } from "./character-data";
 
 on(ServerEvents.FromServer.USER_LOAD, (player) => {

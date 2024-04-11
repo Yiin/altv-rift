@@ -1,8 +1,8 @@
 import { Player } from "@altv/server";
 import { Item } from "@shared/modules/items";
 import { ClientEvents } from "@shared/events/client";
+import { addItemToInventory } from "@shared/modules/inventory";
 import { InGamePlayer } from "@/core/utility/assertions";
-import { addItemToInventory } from "@/modules/items-manager";
 
 declare module "@altv/server" {
   export interface Player {
