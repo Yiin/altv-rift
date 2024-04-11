@@ -21,52 +21,46 @@ const view = ref<View>(View.CRAFTING);
 </script>
 
 <template>
-  <div class="relative flex h-full w-full flex-col px-20 py-20">
-    <DarkBackground bg-class="bg-neutral-900" />
+  <div class="relative flex h-full w-full flex-col px-20 pb-17 pt-20">
+    <DarkBackground bg-class="bg-black" />
     <div class="mx-auto flex w-full items-center justify-between">
-      <div class="w-40">
-        <v-img :src="`./assets/workbench/logo.svg`" />
+      <div>
+        <v-img
+          :src="`./assets/workbench/logo.svg`"
+          class="h-[3.88875rem] w-[9.84rem]"
+        />
       </div>
-      <div
-        class="no-scrollbar absolute left-1/2 top-0 flex -translate-x-1/2 gap-2.5 overflow-x-auto whitespace-nowrap font-bold uppercase text-white"
-      >
-        <button
+      <div class="absolute -top-2.5 left-1/2 flex -translate-x-1/2 gap-1">
+        <div
           v-for="[link, label] in links"
           :key="link"
           @click="view = link"
-          class="h-[11.25rem] w-[8.75rem] py-3 text-lg font-extrabold uppercase"
+          class="flex h-45 w-35 flex-col items-center justify-end pb-6.75"
           :class="{
             'text-white': view === link,
-            'text-grey-500 transition duration-200': view !== link,
+            'text-gray-500 transition duration-200': view !== link,
+            'bg-[url(./assets/workbench/rectangle.svg)] bg-contain': view === link,
           }"
         >
-          <div class="flex flex-col items-center justify-center">
-            <img
-              v-if="view === link"
-              :src="`./assets/workbench/rectangle.svg`"
-              class="absolute h-[11.25rem] w-[8.75rem]"
-            />
-            <WrenchIcon
-              v-if="link === View.CRAFTING"
-              :style="{ color: view === link ? '#EE2E24' : '#5D5D5D' }"
-              class="mb-4 h-4 w-4"
-            />
-            <GearIcon
-              v-if="link === View.UPGRADES"
-              :style="{ color: view === link ? '#EE2E24' : '#5D5D5D' }"
-              class="mb-4 h-4 w-4"
-            />
-            <span class="pb-2">
-              {{ label }}
-            </span>
-            <div class="h-3 w-18.5">
-              <img
-                v-if="view === link"
-                :src="`./assets/workbench/ornament.svg`"
-              />
-            </div>
-          </div>
-        </button>
+          <WrenchIcon
+            v-if="link === View.CRAFTING"
+            :active="view === link"
+            class="-mb-2 h-11.5 w-11.5"
+          />
+          <GearIcon
+            v-if="link === View.UPGRADES"
+            :active="view === link"
+            class="-mb-2 h-11.5 w-11.5"
+          />
+          <span class="mb-1 text-lg font-bold uppercase tracking-[0.03125rem]">
+            {{ label }}
+          </span>
+          <img
+            :src="`./assets/workbench/ornament.svg`"
+            class="h-3 w-18.5"
+            :class="[view === link ? 'visible' : 'invisible']"
+          />
+        </div>
       </div>
       <BackButtons />
     </div>

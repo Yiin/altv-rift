@@ -1,10 +1,9 @@
 import alt from "@altv/server";
 import { ItemSource, ItemSourceOrigin } from "@shared/interfaces";
 import { Item, isStackable, createItem } from "@shared/modules/items";
-import { isEquipmentSlotQuickSlot } from "@shared/modules/inventory";
+import { removeItemFromInventorySlot, isEquipmentSlotQuickSlot } from "@shared/modules/inventory";
 import { isInGame } from "@/core/utility/assertions";
 import { cleanupDroppedItem } from "../dropped-items";
-import { removeItemFromInventorySlot } from "./remove-item-from-inventory-slot";
 import { findInventoryByItemSource } from "./find-inventory-by-item-source";
 import { findItem } from "./find-item";
 

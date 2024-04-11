@@ -1,6 +1,5 @@
 import { InventoryItemSource } from "@shared/interfaces";
-import { getInventoryItemInSlot } from "@shared/modules/inventory";
-import { addItemToInventory } from "./add-item-to-inventory";
+import { addItemToInventory, getInventoryItemInSlot } from "@shared/modules/inventory";
 import { findInventoryByItemSource } from "./find-inventory-by-item-source";
 
 export function swapInventoryItems(from: InventoryItemSource, to: InventoryItemSource): boolean {

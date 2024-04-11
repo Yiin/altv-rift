@@ -49,22 +49,5 @@ rpc.registerClient(ServerCall.FromClient.REGISTER_KEY_PRESS, (player, key) => {
       }
       break;
     }
-    case FishingGameType.Keys: {
-      const keysRequired = player.gameState.fishingProgress.keys;
-      const pressedKeys = player.gameState.fishingProgress.pressedKeys;
-
-      pressedKeys.push(key);
-
-      if (_.isEqual(keysRequired, pressedKeys)) {
-        catchAFish(player, player.gameState.fishingProgress.baitKey);
-      } else {
-        const keysToValidate = keysRequired.slice(0, pressedKeys.length);
-        if (!_.isEqual(keysToValidate, pressedKeys)) {
-          // Player pressed the wrong key
-          stopFishing(player);
-        }
-      }
-      break;
-    }
   }
 });

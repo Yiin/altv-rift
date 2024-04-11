@@ -1,4 +1,5 @@
 import {
+  getWeaponComponentHashKey,
   getWeaponHashKey,
   isItemKeyAmmo,
   isItemKeyClothing,
@@ -28,7 +29,7 @@ export const getItemImage = (key: string) => {
     return `./assets/items/tools/${key}.png`;
   }
   if (isItemKeyWeaponComponent(key)) {
-    return `./assets/items/weapon-components/${key}.png`;
+    return `./assets/items/weapon-components/${getWeaponComponentHashKey(key)}.png`;
   }
   return `./assets/items/${key}.png`;
 };

@@ -3,7 +3,7 @@
  * Does not work with functions.
  * This is required to prevent data from being modified in other items.
  */
-export function deepCloneObject<T>(data: object): T {
+export function deepCloneObject<T>(data: T): T {
   const result = JSON.parse(JSON.stringify(data));
 
   Object.keys(result).forEach((key) => {

@@ -1,5 +1,6 @@
 import { Appearance, ScreenPosition } from "@prisma/client/edge";
 import { z } from "zod";
+import { BlueprintKey } from "@shared/modules/production";
 import {
   EquipmentSlot,
   StorageItemSource,
@@ -24,6 +25,7 @@ export const FromWebview = {
   SELL_ITEM: "SELL_ITEM",
   TAKE_ITEM: "TAKE_ITEM",
   TAKE_ALL_ITEMS: "TAKE_ALL_ITEMS",
+  CRAFT_ITEM: "CRAFT_ITEM",
 } as const;
 
 export interface CallFromWebview<
@@ -63,6 +65,7 @@ export interface CallFromWebview<
   ) => boolean;
   [FromWebview.TAKE_ITEM]: (player: P, source: StorageItemSource) => void;
   [FromWebview.TAKE_ALL_ITEMS]: (player: P, source: StorageSource) => void;
+  [FromWebview.CRAFT_ITEM]: (player: P, blueprintKey: BlueprintKey, recipeIndex: number) => boolean;
 }
 
 export const FromWebviewValidation = {
@@ -125,6 +128,10 @@ export const FromWebviewValidation = {
   },
   [FromWebview.TAKE_ALL_ITEMS]: {
     args: [schema.storageSource],
+  },
+  [FromWebview.CRAFT_ITEM]: {
+    args: [z.string(), z.number()],
+    returns: z.boolean(),
   },
 } satisfies Record<
   keyof typeof FromWebview,

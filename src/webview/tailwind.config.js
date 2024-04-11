@@ -90,26 +90,9 @@ module.exports = {
       },
       minWidth: (utils) => utils.theme("spacing"),
       spacing: {
-        1.75: "0.4375rem",
-        5.5: "1.375rem",
-        14.5: "3.625rem",
-        17: "4.25rem",
-        17.25: "4.3125rem",
-        17.5: "4.375rem",
-        17.75: "4.4375rem",
-        18: "4.5rem",
-        18.5: "4.625rem",
-        19: "4.75rem",
-        21: "5.25rem",
-        22: "5.5rem",
-        42: "10.5rem",
-        44.5: "11.125rem",
-        49: "12.25rem",
-        100: "25rem",
-        110: "27.5rem",
-        120: "30rem",
-        135: "33.75rem",
-        132.5: "33.125rem",
+        ...generateSpacings([0, 100], [0, 0.25, 0.5, 0.75]),
+        ...generateSpacings([100, 200], [0, 0.5]),
+        ...generateSpacings([200, 300], [0]),
         "7/100": "7%",
         "1/10": "10%",
         "1/8": "12.5%",
@@ -165,3 +148,18 @@ module.exports = {
     },
   ],
 };
+
+function generateSpacings([from, to], granuality) {
+  return [...Array(to - from).keys()].reduce(
+    (acc, i) => ({
+      ...acc,
+      ...Object.fromEntries(
+        granuality.map((j) => [
+          `${i + from + j}`,
+          `${((i + from + j) / 4).toFixed(4).replace(/0+$/g, "").replace(/\.$/g, "")}rem`,
+        ]),
+      ),
+    }),
+    {},
+  );
+}

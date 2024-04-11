@@ -38,6 +38,7 @@
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-vue": "^9.17.0",
     "npm-run-all2": "^6.1.2",
+    "postcss-nesting": "^12.1.1",
     "prettier": "^3.0.3",
     "prettier-plugin-tailwindcss": "^0.5.12",
     "rollup-plugin-external-globals": "^0.9.2",

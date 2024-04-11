@@ -6,18 +6,12 @@ import { getItemImage, getItemIconPosition, getItemClasses } from "@/utils/items
 import { px } from "@/composables/use-pixel";
 import LogIcon from "./dynamic-icons/LogIcon.vue";
 
-const props = withDefaults(
-  defineProps<{
-    item: Item;
-    width?: number;
-    height?: number;
-    hideAmount?: boolean;
-  }>(),
-  {
-    width: px(80),
-    height: px(80),
-  },
-);
+const props = defineProps<{
+  item: Item;
+  width?: string;
+  height?: string;
+  hideAmount?: boolean;
+}>();
 
 const item = computed(() => props.item);
 
@@ -47,7 +41,10 @@ watch(
 <template>
   <div
     class="relative flex items-center justify-center p-2 text-white"
-    :style="{ width: `${width}px`, height: `${height}px` }"
+    :style="{
+      width: width ?? `${px(80)}px`,
+      height: height ?? `${px(80)}px`,
+    }"
   >
     <template v-if="noImage">
       <LogIcon

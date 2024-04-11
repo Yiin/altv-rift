@@ -1,6 +1,7 @@
 import alt from "@altv/shared";
 import { Inventory, StorageSource } from "@shared/interfaces";
 import { FishBaitItemKey } from "@shared/modules/items";
+import { BlueprintRecipe } from "@shared/modules/production";
 
 export enum PlayerFlags {
   InFishingArea = "InFishingArea",
@@ -18,9 +19,7 @@ export enum StorageType {
 }
 
 export enum FishingGameType {
-  // HoldBalance = "HoldBalance",
   TimeClick = "TimeClick",
-  Keys = "Keys",
 }
 
 export interface GameState {
@@ -47,32 +46,24 @@ export interface GameState {
         inventory: Inventory;
       }
     | null;
-  fishingProgress: // | {
-  //   baitKey: FishBaitItemKey;
-  //   gameType: FishingGameType.HoldBalance;
-  //   balance: number;
-  // }
-  | {
-        baitKey: FishBaitItemKey;
-        gameType: FishingGameType.TimeClick;
-        startedAt: number;
-        durationMs: number;
-        targetPosition: number; // 0-1
-        targetSize: number; // 0-1
-      }
-    | {
-        baitKey: FishBaitItemKey;
-        gameType: FishingGameType.Keys;
-        startedAt: number;
-        durationMs: number;
-        keys: alt.Enums.KeyCode[];
-        pressedKeys: alt.Enums.KeyCode[];
-      }
-    | null;
+  fishingProgress: {
+    baitKey: FishBaitItemKey;
+    gameType: FishingGameType.TimeClick;
+    startedAt: number;
+    durationMs: number;
+    targetPosition: number; // 0-1
+    targetSize: number; // 0-1
+  } | null;
+  workbench: {
+    queue: BlueprintRecipe[];
+  };
 }
 
 export const getDefaultGameState = (): GameState => ({
   flags: new Set(),
   openedStorage: null,
   fishingProgress: null,
+  workbench: {
+    queue: [],
+  },
 });

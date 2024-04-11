@@ -1,5 +1,5 @@
 import { Consumable } from "@shared/modules/items";
-import { useItem } from "../api/hooks";
+import { useItem } from "../api";
 
 useItem.hook((player, item) => {
   if (item.key !== Consumable.SIMPLE_MEDKIT) {

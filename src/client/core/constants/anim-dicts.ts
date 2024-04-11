@@ -1,4 +1,7 @@
-export const ANIM_DICTS = [
+export const ANIM_DICTS: {
+  DictionaryName: string;
+  Animations: string[];
+}[] = [
   {
     DictionaryName: "agency_heist_3a",
     Animations: [

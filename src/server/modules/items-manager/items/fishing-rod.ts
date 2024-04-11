@@ -13,9 +13,10 @@ import {
   isItemFishBait,
   isItemFishingRod,
 } from "@shared/modules/items";
+import { addItemToInventory } from "@shared/modules/inventory";
 import { InGamePlayer } from "@/core/utility/assertions";
-import { addItemToInventory, findInventoryByItemSource, findItem, removeItem } from "../api";
 import { dropItemOnTheGround } from "../dropped-items";
+import { findItem, findInventoryByItemSource, removeItem } from "../api";
 
 export function useFishBaitOnFishingRod(
   fishingRodSource: ItemSource,

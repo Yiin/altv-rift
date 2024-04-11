@@ -14,14 +14,10 @@ import {
   isMaleClothing,
   isUnisexClothing,
 } from "@shared/modules/items";
+import { addItemToInventory } from "@shared/modules/inventory";
 import { isItemFishBait } from "@shared/modules/items/registry/fish-bait.items";
 import { InGamePlayer } from "@/core/utility/assertions";
-import {
-  addItemToInventory,
-  findItem,
-  findInventoryByItemSource,
-  removeItem,
-} from "@/modules/items-manager";
+import { findItem, findInventoryByItemSource, removeItem } from "@/modules/items-manager";
 import { useFishBaitOnFishingRod } from "@/modules/items-manager/items/fishing-rod";
 import { emit } from "@/core/events/emit";
 import { dropItemOnTheGround } from "@/modules/items-manager/dropped-items";

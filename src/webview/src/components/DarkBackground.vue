@@ -4,9 +4,11 @@ import { useWindowSize } from "@/composables/use-window-size";
 withDefaults(
   defineProps<{
     bgClass?: string;
+    extraDark?: boolean;
   }>(),
   {
     bgClass: "bg-darkRadialGradient",
+    extraDark: true,
   },
 );
 

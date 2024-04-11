@@ -5,7 +5,7 @@ import { isItemThrowableWeapon } from "@shared/modules/items/registry/weapons/th
 import { EquipmentSlot } from "@shared/interfaces";
 import { isInGame } from "@/core/utility/assertions";
 import { on } from "@/core/events/emit";
-import { removeItemFromInventory } from "../../api";
+import { removeItemFromInventory } from "../../../../../shared/modules/inventory/api";
 
 on(ServerEvents.FromServer.ITEM_EQUIP, (player, item) => {
   if (!isItemThrowableWeapon(item)) {

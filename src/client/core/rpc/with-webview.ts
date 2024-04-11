@@ -78,7 +78,7 @@ useWebview((webview) =>
 // receive from webview on client
 export const registerWebview = <T extends keyof typeof ClientCall.FromWebview>(
   name: T,
-  handler: Asyncify<CallFromWebview>[T],
+  handler: Asyncify<CallFromWebview[T]>,
 ) => {
   if (webviewProcedures.has(name)) {
     throw new Error(`registerWebview: Procedure ${name} already exists`);

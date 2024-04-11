@@ -1,6 +1,6 @@
 import { type Store, type StoreDefinition } from "pinia";
 import { type Character, EquipmentSlot } from "@shared/interfaces";
-import { Ammo } from "@shared/modules/items";
+import { Ammo, UnlearnedBlueprint } from "@shared/modules/items";
 
 type CharacterStore = StoreDefinition<"character", Character, {}, {}>;
 
@@ -31,39 +31,6 @@ export const useCharacter = () =>
           size: 30,
           items: [],
         },
-        blueprints: [
-          "assaultrifle",
-          "handgunammo",
-          "hatchet",
-          "advancedrifle",
-          "appistol",
-          "assaultriflemk2",
-          "assaultshotgun",
-          "assaultsmg",
-          "autoshotgun",
-          "bullpuprifle",
-          "bullpupriflemk2",
-          "bullpupshotgun",
-          "carbinerifle",
-          "carbineriflemk2",
-          "ceramicpistol",
-          "combatmg",
-          "combatmgmk2",
-          "combatpdw",
-          "combatpistol",
-          "combatshotgun",
-          "compactlauncher",
-          "compactrifle",
-          "dbshotgun",
-          "doubleaction",
-          "emplauncher",
-          "gadgetpistol",
-          "grenadelauncher",
-          "gusenberg",
-          "heavypistol",
-          "heavyrifle",
-          "heavyshotgun",
-          "heavysniper",
-        ],
+        blueprints: Object.values(UnlearnedBlueprint),
       } as any as Store<"character", Character, {}, {}>)
     : characterStore?.();

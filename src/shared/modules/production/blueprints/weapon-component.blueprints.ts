@@ -7,84 +7,83 @@ import { Metal } from "@shared/modules/items/registry/materials/metal.items";
 import { registerBlueprint } from "../blueprints.registry";
 
 export const WeaponComponentBlueprint = makeKeys<WeaponComponentBlueprintKey>()({
-  COMBATSHOTGUN: "combatshotgun_cs",
-  SNIPERRIFLE: "sniperrifle_cs",
-  VINTAGEPISTOL: "vintagepistol_cs",
-  COMBATPDW: "combatpdw_cs",
-  HEAVYSNIPERMK2: "heavysnipermk2_cs",
-  HEAVYSNIPER: "heavysniper_cs",
-  MICROSMG: "microsmg_cs",
-  PISTOL: "pistol_cs",
-  PISTOLXM3: "pistolxm3_cs",
-  PUMPSHOTGUN: "pumpshotgun_cs",
-  APPISTOL: "appistol_cs",
-  CERAMICPISTOL: "ceramicpistol_cs",
-  SMG: "smg_cs",
-  ASSAULTRIFLEMK2: "assaultriflemk2_cs",
-  HEAVYSHOTGUN: "heavyshotgun_cs",
-  GRENADELAUNCHERSMOKE: "grenadelaunchersmoke_cs",
-  PUMPSHOTGUNMK2: "pumpshotgunmk2_cs",
-  COMBATPISTOL: "combatpistol_cs",
-  GUSENBERG: "gusenberg_cs",
-  COMPACTRIFLE: "compactrifle_cs",
-  MARKSMANRIFLEMK2: "marksmanriflemk2_cs",
-  RAILGUN: "railgun_cs",
-  PRECISIONRIFLE: "precisionrifle_cs",
-  SMGMK2: "smgmk2_cs",
-  BULLPUPRIFLE: "bullpuprifle_cs",
-  FIREWORK: "firework_cs",
-  COMBATMG: "combatmg_cs",
-  CARBINERIFLE: "carbinerifle_cs",
-  BULLPUPRIFLEMK2: "bullpupriflemk2_cs",
-  SNSPISTOLMK2: "snspistolmk2_cs",
-  FLASHLIGHT: "flashlight_cs",
-  SPECIALCARBINEMK2: "specialcarbinemk2_cs",
-  DOUBLEACTION: "doubleaction_cs",
-  PISTOL50: "pistol50_cs",
-  MG: "mg_cs",
-  MILITARYRIFLE: "militaryrifle_cs",
-  BULLPUPSHOTGUN: "bullpupshotgun_cs",
-  GRENADELAUNCHER: "grenadelauncher_cs",
-  MUSKET: "musket_cs",
-  ADVANCEDRIFLE: "advancedrifle_cs",
-  RAYPISTOL: "raypistol_cs",
-  MINISMG: "minismg_cs",
-  SNSPISTOL: "snspistol_cs",
-  PISTOLMK2: "pistolmk2_cs",
-  ASSAULTRIFLE: "assaultrifle_cs",
-  SPECIALCARBINE: "specialcarbine_cs",
-  MARKSMANRIFLE: "marksmanrifle_cs",
-  HEAVYRIFLE: "heavyrifle_cs",
-  REVOLVERMK2: "revolvermk2_cs",
-  TACTICALRIFLE: "tacticalrifle_cs",
-  HEAVYPISTOL: "heavypistol_cs",
-  MACHINEPISTOL: "machinepistol_cs",
-  COMBATMGMK2: "combatmgmk2_cs",
-  ASSAULTSHOTGUN: "assaultshotgun_cs",
-  ASSAULTSMG: "assaultsmg_cs",
-  CARBINERIFLEMK2: "carbineriflemk2_cs",
-  RAILGUNXM3: "railgunxm3_cs",
+  COMBATSHOTGUN_CS: "combatshotgun_cs",
+  SNIPERRIFLE_CS: "sniperrifle_cs",
+  VINTAGEPISTOL_CS: "vintagepistol_cs",
+  COMBATPDW_CS: "combatpdw_cs",
+  HEAVYSNIPERMK2_CS: "heavysnipermk2_cs",
+  HEAVYSNIPER_CS: "heavysniper_cs",
+  MICROSMG_CS: "microsmg_cs",
+  PISTOL_CS: "pistol_cs",
+  PISTOLXM3_CS: "pistolxm3_cs",
+  PUMPSHOTGUN_CS: "pumpshotgun_cs",
+  APPISTOL_CS: "appistol_cs",
+  CERAMICPISTOL_CS: "ceramicpistol_cs",
+  SMG_CS: "smg_cs",
+  ASSAULTRIFLEMK2_CS: "assaultriflemk2_cs",
+  HEAVYSHOTGUN_CS: "heavyshotgun_cs",
+  GRENADELAUNCHERSMOKE_CS: "grenadelaunchersmoke_cs",
+  PUMPSHOTGUNMK2_CS: "pumpshotgunmk2_cs",
+  COMBATPISTOL_CS: "combatpistol_cs",
+  GUSENBERG_CS: "gusenberg_cs",
+  COMPACTRIFLE_CS: "compactrifle_cs",
+  MARKSMANRIFLEMK2_CS: "marksmanriflemk2_cs",
+  RAILGUN_CS: "railgun_cs",
+  PRECISIONRIFLE_CS: "precisionrifle_cs",
+  SMGMK2_CS: "smgmk2_cs",
+  BULLPUPRIFLE_CS: "bullpuprifle_cs",
+  COMBATMG_CS: "combatmg_cs",
+  CARBINERIFLE_CS: "carbinerifle_cs",
+  BULLPUPRIFLEMK2_CS: "bullpupriflemk2_cs",
+  SNSPISTOLMK2_CS: "snspistolmk2_cs",
+  FLASHLIGHT_CS: "flashlight_cs",
+  SPECIALCARBINEMK2_CS: "specialcarbinemk2_cs",
+  DOUBLEACTION_CS: "doubleaction_cs",
+  PISTOL50_CS: "pistol50_cs",
+  MG_CS: "mg_cs",
+  MILITARYRIFLE_CS: "militaryrifle_cs",
+  BULLPUPSHOTGUN_CS: "bullpupshotgun_cs",
+  GRENADELAUNCHER_CS: "grenadelauncher_cs",
+  MUSKET_CS: "musket_cs",
+  ADVANCEDRIFLE_CS: "advancedrifle_cs",
+  RAYPISTOL_CS: "raypistol_cs",
+  MINISMG_CS: "minismg_cs",
+  SNSPISTOL_CS: "snspistol_cs",
+  PISTOLMK2_CS: "pistolmk2_cs",
+  ASSAULTRIFLE_CS: "assaultrifle_cs",
+  SPECIALCARBINE_CS: "specialcarbine_cs",
+  MARKSMANRIFLE_CS: "marksmanrifle_cs",
+  HEAVYRIFLE_CS: "heavyrifle_cs",
+  REVOLVERMK2_CS: "revolvermk2_cs",
+  TACTICALRIFLE_CS: "tacticalrifle_cs",
+  HEAVYPISTOL_CS: "heavypistol_cs",
+  MACHINEPISTOL_CS: "machinepistol_cs",
+  COMBATMGMK2_CS: "combatmgmk2_cs",
+  ASSAULTSHOTGUN_CS: "assaultshotgun_cs",
+  ASSAULTSMG_CS: "assaultsmg_cs",
+  CARBINERIFLEMK2_CS: "carbineriflemk2_cs",
+  RAILGUNXM3_CS: "railgunxm3_cs",
 });
 
 export type WeaponComponentBlueprintKey = Brand<string, "WeaponComponentBlueprintKey">;
 
 Object.entries({
-  [WeaponComponentBlueprint.COMBATSHOTGUN]: [
+  [WeaponComponentBlueprint.COMBATSHOTGUN_CS]: [
     WeaponComponent.COMBATSHOTGUN_FLASH,
     WeaponComponent.COMBATSHOTGUN_SUPP,
     WeaponComponent.COMBATSHOTGUN_SHELL,
   ],
-  [WeaponComponentBlueprint.SNIPERRIFLE]: [
+  [WeaponComponentBlueprint.SNIPERRIFLE_CS]: [
     WeaponComponent.SNIPERRIFLE_SUPP,
     WeaponComponent.SNIPERRIFLE_SCOPE_MAX,
     WeaponComponent.SNIPERRIFLE_SCOPE_LRG,
   ],
-  [WeaponComponentBlueprint.VINTAGEPISTOL]: [
+  [WeaponComponentBlueprint.VINTAGEPISTOL_CS]: [
     WeaponComponent.VINTAGEPISTOL_CLIP2,
     WeaponComponent.VINTAGEPISTOL_CLIP1,
     WeaponComponent.VINTAGEPISTOL_SUPP,
   ],
-  [WeaponComponentBlueprint.COMBATPDW]: [
+  [WeaponComponentBlueprint.COMBATPDW_CS]: [
     WeaponComponent.COMBATPDW_GRIP,
     WeaponComponent.COMBATPDW_CLIP2,
     WeaponComponent.COMBATPDW_CLIP1,
@@ -92,7 +91,7 @@ Object.entries({
     WeaponComponent.COMBATPDW_FLASH,
     WeaponComponent.COMBATPDW_SCOPE_SML,
   ],
-  [WeaponComponentBlueprint.HEAVYSNIPERMK2]: [
+  [WeaponComponentBlueprint.HEAVYSNIPERMK2_CS]: [
     WeaponComponent.HEAVYSNIPERMK2_CLIP_INC,
     WeaponComponent.HEAVYSNIPERMK2_BARR2,
     WeaponComponent.HEAVYSNIPERMK2_CLIP2,
@@ -109,43 +108,43 @@ Object.entries({
     WeaponComponent.HEAVYSNIPERMK2_CLIP_AP,
     WeaponComponent.HEAVYSNIPERMK2_CLIP1,
   ],
-  [WeaponComponentBlueprint.HEAVYSNIPER]: [
+  [WeaponComponentBlueprint.HEAVYSNIPER_CS]: [
     WeaponComponent.HEAVYSNIPER_SCOPE_MAX,
     WeaponComponent.HEAVYSNIPER_SCOPE_LRG,
   ],
-  [WeaponComponentBlueprint.MICROSMG]: [
+  [WeaponComponentBlueprint.MICROSMG_CS]: [
     WeaponComponent.MICROSMG_CLIP2,
     WeaponComponent.MICROSMG_FLASH,
     WeaponComponent.MICROSMG_SCOPE_MAC,
     WeaponComponent.MICROSMG_SUPP,
     WeaponComponent.MICROSMG_CLIP1,
   ],
-  [WeaponComponentBlueprint.PISTOL]: [
+  [WeaponComponentBlueprint.PISTOL_CS]: [
     WeaponComponent.PISTOL_FLASH,
     WeaponComponent.PISTOL_SUPP,
     WeaponComponent.PISTOL_CLIP2,
     WeaponComponent.PISTOL_CLIP1,
   ],
-  [WeaponComponentBlueprint.PISTOLXM3]: [
+  [WeaponComponentBlueprint.PISTOLXM3_CS]: [
     WeaponComponent.PISTOLXM3_CLIP1,
     WeaponComponent.PISTOLXM3_SUPP,
   ],
-  [WeaponComponentBlueprint.PUMPSHOTGUN]: [
+  [WeaponComponentBlueprint.PUMPSHOTGUN_CS]: [
     WeaponComponent.PUMPSHOTGUN_FLASH,
     WeaponComponent.PUMPSHOTGUN_SUPP,
   ],
-  [WeaponComponentBlueprint.APPISTOL]: [
+  [WeaponComponentBlueprint.APPISTOL_CS]: [
     WeaponComponent.APPISTOL_CLIP2,
     WeaponComponent.APPISTOL_CLIP1,
     WeaponComponent.APPISTOL_FLASH,
     WeaponComponent.APPISTOL_SUPP,
   ],
-  [WeaponComponentBlueprint.CERAMICPISTOL]: [
+  [WeaponComponentBlueprint.CERAMICPISTOL_CS]: [
     WeaponComponent.CERAMICPISTOL_CLIP1,
     WeaponComponent.CERAMICPISTOL_CLIP2,
     WeaponComponent.CERAMICPISTOL_SUPP,
   ],
-  [WeaponComponentBlueprint.SMG]: [
+  [WeaponComponentBlueprint.SMG_CS]: [
     WeaponComponent.SMG_CLIP1,
     WeaponComponent.SMG_CLIP2,
     WeaponComponent.SMG_SCOPE_MAC,
@@ -153,7 +152,7 @@ Object.entries({
     WeaponComponent.SMG_FLASH,
     WeaponComponent.SMG_SUPP,
   ],
-  [WeaponComponentBlueprint.ASSAULTRIFLEMK2]: [
+  [WeaponComponentBlueprint.ASSAULTRIFLEMK2_CS]: [
     WeaponComponent.ASSAULTRIFLEMK2_MUZZ5,
     WeaponComponent.ASSAULTRIFLEMK2_SCOPE_MAC2,
     WeaponComponent.ASSAULTRIFLEMK2_MUZZ6,
@@ -176,7 +175,7 @@ Object.entries({
     WeaponComponent.ASSAULTRIFLEMK2_CLIP_TR,
     WeaponComponent.ASSAULTRIFLEMK2_CLIP_INC,
   ],
-  [WeaponComponentBlueprint.HEAVYSHOTGUN]: [
+  [WeaponComponentBlueprint.HEAVYSHOTGUN_CS]: [
     WeaponComponent.HEAVYSHOTGUN_GRIP,
     WeaponComponent.HEAVYSHOTGUN_CLIP1,
     WeaponComponent.HEAVYSHOTGUN_FLASH,
@@ -184,12 +183,12 @@ Object.entries({
     WeaponComponent.HEAVYSHOTGUN_CLIP2,
     WeaponComponent.HEAVYSHOTGUN_SUPP,
   ],
-  [WeaponComponentBlueprint.GRENADELAUNCHERSMOKE]: [
+  [WeaponComponentBlueprint.GRENADELAUNCHERSMOKE_CS]: [
     WeaponComponent.GRENADELAUNCHERSMOKE_GRIP,
     WeaponComponent.GRENADELAUNCHERSMOKE_FLASH,
     WeaponComponent.GRENADELAUNCHERSMOKE_SCOPE_SML,
   ],
-  [WeaponComponentBlueprint.PUMPSHOTGUNMK2]: [
+  [WeaponComponentBlueprint.PUMPSHOTGUNMK2_CS]: [
     WeaponComponent.PUMPSHOTGUNMK2_SCOPE_MAC2,
     WeaponComponent.PUMPSHOTGUNMK2_SHELL_EX,
     WeaponComponent.PUMPSHOTGUNMK2_SCOPE_SML2,
@@ -202,22 +201,22 @@ Object.entries({
     WeaponComponent.PUMPSHOTGUNMK2_SHELL,
     WeaponComponent.PUMPSHOTGUNMK2_SHELL_HP,
   ],
-  [WeaponComponentBlueprint.COMBATPISTOL]: [
+  [WeaponComponentBlueprint.COMBATPISTOL_CS]: [
     WeaponComponent.COMBATPISTOL_CLIP1,
     WeaponComponent.COMBATPISTOL_FLASH,
     WeaponComponent.COMBATPISTOL_SUPP,
     WeaponComponent.COMBATPISTOL_CLIP2,
   ],
-  [WeaponComponentBlueprint.GUSENBERG]: [
+  [WeaponComponentBlueprint.GUSENBERG_CS]: [
     WeaponComponent.GUSENBERG_CLIP1,
     WeaponComponent.GUSENBERG_CLIP2,
   ],
-  [WeaponComponentBlueprint.COMPACTRIFLE]: [
+  [WeaponComponentBlueprint.COMPACTRIFLE_CS]: [
     WeaponComponent.COMPACTRIFLE_CLIP1,
     WeaponComponent.COMPACTRIFLE_CLIP2,
     WeaponComponent.COMPACTRIFLE_CLIP_DRM,
   ],
-  [WeaponComponentBlueprint.MARKSMANRIFLEMK2]: [
+  [WeaponComponentBlueprint.MARKSMANRIFLEMK2_CS]: [
     WeaponComponent.MARKSMANRIFLEMK2_MUZZ5,
     WeaponComponent.MARKSMANRIFLEMK2_MUZZ6,
     WeaponComponent.MARKSMANRIFLEMK2_BARR,
@@ -240,9 +239,9 @@ Object.entries({
     WeaponComponent.MARKSMANRIFLEMK2_MUZZ4,
     WeaponComponent.MARKSMANRIFLEMK2_CLIP_AP,
   ],
-  [WeaponComponentBlueprint.RAILGUN]: [WeaponComponent.RAILGUN_CLIP1],
-  [WeaponComponentBlueprint.PRECISIONRIFLE]: [WeaponComponent.PRECISIONRIFLE_CLIP1],
-  [WeaponComponentBlueprint.SMGMK2]: [
+  [WeaponComponentBlueprint.RAILGUN_CS]: [WeaponComponent.RAILGUN_CLIP1],
+  [WeaponComponentBlueprint.PRECISIONRIFLE_CS]: [WeaponComponent.PRECISIONRIFLE_CLIP1],
+  [WeaponComponentBlueprint.SMGMK2_CS]: [
     WeaponComponent.SMGMK2_MUZZ5,
     WeaponComponent.SMGMK2_CLIP_FMJ,
     WeaponComponent.SMGMK2_MUZZ6,
@@ -264,7 +263,7 @@ Object.entries({
     WeaponComponent.SMGMK2_SCOPE_MAC2,
     WeaponComponent.SMGMK2_MUZZ4,
   ],
-  [WeaponComponentBlueprint.BULLPUPRIFLE]: [
+  [WeaponComponentBlueprint.BULLPUPRIFLE_CS]: [
     WeaponComponent.BULLPUPRIFLE_GRIP,
     WeaponComponent.BULLPUPRIFLE_FLASH,
     WeaponComponent.BULLPUPRIFLE_SUPP,
@@ -272,14 +271,13 @@ Object.entries({
     WeaponComponent.BULLPUPRIFLE_CLIP2,
     WeaponComponent.BULLPUPRIFLE_CLIP1,
   ],
-  [WeaponComponentBlueprint.FIREWORK]: [WeaponComponent.FIREWORK_CLIP1],
-  [WeaponComponentBlueprint.COMBATMG]: [
+  [WeaponComponentBlueprint.COMBATMG_CS]: [
     WeaponComponent.COMBATMG_GRIP,
     WeaponComponent.COMBATMG_SCOPE_LRG,
     WeaponComponent.COMBATMG_CLIP2,
     WeaponComponent.COMBATMG_CLIP1,
   ],
-  [WeaponComponentBlueprint.CARBINERIFLE]: [
+  [WeaponComponentBlueprint.CARBINERIFLE_CS]: [
     WeaponComponent.CARBINERIFLE_GRIP,
     WeaponComponent.CARBINERIFLE_FLASH,
     WeaponComponent.CARBINERIFLE_SUPP,
@@ -288,7 +286,7 @@ Object.entries({
     WeaponComponent.CARBINERIFLE_SCOPE_LRG,
     WeaponComponent.CARBINERIFLE_CLIP_BOX,
   ],
-  [WeaponComponentBlueprint.BULLPUPRIFLEMK2]: [
+  [WeaponComponentBlueprint.BULLPUPRIFLEMK2_CS]: [
     WeaponComponent.BULLPUPRIFLEMK2_CLIP1,
     WeaponComponent.BULLPUPRIFLEMK2_MUZZ5,
     WeaponComponent.BULLPUPRIFLEMK2_MUZZ6,
@@ -311,7 +309,7 @@ Object.entries({
     WeaponComponent.BULLPUPRIFLEMK2_CLIP2,
     WeaponComponent.BULLPUPRIFLEMK2_CLIP_AP,
   ],
-  [WeaponComponentBlueprint.SNSPISTOLMK2]: [
+  [WeaponComponentBlueprint.SNSPISTOLMK2_CS]: [
     WeaponComponent.SNSPISTOLMK2_CLIP1,
     WeaponComponent.SNSPISTOLMK2_SCOPE_PI,
     WeaponComponent.SNSPISTOLMK2_FLASH,
@@ -323,8 +321,8 @@ Object.entries({
     WeaponComponent.SNSPISTOLMK2_CLIP2,
     WeaponComponent.SNSPISTOLMK2_CLIP_INC,
   ],
-  [WeaponComponentBlueprint.FLASHLIGHT]: [WeaponComponent.FLASHLIGHT_FLASH],
-  [WeaponComponentBlueprint.SPECIALCARBINEMK2]: [
+  [WeaponComponentBlueprint.FLASHLIGHT_CS]: [WeaponComponent.FLASHLIGHT_FLASH],
+  [WeaponComponentBlueprint.SPECIALCARBINEMK2_CS]: [
     WeaponComponent.SPECIALCARBINEMK2_MUZZ5,
     WeaponComponent.SPECIALCARBINEMK2_SCOPE_MAC2,
     WeaponComponent.SPECIALCARBINEMK2_CLIP1,
@@ -347,19 +345,19 @@ Object.entries({
     WeaponComponent.SPECIALCARBINEMK2_MUZZ4,
     WeaponComponent.SPECIALCARBINEMK2_BARR2,
   ],
-  [WeaponComponentBlueprint.DOUBLEACTION]: [WeaponComponent.DOUBLEACTION_CLIP1],
-  [WeaponComponentBlueprint.PISTOL50]: [
+  [WeaponComponentBlueprint.DOUBLEACTION_CS]: [WeaponComponent.DOUBLEACTION_CLIP1],
+  [WeaponComponentBlueprint.PISTOL50_CS]: [
     WeaponComponent.PISTOL50_CLIP1,
     WeaponComponent.PISTOL50_FLASH,
     WeaponComponent.PISTOL50_SUPP,
     WeaponComponent.PISTOL50_CLIP2,
   ],
-  [WeaponComponentBlueprint.MG]: [
+  [WeaponComponentBlueprint.MG_CS]: [
     WeaponComponent.MG_SCOPE_SML,
     WeaponComponent.MG_CLIP2,
     WeaponComponent.MG_CLIP1,
   ],
-  [WeaponComponentBlueprint.MILITARYRIFLE]: [
+  [WeaponComponentBlueprint.MILITARYRIFLE_CS]: [
     WeaponComponent.MILITARYRIFLE_CLIP1,
     WeaponComponent.MILITARYRIFLE_CLIP2,
     WeaponComponent.MILITARYRIFLE_MRFL_SIGHT,
@@ -367,34 +365,34 @@ Object.entries({
     WeaponComponent.MILITARYRIFLE_SUPP,
     WeaponComponent.MILITARYRIFLE_SCOPE_SML,
   ],
-  [WeaponComponentBlueprint.BULLPUPSHOTGUN]: [
+  [WeaponComponentBlueprint.BULLPUPSHOTGUN_CS]: [
     WeaponComponent.BULLPUPSHOTGUN_GRIP,
     WeaponComponent.BULLPUPSHOTGUN_FLASH,
     WeaponComponent.BULLPUPSHOTGUN_SUPP,
   ],
-  [WeaponComponentBlueprint.GRENADELAUNCHER]: [
+  [WeaponComponentBlueprint.GRENADELAUNCHER_CS]: [
     WeaponComponent.GRENADELAUNCHER_GRIP,
     WeaponComponent.GRENADELAUNCHER_FLASH,
     WeaponComponent.GRENADELAUNCHER_SCOPE_SML,
   ],
-  [WeaponComponentBlueprint.MUSKET]: [WeaponComponent.MUSKET_CLIP1],
-  [WeaponComponentBlueprint.ADVANCEDRIFLE]: [
+  [WeaponComponentBlueprint.MUSKET_CS]: [WeaponComponent.MUSKET_CLIP1],
+  [WeaponComponentBlueprint.ADVANCEDRIFLE_CS]: [
     WeaponComponent.ADVANCEDRIFLE_FLASH,
     WeaponComponent.ADVANCEDRIFLE_SUPP,
     WeaponComponent.ADVANCEDRIFLE_CLIP2,
     WeaponComponent.ADVANCEDRIFLE_SCOPE_SML,
     WeaponComponent.ADVANCEDRIFLE_CLIP1,
   ],
-  [WeaponComponentBlueprint.RAYPISTOL]: [WeaponComponent.RAYPISTOL_VAR_RAY18],
-  [WeaponComponentBlueprint.MINISMG]: [
+  [WeaponComponentBlueprint.RAYPISTOL_CS]: [WeaponComponent.RAYPISTOL_VAR_RAY18],
+  [WeaponComponentBlueprint.MINISMG_CS]: [
     WeaponComponent.MINISMG_CLIP1,
     WeaponComponent.MINISMG_CLIP2,
   ],
-  [WeaponComponentBlueprint.SNSPISTOL]: [
+  [WeaponComponentBlueprint.SNSPISTOL_CS]: [
     WeaponComponent.SNSPISTOL_CLIP2,
     WeaponComponent.SNSPISTOL_CLIP1,
   ],
-  [WeaponComponentBlueprint.PISTOLMK2]: [
+  [WeaponComponentBlueprint.PISTOLMK2_CS]: [
     WeaponComponent.PISTOLMK2_COMP,
     WeaponComponent.PISTOLMK2_CLIP_TR,
     WeaponComponent.PISTOLMK2_CLIP_INC,
@@ -406,7 +404,7 @@ Object.entries({
     WeaponComponent.PISTOLMK2_SCOPE_PI,
     WeaponComponent.PISTOLMK2_CLIP1,
   ],
-  [WeaponComponentBlueprint.ASSAULTRIFLE]: [
+  [WeaponComponentBlueprint.ASSAULTRIFLE_CS]: [
     WeaponComponent.ASSAULTRIFLE_GRIP,
     WeaponComponent.ASSAULTRIFLE_FLASH,
     WeaponComponent.ASSAULTRIFLE_SCOPE_MAC,
@@ -415,7 +413,7 @@ Object.entries({
     WeaponComponent.ASSAULTRIFLE_CLIP1,
     WeaponComponent.ASSAULTRIFLE_CLIP_DRM,
   ],
-  [WeaponComponentBlueprint.SPECIALCARBINE]: [
+  [WeaponComponentBlueprint.SPECIALCARBINE_CS]: [
     WeaponComponent.SPECIALCARBINE_GRIP,
     WeaponComponent.SPECIALCARBINE_CLIP_DRM,
     WeaponComponent.SPECIALCARBINE_FLASH,
@@ -424,7 +422,7 @@ Object.entries({
     WeaponComponent.SPECIALCARBINE_SUPP,
     WeaponComponent.SPECIALCARBINE_CLIP1,
   ],
-  [WeaponComponentBlueprint.MARKSMANRIFLE]: [
+  [WeaponComponentBlueprint.MARKSMANRIFLE_CS]: [
     WeaponComponent.MARKSMANRIFLE_GRIP,
     WeaponComponent.MARKSMANRIFLE_SCOPE_LRG,
     WeaponComponent.MARKSMANRIFLE_FLASH,
@@ -432,7 +430,7 @@ Object.entries({
     WeaponComponent.MARKSMANRIFLE_CLIP2,
     WeaponComponent.MARKSMANRIFLE_CLIP1,
   ],
-  [WeaponComponentBlueprint.HEAVYRIFLE]: [
+  [WeaponComponentBlueprint.HEAVYRIFLE_CS]: [
     WeaponComponent.HEAVYRIFLE_GRIP,
     WeaponComponent.HEAVYRIFLE_CLIP1,
     WeaponComponent.HEAVYRIFLE_CLIP2,
@@ -441,7 +439,7 @@ Object.entries({
     WeaponComponent.HEAVYRIFLE_SCOPE_LRG,
     WeaponComponent.HEAVYRIFLE_HVYRFLE_SIG,
   ],
-  [WeaponComponentBlueprint.REVOLVERMK2]: [
+  [WeaponComponentBlueprint.REVOLVERMK2_CS]: [
     WeaponComponent.REVOLVERMK2_CLIP_INC,
     WeaponComponent.REVOLVERMK2_SCOPE_MAC2,
     WeaponComponent.REVOLVERMK2_CLIP_FMJ,
@@ -452,26 +450,26 @@ Object.entries({
     WeaponComponent.REVOLVERMK2_CLIP1_RV,
     WeaponComponent.REVOLVERMK2_CLIP_TR,
   ],
-  [WeaponComponentBlueprint.TACTICALRIFLE]: [
+  [WeaponComponentBlueprint.TACTICALRIFLE_CS]: [
     WeaponComponent.TACTICALRIFLE_GRIP,
     WeaponComponent.TACTICALRIFLE_CLIP1,
     WeaponComponent.TACTICALRIFLE_CLIP2,
     WeaponComponent.TACTICALRIFLE_FLASH,
     WeaponComponent.TACTICALRIFLE_SUPP,
   ],
-  [WeaponComponentBlueprint.HEAVYPISTOL]: [
+  [WeaponComponentBlueprint.HEAVYPISTOL_CS]: [
     WeaponComponent.HEAVYPISTOL_CLIP1,
     WeaponComponent.HEAVYPISTOL_FLASH,
     WeaponComponent.HEAVYPISTOL_CLIP2,
     WeaponComponent.HEAVYPISTOL_SUPP,
   ],
-  [WeaponComponentBlueprint.MACHINEPISTOL]: [
+  [WeaponComponentBlueprint.MACHINEPISTOL_CS]: [
     WeaponComponent.MACHINEPISTOL_CLIP1,
     WeaponComponent.MACHINEPISTOL_CLIP_DRM,
     WeaponComponent.MACHINEPISTOL_CLIP2,
     WeaponComponent.MACHINEPISTOL_SUPP,
   ],
-  [WeaponComponentBlueprint.COMBATMGMK2]: [
+  [WeaponComponentBlueprint.COMBATMGMK2_CS]: [
     WeaponComponent.COMBATMGMK2_MUZZ5,
     WeaponComponent.COMBATMGMK2_CLIP2,
     WeaponComponent.COMBATMGMK2_CLIP_AP,
@@ -492,19 +490,19 @@ Object.entries({
     WeaponComponent.COMBATMGMK2_MUZZ4,
     WeaponComponent.COMBATMGMK2_CLIP_TR,
   ],
-  [WeaponComponentBlueprint.ASSAULTSHOTGUN]: [
+  [WeaponComponentBlueprint.ASSAULTSHOTGUN_CS]: [
     WeaponComponent.ASSAULTSHOTGUN_GRIP,
     WeaponComponent.ASSAULTSHOTGUN_FLASH,
     WeaponComponent.ASSAULTSHOTGUN_SUPP,
     WeaponComponent.ASSAULTSHOTGUN_CLIP2,
     WeaponComponent.ASSAULTSHOTGUN_CLIP1,
   ],
-  [WeaponComponentBlueprint.ASSAULTSMG]: [
+  [WeaponComponentBlueprint.ASSAULTSMG_CS]: [
     WeaponComponent.ASSAULTSMG_FLASH,
     WeaponComponent.ASSAULTSMG_SCOPE_MAC,
     WeaponComponent.ASSAULTSMG_SUPP,
   ],
-  [WeaponComponentBlueprint.CARBINERIFLEMK2]: [
+  [WeaponComponentBlueprint.CARBINERIFLEMK2_CS]: [
     WeaponComponent.CARBINERIFLEMK2_MUZZ5,
     WeaponComponent.CARBINERIFLEMK2_SCOPE_MAC2,
     WeaponComponent.CARBINERIFLEMK2_CLIP_TR,
@@ -527,7 +525,7 @@ Object.entries({
     WeaponComponent.CARBINERIFLEMK2_MUZZ3,
     WeaponComponent.CARBINERIFLEMK2_MUZZ4,
   ],
-  [WeaponComponentBlueprint.RAILGUNXM3]: [WeaponComponent.RAILGUNXM3_CLIP1],
+  [WeaponComponentBlueprint.RAILGUNXM3_CS]: [WeaponComponent.RAILGUNXM3_CLIP1],
 }).forEach(([key, components]) => {
   const weaponItemKey = key.replace("_cs", "") as string as WeaponItemKey;
   registerBlueprint({

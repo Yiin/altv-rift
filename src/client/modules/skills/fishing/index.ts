@@ -46,13 +46,4 @@ alt.Events.onKeyDown(({ key }) => {
       rpc.callServer(ServerCall.FromClient.REGISTER_KEY_PRESS, key);
     }
   }
-  if (gameState.fishingProgress?.gameType === FishingGameType.Keys) {
-    if (
-      [alt.Enums.KeyCode.W, alt.Enums.KeyCode.A, alt.Enums.KeyCode.S, alt.Enums.KeyCode.D].includes(
-        key,
-      )
-    ) {
-      rpc.callServer(ServerCall.FromClient.REGISTER_KEY_PRESS, key);
-    }
-  }
 });

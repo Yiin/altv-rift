@@ -1,5 +1,4 @@
 import { ref } from "vue";
-import { useEventListener } from "./use-event-listener";
 
 const pixelSize = ref<number>(0);
 
@@ -18,17 +17,19 @@ function calculatePixelSize() {
     createRemToPxDiv();
   }
 
-  const div = document.getElementById("rem-to-px")!;
-  const px = div.getBoundingClientRect().height;
-  pixelSize.value = px / 4;
+  // Wait for the next frame to get the correct height.
+  // In theory it shouldn't be needed, but reality is often disappointing
+  requestAnimationFrame(() => {
+    const div = document.getElementById("rem-to-px")!;
+    const px = div.getBoundingClientRect().height;
+    pixelSize.value = px / 4;
+  });
 }
 
-useEventListener("resize", calculatePixelSize);
+window.addEventListener("resize", calculatePixelSize);
 
 calculatePixelSize();
 
 export function px(value: number) {
   return (value * pixelSize.value) / 4;
 }
-
-// const

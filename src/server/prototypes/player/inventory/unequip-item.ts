@@ -1,9 +1,10 @@
 import alt from "@altv/server";
 import { EquipmentSlot, InventoryItemSource } from "@shared/interfaces";
 import { ServerEvents } from "@shared/events/server";
+import { addItemToInventory } from "@shared/modules/inventory";
 import { Equipment, Item } from "@shared/modules/items";
 import { InGamePlayer } from "@/core/utility/assertions";
-import { addItemToInventory, findInventoryByItemSource } from "@/modules/items-manager";
+import { findInventoryByItemSource } from "@/modules/items-manager";
 import { emit } from "@/core/events/emit";
 
 declare module "@altv/server" {
