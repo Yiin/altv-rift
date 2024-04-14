@@ -21,6 +21,7 @@ registerBlueprint({
   description: `Lets you craft and upgrade ${getItemName(MeleeWeapon.BAT)}.`,
   recipes: [
     {
+      key: MeleeWeapon.BAT,
       durationSeconds: 5,
       item: {
         key: MeleeWeapon.BAT,
@@ -32,6 +33,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.BAT + "+1",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -45,6 +47,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.BAT + "+2",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -58,6 +61,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.BAT + "+3",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -71,6 +75,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.BAT + "+4",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -92,6 +97,7 @@ registerBlueprint({
   description: `Lets you craft and upgrade ${getItemName(MeleeWeapon.BATTLEAXE)}.`,
   recipes: [
     {
+      key: MeleeWeapon.BATTLEAXE,
       durationSeconds: 5,
       item: {
         key: MeleeWeapon.BATTLEAXE,
@@ -103,6 +109,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.BATTLEAXE + "+1",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -116,6 +123,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.BATTLEAXE + "+2",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -129,6 +137,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.BATTLEAXE + "+3",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -142,6 +151,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.BATTLEAXE + "+4",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -163,6 +173,7 @@ registerBlueprint({
   description: `Lets you craft and upgrade ${getItemName(MeleeWeapon.BOTTLE)}.`,
   recipes: [
     {
+      key: MeleeWeapon.BOTTLE,
       durationSeconds: 5,
       item: {
         key: MeleeWeapon.BOTTLE,
@@ -174,6 +185,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.BOTTLE + "+1",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -187,6 +199,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.BOTTLE + "+2",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -200,6 +213,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.BOTTLE + "+3",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -213,6 +227,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.BOTTLE + "+4",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -234,6 +249,7 @@ registerBlueprint({
   description: `Lets you craft and upgrade ${getItemName(MeleeWeapon.CROWBAR)}.`,
   recipes: [
     {
+      key: MeleeWeapon.CROWBAR,
       durationSeconds: 5,
       item: {
         key: MeleeWeapon.CROWBAR,
@@ -245,6 +261,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.CROWBAR + "+1",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -258,6 +275,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.CROWBAR + "+2",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -271,6 +289,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.CROWBAR + "+3",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -284,6 +303,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.CROWBAR + "+4",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -305,6 +325,7 @@ registerBlueprint({
   description: `Lets you craft and upgrade ${getItemName(MeleeWeapon.DAGGER)}.`,
   recipes: [
     {
+      key: MeleeWeapon.DAGGER,
       durationSeconds: 5,
       item: {
         key: MeleeWeapon.DAGGER,
@@ -317,6 +338,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.DAGGER + "+1",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -334,6 +356,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.DAGGER + "+2",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -348,6 +371,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.DAGGER + "+3",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -362,6 +386,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.DAGGER + "+4",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -384,6 +409,7 @@ registerBlueprint({
   description: `Lets you craft and upgrade ${getItemName(MeleeWeapon.GOLFCLUB)}.`,
   recipes: [
     {
+      key: MeleeWeapon.GOLFCLUB,
       durationSeconds: 5,
       item: {
         key: MeleeWeapon.GOLFCLUB,
@@ -396,6 +422,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.GOLFCLUB + "+1",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -410,6 +437,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.GOLFCLUB + "+2",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -424,6 +452,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.GOLFCLUB + "+3",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -438,6 +467,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.GOLFCLUB + "+4",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -460,6 +490,7 @@ registerBlueprint({
   description: `Lets you craft and upgrade ${getItemName(MeleeWeapon.HAMMER)}.`,
   recipes: [
     {
+      key: MeleeWeapon.HAMMER,
       durationSeconds: 5,
       item: {
         key: MeleeWeapon.HAMMER,
@@ -471,6 +502,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.HAMMER + "+1",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -484,6 +516,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.HAMMER + "+2",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -497,6 +530,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.HAMMER + "+3",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -510,6 +544,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.HAMMER + "+4",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -531,6 +566,7 @@ registerBlueprint({
   description: `Lets you craft and upgrade ${getItemName(MeleeWeapon.KNIFE)}.`,
   recipes: [
     {
+      key: MeleeWeapon.KNIFE,
       durationSeconds: 5,
       item: {
         key: MeleeWeapon.KNIFE,
@@ -543,6 +579,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.KNIFE + "+1",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -557,6 +594,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.KNIFE + "+2",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -571,6 +609,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.KNIFE + "+3",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -585,6 +624,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.KNIFE + "+4",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -607,6 +647,7 @@ registerBlueprint({
   description: `Lets you craft and upgrade ${getItemName(MeleeWeapon.KNUCKLE)}.`,
   recipes: [
     {
+      key: MeleeWeapon.KNUCKLE,
       durationSeconds: 5,
       item: {
         key: MeleeWeapon.KNUCKLE,
@@ -618,6 +659,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.KNUCKLE + "+1",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -631,6 +673,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.KNUCKLE + "+2",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -644,6 +687,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.KNUCKLE + "+3",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -657,6 +701,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.KNUCKLE + "+4",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -678,6 +723,7 @@ registerBlueprint({
   description: `Lets you craft and upgrade ${getItemName(MeleeWeapon.MACHETE)}.`,
   recipes: [
     {
+      key: MeleeWeapon.MACHETE,
       durationSeconds: 5,
       item: {
         key: MeleeWeapon.MACHETE,
@@ -690,6 +736,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.MACHETE + "+1",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -704,6 +751,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.MACHETE + "+2",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -718,6 +766,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.MACHETE + "+3",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -732,6 +781,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.MACHETE + "+4",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -754,6 +804,7 @@ registerBlueprint({
   description: `Lets you craft and upgrade ${getItemName(MeleeWeapon.NIGHTSTICK)}.`,
   recipes: [
     {
+      key: MeleeWeapon.NIGHTSTICK,
       durationSeconds: 5,
       item: {
         key: MeleeWeapon.NIGHTSTICK,
@@ -765,6 +816,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.NIGHTSTICK + "+1",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -778,6 +830,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.NIGHTSTICK + "+2",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -791,6 +844,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.NIGHTSTICK + "+3",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -804,6 +858,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.NIGHTSTICK + "+4",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -825,6 +880,7 @@ registerBlueprint({
   description: `Lets you craft and upgrade ${getItemName(MeleeWeapon.PIPEWRENCH)}.`,
   recipes: [
     {
+      key: MeleeWeapon.PIPEWRENCH,
       durationSeconds: 5,
       item: {
         key: MeleeWeapon.PIPEWRENCH,
@@ -836,6 +892,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.PIPEWRENCH + "+1",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -849,6 +906,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.PIPEWRENCH + "+2",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -862,6 +920,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.PIPEWRENCH + "+3",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -875,6 +934,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.PIPEWRENCH + "+4",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -896,6 +956,7 @@ registerBlueprint({
   description: `Lets you craft and upgrade ${getItemName(MeleeWeapon.POOLCUE)}.`,
   recipes: [
     {
+      key: MeleeWeapon.POOLCUE,
       durationSeconds: 5,
       item: {
         key: MeleeWeapon.POOLCUE,
@@ -907,6 +968,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.POOLCUE + "+1",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -920,6 +982,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.POOLCUE + "+2",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -934,6 +997,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.POOLCUE + "+3",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -948,6 +1012,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.POOLCUE + "+4",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -970,6 +1035,7 @@ registerBlueprint({
   description: `Lets you craft and upgrade ${getItemName(MeleeWeapon.STONEHATCHET)}.`,
   recipes: [
     {
+      key: MeleeWeapon.STONEHATCHET,
       durationSeconds: 5,
       item: {
         key: MeleeWeapon.STONEHATCHET,
@@ -981,6 +1047,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.STONEHATCHET + "+1",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -994,6 +1061,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.STONEHATCHET + "+2",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -1007,6 +1075,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.STONEHATCHET + "+3",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -1020,6 +1089,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.STONEHATCHET + "+4",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -1041,6 +1111,7 @@ registerBlueprint({
   description: `Lets you craft and upgrade ${getItemName(MeleeWeapon.SWITCHBLADE)}.`,
   recipes: [
     {
+      key: MeleeWeapon.SWITCHBLADE,
       durationSeconds: 5,
       item: {
         key: MeleeWeapon.SWITCHBLADE,
@@ -1053,6 +1124,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.SWITCHBLADE + "+1",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -1067,6 +1139,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.SWITCHBLADE + "+2",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -1081,6 +1154,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.SWITCHBLADE + "+3",
       isUpgrade: true,
       durationSeconds: 10,
       item: {
@@ -1095,6 +1169,7 @@ registerBlueprint({
       ],
     },
     {
+      key: MeleeWeapon.SWITCHBLADE + "+4",
       isUpgrade: true,
       durationSeconds: 10,
       item: {

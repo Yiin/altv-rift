@@ -21,7 +21,7 @@ const serverHandlers = new Map<
 // call server from client
 export const callServer = <T extends keyof typeof ServerCall.FromClient>(
   name: T,
-  ...args: Shift<Parameters<CallFromClient[T]>>
+  ...args: Parameters<CallFromClient[T]>
 ) => {
   return new Promise<ReturnType<CallFromClient[T]>>((resolve, reject) => {
     const payload = createPayload(name, args);

@@ -23,7 +23,7 @@ const webviewHandlers = new Map<
 // call webview from client
 export const callWebview = async <T extends keyof typeof WebviewCall.FromClient>(
   name: T,
-  ...args: Shift<Parameters<CallFromClient[T]>>
+  ...args: Parameters<CallFromClient[T]>
 ) => {
   return new Promise<ReturnType<CallFromClient[T]>>((resolve, reject) => {
     const payload = createPayload(name, args);

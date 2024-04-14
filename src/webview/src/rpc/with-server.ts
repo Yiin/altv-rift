@@ -16,7 +16,7 @@ const serverHandlers = new Map<string, { name: string; resolve: Function; reject
 
 export const callServer = async <T extends keyof typeof ServerCall.FromWebview>(
   name: T,
-  ...args: Shift<Parameters<CallFromWebview[T]>>
+  ...args: Parameters<CallFromWebview[T]>
 ) => {
   return new Promise<ReturnType<CallFromWebview[T]>>((resolve, reject) => {
     const payload = createPayload(name, args);

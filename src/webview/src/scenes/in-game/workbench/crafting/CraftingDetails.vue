@@ -6,12 +6,19 @@ import { useQuantity } from "../composables/use-quantity";
 import WorkbenchSlot from "../components/WorkbenchSlot.vue";
 import { useCrafting } from "../composables/use-crafting";
 
-const { queue, selectedRecipe, onStartCrafting, cancelCrafting, removeFromQueue } = useCrafting();
+const {
+  queue,
+  selectedRecipe,
+  onStartCrafting,
+  cancelCrafting,
+  removeFromQueue,
+  canCraftSelectedRecipe,
+} = useCrafting();
 
 const { quantity, handleQuantityInput, handleQuantityKeydown, handleQuantityPaste } = useQuantity();
 
-const isInQueue = computed(() => queue.includes(selectedRecipe.value));
-const isCurrentlyBeingCrafted = computed(() => queue[0] === selectedRecipe.value);
+const isInQueue = computed(() => queue.value.includes(selectedRecipe.value));
+const isCurrentlyBeingCrafted = computed(() => queue.value[0] === selectedRecipe.value);
 </script>
 
 <template>
@@ -89,23 +96,26 @@ const isCurrentlyBeingCrafted = computed(() => queue[0] === selectedRecipe.value
           </div>
         </div>
         <button
+          v-if="isCurrentlyBeingCrafted"
           class="button mt-2.5 p-4 pt-3.5 text-center text-lg font-bold"
-          @click="
-            () =>
-              isCurrentlyBeingCrafted
-                ? cancelCrafting()
-                : isInQueue
-                  ? removeFromQueue()
-                  : onStartCrafting(quantity)
-          "
+          @click="() => cancelCrafting()"
         >
-          {{
-            isCurrentlyBeingCrafted
-              ? "Cancel crafting"
-              : isInQueue
-                ? "Remove from queue"
-                : "Begin crafting"
-          }}
+          Cancel crafting
+        </button>
+        <button
+          v-else-if="isInQueue"
+          class="button mt-2.5 p-4 pt-3.5 text-center text-lg font-bold"
+          @click="() => removeFromQueue()"
+        >
+          Remove from queue
+        </button>
+        <button
+          v-else
+          class="button mt-2.5 p-4 pt-3.5 text-center text-lg font-bold"
+          @click="() => onStartCrafting(quantity)"
+          :disabled="!canCraftSelectedRecipe"
+        >
+          Begin crafting
         </button>
       </div>
     </template>

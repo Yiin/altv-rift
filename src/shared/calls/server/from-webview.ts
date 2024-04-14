@@ -26,46 +26,32 @@ export const FromWebview = {
   TAKE_ITEM: "TAKE_ITEM",
   TAKE_ALL_ITEMS: "TAKE_ALL_ITEMS",
   CRAFT_ITEM: "CRAFT_ITEM",
+  CANCEL_CRAFTING: "CANCEL_CRAFTING",
+  REMOVE_FROM_CRAFTING_QUEUE: "REMOVE_FROM_CRAFTING_QUEUE",
 } as const;
 
-export interface CallFromWebview<
-  P extends import("@altv/server").Player = import("@altv/server").Player,
-> {
-  [FromWebview.CREATE_CHARACTER]: (
-    player: import("@altv/server").Player,
-    data: {
-      name: string;
-      appearance: Appearance;
-    },
-  ) => boolean;
-  [FromWebview.MOVE_WINDOW]: (
-    player: import("@altv/server").Player,
-    name: string,
-    screen: ScreenPosition,
-  ) => void;
-  [FromWebview.MOVE_ITEM]: (
-    player: import("@altv/server").Player,
-    from: ItemSource,
-    toSlot: ItemSource,
-    amount?: number,
-  ) => boolean;
-  [FromWebview.USE_ITEM]: (player: P, source: ItemSource) => boolean;
-  [FromWebview.EQUIP_ITEM]: (player: P, source: ItemSource) => boolean;
-  [FromWebview.UNEQUIP_ITEM]: (player: P, equipmentSlot: EquipmentSlot) => boolean;
-  [FromWebview.DROP_ITEM]: (player: P, source: ItemSource, amount: number) => boolean;
-  [FromWebview.COMBINE_ITEMS]: (player: P, sourceA: ItemSource, sourceB: ItemSource) => boolean;
-  [FromWebview.UNLOAD_AMMO]: (player: P, source: ItemSource) => boolean;
-  [FromWebview.REMOVE_BAIT]: (player: P, source: ItemSource) => boolean;
-  [FromWebview.BUY_ITEM]: (player: P, source: StorageItemSource, amount: number) => boolean;
+export interface CallFromWebview {
+  [FromWebview.CREATE_CHARACTER]: (data: { name: string; appearance: Appearance }) => boolean;
+  [FromWebview.MOVE_WINDOW]: (name: string, screen: ScreenPosition) => void;
+  [FromWebview.MOVE_ITEM]: (from: ItemSource, toSlot: ItemSource, amount?: number) => boolean;
+  [FromWebview.USE_ITEM]: (source: ItemSource) => boolean;
+  [FromWebview.EQUIP_ITEM]: (source: ItemSource) => boolean;
+  [FromWebview.UNEQUIP_ITEM]: (equipmentSlot: EquipmentSlot) => boolean;
+  [FromWebview.DROP_ITEM]: (source: ItemSource, amount: number) => boolean;
+  [FromWebview.COMBINE_ITEMS]: (sourceA: ItemSource, sourceB: ItemSource) => boolean;
+  [FromWebview.UNLOAD_AMMO]: (source: ItemSource) => boolean;
+  [FromWebview.REMOVE_BAIT]: (source: ItemSource) => boolean;
+  [FromWebview.BUY_ITEM]: (source: StorageItemSource, amount: number) => boolean;
   [FromWebview.SELL_ITEM]: (
-    player: P,
     shopSource: StorageSource,
     itemSource: PlayerInventoryItemSource,
     amount: number,
   ) => boolean;
-  [FromWebview.TAKE_ITEM]: (player: P, source: StorageItemSource) => void;
-  [FromWebview.TAKE_ALL_ITEMS]: (player: P, source: StorageSource) => void;
-  [FromWebview.CRAFT_ITEM]: (player: P, blueprintKey: BlueprintKey, recipeIndex: number) => boolean;
+  [FromWebview.TAKE_ITEM]: (source: StorageItemSource) => void;
+  [FromWebview.TAKE_ALL_ITEMS]: (source: StorageSource) => void;
+  [FromWebview.CRAFT_ITEM]: (recipeKey: string, amount: number) => boolean;
+  [FromWebview.CANCEL_CRAFTING]: () => boolean;
+  [FromWebview.REMOVE_FROM_CRAFTING_QUEUE]: (index: number) => boolean;
 }
 
 export const FromWebviewValidation = {
@@ -131,6 +117,13 @@ export const FromWebviewValidation = {
   },
   [FromWebview.CRAFT_ITEM]: {
     args: [z.string(), z.number()],
+    returns: z.boolean(),
+  },
+  [FromWebview.CANCEL_CRAFTING]: {
+    returns: z.boolean(),
+  },
+  [FromWebview.REMOVE_FROM_CRAFTING_QUEUE]: {
+    args: [z.number()],
     returns: z.boolean(),
   },
 } satisfies Record<

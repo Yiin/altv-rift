@@ -19,27 +19,24 @@ export const FromClient = {
   USE_QUICK_SLOT: "USE_QUICK_SLOT",
 } as const;
 
-export interface CallFromClient<
-  Player extends import("@altv/server").Player = import("@altv/server").Player,
-> {
-  [FromClient.GET_DISCORD_AUTH_URL]: (player: Player) => string;
-  [FromClient.TRY_CACHED_TOKEN]: (player: Player, token: string) => boolean;
-  [FromClient.BEGIN_TREE_HIT]: (player: Player, virtualTreeId: number) => number;
-  [FromClient.TREE_HIT]: (player: Player, virtualTreeId: number) => number;
-  [FromClient.RELOAD_WEAPON]: (player: Player) => boolean;
-  [FromClient.START_FISHING]: (player: Player) => void;
-  [FromClient.STOP_FISHING]: (player: Player) => void;
-  [FromClient.START_DIGGING]: (player: Player) => void;
-  [FromClient.STOP_DIGGING]: (player: Player) => void;
+export interface CallFromClient {
+  [FromClient.GET_DISCORD_AUTH_URL]: () => string;
+  [FromClient.TRY_CACHED_TOKEN]: (token: string) => boolean;
+  [FromClient.BEGIN_TREE_HIT]: (virtualTreeId: number) => number;
+  [FromClient.TREE_HIT]: (virtualTreeId: number) => number;
+  [FromClient.RELOAD_WEAPON]: () => boolean;
+  [FromClient.START_FISHING]: () => void;
+  [FromClient.STOP_FISHING]: () => void;
+  [FromClient.START_DIGGING]: () => void;
+  [FromClient.STOP_DIGGING]: () => void;
   [FromClient.TOGGLE_VEHICLE_DOOR]: (
-    player: Player,
     vehicleId: number,
     doorId: number,
     shouldClose?: boolean,
   ) => void;
-  [FromClient.OPEN_STORAGE]: (player: Player, storageId: number) => boolean;
-  [FromClient.REGISTER_KEY_PRESS]: (player: Player, key: alt.Enums.KeyCode) => void;
-  [FromClient.USE_QUICK_SLOT]: (player: Player, slot: EquipmentSlot) => boolean;
+  [FromClient.OPEN_STORAGE]: (storageId: number) => boolean;
+  [FromClient.REGISTER_KEY_PRESS]: (key: alt.Enums.KeyCode) => void;
+  [FromClient.USE_QUICK_SLOT]: (slot: EquipmentSlot) => boolean;
 }
 
 export const FromClientValidation = {
