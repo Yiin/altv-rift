@@ -14,6 +14,7 @@ export type StoreUpdatePayload =
       path: string | undefined;
       key: any;
       newValue: any;
+      length?: number;
     }
   | {
       type: TriggerOpTypes.DELETE;
@@ -44,6 +45,10 @@ export function subscribeToStore<T extends Store>(
         return;
       }
       const events = Array.isArray(mutation.events) ? mutation.events : [mutation.events];
+      // console.log(
+      //   // @ts-expect-error
+      //   JSON.stringify(events.map(({ effect, ...event }) => [event, effect.$$wtf])),
+      // );
 
       for (const event of events) {
         const path =
@@ -58,7 +63,13 @@ export function subscribeToStore<T extends Store>(
             payload = { type, path, target: deepToRaw(target) };
             break;
           case "set":
-            payload = { type, path, key, newValue: deepToRaw(newValue) };
+            payload = {
+              type,
+              path,
+              key,
+              newValue: deepToRaw(newValue),
+              length: target && Array.isArray(target) ? target.length : undefined,
+            };
             break;
           case "delete":
             payload = { type, path, key };
@@ -87,8 +98,23 @@ export function updateStoreState<S extends Store>(store: S, event: StoreUpdatePa
       break;
     }
     case "set": {
-      const { path, key, newValue } = event;
+      const { path, key, newValue, length } = event;
 
+      /**
+       * Vue $subscribe doesn't provide enough info to determine if element was
+       * removed from the array. If any other than the last element is removed,
+       * vue will report that as a "set" operation for arr[removedIndex] = arr[removedIndex + 1].
+       * To work around this, we check if the array is shorter than it was before and remove the
+       * `key` which in this case is the index of the removed element.
+       */
+      if (path && length !== undefined) {
+        const obj = get(store.$state, path);
+
+        if (obj.length > length) {
+          obj.splice(key, 1);
+          break;
+        }
+      }
       set(store.$state, `${path ? path + "." : ""}${key}`, newValue);
       break;
     }
@@ -96,10 +122,18 @@ export function updateStoreState<S extends Store>(store: S, event: StoreUpdatePa
       const { path, key } = event;
 
       if (path) {
-        if (get(store.$state, path) instanceof Set) {
-          get(store.$state, path)?.delete(key);
+        const obj = get(store.$state, path);
+
+        if (!obj) {
+          return;
+        }
+
+        if (obj instanceof Set || obj instanceof Map) {
+          obj.delete(key);
+        } else if (Array.isArray(obj)) {
+          obj.splice(key, 1);
         } else {
-          delete get(store.$state, path)[key];
+          delete obj[key];
         }
       } else {
         delete (store.$state as any)[key];
