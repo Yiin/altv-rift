@@ -39,6 +39,7 @@ Object.values(FirearmWeaponBlueprint).forEach((key) => {
     recipes: [
       // base
       {
+        key: itemKey,
         durationSeconds: 2,
         item: {
           key: itemKey,
@@ -52,6 +53,7 @@ Object.values(FirearmWeaponBlueprint).forEach((key) => {
 
       // +1
       {
+        key: itemKey + "+1",
         isUpgrade: true,
         durationSeconds: 5,
         item: {
@@ -67,6 +69,7 @@ Object.values(FirearmWeaponBlueprint).forEach((key) => {
 
       // +2
       {
+        key: itemKey + "+2",
         isUpgrade: true,
         durationSeconds: 10,
         item: {
@@ -82,6 +85,7 @@ Object.values(FirearmWeaponBlueprint).forEach((key) => {
 
       // +3
       {
+        key: itemKey + "+3",
         isUpgrade: true,
         durationSeconds: 20,
         item: {
@@ -97,6 +101,7 @@ Object.values(FirearmWeaponBlueprint).forEach((key) => {
 
       // +4
       {
+        key: itemKey + "+4",
         isUpgrade: true,
         durationSeconds: 30,
         item: {

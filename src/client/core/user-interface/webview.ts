@@ -123,6 +123,17 @@ export function clearCursor() {
   return cursorCount;
 }
 
+export function toggleWindow(windowType: WindowType) {
+  if (!clientState.ui.window || clientState.ui.window.type !== windowType) {
+    if (clientState.ui.window) {
+      closeWindow();
+    }
+    openWindow(windowType);
+  } else {
+    closeWindow();
+  }
+}
+
 export function openWindow(windowType: WindowType) {
   clientState.ui.window = {
     type: windowType,
@@ -136,6 +147,12 @@ export function closeWindow() {
 
   alt.Events.emitServer(ServerEvents.FromClient.CLOSE_WINDOW);
 }
+
+alt.Events.onKeyDown(({ key }) => {
+  if (key === alt.Enums.KeyCode.ESCAPE) {
+    closeWindow();
+  }
+});
 
 let clearedCursors = 0;
 
@@ -164,7 +181,7 @@ alt.Events.onServer(
       webview.destroy();
     }
 
-    webview = alt.WebView.create({ url: `${url}#/`, isOverlay: false });
+    webview = alt.WebView.create({ url: `${url}#/`, overlay: false });
 
     webview.on(ClientEvents.FromWebview.VIEW_READY, () => {
       webview.focused = true;

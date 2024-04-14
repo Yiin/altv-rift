@@ -10,6 +10,7 @@ import {
  * Blueprints
  */
 export type BlueprintRecipe = {
+  key: string;
   isUpgrade?: true;
   durationSeconds: number;
   item: Item;

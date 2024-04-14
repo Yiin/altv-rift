@@ -4,7 +4,13 @@ import { Item } from "../items";
 import { findFreeInventorySlot, removeItemFromInventorySlot } from "../inventory/api";
 import { BlueprintRecipe } from "./types";
 
-export function canCraftRecipe(recipe: BlueprintRecipe, inventory: Inventory): boolean {
+export enum CraftingResult {
+  OK,
+  NOT_ENOUGH_MATERIALS,
+  NO_SPACE_IN_INVENTORY,
+}
+
+export function canCraftRecipe(recipe: BlueprintRecipe, inventory: Inventory): CraftingResult {
   return craftRecipe(recipe, inventory, { isTestRun: true });
 }
 
@@ -12,7 +18,7 @@ export function craftRecipe(
   recipe: BlueprintRecipe,
   inventory: Inventory,
   { isTestRun = false } = {},
-): boolean {
+): CraftingResult {
   const { parts } = recipe;
 
   // If we're not currently in the test, we should run a test
@@ -24,8 +30,8 @@ export function craftRecipe(
   if (!isTestRun) {
     const testRunSuccess = craftRecipe(recipe, inventory, { isTestRun: true });
 
-    if (!testRunSuccess) {
-      return false;
+    if (testRunSuccess !== CraftingResult.OK) {
+      return testRunSuccess;
     }
   } else {
     inventory = deepCloneObject(inventory);
@@ -44,13 +50,21 @@ export function craftRecipe(
     return true;
   });
 
+  if (!success) {
+    return CraftingResult.NOT_ENOUGH_MATERIALS;
+  }
+
   const hasFreeSlot = findFreeInventorySlot(inventory) !== -1;
 
   if (!isTestRun && !hasFreeSlot) {
     console.warn("ERR: We tried to craft an item with no free slot in the inventory.");
   }
 
-  return success && hasFreeSlot;
+  if (!hasFreeSlot) {
+    return CraftingResult.NO_SPACE_IN_INVENTORY;
+  }
+
+  return CraftingResult.OK;
 }
 
 export function isMatchingPart(part: Item, item: Item): boolean {

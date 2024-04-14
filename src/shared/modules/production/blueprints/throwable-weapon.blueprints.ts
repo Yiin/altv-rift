@@ -20,6 +20,7 @@ registerBlueprint({
   name: `${getItemName(ThrowableWeapon.GRENADE)} blueprint`,
   recipes: [
     {
+      key: ThrowableWeapon.GRENADE,
       durationSeconds: 3,
       item: {
         key: ThrowableWeapon.GRENADE,
@@ -39,6 +40,7 @@ registerBlueprint({
   name: `${getItemName(ThrowableWeapon.STICKYBOMB)} blueprint`,
   recipes: [
     {
+      key: ThrowableWeapon.STICKYBOMB,
       durationSeconds: 3,
       item: {
         key: ThrowableWeapon.STICKYBOMB,
@@ -59,6 +61,7 @@ registerBlueprint({
   name: `${getItemName(ThrowableWeapon.SMOKEGRENADE)} blueprint`,
   recipes: [
     {
+      key: ThrowableWeapon.SMOKEGRENADE,
       durationSeconds: 3,
       item: {
         key: ThrowableWeapon.SMOKEGRENADE,
@@ -78,6 +81,7 @@ registerBlueprint({
   name: `${getItemName(ThrowableWeapon.JERRYCAN)} blueprint`,
   recipes: [
     {
+      key: ThrowableWeapon.JERRYCAN,
       durationSeconds: 3,
       item: {
         key: ThrowableWeapon.JERRYCAN,
@@ -98,6 +102,7 @@ registerBlueprint({
   name: `${getItemName(ThrowableWeapon.MOLOTOV)} blueprint`,
   recipes: [
     {
+      key: ThrowableWeapon.MOLOTOV,
       durationSeconds: 3,
       item: {
         key: ThrowableWeapon.MOLOTOV,
@@ -118,6 +123,7 @@ registerBlueprint({
   name: `${getItemName(ThrowableWeapon.HAZARDCAN)} blueprint`,
   recipes: [
     {
+      key: ThrowableWeapon.HAZARDCAN,
       durationSeconds: 3,
       item: {
         key: ThrowableWeapon.HAZARDCAN,
@@ -137,6 +143,7 @@ registerBlueprint({
   name: `${getItemName(ThrowableWeapon.BZGAS)} blueprint`,
   recipes: [
     {
+      key: ThrowableWeapon.BZGAS,
       durationSeconds: 3,
       item: {
         key: ThrowableWeapon.BZGAS,
@@ -156,6 +163,7 @@ registerBlueprint({
   name: `${getItemName(ThrowableWeapon.FLARE)} blueprint`,
   recipes: [
     {
+      key: ThrowableWeapon.FLARE,
       durationSeconds: 3,
       item: {
         key: ThrowableWeapon.FLARE,
@@ -176,6 +184,7 @@ registerBlueprint({
   name: `${getItemName(ThrowableWeapon.PROXMINE)} blueprint`,
   recipes: [
     {
+      key: ThrowableWeapon.PROXMINE,
       durationSeconds: 3,
       item: {
         key: ThrowableWeapon.PROXMINE,
@@ -195,6 +204,7 @@ registerBlueprint({
   name: `${getItemName(ThrowableWeapon.PIPEBOMB)} blueprint`,
   recipes: [
     {
+      key: ThrowableWeapon.PIPEBOMB,
       durationSeconds: 3,
       item: {
         key: ThrowableWeapon.PIPEBOMB,

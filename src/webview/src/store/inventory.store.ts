@@ -245,12 +245,7 @@ export const useInventory = defineStore("inventory", {
       return useGameState().openedStorage;
     },
     droppedItems: () => {
-      /**
-       * .filter(Boolean) doesn't really makes sense from the first glance,
-       * but it's a workaround for a bug where the item after being picked up
-       * would end up being undefined in the array for a brief moment. Idk don't ask.
-       */
-      return useClient().droppedItems.filter(Boolean);
+      return useClient().droppedItems;
     },
     size(): number {
       return this.character.inventory.size ?? 24;
@@ -265,7 +260,7 @@ export const useInventory = defineStore("inventory", {
       /**
        * Player inventory
        */
-      const inventoryItems = this.character.inventory.items.filter(Boolean);
+      const inventoryItems = this.character.inventory.items;
       if ("altMock" in globalThis) {
         inventoryItems.push(...MOCK_ITEMS);
       }
@@ -561,7 +556,7 @@ export const useInventory = defineStore("inventory", {
         return;
       }
 
-      if (this.ammunitionPanelRef?.value?.contains(e.target as HTMLElement)) {
+      if (this.ammunitionPanelRef?.contains(e.target as HTMLElement)) {
         return;
       }
 

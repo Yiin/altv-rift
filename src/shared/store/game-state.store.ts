@@ -56,6 +56,7 @@ export interface GameState {
   } | null;
   workbench: {
     queue: BlueprintRecipe[];
+    startedAt: number;
   };
 }
 
@@ -65,5 +66,6 @@ export const getDefaultGameState = (): GameState => ({
   fishingProgress: null,
   workbench: {
     queue: [],
+    startedAt: 0,
   },
 });

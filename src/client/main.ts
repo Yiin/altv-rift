@@ -21,6 +21,7 @@ import "./modules/inventory";
 import "./modules/peds";
 import "./modules/questing";
 import "./modules/skills";
+import "./modules/production";
 
 import alt from "@altv/client";
 import _ from "lodash";

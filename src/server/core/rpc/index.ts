@@ -73,9 +73,12 @@ alt.Events.onPlayer(CALL_CLIENT_FROM_SERVER_RESPONSE, (_, response) => {
 });
 
 // receive from client on server
-const registerClient = <T extends keyof typeof ServerCall.FromClient>(
+const registerClient = <
+  T extends keyof typeof ServerCall.FromClient,
+  R extends ReturnType<CallFromClient[T]>,
+>(
   name: T,
-  callback: Asyncify<CallFromClient[T]>,
+  callback: (player: alt.Player, ...args: Parameters<CallFromClient[T]>) => R | Promise<R>,
 ): void => {
   if (clientProcedures.has(name)) {
     throw new Error(`registerClient: Procedure ${name} already exists`);
@@ -171,9 +174,9 @@ alt.Events.onPlayer(CALL_WEBVIEW_FROM_SERVER_RESPONSE, (_, response) => {
 type FromWebviewKey = keyof typeof FromWebview;
 
 // receive from webview on server
-const registerWebview = <T extends FromWebviewKey>(
+const registerWebview = <T extends FromWebviewKey, R extends ReturnType<CallFromWebview[T]>>(
   name: T,
-  callback: Asyncify<CallFromWebview[T]>,
+  callback: (player: alt.Player, ...args: Parameters<CallFromWebview[T]>) => R | Promise<R>,
 ): void => {
   if (webviewProcedures.has(name)) {
     throw new Error(`registerWebview: Procedure ${name} already exists`);

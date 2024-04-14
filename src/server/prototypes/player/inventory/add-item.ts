@@ -1,3 +1,4 @@
+import { toRaw } from "vue";
 import { Player } from "@altv/server";
 import { Item } from "@shared/modules/items";
 import { ClientEvents } from "@shared/events/client";
@@ -14,7 +15,7 @@ Player.prototype.addItem = function (itemToAdd, toSlot) {
   const success = addItemToInventory(this.character.inventory, itemToAdd, toSlot);
 
   if (success) {
-    this.emitRaw(ClientEvents.FromServer.INVENTORY_ITEM_ADD, itemToAdd);
+    this.emitRaw(ClientEvents.FromServer.INVENTORY_ITEM_ADD, toRaw(itemToAdd));
   }
 
   return success;

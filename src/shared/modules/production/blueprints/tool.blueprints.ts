@@ -26,6 +26,7 @@ Object.values(ToolBlueprint).forEach((key) => {
     description: `Lets you craft and upgrade ${getItemName(itemKey)}.`,
     recipes: [
       {
+        key: itemKey,
         durationSeconds: 3,
         item: {
           key: itemKey,
@@ -37,6 +38,7 @@ Object.values(ToolBlueprint).forEach((key) => {
         ],
       },
       {
+        key: itemKey + "+1",
         isUpgrade: true,
         durationSeconds: 5,
         item: {
@@ -50,6 +52,7 @@ Object.values(ToolBlueprint).forEach((key) => {
         ],
       },
       {
+        key: itemKey + "+2",
         isUpgrade: true,
         durationSeconds: 10,
         item: {
@@ -63,6 +66,7 @@ Object.values(ToolBlueprint).forEach((key) => {
         ],
       },
       {
+        key: itemKey + "+3",
         isUpgrade: true,
         durationSeconds: 15,
         item: {
@@ -76,6 +80,7 @@ Object.values(ToolBlueprint).forEach((key) => {
         ],
       },
       {
+        key: itemKey + "+4",
         isUpgrade: true,
         durationSeconds: 20,
         item: {

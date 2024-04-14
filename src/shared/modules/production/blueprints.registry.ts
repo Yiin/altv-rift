@@ -13,3 +13,17 @@ export function getBlueprints(): Blueprint[] {
 export function getBlueprint(key: string): Blueprint | undefined {
   return blueprints.get(key);
 }
+
+export function getRecipeByKey(key: string) {
+  for (const blueprint of blueprints.values()) {
+    const recipe = blueprint.recipes.find((recipe) => recipe.key === key);
+
+    if (recipe) {
+      return {
+        recipe,
+        blueprint,
+      };
+    }
+  }
+  return null;
+}

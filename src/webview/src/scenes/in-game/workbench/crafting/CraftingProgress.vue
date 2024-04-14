@@ -1,15 +1,31 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { getItemName, getWeaponStats, isItemKeyWeapon } from "@shared/modules/items";
 import { getItemImage } from "@/utils/items";
 import { px } from "@/composables/use-pixel";
+import { useFrame } from "@/composables/use-frame";
 import ItemIcon from "../../inventory/ItemIcon.vue";
 import WorkbenchSlot from "../components/WorkbenchSlot.vue";
 import { useCrafting } from "../composables/use-crafting";
 
-const { hasRecipes, queue, selectedRecipe } = useCrafting();
+const { hasRecipes, queue, selectedRecipe, startedCraftingAt } = useCrafting();
 
-const currentlyCrafting = computed(() => queue[0]);
+const now = ref(Date.now());
+
+useFrame(() => {
+  now.value = Date.now();
+});
+
+const craftingProgress = computed(() => {
+  if (!currentlyCrafting.value) return 0;
+
+  const time = currentlyCrafting.value.durationSeconds * 1000;
+  const progress = Math.min(1, (now.value - startedCraftingAt.value) / time);
+
+  return Math.round(progress * 100);
+});
+
+const currentlyCrafting = computed(() => queue.value[0]);
 </script>
 
 <template>
@@ -101,14 +117,14 @@ const currentlyCrafting = computed(() => queue[0]);
           <div class="font-light">Clip</div>
         </WorkbenchSlot>
       </div>
-      <div class="flex w-full flex-grow flex-col justify-end">
+      <div class="flex w-full flex-grow flex-col items-center justify-end">
         <template v-if="currentlyCrafting">
-          <v-progress-linear
-            :height="px(4)"
-            model-value="20"
-            rounded-bar
-            rounded
-          />
+          <div class="h-1 w-full rounded bg-neutral-500/20">
+            <div
+              class="h-1 rounded bg-white"
+              :style="{ width: `${craftingProgress}%` }"
+            ></div>
+          </div>
           <div class="text-grey mb-6 mt-3 text-base leading-none">
             Now is crafting
             <span class="font-semibold text-white">
