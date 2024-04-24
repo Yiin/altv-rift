@@ -30,11 +30,11 @@ Object.values(ToolBlueprint).forEach((key) => {
         durationSeconds: 3,
         item: {
           key: itemKey,
-          grade: ItemGrade.BASE,
+          grade: ItemGrade.COMMON,
         } as ToolItem,
         parts: [
-          { key: Wood.COMMON_WOOD, amount: 5 },
-          { key: Metal.COMMON_METAL, amount: 5 },
+          { key: Wood.WOOD, grade: ItemGrade.COMMON, amount: 5 },
+          { key: Metal.METAL, grade: ItemGrade.COMMON, amount: 5 },
         ],
       },
       {
@@ -43,12 +43,12 @@ Object.values(ToolBlueprint).forEach((key) => {
         durationSeconds: 5,
         item: {
           key: itemKey,
-          grade: ItemGrade.ONE,
+          grade: ItemGrade.UNCOMMON,
         } as ToolItem,
         parts: [
-          { key: itemKey, grade: ItemGrade.BASE } as ToolItem,
-          { key: Wood.UNCOMMON_WOOD, amount: 5 },
-          { key: Metal.UNCOMMON_METAL, amount: 5 },
+          { key: itemKey, grade: ItemGrade.COMMON } as ToolItem,
+          { key: Wood.WOOD, grade: ItemGrade.UNCOMMON, amount: 5 },
+          { key: Metal.METAL, grade: ItemGrade.UNCOMMON, amount: 5 },
         ],
       },
       {
@@ -57,12 +57,12 @@ Object.values(ToolBlueprint).forEach((key) => {
         durationSeconds: 10,
         item: {
           key: itemKey,
-          grade: ItemGrade.TWO,
+          grade: ItemGrade.RARE,
         } as ToolItem,
         parts: [
-          { key: itemKey, grade: ItemGrade.ONE } as ToolItem,
-          { key: Wood.RARE_WOOD, amount: 5 },
-          { key: Metal.RARE_METAL, amount: 5 },
+          { key: itemKey, grade: ItemGrade.UNCOMMON } as ToolItem,
+          { key: Wood.WOOD, grade: ItemGrade.RARE, amount: 5 },
+          { key: Metal.METAL, grade: ItemGrade.RARE, amount: 5 },
         ],
       },
       {
@@ -71,12 +71,12 @@ Object.values(ToolBlueprint).forEach((key) => {
         durationSeconds: 15,
         item: {
           key: itemKey,
-          grade: ItemGrade.THREE,
+          grade: ItemGrade.EPIC,
         } as ToolItem,
         parts: [
-          { key: itemKey, grade: ItemGrade.TWO } as ToolItem,
-          { key: Wood.EPIC_WOOD, amount: 5 },
-          { key: Metal.EPIC_METAL, amount: 5 },
+          { key: itemKey, grade: ItemGrade.RARE } as ToolItem,
+          { key: Wood.WOOD, grade: ItemGrade.EPIC, amount: 5 },
+          { key: Metal.METAL, grade: ItemGrade.EPIC, amount: 5 },
         ],
       },
       {
@@ -85,12 +85,12 @@ Object.values(ToolBlueprint).forEach((key) => {
         durationSeconds: 20,
         item: {
           key: itemKey,
-          grade: ItemGrade.FOUR,
+          grade: ItemGrade.LEGENDARY,
         } as ToolItem,
         parts: [
-          { key: itemKey, grade: ItemGrade.THREE } as ToolItem,
-          { key: Wood.LEGENDARY_WOOD, amount: 5 },
-          { key: Metal.LEGENDARY_METAL, amount: 5 },
+          { key: itemKey, grade: ItemGrade.EPIC } as ToolItem,
+          { key: Wood.WOOD, grade: ItemGrade.LEGENDARY, amount: 5 },
+          { key: Metal.METAL, grade: ItemGrade.LEGENDARY, amount: 5 },
         ],
       },
     ],

@@ -43,11 +43,11 @@ Object.values(FirearmWeaponBlueprint).forEach((key) => {
         durationSeconds: 2,
         item: {
           key: itemKey,
-          grade: ItemGrade.BASE,
+          grade: ItemGrade.COMMON,
         } as FirearmWeaponItem,
         parts: [
-          { key: Metal.COMMON_METAL, amount: 5 * multiplier },
-          { key: Scrap.COMMON_SCRAP, amount: 5 * multiplier },
+          { key: Metal.METAL, grade: ItemGrade.COMMON, amount: 5 * multiplier },
+          { key: Scrap.SCRAP, grade: ItemGrade.COMMON, amount: 5 * multiplier },
         ],
       },
 
@@ -58,12 +58,12 @@ Object.values(FirearmWeaponBlueprint).forEach((key) => {
         durationSeconds: 5,
         item: {
           key: itemKey,
-          grade: ItemGrade.ONE,
+          grade: ItemGrade.UNCOMMON,
         } as FirearmWeaponItem,
         parts: [
-          { key: itemKey, grade: ItemGrade.BASE } as FirearmWeaponItem,
-          { key: Metal.UNCOMMON_METAL, amount: 10 * multiplier },
-          { key: Scrap.UNCOMMON_SCRAP, amount: 10 * multiplier },
+          { key: itemKey, grade: ItemGrade.COMMON } as FirearmWeaponItem,
+          { key: Metal.METAL, grade: ItemGrade.UNCOMMON, amount: 10 * multiplier },
+          { key: Scrap.SCRAP, grade: ItemGrade.UNCOMMON, amount: 10 * multiplier },
         ],
       },
 
@@ -74,12 +74,12 @@ Object.values(FirearmWeaponBlueprint).forEach((key) => {
         durationSeconds: 10,
         item: {
           key: itemKey,
-          grade: ItemGrade.TWO,
+          grade: ItemGrade.RARE,
         } as FirearmWeaponItem,
         parts: [
-          { key: itemKey, grade: ItemGrade.ONE } as FirearmWeaponItem,
-          { key: Metal.RARE_METAL, amount: 15 * multiplier },
-          { key: Scrap.RARE_SCRAP, amount: 15 * multiplier },
+          { key: itemKey, grade: ItemGrade.UNCOMMON } as FirearmWeaponItem,
+          { key: Metal.METAL, grade: ItemGrade.RARE, amount: 15 * multiplier },
+          { key: Scrap.SCRAP, grade: ItemGrade.RARE, amount: 15 * multiplier },
         ],
       },
 
@@ -90,12 +90,12 @@ Object.values(FirearmWeaponBlueprint).forEach((key) => {
         durationSeconds: 20,
         item: {
           key: itemKey,
-          grade: ItemGrade.THREE,
+          grade: ItemGrade.EPIC,
         } as FirearmWeaponItem,
         parts: [
-          { key: itemKey, grade: ItemGrade.TWO } as FirearmWeaponItem,
-          { key: Metal.EPIC_METAL, amount: 20 * multiplier },
-          { key: Scrap.EPIC_SCRAP, amount: 20 * multiplier },
+          { key: itemKey, grade: ItemGrade.RARE } as FirearmWeaponItem,
+          { key: Metal.METAL, grade: ItemGrade.EPIC, amount: 20 * multiplier },
+          { key: Scrap.SCRAP, grade: ItemGrade.EPIC, amount: 20 * multiplier },
         ],
       },
 
@@ -106,12 +106,12 @@ Object.values(FirearmWeaponBlueprint).forEach((key) => {
         durationSeconds: 30,
         item: {
           key: itemKey,
-          grade: ItemGrade.FOUR,
+          grade: ItemGrade.LEGENDARY,
         } as FirearmWeaponItem,
         parts: [
-          { key: itemKey, grade: ItemGrade.THREE } as FirearmWeaponItem,
-          { key: Metal.LEGENDARY_METAL, amount: 25 * multiplier },
-          { key: Scrap.LEGENDARY_SCRAP, amount: 25 * multiplier },
+          { key: itemKey, grade: ItemGrade.EPIC } as FirearmWeaponItem,
+          { key: Metal.METAL, grade: ItemGrade.LEGENDARY, amount: 25 * multiplier },
+          { key: Scrap.SCRAP, grade: ItemGrade.LEGENDARY, amount: 25 * multiplier },
         ],
       },
     ],

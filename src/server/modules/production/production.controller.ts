@@ -3,6 +3,7 @@ import { ServerCall } from "@shared/calls/server";
 import { rpc } from "@/core/rpc";
 import { needsToBeInGame } from "@/core/utility/assertions";
 import { cancelCrafting, removeFromCraftingQueue, startCrafting } from "./api/crafting.api";
+import { cancelUpgrading, upgradeItem } from "./api/upgrading.api";
 
 rpc.registerWebview(ServerCall.FromWebview.CRAFT_ITEM, (player, recipeKey, amount) => {
   needsToBeInGame(player);
@@ -41,4 +42,16 @@ rpc.registerWebview(ServerCall.FromWebview.REMOVE_FROM_CRAFTING_QUEUE, (player, 
   needsToBeInGame(player);
 
   return removeFromCraftingQueue(player, index);
+});
+
+rpc.registerWebview(ServerCall.FromWebview.UPGRADE_ITEM, (player, itemSource) => {
+  needsToBeInGame(player);
+
+  return upgradeItem(player, itemSource);
+});
+
+rpc.registerWebview(ServerCall.FromWebview.CANCEL_UPGRADING, (player) => {
+  needsToBeInGame(player);
+
+  return cancelUpgrading(player);
 });

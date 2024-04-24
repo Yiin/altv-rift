@@ -40,7 +40,7 @@ watch(
 
 <template>
   <div
-    class="relative flex items-center justify-center p-2 text-white"
+    class="relative flex items-center justify-center p-2 text-left text-white"
     :style="{
       width: width ?? `${px(80)}px`,
       height: height ?? `${px(80)}px`,
@@ -68,18 +68,42 @@ watch(
       }"
     />
     <p
-      v-if="'grade' in item && item.grade"
-      class="absolute left-2 top-1 w-full font-mono text-lg font-extrabold uppercase"
+      v-if="'grade' in item"
+      class="absolute right-2 top-0 font-mono text-lg font-extrabold uppercase"
       :class="
         {
-          [ItemGrade.ONE]: `text-gray-300`,
-          [ItemGrade.TWO]: `text-yellow-400`,
-          [ItemGrade.THREE]: `text-main-500`,
-          [ItemGrade.FOUR]: `text-red-500`,
+          [ItemGrade.COMMON]: `text-common`,
+          [ItemGrade.UNCOMMON]: `text-uncommon`,
+          [ItemGrade.RARE]: `text-rare`,
+          [ItemGrade.EPIC]: `text-epic`,
+          [ItemGrade.LEGENDARY]: `text-legendary`,
+          [ItemGrade.CONTRABAND]: `text-contraband`,
+          [ItemGrade.LIMITED]: `text-limited`,
         }[item.grade]
       "
     >
-      {{ item.grade }}
+      •
+    </p>
+    <p
+      v-else-if="
+        ['common_', 'uncommon_', 'rare_', 'epic_', 'legendary_'].some((grade) =>
+          item.key.startsWith(grade),
+        )
+      "
+      class="absolute right-2 top-0 font-mono text-lg font-extrabold uppercase"
+      :class="
+        {
+          [ItemGrade.COMMON]: `text-common`,
+          [ItemGrade.UNCOMMON]: `text-uncommon`,
+          [ItemGrade.RARE]: `text-rare`,
+          [ItemGrade.EPIC]: `text-epic`,
+          [ItemGrade.LEGENDARY]: `text-legendary`,
+          [ItemGrade.CONTRABAND]: `text-contraband`,
+          [ItemGrade.LIMITED]: `text-limited`,
+        }[item.key.split(`_`)[0]]
+      "
+    >
+      •
     </p>
     <div
       v-if="`amount` in item && !hideAmount"

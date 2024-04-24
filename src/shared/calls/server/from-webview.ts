@@ -7,6 +7,7 @@ import {
   StorageSource,
   ItemSource,
   PlayerInventoryItemSource,
+  PlayerItemSource,
 } from "../../interfaces";
 import { schema } from "../validation";
 
@@ -28,6 +29,8 @@ export const FromWebview = {
   CRAFT_ITEM: "CRAFT_ITEM",
   CANCEL_CRAFTING: "CANCEL_CRAFTING",
   REMOVE_FROM_CRAFTING_QUEUE: "REMOVE_FROM_CRAFTING_QUEUE",
+  UPGRADE_ITEM: "UPGRADE_ITEM",
+  CANCEL_UPGRADING: "CANCEL_UPGRADING",
 } as const;
 
 export interface CallFromWebview {
@@ -52,6 +55,8 @@ export interface CallFromWebview {
   [FromWebview.CRAFT_ITEM]: (recipeKey: string, amount: number) => boolean;
   [FromWebview.CANCEL_CRAFTING]: () => boolean;
   [FromWebview.REMOVE_FROM_CRAFTING_QUEUE]: (index: number) => boolean;
+  [FromWebview.UPGRADE_ITEM]: (itemSource: PlayerItemSource) => boolean;
+  [FromWebview.CANCEL_UPGRADING]: () => boolean;
 }
 
 export const FromWebviewValidation = {
@@ -124,6 +129,13 @@ export const FromWebviewValidation = {
   },
   [FromWebview.REMOVE_FROM_CRAFTING_QUEUE]: {
     args: [z.number()],
+    returns: z.boolean(),
+  },
+  [FromWebview.UPGRADE_ITEM]: {
+    args: [schema.playerItemSource],
+    returns: z.boolean(),
+  },
+  [FromWebview.CANCEL_UPGRADING]: {
     returns: z.boolean(),
   },
 } satisfies Record<

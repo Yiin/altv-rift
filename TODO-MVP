@@ -13,7 +13,7 @@ Introduction MVP:
       ☐ Random boxes in the world
   Weapon:
     ☐ Craft basic weapon
-      ☐ Crafting menu (just basic UI, no design)
+      ✔ Crafting menu @done
     ☐ Use items on zombie boar - 3 hits to kill
     ☐ Upgrade weapon with fire ammo as a gift - omg
     ☐ Use upgraded on more zombie boars - 1 hit + effect to kill
@@ -116,11 +116,12 @@ Workbench:
     ☐ Item components
       - Used for crafting weapons/ammo/tools
     ☐ Scrap
+      - Collecting of scrap
       - Craft item components using scraps
     ☐ Ores
-      - Melt ores into metal(?)
+      - Melt ores into metal
     ☐ Tree logs
-      - Process tree logs into wood(?)
+      - Process tree logs into wood
     ☐ Metal(?)
       - Used for crafting weapons/ammo/tools
     ☐ Wood(?)
@@ -139,21 +140,21 @@ Workbench:
         For now only 2 types: female & male versions of black utility vest
     ✔ Materials @done(24-03-17 23:53)
       ✔ Item components @done(24-03-17 23:53)
-  ☐ Crafting UI for weapons
+  ✔ Crafting UI for weapons @done
     ✔ UI itself @done(24-03-12 04:20)
-    ☐ The actual integration of that UI
+    ✔ The actual integration of that UI @done
       - Crafting of items using blueprints:
         - Crafting tables
       - Upgrading items:
         - Crafting tables
         - Workbench
-  ☐ Quick slots
-    ☐ Weapons
-    ☐ Clothing
-    ☐ Ammo
-    ☐ Tools
+  ✔ Quick slots @done
+    ✔ Weapons @done
+    ✔ Clothing @done
+    ✔ Ammo @done
+    ✔ Tools @done
       - Equips the uten and puts previous item in quick slot position
-    ☐ Materials
+    ✔ Materials @done
       - Can't be equipped
 
 player prototype:

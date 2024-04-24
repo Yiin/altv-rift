@@ -53,9 +53,9 @@ export default {
     if (isItemKeyFirearmWeapon(itemKey)) {
       return createItem(itemKey, {
         grade: rollItem([
-          [30, ItemGrade.TWO],
-          [50, ItemGrade.THREE],
-          [5, ItemGrade.FOUR],
+          [30, ItemGrade.RARE],
+          [50, ItemGrade.EPIC],
+          [5, ItemGrade.LEGENDARY],
         ]),
         clip: createItem(getAmmoKeyForAmmoGroup(getWeaponAmmoGroup(itemKey)), {
           amount: getWeaponClipSize(itemKey),

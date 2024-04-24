@@ -3,18 +3,18 @@ import { ref } from "vue";
 import BackButtons from "@/components/buttons/BackButtons.vue";
 import DarkBackground from "@/components/DarkBackground.vue";
 import CraftingView from "@/scenes/in-game/workbench/CraftingView.vue";
-import UpgradesView from "@/scenes/in-game/workbench/UpgradesView.vue";
+import UpgradingView from "@/scenes/in-game/workbench/UpgradingView.vue";
 import GearIcon from "./icons/GearIcon.vue";
 import WrenchIcon from "./icons/WrenchIcon.vue";
 
 enum View {
   CRAFTING,
-  UPGRADES,
+  UPGRADING,
 }
 
 const links = [
   [View.CRAFTING, "Crafting"],
-  [View.UPGRADES, "Upgrades"],
+  [View.UPGRADING, "Upgrades"],
 ] as const;
 
 const view = ref<View>(View.CRAFTING);
@@ -24,7 +24,7 @@ const view = ref<View>(View.CRAFTING);
   <div class="relative flex h-full w-full flex-col px-20 pb-17 pt-20">
     <DarkBackground bg-class="bg-black" />
     <div class="mx-auto flex w-full items-center justify-between">
-      <div>
+      <div class="pointer-events-none">
         <v-img
           :src="`./assets/workbench/logo.svg`"
           class="h-[3.88875rem] w-[9.84rem]"
@@ -48,7 +48,7 @@ const view = ref<View>(View.CRAFTING);
             class="-mb-2 h-11.5 w-11.5"
           />
           <GearIcon
-            v-if="link === View.UPGRADES"
+            v-if="link === View.UPGRADING"
             :active="view === link"
             class="-mb-2 h-11.5 w-11.5"
           />
@@ -65,6 +65,6 @@ const view = ref<View>(View.CRAFTING);
       <BackButtons />
     </div>
     <CraftingView v-if="view === View.CRAFTING" />
-    <UpgradesView v-else-if="view === View.UPGRADES" />
+    <UpgradingView v-else-if="view === View.UPGRADING" />
   </div>
 </template>

@@ -288,3 +288,20 @@ body {
   border-image: linear-gradient(to bottom, #fff, transparent) 1;
   @apply absolute left-0 top-0 -z-10 h-full w-full border border-solid border-transparent bg-clip-padding;
 }
+
+.absolute-center {
+  @apply absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2;
+}
+.absolute-center-x {
+  @apply absolute left-1/2 -translate-x-1/2;
+}
+.absolute-center-y {
+  @apply absolute top-1/2 -translate-y-1/2;
+}
+
+.text-limited {
+  background: linear-gradient(270deg, #FCFF62 0%, #7BFF29 18.5%, #28CBA4 37%, #06F 54.5%, #904CB9 69%, #B73F3F 82%, #EE9D24 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

@@ -1,18 +1,24 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { type Item, getItemName } from "@shared/modules/items";
+import { useClient } from "@/store/synced/client.store";
 import ItemIcon from "../inventory/ItemIcon.vue";
 
 const props = defineProps<{
   item: Item;
 }>();
 
+const isWindowOpened = computed(() => useClient().ui.window !== null);
+
 const name = computed(() => getItemName(props.item.key));
 const amount = computed(() => ("amount" in props.item ? props.item.amount : 1));
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center">
+  <div
+    class="flex flex-col items-center justify-center"
+    :class="[isWindowOpened && '-mt-4 rounded-3xl bg-black/95 p-4']"
+  >
     <div class="text-center text-base font-semibold text-white opacity-70">You received item</div>
     <div class="text-center text-base font-bold text-white">{{ name }}</div>
     <svg

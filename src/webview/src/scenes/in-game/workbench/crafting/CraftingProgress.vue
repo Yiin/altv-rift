@@ -1,11 +1,20 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { getItemName, getWeaponStats, isItemKeyWeapon } from "@shared/modules/items";
+import {
+  getAmmoDamageMultiplier,
+  getItemName,
+  getWeaponStats,
+  isItemAmmo,
+  isItemKeyAmmo,
+  isItemFirearmWeapon,
+  isItemKeyThrowableWeapon,
+  getWeaponDamage,
+} from "@shared/modules/items";
 import { getItemImage } from "@/utils/items";
-import { px } from "@/composables/use-pixel";
 import { useFrame } from "@/composables/use-frame";
 import ItemIcon from "../../inventory/ItemIcon.vue";
 import WorkbenchSlot from "../components/WorkbenchSlot.vue";
+import ItemBadge from "../components/ItemBadge.vue";
 import { useCrafting } from "../composables/use-crafting";
 
 const { hasRecipes, queue, selectedRecipe, startedCraftingAt } = useCrafting();
@@ -22,7 +31,7 @@ const craftingProgress = computed(() => {
   const time = currentlyCrafting.value.durationSeconds * 1000;
   const progress = Math.min(1, (now.value - startedCraftingAt.value) / time);
 
-  return Math.round(progress * 100);
+  return progress * 100;
 });
 
 const currentlyCrafting = computed(() => queue.value[0]);
@@ -58,14 +67,16 @@ const currentlyCrafting = computed(() => queue.value[0]);
           </WorkbenchSlot>
         </div>
       </div>
-      <div>
+      <div class="pointer-events-none">
         <div class="flex justify-center">
-          <img
-            :src="`./assets/workbench/weapon-ornament.svg`"
-            class="align-self-center h-69.5 w-48.75"
-          />
+          <ItemBadge :grade="'grade' in selectedRecipe.item ? selectedRecipe.item.grade : 'none'" />
           <v-img
             class="absolute h-66.5 w-135"
+            :class="{
+              '-mt-4 scale-50':
+                isItemKeyAmmo(selectedRecipe.item.key) ||
+                isItemKeyThrowableWeapon(selectedRecipe.item.key),
+            }"
             :src="getItemImage(selectedRecipe.item.key)"
           />
         </div>
@@ -76,8 +87,9 @@ const currentlyCrafting = computed(() => queue.value[0]);
           class="align-self-center h-3 w-18.5"
         />
       </div>
+      <div class="-mt-4 mb-8 text-3xl font-bold">{{ getItemName(selectedRecipe.item.key) }}</div>
       <div
-        v-if="isItemKeyWeapon(selectedRecipe.item.key)"
+        v-if="isItemFirearmWeapon(selectedRecipe.item)"
         class="flex justify-center gap-3.5"
       >
         <WorkbenchSlot
@@ -85,7 +97,12 @@ const currentlyCrafting = computed(() => queue.value[0]);
           static
         >
           <h3 class="text-3xl font-bold text-red-500">
-            {{ (getWeaponStats(selectedRecipe.item.key).timeBetweenShots * 60).toFixed(2) }}
+            {{
+              (getWeaponStats(selectedRecipe.item.key).timeBetweenShots * 60)
+                .toFixed(2)
+                .replace(/0+$/g, "")
+                .replace(/\.$/g, "")
+            }}
           </h3>
           <div class="font-light">Fire rate</div>
         </WorkbenchSlot>
@@ -103,18 +120,35 @@ const currentlyCrafting = computed(() => queue.value[0]);
           static
         >
           <h3 class="text-3xl font-bold text-red-500">
-            {{ getWeaponStats(selectedRecipe.item.key).damage }}
+            {{ getWeaponDamage(selectedRecipe.item.key, selectedRecipe.item.grade) }}
           </h3>
           <div class="font-light">Damage</div>
         </WorkbenchSlot>
         <WorkbenchSlot
           class="h-22.5 w-22.5 flex-col"
+          v-if="getWeaponStats(selectedRecipe.item.key).clipSize"
           static
         >
           <h3 class="text-3xl font-bold text-red-500">
             {{ getWeaponStats(selectedRecipe.item.key).clipSize }}
           </h3>
           <div class="font-light">Clip</div>
+        </WorkbenchSlot>
+      </div>
+      <div
+        v-else-if="isItemAmmo(selectedRecipe.item)"
+        class="flex justify-center gap-3.5"
+      >
+        <WorkbenchSlot
+          class="h-22.5 w-22.5 flex-col"
+          v-if="getAmmoDamageMultiplier(selectedRecipe.item.key)"
+          static
+        >
+          <h3 class="text-3xl font-bold text-red-500">
+            <span class="text-lg">x</span>
+            {{ getAmmoDamageMultiplier(selectedRecipe.item.key) }}
+          </h3>
+          <div class="font-light">Dmg</div>
         </WorkbenchSlot>
       </div>
       <div class="flex w-full flex-grow flex-col items-center justify-end">
@@ -126,7 +160,7 @@ const currentlyCrafting = computed(() => queue.value[0]);
             ></div>
           </div>
           <div class="text-grey mb-6 mt-3 text-base leading-none">
-            Now is crafting
+            Crafting
             <span class="font-semibold text-white">
               {{ getItemName(currentlyCrafting.item.key) }}
             </span>

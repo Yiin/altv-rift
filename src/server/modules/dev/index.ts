@@ -17,7 +17,7 @@ registerCmd("s", (player) => {
     const randomKey = keys[Math.floor(Math.random() * keys.length)];
 
     // generate random grade
-    const grades = [ItemGrade.BASE, ItemGrade.ONE, ItemGrade.TWO, ItemGrade.THREE, ItemGrade.FOUR];
+    const grades = [ItemGrade.COMMON, ItemGrade.UNCOMMON, ItemGrade.RARE, ItemGrade.EPIC, ItemGrade.LEGENDARY];
     const randomGrade = grades[Math.floor(Math.random() * grades.length)];
 
     // generate random amount

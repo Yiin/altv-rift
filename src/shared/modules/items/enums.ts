@@ -8,11 +8,13 @@ export enum ItemFlags {
 }
 
 export enum ItemGrade {
-  BASE = "",
-  ONE = "+",
-  TWO = "++",
-  THREE = "+++",
-  FOUR = "++++",
+  COMMON = "common",
+  UNCOMMON = "uncommon",
+  RARE = "rare",
+  EPIC = "epic",
+  LEGENDARY = "legendary",
+  CONTRABAND = "contraband",
+  LIMITED = "limited",
 }
 
 export enum ItemTier {

@@ -88,28 +88,28 @@ const weapon = computed(() => {
 <template>
   <div
     v-if="weapon"
-    class="absolute right-0 top-1/3 m-10 flex flex-col items-end gap-2"
+    class="absolute right-0 top-1/3 m-10 flex flex-col items-end gap-1"
   >
     <div
-      class="z-max h-40 w-40 origin-bottom-right bg-contain bg-right-bottom"
+      class="z-max h-15 w-30 origin-bottom-right bg-contain bg-right-bottom"
       :class="[getItemClasses(weapon.item)]"
       :style="{
         backgroundImage: `url(${getItemImage(weapon.item.key)})`,
       }"
     />
-    <div class="text-2xl font-bold text-white">{{ weapon.name }}</div>
+    <div class="text-base font-bold text-white">{{ weapon.name }}</div>
     <template v-if="weapon.type === 'firearm'">
       <div
         v-if="weapon.ammo"
-        class="rounded bg-yellow-500 px-2 pt-1 font-bold uppercase text-black"
+        class="rounded bg-yellow-500 px-1 text-xs font-bold uppercase text-black"
       >
         {{ getItemName(weapon.ammo.key) }}
       </div>
       <div class="flex items-end gap-2">
-        <span class="text-4xl text-white">{{ weapon.clip }}</span>
+        <span class="text-2xl text-white">{{ weapon.clip }}</span>
         <span
           v-if="weapon.hasClip"
-          class="text-xl text-white/50"
+          class="text-base text-white/50"
         >
           {{ weapon.rest }}
         </span>
@@ -117,7 +117,7 @@ const weapon = computed(() => {
     </template>
     <template v-if="weapon.type === 'throwable'">
       <div class="flex items-end gap-2">
-        <span class="text-4xl text-white">{{ weapon.amount }}</span>
+        <span class="text-2xl text-white">{{ weapon.amount }}</span>
       </div>
     </template>
   </div>

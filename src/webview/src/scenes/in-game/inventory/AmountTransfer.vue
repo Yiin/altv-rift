@@ -88,7 +88,7 @@ const itemName = computed(() => getItemName(props.item.item.key));
 
     <div class="mt-4 flex gap-2">
       <button
-        @click="() => inventory.confirmAmountTransfer(amount)"
+        @click.stop="() => inventory.confirmAmountTransfer(amount)"
         type="button"
         class="rounded bg-green-700 px-4 py-2 text-sm font-medium text-white transition-all hover:bg-green-600"
       >

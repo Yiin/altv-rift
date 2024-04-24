@@ -1,5 +1,5 @@
 import alt from "@altv/shared";
-import { Inventory, StorageSource } from "@shared/interfaces";
+import { Inventory, PlayerItemSource, StorageSource } from "@shared/interfaces";
 import { FishBaitItemKey } from "@shared/modules/items";
 import { BlueprintRecipe } from "@shared/modules/production";
 
@@ -57,6 +57,11 @@ export interface GameState {
   workbench: {
     queue: BlueprintRecipe[];
     startedAt: number;
+    upgrading: {
+      startedAt: number;
+      recipe: BlueprintRecipe;
+      itemSource: PlayerItemSource;
+    } | null;
   };
 }
 
@@ -67,5 +72,6 @@ export const getDefaultGameState = (): GameState => ({
   workbench: {
     queue: [],
     startedAt: 0,
+    upgrading: null,
   },
 });

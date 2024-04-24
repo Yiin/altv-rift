@@ -8,8 +8,10 @@ import {
   AmmoBlueprint,
   ClothingBlueprint,
   WeaponComponentBlueprint,
+  canCraftRecipe,
   type BlueprintRecipe,
 } from "@shared/modules/production";
+import { getItemName } from "@shared/modules/items";
 import { useCharacter } from "@/store/synced/character.store";
 import { px } from "@/composables/use-pixel";
 import ItemIcon from "../../inventory/ItemIcon.vue";
@@ -62,6 +64,9 @@ const categories = {
 
 const character = useCharacter();
 
+const hideUnavailable = ref(true);
+const search = ref("");
+
 const recipesContainerRef = ref<HTMLDivElement>();
 const recipesContainerHeight = computed(() => {
   if (!recipesContainerRef.value) return 0;
@@ -78,7 +83,14 @@ const recipesByCategory = computed(() => {
     (acc, { name, blueprints }) => {
       const blueprintRecipes = Object.values(blueprints)
         .filter((blueprint) => character.blueprints.includes(blueprint))
-        .flatMap((blueprint) => getBlueprintRecipes(blueprint));
+        .flatMap((blueprint) => getBlueprintRecipes(blueprint))
+        .filter((recipe) => !hideUnavailable.value || canCraftRecipe(recipe, character.inventory))
+        .filter(
+          (recipe) =>
+            getItemName(recipe.item.key).toLowerCase().includes(search.value.toLowerCase()) ||
+            ("grade" in recipe.item &&
+              recipe.item.grade.toLowerCase() === search.value.toLowerCase()),
+        );
 
       if (blueprintRecipes.length > 0) {
         acc[name] = blueprintRecipes;
@@ -101,9 +113,20 @@ const recipesByCategory = computed(() => {
       type="text"
       class="mb-5 mt-2 w-75 rounded border border-solid border-white/10 px-5 py-5 text-xl focus-within:outline-neutral-500 focus-visible:outline"
       placeholder="Type name of..."
+      v-model="search"
     />
     <div>
-      <div class="mb-6 flex flex-wrap items-center justify-between">
+      <div class="mb-6 flex w-105.5 flex-wrap items-center justify-between">
+        <div class="mb-2 flex items-center gap-2.5">
+          <WorkbenchSlot
+            @click="hideUnavailable = !hideUnavailable"
+            :selected="hideUnavailable"
+            class="h-11 w-11 p-2.5"
+          >
+            <v-icon icon="mdi-check" />
+          </WorkbenchSlot>
+          <div>Show only available recipes</div>
+        </div>
         <div class="flex flex-wrap gap-2.5">
           <WorkbenchSlot
             v-for="category in Object.values(CategoryFilter)"
@@ -115,7 +138,7 @@ const recipesByCategory = computed(() => {
             <img
               v-if="category !== 'all'"
               :src="`./assets/workbench/categories/${category}.svg`"
-              class="h-4 w-4"
+              :class="[category === 'weapon_components' ? 'h-6 w-6' : 'h-4 w-4']"
             />
             <span
               v-else
@@ -143,6 +166,7 @@ const recipesByCategory = computed(() => {
             v-for="(recipe, index) in recipes"
             :key="`${recipe.item.key}-${index}`"
             class="h-18.75 w-18.75 p-0"
+            :class="{ 'opacity-50': !canCraftRecipe(recipe, character.inventory) }"
             :selected="JSON.stringify(selectedRecipe) === JSON.stringify(recipe)"
           >
             <ItemIcon

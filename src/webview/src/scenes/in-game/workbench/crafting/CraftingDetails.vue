@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { getItemName, getItemDescription } from "@shared/modules/items";
+import { hasMatchingPart } from "@shared/modules/production";
+import { useCharacter } from "@/store/synced/character.store";
 import ItemIcon from "../../inventory/ItemIcon.vue";
 import { useQuantity } from "../composables/use-quantity";
 import WorkbenchSlot from "../components/WorkbenchSlot.vue";
@@ -15,6 +17,7 @@ const {
   canCraftSelectedRecipe,
 } = useCrafting();
 
+const character = useCharacter();
 const { quantity, handleQuantityInput, handleQuantityKeydown, handleQuantityPaste } = useQuantity();
 
 const isInQueue = computed(() => queue.value.includes(selectedRecipe.value));
@@ -38,6 +41,7 @@ const isCurrentlyBeingCrafted = computed(() => queue.value[0] === selectedRecipe
         >
           <ItemIcon
             class="mt-5"
+            :class="{ 'opacity-50': !hasMatchingPart(part, character.inventory) }"
             :item="part"
             width="4.45rem"
             height="4.45rem"
@@ -50,14 +54,14 @@ const isCurrentlyBeingCrafted = computed(() => queue.value[0] === selectedRecipe
       <div class="mb-18.75 flex w-56.25 flex-grow flex-col justify-end">
         <div class="mb-4 text-xl font-bold">Crafting information</div>
         <div class="mb-4 flex justify-end gap-2">
-          <div
+          <!-- <div
             class="rounded-md border border-solid border-neutral-400/10 bg-neutral-400/5 px-3.25 py-2.75"
           >
             <div class="whitespace-nowrap text-right text-xs font-bold uppercase text-neutral-400">
               Success rate
             </div>
             <div class="text-right text-xl font-bold text-amber-300">32%</div>
-          </div>
+          </div> -->
           <div
             class="rounded-md border border-solid border-neutral-400/10 bg-neutral-400/5 px-3.25 py-2.75"
           >
@@ -128,8 +132,12 @@ const isCurrentlyBeingCrafted = computed(() => queue.value[0] === selectedRecipe
   background-size: contain;
 }
 
-.button:hover {
+.button:not(:disabled):hover {
   background: url("../../../../../public/assets/workbench/button-background-hovered.svg");
   background-size: contain;
+}
+
+.button:disabled {
+  filter: grayscale(1);
 }
 </style>

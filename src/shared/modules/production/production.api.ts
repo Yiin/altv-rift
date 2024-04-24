@@ -10,8 +10,8 @@ export enum CraftingResult {
   NO_SPACE_IN_INVENTORY,
 }
 
-export function canCraftRecipe(recipe: BlueprintRecipe, inventory: Inventory): CraftingResult {
-  return craftRecipe(recipe, inventory, { isTestRun: true });
+export function canCraftRecipe(recipe: BlueprintRecipe, inventory: Inventory): boolean {
+  return craftRecipe(recipe, inventory, { isTestRun: true }) === CraftingResult.OK;
 }
 
 export function craftRecipe(
@@ -37,7 +37,7 @@ export function craftRecipe(
     inventory = deepCloneObject(inventory);
   }
 
-  const success = parts.every((part) => {
+  const success = parts.every((part, index) => {
     const inventoryItem = inventory.items.find((inventoryItem) =>
       isMatchingPart(part, inventoryItem.item),
     );
@@ -46,7 +46,17 @@ export function craftRecipe(
       return false;
     }
 
-    removeItemFromInventorySlot(inventory, inventoryItem.slot, "amount" in part ? part.amount : 1);
+    /**
+     * In upgrades, first part is always the item we're upgrading,
+     * so we need to skip it when removing materials from inventory.
+     */
+    if (!recipe.isUpgrade || index > 0) {
+      removeItemFromInventorySlot(
+        inventory,
+        inventoryItem.slot,
+        "amount" in part ? part.amount : 1,
+      );
+    }
     return true;
   });
 
@@ -65,6 +75,10 @@ export function craftRecipe(
   }
 
   return CraftingResult.OK;
+}
+
+export function hasMatchingPart(part: Item, inventory: Inventory): boolean {
+  return inventory.items.some((inventoryItem) => isMatchingPart(part, inventoryItem.item));
 }
 
 export function isMatchingPart(part: Item, item: Item): boolean {

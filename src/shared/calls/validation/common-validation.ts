@@ -171,6 +171,7 @@ export const playerInventoryItemSource = playerInventorySource.extend({
 export const playerEquipmentItemSource = PlayerEquipmentSource.extend({
   equipmentSlot: equipmentSlot,
 });
+export const playerItemSource = z.union([playerInventoryItemSource, playerEquipmentItemSource]);
 export const storageItemSource = storageSource.extend({
   inventorySlot: z.number(),
 });

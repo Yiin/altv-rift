@@ -1,5 +1,6 @@
 import { Item } from "../../types";
 import { getItemInfoByKey } from "../../items-registry";
+import { ItemGrade } from "../../enums";
 import WEAPON_DATA from "./weapons-data.json";
 import {
   FirearmWeaponItem,
@@ -120,6 +121,32 @@ export function getWeaponGroup(key: WeaponItemKey): WeaponGroup {
 
 export function getWeaponAmmoGroup(key: FirearmWeaponItemKey): AmmoGroup {
   return getItemInfoByKey(key).ammoGroup;
+}
+
+export function getWeaponDamageMultiplier(key: WeaponItemKey, grade: ItemGrade) {
+  const damage = getWeaponStats(key).damage;
+
+  // compute a multiples that would result in rounded damage
+  switch (grade) {
+    case ItemGrade.COMMON:
+      return 1;
+    case ItemGrade.UNCOMMON:
+      return Math.ceil(damage * 2) / damage;
+    case ItemGrade.RARE:
+      return Math.ceil(damage * 4) / damage;
+    case ItemGrade.EPIC:
+      return Math.ceil(damage * 8) / damage;
+    case ItemGrade.LEGENDARY:
+      return Math.ceil(damage * 16) / damage;
+    case ItemGrade.CONTRABAND:
+      return Math.ceil(damage * 32) / damage;
+    case ItemGrade.LIMITED:
+      return Math.ceil(damage * 64) / damage;
+  }
+}
+
+export function getWeaponDamage(key: WeaponItemKey, grade: ItemGrade): number {
+  return getWeaponStats(key).damage * getWeaponDamageMultiplier(key, grade);
 }
 
 export function isItemKeyWeapon(key: string): key is WeaponItemKey {
