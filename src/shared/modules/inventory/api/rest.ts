@@ -14,7 +14,7 @@ export function getInventoryItem<T extends Item>(
   item: T,
 ): InventoryItem<T> | undefined {
   return inventory.items.find((inventoryItem): inventoryItem is InventoryItem<T> =>
-    isEqual(inventoryItem.item, item),
+    isMatchingItem(inventoryItem.item, item),
   );
 }
 
@@ -44,4 +44,16 @@ export function isEquipmentSlotQuickSlot(
   ].includes(slot);
 
   return isQuickSlot;
+}
+
+export function isMatchingItem(part: Item, item: Item): boolean {
+  if (part.key !== item.key) {
+    return false;
+  }
+
+  if ("grade" in part && "grade" in item && part.grade !== item.grade) {
+    return false;
+  }
+
+  return true;
 }

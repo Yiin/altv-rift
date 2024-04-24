@@ -12,6 +12,7 @@ import {
   isSameItemSource,
   useInventory,
 } from "@/store/inventory.store";
+import ItemIcon from "./ItemIcon.vue";
 import InventoryItemIcon from "./InventoryItemIcon.vue";
 
 const props = defineProps<{
@@ -45,19 +46,17 @@ const draggingOver = computed(() => {
 
   if (interaction.type === InteractionType.Dragging && !interaction.maybe) {
     const currentCursorPos = interaction.state.currentPosition;
+    const itemSource = inventory.getItemSourceFromScreenPos(currentCursorPos.x, currentCursorPos.y);
 
-    const nodeRect = nodeRef.value?.parentElement?.getBoundingClientRect();
-
-    if (!nodeRect) {
+    if (!itemSource) {
       return false;
     }
 
-    return (
-      currentCursorPos.x > nodeRect.left &&
-      currentCursorPos.x <= nodeRect.right &&
-      currentCursorPos.y > nodeRect.top &&
-      currentCursorPos.y <= nodeRect.bottom
-    );
+    if (!isSameItemSource(itemSource, props.source)) {
+      return false;
+    }
+
+    return interaction.state;
   }
 
   return false;
@@ -105,6 +104,11 @@ inventory.registerItemSlot({
         :item="item"
         @dblclick="useOrEquipItem"
         @contextmenu.prevent="(e) => item && inventory.openContextMenu(item, e)"
+      />
+      <ItemIcon
+        v-else-if="draggingOver"
+        :item="draggingOver.item.item"
+        class="opacity-25"
       />
     </div>
   </div>

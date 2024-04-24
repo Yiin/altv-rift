@@ -7,6 +7,7 @@ import {
   getAmmoDamageMultiplier,
   getWeaponAmmoEquipmentSlot,
   isWeaponWithClip,
+  getWeaponDamageMultiplier,
 } from "@shared/modules/items";
 import { isInGame } from "@/core/utility/assertions";
 
@@ -41,6 +42,7 @@ alt.Events.onWeaponDamage(
     }
 
     const initialDamage = damage;
+    damage *= getWeaponDamageMultiplier(equipedWeapon.key, equipedWeapon.grade);
     damage *= getAmmoDamageMultiplier(ammoKey);
     damage *= getBodyPartDamageMultiplier(bodyPart);
 

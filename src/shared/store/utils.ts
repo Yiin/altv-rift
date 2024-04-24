@@ -115,7 +115,7 @@ export function updateStoreState<S extends Store>(store: S, event: StoreUpdatePa
           break;
         }
       }
-      set(store.$state, `${path ? path + "." : ""}${key}`, newValue);
+      set(store.$state, [path, key].filter(Boolean).join("."), newValue);
       break;
     }
     case "delete": {

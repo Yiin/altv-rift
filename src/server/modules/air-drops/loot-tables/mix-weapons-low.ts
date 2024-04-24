@@ -67,9 +67,9 @@ export default {
     if (isItemKeyFirearmWeapon(itemKey)) {
       return createItem(itemKey, {
         grade: rollItem([
-          [50, ItemGrade.ONE],
-          [30, ItemGrade.TWO],
-          [5, ItemGrade.THREE],
+          [50, ItemGrade.UNCOMMON],
+          [30, ItemGrade.RARE],
+          [5, ItemGrade.EPIC],
         ]),
         clip: createItem(getAmmoKeyForAmmoGroup(getWeaponAmmoGroup(itemKey)), {
           amount: getWeaponClipSize(itemKey),
@@ -84,10 +84,10 @@ export default {
     if (isItemKeyMeleeWeapon(itemKey)) {
       return createItem(itemKey, {
         grade: rollItem([
-          [50, ItemGrade.ONE],
-          [30, ItemGrade.TWO],
-          [10, ItemGrade.THREE],
-          [5, ItemGrade.FOUR],
+          [50, ItemGrade.UNCOMMON],
+          [30, ItemGrade.RARE],
+          [10, ItemGrade.EPIC],
+          [5, ItemGrade.LEGENDARY],
         ]),
       });
     }

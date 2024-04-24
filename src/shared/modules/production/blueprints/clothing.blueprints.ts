@@ -22,12 +22,12 @@ registerBlueprint({
       durationSeconds: 5,
       item: {
         key: Armor.FemaleBlackUtilityVest,
-        grade: ItemGrade.BASE,
+        grade: ItemGrade.COMMON,
         amount: 5,
       } as ArmorItem,
       parts: [
-        { key: Scrap.COMMON_SCRAP, amount: 10 },
-        { key: Metal.COMMON_METAL, amount: 30 },
+        { key: Scrap.SCRAP, grade: ItemGrade.COMMON, amount: 10 },
+        { key: Metal.METAL, grade: ItemGrade.COMMON, amount: 30 },
       ],
     },
   ],
@@ -42,12 +42,12 @@ registerBlueprint({
       durationSeconds: 5,
       item: {
         key: Armor.MaleBlackUtilityVest,
-        grade: ItemGrade.BASE,
+        grade: ItemGrade.COMMON,
         amount: 5,
       } as ArmorItem,
       parts: [
-        { key: Scrap.COMMON_SCRAP, amount: 10 },
-        { key: Metal.COMMON_METAL, amount: 30 },
+        { key: Scrap.SCRAP, grade: ItemGrade.COMMON, amount: 10 },
+        { key: Metal.METAL, grade: ItemGrade.COMMON, amount: 30 },
       ],
     },
   ],

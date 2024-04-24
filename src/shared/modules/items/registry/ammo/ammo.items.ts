@@ -2,7 +2,7 @@ import { AmmoGroup } from "../weapons/weapon-groups";
 import { Item, ItemKey } from "../../types";
 import { registerItems } from "../../items-registry";
 import { makeKeys } from "../../../../utility/make-keys";
-import { ItemTier } from "../../enums";
+import { ItemGrade, ItemTier } from "../../enums";
 
 export const Ammo = makeKeys<AmmoItemKey>()({
   HANDGUN_AMMO: "handgunammo",
@@ -25,6 +25,8 @@ export type AmmoItemKey = Brand<string, "AmmoItemKey">;
 export type AmmoItem = {
   key: AmmoItemKey;
   amount: number;
+
+  grade: ItemGrade;
 };
 
 export type AmmoItemInfo = {

@@ -39,7 +39,7 @@ export function getItemDefaultData(key: ItemKey): Partial<Item> {
       customName: null,
       components: [],
       tint: 0,
-      grade: ItemGrade.BASE,
+      grade: ItemGrade.COMMON,
     } satisfies Partial<FirearmWeaponItem>;
   } else if (isItemKeyThrowableWeapon(key)) {
     return {
@@ -51,7 +51,7 @@ export function getItemDefaultData(key: ItemKey): Partial<Item> {
       customName: null,
       components: [],
       tint: 0,
-      grade: ItemGrade.BASE,
+      grade: ItemGrade.COMMON,
     } satisfies Partial<MeleeWeaponItem>;
   } else if (isItemKeyAmmo(key)) {
     return {

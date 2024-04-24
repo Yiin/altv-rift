@@ -151,6 +151,7 @@ whileInGame(() => {
    */
   async function reloadWeapon() {
     if (!weaponCanReload.value) {
+      handleAmmoChange();
       return;
     }
 

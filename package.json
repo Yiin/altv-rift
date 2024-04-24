@@ -71,7 +71,7 @@
   "devDependencies": {
     "@altv/client": "^0.0.34",
     "@altv/natives": "^0.0.8",
-    "@altv/server": "^0.0.39",
+    "@altv/server": "^0.0.40",
     "@altv/shared": "^0.0.16",
     "@altv/types-webview": "^16.2.1",
     "@babel/types": "^7.20.7",

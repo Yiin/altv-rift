@@ -25,11 +25,11 @@ registerBlueprint({
       durationSeconds: 5,
       item: {
         key: MeleeWeapon.BAT,
-        grade: ItemGrade.BASE,
+        grade: ItemGrade.COMMON,
       } as MeleeWeaponItem,
       parts: [
-        { key: Wood.COMMON_WOOD, amount: 10 },
-        { key: Scrap.COMMON_SCRAP, amount: 2 },
+        { key: Wood.WOOD, grade: ItemGrade.COMMON, amount: 10 },
+        { key: Scrap.SCRAP, grade: ItemGrade.COMMON, amount: 2 },
       ],
     },
     {
@@ -38,12 +38,12 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.BAT,
-        grade: ItemGrade.ONE,
+        grade: ItemGrade.UNCOMMON,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.BAT, grade: ItemGrade.BASE } as MeleeWeaponItem,
-        { key: Wood.UNCOMMON_WOOD, amount: 10 },
-        { key: Scrap.UNCOMMON_SCRAP, amount: 2 },
+        { key: MeleeWeapon.BAT, grade: ItemGrade.COMMON } as MeleeWeaponItem,
+        { key: Wood.WOOD, grade: ItemGrade.UNCOMMON, amount: 10 },
+        { key: Scrap.SCRAP, grade: ItemGrade.UNCOMMON, amount: 2 },
       ],
     },
     {
@@ -52,12 +52,12 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.BAT,
-        grade: ItemGrade.TWO,
+        grade: ItemGrade.RARE,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.BAT, grade: ItemGrade.ONE } as MeleeWeaponItem,
-        { key: Wood.RARE_WOOD, amount: 10 },
-        { key: Scrap.RARE_SCRAP, amount: 2 },
+        { key: MeleeWeapon.BAT, grade: ItemGrade.UNCOMMON } as MeleeWeaponItem,
+        { key: Wood.WOOD, grade: ItemGrade.RARE, amount: 10 },
+        { key: Scrap.SCRAP, grade: ItemGrade.RARE, amount: 2 },
       ],
     },
     {
@@ -66,12 +66,12 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.BAT,
-        grade: ItemGrade.THREE,
+        grade: ItemGrade.EPIC,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.BAT, grade: ItemGrade.TWO } as MeleeWeaponItem,
-        { key: Wood.EPIC_WOOD, amount: 10 },
-        { key: Scrap.EPIC_SCRAP, amount: 2 },
+        { key: MeleeWeapon.BAT, grade: ItemGrade.RARE } as MeleeWeaponItem,
+        { key: Wood.WOOD, grade: ItemGrade.EPIC, amount: 10 },
+        { key: Scrap.SCRAP, grade: ItemGrade.EPIC, amount: 2 },
       ],
     },
     {
@@ -80,12 +80,12 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.BAT,
-        grade: ItemGrade.FOUR,
+        grade: ItemGrade.LEGENDARY,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.BAT, grade: ItemGrade.THREE } as MeleeWeaponItem,
-        { key: Wood.LEGENDARY_WOOD, amount: 10 },
-        { key: Scrap.LEGENDARY_SCRAP, amount: 2 },
+        { key: MeleeWeapon.BAT, grade: ItemGrade.EPIC } as MeleeWeaponItem,
+        { key: Wood.WOOD, grade: ItemGrade.LEGENDARY, amount: 10 },
+        { key: Scrap.SCRAP, grade: ItemGrade.LEGENDARY, amount: 2 },
       ],
     },
   ],
@@ -101,11 +101,11 @@ registerBlueprint({
       durationSeconds: 5,
       item: {
         key: MeleeWeapon.BATTLEAXE,
-        grade: ItemGrade.BASE,
+        grade: ItemGrade.COMMON,
       } as MeleeWeaponItem,
       parts: [
-        { key: Metal.COMMON_METAL, amount: 10 },
-        { key: Wood.COMMON_WOOD, amount: 5 },
+        { key: Metal.METAL, grade: ItemGrade.COMMON, amount: 10 },
+        { key: Wood.WOOD, grade: ItemGrade.COMMON, amount: 5 },
       ],
     },
     {
@@ -114,12 +114,12 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.BATTLEAXE,
-        grade: ItemGrade.ONE,
+        grade: ItemGrade.UNCOMMON,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.BATTLEAXE, grade: ItemGrade.BASE } as MeleeWeaponItem,
-        { key: Metal.UNCOMMON_METAL, amount: 10 },
-        { key: Wood.UNCOMMON_WOOD, amount: 5 },
+        { key: MeleeWeapon.BATTLEAXE, grade: ItemGrade.COMMON } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.UNCOMMON, amount: 10 },
+        { key: Wood.WOOD, grade: ItemGrade.UNCOMMON, amount: 5 },
       ],
     },
     {
@@ -128,12 +128,12 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.BATTLEAXE,
-        grade: ItemGrade.TWO,
+        grade: ItemGrade.RARE,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.BATTLEAXE, grade: ItemGrade.ONE } as MeleeWeaponItem,
-        { key: Metal.RARE_METAL, amount: 10 },
-        { key: Wood.RARE_WOOD, amount: 5 },
+        { key: MeleeWeapon.BATTLEAXE, grade: ItemGrade.UNCOMMON } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.RARE, amount: 10 },
+        { key: Wood.WOOD, grade: ItemGrade.RARE, amount: 5 },
       ],
     },
     {
@@ -142,12 +142,12 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.BATTLEAXE,
-        grade: ItemGrade.THREE,
+        grade: ItemGrade.EPIC,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.BATTLEAXE, grade: ItemGrade.TWO } as MeleeWeaponItem,
-        { key: Metal.EPIC_METAL, amount: 10 },
-        { key: Wood.EPIC_WOOD, amount: 5 },
+        { key: MeleeWeapon.BATTLEAXE, grade: ItemGrade.RARE } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.EPIC, amount: 10 },
+        { key: Wood.WOOD, grade: ItemGrade.EPIC, amount: 5 },
       ],
     },
     {
@@ -156,12 +156,12 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.BATTLEAXE,
-        grade: ItemGrade.FOUR,
+        grade: ItemGrade.LEGENDARY,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.BATTLEAXE, grade: ItemGrade.THREE } as MeleeWeaponItem,
-        { key: Metal.LEGENDARY_METAL, amount: 10 },
-        { key: Wood.LEGENDARY_WOOD, amount: 5 },
+        { key: MeleeWeapon.BATTLEAXE, grade: ItemGrade.EPIC } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.LEGENDARY, amount: 10 },
+        { key: Wood.WOOD, grade: ItemGrade.LEGENDARY, amount: 5 },
       ],
     },
   ],
@@ -177,11 +177,11 @@ registerBlueprint({
       durationSeconds: 5,
       item: {
         key: MeleeWeapon.BOTTLE,
-        grade: ItemGrade.BASE,
+        grade: ItemGrade.COMMON,
       } as MeleeWeaponItem,
       parts: [
-        { key: Metal.COMMON_METAL, amount: 2 },
-        { key: Scrap.COMMON_SCRAP, amount: 3 },
+        { key: Metal.METAL, grade: ItemGrade.COMMON, amount: 2 },
+        { key: Scrap.SCRAP, grade: ItemGrade.COMMON, amount: 3 },
       ],
     },
     {
@@ -190,12 +190,12 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.BOTTLE,
-        grade: ItemGrade.ONE,
+        grade: ItemGrade.UNCOMMON,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.BOTTLE, grade: ItemGrade.BASE } as MeleeWeaponItem,
-        { key: Metal.UNCOMMON_METAL, amount: 3 },
-        { key: Scrap.UNCOMMON_SCRAP, amount: 4 },
+        { key: MeleeWeapon.BOTTLE, grade: ItemGrade.COMMON } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.UNCOMMON, amount: 3 },
+        { key: Scrap.SCRAP, grade: ItemGrade.UNCOMMON, amount: 4 },
       ],
     },
     {
@@ -204,12 +204,12 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.BOTTLE,
-        grade: ItemGrade.TWO,
+        grade: ItemGrade.RARE,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.BOTTLE, grade: ItemGrade.ONE } as MeleeWeaponItem,
-        { key: Metal.RARE_METAL, amount: 4 },
-        { key: Scrap.RARE_SCRAP, amount: 5 },
+        { key: MeleeWeapon.BOTTLE, grade: ItemGrade.UNCOMMON } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.RARE, amount: 4 },
+        { key: Scrap.SCRAP, grade: ItemGrade.RARE, amount: 5 },
       ],
     },
     {
@@ -218,12 +218,12 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.BOTTLE,
-        grade: ItemGrade.THREE,
+        grade: ItemGrade.EPIC,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.BOTTLE, grade: ItemGrade.TWO } as MeleeWeaponItem,
-        { key: Metal.EPIC_METAL, amount: 5 },
-        { key: Scrap.EPIC_SCRAP, amount: 6 },
+        { key: MeleeWeapon.BOTTLE, grade: ItemGrade.RARE } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.EPIC, amount: 5 },
+        { key: Scrap.SCRAP, grade: ItemGrade.EPIC, amount: 6 },
       ],
     },
     {
@@ -232,12 +232,12 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.BOTTLE,
-        grade: ItemGrade.FOUR,
+        grade: ItemGrade.LEGENDARY,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.BOTTLE, grade: ItemGrade.THREE } as MeleeWeaponItem,
-        { key: Metal.LEGENDARY_METAL, amount: 6 },
-        { key: Scrap.LEGENDARY_SCRAP, amount: 7 },
+        { key: MeleeWeapon.BOTTLE, grade: ItemGrade.EPIC } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.LEGENDARY, amount: 6 },
+        { key: Scrap.SCRAP, grade: ItemGrade.LEGENDARY, amount: 7 },
       ],
     },
   ],
@@ -253,11 +253,11 @@ registerBlueprint({
       durationSeconds: 5,
       item: {
         key: MeleeWeapon.CROWBAR,
-        grade: ItemGrade.BASE,
+        grade: ItemGrade.COMMON,
       } as MeleeWeaponItem,
       parts: [
-        { key: Metal.COMMON_METAL, amount: 10 },
-        { key: Scrap.COMMON_SCRAP, amount: 3 },
+        { key: Metal.METAL, grade: ItemGrade.COMMON, amount: 10 },
+        { key: Scrap.SCRAP, grade: ItemGrade.COMMON, amount: 3 },
       ],
     },
     {
@@ -266,12 +266,12 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.CROWBAR,
-        grade: ItemGrade.ONE,
+        grade: ItemGrade.UNCOMMON,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.CROWBAR, grade: ItemGrade.BASE } as MeleeWeaponItem,
-        { key: Metal.UNCOMMON_METAL, amount: 10 },
-        { key: Scrap.UNCOMMON_SCRAP, amount: 5 },
+        { key: MeleeWeapon.CROWBAR, grade: ItemGrade.COMMON } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.UNCOMMON, amount: 10 },
+        { key: Scrap.SCRAP, grade: ItemGrade.UNCOMMON, amount: 5 },
       ],
     },
     {
@@ -280,12 +280,12 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.CROWBAR,
-        grade: ItemGrade.TWO,
+        grade: ItemGrade.RARE,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.CROWBAR, grade: ItemGrade.ONE } as MeleeWeaponItem,
-        { key: Metal.RARE_METAL, amount: 10 },
-        { key: Scrap.RARE_SCRAP, amount: 5 },
+        { key: MeleeWeapon.CROWBAR, grade: ItemGrade.UNCOMMON } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.RARE, amount: 10 },
+        { key: Scrap.SCRAP, grade: ItemGrade.RARE, amount: 5 },
       ],
     },
     {
@@ -294,12 +294,12 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.CROWBAR,
-        grade: ItemGrade.THREE,
+        grade: ItemGrade.EPIC,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.CROWBAR, grade: ItemGrade.TWO } as MeleeWeaponItem,
-        { key: Metal.EPIC_METAL, amount: 10 },
-        { key: Scrap.EPIC_SCRAP, amount: 5 },
+        { key: MeleeWeapon.CROWBAR, grade: ItemGrade.RARE } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.EPIC, amount: 10 },
+        { key: Scrap.SCRAP, grade: ItemGrade.EPIC, amount: 5 },
       ],
     },
     {
@@ -308,12 +308,12 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.CROWBAR,
-        grade: ItemGrade.FOUR,
+        grade: ItemGrade.LEGENDARY,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.CROWBAR, grade: ItemGrade.THREE } as MeleeWeaponItem,
-        { key: Metal.LEGENDARY_METAL, amount: 10 },
-        { key: Scrap.LEGENDARY_SCRAP, amount: 5 },
+        { key: MeleeWeapon.CROWBAR, grade: ItemGrade.EPIC } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.LEGENDARY, amount: 10 },
+        { key: Scrap.SCRAP, grade: ItemGrade.LEGENDARY, amount: 5 },
       ],
     },
   ],
@@ -329,12 +329,12 @@ registerBlueprint({
       durationSeconds: 5,
       item: {
         key: MeleeWeapon.DAGGER,
-        grade: ItemGrade.BASE,
+        grade: ItemGrade.COMMON,
       } as MeleeWeaponItem,
       parts: [
-        { key: Metal.COMMON_METAL, amount: 5 },
-        { key: Wood.COMMON_WOOD, amount: 2 },
-        { key: Scrap.COMMON_SCRAP, amount: 3 },
+        { key: Metal.METAL, grade: ItemGrade.COMMON, amount: 5 },
+        { key: Wood.WOOD, grade: ItemGrade.COMMON, amount: 2 },
+        { key: Scrap.SCRAP, grade: ItemGrade.COMMON, amount: 3 },
       ],
     },
     {
@@ -343,14 +343,15 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.DAGGER,
-        grade: ItemGrade.ONE,
+        grade: ItemGrade.UNCOMMON,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.DAGGER, grade: ItemGrade.BASE } as MeleeWeaponItem,
-        { key: Metal.UNCOMMON_METAL, amount: 5 },
-        { key: Wood.UNCOMMON_WOOD, amount: 2 },
+        { key: MeleeWeapon.DAGGER, grade: ItemGrade.COMMON } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.UNCOMMON, amount: 5 },
+        { key: Wood.WOOD, grade: ItemGrade.UNCOMMON, amount: 2 },
         {
-          key: Scrap.UNCOMMON_SCRAP,
+          key: Scrap.SCRAP,
+          grade: ItemGrade.UNCOMMON,
           amount: 3,
         },
       ],
@@ -361,13 +362,13 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.DAGGER,
-        grade: ItemGrade.TWO,
+        grade: ItemGrade.RARE,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.DAGGER, grade: ItemGrade.ONE } as MeleeWeaponItem,
-        { key: Metal.RARE_METAL, amount: 5 },
-        { key: Wood.RARE_WOOD, amount: 2 },
-        { key: Scrap.RARE_SCRAP, amount: 3 },
+        { key: MeleeWeapon.DAGGER, grade: ItemGrade.UNCOMMON } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.RARE, amount: 5 },
+        { key: Wood.WOOD, grade: ItemGrade.RARE, amount: 2 },
+        { key: Scrap.SCRAP, grade: ItemGrade.RARE, amount: 3 },
       ],
     },
     {
@@ -376,13 +377,13 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.DAGGER,
-        grade: ItemGrade.THREE,
+        grade: ItemGrade.EPIC,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.DAGGER, grade: ItemGrade.TWO } as MeleeWeaponItem,
-        { key: Metal.EPIC_METAL, amount: 5 },
-        { key: Wood.EPIC_WOOD, amount: 2 },
-        { key: Scrap.EPIC_SCRAP, amount: 3 },
+        { key: MeleeWeapon.DAGGER, grade: ItemGrade.RARE } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.EPIC, amount: 5 },
+        { key: Wood.WOOD, grade: ItemGrade.EPIC, amount: 2 },
+        { key: Scrap.SCRAP, grade: ItemGrade.EPIC, amount: 3 },
       ],
     },
     {
@@ -391,13 +392,13 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.DAGGER,
-        grade: ItemGrade.FOUR,
+        grade: ItemGrade.LEGENDARY,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.DAGGER, grade: ItemGrade.THREE } as MeleeWeaponItem,
-        { key: Metal.LEGENDARY_METAL, amount: 5 },
-        { key: Wood.LEGENDARY_WOOD, amount: 2 },
-        { key: Scrap.LEGENDARY_SCRAP, amount: 3 },
+        { key: MeleeWeapon.DAGGER, grade: ItemGrade.EPIC } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.LEGENDARY, amount: 5 },
+        { key: Wood.WOOD, grade: ItemGrade.LEGENDARY, amount: 2 },
+        { key: Scrap.SCRAP, grade: ItemGrade.LEGENDARY, amount: 3 },
       ],
     },
   ],
@@ -413,12 +414,12 @@ registerBlueprint({
       durationSeconds: 5,
       item: {
         key: MeleeWeapon.GOLFCLUB,
-        grade: ItemGrade.BASE,
+        grade: ItemGrade.COMMON,
       } as MeleeWeaponItem,
       parts: [
-        { key: Metal.COMMON_METAL, amount: 5 },
-        { key: Wood.COMMON_WOOD, amount: 2 },
-        { key: Scrap.COMMON_SCRAP, amount: 3 },
+        { key: Metal.METAL, grade: ItemGrade.COMMON, amount: 5 },
+        { key: Wood.WOOD, grade: ItemGrade.COMMON, amount: 2 },
+        { key: Scrap.SCRAP, grade: ItemGrade.COMMON, amount: 3 },
       ],
     },
     {
@@ -427,13 +428,13 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.GOLFCLUB,
-        grade: ItemGrade.ONE,
+        grade: ItemGrade.UNCOMMON,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.GOLFCLUB, grade: ItemGrade.BASE } as MeleeWeaponItem,
-        { key: Metal.UNCOMMON_METAL, amount: 8 },
-        { key: Wood.UNCOMMON_WOOD, amount: 3 },
-        { key: Scrap.UNCOMMON_SCRAP, amount: 5 },
+        { key: MeleeWeapon.GOLFCLUB, grade: ItemGrade.COMMON } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.UNCOMMON, amount: 8 },
+        { key: Wood.WOOD, grade: ItemGrade.UNCOMMON, amount: 3 },
+        { key: Scrap.SCRAP, grade: ItemGrade.UNCOMMON, amount: 5 },
       ],
     },
     {
@@ -442,13 +443,13 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.GOLFCLUB,
-        grade: ItemGrade.TWO,
+        grade: ItemGrade.RARE,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.GOLFCLUB, grade: ItemGrade.ONE } as MeleeWeaponItem,
-        { key: Metal.RARE_METAL, amount: 12 },
-        { key: Wood.RARE_WOOD, amount: 4 },
-        { key: Scrap.RARE_SCRAP, amount: 7 },
+        { key: MeleeWeapon.GOLFCLUB, grade: ItemGrade.UNCOMMON } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.RARE, amount: 12 },
+        { key: Wood.WOOD, grade: ItemGrade.RARE, amount: 4 },
+        { key: Scrap.SCRAP, grade: ItemGrade.RARE, amount: 7 },
       ],
     },
     {
@@ -457,13 +458,13 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.GOLFCLUB,
-        grade: ItemGrade.THREE,
+        grade: ItemGrade.EPIC,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.GOLFCLUB, grade: ItemGrade.TWO } as MeleeWeaponItem,
-        { key: Metal.EPIC_METAL, amount: 15 },
-        { key: Wood.EPIC_WOOD, amount: 5 },
-        { key: Scrap.EPIC_SCRAP, amount: 10 },
+        { key: MeleeWeapon.GOLFCLUB, grade: ItemGrade.RARE } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.EPIC, amount: 15 },
+        { key: Wood.WOOD, grade: ItemGrade.EPIC, amount: 5 },
+        { key: Scrap.SCRAP, grade: ItemGrade.EPIC, amount: 10 },
       ],
     },
     {
@@ -472,13 +473,13 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.GOLFCLUB,
-        grade: ItemGrade.FOUR,
+        grade: ItemGrade.LEGENDARY,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.GOLFCLUB, grade: ItemGrade.THREE } as MeleeWeaponItem,
-        { key: Metal.LEGENDARY_METAL, amount: 20 },
-        { key: Wood.LEGENDARY_WOOD, amount: 7 },
-        { key: Scrap.LEGENDARY_SCRAP, amount: 15 },
+        { key: MeleeWeapon.GOLFCLUB, grade: ItemGrade.EPIC } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.LEGENDARY, amount: 20 },
+        { key: Wood.WOOD, grade: ItemGrade.LEGENDARY, amount: 7 },
+        { key: Scrap.SCRAP, grade: ItemGrade.LEGENDARY, amount: 15 },
       ],
     },
   ],
@@ -494,11 +495,11 @@ registerBlueprint({
       durationSeconds: 5,
       item: {
         key: MeleeWeapon.HAMMER,
-        grade: ItemGrade.BASE,
+        grade: ItemGrade.COMMON,
       } as MeleeWeaponItem,
       parts: [
-        { key: Metal.COMMON_METAL, amount: 5 },
-        { key: Scrap.COMMON_SCRAP, amount: 5 },
+        { key: Metal.METAL, grade: ItemGrade.COMMON, amount: 5 },
+        { key: Scrap.SCRAP, grade: ItemGrade.COMMON, amount: 5 },
       ],
     },
     {
@@ -507,12 +508,12 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.HAMMER,
-        grade: ItemGrade.ONE,
+        grade: ItemGrade.UNCOMMON,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.HAMMER, grade: ItemGrade.BASE } as MeleeWeaponItem,
-        { key: Metal.UNCOMMON_METAL, amount: 10 },
-        { key: Scrap.UNCOMMON_SCRAP, amount: 10 },
+        { key: MeleeWeapon.HAMMER, grade: ItemGrade.COMMON } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.UNCOMMON, amount: 10 },
+        { key: Scrap.SCRAP, grade: ItemGrade.UNCOMMON, amount: 10 },
       ],
     },
     {
@@ -521,12 +522,12 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.HAMMER,
-        grade: ItemGrade.TWO,
+        grade: ItemGrade.RARE,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.HAMMER, grade: ItemGrade.ONE } as MeleeWeaponItem,
-        { key: Metal.RARE_METAL, amount: 15 },
-        { key: Scrap.RARE_SCRAP, amount: 15 },
+        { key: MeleeWeapon.HAMMER, grade: ItemGrade.UNCOMMON } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.RARE, amount: 15 },
+        { key: Scrap.SCRAP, grade: ItemGrade.RARE, amount: 15 },
       ],
     },
     {
@@ -535,12 +536,12 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.HAMMER,
-        grade: ItemGrade.THREE,
+        grade: ItemGrade.EPIC,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.HAMMER, grade: ItemGrade.TWO } as MeleeWeaponItem,
-        { key: Metal.EPIC_METAL, amount: 20 },
-        { key: Scrap.EPIC_SCRAP, amount: 20 },
+        { key: MeleeWeapon.HAMMER, grade: ItemGrade.RARE } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.EPIC, amount: 20 },
+        { key: Scrap.SCRAP, grade: ItemGrade.EPIC, amount: 20 },
       ],
     },
     {
@@ -549,12 +550,12 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.HAMMER,
-        grade: ItemGrade.FOUR,
+        grade: ItemGrade.LEGENDARY,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.HAMMER, grade: ItemGrade.THREE } as MeleeWeaponItem,
-        { key: Metal.LEGENDARY_METAL, amount: 25 },
-        { key: Scrap.LEGENDARY_SCRAP, amount: 25 },
+        { key: MeleeWeapon.HAMMER, grade: ItemGrade.EPIC } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.LEGENDARY, amount: 25 },
+        { key: Scrap.SCRAP, grade: ItemGrade.LEGENDARY, amount: 25 },
       ],
     },
   ],
@@ -570,12 +571,12 @@ registerBlueprint({
       durationSeconds: 5,
       item: {
         key: MeleeWeapon.KNIFE,
-        grade: ItemGrade.BASE,
+        grade: ItemGrade.COMMON,
       } as MeleeWeaponItem,
       parts: [
-        { key: Metal.COMMON_METAL, amount: 5 },
-        { key: Wood.COMMON_WOOD, amount: 2 },
-        { key: Scrap.COMMON_SCRAP, amount: 5 },
+        { key: Metal.METAL, grade: ItemGrade.COMMON, amount: 5 },
+        { key: Wood.WOOD, grade: ItemGrade.COMMON, amount: 2 },
+        { key: Scrap.SCRAP, grade: ItemGrade.COMMON, amount: 5 },
       ],
     },
     {
@@ -584,13 +585,13 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.KNIFE,
-        grade: ItemGrade.ONE,
+        grade: ItemGrade.UNCOMMON,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.KNIFE, grade: ItemGrade.BASE } as MeleeWeaponItem,
-        { key: Metal.UNCOMMON_METAL, amount: 5 },
-        { key: Wood.UNCOMMON_WOOD, amount: 2 },
-        { key: Scrap.UNCOMMON_SCRAP, amount: 5 },
+        { key: MeleeWeapon.KNIFE, grade: ItemGrade.COMMON } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.UNCOMMON, amount: 5 },
+        { key: Wood.WOOD, grade: ItemGrade.UNCOMMON, amount: 2 },
+        { key: Scrap.SCRAP, grade: ItemGrade.UNCOMMON, amount: 5 },
       ],
     },
     {
@@ -599,13 +600,13 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.KNIFE,
-        grade: ItemGrade.TWO,
+        grade: ItemGrade.RARE,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.KNIFE, grade: ItemGrade.ONE } as MeleeWeaponItem,
-        { key: Metal.RARE_METAL, amount: 5 },
-        { key: Wood.RARE_WOOD, amount: 2 },
-        { key: Scrap.RARE_SCRAP, amount: 5 },
+        { key: MeleeWeapon.KNIFE, grade: ItemGrade.UNCOMMON } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.RARE, amount: 5 },
+        { key: Wood.WOOD, grade: ItemGrade.RARE, amount: 2 },
+        { key: Scrap.SCRAP, grade: ItemGrade.RARE, amount: 5 },
       ],
     },
     {
@@ -614,13 +615,13 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.KNIFE,
-        grade: ItemGrade.THREE,
+        grade: ItemGrade.EPIC,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.KNIFE, grade: ItemGrade.TWO } as MeleeWeaponItem,
-        { key: Metal.EPIC_METAL, amount: 5 },
-        { key: Wood.EPIC_WOOD, amount: 2 },
-        { key: Scrap.EPIC_SCRAP, amount: 5 },
+        { key: MeleeWeapon.KNIFE, grade: ItemGrade.RARE } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.EPIC, amount: 5 },
+        { key: Wood.WOOD, grade: ItemGrade.EPIC, amount: 2 },
+        { key: Scrap.SCRAP, grade: ItemGrade.EPIC, amount: 5 },
       ],
     },
     {
@@ -629,13 +630,13 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.KNIFE,
-        grade: ItemGrade.FOUR,
+        grade: ItemGrade.LEGENDARY,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.KNIFE, grade: ItemGrade.THREE } as MeleeWeaponItem,
-        { key: Metal.LEGENDARY_METAL, amount: 5 },
-        { key: Wood.LEGENDARY_WOOD, amount: 2 },
-        { key: Scrap.LEGENDARY_SCRAP, amount: 5 },
+        { key: MeleeWeapon.KNIFE, grade: ItemGrade.EPIC } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.LEGENDARY, amount: 5 },
+        { key: Wood.WOOD, grade: ItemGrade.LEGENDARY, amount: 2 },
+        { key: Scrap.SCRAP, grade: ItemGrade.LEGENDARY, amount: 5 },
       ],
     },
   ],
@@ -651,11 +652,11 @@ registerBlueprint({
       durationSeconds: 5,
       item: {
         key: MeleeWeapon.KNUCKLE,
-        grade: ItemGrade.BASE,
+        grade: ItemGrade.COMMON,
       } as MeleeWeaponItem,
       parts: [
-        { key: Metal.COMMON_METAL, amount: 5 },
-        { key: Scrap.COMMON_SCRAP, amount: 5 },
+        { key: Metal.METAL, grade: ItemGrade.COMMON, amount: 5 },
+        { key: Scrap.SCRAP, grade: ItemGrade.COMMON, amount: 5 },
       ],
     },
     {
@@ -664,12 +665,12 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.KNUCKLE,
-        grade: ItemGrade.ONE,
+        grade: ItemGrade.UNCOMMON,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.KNUCKLE, grade: ItemGrade.BASE } as MeleeWeaponItem,
-        { key: Metal.UNCOMMON_METAL, amount: 5 },
-        { key: Scrap.UNCOMMON_SCRAP, amount: 5 },
+        { key: MeleeWeapon.KNUCKLE, grade: ItemGrade.COMMON } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.UNCOMMON, amount: 5 },
+        { key: Scrap.SCRAP, grade: ItemGrade.UNCOMMON, amount: 5 },
       ],
     },
     {
@@ -678,12 +679,12 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.KNUCKLE,
-        grade: ItemGrade.TWO,
+        grade: ItemGrade.RARE,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.KNUCKLE, grade: ItemGrade.ONE } as MeleeWeaponItem,
-        { key: Metal.RARE_METAL, amount: 10 },
-        { key: Scrap.RARE_SCRAP, amount: 10 },
+        { key: MeleeWeapon.KNUCKLE, grade: ItemGrade.UNCOMMON } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.RARE, amount: 10 },
+        { key: Scrap.SCRAP, grade: ItemGrade.RARE, amount: 10 },
       ],
     },
     {
@@ -692,12 +693,12 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.KNUCKLE,
-        grade: ItemGrade.THREE,
+        grade: ItemGrade.EPIC,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.KNUCKLE, grade: ItemGrade.TWO } as MeleeWeaponItem,
-        { key: Metal.EPIC_METAL, amount: 15 },
-        { key: Scrap.EPIC_SCRAP, amount: 15 },
+        { key: MeleeWeapon.KNUCKLE, grade: ItemGrade.RARE } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.EPIC, amount: 15 },
+        { key: Scrap.SCRAP, grade: ItemGrade.EPIC, amount: 15 },
       ],
     },
     {
@@ -706,12 +707,12 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.KNUCKLE,
-        grade: ItemGrade.FOUR,
+        grade: ItemGrade.LEGENDARY,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.KNUCKLE, grade: ItemGrade.THREE } as MeleeWeaponItem,
-        { key: Metal.LEGENDARY_METAL, amount: 20 },
-        { key: Scrap.LEGENDARY_SCRAP, amount: 20 },
+        { key: MeleeWeapon.KNUCKLE, grade: ItemGrade.EPIC } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.LEGENDARY, amount: 20 },
+        { key: Scrap.SCRAP, grade: ItemGrade.LEGENDARY, amount: 20 },
       ],
     },
   ],
@@ -727,12 +728,12 @@ registerBlueprint({
       durationSeconds: 5,
       item: {
         key: MeleeWeapon.MACHETE,
-        grade: ItemGrade.BASE,
+        grade: ItemGrade.COMMON,
       } as MeleeWeaponItem,
       parts: [
-        { key: Metal.COMMON_METAL, amount: 5 },
-        { key: Wood.COMMON_WOOD, amount: 3 },
-        { key: Scrap.COMMON_SCRAP, amount: 2 },
+        { key: Metal.METAL, grade: ItemGrade.COMMON, amount: 5 },
+        { key: Wood.WOOD, grade: ItemGrade.COMMON, amount: 3 },
+        { key: Scrap.SCRAP, grade: ItemGrade.COMMON, amount: 2 },
       ],
     },
     {
@@ -741,13 +742,13 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.MACHETE,
-        grade: ItemGrade.ONE,
+        grade: ItemGrade.UNCOMMON,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.MACHETE, grade: ItemGrade.BASE } as MeleeWeaponItem,
-        { key: Metal.UNCOMMON_METAL, amount: 6 },
-        { key: Wood.UNCOMMON_WOOD, amount: 4 },
-        { key: Scrap.UNCOMMON_SCRAP, amount: 3 },
+        { key: MeleeWeapon.MACHETE, grade: ItemGrade.COMMON } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.UNCOMMON, amount: 6 },
+        { key: Wood.WOOD, grade: ItemGrade.UNCOMMON, amount: 4 },
+        { key: Scrap.SCRAP, grade: ItemGrade.UNCOMMON, amount: 3 },
       ],
     },
     {
@@ -756,13 +757,13 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.MACHETE,
-        grade: ItemGrade.TWO,
+        grade: ItemGrade.RARE,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.MACHETE, grade: ItemGrade.ONE } as MeleeWeaponItem,
-        { key: Metal.RARE_METAL, amount: 7 },
-        { key: Wood.RARE_WOOD, amount: 5 },
-        { key: Scrap.RARE_SCRAP, amount: 4 },
+        { key: MeleeWeapon.MACHETE, grade: ItemGrade.UNCOMMON } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.RARE, amount: 7 },
+        { key: Wood.WOOD, grade: ItemGrade.RARE, amount: 5 },
+        { key: Scrap.SCRAP, grade: ItemGrade.RARE, amount: 4 },
       ],
     },
     {
@@ -771,13 +772,13 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.MACHETE,
-        grade: ItemGrade.THREE,
+        grade: ItemGrade.EPIC,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.MACHETE, grade: ItemGrade.TWO } as MeleeWeaponItem,
-        { key: Metal.EPIC_METAL, amount: 8 },
-        { key: Wood.EPIC_WOOD, amount: 6 },
-        { key: Scrap.EPIC_SCRAP, amount: 5 },
+        { key: MeleeWeapon.MACHETE, grade: ItemGrade.RARE } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.EPIC, amount: 8 },
+        { key: Wood.WOOD, grade: ItemGrade.EPIC, amount: 6 },
+        { key: Scrap.SCRAP, grade: ItemGrade.EPIC, amount: 5 },
       ],
     },
     {
@@ -786,13 +787,13 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.MACHETE,
-        grade: ItemGrade.FOUR,
+        grade: ItemGrade.LEGENDARY,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.MACHETE, grade: ItemGrade.THREE } as MeleeWeaponItem,
-        { key: Metal.LEGENDARY_METAL, amount: 9 },
-        { key: Wood.LEGENDARY_WOOD, amount: 7 },
-        { key: Scrap.LEGENDARY_SCRAP, amount: 6 },
+        { key: MeleeWeapon.MACHETE, grade: ItemGrade.EPIC } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.LEGENDARY, amount: 9 },
+        { key: Wood.WOOD, grade: ItemGrade.LEGENDARY, amount: 7 },
+        { key: Scrap.SCRAP, grade: ItemGrade.LEGENDARY, amount: 6 },
       ],
     },
   ],
@@ -808,11 +809,11 @@ registerBlueprint({
       durationSeconds: 5,
       item: {
         key: MeleeWeapon.NIGHTSTICK,
-        grade: ItemGrade.BASE,
+        grade: ItemGrade.COMMON,
       } as MeleeWeaponItem,
       parts: [
-        { key: Wood.COMMON_WOOD, amount: 10 },
-        { key: Metal.COMMON_METAL, amount: 5 },
+        { key: Wood.WOOD, grade: ItemGrade.COMMON, amount: 10 },
+        { key: Metal.METAL, grade: ItemGrade.COMMON, amount: 5 },
       ],
     },
     {
@@ -821,12 +822,12 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.NIGHTSTICK,
-        grade: ItemGrade.ONE,
+        grade: ItemGrade.UNCOMMON,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.NIGHTSTICK, grade: ItemGrade.BASE } as MeleeWeaponItem,
-        { key: Wood.UNCOMMON_WOOD, amount: 10 },
-        { key: Metal.UNCOMMON_METAL, amount: 5 },
+        { key: MeleeWeapon.NIGHTSTICK, grade: ItemGrade.COMMON } as MeleeWeaponItem,
+        { key: Wood.WOOD, grade: ItemGrade.UNCOMMON, amount: 10 },
+        { key: Metal.METAL, grade: ItemGrade.UNCOMMON, amount: 5 },
       ],
     },
     {
@@ -835,12 +836,12 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.NIGHTSTICK,
-        grade: ItemGrade.TWO,
+        grade: ItemGrade.RARE,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.NIGHTSTICK, grade: ItemGrade.ONE } as MeleeWeaponItem,
-        { key: Wood.RARE_WOOD, amount: 10 },
-        { key: Metal.RARE_METAL, amount: 5 },
+        { key: MeleeWeapon.NIGHTSTICK, grade: ItemGrade.UNCOMMON } as MeleeWeaponItem,
+        { key: Wood.WOOD, grade: ItemGrade.RARE, amount: 10 },
+        { key: Metal.METAL, grade: ItemGrade.RARE, amount: 5 },
       ],
     },
     {
@@ -849,12 +850,12 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.NIGHTSTICK,
-        grade: ItemGrade.THREE,
+        grade: ItemGrade.EPIC,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.NIGHTSTICK, grade: ItemGrade.TWO } as MeleeWeaponItem,
-        { key: Wood.EPIC_WOOD, amount: 10 },
-        { key: Metal.EPIC_METAL, amount: 5 },
+        { key: MeleeWeapon.NIGHTSTICK, grade: ItemGrade.RARE } as MeleeWeaponItem,
+        { key: Wood.WOOD, grade: ItemGrade.EPIC, amount: 10 },
+        { key: Metal.METAL, grade: ItemGrade.EPIC, amount: 5 },
       ],
     },
     {
@@ -863,12 +864,12 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.NIGHTSTICK,
-        grade: ItemGrade.FOUR,
+        grade: ItemGrade.LEGENDARY,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.NIGHTSTICK, grade: ItemGrade.THREE } as MeleeWeaponItem,
-        { key: Wood.LEGENDARY_WOOD, amount: 10 },
-        { key: Metal.LEGENDARY_METAL, amount: 5 },
+        { key: MeleeWeapon.NIGHTSTICK, grade: ItemGrade.EPIC } as MeleeWeaponItem,
+        { key: Wood.WOOD, grade: ItemGrade.LEGENDARY, amount: 10 },
+        { key: Metal.METAL, grade: ItemGrade.LEGENDARY, amount: 5 },
       ],
     },
   ],
@@ -884,11 +885,11 @@ registerBlueprint({
       durationSeconds: 5,
       item: {
         key: MeleeWeapon.PIPEWRENCH,
-        grade: ItemGrade.BASE,
+        grade: ItemGrade.COMMON,
       } as MeleeWeaponItem,
       parts: [
-        { key: Metal.COMMON_METAL, amount: 5 },
-        { key: Scrap.COMMON_SCRAP, amount: 5 },
+        { key: Metal.METAL, grade: ItemGrade.COMMON, amount: 5 },
+        { key: Scrap.SCRAP, grade: ItemGrade.COMMON, amount: 5 },
       ],
     },
     {
@@ -897,12 +898,12 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.PIPEWRENCH,
-        grade: ItemGrade.ONE,
+        grade: ItemGrade.UNCOMMON,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.PIPEWRENCH, grade: ItemGrade.BASE } as MeleeWeaponItem,
-        { key: Metal.UNCOMMON_METAL, amount: 8 },
-        { key: Scrap.UNCOMMON_SCRAP, amount: 8 },
+        { key: MeleeWeapon.PIPEWRENCH, grade: ItemGrade.COMMON } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.UNCOMMON, amount: 8 },
+        { key: Scrap.SCRAP, grade: ItemGrade.UNCOMMON, amount: 8 },
       ],
     },
     {
@@ -911,12 +912,12 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.PIPEWRENCH,
-        grade: ItemGrade.TWO,
+        grade: ItemGrade.RARE,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.PIPEWRENCH, grade: ItemGrade.ONE } as MeleeWeaponItem,
-        { key: Metal.RARE_METAL, amount: 12 },
-        { key: Scrap.RARE_SCRAP, amount: 12 },
+        { key: MeleeWeapon.PIPEWRENCH, grade: ItemGrade.UNCOMMON } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.RARE, amount: 12 },
+        { key: Scrap.SCRAP, grade: ItemGrade.RARE, amount: 12 },
       ],
     },
     {
@@ -925,12 +926,12 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.PIPEWRENCH,
-        grade: ItemGrade.THREE,
+        grade: ItemGrade.EPIC,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.PIPEWRENCH, grade: ItemGrade.TWO } as MeleeWeaponItem,
-        { key: Metal.EPIC_METAL, amount: 15 },
-        { key: Scrap.EPIC_SCRAP, amount: 15 },
+        { key: MeleeWeapon.PIPEWRENCH, grade: ItemGrade.RARE } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.EPIC, amount: 15 },
+        { key: Scrap.SCRAP, grade: ItemGrade.EPIC, amount: 15 },
       ],
     },
     {
@@ -939,12 +940,12 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.PIPEWRENCH,
-        grade: ItemGrade.FOUR,
+        grade: ItemGrade.LEGENDARY,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.PIPEWRENCH, grade: ItemGrade.THREE } as MeleeWeaponItem,
-        { key: Metal.LEGENDARY_METAL, amount: 20 },
-        { key: Scrap.LEGENDARY_SCRAP, amount: 20 },
+        { key: MeleeWeapon.PIPEWRENCH, grade: ItemGrade.EPIC } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.LEGENDARY, amount: 20 },
+        { key: Scrap.SCRAP, grade: ItemGrade.LEGENDARY, amount: 20 },
       ],
     },
   ],
@@ -960,11 +961,11 @@ registerBlueprint({
       durationSeconds: 5,
       item: {
         key: MeleeWeapon.POOLCUE,
-        grade: ItemGrade.BASE,
+        grade: ItemGrade.COMMON,
       } as MeleeWeaponItem,
       parts: [
-        { key: Wood.COMMON_WOOD, amount: 10 },
-        { key: Scrap.COMMON_SCRAP, amount: 5 },
+        { key: Wood.WOOD, grade: ItemGrade.COMMON, amount: 10 },
+        { key: Scrap.SCRAP, grade: ItemGrade.COMMON, amount: 5 },
       ],
     },
     {
@@ -973,12 +974,12 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.POOLCUE,
-        grade: ItemGrade.ONE,
+        grade: ItemGrade.UNCOMMON,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.POOLCUE, grade: ItemGrade.BASE } as MeleeWeaponItem,
-        { key: Wood.UNCOMMON_WOOD, amount: 15 },
-        { key: Scrap.UNCOMMON_SCRAP, amount: 10 },
+        { key: MeleeWeapon.POOLCUE, grade: ItemGrade.COMMON } as MeleeWeaponItem,
+        { key: Wood.WOOD, grade: ItemGrade.UNCOMMON, amount: 15 },
+        { key: Scrap.SCRAP, grade: ItemGrade.UNCOMMON, amount: 10 },
       ],
     },
     {
@@ -987,13 +988,13 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.POOLCUE,
-        grade: ItemGrade.TWO,
+        grade: ItemGrade.RARE,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.POOLCUE, grade: ItemGrade.ONE } as MeleeWeaponItem,
-        { key: Wood.RARE_WOOD, amount: 20 },
-        { key: Metal.RARE_METAL, amount: 10 },
-        { key: Scrap.RARE_SCRAP, amount: 15 },
+        { key: MeleeWeapon.POOLCUE, grade: ItemGrade.UNCOMMON } as MeleeWeaponItem,
+        { key: Wood.WOOD, grade: ItemGrade.RARE, amount: 20 },
+        { key: Metal.METAL, grade: ItemGrade.RARE, amount: 10 },
+        { key: Scrap.SCRAP, grade: ItemGrade.RARE, amount: 15 },
       ],
     },
     {
@@ -1002,13 +1003,13 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.POOLCUE,
-        grade: ItemGrade.THREE,
+        grade: ItemGrade.EPIC,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.POOLCUE, grade: ItemGrade.TWO } as MeleeWeaponItem,
-        { key: Wood.EPIC_WOOD, amount: 25 },
-        { key: Metal.EPIC_METAL, amount: 15 },
-        { key: Scrap.EPIC_SCRAP, amount: 20 },
+        { key: MeleeWeapon.POOLCUE, grade: ItemGrade.RARE } as MeleeWeaponItem,
+        { key: Wood.WOOD, grade: ItemGrade.EPIC, amount: 25 },
+        { key: Metal.METAL, grade: ItemGrade.EPIC, amount: 15 },
+        { key: Scrap.SCRAP, grade: ItemGrade.EPIC, amount: 20 },
       ],
     },
     {
@@ -1017,13 +1018,13 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.POOLCUE,
-        grade: ItemGrade.FOUR,
+        grade: ItemGrade.LEGENDARY,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.POOLCUE, grade: ItemGrade.THREE } as MeleeWeaponItem,
-        { key: Wood.LEGENDARY_WOOD, amount: 30 },
-        { key: Metal.LEGENDARY_METAL, amount: 20 },
-        { key: Scrap.LEGENDARY_SCRAP, amount: 25 },
+        { key: MeleeWeapon.POOLCUE, grade: ItemGrade.EPIC } as MeleeWeaponItem,
+        { key: Wood.WOOD, grade: ItemGrade.LEGENDARY, amount: 30 },
+        { key: Metal.METAL, grade: ItemGrade.LEGENDARY, amount: 20 },
+        { key: Scrap.SCRAP, grade: ItemGrade.LEGENDARY, amount: 25 },
       ],
     },
   ],
@@ -1039,11 +1040,11 @@ registerBlueprint({
       durationSeconds: 5,
       item: {
         key: MeleeWeapon.STONEHATCHET,
-        grade: ItemGrade.BASE,
+        grade: ItemGrade.COMMON,
       } as MeleeWeaponItem,
       parts: [
-        { key: Metal.COMMON_METAL, amount: 10 },
-        { key: Scrap.COMMON_SCRAP, amount: 5 },
+        { key: Metal.METAL, grade: ItemGrade.COMMON, amount: 10 },
+        { key: Scrap.SCRAP, grade: ItemGrade.COMMON, amount: 5 },
       ],
     },
     {
@@ -1052,12 +1053,12 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.STONEHATCHET,
-        grade: ItemGrade.ONE,
+        grade: ItemGrade.UNCOMMON,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.STONEHATCHET, grade: ItemGrade.BASE } as MeleeWeaponItem,
-        { key: Metal.UNCOMMON_METAL, amount: 8 },
-        { key: Scrap.UNCOMMON_SCRAP, amount: 4 },
+        { key: MeleeWeapon.STONEHATCHET, grade: ItemGrade.COMMON } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.UNCOMMON, amount: 8 },
+        { key: Scrap.SCRAP, grade: ItemGrade.UNCOMMON, amount: 4 },
       ],
     },
     {
@@ -1066,12 +1067,12 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.STONEHATCHET,
-        grade: ItemGrade.TWO,
+        grade: ItemGrade.RARE,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.STONEHATCHET, grade: ItemGrade.ONE } as MeleeWeaponItem,
-        { key: Metal.RARE_METAL, amount: 6 },
-        { key: Scrap.RARE_SCRAP, amount: 3 },
+        { key: MeleeWeapon.STONEHATCHET, grade: ItemGrade.UNCOMMON } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.RARE, amount: 6 },
+        { key: Scrap.SCRAP, grade: ItemGrade.RARE, amount: 3 },
       ],
     },
     {
@@ -1080,12 +1081,12 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.STONEHATCHET,
-        grade: ItemGrade.THREE,
+        grade: ItemGrade.EPIC,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.STONEHATCHET, grade: ItemGrade.TWO } as MeleeWeaponItem,
-        { key: Metal.EPIC_METAL, amount: 4 },
-        { key: Scrap.EPIC_SCRAP, amount: 2 },
+        { key: MeleeWeapon.STONEHATCHET, grade: ItemGrade.RARE } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.EPIC, amount: 4 },
+        { key: Scrap.SCRAP, grade: ItemGrade.EPIC, amount: 2 },
       ],
     },
     {
@@ -1094,12 +1095,12 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.STONEHATCHET,
-        grade: ItemGrade.FOUR,
+        grade: ItemGrade.LEGENDARY,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.STONEHATCHET, grade: ItemGrade.THREE } as MeleeWeaponItem,
-        { key: Metal.LEGENDARY_METAL, amount: 2 },
-        { key: Scrap.LEGENDARY_SCRAP, amount: 1 },
+        { key: MeleeWeapon.STONEHATCHET, grade: ItemGrade.EPIC } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.LEGENDARY, amount: 2 },
+        { key: Scrap.SCRAP, grade: ItemGrade.LEGENDARY, amount: 1 },
       ],
     },
   ],
@@ -1115,12 +1116,12 @@ registerBlueprint({
       durationSeconds: 5,
       item: {
         key: MeleeWeapon.SWITCHBLADE,
-        grade: ItemGrade.BASE,
+        grade: ItemGrade.COMMON,
       } as MeleeWeaponItem,
       parts: [
-        { key: Metal.COMMON_METAL, amount: 5 },
-        { key: Wood.COMMON_WOOD, amount: 5 },
-        { key: Scrap.COMMON_SCRAP, amount: 5 },
+        { key: Metal.METAL, grade: ItemGrade.COMMON, amount: 5 },
+        { key: Wood.WOOD, grade: ItemGrade.COMMON, amount: 5 },
+        { key: Scrap.SCRAP, grade: ItemGrade.COMMON, amount: 5 },
       ],
     },
     {
@@ -1129,13 +1130,13 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.SWITCHBLADE,
-        grade: ItemGrade.ONE,
+        grade: ItemGrade.UNCOMMON,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.SWITCHBLADE, grade: ItemGrade.BASE } as MeleeWeaponItem,
-        { key: Metal.UNCOMMON_METAL, amount: 5 },
-        { key: Wood.UNCOMMON_WOOD, amount: 5 },
-        { key: Scrap.UNCOMMON_SCRAP, amount: 5 },
+        { key: MeleeWeapon.SWITCHBLADE, grade: ItemGrade.COMMON } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.UNCOMMON, amount: 5 },
+        { key: Wood.WOOD, grade: ItemGrade.UNCOMMON, amount: 5 },
+        { key: Scrap.SCRAP, grade: ItemGrade.UNCOMMON, amount: 5 },
       ],
     },
     {
@@ -1144,13 +1145,13 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.SWITCHBLADE,
-        grade: ItemGrade.TWO,
+        grade: ItemGrade.RARE,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.SWITCHBLADE, grade: ItemGrade.ONE } as MeleeWeaponItem,
-        { key: Metal.RARE_METAL, amount: 5 },
-        { key: Wood.RARE_WOOD, amount: 5 },
-        { key: Scrap.RARE_SCRAP, amount: 5 },
+        { key: MeleeWeapon.SWITCHBLADE, grade: ItemGrade.UNCOMMON } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.RARE, amount: 5 },
+        { key: Wood.WOOD, grade: ItemGrade.RARE, amount: 5 },
+        { key: Scrap.SCRAP, grade: ItemGrade.RARE, amount: 5 },
       ],
     },
     {
@@ -1159,13 +1160,13 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.SWITCHBLADE,
-        grade: ItemGrade.THREE,
+        grade: ItemGrade.EPIC,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.SWITCHBLADE, grade: ItemGrade.TWO } as MeleeWeaponItem,
-        { key: Metal.EPIC_METAL, amount: 5 },
-        { key: Wood.EPIC_WOOD, amount: 5 },
-        { key: Scrap.EPIC_SCRAP, amount: 5 },
+        { key: MeleeWeapon.SWITCHBLADE, grade: ItemGrade.RARE } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.EPIC, amount: 5 },
+        { key: Wood.WOOD, grade: ItemGrade.EPIC, amount: 5 },
+        { key: Scrap.SCRAP, grade: ItemGrade.EPIC, amount: 5 },
       ],
     },
     {
@@ -1174,13 +1175,13 @@ registerBlueprint({
       durationSeconds: 10,
       item: {
         key: MeleeWeapon.SWITCHBLADE,
-        grade: ItemGrade.FOUR,
+        grade: ItemGrade.LEGENDARY,
       } as MeleeWeaponItem,
       parts: [
-        { key: MeleeWeapon.SWITCHBLADE, grade: ItemGrade.THREE } as MeleeWeaponItem,
-        { key: Metal.LEGENDARY_METAL, amount: 5 },
-        { key: Wood.LEGENDARY_WOOD, amount: 5 },
-        { key: Scrap.LEGENDARY_SCRAP, amount: 5 },
+        { key: MeleeWeapon.SWITCHBLADE, grade: ItemGrade.EPIC } as MeleeWeaponItem,
+        { key: Metal.METAL, grade: ItemGrade.LEGENDARY, amount: 5 },
+        { key: Wood.WOOD, grade: ItemGrade.LEGENDARY, amount: 5 },
+        { key: Scrap.SCRAP, grade: ItemGrade.LEGENDARY, amount: 5 },
       ],
     },
   ],

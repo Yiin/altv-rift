@@ -47,9 +47,6 @@ onUnmounted(() => {
             <h3 class="text-xl font-bold text-white">Your vitals</h3>
             <span class="text-sm font-semibold text-deepGray">health & energy</span>
           </div>
-          <div>
-            <h2 class="font-bold text-white">{{ inventory.currentInteraction.type }}</h2>
-          </div>
           <div class="flex gap-16">
             <div class="flex items-center gap-6">
               <div class="flex items-center justify-center border border-solid border-white/10 p-3">

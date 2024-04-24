@@ -62,7 +62,6 @@ alt.Player.prototype.setupCharacterStore = async function (character: Character)
       this.emitRaw(ClientEvents.FromServer.SET_CHARACTER_STATE, state);
     },
     onUpdateState: (payload) => {
-      console.log("update character state", payload);
       this.emitRaw(ClientEvents.FromServer.UPDATE_CHARACTER_STATE, payload);
     },
   });

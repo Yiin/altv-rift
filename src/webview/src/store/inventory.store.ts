@@ -27,32 +27,6 @@ import { isCharacterStoreAvailable, useCharacter } from "./synced/character.stor
 import { useGameState } from "./synced/game-state.store";
 import { useClient } from "./synced/client.store";
 
-const MOCK_ITEMS = reactive([
-  {
-    slot: 0,
-    item: {
-      key: "DLC_MP_XMAS3_M_JBIB_1_0",
-    },
-  },
-  {
-    slot: 4,
-    item: {
-      key: "specialcarbine",
-      durability: 100,
-      ammo: null,
-      components: [],
-      tint: 0,
-    },
-  },
-  {
-    slot: 3,
-    item: {
-      key: "handgunammo",
-      amount: 100,
-    },
-  },
-] as InventoryItem[]);
-
 export type Dragging = {
   item: SlottedItem;
   startPosition: {
@@ -261,9 +235,7 @@ export const useInventory = defineStore("inventory", {
        * Player inventory
        */
       const inventoryItems = this.character.inventory.items;
-      if ("altMock" in globalThis) {
-        inventoryItems.push(...MOCK_ITEMS);
-      }
+
       for (const inventoryItem of inventoryItems) {
         items.push({
           item: inventoryItem.item,
@@ -566,6 +538,16 @@ export const useInventory = defineStore("inventory", {
         return;
       }
 
+      const node = this.getItemNodeFromSource(source);
+
+      if (!node) {
+        return;
+      }
+
+      if (!(node.contains(e.target as HTMLElement) || (e.target as HTMLElement).contains(node))) {
+        return;
+      }
+
       const item = this.getItemFromSource(source);
 
       if (!item) {
@@ -739,6 +721,16 @@ export const useInventory = defineStore("inventory", {
       const source = this.getItemSourceFromScreenPos(e.clientX, e.clientY);
 
       if (!source) {
+        return;
+      }
+
+      const node = this.getItemNodeFromSource(source);
+
+      if (!node) {
+        return;
+      }
+
+      if (!(node.contains(e.target as HTMLElement) || (e.target as HTMLElement).contains(node))) {
         return;
       }
 

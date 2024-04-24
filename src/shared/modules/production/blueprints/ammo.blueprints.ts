@@ -3,6 +3,7 @@ import { getItemName } from "@shared/modules/items/lib";
 import { Metal } from "@shared/modules/items/registry/materials/metal.items";
 import { Scrap } from "@shared/modules/items/registry/materials/scrap.items";
 import { Ammo, AmmoItem, AmmoItemKey } from "@shared/modules/items/registry/ammo/ammo.items";
+import { ItemGrade } from "@shared/modules/items";
 import { registerBlueprint } from "../blueprints.registry";
 
 export const AmmoBlueprint = makeKeys<AmmoBlueprintKey>()({
@@ -34,16 +35,21 @@ export type AmmoBlueprintKey = Brand<string, "AmmoBlueprintKey">;
     key,
     name: `${getItemName(itemKey)} blueprint`,
     recipes: [
-      {
-        key,
-        durationSeconds: 2,
-        item: {
-          key: itemKey,
-          amount: 10,
-        } as AmmoItem,
-        parts: [{ key: Metal.COMMON_METAL, amount: 1 }],
-      },
-    ],
+      ItemGrade.COMMON,
+      ItemGrade.UNCOMMON,
+      ItemGrade.RARE,
+      ItemGrade.EPIC,
+      ItemGrade.LEGENDARY,
+    ].map((grade) => ({
+      key,
+      durationSeconds: 2,
+      item: {
+        key: itemKey,
+        amount: 10,
+        grade,
+      } as AmmoItem,
+      parts: [{ key: Metal.METAL, grade, amount: 1 }],
+    })),
   });
 });
 
@@ -66,8 +72,8 @@ export type AmmoBlueprintKey = Brand<string, "AmmoBlueprintKey">;
           amount: 10,
         } as AmmoItem,
         parts: [
-          { key: Scrap.UNCOMMON_SCRAP, amount: 1 },
-          { key: Metal.COMMON_METAL, amount: 1 },
+          { key: Scrap.SCRAP, grade: ItemGrade.UNCOMMON, amount: 1 },
+          { key: Metal.METAL, grade: ItemGrade.COMMON, amount: 1 },
         ],
       },
     ],
@@ -94,8 +100,8 @@ export type AmmoBlueprintKey = Brand<string, "AmmoBlueprintKey">;
           amount: 5,
         } as AmmoItem,
         parts: [
-          { key: Scrap.COMMON_SCRAP, amount: 2 },
-          { key: Metal.COMMON_METAL, amount: 2 },
+          { key: Scrap.SCRAP, grade: ItemGrade.COMMON, amount: 2 },
+          { key: Metal.METAL, grade: ItemGrade.COMMON, amount: 2 },
         ],
       },
     ],

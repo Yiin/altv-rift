@@ -2322,7 +2322,7 @@
         "Description": "Fires a projectile that administers a voltage capable of temporarily stunning an assailant. Takes approximately 4 seconds to recharge after firing.",
         "Group": "GROUP_STUNGUN",
         "ModelHashKey": "w_pi_stungun",
-        "DefaultClipSize": 2104529083,
+        "DefaultClipSize": 0,
         "AmmoType": "AMMO_STUNGUN",
         "Components": {},
         "Tints": [
@@ -2372,7 +2372,7 @@
             "accuracySpread": 1,
             "range": 11,
             "damage": 1,
-            "clipSize": 2104529083,
+            "clipSize": -1,
             "timeBetweenShots": 2.799999952316284,
             "headshotDamageModifier": 18,
             "playerDamageModifier": 1
@@ -3221,7 +3221,7 @@
         "Description": "It's, like, literally stunning.",
         "Group": "GROUP_STUNGUN",
         "ModelHashKey": "w_pi_stungun",
-        "DefaultClipSize": 2104529083,
+        "DefaultClipSize": 0,
         "AmmoType": "AMMO_STUNGUN",
         "Components": {},
         "Tints": [

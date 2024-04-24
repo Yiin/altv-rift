@@ -4,6 +4,7 @@ import { WeaponComponent } from "@shared/modules/items/registry/weapon-component
 import { getItemName } from "@shared/modules/items/lib";
 import { WeaponItemKey } from "@shared/modules/items/registry/weapons/weapon.items";
 import { Metal } from "@shared/modules/items/registry/materials/metal.items";
+import { ItemGrade } from "@shared/modules/items";
 import { registerBlueprint } from "../blueprints.registry";
 
 export const WeaponComponentBlueprint = makeKeys<WeaponComponentBlueprintKey>()({
@@ -539,8 +540,16 @@ Object.entries({
         key: component,
       },
       parts: [
-        { key: Metal.COMMON_METAL, amount: 5 },
-        { key: Scrap.COMMON_SCRAP, amount: 5 },
+        {
+          key: Metal.METAL,
+          grade: ItemGrade.COMMON,
+          amount: 5 * (+component[component.length - 1] || 1),
+        },
+        {
+          key: Scrap.SCRAP,
+          grade: ItemGrade.COMMON,
+          amount: 5 * (+component[component.length - 1] || 1),
+        },
       ],
     })),
   });

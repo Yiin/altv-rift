@@ -18,6 +18,12 @@ module.exports = {
           800: "#8f441b",
           900: "#6b3314",
         },
+        common: "#FFFFFF",
+        uncommon: "#B9F045",
+        rare: "#2087FF",
+        epic: "#BB2CFF",
+        legendary: "#FFDA57",
+        contraband: "#EE2E24",
         primaryGreen: "#95C82A",
         accentRed: "#FF2431",
         aquaBlue: "#45F0D1",
@@ -87,6 +93,7 @@ module.exports = {
       dropShadow: {
         "glow-simple": "0px 1px 32px rgba(255, 238, 87, 0.15)",
         glow: ["0 0px 2px rgba(255,255, 255, 0.35)", "0 0px 6px rgba(255, 255,255, 0.2)"],
+        "glow-color": ["0 0px 2px var(--glow-color)", "0 0px 18px var(--glow-color)"],
       },
       minWidth: (utils) => utils.theme("spacing"),
       spacing: {

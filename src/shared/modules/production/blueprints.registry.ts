@@ -1,4 +1,6 @@
-import { Blueprint } from "./types";
+import { Item } from "../items";
+import { isMatchingPart } from "./production.api";
+import { Blueprint, BlueprintRecipe } from "./types";
 
 const blueprints = new Map<string, Blueprint>();
 
@@ -26,4 +28,13 @@ export function getRecipeByKey(key: string) {
     }
   }
   return null;
+}
+
+export function getUpgradeRecipe(
+  item: Item,
+  blueprints = getBlueprints(),
+): BlueprintRecipe | undefined {
+  return blueprints
+    .flatMap((blueprint) => blueprint.recipes ?? [])
+    .find(({ parts, isUpgrade }) => isUpgrade && isMatchingPart(parts[0], item));
 }
