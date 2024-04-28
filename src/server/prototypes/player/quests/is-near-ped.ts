@@ -9,7 +9,7 @@ declare module "@altv/server" {
   }
 }
 
-alt.Player.prototype.isNearPed = function (pedKey, distance = 5) {
+alt.Player.prototype.isNearPed = function (pedKey, distance = 10) {
   const ped = getPedByKey(pedKey);
   return typeof ped !== "undefined" && this.pos.distanceTo(ped.pos) <= distance;
 };

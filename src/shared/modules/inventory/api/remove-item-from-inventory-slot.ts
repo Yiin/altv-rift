@@ -20,7 +20,6 @@ export function removeItemFromInventorySlot(
   }
 
   if (!isStackable(item) || item.amount - amount === 0 || amount <= 0) {
-    console.log(`Removing item from slot ${slot}`);
     inventory.items.splice(
       inventory.items.findIndex((item) => item.slot === slot),
       1,

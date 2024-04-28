@@ -2,7 +2,6 @@ import { computed, ref } from "vue";
 import {
   type BlueprintRecipe,
   getBlueprint,
-  CraftingResult,
   canCraftRecipe,
   getUpgradeRecipe,
   type Blueprint,

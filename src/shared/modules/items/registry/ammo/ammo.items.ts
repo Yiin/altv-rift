@@ -1,5 +1,5 @@
 import { AmmoGroup } from "../weapons/weapon-groups";
-import { Item, ItemKey } from "../../types";
+import { Item } from "../../types";
 import { registerItems } from "../../items-registry";
 import { makeKeys } from "../../../../utility/make-keys";
 import { ItemGrade, ItemTier } from "../../enums";
@@ -167,6 +167,23 @@ export function getAmmoGroup(ammoKey: AmmoItemKey): AmmoGroup {
   return ammo.get(ammoKey)!.group;
 }
 
-export function getAmmoDamageMultiplier(ammoKey: AmmoItemKey): number {
-  return ammo.get(ammoKey)!.damagemultiplier;
+export function getAmmoDamageMultiplier(ammoKey: AmmoItemKey, grade: ItemGrade): number {
+  const multiplier = ammo.get(ammoKey)!.damagemultiplier;
+
+  switch (grade) {
+    case ItemGrade.COMMON:
+      return 1;
+    case ItemGrade.UNCOMMON:
+      return 1.2;
+    case ItemGrade.RARE:
+      return 1.5;
+    case ItemGrade.EPIC:
+      return 2;
+    case ItemGrade.LEGENDARY:
+      return 3;
+    case ItemGrade.CONTRABAND:
+      return 4;
+    case ItemGrade.LIMITED:
+      return 5;
+  }
 }

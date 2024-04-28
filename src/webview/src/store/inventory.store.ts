@@ -14,7 +14,6 @@ import {
   EquipmentSlot,
   type GroundItemSource,
   type StorageItemSource,
-  type InventoryItem,
   type InventoryItemSource,
   type ItemSource,
   ItemSourceOrigin,
@@ -195,7 +194,6 @@ interface State {
   draggingItemThisFrame: boolean;
   previewingItem?: SlottedItem;
   ammunitionPanelRef?: Ref<HTMLElement>;
-  hiddenItems: Set<ItemSource>;
 }
 
 export const useInventory = defineStore("inventory", {
@@ -206,7 +204,6 @@ export const useInventory = defineStore("inventory", {
     selectedItem: undefined,
     previewingItem: undefined,
     ammunitionPanelRef: undefined,
-    hiddenItems: new Set(),
   }),
   getters: {
     character: () => {
@@ -368,9 +365,6 @@ export const useInventory = defineStore("inventory", {
   },
   actions: {
     updateInteraction(interaction: ItemInteraction) {
-      if (this.currentInteraction.type === InteractionType.TransferingAmount) {
-        this.unhideItem(this.currentInteraction.state.item.source);
-      }
       this.currentInteraction = interaction;
     },
     registerItemSlot(slot: ItemNode) {
@@ -401,31 +395,14 @@ export const useInventory = defineStore("inventory", {
     removeBait(source: ItemSource) {
       return rpc.callServer(ServerCall.FromWebview.REMOVE_BAIT, source);
     },
-    isItemHidden(source: ItemSource) {
-      return [...this.hiddenItems.values()].some((hiddenSource) =>
-        isSameItemSource(source, hiddenSource),
-      );
-    },
-    hideItem(source: SlottedItem | ItemSource) {
-      if ("source" in source) {
-        this.hiddenItems.add(source.source);
-      } else {
-        this.hiddenItems.add(source);
-      }
-    },
-    unhideItem(source: SlottedItem | ItemSource) {
-      if ("source" in source) {
-        this.hiddenItems.delete(source.source);
-      } else {
-        this.hiddenItems.delete(source);
-      }
-    },
     swapLocally(from: SlottedItem | undefined, to: SlottedItem | ItemSource) {
       const toSource = "source" in to ? to.source : to;
 
       if (
         from?.source.origin === ItemSourceOrigin.Ground ||
-        toSource.origin === ItemSourceOrigin.Ground
+        toSource.origin === ItemSourceOrigin.Ground ||
+        from?.source.origin === ItemSourceOrigin.Storage ||
+        toSource.origin === ItemSourceOrigin.Storage
       ) {
         return;
       }
@@ -460,8 +437,6 @@ export const useInventory = defineStore("inventory", {
           return reject("No item in source");
         }
 
-        // Hides the item from current slot while we're displaying transfer dialog
-        this.hideItem(from);
         this.updateInteraction({
           type: InteractionType.TransferingAmount,
           state: { item: fromItem, to, resolve, reject, position },
@@ -472,20 +447,17 @@ export const useInventory = defineStore("inventory", {
     },
     confirmAmountTransfer(amount: number) {
       if (this.currentInteraction.type !== InteractionType.TransferingAmount) {
-        console.log("Not transferring amount");
         return;
       }
 
       const slottedItem = this.currentInteraction.state.item;
 
       if (!slottedItem) {
-        console.log("No item in source");
         this.currentInteraction.state.reject();
         return;
       }
 
       if (amount <= 0) {
-        console.log("Amount is less than 0");
         return;
       }
 
@@ -493,7 +465,6 @@ export const useInventory = defineStore("inventory", {
         amount = slottedItem.item.amount;
       }
 
-      console.log("Amount to transfer", amount);
       this.currentInteraction.state.resolve(amount);
     },
     cancelAmountTransfer() {
@@ -581,10 +552,8 @@ export const useInventory = defineStore("inventory", {
       }
       switch (this.currentInteraction.type) {
         case InteractionType.Dragging:
-          this.currentInteraction.state.currentPosition = {
-            x: e.clientX,
-            y: e.clientY,
-          };
+          this.currentInteraction.state.currentPosition.x = e.clientX;
+          this.currentInteraction.state.currentPosition.y = e.clientY;
           return;
         case InteractionType.Hovering:
         case InteractionType.None:
@@ -597,7 +566,8 @@ export const useInventory = defineStore("inventory", {
 
           if (this.currentInteraction.type === InteractionType.Hovering) {
             if (isSameItemSource(this.currentInteraction.state.item.source, source)) {
-              this.currentInteraction.state.position = { x: e.clientX, y: e.clientY };
+              this.currentInteraction.state.position.x = e.clientX;
+              this.currentInteraction.state.position.y = e.clientY;
               return;
             }
           }
@@ -849,6 +819,28 @@ export const useInventory = defineStore("inventory", {
         isSameItemSource(item.source, source),
       );
     },
+    getNodeRect(node?: HTMLElement) {
+      if (!node) {
+        return null;
+      }
+
+      const cache = node.cache;
+
+      if (cache && cache.freshUntil > Date.now()) {
+        return cache.rect;
+      }
+
+      const rect = node.parentElement?.classList.contains("node-anchor")
+        ? node.parentElement.getBoundingClientRect()
+        : node.getBoundingClientRect();
+
+      node.cache = {
+        rect,
+        freshUntil: Date.now() + 1000,
+      };
+
+      return rect;
+    },
     getItemSourceFromScreenPos(x: number, y: number) {
       const MAX_DISTANCE = 8;
 
@@ -860,11 +852,13 @@ export const useInventory = defineStore("inventory", {
 
       const closest = this.itemNodes
         .map((slot) => {
-          const rect = slot.node.value?.parentElement?.classList.contains("node-anchor")
-            ? slot.node.value?.parentElement.getBoundingClientRect()
-            : slot.node.value?.getBoundingClientRect();
+          const rect = this.getNodeRect(slot.node.value);
 
-          return rect ? ([slot.source, rect, distanceToRect(rect, x, y)] as const) : null;
+          if (!rect) {
+            return null;
+          }
+
+          return [slot.source, rect, distanceToRect(rect, x, y)] as const;
         })
         .filter(
           (entry): entry is NonNullable<typeof entry> => entry !== null && entry[2] <= MAX_DISTANCE,
@@ -878,9 +872,13 @@ export const useInventory = defineStore("inventory", {
       return slot?.node.value;
     },
     getItemSourceScreenPosition(source: ItemSource) {
-      const rect = this.itemNodes
-        .find((slot) => isSameItemSource(slot.source, source))
-        ?.node.value?.getBoundingClientRect();
+      const itemNode = this.itemNodes.find((slot) => isSameItemSource(slot.source, source));
+
+      if (!itemNode) {
+        return { x: 0, y: 0 };
+      }
+
+      const rect = this.getNodeRect(itemNode.node.value);
 
       if (!rect) {
         return { x: 0, y: 0 };

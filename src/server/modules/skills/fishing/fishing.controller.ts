@@ -37,10 +37,13 @@ rpc.registerClient(ServerCall.FromClient.REGISTER_KEY_PRESS, (player, key) => {
 
       // target limits
       const errorMargin = (player.ping + 50) / durationMs;
-      const min = targetPosition - targetSize / 2 - errorMargin;
-      const max = targetPosition + targetSize / 2 + errorMargin;
+      const min = targetPosition - targetSize / 2;
+      const max = targetPosition + targetSize / 2;
 
-      const hitTheTarget = timePassed >= min && timePassed <= max;
+      const minAdjusted = Math.max(0, min - Math.max(0, max - 1) - errorMargin);
+      const maxAdjusted = Math.min(1, max + Math.min(0, 1 + min) + errorMargin);
+
+      const hitTheTarget = timePassed >= minAdjusted && timePassed <= maxAdjusted;
 
       if (hitTheTarget) {
         catchAFish(player, player.gameState.fishingProgress.baitKey);

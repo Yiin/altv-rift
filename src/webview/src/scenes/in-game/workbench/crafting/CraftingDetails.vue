@@ -54,14 +54,6 @@ const isCurrentlyBeingCrafted = computed(() => queue.value[0] === selectedRecipe
       <div class="mb-18.75 flex w-56.25 flex-grow flex-col justify-end">
         <div class="mb-4 text-xl font-bold">Crafting information</div>
         <div class="mb-4 flex justify-end gap-2">
-          <!-- <div
-            class="rounded-md border border-solid border-neutral-400/10 bg-neutral-400/5 px-3.25 py-2.75"
-          >
-            <div class="whitespace-nowrap text-right text-xs font-bold uppercase text-neutral-400">
-              Success rate
-            </div>
-            <div class="text-right text-xl font-bold text-amber-300">32%</div>
-          </div> -->
           <div
             class="rounded-md border border-solid border-neutral-400/10 bg-neutral-400/5 px-3.25 py-2.75"
           >

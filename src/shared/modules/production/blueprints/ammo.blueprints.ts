@@ -41,8 +41,8 @@ export type AmmoBlueprintKey = Brand<string, "AmmoBlueprintKey">;
       ItemGrade.EPIC,
       ItemGrade.LEGENDARY,
     ].map((grade) => ({
-      key,
-      durationSeconds: 2,
+      key: key + grade,
+      durationSeconds: 1,
       item: {
         key: itemKey,
         amount: 10,

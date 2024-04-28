@@ -25,7 +25,8 @@ function adjustUIBaseFontSize() {
   const currentAspectRatio = window.innerWidth / window.innerHeight;
   const aspectRatioDeviation = currentAspectRatio / targetAspectRatio;
 
-  const baseFontSize = Math.max(10, (1.4814814814814814 * window.innerHeight) / 100);
+  // Base font size should be 16px on 1080p screens
+  const baseFontSize = Math.max(10, (16 / 1080) * window.innerHeight);
   const adjustedFontSize = baseFontSize * Math.min(1, aspectRatioDeviation);
 
   document.documentElement.style.fontSize = `${adjustedFontSize}px`;

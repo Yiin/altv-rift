@@ -109,6 +109,10 @@ function getDropPosition(entity: alt.VirtualEntity) {
 }
 
 export function isAirDropInPosition(entity: alt.VirtualEntity) {
+  if (entity.streamSyncedMeta.storageType !== StorageType.AirDrop) {
+    return true;
+  }
+
   const {
     streamSyncedMeta: { interpolate },
   } = entity;
@@ -167,7 +171,7 @@ alt.Events.onStreamSyncedMetaChange(({ entity, key, newValue }) => {
   if (
     !(entity instanceof alt.VirtualEntity) ||
     entity.streamSyncedMeta.entityType !== "storage" ||
-    entity.streamSyncedMeta.storageType !== StorageType.LootBox ||
+    entity.streamSyncedMeta.storageType !== StorageType.AirDrop ||
     key !== "interpolate"
   ) {
     return;
@@ -206,7 +210,7 @@ alt.Events.onWorldObjectStreamOut(({ object }) => {
   if (
     !(object instanceof alt.VirtualEntity) ||
     object.streamSyncedMeta.entityType !== "storage" ||
-    object.streamSyncedMeta.storageType !== StorageType.LootBox
+    object.streamSyncedMeta.storageType !== StorageType.AirDrop
   ) {
     return;
   }

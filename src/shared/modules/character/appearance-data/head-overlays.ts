@@ -1,3 +1,5 @@
+import { Gender } from "./aspects";
+
 export const headOverlayNames = [
   "Blemishes",
   "Facial Hair",
@@ -47,7 +49,7 @@ export const headOverlayItemNames = [
   makeList('Classic', 'Natural', 'The Strip', 'The Tree', 'Hairy', 'Grisly', 'Ape', 'Groomed Ape', 'Bikini', 'Lightning Bolt', 'Reverse Lightning', 'Love Heart', 'Chestache', 'Happy Face', 'Skull', 'Snail Trail', 'Slug and Nips', 'Hairy Arms'),
 ];
 
-export const hiddenOverlaysForGender = (gender: 0 | 1) => {
+export const hiddenOverlaysForGender = (gender: Gender | "Male" | "Female") => {
   const forMale: number[] = [];
   const forFemale = ["Facial Hair", "Chest Hair"].map(headOverlayNames.indexOf, headOverlayNames);
 
@@ -59,7 +61,7 @@ export const hiddenOverlaysForGender = (gender: 0 | 1) => {
   }[gender];
 };
 
-export const notRandomizableOverlaysForGender = (gender: 0 | 1) => {
+export const notRandomizableOverlaysForGender = (gender: Gender | "Male" | "Female") => {
   const forMale = ["Blemishes", "Makeup", "Lipstick"].map(
     headOverlayNames.indexOf,
     headOverlayNames,

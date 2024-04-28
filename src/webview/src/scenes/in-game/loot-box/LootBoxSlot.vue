@@ -26,7 +26,7 @@ function takeItem() {
 
 <template>
   <div
-    class="node-anchor relative h-21 w-21 border border-solid border-white/[0.03] bg-silverCloud/[0.01]"
+    class="node-anchor relative h-21.25 w-21.25 border border-solid border-white/[0.03] bg-silverCloud/[0.01]"
   >
     <div
       ref="nodeRef"

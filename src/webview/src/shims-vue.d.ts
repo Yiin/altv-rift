@@ -97,3 +97,10 @@ declare module "vue-drag-resize" {
   >;
   export default component;
 }
+
+interface HTMLElement {
+  cache?: {
+    rect: DOMRect;
+    freshUntil: number;
+  };
+}

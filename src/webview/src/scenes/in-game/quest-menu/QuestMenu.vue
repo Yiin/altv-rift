@@ -3,6 +3,7 @@ import { computed, ref } from "vue";
 import Window from "@/components/Window.vue";
 import { useClient } from "@/store/synced/client.store";
 import { useUser } from "@/store/synced/user.store";
+import { px } from "@/composables/use-pixel";
 import Quest from "./Quest.vue";
 
 const client = useClient();
@@ -13,7 +14,7 @@ const defaultPosition = computed(() => {
     user?.interface?.questMenu?.screen ?? {
       x: window.innerWidth / 4,
       y: window.innerHeight / 3,
-      w: 400,
+      w: px(350),
     }
   );
 });

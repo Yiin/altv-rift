@@ -214,6 +214,7 @@ alt.Events.onPlayer(CALL_SERVER_FROM_WEBVIEW, async (player, payload) => {
       result,
     });
   } catch (error) {
+    console.log(`Error in CALL_SERVER_FROM_WEBVIEW`, error);
     player.emitRaw(CALL_SERVER_FROM_WEBVIEW_RESPONSE, {
       id,
       error: error instanceof z.ZodError ? error.issues.map((issue) => issue.message) : error,

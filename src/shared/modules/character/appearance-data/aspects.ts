@@ -1,5 +1,10 @@
 import { OverlayType } from "./overlays";
 
+export enum Gender {
+  FEMALE,
+  MALE,
+}
+
 export const hairColors = [
   { hex: "#1c1f21" },
   { hex: "#272a2c" },
@@ -149,7 +154,8 @@ function makeList(...items: string[]) {
   return new Map(
     items
       .map((value, id) => [id, value] as const)
-      .filter(([, value]) => typeof value !== "undefined"),
+      // Ignore face paints
+      .filter(([, value]) => typeof value !== "undefined" && !value.startsWith("paint ")),
   );
 }
 
@@ -171,25 +177,25 @@ export enum Aspect {
 }
 
 // prettier-ignore
-export const aspects = (sex: 0 | 1 = 0) => ({
+export const aspects = (sex: Gender = Gender.MALE) => ({
   [Aspect.Hair]: {
-    options: new Map<number, { name: string, collection: string, overlay: string }>(!sex ? [
+    options: new Map<number, { name: string, collection: string, overlay: string }>(sex === Gender.MALE ? [
       [0, { name: 'Close Shave', collection: 'mpbeach_overlays', overlay: 'FM_Hair_Fuzz' }],
-      [1, { name: 'Buzzcut', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_001' }],
-      [2, { name: 'Faux Hawk', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_002' }],
-      [3, { name: 'Hipster', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_003' }],
-      [4, { name: 'Side Parting', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_004' }],
-      [5, { name: 'Shorter Cut', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_005' }],
-      [6, { name: 'Biker', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_006' }],
-      [7, { name: 'Ponytail', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_007' }],
-      [8, { name: 'Cornrows', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_008' }],
-      [9, { name: 'Slicked', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_009' }],
-      [10, { name: 'Short Brushed', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_013' }],
-      [11, { name: 'Spikey', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_002' }],
-      [12, { name: 'Caesar', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_011' }],
-      [13, { name: 'Chopped', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_012' }],
-      [14, { name: 'Dreads', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_014' }],
-      [15, { name: 'Long Hair', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_015' }],
+      [37, { name: 'Buzzcut', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_001' }],
+      [38, { name: 'Faux Hawk', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_002' }],
+      [39, { name: 'Hipster', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_003' }],
+      [40, { name: 'Side Parting', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_004' }],
+      [41, { name: 'Shorter Cut', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_005' }],
+      [42, { name: 'Biker', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_006' }],
+      [43, { name: 'Ponytail', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_007' }],
+      [44, { name: 'Cornrows', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_008' }],
+      [45, { name: 'Slicked', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_009' }],
+      [46, { name: 'Short Brushed', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_013' }],
+      [47, { name: 'Spikey', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_002' }],
+      [48, { name: 'Caesar', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_011' }],
+      [49, { name: 'Chopped', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_012' }],
+      [50, { name: 'Dreads', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_014' }],
+      [51, { name: 'Long Hair', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_015' }],
       [16, { name: 'Shaggy Curls', collection: 'multiplayer_overlays', overlay: 'NGBea_M_Hair_000' }],
       [17, { name: 'Surfer Dude', collection: 'multiplayer_overlays', overlay: 'NGBea_M_Hair_001' }],
       [18, { name: 'Short Side Part', collection: 'multiplayer_overlays', overlay: 'NGBus_M_Hair_000' }],
@@ -210,21 +216,21 @@ export const aspects = (sex: 0 | 1 = 0) => ({
       [34, { name: 'Spiked Mohawk', collection: 'mpbiker_overlays', overlay: 'MP_Biker_Hair_003_M' }],
       [35, { name: 'Mod', collection: 'mpbiker_overlays', overlay: 'MP_Biker_Hair_004_M' }],
       [36, { name: 'Layered Mod', collection: 'mpbiker_overlays', overlay: 'MP_Biker_Hair_005_M' }],
-      // [37, { name: 'NG_M_Hair_001', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_001' }],
-      // [38, { name: 'NG_M_Hair_002', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_002' }],
-      // [39, { name: 'NG_M_Hair_003', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_003' }],
-      // [40, { name: 'NG_M_Hair_004', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_004' }],
-      // [41, { name: 'NG_M_Hair_005', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_005' }],
-      // [42, { name: 'NG_M_Hair_006', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_006' }],
-      // [43, { name: 'NG_M_Hair_007', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_007' }],
-      // [44, { name: 'NG_M_Hair_008', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_008' }],
-      // [45, { name: 'NG_M_Hair_009', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_009' }],
-      // [46, { name: 'NG_M_Hair_013', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_013' }],
-      // [47, { name: 'NG_M_Hair_002', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_002' }],
-      // [48, { name: 'NG_M_Hair_011', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_011' }],
-      // [49, { name: 'NG_M_Hair_012', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_012' }],
-      // [50, { name: 'NG_M_Hair_014', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_014' }],
-      // [51, { name: 'NG_M_Hair_015', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_015' }],
+      // [1, { name: 'Buzzcut', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_001' }],
+      // [2, { name: 'Faux Hawk', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_002' }],
+      // [3, { name: 'Hipster', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_003' }],
+      // [4, { name: 'Side Parting', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_004' }],
+      // [5, { name: 'Shorter Cut', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_005' }],
+      // [6, { name: 'Biker', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_006' }],
+      // [7, { name: 'Ponytail', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_007' }],
+      // [8, { name: 'Cornrows', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_008' }],
+      // [9, { name: 'Slicked', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_009' }],
+      // [10, { name: 'Short Brushed', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_013' }],
+      // [11, { name: 'Spikey', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_002' }],
+      // [12, { name: 'Caesar', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_011' }],
+      // [13, { name: 'Chopped', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_012' }],
+      // [14, { name: 'Dreads', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_014' }],
+      // [15, { name: 'Long Hair', collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_015' }],
       // [52, { name: 'NGBea_M_Hair_000', collection: 'multiplayer_overlays', overlay: 'NGBea_M_Hair_000' }],
       // [53, { name: 'NGBea_M_Hair_001', collection: 'multiplayer_overlays', overlay: 'NGBea_M_Hair_001' }],
       // [54, { name: 'NGBus_M_Hair_000', collection: 'multiplayer_overlays', overlay: 'NGBus_M_Hair_000' }],
@@ -247,6 +253,14 @@ export const aspects = (sex: 0 | 1 = 0) => ({
       // [71, { name: 'MP_Biker_Hair_005_M', collection: 'mpbiker_overlays', overlay: 'MP_Biker_Hair_005_M' }],
       [72, { name: 'Flattop', collection: 'mpgunrunning_overlays', overlay: 'MP_Gunrunning_Hair_M_000_M' }],
       [73, { name: 'Military Buzzcut', collection: 'mpgunrunning_overlays', overlay: 'MP_Gunrunning_Hair_M_001_M' }],
+      [74, { name: 'Impotent Rage', collection: 'mpvinewood_overlays', overlay: 'MP_Vinewood_Hair_M_000_M' }],
+      [75, { name: 'Afro Faded', collection: 'mptuner_overlays', overlay: 'MP_Tuner_Hair_001_M' }],
+      [76, { name: 'Top Knot', collection: 'mpsecurity_overlays', overlay: 'MP_Security_Hair_001_M' }],
+      [77, { name: 'Two Block', collection: 'mpsum2_overlays', overlay: 'MP_Sum2_Hair_000_M' }],
+      [78, { name: 'Shaggy Mullet', collection: 'mpsum2_overlays', overlay: 'MP_Sum2_Hair_002_M' }],
+      [79, { name: 'Short Curls Fade', collection: 'mp2023_01_overlays', overlay: 'MP_2023_01_Hair_000_M' }],
+      [80, { name: 'Curtains', collection: 'mp2023_01_overlays', overlay: 'MP_2023_01_Hair_002_M' }],
+      [81, { name: 'Knotless Braids', collection: 'mp2023_02_overlays', overlay: 'MP_2023_02_Hair_000_M' }],
     ] : [
       [0, { name: 'Close Shave', collection: 'mpbeach_overlays', overlay: 'FM_Hair_Fuzz' }],
       [1, { name: 'Short', collection: 'multiplayer_overlays', overlay: 'NG_F_Hair_001' }],
@@ -326,38 +340,41 @@ export const aspects = (sex: 0 | 1 = 0) => ({
       // [75, { name: 'MP_Biker_Hair_004_F', collection: 'mpbiker_overlays', overlay: 'MP_Biker_Hair_004_F' }],
       [76, { name: 'Neat Bun', collection: 'mpgunrunning_overlays', overlay: 'MP_Gunrunning_Hair_F_000_F' }],
       [77, { name: 'Short Bob', collection: 'mpgunrunning_overlays', overlay: 'MP_Gunrunning_Hair_F_001_F' }],
-      [84, { name: "High Ponytail", collection: 'mp_f_proxyworld', overlay: 'CLO_DCT_HAIR_0_0_F' }],
-      [85, { name: "Long Hair", collection: 'mp_f_proxyworld', overlay: 'CLO_DCT_HAIR_1_0_F' }],
-      [86, { name: "Braid w/ Long Hair", collection: 'mp_f_proxyworld', overlay: 'CLO_DCT_HAIR_2_0_F' }],
+      [78, { name: 'Impotent Rage', collection: 'mpvinewood_overlays', overlay: 'MP_Vinewood_Hair_F_000_F' }],
+      [79, { name: 'Afro', collection: 'mptuner_overlays', overlay: 'MP_Tuner_Hair_000_F' }],
+      [80, { name: 'Pixie Wavy', collection: 'mpsecurity_overlays', overlay: 'MP_Security_Hair_000_F' }],
+      [81, { name: 'Short Tucked Bob', collection: 'mpsum2_overlays', overlay: 'MP_Sum2_Hair_001_F' }],
+      [82, { name: 'Shaggy Mullet', collection: 'mpsum2_overlays', overlay: 'MP_Sum2_Hair_003_F' }],
+      [83, { name: 'Buzzcut', collection: 'mpchristmas3_overlays', overlay: 'MP_Christmas3_Hair_000_F' }],
+      [84, { name: 'Baby Braids', collection: 'mp2023_01_overlays', overlay: 'MP_2023_01_Hair_001_F' }],
+      [85, { name: 'Knotless Braids', collection: 'mp2023_02_overlays', overlay: 'MP_2023_02_Hair_000_F' }],
     ]),
     color1: hairColors,
     color2: hairColors,
   },
   [Aspect.Eyebrows]: {
     overlayId: OverlayType.Eyebrows,
-    options: makeList('Classic', 'Balanced', 'Fashion', 'Cleopatra', 'Quizzical', 'Femme', 'Seductive', 'Pinched', 'Chola', 'Triomphe', 'Carefree', 'Curvaceous', 'Rodent', 'Double Tram', 'Thin', 'Penciled', 'Mother Plucker', 'Straight and Narrow', 'Natural', 'Fuzzy', 'Unkempt', 'Caterpillar', 'Regular', 'Mediterranean', 'Groomed', 'Bushels', 'Feathered', 'Prickly', 'Monobrow', 'Winged', 'Triple Tram', 'Arched Tram', 'Cutouts', 'Fade Away', 'Solo Tram'),
-    color1: overlayColors,
-    color2: overlayColors,
+    options: makeList('Balanced', 'Fashion', 'Cleopatra', 'Quizzical', 'Femme', 'Seductive', 'Pinched', 'Chola', 'Triomphe', 'Carefree', 'Curvaceous', 'Rodent', 'Double Tram', 'Thin', 'Penciled', 'Mother Plucker', 'Straight and Narrow', 'Natural', 'Fuzzy', 'Unkempt', 'Caterpillar', 'Regular', 'Mediterranean', 'Groomed', 'Bushels', 'Feathered', 'Prickly', 'Monobrow', 'Winged', 'Triple Tram', 'Arched Tram', 'Cutouts', 'Fade Away', 'Solo Tram'),
+    color1: hairColors,
   },
-  ...(sex === 0
+  ...(sex === Gender.MALE
     ? {
       [Aspect.FacialHair]: {
         overlayId: OverlayType.FacialHair,
-        options: makeList('Classic', 'Light Stubble', 'Balbo', 'Circle Beard', 'Goatee', 'Chin', 'Chin Fuzz', 'Pencil Chin Strap', 'Scruffy', 'Musketeer', 'Mustache', 'Trimmed Beard', 'Stubble', 'Thin Circle Beard', 'Horseshoe', 'Pencil and \'Chops', 'Chin Strap Beard', 'Balbo and Sideburns', 'Mutton Chops', 'Scruffy Beard', 'Curly', 'Curly & Deep Stranger', 'Handlebar', 'Faustic', 'Otto & Patch', 'Otto & Full Stranger', 'Light Franz', 'The Hampstead', 'The Ambrose', 'Lincoln Curtain'),
-        color1: overlayColors,
-        color2: overlayColors,
+        options: makeList('Light Stubble', 'Balbo', 'Circle Beard', 'Goatee', 'Chin', 'Chin Fuzz', 'Pencil Chin Strap', 'Scruffy', 'Musketeer', 'Mustache', 'Trimmed Beard', 'Stubble', 'Thin Circle Beard', 'Horseshoe', 'Pencil and \'Chops', 'Chin Strap Beard', 'Balbo and Sideburns', 'Mutton Chops', 'Scruffy Beard', 'Curly', 'Curly & Deep Stranger', 'Handlebar', 'Faustic', 'Otto & Patch', 'Otto & Full Stranger', 'Light Franz', 'The Hampstead', 'The Ambrose', 'Lincoln Curtain'),
+        color1: hairColors,
       },
       [Aspect.ChestHair]: {
         overlayId: OverlayType.ChestHair,
-        options: makeList('Classic', 'Natural', 'The Strip', 'The Tree', 'Hairy', 'Grisly', 'Ape', 'Groomed Ape', 'Bikini', 'Lightning Bolt', 'Reverse Lightning', 'Love Heart', 'Chestache', 'Happy Face', 'Skull', 'Snail Trail', 'Slug and Nips', 'Hairy Arms'),
-        color1: overlayColors,
+        options: makeList('Natural', 'The Strip', 'The Tree', 'Hairy', 'Grisly', 'Ape', 'Groomed Ape', 'Bikini', 'Lightning Bolt', 'Reverse Lightning', 'Love Heart', 'Chestache', 'Happy Face', 'Skull', 'Snail Trail', 'Slug and Nips', 'Hairy Arms'),
+        color1: hairColors,
       },
     }
     : {}
   ),
   [Aspect.SkinBlemishes]: {
     overlayId: OverlayType.Blemishes,
-    options: makeList('Classic', 'Measles', 'Pimples', 'Spots', 'Break Out', 'Blackheads', 'Build Up', 'Pustules', 'Zits', 'Full Acne', 'Acne', 'Cheek Rash', 'Face Rash', 'Picker', 'Puberty', 'Eyesore', 'Chin Rash', 'Two Face', 'T Zone', 'Greasy', 'Marked', 'Acne Scarring', 'Full Acne Scarring', 'Cold Sores', 'Impetigo'),
+    options: makeList('Measles', 'Pimples', 'Spots', 'Break Out', 'Blackheads', 'Build Up', 'Pustules', 'Zits', 'Full Acne', 'Acne', 'Cheek Rash', 'Face Rash', 'Picker', 'Puberty', 'Eyesore', 'Chin Rash', 'Two Face', 'T Zone', 'Greasy', 'Marked', 'Acne Scarring', 'Full Acne Scarring', 'Cold Sores', 'Impetigo'),
   },
   [Aspect.BodyBlemishes]: {
     overlayId: OverlayType.BodyBlemish,
@@ -365,7 +382,7 @@ export const aspects = (sex: 0 | 1 = 0) => ({
   },
   [Aspect.Blush]: {
     overlayId: OverlayType.Blush,
-    options: makeList('Classic', 'Full', 'Angled', 'Round', 'Horizontal', 'High', 'Sweetheart', 'Eighties'),
+    options: makeList('Full', 'Angled', 'Round', 'Horizontal', 'High', 'Sweetheart', 'Eighties'),
     color1: overlayColors,
   },
   [Aspect.EyeColor]: {
@@ -373,31 +390,29 @@ export const aspects = (sex: 0 | 1 = 0) => ({
   },
   [Aspect.EyeMakeup]: {
     overlayId: OverlayType.Makeup,
-    options: makeList('Classic', 'Smoky Black', 'Bronze', 'Soft Gray', 'Retro Glam', 'Natural Look', 'Cat Eyes', 'Chola', 'Vamp', 'Vinewood Glamour', 'Bubblegum', 'Aqua Dream', 'Pin Up', 'Purple Passion', 'Smoky Cat Eye', 'Smoldering Ruby', 'Pop Princess'),
-    color1: overlayColors,
-    color2: overlayColors,
+    options: makeList('Smoky Black', 'Bronze', 'Soft Gray', 'Retro Glam', 'Natural Look', 'Cat Eyes', 'Chola', 'Vamp', 'Vinewood Glamour', 'Bubblegum', 'Aqua Dream', 'Pin Up', 'Purple Passion', 'Smoky Cat Eye', 'Smoldering Ruby', 'Pop Princess', 'paint 0', 'paint 1', 'paint 2', 'paint 3', 'paint 4', 'paint 5', 'paint 6', 'paint 7', 'paint 8', 'paint 9', 'paint 10', 'paint 11', 'paint 12', 'paint 13', 'paint 14', 'paint 15', 'Guyliner', 'paint 16', 'Blood Tears', 'Heavy Metal', 'Sorrow', 'Prince of Darkness', 'Rocker', 'Goth', 'Punk', 'Devastated', 'paint 17', 'paint 18', 'paint 19', 'paint 20', 'paint 21', 'paint 22', 'paint 23', 'paint 24', 'paint 25', 'paint 26', 'paint 27', 'paint 28', 'paint 29', 'paint 30', 'paint 31', 'paint 32', 'paint 33', 'paint 34', 'paint 35', 'paint 36', 'paint 37', 'paint 38', 'paint 39', 'paint 40', 'paint 41', 'paint 42', 'paint 43', 'paint 44', 'paint 45', 'paint 46', 'paint 47', 'paint 48', 'paint 49', 'paint 50', 'paint 51', 'paint 52', 'paint 53', 'paint 54', 'paint 55', 'paint 56', 'paint 57', 'paint 58', 'paint 59', 'paint 60', 'paint 61', 'paint 62', 'paint 63', 'paint 64', 'paint 65', 'paint 66', 'paint 67', 'paint 68', 'paint 69'),
   },
   [Aspect.Lipstick]: {
     overlayId: OverlayType.Lipstick,
-    options: makeList('Classic', 'Color Matte', 'Color Gloss', 'Lined Matte', 'Lined Gloss', 'Heavy Lined Matte', 'Heavy Lined Gloss', 'Lined Nude Matte', 'Liner Nude Gloss', 'Smudged', 'Geisha'),
+    options: makeList('Color Matte', 'Color Gloss', 'Lined Matte', 'Lined Gloss', 'Heavy Lined Matte', 'Heavy Lined Gloss', 'Lined Nude Matte', 'Liner Nude Gloss', 'Smudged', 'Geisha'),
     color1: overlayColors,
     color2: overlayColors,
   },
   [Aspect.Aging]: {
     overlayId: OverlayType.Age,
-    options: makeList('Classic', 'Crow\'s Feet', 'First Signs', 'Middle Aged', 'Worry Lines', 'Depression', 'Distinguished', 'Aged', 'Weathered', 'Wrinkled', 'Sagging', 'Tough Life', 'Vintage', 'Retired', 'Junkie', 'Geriatric'),
+    options: makeList('Crow\'s Feet', 'First Signs', 'Middle Aged', 'Worry Lines', 'Depression', 'Distinguished', 'Aged', 'Weathered', 'Wrinkled', 'Sagging', 'Tough Life', 'Vintage', 'Retired', 'Junkie', 'Geriatric'),
   },
   [Aspect.SkinComplextion]: {
     overlayId: OverlayType.Complexion,
-    options: makeList('Classic', 'Rosy Cheeks', 'Stubble Rash', 'Hot Flush', 'Sunburn', 'Bruised', 'Alchoholic', 'Patchy', 'Totem', 'Blood Vessels', 'Damaged', 'Pale', 'Ghostly'),
+    options: makeList('Rosy Cheeks', 'Stubble Rash', 'Hot Flush', 'Sunburn', 'Bruised', 'Alchoholic', 'Patchy', 'Totem', 'Blood Vessels', 'Damaged', 'Pale', 'Ghostly'),
   },
   [Aspect.MolesAndFreckles]: {
     overlayId: OverlayType.Freckles,
-    options: makeList('Classic', 'Cherub', 'All Over', 'Irregular', 'Dot Dash', 'Over the Bridge', 'Baby Doll', 'Pixie', 'Sun Kissed', 'Beauty Marks', 'Line Up', 'Modelesque', 'Occasional', 'Speckled', 'Rain Drops', 'Double Dip', 'One Sided', 'Pairs', 'Growth'),
+    options: makeList('Cherub', 'All Over', 'Irregular', 'Dot Dash', 'Over the Bridge', 'Baby Doll', 'Pixie', 'Sun Kissed', 'Beauty Marks', 'Line Up', 'Modelesque', 'Occasional', 'Speckled', 'Rain Drops', 'Double Dip', 'One Sided', 'Pairs', 'Growth'),
   },
   [Aspect.SunDamage]: {
     overlayId: OverlayType.SunDamage,
-    options: makeList('Classic', 'Uneven', 'Sandpaper', 'Patchy', 'Rough', 'Leathery', 'Textured', 'Coarse', 'Rugged', 'Creased', 'Cracked', 'Gritty')
+    options: makeList('Uneven', 'Sandpaper', 'Patchy', 'Rough', 'Leathery', 'Textured', 'Coarse', 'Rugged', 'Creased', 'Cracked', 'Gritty')
   }
 } as const);
 
@@ -411,7 +426,7 @@ const randomIndex = (arrOrLength: number | any[]) => {
 
   return Array.isArray(arrOrLength) ? arrOrLength[index] : index;
 };
-export const getRandomHair = (gender: 0 | 1) =>
+export const getRandomHair = (gender: Gender) =>
   randomIndex(Array.from(aspects(gender)[Aspect.Hair].options.keys()));
 export const getRandomHairColor = () => randomIndex(MAX_HAIR_COLOR);
 export const getRandomHairHighlightColor = () => randomIndex(MAX_HAIR_COLOR);
@@ -458,7 +473,7 @@ export const getRandomOverlayItemOpacity = (overlayId: OverlayType) => {
   return Math.random() * multipliers[overlayId];
 };
 
-export const isValidHair = (sex: 0 | 1, hair: number, collection: string, overlayName: string) => {
+export const isValidHair = (sex: Gender, hair: number, collection: string, overlayName: string) => {
   const options = aspects(sex)[Aspect.Hair].options;
 
   return (

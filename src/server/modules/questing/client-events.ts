@@ -15,7 +15,7 @@ alt.Events.onPlayer(ServerEvents.FromClient.NOTIFY, (player, questFact) => {
       alt.log("Adding quest fact", questFact);
       player.character.questFacts.push(questFact);
 
-      // player.saveCharacter();
+      player.saveCharacter();
     }
   }
 });

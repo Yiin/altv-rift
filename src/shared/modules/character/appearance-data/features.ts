@@ -21,7 +21,14 @@ export const featureNames = [
   "Neck Width",
 ];
 
-export const features = {
+export const features: Record<
+  string,
+  {
+    name: string;
+    x: [number, string, string] | [number, string, string, true];
+    y?: [number, string, string] | [number, string, string, true];
+  }[]
+> = {
   Eyes: [
     {
       name: "Brow",
@@ -30,7 +37,7 @@ export const features = {
     },
     {
       name: "Eyes",
-      x: [11, "Squint", "Wide"], // Eye Size
+      x: [11, "Wide", "Squint", true], // Eye Size
     },
   ],
   Nose: [
@@ -41,12 +48,12 @@ export const features = {
     },
     {
       name: "Nose profile",
-      x: [5, "Broken left", "Broken right"], // Nose Broken
+      x: [2, "Long", "Short", true], // Nose Tip Length
       y: [3, "Crooked", "Curved"], // Nose Bridge Depth
     },
     {
       name: "Nose tip",
-      x: [2, "Long", "Short"], // Nose Tip Length
+      x: [5, "Broken left", "Broken right"], // Nose Broken
       y: [4, "Tip up", "Tip down"], // Nose Tip Height
     },
   ],
@@ -58,13 +65,13 @@ export const features = {
     },
     {
       name: "Cheeks",
-      x: [10, "Puffed", "Gaunt"], // Cheek Depth
+      x: [10, "Puffed", "Gaunt", true], // Cheek Depth
     },
   ],
   Lips: [
     {
       name: "Lips",
-      x: [12, "Fat", "Thin"], // Lip Thickness
+      x: [12, "Fat", "Thin", true], // Lip Thickness
     },
   ],
   Jaw: [
@@ -81,7 +88,7 @@ export const features = {
     {
       name: "Chin shape",
       y: [17, "Rounded", "Bum"], // Chin Width
-      x: [18, "Square", "Pointed"], // Chin Indent
+      x: [18, "Pointed", "Square", true], // Chin Indent
     },
   ],
   Neck: [
@@ -90,7 +97,7 @@ export const features = {
       x: [19, "Slim", "Wide"], // Neck Width
     },
   ],
-} as const;
+};
 
 export const getRandomFeatureValue = () => {
   return +(Math.random() - Math.random()).toFixed(2);

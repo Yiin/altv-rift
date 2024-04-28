@@ -62,11 +62,11 @@ function blur() {
   isFocused.value = false;
 }
 
-function stop(rect: { x: number; y: number; width: number; height: number }) {
+function stop(rect: { left: number; top: number; width: number; height: number }) {
   if (props.name) {
     rpc.callServer(ServerCall.FromWebview.MOVE_WINDOW, props.name, {
-      x: rect.x,
-      y: rect.y,
+      x: rect.left,
+      y: rect.top,
       w: rect.width,
       h: rect.height,
     });

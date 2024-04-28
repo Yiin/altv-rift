@@ -4,15 +4,15 @@ Introduction MVP:
   ☐ Gather materials - explain what to do with them
     ☐ Scrapping minigames to gather materials
       ✔ Woodcutting @done
-      ✔ Fishing w/ simple mini-game @done(24-03-10 05:46)
-        ✔ Fishing mini-game logic @done(24-03-07 00:03)
-        ✔ Fishing mini-game UI @started(24-03-07 00:03) @done(24-03-10 05:46) @lasted(3d5h43m28s)
+      ✔ Fishing w/ simple mini-game @done
+        ✔ Fishing mini-game logic @done
+        ✔ Fishing mini-game UI @started
       ☐ Mining
-      ☐ Looting
+      ✔ Looting @done
     ☐ Different scrapping points for different materials
       ☐ Random boxes in the world
   Weapon:
-    ☐ Craft basic weapon
+    ☐ Craft weapon weapons
       ✔ Crafting menu @done
     ☐ Use items on zombie boar - 3 hits to kill
     ☐ Upgrade weapon with fire ammo as a gift - omg
@@ -113,19 +113,23 @@ Workbench:
     ✘ Create a script to update clothing in the database @cancelled(24-02-28 00:39)
   ☐ Move weapon stats to different file
   ☐ Materials
-    ☐ Item components
+    ✘ Item components @cancelled
       - Used for crafting weapons/ammo/tools
-    ☐ Scrap
+    ✔ Scrap @done
       - Collecting of scrap
       - Craft item components using scraps
     ☐ Ores
       - Melt ores into metal
-    ☐ Tree logs
+    ✔ Tree logs @done
       - Process tree logs into wood
-    ☐ Metal(?)
+    ✔ Metal @done
       - Used for crafting weapons/ammo/tools
-    ☐ Wood(?)
+    ✔ Wood @done
       - Used for ?
+  ☐ Processing
+    ☐ Tree logs to Wood
+    ☐ Ores to Metal
+    ☐ Raw fish to cooked fish
   ✔ Blueprints @done(24-03-17 23:54)
     ✔ Firearm Weapons @done(24-03-17 18:27)
     ✔ Throwable Weapons @done(24-03-17 18:27)
@@ -166,4 +170,4 @@ items:
   ✔ pistol blueprint item @done(24-03-17 23:54)
   ✔ show only categories of blueprints you have learned @done(24-03-17 23:55)
   ✔ make blueprint categories scroll @done(24-03-17 23:54)
-  ☐ list learned blueprints in UI
+  ✔ list learned blueprints in UI @done

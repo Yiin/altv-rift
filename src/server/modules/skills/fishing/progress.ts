@@ -1,8 +1,8 @@
 import alt from "@altv/server";
 import { EquipmentSlot } from "@shared/interfaces";
-import { isItemFishingRod, BAIT_TO_FISH_MAP, createItem, getItemName } from "@shared/modules/items";
+import { getBaitChance, isItemFishingRod } from "@shared/modules/items";
 import { PlayerFlags } from "@shared/store/game-state.store";
-import { sendChatMessage } from "@/modules/chat";
+import { getLevel } from "@shared/modules/experience/experience-table";
 import { isInGame } from "@/core/utility/assertions";
 import { startCatchingFish, stopFishing } from "./api";
 
@@ -33,9 +33,10 @@ function fishingTick(player: alt.Player) {
     return;
   }
 
-  // 10% chance to catch a fish
-  // TODO: Make it so that the chance is based on the player's fishing skill
-  const shouldUseBait = Math.random() < 0.2;
+  // Chance is based on the player's fishing skill
+  const level = getLevel(player.character.skills.fishing);
+  const baitChance = getBaitChance(fishingRod.bait.key);
+  const shouldUseBait = Math.random() < (level / 10) * baitChance;
 
   if (shouldUseBait) {
     const usedBait = fishingRod.bait;

@@ -17,10 +17,23 @@ export function createRenderer(document: alt.RmlDocument) {
   };
 }
 
-function createTextNode(document: alt.RmlDocument, text: string) {
+export function createTextNode(document: alt.RmlDocument, text: string) {
   const node = document.createTextNode(text);
   node.meta.text = text;
   return node;
+}
+
+export function updateTextNode(document: alt.RmlDocument, node: alt.RmlElement, text: string) {
+  if (node.meta.text === text) {
+    return node;
+  }
+
+  const updatedNode = createTextNode(document, text);
+  node.parent?.replaceChild(updatedNode, node);
+  node.destroy();
+  node = updatedNode;
+
+  return updatedNode;
 }
 
 function renderParsedNode(
@@ -57,12 +70,7 @@ function renderParsedNode(
       rmlNode = ref;
     } else {
       // Update text node
-      if (rmlNode.meta.text !== parsedElement.text) {
-        const ref = createTextNode(document, parsedElement.text);
-        rmlNode.parent?.replaceChild(ref, rmlNode);
-        rmlNode.destroy();
-        rmlNode = ref;
-      }
+      rmlNode = updateTextNode(document, rmlNode, parsedElement.text);
     }
     return;
   } else if (tagNamesDoNotMatch) {

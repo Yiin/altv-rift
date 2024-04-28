@@ -22,13 +22,17 @@ registerElement({
     const menu = useMenu([{ text: "Open", value: "open" }], {
       async onSelect(interaction) {
         if (interaction.value === "open") {
-          if (ve.streamSyncedMeta.storageType === StorageType.AirDrop) {
-            const canOpen = await rpc.callServer(ServerCall.FromClient.OPEN_STORAGE, ve.remoteID);
+          const canOpen = await rpc.callServer(ServerCall.FromClient.OPEN_STORAGE, ve.remoteID);
 
+          if (ve.streamSyncedMeta.storageType === StorageType.AirDrop) {
             await alt.Utils.wait(100);
 
             if (canOpen) {
               openWindow(WindowType.LOOT_BOX);
+            }
+          } else {
+            if (canOpen) {
+              openWindow(WindowType.STORAGE);
             }
           }
         }

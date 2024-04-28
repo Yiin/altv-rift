@@ -18,7 +18,6 @@ export function useItemFromSource(player: InGamePlayer, itemSource: ItemSource):
   const amount = useItem.call(player, item);
 
   if (amount !== false && amount > 0) {
-    console.log(`[useItemFromSource] Used ${getItemName(item.key)} x ${amount}`);
     removeItem(itemSource, amount);
     return true;
   }

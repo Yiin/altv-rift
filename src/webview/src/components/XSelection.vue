@@ -13,6 +13,7 @@ const props = withDefaults(
     noPadding?: boolean;
     min?: number;
     max?: number;
+    reverse?: boolean;
   }>(),
   {
     modelValue: 0,
@@ -57,6 +58,8 @@ function normalize(value: number) {
 }
 
 function denormalize(value: number) {
+  value = props.reverse ? props.max + props.min - value : value;
+
   const full = pointerSize.value;
   return clamp(
     ((value - props.min) * (size.value - full)) / (props.max - props.min),
@@ -66,7 +69,8 @@ function denormalize(value: number) {
 }
 
 const updateModelValue = throttle((x) => {
-  emit("update:modelValue", normalize(x));
+  const value = props.reverse ? props.min + props.max - normalize(x) : normalize(x);
+  emit("update:modelValue", value);
 }, 60);
 
 watchEffect(() => {
@@ -134,10 +138,10 @@ function trackDragging(e: PointerEvent) {
 
       <!-- Labels -->
       <span class="absolute -left-2 top-1/2 -translate-x-full -translate-y-1/2 text-xs">
-        {{ props.labelLeft }}
+        {{ reverse ? labelRight : labelLeft }}
       </span>
       <span class="absolute -right-2 top-1/2 -translate-y-1/2 translate-x-full text-xs">
-        {{ props.labelRight }}
+        {{ reverse ? labelLeft : labelRight }}
       </span>
     </v-sheet>
   </div>

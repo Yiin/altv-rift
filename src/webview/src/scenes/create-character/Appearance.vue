@@ -73,19 +73,19 @@ const randomize = () => {
   createCharacter.currentAppearance.hairColor1 = getRandomHairColor();
   createCharacter.currentAppearance.hairColor2 = getRandomHairHighlightColor();
 
-  for (const [key, overlay] of createCharacter.currentAppearance.headOverlays.entries()) {
+  for (const [key, overlay] of Object.entries(createCharacter.currentAppearance.headOverlays)) {
     if (notRandomizableOverlaysForGender(createCharacter.sex).includes(key)) {
       continue;
     }
 
-    overlay.value = getRandomOverlayItemValue(key);
-    overlay.opacity = getRandomOverlayItemOpacity(key);
+    overlay.value = getRandomOverlayItemValue(+key);
+    overlay.opacity = getRandomOverlayItemOpacity(+key);
 
-    if (headOverlays.get(key)?.color1) {
-      overlay.color1 = getRandomOverlayColor(key);
+    if (headOverlays.get(+key)?.color1) {
+      overlay.color1 = getRandomOverlayColor(+key);
     }
-    if (headOverlays.get(key)?.color2) {
-      overlay.color2 = getRandomOverlayColor(key);
+    if (headOverlays.get(+key)?.color2) {
+      overlay.color2 = getRandomOverlayColor(+key);
     }
   }
 };
@@ -128,9 +128,7 @@ const randomize = () => {
           <SlideOption
             v-else-if="currentAspect && 'overlayId' in currentAspect"
             :options="currentAspectValues"
-            v-model="
-              createCharacter.currentAppearance.headOverlays.get(currentAspect.overlayId)!.value
-            "
+            v-model="createCharacter.currentAppearance.headOverlays[currentAspect.overlayId]!.value"
             :value-text="getCurrentAspectValueLabel"
           />
         </div>
@@ -139,7 +137,7 @@ const randomize = () => {
             <div class="text-xs uppercase tracking-wide">Opacity</div>
             <v-slider
               v-model="
-                createCharacter.currentAppearance.headOverlays.get(currentAspect.overlayId)!
+                createCharacter.currentAppearance.headOverlays[currentAspect.overlayId]!
                   .opacity as number
               "
               track-color="grey"
@@ -155,7 +153,6 @@ const randomize = () => {
             v-if="selectedAspectTabs.length > 0"
             v-model="selectedTab"
             :options="selectedAspectTabs"
-            fixed-tabs
           />
 
           <v-window v-model="selectedTab">
@@ -188,8 +185,7 @@ const randomize = () => {
                 "
                 :options="currentAspect.color1"
                 v-model="
-                  createCharacter.currentAppearance.headOverlays.get(currentAspect.overlayId)!
-                    .color1
+                  createCharacter.currentAppearance.headOverlays[currentAspect.overlayId]!.color1
                 "
                 use-index-as-value
               />
@@ -203,13 +199,11 @@ const randomize = () => {
                 "
                 :options="currentAspect.color2"
                 v-model="
-                  createCharacter.currentAppearance.headOverlays.get(currentAspect.overlayId)!
-                    .color2
+                  createCharacter.currentAppearance.headOverlays[currentAspect.overlayId]!.color2
                 "
                 :value-text="
                   currentAspect.color2[
-                    createCharacter.currentAppearance.headOverlays.get(currentAspect.overlayId)!
-                      .color2!
+                    createCharacter.currentAppearance.headOverlays[currentAspect.overlayId]!.color2!
                   ].name
                 "
                 use-index-as-value

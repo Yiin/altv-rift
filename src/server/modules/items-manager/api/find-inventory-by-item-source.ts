@@ -1,6 +1,7 @@
 import alt from "@altv/server";
 import { Inventory, ItemSource, ItemSourceOrigin } from "@shared/interfaces";
 import { InGamePlayer } from "@/core/utility/assertions";
+import { getStorageInventory } from "../storage";
 
 export function findInventoryByItemSource(source: ItemSource): Inventory | null {
   if (source.origin === ItemSourceOrigin.PlayerInventory) {
@@ -16,7 +17,7 @@ export function findInventoryByItemSource(source: ItemSource): Inventory | null 
   }
 
   if (source.origin === ItemSourceOrigin.Storage) {
-    return null;
+    return getStorageInventory(source.originId);
   }
   return null;
 }

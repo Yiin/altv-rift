@@ -45,6 +45,9 @@ module.exports = {
         saffronBlaze: "#FA8633",
         ceruleanSky: "#3382FA",
       },
+      contain: {
+        content: "content",
+      },
       backgroundImage: {
         weaponCard:
           "linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(102,102,102,0.2) 100%), linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.05) 100%)",
@@ -94,6 +97,7 @@ module.exports = {
         "glow-simple": "0px 1px 32px rgba(255, 238, 87, 0.15)",
         glow: ["0 0px 2px rgba(255,255, 255, 0.35)", "0 0px 6px rgba(255, 255,255, 0.2)"],
         "glow-color": ["0 0px 2px var(--glow-color)", "0 0px 18px var(--glow-color)"],
+        light: "0px 1px 1px rgba(0, 0, 0, 0.8)",
       },
       minWidth: (utils) => utils.theme("spacing"),
       spacing: {

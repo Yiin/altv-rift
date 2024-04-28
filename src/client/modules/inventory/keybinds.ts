@@ -6,7 +6,7 @@ import { ServerCall } from "@shared/calls/server";
 import { EquipmentSlot } from "@shared/interfaces";
 import { onKeyDown } from "@/core/utility/event-helpers";
 import { clientState } from "@/core/store/client.store";
-import { closeWindow, openWindow } from "@/core/user-interface/webview";
+import { closeWindow, openWindow, toggleWindow } from "@/core/user-interface/webview";
 import { whileInGame } from "@/core/game-state-hooks/in-game.state";
 import { useCharacter } from "@/core/store/character.store";
 import { rpc } from "@/core/rpc";
@@ -56,16 +56,7 @@ whileInGame(() => {
 });
 
 export function togglePlayerInventory() {
-  // Show inventory only if there is no other window opened
-  if (!clientState.ui.window) {
-    openWindow(WindowType.PLAYER_INVENTORY);
-    game.triggerScreenblurFadeIn(100);
-  }
-  // Hide the inventory if there is no other interaction opened (i.e. shop or storage or trade window)
-  else if (clientState.ui.window.type === WindowType.PLAYER_INVENTORY) {
-    closeWindow();
-    game.triggerScreenblurFadeOut(100);
-  }
+  toggleWindow(WindowType.PLAYER_INVENTORY);
 }
 
 function handleQuickSlot(

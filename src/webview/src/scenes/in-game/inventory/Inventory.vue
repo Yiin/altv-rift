@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onUnmounted, ref } from "vue";
+import { effect } from "vue";
 import { ItemSourceOrigin, EquipmentSlot as EquipmentSlotEnum } from "@shared/interfaces";
 import { InteractionType, useInventory } from "@/store/inventory.store";
 import { useEventListener } from "@/composables/use-event-listener";
@@ -35,7 +36,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="relative w-full px-10 lg:px-1/8 lg:py-16">
+  <div class="relative w-full px-10">
     <DarkBackground />
     <div
       :style="{ padding: `2rem ${gapSize}px 7rem` }"
@@ -160,14 +161,15 @@ onUnmounted(() => {
         <GroundItems v-else />
       </div>
     </div>
-    <div
-      :style="{ padding: `2rem ${gapSize}px` }"
-      class="flex w-full justify-between"
-    >
+    <div class="flex w-full justify-around py-8">
       <div :style="{ width: `${widths[0]}px` }">
-        <div
-          class="after:outline-solid relative mb-5 h-0.5 w-full bg-white/10 after:absolute after:left-1/2 after:top-1/2 after:h-3 after:w-3 after:-translate-x-1/2 after:-translate-y-1/2 after:rotate-45 after:border after:border-solid after:border-white/30 after:bg-[#01010d] after:outline after:outline-[10px] after:outline-[#01010d] after:content-['']"
-        ></div>
+        <div class="relative mb-5 flex items-center justify-center gap-2.75">
+          <div class="h-px w-full border border-white opacity-10"></div>
+          <div
+            class="h-3 w-3 flex-shrink-0 origin-center -rotate-45 border border-white opacity-30"
+          ></div>
+          <div class="h-px w-full border border-white opacity-10"></div>
+        </div>
         <h2 class="text-2xl font-bold uppercase text-white">extras</h2>
         <div class="text-base uppercase text-deepGray">other equipment</div>
         <div class="mb-8 mt-5 inline-grid grid-cols-3 place-content-center gap-2.5">
@@ -177,7 +179,7 @@ onUnmounted(() => {
       </div>
       <div
         :style="{ width: `${widths[1]}px` }"
-        class="pt-5.5"
+        class="pt-8"
       >
         <h2 class="text-2xl font-bold uppercase text-white">backpack</h2>
         <div class="text-base uppercase text-deepGray">quick access</div>
