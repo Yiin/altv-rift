@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
+import { Gender } from "@shared/modules/character/appearance-data/aspects";
 import { useEventListener } from "@/composables/use-event-listener";
 import { useCreateCharacter } from "../../store/create-character.store";
 
@@ -75,10 +76,10 @@ watch(
     </v-card>
     <div class="flex gap-8">
       <v-btn
-        @click="createCharacter.sex = 0"
+        @click="createCharacter.sex = Gender.MALE"
         size="5rem"
         icon
-        :color="!createCharacter.sex ? 'blue-grey' : 'grey-lighten-1'"
+        :color="createCharacter.sex === Gender.MALE ? 'blue-grey' : 'grey-lighten-1'"
       >
         <v-icon
           icon="mdi-gender-male"
@@ -87,10 +88,10 @@ watch(
         />
       </v-btn>
       <v-btn
-        @click="createCharacter.sex = 1"
+        @click="createCharacter.sex = Gender.FEMALE"
         size="5rem"
         icon
-        :color="createCharacter.sex ? 'pink-lighten-1' : 'grey-lighten-1'"
+        :color="createCharacter.sex === Gender.FEMALE ? 'pink-lighten-1' : 'grey-lighten-1'"
       >
         <v-icon
           icon="mdi-gender-female"

@@ -38,10 +38,12 @@ alt.Player.prototype.applyEquipment = function (specificEquipmentSlot) {
   }
 };
 
-alt.Events.onPlayerSpawn(({ player }) => {
+alt.Events.onPlayerSpawn(async ({ player }) => {
   if (!isInGame(player)) {
     return;
   }
 
+  player.applyEquipment();
+  await alt.Utils.wait(500);
   player.applyEquipment();
 });

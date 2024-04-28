@@ -28,7 +28,6 @@ rpc.registerWebview(ServerCall.FromWebview.CRAFT_ITEM, (player, recipeKey, amoun
     startCrafting(player, recipe.recipe);
   }
 
-  console.log("OK");
   return true;
 });
 

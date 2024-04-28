@@ -17,6 +17,7 @@ if (!("alt" in globalThis)) {
     getEventListeners() {
       return [];
     },
+    getPermissionState: () => false,
   };
   globalThis.altMock = true;
 } else {

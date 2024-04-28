@@ -13,6 +13,8 @@ const props = withDefaults(
     y?: number;
     size?: number;
     pointerSize?: number;
+    reverseX?: boolean;
+    reverseY?: boolean;
   }>(),
   {
     x: 0,
@@ -32,8 +34,8 @@ const emit = defineEmits<{
 
 const container = ref();
 const pointer = ref();
-const x = ref(denormalize(props.x));
-const y = ref(denormalize(props.y));
+const x = ref(denormalize(props.reverseX ? -props.x : props.x));
+const y = ref(denormalize(props.reverseY ? -props.y : props.y));
 const isDragging = ref(false);
 
 const bounds = ref({
@@ -46,7 +48,8 @@ watchEffect(() => {
 });
 
 watch([() => props.x, () => props.y], (xy) => {
-  [x.value, y.value] = xy.map(denormalize);
+  x.value = denormalize(props.reverseX ? -xy[0] : xy[0]);
+  y.value = denormalize(props.reverseY ? -xy[1] : xy[1]);
 });
 
 function normalize(value: number) {
@@ -62,8 +65,8 @@ function denormalize(value: number) {
 }
 
 const updateModelValue = throttle((x, y) => {
-  emit("update:x", normalize(x));
-  emit("update:y", normalize(y));
+  emit("update:x", props.reverseX ? -normalize(x) : normalize(x));
+  emit("update:y", props.reverseY ? -normalize(y) : normalize(y));
 }, 60);
 
 watchEffect(() => {
@@ -145,16 +148,16 @@ function trackDragging(e: PointerEvent) {
 
       <!-- Labels -->
       <span class="absolute -left-2 top-1/2 -translate-x-full -translate-y-1/2 text-xs">
-        {{ props.labelLeft }}
+        {{ reverseX ? labelRight : labelLeft }}
       </span>
       <span class="absolute -top-2 left-1/2 -translate-x-1/2 -translate-y-full text-xs">
-        {{ props.labelTop }}
+        {{ reverseY ? labelBottom : labelTop }}
       </span>
       <span class="absolute -right-2 top-1/2 -translate-y-1/2 translate-x-full text-xs">
-        {{ props.labelRight }}
+        {{ reverseX ? labelLeft : labelRight }}
       </span>
       <span class="absolute -bottom-2 left-1/2 -translate-x-1/2 translate-y-full text-xs">
-        {{ props.labelBottom }}
+        {{ reverseY ? labelTop : labelBottom }}
       </span>
     </v-sheet>
   </div>

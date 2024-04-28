@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 import { features, getRandomFeatureValue } from "@shared/modules/character/appearance-data";
 import { useCreateCharacter } from "../../store/create-character.store";
 import SliderSelection from "../../components/SliderSelection.vue";
@@ -11,6 +11,12 @@ const createCharacter = useCreateCharacter();
 
 const selectedFeature = ref<keyof typeof features>("Eyes");
 const selectedTab = ref(0);
+
+/**
+ * Workaround for v-tabs not registering click events when the selected feature changes
+ */
+const featuresList = computed(() => [selectedFeature.value]);
+const selectedFeatures = computed(() => features[selectedFeature.value]);
 
 watch(selectedFeature, () => {
   selectedTab.value = 0;
@@ -43,23 +49,27 @@ const randomize = () => {
       />
       <v-divider />
       <Tabs
+        v-for="feature in featuresList"
+        :key="feature"
         v-model="selectedTab"
-        :options="features[selectedFeature].map(({ name }) => name)"
+        :options="selectedFeatures.map(({ name }) => name)"
         fixed-tabs
       />
-      <v-window v-model="selectedTab">
+      <v-window :model-value="selectedTab">
         <v-window-item
-          v-for="tab in features[selectedFeature]"
+          v-for="tab in selectedFeatures"
           :key="tab.name"
         >
           <XYSelection
-            v-if="'y' in tab"
+            v-if="tab.y"
             v-model:x="createCharacter.currentAppearance.features[tab.x[0]]"
             v-model:y="createCharacter.currentAppearance.features[tab.y[0]]"
             :label-top="tab.y[1]"
             :label-bottom="tab.y[2]"
             :label-left="tab.x[1]"
             :label-right="tab.x[2]"
+            :reverse-x="tab.x.length === 4 && tab.x[3]"
+            :reverse-y="tab.y.length === 4 && tab.y[3]"
             class="my-2"
           />
           <XSelection
@@ -67,6 +77,7 @@ const randomize = () => {
             v-model="createCharacter.currentAppearance.features[tab.x[0]]"
             :label-left="tab.x[1]"
             :label-right="tab.x[2]"
+            :reverse="tab.x.length === 4 && tab.x[3]"
             class="my-2"
           />
         </v-window-item>

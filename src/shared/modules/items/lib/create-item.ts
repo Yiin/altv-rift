@@ -44,6 +44,7 @@ export function getItemDefaultData(key: ItemKey): Partial<Item> {
   } else if (isItemKeyThrowableWeapon(key)) {
     return {
       amount: 1,
+      grade: ItemGrade.COMMON,
     } satisfies Partial<ThrowableWeaponItem>;
   } else if (isItemKeyMeleeWeapon(key)) {
     return {
@@ -56,6 +57,7 @@ export function getItemDefaultData(key: ItemKey): Partial<Item> {
   } else if (isItemKeyAmmo(key)) {
     return {
       amount: 1,
+      grade: ItemGrade.COMMON,
     } satisfies Partial<AmmoItem>;
   } else if (isItemKeyClothing(key)) {
     return {

@@ -15,14 +15,6 @@ game.setRelationshipBetweenGroups(5, alt.hash("Enemy"), alt.hash("Friendly"));
 alt.Timers.setInterval(() => {
   game.setPedRelationshipGroupHash(alt.Player.local, alt.hash("Friendly"));
 
-  for (const player of alt.Player.streamedIn) {
-    if (player === alt.Player.local) {
-      continue;
-    }
-
-    game.setPedRelationshipGroupHash(player, alt.hash("Friendly"));
-  }
-
   for (const ped of alt.Ped.streamedIn) {
     if (ped.netOwner !== alt.Player.local) {
       continue;

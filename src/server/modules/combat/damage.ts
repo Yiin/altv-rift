@@ -33,32 +33,44 @@ alt.Events.onWeaponDamage(
       return cancel();
     }
 
-    let ammoKey = isWeaponWithClip(equipedWeapon.key)
-      ? equipedWeapon.clip?.key
-      : source.getEquipedItemInSlot(getWeaponAmmoEquipmentSlot(equipedWeapon.key))?.key;
+    const ammo = isWeaponWithClip(equipedWeapon.key)
+      ? equipedWeapon.clip
+      : source.getEquipedItemInSlot(getWeaponAmmoEquipmentSlot(equipedWeapon.key));
 
-    if (!ammoKey) {
+    if (!ammo) {
       return cancel();
     }
 
     const initialDamage = damage;
-    damage *= getWeaponDamageMultiplier(equipedWeapon.key, equipedWeapon.grade);
-    damage *= getAmmoDamageMultiplier(ammoKey);
-    damage *= getBodyPartDamageMultiplier(bodyPart);
+    const weaponDamage = damage * getWeaponDamageMultiplier(equipedWeapon.key, equipedWeapon.grade);
+    const ammoDamage = weaponDamage * getAmmoDamageMultiplier(ammo.key, ammo.grade) - weaponDamage;
+    const bodyPartDamage = weaponDamage * getBodyPartDamageMultiplier(bodyPart) - weaponDamage;
+    const totalDamage = weaponDamage + ammoDamage + bodyPartDamage;
 
-    if (damage > 0) {
-      setDamageValue(damage);
+    if (totalDamage > 0) {
+      setDamageValue(totalDamage);
 
       if (target instanceof alt.Ped) {
-        target.health -= Math.min(target.health, damage - initialDamage) + 1000;
+        target.health = Math.max(
+          99,
+          Math.min(target.maxHealth, target.health - totalDamage + initialDamage),
+        );
       }
 
       source.emit(
         ClientEvents.FromServer.DISPLAY_DAMAGE_HIT,
         target.type,
         target.id,
-        damage,
+        weaponDamage + bodyPartDamage,
         "health",
+      );
+
+      source.emit(
+        ClientEvents.FromServer.DISPLAY_DAMAGE_HIT,
+        target.type,
+        target.id,
+        ammoDamage,
+        "armor",
       );
     } else {
       cancel();

@@ -2,7 +2,7 @@ import { isValidItem, createItem, getItemName } from "@shared/modules/items";
 import { needsToBeInGame } from "@/core/utility/assertions";
 import { registerCmd, sendChatMessage } from "../chat";
 
-registerCmd("additem", (player, [key, amount]) => {
+registerCmd("additem", (player, [key, amount, grade]) => {
   needsToBeInGame(player);
 
   if (!isValidItem(key)) {
@@ -10,7 +10,7 @@ registerCmd("additem", (player, [key, amount]) => {
     return;
   }
 
-  const item = createItem(key, { amount: amount ? +amount : 1 });
+  const item = createItem(key, { amount: amount ? +amount : 1, grade });
 
   if (!item) {
     sendChatMessage(player, "Couldn't create item.");

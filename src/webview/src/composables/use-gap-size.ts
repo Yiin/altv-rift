@@ -9,6 +9,8 @@ export function useGapSize(elementRef: Ref<HTMLElement | undefined>) {
     nextTick(() => {
       if (!elementRef.value) return;
 
+      widths.length = 0;
+
       const children = Array.from(elementRef.value.children);
       const totalChildrenWidth = children.reduce((total, child) => {
         widths.push(child instanceof HTMLElement ? child.clientWidth : 0);

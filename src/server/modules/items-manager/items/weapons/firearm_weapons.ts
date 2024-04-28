@@ -202,7 +202,7 @@ export function loadWeaponItemWithAmmoItem(weapon: FirearmWeaponItem, ammo: Ammo
 
   if (!weapon.clip) {
     const amount = Math.min(clipSize, ammo.amount);
-    weapon.clip = createItem(ammo.key, { amount });
+    weapon.clip = createItem(ammo.key, { ...ammo, amount });
     ammo.amount -= amount;
     return true;
   } else if (weapon.clip.key === ammo.key) {

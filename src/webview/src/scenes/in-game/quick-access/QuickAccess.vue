@@ -4,7 +4,7 @@ import EquipmentSlot from "../inventory/EquipmentSlot.vue";
 </script>
 
 <template>
-  <div class="absolute flex h-full w-full items-end justify-center">
+  <div class="absolute bottom-0 flex w-full justify-center">
     <div class="relative mb-16 flex gap-2.5">
       <div class="bg-darkRadialGradient/80">
         <EquipmentSlot :name="EquipmentSlotEnum.QuickSlot1" />

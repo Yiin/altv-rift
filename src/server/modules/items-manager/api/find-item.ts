@@ -79,7 +79,7 @@ export function findItem(itemSource: ItemSource, player?: InGamePlayer): Item | 
       return null;
     }
 
-    // return getInventoryItemInSlot(inventory, itemSource.inventorySlot)?.item ?? null;
+    return getInventoryItemInSlot(inventory, itemSource.inventorySlot)?.item ?? null;
   }
 
   return null;

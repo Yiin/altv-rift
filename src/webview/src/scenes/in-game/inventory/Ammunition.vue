@@ -9,19 +9,21 @@ import { getItemImage } from "@/utils/items";
 const inventory = useInventory();
 const equipment = computed(() => useCharacter().equipment);
 const equipedAmmo = computed(() =>
-  ([
-    { slot: EquipmentSlot.AssaultRifleAmmo, label: "Assault rifle" },
-    { slot: EquipmentSlot.HandgunAmmo, label: "Handgun" },
-    { slot: EquipmentSlot.MachineGunAmmo, label: "Machine gun" },
-    { slot: EquipmentSlot.ShotgunAmmo, label: "Shotgun" },
-    { slot: EquipmentSlot.SniperRifleAmmo, label: "Sniper rifle" },
-    { slot: EquipmentSlot.RocketLauncherAmmo, label: "Rocket launcher" },
-    { slot: EquipmentSlot.FireworkAmmo, label: "Firework" },
-    { slot: EquipmentSlot.GrenadeLauncherAmmo, label: "Grenade launcher" },
-    { slot: EquipmentSlot.PlasmaRaysAmmo, label: "Plasma rays" },
-    { slot: EquipmentSlot.FireExtinguisherAmmo, label: "Fire extinguisher" },
-    { slot: EquipmentSlot.SmokeGranadesAmmo, label: "Smoke granades" },
-  ] as const)
+  (
+    [
+      { slot: EquipmentSlot.AssaultRifleAmmo, label: "Assault rifle" },
+      { slot: EquipmentSlot.HandgunAmmo, label: "Handgun" },
+      { slot: EquipmentSlot.MachineGunAmmo, label: "Machine gun" },
+      { slot: EquipmentSlot.ShotgunAmmo, label: "Shotgun" },
+      { slot: EquipmentSlot.SniperRifleAmmo, label: "Sniper rifle" },
+      { slot: EquipmentSlot.RocketLauncherAmmo, label: "Rocket launcher" },
+      { slot: EquipmentSlot.FireworkAmmo, label: "Firework" },
+      { slot: EquipmentSlot.GrenadeLauncherAmmo, label: "Grenade launcher" },
+      { slot: EquipmentSlot.PlasmaRaysAmmo, label: "Plasma rays" },
+      { slot: EquipmentSlot.FireExtinguisherAmmo, label: "Fire extinguisher" },
+      { slot: EquipmentSlot.SmokeGranadesAmmo, label: "Smoke granades" },
+    ] as const
+  )
     .filter(({ slot }) => equipment.value[slot])
     .map(({ slot, label }) => ({
       slot,
@@ -33,7 +35,7 @@ const equipedAmmo = computed(() =>
 </script>
 
 <template>
-  <div class="z-max w-60">
+  <div class="z-max w-70">
     <div class="relative">
       <div
         v-if="equipedAmmo.length > 0"
@@ -60,7 +62,7 @@ const equipedAmmo = computed(() =>
           v-for="({ slot, label, key, amount }, index) of equipedAmmo"
           :key="label"
           @click="() => inventory.unequipItem(slot)"
-          class="flex items-center cursor-pointer gap-5 px-5.5 pb-2.5 pt-4 hover:bg-white/5"
+          class="flex cursor-pointer items-center gap-5 px-5.5 pb-2.5 pt-4 hover:bg-white/5"
           :class="{ 'border-t-1 border-dashed border-t-white/10': index > 0 }"
         >
           <div>
@@ -75,10 +77,10 @@ const equipedAmmo = computed(() =>
             <div class="text-sm font-semibold uppercase text-gray-500">{{ label }}</div>
           </div>
           <div class="flex flex-1 justify-end">
-          <div class="text-white text-xs font-bold pt-1 pb-0.5 px-1.5 bg-zinc-300/10 rounded">
-            {{ amount }}
+            <div class="rounded bg-zinc-300/10 px-1.5 pb-0.5 pt-1 text-xs font-bold text-white">
+              {{ amount }}
+            </div>
           </div>
-        </div>
         </div>
       </div>
     </div>

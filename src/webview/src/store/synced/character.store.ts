@@ -81,5 +81,10 @@ export const useCharacter = () =>
           ],
         },
         blueprints: Object.values(UnlearnedBlueprint),
+        skills: {
+          fishing: 0,
+          mining: 0,
+          woodcutting: 0,
+        },
       } as any as Store<"character", Character, {}, {}>)
     : characterStore?.();

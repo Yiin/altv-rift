@@ -4,6 +4,7 @@ import {
   getWeaponClipSize,
   isItemFirearmWeapon,
 } from "@shared/modules/items/registry/weapons/firearm-weapon.items";
+import { isMatchingItem } from "@shared/modules/inventory";
 import { InGamePlayer, isInGame } from "@/core/utility/assertions";
 
 declare module "@altv/server" {
@@ -52,6 +53,10 @@ alt.Player.prototype.reloadWeapon = function () {
     return false;
   }
 
+  if (weapon.clip && !isMatchingItem(ammo, weapon.clip)) {
+    return false;
+  }
+
   setTimeout(() => {
     if (this.valid && isInGame(this) && this.isReloading) {
       if (weapon.clip) {
@@ -69,7 +74,7 @@ alt.Player.prototype.reloadWeapon = function () {
         if ((ammo.amount -= amount) <= 0) {
           this.removeEquipedItem(ammoEquipmentSlot);
         }
-        weapon.clip = createItem(ammo.key, { amount });
+        weapon.clip = createItem(ammo.key, { ...ammo, amount });
       }
     }
   }, 1000);

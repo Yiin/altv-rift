@@ -46,3 +46,7 @@ export function getLevelProgress(xp: number): number {
 
   return ((xp - start) / (next - start)) * 100;
 }
+
+export function isLevelUp(previousXP: number, currentXP: number): boolean {
+  return getLevel(previousXP) < getLevel(currentXP);
+}

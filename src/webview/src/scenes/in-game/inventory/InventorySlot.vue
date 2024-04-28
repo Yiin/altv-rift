@@ -2,7 +2,11 @@
 import { computed, ref } from "vue";
 import { isItemUsable, isItemEquipable } from "@shared/modules/items";
 import { isItemPreviewable } from "@shared/modules/items/lib/is-item-previewable";
-import { type GroundItemSource, type InventoryItemSource } from "@shared/interfaces";
+import {
+  ItemSourceOrigin,
+  type GroundItemSource,
+  type InventoryItemSource,
+} from "@shared/interfaces";
 import { useCombinableItem } from "@/composables/use-combinable-item";
 import {
   InteractionType,
@@ -56,6 +60,10 @@ const draggingOver = computed(() => {
       return false;
     }
 
+    if (itemSource.origin === ItemSourceOrigin.Ground) {
+      return false;
+    }
+
     return interaction.state;
   }
 
@@ -92,23 +100,23 @@ inventory.registerItemSlot({
   >
     <div
       ref="nodeRef"
-      class="h-19 w-19 border-2 border-solid"
+      class="h-21.25 w-21.25 border-2 border-solid"
       :class="{
         'scale-105 drop-shadow-[0px_0px_6px_black]': draggingOver || (item && !dragging),
         'border-white/50': selected,
         'border-transparent': !selected,
       }"
     >
+      <ItemIcon
+        v-if="draggingOver"
+        :item="draggingOver.item.item"
+        class="opacity-25"
+      />
       <InventoryItemIcon
-        v-if="item && !inventory.isItemHidden(item.source)"
+        v-else-if="item"
         :item="item"
         @dblclick="useOrEquipItem"
         @contextmenu.prevent="(e) => item && inventory.openContextMenu(item, e)"
-      />
-      <ItemIcon
-        v-else-if="draggingOver"
-        :item="draggingOver.item.item"
-        class="opacity-25"
       />
     </div>
   </div>

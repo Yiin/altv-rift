@@ -11,6 +11,7 @@ import {
   isItemFirearmWeapon,
   isItemFishingRod,
   isItemWeapon,
+  getWeaponDamage,
 } from "@shared/modules/items";
 import { useItemDetails } from "@/composables/use-item-details";
 import { type Hovering, useInventory } from "@/store/inventory.store";
@@ -31,7 +32,10 @@ const details = useItemDetails(item);
 
 const weaponStats = computed(() => {
   if (isItemWeapon(item.value)) {
-    return getWeaponStats(item.value.key);
+    return {
+      ...getWeaponStats(item.value.key),
+      damage: getWeaponDamage(item.value.key, item.value.grade),
+    };
   }
   return null;
 });

@@ -18,10 +18,12 @@ function displayHit(
   // Create a new div element for damage number
   const damageDiv = document.createElement("div");
 
-  damageDiv.innerRML = damage.toString();
+  damageDiv.innerRML = (damage < 10 ? damage.toFixed(2) : damage.toFixed(0))
+    .replace(/0+$/, "")
+    .replace(/\.$/, "");
   damageDiv.style.position = "absolute";
   damageDiv.style["font-weight"] = "bold";
-  damageDiv.style.color = type === "armor" ? "#ffffff" : "#ff0000";
+  damageDiv.style.color = type === "armor" ? "#ffffff" : "#ff2222";
   damageDiv.style["font-size"] = `${Math.min(damage, 20)}pt`;
   damageDiv.style.animation = `1s exponential-out damage-fade-${Math.ceil(Math.random() * 7)}`;
 

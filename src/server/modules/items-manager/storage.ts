@@ -1,13 +1,11 @@
 import alt from "@altv/server";
-import { reactive, UnwrapNestedRefs } from "vue";
+import { reactive, UnwrapNestedRefs, watch } from "vue";
 import { addMinutes } from "date-fns";
 import { Inventory, ItemSourceOrigin } from "@shared/interfaces";
 import { StorageType } from "@shared/store/game-state.store";
-import { Ammo, createItem } from "@shared/modules/items";
 import { ServerEvents } from "@shared/events/server";
 import { AirDropType } from "@shared/modules/air-drops";
 import { InGamePlayer } from "@/core/utility/assertions";
-import { addItemToInventory, removeItemFromInventorySlot } from "../../../shared/modules/inventory/api";
 
 interface StorageData {
   label: string;

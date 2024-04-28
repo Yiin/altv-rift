@@ -81,12 +81,12 @@ alt.Player.prototype.resetClothes = function (component?: number) {
 };
 
 alt.Player.prototype.updateCharacterAppearance = function (appearance: Appearance) {
-  const isFemale = appearance.sex;
+  const isMale = appearance.sex;
 
-  if (isFemale) {
-    this.model = "mp_f_freemode_01";
-  } else {
+  if (isMale) {
     this.model = "mp_m_freemode_01";
+  } else {
+    this.model = "mp_f_freemode_01";
   }
 
   this.resetClothes();

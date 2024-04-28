@@ -142,7 +142,7 @@ inventory.registerItemSlot({
 <template>
   <div
     ref="nodeRef"
-    class="flex-basis-21 relative flex h-21 w-21 flex-col items-center justify-between border border-solid border-white/[0.03] bg-silverCloud/[0.01]"
+    class="flex-basis-21 relative flex h-21.25 w-21.25 flex-col items-center justify-between border border-solid border-white/[0.03] bg-silverCloud/[0.01]"
     :class="{
       'bg-silverCloud/5': combinableWithHoveredItem || combinableWithOtherItems,
     }"

@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
-import { watch } from "vue";
+import { watch, watchEffect } from "vue";
+import _ from "lodash";
 import {
   featureNames,
   aspects,
@@ -7,38 +8,51 @@ import {
   getRandomHair,
   headOverlays,
   OverlayType,
+  Gender,
 } from "@shared/modules/character/appearance-data";
 import { ServerCall } from "@shared/calls/server";
 import { rpc } from "../rpc";
 import { pinia } from ".";
 import type { Appearance } from "@prisma/client/edge";
 
-const MALE = 0;
-const FEMALE = 1;
-
-function getDefaultAppearance(sex: 0 | 1) {
+function getDefaultAppearance(sex: Gender) {
   const hair = getRandomHair(sex);
   const hairCollection = aspects(sex).Hair.options.get(hair)!.collection;
   const hairOverlay = aspects(sex).Hair.options.get(hair)!.overlay;
 
   return {
-    faceFather: sex === MALE ? 0 : 45,
+    faceFather: sex === Gender.MALE ? 0 : 45,
     faceMother: 21,
     skinFather: 0,
     skinMother: 21,
     faceMix: 0.5,
     skinMix: 0.5,
     features: featureNames.map(() => 0),
-    headOverlays: [...headOverlays.values()].reduce(
-      (map, { id, min, opacity, color1, color2 }) =>
-        map.set(id, {
-          id,
-          value: min,
-          opacity: opacity?.min ?? null,
-          color1: id === OverlayType.Blush ? [...blushColors.keys()][0] : color1?.min ?? null,
-          color2: id === OverlayType.Blush ? [...blushColors.keys()][0] : color2?.min ?? null,
-        }),
-      new Map<OverlayType, Appearance["headOverlays"][number]>(),
+    headOverlays: _.merge(
+      [...headOverlays.values()].reduce(
+        (map, { id, opacity, color1, color2 }) => {
+          return {
+            ...map,
+            [id]: {
+              id,
+              value: 255,
+              opacity: opacity?.max ?? null,
+              color1: id === OverlayType.Blush ? [...blushColors.keys()][0] : color1?.min ?? null,
+              color2: id === OverlayType.Blush ? [...blushColors.keys()][0] : color2?.min ?? null,
+            },
+          };
+        },
+        {} as Record<OverlayType, Appearance["headOverlays"][number]>,
+      ),
+      sex === Gender.MALE
+        ? {
+            // Default eyebrows
+            "2": { id: 2, value: 1, opacity: 1, color1: 0, color2: 0 },
+          }
+        : {
+            // Default eyebrows
+            "2": { id: 2, value: 2, opacity: 1, color1: 0, color2: 0 },
+          },
     ),
     hair,
     hairCollection,
@@ -54,9 +68,9 @@ export const useCreateCharacter = defineStore("create-character", {
   state: () => ({
     errors: {} as Record<string, string>,
     name: "",
-    sex: MALE as 0 | 1,
-    otherAppearance: getDefaultAppearance(FEMALE),
-    currentAppearance: getDefaultAppearance(MALE),
+    sex: Gender.MALE as Gender,
+    otherAppearance: getDefaultAppearance(Gender.FEMALE),
+    currentAppearance: getDefaultAppearance(Gender.MALE),
   }),
   getters: {
     appearance: (state) => {
@@ -75,7 +89,7 @@ export const useCreateCharacter = defineStore("create-character", {
         hairCollection: state.currentAppearance.hairCollection,
         hairDlc: state.currentAppearance.hairDlc,
         hairOverlay: state.currentAppearance.hairOverlay,
-        headOverlays: [...state.currentAppearance.headOverlays.values()],
+        headOverlays: Object.values(state.currentAppearance.headOverlays),
         eyes: state.currentAppearance.eyes,
       };
     },
@@ -95,6 +109,7 @@ watch(
   (current, previous) => {
     if (current !== previous) {
       const createCharacter = useCreateCharacter(pinia);
+
       [createCharacter.currentAppearance, createCharacter.otherAppearance] = [
         createCharacter.otherAppearance,
         createCharacter.currentAppearance,
@@ -103,16 +118,13 @@ watch(
   },
 );
 
-watch(
-  () => useCreateCharacter(pinia).currentAppearance.hair,
-  (current) => {
-    const createCharacter = useCreateCharacter(pinia);
+watchEffect(() => {
+  const createCharacter = useCreateCharacter(pinia);
 
-    createCharacter.currentAppearance.hairCollection = aspects(
-      createCharacter.sex,
-    ).Hair.options.get(current)!.collection;
-    createCharacter.currentAppearance.hairOverlay = aspects(createCharacter.sex).Hair.options.get(
-      current,
-    )!.overlay;
-  },
-);
+  createCharacter.currentAppearance.hairCollection = aspects(createCharacter.sex).Hair.options.get(
+    createCharacter.currentAppearance.hair,
+  )!.collection;
+  createCharacter.currentAppearance.hairOverlay = aspects(createCharacter.sex).Hair.options.get(
+    createCharacter.currentAppearance.hair,
+  )!.overlay;
+});

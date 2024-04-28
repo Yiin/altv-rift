@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const props = defineProps<{
+defineProps<{
   options: string[];
   modelValue: number;
 }>();
@@ -11,7 +11,7 @@ const emit = defineEmits<{
 
 <template>
   <v-tabs
-    :model-value="props.modelValue"
+    :model-value="modelValue"
     @update:model-value="(value) => emit('update:modelValue', value as number)"
     fixed-tabs
   >

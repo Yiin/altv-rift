@@ -8,6 +8,7 @@ import { WindowType } from "@shared/store/client.store";
 import { ServerEvents } from "@shared/events/server";
 import { clientState } from "../store/client.store";
 import { onKeyDown } from "../utility/event-helpers";
+import { Control, ControlType } from "../constants/controls";
 
 export const doesElementHaveCursor = createHookableFunction({
   name: "doesElementHaveCursor",
@@ -34,8 +35,8 @@ const ready = new Promise<alt.WebView>((resolve) => {
   markWebViewAsReady = resolve;
 });
 
-export async function waitForUserInterface() {
-  await ready;
+export function waitForUserInterface() {
+  return ready;
 }
 
 export function useWebview(fn: (webview: alt.WebView) => void) {
@@ -142,15 +143,60 @@ export function openWindow(windowType: WindowType) {
 }
 
 export function closeWindow() {
+  const closed = clientState.ui.window !== null;
+
   clientState.ui.window = null;
   showCursor(false);
 
   alt.Events.emitServer(ServerEvents.FromClient.CLOSE_WINDOW);
+
+  return closed;
 }
 
 alt.Events.onKeyDown(({ key }) => {
   if (key === alt.Enums.KeyCode.ESCAPE) {
-    closeWindow();
+    const closed = closeWindow();
+
+    /**
+     * Temporarily disable the escape key to prevent the game
+     * from pausing after closing the window.
+     */
+    if (closed) {
+      const tick = alt.Timers.everyTick(() => {
+        game.disableControlAction(
+          ControlType.FRONTEND_CONTROL,
+          Control.INPUT_FRONTEND_PAUSE,
+          false,
+        );
+        game.disableControlAction(
+          ControlType.FRONTEND_CONTROL,
+          Control.INPUT_FRONTEND_PAUSE_ALTERNATE,
+          false,
+        );
+      });
+
+      const keyUp = alt.Events.onKeyUp(({ key }) => {
+        if (key === alt.Enums.KeyCode.ESCAPE) {
+          alt.log("Destroying listeners");
+          tick.destroy();
+          keyUp.destroy();
+
+          alt.Timers.nextTick(() => {
+            alt.log("Setting Game Controls Active");
+            game.enableControlAction(
+              ControlType.FRONTEND_CONTROL,
+              Control.INPUT_FRONTEND_PAUSE,
+              false,
+            );
+            game.enableControlAction(
+              ControlType.FRONTEND_CONTROL,
+              Control.INPUT_FRONTEND_PAUSE_ALTERNATE,
+              false,
+            );
+          });
+        }
+      });
+    }
   }
 });
 

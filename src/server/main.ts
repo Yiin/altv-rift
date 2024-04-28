@@ -23,6 +23,7 @@ import "./modules/vehicles";
 import "./modules/user-interface";
 import "./modules/thugs";
 import "./modules/production";
+import "./modules/loot";
 import "./modules/dev";
 
 import alt from "@altv/server";

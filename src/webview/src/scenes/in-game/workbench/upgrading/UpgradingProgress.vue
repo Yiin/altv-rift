@@ -43,9 +43,10 @@ const upgradingProgress = computed(() => {
             class="absolute-center h-66.5 w-135 bg-contain bg-center"
             :class="{
               '-mt-4 scale-50':
-                isItemKeyAmmo(selectedItem.key) || isItemKeyThrowableWeapon(selectedItem.key),
+                isItemKeyAmmo(upgradeRecipe.item.key) ||
+                isItemKeyThrowableWeapon(upgradeRecipe.item.key),
             }"
-            :style="{ backgroundImage: `url(${getItemImage(selectedItem.key)})` }"
+            :style="{ backgroundImage: `url(${getItemImage(upgradeRecipe.item.key)})` }"
           />
         </div>
       </div>
@@ -57,7 +58,7 @@ const upgradingProgress = computed(() => {
       </div>
       <div class="-mt-4 mb-8 text-3xl font-bold">{{ getItemName(upgradeRecipe.item.key) }}</div>
       <div
-        v-if="isItemWeapon(selectedItem)"
+        v-if="isItemWeapon(upgradeRecipe.item)"
         class="flex justify-center gap-3.5"
       >
         <WorkbenchSlot
@@ -65,7 +66,7 @@ const upgradingProgress = computed(() => {
           static
         >
           <h3 class="text-3xl font-bold text-red-500">
-            {{ (getWeaponStats(selectedItem.key).timeBetweenShots * 60).toFixed(2) }}
+            {{ (getWeaponStats(upgradeRecipe.item.key).timeBetweenShots * 60).toFixed(2) }}
           </h3>
           <div class="font-light">Fire rate</div>
         </WorkbenchSlot>
@@ -74,7 +75,7 @@ const upgradingProgress = computed(() => {
           static
         >
           <h3 class="text-3xl font-bold text-red-500">
-            {{ getWeaponStats(selectedItem.key).accuracySpread.toFixed(2) }}
+            {{ getWeaponStats(upgradeRecipe.item.key).accuracySpread.toFixed(2) }}
           </h3>
           <div class="font-light">Accuracy</div>
         </WorkbenchSlot>
@@ -86,7 +87,7 @@ const upgradingProgress = computed(() => {
             class="text-3xl font-bold text-yellow-500 drop-shadow-glow-color"
             :style="{ '--glow-color': 'rgb(234 179 8 / 0.5)' }"
           >
-            {{ getWeaponDamage(selectedItem.key, selectedItem.grade) }}
+            {{ getWeaponDamage(upgradeRecipe.item.key, upgradeRecipe.item.grade) }}
           </h3>
           <div class="font-light">Damage</div>
         </WorkbenchSlot>
@@ -95,7 +96,7 @@ const upgradingProgress = computed(() => {
           static
         >
           <h3 class="text-3xl font-bold text-red-500">
-            {{ getWeaponStats(selectedItem.key).clipSize }}
+            {{ getWeaponStats(upgradeRecipe.item.key).clipSize }}
           </h3>
           <div class="font-light">Clip</div>
         </WorkbenchSlot>

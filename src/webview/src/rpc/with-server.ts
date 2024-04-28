@@ -34,6 +34,7 @@ alt.on(CALL_SERVER_FROM_WEBVIEW_RESPONSE, (response) => {
   serverHandlers.delete(response.id);
 
   if (response.error) {
+    console.log(`CALL_SERVER_FROM_WEBVIEW_RESPONSE: Error in ${handler.name}:`, response.error);
     handler.reject(deserialize(response.error));
     return;
   }

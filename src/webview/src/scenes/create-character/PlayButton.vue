@@ -11,7 +11,7 @@ async function submit() {
   try {
     await createCharacter.submit();
   } catch (e: any) {
-    if (e.error.type === "ValidationError") {
+    if (e.error?.type === "ValidationError") {
       createCharacter.errors = e.error.errors;
     }
   }

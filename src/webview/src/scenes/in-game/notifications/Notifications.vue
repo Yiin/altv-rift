@@ -1,20 +1,76 @@
 <script setup lang="ts">
-import { reactive, ref } from "vue";
+import { computed, reactive, ref, watch } from "vue";
 import { WebviewEvents } from "@shared/events/webview";
-import { type Notification, NotificationType } from "@shared/interfaces";
+import { type Notification } from "@shared/interfaces";
 import { type Item } from "@shared/modules/items";
 import { useAlt } from "@/composables/use-alt";
+import { useCharacter } from "@/store/synced/character.store";
 import GenericNotification from "./GenericNotification.vue";
 import ItemReceivedNotification from "./ItemReceivedNotification.vue";
+import ExperienceGainedNotification from "./ExperienceGainedNotification.vue";
 
 const alt = useAlt();
+const character = useCharacter();
 const notifications = reactive<Notification[]>([]);
 const addedItem = ref<{
   timeout: any;
   item: Item;
 } | null>(null);
 
-function showNotification(type: NotificationType, title: string, text: string) {
+const experienceChanged = ref<{
+  type: "fishing" | "mining" | "woodcutting";
+  previousXp: number;
+  currentXp: number;
+}>();
+
+const xp = computed(() => [
+  character.skills.fishing,
+  character.skills.mining,
+  character.skills.woodcutting,
+]);
+
+let timeout: number | null;
+
+watch(
+  xp,
+  (
+    [currentFishing, currentMining, currentWoodcutting],
+    [previousFishing, previousMining, previousWoordcutting],
+  ) => {
+    if (currentFishing > previousFishing) {
+      experienceChanged.value = {
+        type: "fishing",
+        previousXp: previousFishing,
+        currentXp: currentFishing,
+      };
+    } else if (currentMining > previousMining) {
+      experienceChanged.value = {
+        type: "mining",
+        previousXp: previousMining,
+        currentXp: currentMining,
+      };
+    } else if (currentWoodcutting > previousWoordcutting) {
+      experienceChanged.value = {
+        type: "woodcutting",
+        previousXp: previousWoordcutting,
+        currentXp: currentWoodcutting,
+      };
+    }
+
+    if (experienceChanged.value) {
+      if (timeout) {
+        clearTimeout(timeout);
+      }
+
+      timeout = setTimeout(() => {
+        experienceChanged.value = undefined;
+        timeout = null;
+      }, 5000);
+    }
+  },
+);
+
+alt.on(WebviewEvents.FromClient.SHOW_NOTIFICATION, (type, title, text) => {
   const notification = {
     key: Date.now().toString(),
     type,
@@ -26,9 +82,8 @@ function showNotification(type: NotificationType, title: string, text: string) {
   setTimeout(() => {
     notifications.splice(notifications.indexOf(notification), 1);
   }, 5000);
-}
+});
 
-alt.on(WebviewEvents.FromClient.SHOW_NOTIFICATION, showNotification);
 alt.on(WebviewEvents.FromClient.INVENTORY_ITEM_ADD, async (item) => {
   if (addedItem.value) {
     clearTimeout(addedItem.value.timeout);
@@ -58,6 +113,16 @@ alt.on(WebviewEvents.FromClient.INVENTORY_ITEM_ADD, async (item) => {
       :type="notification.type"
       :title="notification.title"
       :text="notification.text"
+    />
+  </transition-group>
+  <transition-group
+    name="notification"
+    tag="div"
+    class="pointer-events-none absolute top-30 flex h-full w-full items-start justify-center"
+  >
+    <ExperienceGainedNotification
+      v-if="experienceChanged"
+      v-bind="experienceChanged"
     />
   </transition-group>
   <transition-group

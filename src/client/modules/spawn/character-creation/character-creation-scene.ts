@@ -1,48 +1,81 @@
 import alt from "@altv/client";
 import game from "@altv/natives";
+import { Appearance } from "@prisma/client/edge";
 import { ClientEvents } from "@shared/events/client";
 import { Scene } from "@shared/enums/ui";
 import { SWITCHOUT_TYPES } from "@shared/modules/game/ui/switch-out-types";
-import { useWebview, setScene } from "@/core/user-interface/webview";
+import { setScene, waitForUserInterface } from "@/core/user-interface/webview";
 import { whileCreatingCharacter } from "@/core/game-state-hooks/creating-character.state";
-import { PedAppearance } from "@/core/utility/ped-appearance";
 import { whileInGame } from "@/core/game-state-hooks/in-game.state";
-import { createCharacterCreationCamera, destroyCharacterCreationCamera } from "./camera";
-import { createCharacterPed, updateAppearance } from "./character-ped";
+import { setPedAppearance, setPedEquipment } from "@/core/utility/ped-appearance";
+import { setupPeacefulPed } from "@/modules/peds/setup-ped/setup-peaceful-ped";
+import { createCharacterCreationCamera } from "./camera";
+import { createPedModel } from "./ped-model";
 
-const pedPosition = new alt.Vector3(1507.9, -1732.3, 78.65);
-const pedRotation = 288;
+const PED_MODEL_POSITION = new alt.Vector3(1507.9, -1732.3, 78.65);
+const PED_MODEL_HEADING = 288;
+const PED_CAMERA_BASELINE = new alt.Vector3(1508.8, -1731.9, 79.3);
 
 whileCreatingCharacter(async () => {
-  const ped = await createCharacterPed(true, pedPosition, pedRotation);
+  // Create the character selection peds
+  const male = createPedModel(true, PED_MODEL_POSITION, PED_MODEL_HEADING);
+  const female = createPedModel(false, PED_MODEL_POSITION.sub(2, 0, 0), PED_MODEL_HEADING);
 
-  game.setEntityVisible(ped, false, false);
+  await alt.Utils.waitFor(() => male.scriptID !== 0 && female.scriptID !== 0, 1000);
+  await alt.Utils.wait(500);
 
-  PedAppearance.applyEquipment(ped.scriptID);
+  game.setEntityAlpha(male, 0, false);
+  game.setEntityAlpha(female, 0, false);
 
-  await createCharacterCreationCamera(ped);
-  game.setEntityVisible(ped, true, false);
+  resetModelPed(male);
+  resetModelPed(female);
+
+  let currentModel = male;
+
+  const cleanupCamera = await createCharacterCreationCamera(
+    PED_MODEL_POSITION,
+    PED_CAMERA_BASELINE,
+  );
 
   setScene(Scene.CREATE_CHARACTER, { hasCursor: true });
 
   alt.log("Character Creation Scene Started");
 
+  game.setEntityAlpha(currentModel, 255, false);
+
   game.doScreenFadeIn(1000);
   game.disableScreenblurFade();
 
-  useWebview((webview) =>
-    webview.on(ClientEvents.FromWebview.UPDATE_CHARACTER_APPEARANCE, updateAppearance),
-  );
+  const webview = await waitForUserInterface();
+
+  async function onUpdateCharacterAppearance(newAppearance: Appearance) {
+    const currentSex = currentModel === male ? 1 : 0;
+
+    if (currentSex !== newAppearance.sex) {
+      game.setEntityAlpha(currentModel, 0, false);
+
+      currentModel.pos = PED_MODEL_POSITION.sub(2, 0, 0);
+      currentModel = currentModel === male ? female : male;
+      currentModel.pos = PED_MODEL_POSITION;
+
+      resetModelPed(currentModel);
+
+      game.setEntityAlpha(currentModel, 255, false);
+    }
+
+    setPedAppearance(currentModel, newAppearance);
+  }
+
+  webview.on(ClientEvents.FromWebview.UPDATE_CHARACTER_APPEARANCE, onUpdateCharacterAppearance);
 
   return () => {
-    useWebview((webview) =>
-      webview.off(ClientEvents.FromWebview.UPDATE_CHARACTER_APPEARANCE, updateAppearance),
-    );
-    destroyCharacterCreationCamera();
+    webview.off(ClientEvents.FromWebview.UPDATE_CHARACTER_APPEARANCE, onUpdateCharacterAppearance);
 
-    if (ped && ped.valid) {
-      ped.destroy();
-    }
+    cleanupCamera();
+
+    // cleanup model peds
+    male.destroy();
+    female.destroy();
   };
 });
 
@@ -66,3 +99,12 @@ whileInGame(async () => {
 
   setScene(Scene.IN_GAME, { hasCursor: false });
 });
+
+function resetModelPed(ped: alt.LocalPed) {
+  ped.rot = new alt.Vector3(0, 0, PED_MODEL_HEADING);
+
+  setPedEquipment(ped, [], ped.model === alt.hash("mp_m_freemode_01"));
+  setupPeacefulPed(ped);
+
+  ped.frozen = true;
+}

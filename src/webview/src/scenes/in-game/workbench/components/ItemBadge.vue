@@ -83,8 +83,7 @@ const stars = computed(
           <svg
             v-for="i in stars"
             :key="i"
-            width="18"
-            height="18"
+            class="h-4.5 w-4.5"
             viewBox="0 0 18 18"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -97,8 +96,7 @@ const stars = computed(
         </template>
         <template v-else-if="grade === ItemGrade.LEGENDARY">
           <svg
-            width="52"
-            height="20"
+            class="h-5 w-13"
             viewBox="0 0 52 20"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -119,8 +117,7 @@ const stars = computed(
         </template>
         <template v-else-if="grade === ItemGrade.CONTRABAND">
           <svg
-            width="59"
-            height="27"
+            class="h-6.75 w-14.75"
             viewBox="0 0 59 27"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"

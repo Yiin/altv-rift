@@ -5,11 +5,13 @@ import {
   BAIT_TO_FISH_MAP,
   FishBaitItem,
   FishBaitItemKey,
+  getBaitChance,
   isItemFishBait,
 } from "@shared/modules/items/registry/fish-bait.items";
 import { FishingRodItem, createItem, getItemName, isItemFishingRod } from "@shared/modules/items";
 import { EquipmentSlot, InventoryItem, ItemSourceOrigin } from "@shared/interfaces";
 import { rollItem } from "@shared/utility/random";
+import { getLevel } from "@shared/modules/experience/experience-table";
 import { InGamePlayer, isInGame } from "@/core/utility/assertions";
 import { sendChatMessage } from "@/modules/chat";
 
@@ -113,11 +115,21 @@ export function startCatchingFish(player: InGamePlayer, baitKey: FishBaitItemKey
 
   switch (gameType) {
     case FishingGameType.TimeClick: {
+      const baitChance = getBaitChance(baitKey);
       const durationMs = 2000;
-      const targetSize = 0.1;
-      const startingOffset = targetSize * 2;
-      const endOffset = targetSize * 0.5;
-      const targetPosition = Math.random() * (1 - startingOffset - endOffset) + startingOffset;
+
+      // Default size is the size of the target when baitChance === fishing level / 10,
+      // e.g. baitChance is 0.1 and fishing level is 10.
+      const DEFAULT_SIZE = 0.05;
+      const targetSize = Math.min(
+        1,
+        DEFAULT_SIZE * baitChance * getLevel(player.character.skills.fishing),
+      );
+
+      // Starting offset is to help player avoid the target being too close to the start.
+      // Target center should be at least 30% away from the start.
+      const startingOffset = Math.min(0.3, Math.max(0, 0.3 - targetSize / 2));
+      const targetPosition = Math.min(1, Math.random() + startingOffset);
 
       player.gameState.fishingProgress = {
         baitKey,
@@ -168,15 +180,14 @@ export function catchAFish(player: InGamePlayer, baitKey: FishBaitItemKey): void
   const fish = possibleCatch[~~(Math.random() * possibleCatch.length)];
 
   if (!fish) {
-    sendChatMessage(player, `You caught nothing...`);
     return;
   }
 
   stopCatchingAFish(player);
 
-  sendChatMessage(player, `You caught a ${getItemName(fish)}!`);
+  const xp = (1 / getBaitChance(baitKey)) * 25;
 
-  player.character.skills.fishing += ~~(Math.random() * 100) * 10 + 50;
+  player.character.skills.fishing += xp;
 
   player.addItem(createItem(fish, { amount: 1 }));
 }

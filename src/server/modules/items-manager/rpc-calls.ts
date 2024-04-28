@@ -8,7 +8,7 @@ import {
   isItemEquipable,
   isItemUsable,
 } from "@shared/modules/items";
-import { EquipmentSlot, ItemSourceOrigin } from "@shared/interfaces";
+import { EquipmentSlot, InventoryItemSource, ItemSourceOrigin } from "@shared/interfaces";
 import { getInventoryItemInSlot, isEquipmentSlotQuickSlot } from "@shared/modules/inventory";
 import { removeItemFromInventorySlot, addItemToInventory } from "@shared/modules/inventory";
 import { rpc } from "@/core/rpc";
@@ -194,6 +194,7 @@ rpc.registerWebview(ServerCall.FromWebview.MOVE_ITEM, (player, from, to, amount 
   needsToBeInGame(player);
 
   if (!canInteractWithItemSource(player, from) || !canInteractWithItemSource(player, to)) {
+    console.log("can't interact with item source");
     return false;
   }
 
@@ -273,10 +274,10 @@ rpc.registerWebview(ServerCall.FromWebview.MOVE_ITEM, (player, from, to, amount 
    * Between inventory slots
    */
   if (
-    from.origin === ItemSourceOrigin.PlayerInventory &&
-    to.origin === ItemSourceOrigin.PlayerInventory
+    [ItemSourceOrigin.PlayerInventory, ItemSourceOrigin.Storage].includes(from.origin) &&
+    [ItemSourceOrigin.PlayerInventory, ItemSourceOrigin.Storage].includes(to.origin)
   ) {
-    return swapInventoryItems(from, to);
+    return swapInventoryItems(from as InventoryItemSource, to as InventoryItemSource, amount);
   }
 
   if (
@@ -333,7 +334,7 @@ rpc.registerWebview(ServerCall.FromWebview.MOVE_ITEM, (player, from, to, amount 
     }
   }
 
-  // TS doesn't know that all cases are covered
+  console.log(`Can't move item from ${from.origin} to ${to.origin}`);
   return false;
 });
 
