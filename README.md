@@ -31,11 +31,12 @@ Craft/find gear, level up abilities, conquer & defend territories, stay at the t
 
 ### Server
 
-1. `npm i` (installing npm deps)
-2. `npm run update` (altv serverfiles)
-3. `npm run prisma:generate` (setup prisma)
-4. `npm run dev` (esbuild for building code & tsc for checking types)
-5. `npm run server` (runs the database & server)
+1. `cp .env.example .env` 
+2. `npm i` (installing npm deps)
+3. `npm run update` (altv serverfiles)
+4. `npm run prisma:generate` (setup prisma)
+5. `npm run dev` (esbuild for building code & tsc for checking types)
+6. `npm run server` (runs the database & server)
 
 Note: both `npm run dev` and `npm run server` are continuous processes, so if you want to run them both, run them in separate CLI windows.
 
