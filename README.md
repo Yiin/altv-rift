@@ -33,7 +33,8 @@ Craft/find gear, level up abilities, conquer & defend territories, stay at the t
 
 1. `npm i` (installing npm deps)
 2. `npm run update` (altv serverfiles)
-3. `npm run dev` (esbuild for building code & tsc for checking types)
+3. `npm run prisma:generate` (setup prisma)
+4. `npm run dev` (esbuild for building code & tsc for checking types)
 
 ### Webview
 
