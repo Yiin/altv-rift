@@ -4,6 +4,7 @@ import { type AmmoEquipmentSlot, EquipmentSlot, ItemSourceOrigin } from "@shared
 import { InteractionType, useInventory, isSameItemSource } from "@/store/inventory.store";
 import { px } from "@/composables/use-pixel";
 import { useCombinableItem } from "@/composables/use-combinable-item";
+import { useCharacter } from "@/store/synced/character.store";
 import ItemIcon from "./ItemIcon.vue";
 
 const equipmentSlots = {
@@ -89,10 +90,18 @@ const props = defineProps<{
   name: Exclude<EquipmentSlot, AmmoEquipmentSlot>;
 }>();
 
-const inventory = useInventory();
+const character = useCharacter();
+const {
+  equipment,
+  currentInteraction,
+  unequipItem,
+  registerItemSlot,
+  handleMouseDown,
+  openContextMenu,
+} = useInventory();
 
 const slot = computed(() => equipmentSlots[props.name]);
-const item = computed(() => inventory.equipment[props.name] ?? null);
+const item = computed(() => equipment.value[props.name] ?? null);
 
 const { combinableWithHoveredItem, combinableWithOtherItems } = useCombinableItem(item);
 
@@ -100,7 +109,7 @@ const draggingStyle = computed(() => {
   if (!item.value) {
     return {};
   }
-  const interaction = inventory.currentInteraction;
+  const interaction = currentInteraction.value;
 
   if (
     interaction.type === InteractionType.Dragging &&
@@ -123,16 +132,12 @@ const draggingStyle = computed(() => {
   }
 });
 
-function unequipItem() {
-  inventory.unequipItem(props.name);
-}
-
 const nodeRef = ref<HTMLDivElement>();
 
-inventory.registerItemSlot({
+registerItemSlot({
   source: {
     origin: ItemSourceOrigin.PlayerEquipment,
-    originId: inventory.playerId,
+    originId: character.id,
     equipmentSlot: props.name,
   },
   node: nodeRef,
@@ -162,9 +167,9 @@ inventory.registerItemSlot({
       v-else
       :item="item.item"
       :style="draggingStyle"
-      @mousedown="inventory.handleMouseDown"
-      @dblclick="unequipItem"
-      @contextmenu.prevent="(e) => item && inventory.openContextMenu(item, e)"
+      @mousedown="handleMouseDown"
+      @dblclick="() => unequipItem(name)"
+      @contextmenu.prevent="(e) => item && openContextMenu(item, e)"
     />
   </div>
 </template>

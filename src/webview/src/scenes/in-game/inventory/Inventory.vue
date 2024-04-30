@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { onUnmounted, ref } from "vue";
-import { effect } from "vue";
 import { ItemSourceOrigin, EquipmentSlot as EquipmentSlotEnum } from "@shared/interfaces";
 import { InteractionType, useInventory } from "@/store/inventory.store";
 import { useEventListener } from "@/composables/use-event-listener";
 import { useGapSize } from "@/composables/use-gap-size";
 import { useGameState } from "@/store/synced/game-state.store";
+import { useCharacter } from "@/store/synced/character.store";
 import Icon from "../../../components/Icon/Icon.vue";
 import DarkBackground from "../../../components/DarkBackground.vue";
 import BackButtons from "../../../components/buttons/BackButtons.vue";
@@ -19,25 +19,37 @@ import AmountTransfer from "./AmountTransfer.vue";
 import Ammunition from "./Ammunition.vue";
 import ItemPreview from "./item-preview/ItemPreview.vue";
 
-const inventory = useInventory();
+const character = useCharacter();
+const {
+  size,
+  handleMouseDown,
+  handleMouseMove,
+  handleMouseUp,
+  handleClick,
+  currentInteraction,
+  previewingItem,
+  $reset,
+  closeAmmunitionPanel,
+  openAmmunitionPanel,
+} = useInventory();
 const gameState = useGameState();
 
 const containerRef = ref<HTMLDivElement>();
 const { gapSize, widths } = useGapSize(containerRef);
 
-useEventListener("mousedown", inventory.handleMouseDown);
-useEventListener("mousemove", inventory.handleMouseMove);
-useEventListener("mouseup", inventory.handleMouseUp);
-useEventListener("click", inventory.handleClick, true);
+useEventListener("mousedown", handleMouseDown);
+useEventListener("mousemove", handleMouseMove);
+useEventListener("mouseup", handleMouseUp);
+useEventListener("click", handleClick, true);
 
 onUnmounted(() => {
-  inventory.$reset();
+  $reset();
 });
 </script>
 
 <template>
   <div class="relative w-full px-10">
-    <DarkBackground />
+    <DarkBackground :extra-dark="false" />
     <div
       :style="{ padding: `2rem ${gapSize}px 7rem` }"
       class="mx-auto flex w-full items-center justify-between gap-7"
@@ -130,27 +142,27 @@ onUnmounted(() => {
           </div>
           <div
             class="inline-block"
-            v-click-outside="inventory.closeAmmunitionPanel"
+            v-click-outside="closeAmmunitionPanel"
           >
             <div
-              @click="inventory.openAmmunitionPanel()"
+              @click="openAmmunitionPanel()"
               class="flex h-[45px] w-[139px] cursor-pointer items-center justify-center border border-white border-opacity-5 bg-zinc-600 bg-opacity-0 hover:bg-opacity-5"
             >
               <div class="text-sm font-bold uppercase text-white">ammunition</div>
             </div>
             <Ammunition
-              v-if="inventory.currentInteraction?.type === InteractionType.AmmunitionPanel"
+              v-if="currentInteraction?.type === InteractionType.AmmunitionPanel"
               class="absolute right-0 top-14.5"
             />
           </div>
         </div>
         <div class="mt-5 inline-grid grid-cols-6 grid-rows-5 gap-2.5">
           <InventorySlot
-            v-for="(_, slot) in inventory.size"
+            v-for="(_, slot) in size"
             :key="slot"
             :source="{
               origin: ItemSourceOrigin.PlayerInventory,
-              originId: inventory.playerId,
+              originId: character.id,
               inventorySlot: slot,
             }"
           />
@@ -199,22 +211,22 @@ onUnmounted(() => {
   </div>
 
   <ContextMenu
-    v-if="inventory.currentInteraction.type === InteractionType.ContextMenu"
-    v-bind="inventory.currentInteraction.state"
+    v-if="currentInteraction.type === InteractionType.ContextMenu"
+    v-bind="currentInteraction.state"
   />
   <ItemInfo
-    v-if="inventory.currentInteraction.type === InteractionType.Hovering"
-    :key="JSON.stringify(inventory.currentInteraction.state.item.source)"
-    v-bind="inventory.currentInteraction.state"
+    v-if="currentInteraction.type === InteractionType.Hovering"
+    :key="JSON.stringify(currentInteraction.state.item.source)"
+    v-bind="currentInteraction.state"
   />
   <ItemPreview
-    v-if="inventory.previewingItem"
-    :key="JSON.stringify(inventory.previewingItem.source)"
-    v-bind="inventory.previewingItem"
+    v-if="previewingItem"
+    :key="JSON.stringify(previewingItem.source)"
+    v-bind="previewingItem"
   />
   <AmountTransfer
-    v-if="inventory.currentInteraction.type === InteractionType.TransferingAmount"
-    v-bind="inventory.currentInteraction.state"
+    v-if="currentInteraction.type === InteractionType.TransferingAmount"
+    v-bind="currentInteraction.state"
   />
-  <!-- <Confirmation v-if="inventory.transfer" /> -->
+  <!-- <Confirmation v-if="transfer" /> -->
 </template>

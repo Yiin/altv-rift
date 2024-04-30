@@ -41,13 +41,13 @@ const weaponStats = computed(() => {
 });
 
 const combination = computed(() => {
-  const inventory = useInventory();
+  const { selectedItem } = useInventory();
 
-  if (!inventory.selectedItem) {
+  if (!selectedItem.value) {
     return null;
   }
   const target = item.value.key;
-  const source = inventory.selectedItem.item.key;
+  const source = selectedItem.value.item.key;
 
   const [combineType, reverse] = getCombineType(target, source);
 

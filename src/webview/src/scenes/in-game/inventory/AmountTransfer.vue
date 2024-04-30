@@ -7,7 +7,7 @@ import { getItemImage } from "@/utils/items";
 
 const props = defineProps<TransferingAmount>();
 
-const inventory = useInventory();
+const { confirmAmountTransfer, cancelAmountTransfer } = useInventory();
 const amount = ref(1);
 
 const itemName = computed(() => getItemName(props.item.item.key));
@@ -88,7 +88,7 @@ const itemName = computed(() => getItemName(props.item.item.key));
 
     <div class="mt-4 flex gap-2">
       <button
-        @click.stop="() => inventory.confirmAmountTransfer(amount)"
+        @click.stop="() => confirmAmountTransfer(amount)"
         type="button"
         class="rounded bg-green-700 px-4 py-2 text-sm font-medium text-white transition-all hover:bg-green-600"
       >
@@ -96,7 +96,7 @@ const itemName = computed(() => getItemName(props.item.item.key));
       </button>
 
       <button
-        @click="inventory.cancelAmountTransfer"
+        @click="cancelAmountTransfer"
         type="button"
         class="rounded px-4 py-2 text-sm font-medium hover:drop-shadow-glow"
       >

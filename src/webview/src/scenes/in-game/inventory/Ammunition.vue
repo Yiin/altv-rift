@@ -6,7 +6,7 @@ import { useInventory } from "@/store/inventory.store";
 import { useCharacter } from "@/store/synced/character.store";
 import { getItemImage } from "@/utils/items";
 
-const inventory = useInventory();
+const { unequipItem } = useInventory();
 const equipment = computed(() => useCharacter().equipment);
 const equipedAmmo = computed(() =>
   (
@@ -61,7 +61,7 @@ const equipedAmmo = computed(() =>
         <div
           v-for="({ slot, label, key, amount }, index) of equipedAmmo"
           :key="label"
-          @click="() => inventory.unequipItem(slot)"
+          @click="() => unequipItem(slot)"
           class="flex cursor-pointer items-center gap-5 px-5.5 pb-2.5 pt-4 hover:bg-white/5"
           :class="{ 'border-t-1 border-dashed border-t-white/10': index > 0 }"
         >

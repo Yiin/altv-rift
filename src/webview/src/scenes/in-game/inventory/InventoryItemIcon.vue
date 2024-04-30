@@ -14,25 +14,25 @@ const props = defineProps<{
   item: SlottedPlayerInventoryItem | SlottedStorageItem | SlottedGroundItem;
 }>();
 
-const inventory = useInventory();
+const { currentInteraction } = useInventory();
 
 const slottedItem = computed(() => props.item);
 
 const isDraggingOrDropping = computed(() =>
   [InteractionType.Dragging, InteractionType.TransferingAmount].includes(
-    inventory.currentInteraction.type,
+    currentInteraction.value.type,
   ),
 );
 
 const shouldShow = computed(
   () =>
-    inventory.currentInteraction.type !== InteractionType.TransferingAmount ||
-    !inventory.currentInteraction.state.outside ||
-    !isSameItemSource(slottedItem.value.source, inventory.currentInteraction.state.item.source),
+    currentInteraction.value.type !== InteractionType.TransferingAmount ||
+    !currentInteraction.value.state.outside ||
+    !isSameItemSource(slottedItem.value.source, currentInteraction.value.state.item.source),
 );
 
 const draggingStyle = computed(() => {
-  const interaction = inventory.currentInteraction;
+  const interaction = currentInteraction.value;
 
   if (
     interaction.type === InteractionType.Dragging &&

@@ -8,10 +8,10 @@ defineProps<{
   };
 }>();
 
-const inventory = useInventory();
+const { previewingItem } = useInventory();
 
 function closePreview() {
-  inventory.previewingItem = undefined;
+  previewingItem.value = undefined;
 }
 
 const hw = window.innerWidth / 2 - 400;

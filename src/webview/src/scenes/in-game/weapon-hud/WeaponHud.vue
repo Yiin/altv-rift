@@ -12,11 +12,11 @@ import { useInventory } from "@/store/inventory.store";
 import { getItemClasses, getItemImage } from "@/utils/items";
 import { useCharacter } from "@/store/synced/character.store";
 
-const inventory = useInventory();
+const { equipment } = useInventory();
 const character = useCharacter();
 
 const weaponItem = computed(() => {
-  const { weapon } = inventory.equipment;
+  const { weapon } = equipment.value;
 
   if (!weapon) {
     return null;

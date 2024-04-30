@@ -1,6 +1,4 @@
-import { defineStore } from "pinia";
-import { markRaw, reactive, watchEffect } from "vue";
-import { type Ref } from "vue";
+import { computed, markRaw, reactive, ref, watchEffect } from "vue";
 import { ServerCall } from "@shared/calls/server";
 import { ClientEvents } from "@shared/events/client";
 import {
@@ -187,712 +185,749 @@ export function isSameItemSource(a?: ItemSource, b?: ItemSource): boolean {
 
 type ItemNode = { source: ItemSource; node: { value: HTMLElement | undefined } };
 
-interface State {
-  itemNodes: ItemNode[];
-  currentInteraction: ItemInteraction;
-  selectedItem?: SlottedItem;
-  draggingItemThisFrame: boolean;
-  previewingItem?: SlottedItem;
-  ammunitionPanelRef?: Ref<HTMLElement>;
-}
+const itemNodes = reactive<ItemNode[]>([]);
+const currentInteraction = ref<ItemInteraction>(IDLE);
+const draggingItemThisFrame = ref(false);
+const selectedItem = ref<SlottedItem>();
+const previewingItem = ref<SlottedItem>();
+const ammunitionPanelRef = ref<HTMLElement>();
 
-export const useInventory = defineStore("inventory", {
-  state: (): State => ({
-    itemNodes: [],
-    currentInteraction: IDLE,
-    draggingItemThisFrame: false,
-    selectedItem: undefined,
-    previewingItem: undefined,
-    ammunitionPanelRef: undefined,
-  }),
-  getters: {
-    character: () => {
-      return useCharacter();
-    },
-    playerId(): string {
-      return this.character.id;
-    },
-    storage: () => {
-      return useGameState().openedStorage;
-    },
-    droppedItems: () => {
-      return useClient().droppedItems;
-    },
-    size(): number {
-      return this.character.inventory.size ?? 24;
-    },
-    items(): SlottedItem[] {
-      const items: SlottedItem[] = reactive([]);
+const character = computed(() => useCharacter());
+const storage = computed(() => useGameState().openedStorage);
+const droppedItems = computed(() => useClient().droppedItems);
+const size = computed(() => character.value.inventory.size ?? 24);
+const items = computed(() => {
+  const items: SlottedItem[] = reactive([]);
 
-      if (!("altMock" in globalThis) && !isCharacterStoreAvailable()) {
-        return items;
-      }
+  if (!("altMock" in globalThis) && !isCharacterStoreAvailable()) {
+    return items;
+  }
 
-      /**
-       * Player inventory
-       */
-      const inventoryItems = this.character.inventory.items;
+  /**
+   * Player inventory
+   */
+  const inventoryItems = character.value.inventory.items;
 
-      for (const inventoryItem of inventoryItems) {
-        items.push({
-          item: inventoryItem.item,
-          price: inventoryItem.price,
-          source: {
-            origin: ItemSourceOrigin.PlayerInventory,
-            originId: this.playerId,
-            inventorySlot: inventoryItem.slot,
-          } satisfies PlayerInventoryItemSource,
-        });
-      }
+  for (const inventoryItem of inventoryItems) {
+    items.push({
+      item: inventoryItem.item,
+      price: inventoryItem.price,
+      source: {
+        origin: ItemSourceOrigin.PlayerInventory,
+        originId: character.value.id,
+        inventorySlot: inventoryItem.slot,
+      } satisfies PlayerInventoryItemSource,
+    });
+  }
 
-      /**
-       * Player equipment
-       */
-      const equipmentItems = Object.entries(this.character.equipment ?? {}).filter(
-        ([, item]) => !!item,
-      ) as [EquipmentSlot, Item][];
+  /**
+   * Player equipment
+   */
+  const equipmentItems = Object.entries(character.value.equipment ?? {}).filter(
+    ([, item]) => !!item,
+  ) as [EquipmentSlot, Item][];
 
-      for (const [equipmentSlot, item] of equipmentItems) {
-        items.push({
-          item,
-          source: {
-            origin: ItemSourceOrigin.PlayerEquipment,
-            originId: this.playerId,
-            equipmentSlot,
-          } satisfies PlayerEquipmentItemSource,
-        });
-      }
+  for (const [equipmentSlot, item] of equipmentItems) {
+    items.push({
+      item,
+      source: {
+        origin: ItemSourceOrigin.PlayerEquipment,
+        originId: character.value.id,
+        equipmentSlot,
+      } satisfies PlayerEquipmentItemSource,
+    });
+  }
 
-      /**
-       * Opened storage inventory
-       */
-      if (this.storage) {
-        const storageItems = this.storage.inventory.items;
+  /**
+   * Opened storage inventory
+   */
+  if (storage.value) {
+    const storageItems = storage.value.inventory.items;
 
-        for (const item of storageItems) {
-          items.push({
-            item: item.item,
-            price: item.price,
-            source: {
-              ...this.storage.source,
-              inventorySlot: item.slot,
-            } satisfies StorageItemSource,
-          });
-        }
-      }
-
-      /**
-       * Nearby items
-       */
-      for (const groundItem of this.droppedItems) {
-        items.push({
-          item: groundItem.item,
-          source: {
-            origin: ItemSourceOrigin.Ground,
-            originId: groundItem.id,
-          } satisfies GroundItemSource,
-        });
-      }
-
-      return items;
-    },
-    inventoryItems(): SlottedItem<PlayerInventoryItemSource>[] {
-      return this.items.filter(
-        (item): item is SlottedItem<PlayerInventoryItemSource> =>
-          item.source.origin === ItemSourceOrigin.PlayerInventory,
-      );
-    },
-    equipmentItems(): SlottedItem<PlayerEquipmentItemSource>[] {
-      return this.items.filter(
-        (item): item is SlottedItem<PlayerEquipmentItemSource> =>
-          item.source.origin === ItemSourceOrigin.PlayerEquipment,
-      );
-    },
-    interactionItems(): SlottedItem<StorageItemSource>[] {
-      return this.items.filter(
-        (item): item is SlottedItem<StorageItemSource> =>
-          item.source.origin === ItemSourceOrigin.Storage,
-      );
-    },
-    groundItems(): SlottedGroundItem[] {
-      return this.items
-        .filter((item): item is SlottedGroundItem => item.source.origin === ItemSourceOrigin.Ground)
-        .slice(0, 24);
-    },
-    equipment(): SlottedEquipment {
-      const equipment: SlottedEquipment = {
-        mask: null,
-        glasses: null,
-        headwear: null,
-        earrings: null,
-        top: null,
-        armor: null,
-        accessory: null,
-        weapon:
-          "altMock" in globalThis
-            ? ({
-                item: {
-                  key: "grenade",
-                  durability: 100,
-                  ammo: null,
-                  components: [],
-                  tint: 0,
-                },
-                source: {
-                  origin: ItemSourceOrigin.PlayerEquipment,
-                  originId: this.playerId,
-                  equipmentSlot: "weapon",
-                },
-              } as any)
-            : null,
-        gloves: null,
-        lefthand: null,
-        pants: null,
-        righthand: null,
-        backpack: null,
-        shoes: null,
-        phone: null,
-      };
-
-      for (const item of this.equipmentItems) {
-        const equipmentSlot = item.source.equipmentSlot;
-        // @ts-expect-error item is guaranteed to be of correct type,
-        // but TS is complaining that e.g. ClothingItem might be on weapon slot
-        equipment[equipmentSlot] = item;
-      }
-      return equipment;
-    },
-  },
-  actions: {
-    updateInteraction(interaction: ItemInteraction) {
-      this.currentInteraction = interaction;
-    },
-    registerItemSlot(slot: ItemNode) {
-      this.itemNodes.push(markRaw(slot));
-    },
-    useItem(source: InventoryItemSource | GroundItemSource) {
-      return rpc.callServer(ServerCall.FromWebview.USE_ITEM, source);
-    },
-    equipItem(source: InventoryItemSource | GroundItemSource) {
-      return rpc.callServer(ServerCall.FromWebview.EQUIP_ITEM, source);
-    },
-    unequipItem(equipmentSlot: EquipmentSlot) {
-      return rpc.callServer(ServerCall.FromWebview.UNEQUIP_ITEM, equipmentSlot);
-    },
-    dropItem(source: PlayerItemSource, amount: number) {
-      if (window.altMock) {
-        return Promise.resolve(true);
-      }
-
-      return rpc.callServer(ServerCall.FromWebview.DROP_ITEM, source, amount);
-    },
-    combineItems(weaponSource: ItemSource, ammoSource: ItemSource) {
-      return rpc.callServer(ServerCall.FromWebview.COMBINE_ITEMS, weaponSource, ammoSource);
-    },
-    unloadAmmo(source: ItemSource) {
-      return rpc.callServer(ServerCall.FromWebview.UNLOAD_AMMO, source);
-    },
-    removeBait(source: ItemSource) {
-      return rpc.callServer(ServerCall.FromWebview.REMOVE_BAIT, source);
-    },
-    swapLocally(from: SlottedItem | undefined, to: SlottedItem | ItemSource) {
-      const toSource = "source" in to ? to.source : to;
-
-      if (
-        from?.source.origin === ItemSourceOrigin.Ground ||
-        toSource.origin === ItemSourceOrigin.Ground ||
-        from?.source.origin === ItemSourceOrigin.Storage ||
-        toSource.origin === ItemSourceOrigin.Storage
-      ) {
-        return;
-      }
-      if (from) {
-        if ("source" in to) {
-          to.source = from.source;
-        }
-        from.source = toSource;
-      }
-    },
-    openAmmunitionPanel() {
-      setTimeout(() => {
-        this.updateInteraction({
-          type: InteractionType.AmmunitionPanel,
-        });
-      }, 0);
-    },
-    closeAmmunitionPanel() {
-      if (this.currentInteraction.type === InteractionType.AmmunitionPanel) {
-        this.updateInteraction(IDLE);
-      }
-    },
-    transferAmount(from: ItemSource, to: ItemSource | null, position: { x: number; y: number }) {
-      return new Promise<number>((resolve, reject) => {
-        if (to && isSameSourceOrigin(from, to)) {
-          return reject("Cannot transfer to the same source origin");
-        }
-
-        const fromItem = this.getItemFromSource(from);
-
-        if (!fromItem) {
-          return reject("No item in source");
-        }
-
-        this.updateInteraction({
-          type: InteractionType.TransferingAmount,
-          state: { item: fromItem, to, resolve, reject, position },
-        });
-
-        return true;
+    for (const item of storageItems) {
+      items.push({
+        item: item.item,
+        price: item.price,
+        source: {
+          ...storage.value.source,
+          inventorySlot: item.slot,
+        } satisfies StorageItemSource,
       });
-    },
-    confirmAmountTransfer(amount: number) {
-      if (this.currentInteraction.type !== InteractionType.TransferingAmount) {
-        return;
-      }
+    }
+  }
 
-      const slottedItem = this.currentInteraction.state.item;
+  /**
+   * Nearby items
+   */
+  for (const groundItem of droppedItems.value) {
+    items.push({
+      item: groundItem.item,
+      source: {
+        origin: ItemSourceOrigin.Ground,
+        originId: groundItem.id,
+      } satisfies GroundItemSource,
+    });
+  }
 
-      if (!slottedItem) {
-        this.currentInteraction.state.reject();
-        return;
-      }
+  return items;
+});
 
-      if (amount <= 0) {
-        return;
-      }
+const inventoryItems = computed(() =>
+  items.value.filter(
+    (item): item is SlottedItem<PlayerInventoryItemSource> =>
+      item.source.origin === ItemSourceOrigin.PlayerInventory,
+  ),
+);
 
-      if (isStackable(slottedItem.item) && amount > slottedItem.item.amount) {
-        amount = slottedItem.item.amount;
-      }
+const equipmentItems = computed(() =>
+  items.value.filter(
+    (item): item is SlottedItem<PlayerEquipmentItemSource> =>
+      item.source.origin === ItemSourceOrigin.PlayerEquipment,
+  ),
+);
 
-      this.currentInteraction.state.resolve(amount);
-    },
-    cancelAmountTransfer() {
-      if (this.currentInteraction.type === InteractionType.TransferingAmount) {
-        this.currentInteraction.state.reject();
-      }
-    },
-    async moveItem(
-      from: ItemSource,
-      to: ItemSource,
-      options: { localOnly?: boolean; amount?: number } = {},
-    ) {
-      const itemInSlotFrom = this.getItemFromSource(from);
-      const itemInSlotTo = this.getItemFromSource(to);
+const interactionItems = computed(() =>
+  items.value.filter(
+    (item): item is SlottedItem<StorageItemSource> =>
+      item.source.origin === ItemSourceOrigin.Storage,
+  ),
+);
 
-      if (options.localOnly) {
-        this.swapLocally(itemInSlotFrom, itemInSlotTo || to);
-        return true;
-      }
+const groundItems = computed(() =>
+  items.value
+    .filter((item): item is SlottedGroundItem => item.source.origin === ItemSourceOrigin.Ground)
+    .slice(0, 24),
+);
 
-      this.swapLocally(itemInSlotFrom, itemInSlotTo || to);
-
-      const ok = await rpc.callServer(ServerCall.FromWebview.MOVE_ITEM, from, to, options.amount);
-
-      if (!ok) {
-        this.moveItem(to, from, { localOnly: true, amount: options.amount });
-      }
-      return ok;
-    },
-    handleMouseDown(e: MouseEvent) {
-      if (e.button !== 0) {
-        return;
-      }
-
-      if (this.ammunitionPanelRef?.contains(e.target as HTMLElement)) {
-        return;
-      }
-
-      const source = this.getItemSourceFromScreenPos(e.clientX, e.clientY);
-
-      if (!source) {
-        return;
-      }
-
-      const node = this.getItemNodeFromSource(source);
-
-      if (!node) {
-        return;
-      }
-
-      if (!(node.contains(e.target as HTMLElement) || (e.target as HTMLElement).contains(node))) {
-        return;
-      }
-
-      const item = this.getItemFromSource(source);
-
-      if (!item) {
-        return;
-      }
-
-      this.updateInteraction({
-        type: InteractionType.Dragging,
-        maybe: true,
-        state: {
-          item,
-          startPosition: { x: e.clientX, y: e.clientY },
-          currentPosition: { x: e.clientX, y: e.clientY },
-        },
-      });
-    },
-    handleMouseMove(e: MouseEvent) {
-      if (
-        this.currentInteraction.type === InteractionType.Dragging &&
-        this.currentInteraction.maybe
-      ) {
-        if (
-          this.currentInteraction.state.startPosition.x !== e.clientX ||
-          this.currentInteraction.state.startPosition.y !== e.clientY
-        ) {
-          alt.emit(ClientEvents.FromWebview.PLAY_SOUND, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET");
-
-          this.currentInteraction.maybe = false;
-          this.selectedItem = undefined;
-        }
-      }
-      switch (this.currentInteraction.type) {
-        case InteractionType.Dragging:
-          this.currentInteraction.state.currentPosition.x = e.clientX;
-          this.currentInteraction.state.currentPosition.y = e.clientY;
-          return;
-        case InteractionType.Hovering:
-        case InteractionType.None:
-          const source = this.getItemSourceFromScreenPos(e.clientX, e.clientY);
-
-          if (!source) {
-            this.updateInteraction(IDLE);
-            return;
-          }
-
-          if (this.currentInteraction.type === InteractionType.Hovering) {
-            if (isSameItemSource(this.currentInteraction.state.item.source, source)) {
-              this.currentInteraction.state.position.x = e.clientX;
-              this.currentInteraction.state.position.y = e.clientY;
-              return;
-            }
-          }
-
-          const itemInSlot = this.getItemFromSource(source);
-
-          if (!itemInSlot) {
-            this.updateInteraction(IDLE);
-            return;
-          }
-
-          this.updateInteraction({
-            type: InteractionType.Hovering,
-            state: {
-              item: itemInSlot,
-              position: { x: e.clientX, y: e.clientY },
+const equipment = computed(() => {
+  const equipment: SlottedEquipment = {
+    mask: null,
+    glasses: null,
+    headwear: null,
+    earrings: null,
+    top: null,
+    armor: null,
+    accessory: null,
+    weapon:
+      "altMock" in globalThis
+        ? ({
+            item: {
+              key: "grenade",
+              durability: 100,
+              ammo: null,
+              components: [],
+              tint: 0,
             },
-          });
-      }
+            source: {
+              origin: ItemSourceOrigin.PlayerEquipment,
+              originId: character.value.id,
+              equipmentSlot: "weapon",
+            },
+          } as any)
+        : null,
+    gloves: null,
+    lefthand: null,
+    pants: null,
+    righthand: null,
+    backpack: null,
+    shoes: null,
+    phone: null,
+  };
+
+  for (const item of equipmentItems.value) {
+    const equipmentSlot = item.source.equipmentSlot;
+    // @ts-expect-error item is guaranteed to be of correct type,
+    // but TS is complaining that e.g. ClothingItem might be on weapon slot
+    equipment[equipmentSlot] = item;
+  }
+  return equipment;
+});
+
+function updateInteraction(interaction: ItemInteraction) {
+  currentInteraction.value = interaction;
+}
+function registerItemSlot(slot: ItemNode) {
+  itemNodes.push(markRaw(slot));
+}
+function useItem(source: InventoryItemSource | GroundItemSource) {
+  return rpc.callServer(ServerCall.FromWebview.USE_ITEM, source);
+}
+function equipItem(source: InventoryItemSource | GroundItemSource) {
+  return rpc.callServer(ServerCall.FromWebview.EQUIP_ITEM, source);
+}
+function unequipItem(equipmentSlot: EquipmentSlot) {
+  return rpc.callServer(ServerCall.FromWebview.UNEQUIP_ITEM, equipmentSlot);
+}
+function dropItem(source: PlayerItemSource, amount: number) {
+  if (window.altMock) {
+    return Promise.resolve(true);
+  }
+
+  return rpc.callServer(ServerCall.FromWebview.DROP_ITEM, source, amount);
+}
+function combineItems(weaponSource: ItemSource, ammoSource: ItemSource) {
+  return rpc.callServer(ServerCall.FromWebview.COMBINE_ITEMS, weaponSource, ammoSource);
+}
+function unloadAmmo(source: ItemSource) {
+  return rpc.callServer(ServerCall.FromWebview.UNLOAD_AMMO, source);
+}
+function removeBait(source: ItemSource) {
+  return rpc.callServer(ServerCall.FromWebview.REMOVE_BAIT, source);
+}
+function swapLocally(from: SlottedItem | undefined, to: SlottedItem | ItemSource) {
+  const toSource = "source" in to ? to.source : to;
+
+  if (
+    from?.source.origin === ItemSourceOrigin.Ground ||
+    toSource.origin === ItemSourceOrigin.Ground ||
+    from?.source.origin === ItemSourceOrigin.Storage ||
+    toSource.origin === ItemSourceOrigin.Storage
+  ) {
+    return;
+  }
+  if (from) {
+    if ("source" in to) {
+      to.source = from.source;
+    }
+    from.source = toSource;
+  }
+}
+function openAmmunitionPanel() {
+  setTimeout(() => {
+    updateInteraction({
+      type: InteractionType.AmmunitionPanel,
+    });
+  }, 0);
+}
+function closeAmmunitionPanel() {
+  if (currentInteraction.value.type === InteractionType.AmmunitionPanel) {
+    updateInteraction(IDLE);
+  }
+}
+function transferAmount(
+  from: ItemSource,
+  to: ItemSource | null,
+  position: { x: number; y: number },
+) {
+  return new Promise<number>((resolve, reject) => {
+    if (to && isSameSourceOrigin(from, to)) {
+      return reject("Cannot transfer to the same source origin");
+    }
+
+    const fromItem = getItemFromSource(from);
+
+    if (!fromItem) {
+      return reject("No item in source");
+    }
+
+    updateInteraction({
+      type: InteractionType.TransferingAmount,
+      state: { item: fromItem, to, resolve, reject, position },
+    });
+
+    return true;
+  });
+}
+function confirmAmountTransfer(amount: number) {
+  if (currentInteraction.value.type !== InteractionType.TransferingAmount) {
+    return;
+  }
+
+  const slottedItem = currentInteraction.value.state.item;
+
+  if (!slottedItem) {
+    currentInteraction.value.state.reject();
+    return;
+  }
+
+  if (amount <= 0) {
+    return;
+  }
+
+  if (isStackable(slottedItem.item) && amount > slottedItem.item.amount) {
+    amount = slottedItem.item.amount;
+  }
+
+  currentInteraction.value.state.resolve(amount);
+}
+function cancelAmountTransfer() {
+  if (currentInteraction.value.type === InteractionType.TransferingAmount) {
+    currentInteraction.value.state.reject();
+  }
+}
+async function moveItem(
+  from: ItemSource,
+  to: ItemSource,
+  options: { localOnly?: boolean; amount?: number } = {},
+) {
+  const itemInSlotFrom = getItemFromSource(from);
+  const itemInSlotTo = getItemFromSource(to);
+
+  if (options.localOnly) {
+    swapLocally(itemInSlotFrom, itemInSlotTo || to);
+    return true;
+  }
+
+  swapLocally(itemInSlotFrom, itemInSlotTo || to);
+
+  const ok = await rpc.callServer(ServerCall.FromWebview.MOVE_ITEM, from, to, options.amount);
+
+  if (!ok) {
+    moveItem(to, from, { localOnly: true, amount: options.amount });
+  }
+  return ok;
+}
+function handleMouseDown(e: MouseEvent) {
+  if (e.button !== 0) {
+    return;
+  }
+
+  if (ammunitionPanelRef.value?.contains(e.target as HTMLElement)) {
+    return;
+  }
+
+  const source = getItemSourceFromScreenPos(e.clientX, e.clientY);
+
+  if (!source) {
+    return;
+  }
+
+  const node = getItemNodeFromSource(source);
+
+  if (!node) {
+    return;
+  }
+
+  if (!(node.contains(e.target as HTMLElement) || (e.target as HTMLElement).contains(node))) {
+    return;
+  }
+
+  const item = getItemFromSource(source);
+
+  if (!item) {
+    return;
+  }
+
+  updateInteraction({
+    type: InteractionType.Dragging,
+    maybe: true,
+    state: {
+      item,
+      startPosition: { x: e.clientX, y: e.clientY },
+      currentPosition: { x: e.clientX, y: e.clientY },
     },
-    async handleMouseUp(e: MouseEvent) {
-      if (this.currentInteraction.type === InteractionType.Dragging) {
-        if (this.currentInteraction.maybe) {
-          this.updateInteraction(IDLE);
-          return;
-        }
+  });
+}
+function handleMouseMove(e: MouseEvent) {
+  if (
+    currentInteraction.value.type === InteractionType.Dragging &&
+    currentInteraction.value.maybe
+  ) {
+    if (
+      currentInteraction.value.state.startPosition.x !== e.clientX ||
+      currentInteraction.value.state.startPosition.y !== e.clientY
+    ) {
+      alt.emit(ClientEvents.FromWebview.PLAY_SOUND, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET");
 
-        const slottedItem = this.currentInteraction.state.item;
-        const from = slottedItem.source;
-        const to = this.getItemSourceFromScreenPos(e.clientX, e.clientY);
-
-        const isFromGroundToGround =
-          from.origin === ItemSourceOrigin.Ground && (!to || to.origin === ItemSourceOrigin.Ground);
-        const canMoveItem = !isFromGroundToGround;
-        const fullAmount = isStackable(slottedItem.item) ? slottedItem.item.amount : 1;
-
-        let promise;
-
-        if (canMoveItem) {
-          try {
-            const isSameOrigin =
-              to &&
-              (isSameSourceOrigin(from, to) ||
-                [from, to].every((s) =>
-                  [ItemSourceOrigin.PlayerEquipment, ItemSourceOrigin.PlayerInventory].includes(
-                    s.origin,
-                  ),
-                ));
-            const isFromGround = from.origin === ItemSourceOrigin.Ground;
-            const isSingleItem = !isStackable(slottedItem.item) || slottedItem.item.amount === 1;
-
-            const amount =
-              isSameOrigin || (isFromGround && isSingleItem)
-                ? // move full amount because we don't split items in the same origin
-                  fullAmount
-                : // ask for amount to move
-                  await this.transferAmount(from, to, { x: e.clientX, y: e.clientY });
-
-            // if we're dropping the item
-            if (!to || to.origin === ItemSourceOrigin.Ground) {
-              // we can drop it only from either inventory or equipment
-              if (
-                [ItemSourceOrigin.PlayerInventory, ItemSourceOrigin.PlayerEquipment].includes(
-                  from.origin,
-                )
-              ) {
-                await this.dropItem(from as PlayerItemSource, amount);
-              }
-            } else {
-              // Move the item or swap with another item
-              promise = this.moveItem(from, to, { amount });
-            }
-          } catch {
-            // couldn't move the item, oh well ¯\_(ツ)_/¯
-          }
-        }
-
-        if (from.origin === ItemSourceOrigin.Ground && !isFromGroundToGround) {
-          // fixes item icon appearing back on the ground for a brief moment
-          // after picking it up
-          const stopWatching = watchEffect(() => {
-            const item = this.getItemFromSource(from);
-            if (!item || ("amount" in item.item && item.item.amount < fullAmount)) {
-              if (this.currentInteraction.type === InteractionType.Dragging) {
-                this.updateInteraction(IDLE);
-              }
-              stopWatching();
-              return;
-            }
-          });
-
-          // fallback if the item wasn't picked up
-          promise?.then((result) => {
-            if (!result) {
-              if (this.currentInteraction.type === InteractionType.Dragging) {
-                this.updateInteraction(IDLE);
-              }
-              stopWatching();
-            }
-          });
-        } else {
-          this.updateInteraction(IDLE);
-        }
-
-        this.draggingItemThisFrame = true;
-        requestAnimationFrame(() => {
-          this.draggingItemThisFrame = false;
-        });
-      }
-    },
-    handleClick(e: MouseEvent) {
-      if (this.currentInteraction.type === InteractionType.ContextMenu) {
-        this.selectedItem = undefined;
-        return;
-      }
-
-      if (this.currentInteraction.type === InteractionType.AmmunitionPanel) {
-        return;
-      }
-
-      const source = this.getItemSourceFromScreenPos(e.clientX, e.clientY);
+      currentInteraction.value.maybe = false;
+      selectedItem.value = undefined;
+    }
+  }
+  switch (currentInteraction.value.type) {
+    case InteractionType.Dragging:
+      currentInteraction.value.state.currentPosition.x = e.clientX;
+      currentInteraction.value.state.currentPosition.y = e.clientY;
+      return;
+    case InteractionType.Hovering:
+    case InteractionType.None:
+      const source = getItemSourceFromScreenPos(e.clientX, e.clientY);
 
       if (!source) {
+        updateInteraction(IDLE);
         return;
       }
 
-      const node = this.getItemNodeFromSource(source);
-
-      if (!node) {
-        return;
+      if (currentInteraction.value.type === InteractionType.Hovering) {
+        if (isSameItemSource(currentInteraction.value.state.item.source, source)) {
+          currentInteraction.value.state.position.x = e.clientX;
+          currentInteraction.value.state.position.y = e.clientY;
+          return;
+        }
       }
 
-      if (!(node.contains(e.target as HTMLElement) || (e.target as HTMLElement).contains(node))) {
-        return;
-      }
-
-      const itemInSlot = this.getItemFromSource(source);
+      const itemInSlot = getItemFromSource(source);
 
       if (!itemInSlot) {
-        if (this.selectedItem) {
-          this.selectedItem = undefined;
-        }
+        updateInteraction(IDLE);
         return;
       }
 
-      if (this.selectedItem && isSameItemSource(itemInSlot.source, this.selectedItem.source)) {
-        this.selectedItem = undefined;
-        return;
-      }
-
-      if (this.selectedItem) {
-        const target = itemInSlot;
-        const source = this.selectedItem;
-
-        const [combineType] = getCombineType(target.item.key, source.item.key);
-
-        if (combineType !== CombineType.None) {
-          this.selectedItem = undefined;
-
-          this.combineItems(source.source, target.source);
-        }
-      }
-
-      if (this.currentInteraction.type === InteractionType.Dragging || this.draggingItemThisFrame) {
-        return;
-      }
-
-      if (
-        this.currentInteraction.type !== InteractionType.None &&
-        this.currentInteraction.type !== InteractionType.Hovering
-      ) {
-        this.updateInteraction(IDLE);
-      }
-
-      this.selectedItem = itemInSlot;
-    },
-    async completeDropping(amount: number) {
-      if (this.currentInteraction.type !== InteractionType.TransferingAmount) {
-        return;
-      }
-
-      const source = this.currentInteraction.state.item.source;
-
-      if (
-        source.origin !== ItemSourceOrigin.PlayerEquipment &&
-        source.origin !== ItemSourceOrigin.PlayerInventory
-      ) {
-        this.updateInteraction(IDLE);
-        return;
-      }
-
-      const shouldDrop = await this.dropItem(source, amount);
-
-      if (!shouldDrop) {
-        this.updateInteraction(IDLE);
-        return;
-      }
-    },
-    dropFromMenu(source: PlayerItemSource) {
-      const position = this.getItemSourceScreenPosition(source);
-      const item = this.getItemFromSource(source);
-
-      if (!item) {
-        return;
-      }
-
-      this.updateInteraction({
-        type: InteractionType.TransferingAmount,
+      updateInteraction({
+        type: InteractionType.Hovering,
         state: {
-          item,
-          to: null,
-          resolve: (amount) => {
-            this.dropItem(source, amount);
-            this.updateInteraction(IDLE);
-          },
-          reject: () => {
-            this.updateInteraction(IDLE);
-          },
-          position: {
-            x: position.x,
-            y: position.y,
-          },
+          item: itemInSlot,
+          position: { x: e.clientX, y: e.clientY },
         },
       });
-    },
-    cancelDropping() {
-      if (this.currentInteraction.type === InteractionType.TransferingAmount) {
-        this.updateInteraction(IDLE);
-      }
-    },
-    openContextMenu(item: SlottedItem, event: PointerEvent | MouseEvent) {
-      if ([InteractionType.TransferingAmount]?.includes(this.currentInteraction.type)) {
-        return;
-      }
+  }
+}
+async function handleMouseUp(e: MouseEvent) {
+  if (currentInteraction.value.type === InteractionType.Dragging) {
+    if (currentInteraction.value.maybe) {
+      updateInteraction(IDLE);
+      return;
+    }
 
-      this.updateInteraction({
-        type: InteractionType.ContextMenu,
-        state: { item, x: event.clientX, y: event.clientY, ts: Date.now() },
-      });
-    },
-    closeActionMenu() {
-      if (this.currentInteraction.type === InteractionType.ContextMenu) {
-        this.updateInteraction(IDLE);
-        this.selectedItem = undefined;
+    const slottedItem = currentInteraction.value.state.item;
+    const from = slottedItem.source;
+    const to = getItemSourceFromScreenPos(e.clientX, e.clientY);
+
+    const isFromGroundToGround =
+      from.origin === ItemSourceOrigin.Ground && (!to || to.origin === ItemSourceOrigin.Ground);
+    const canMoveItem = !isFromGroundToGround;
+    const fullAmount = isStackable(slottedItem.item) ? slottedItem.item.amount : 1;
+
+    let promise;
+
+    if (canMoveItem) {
+      try {
+        const isSameOrigin =
+          to &&
+          (isSameSourceOrigin(from, to) ||
+            [from, to].every((s) =>
+              [ItemSourceOrigin.PlayerEquipment, ItemSourceOrigin.PlayerInventory].includes(
+                s.origin,
+              ),
+            ));
+        const isFromGround = from.origin === ItemSourceOrigin.Ground;
+        const isSingleItem = !isStackable(slottedItem.item) || slottedItem.item.amount === 1;
+
+        const amount =
+          isSameOrigin || (isFromGround && isSingleItem)
+            ? // move full amount because we don't split items in the same origin
+              fullAmount
+            : // ask for amount to move
+              await transferAmount(from, to, { x: e.clientX, y: e.clientY });
+
+        // if we're dropping the item
+        if (!to || to.origin === ItemSourceOrigin.Ground) {
+          // we can drop it only from either inventory or equipment
+          if (
+            [ItemSourceOrigin.PlayerInventory, ItemSourceOrigin.PlayerEquipment].includes(
+              from.origin,
+            )
+          ) {
+            await dropItem(from as PlayerItemSource, amount);
+          }
+        } else {
+          // Move the item or swap with another item
+          promise = moveItem(from, to, { amount });
+        }
+      } catch {
+        // couldn't move the item, oh well ¯\_(ツ)_/¯
       }
+    }
+
+    if (from.origin === ItemSourceOrigin.Ground && !isFromGroundToGround) {
+      // fixes item icon appearing back on the ground for a brief moment
+      // after picking it up
+      const stopWatching = watchEffect(() => {
+        const item = getItemFromSource(from);
+        if (!item || ("amount" in item.item && item.item.amount < fullAmount)) {
+          if (currentInteraction.value.type === InteractionType.Dragging) {
+            updateInteraction(IDLE);
+          }
+          stopWatching();
+          return;
+        }
+      });
+
+      // fallback if the item wasn't picked up
+      promise?.then((result) => {
+        if (!result) {
+          if (currentInteraction.value.type === InteractionType.Dragging) {
+            updateInteraction(IDLE);
+          }
+          stopWatching();
+        }
+      });
+    } else {
+      updateInteraction(IDLE);
+    }
+
+    draggingItemThisFrame.value = true;
+    requestAnimationFrame(() => {
+      draggingItemThisFrame.value = false;
+    });
+  }
+}
+function handleClick(e: MouseEvent) {
+  if (currentInteraction.value.type === InteractionType.ContextMenu) {
+    selectedItem.value = undefined;
+    return;
+  }
+
+  if (currentInteraction.value.type === InteractionType.AmmunitionPanel) {
+    return;
+  }
+
+  const source = getItemSourceFromScreenPos(e.clientX, e.clientY);
+
+  if (!source) {
+    return;
+  }
+
+  const node = getItemNodeFromSource(source);
+
+  if (!node) {
+    return;
+  }
+
+  if (!(node.contains(e.target as HTMLElement) || (e.target as HTMLElement).contains(node))) {
+    return;
+  }
+
+  const itemInSlot = getItemFromSource(source);
+
+  if (!itemInSlot) {
+    if (selectedItem.value) {
+      selectedItem.value = undefined;
+    }
+    return;
+  }
+
+  if (selectedItem.value && isSameItemSource(itemInSlot.source, selectedItem.value.source)) {
+    selectedItem.value = undefined;
+    return;
+  }
+
+  if (selectedItem.value) {
+    const target = itemInSlot;
+    const source = selectedItem.value;
+
+    const [combineType] = getCombineType(target.item.key, source.item.key);
+
+    if (combineType !== CombineType.None) {
+      selectedItem.value = undefined;
+
+      combineItems(source.source, target.source);
+    }
+  }
+
+  if (currentInteraction.value.type === InteractionType.Dragging || draggingItemThisFrame.value) {
+    return;
+  }
+
+  if (
+    currentInteraction.value.type !== InteractionType.None &&
+    currentInteraction.value.type !== InteractionType.Hovering
+  ) {
+    updateInteraction(IDLE);
+  }
+
+  selectedItem.value = itemInSlot;
+}
+async function completeDropping(amount: number) {
+  if (currentInteraction.value.type !== InteractionType.TransferingAmount) {
+    return;
+  }
+
+  const source = currentInteraction.value.state.item.source;
+
+  if (
+    source.origin !== ItemSourceOrigin.PlayerEquipment &&
+    source.origin !== ItemSourceOrigin.PlayerInventory
+  ) {
+    updateInteraction(IDLE);
+    return;
+  }
+
+  const shouldDrop = await dropItem(source, amount);
+
+  if (!shouldDrop) {
+    updateInteraction(IDLE);
+    return;
+  }
+}
+function dropFromMenu(source: PlayerItemSource) {
+  const position = getItemSourceScreenPosition(source);
+  const item = getItemFromSource(source);
+
+  if (!item) {
+    return;
+  }
+
+  updateInteraction({
+    type: InteractionType.TransferingAmount,
+    state: {
+      item,
+      to: null,
+      resolve: (amount) => {
+        dropItem(source, amount);
+        updateInteraction(IDLE);
+      },
+      reject: () => {
+        updateInteraction(IDLE);
+      },
+      position: {
+        x: position.x,
+        y: position.y,
+      },
     },
-    getItemFromSource<T extends ItemSource>(source: T) {
-      return this.items.find((item): item is SlottedItem<T> =>
-        isSameItemSource(item.source, source),
-      );
-    },
-    getNodeRect(node?: HTMLElement) {
-      if (!node) {
+  });
+}
+function cancelDropping() {
+  if (currentInteraction.value.type === InteractionType.TransferingAmount) {
+    updateInteraction(IDLE);
+  }
+}
+function openContextMenu(item: SlottedItem, event: PointerEvent | MouseEvent) {
+  if ([InteractionType.TransferingAmount]?.includes(currentInteraction.value.type)) {
+    return;
+  }
+
+  updateInteraction({
+    type: InteractionType.ContextMenu,
+    state: { item, x: event.clientX, y: event.clientY, ts: Date.now() },
+  });
+}
+function closeActionMenu() {
+  if (currentInteraction.value.type === InteractionType.ContextMenu) {
+    updateInteraction(IDLE);
+    selectedItem.value = undefined;
+  }
+}
+function getItemFromSource<T extends ItemSource>(source: T) {
+  return items.value.find((item): item is SlottedItem<T> => isSameItemSource(item.source, source));
+}
+function getNodeRect(node?: HTMLElement) {
+  if (!node) {
+    return null;
+  }
+
+  const cache = node.cache;
+
+  if (cache && cache.freshUntil > Date.now()) {
+    return cache.rect;
+  }
+
+  const rect = node.parentElement?.classList.contains("node-anchor")
+    ? node.parentElement.getBoundingClientRect()
+    : node.getBoundingClientRect();
+
+  node.cache = {
+    rect,
+    freshUntil: Date.now() + 1000,
+  };
+
+  return rect;
+}
+function getItemSourceFromScreenPos(x: number, y: number) {
+  const MAX_DISTANCE = 8;
+
+  const distanceToRect = (rect: DOMRect, x: number, y: number): number => {
+    const dx = x - Math.max(rect.left, Math.min(x, rect.right));
+    const dy = y - Math.max(rect.top, Math.min(y, rect.bottom));
+    return Math.sqrt(dx * dx + dy * dy);
+  };
+
+  const closest = itemNodes
+    .map((slot) => {
+      const rect = getNodeRect(slot.node.value);
+
+      if (!rect) {
         return null;
       }
 
-      const cache = node.cache;
+      return [slot.source, rect, distanceToRect(rect, x, y)] as const;
+    })
+    .filter(
+      (entry): entry is NonNullable<typeof entry> => entry !== null && entry[2] <= MAX_DISTANCE,
+    )
+    .sort((a, b) => a[2] - b[2])[0];
 
-      if (cache && cache.freshUntil > Date.now()) {
-        return cache.rect;
-      }
+  return closest ? closest[0] : null;
+}
+function getItemNodeFromSource(source: ItemSource) {
+  const slot = itemNodes.find((slot) => isSameItemSource(slot.source, source));
+  return slot?.node.value;
+}
+function getItemSourceScreenPosition(source: ItemSource) {
+  const itemNode = itemNodes.find((slot) => isSameItemSource(slot.source, source));
 
-      const rect = node.parentElement?.classList.contains("node-anchor")
-        ? node.parentElement.getBoundingClientRect()
-        : node.getBoundingClientRect();
+  if (!itemNode) {
+    return { x: 0, y: 0 };
+  }
 
-      node.cache = {
-        rect,
-        freshUntil: Date.now() + 1000,
-      };
+  const rect = getNodeRect(itemNode.node.value);
 
-      return rect;
+  if (!rect) {
+    return { x: 0, y: 0 };
+  }
+
+  return { x: rect.x, y: rect.y };
+}
+function getItemRelativeScreenPositionFromSource(source: ItemSource) {
+  const node = getItemNodeFromSource(source);
+
+  if (!node) {
+    return { x: 0, y: 0 };
+  }
+  return { x: node.offsetLeft, y: node.offsetTop };
+}
+
+export function useInventory() {
+  return {
+    size,
+    items,
+    inventoryItems,
+    equipmentItems,
+    interactionItems,
+    groundItems,
+    equipment,
+    itemNodes,
+    currentInteraction,
+    selectedItem,
+    previewingItem,
+    ammunitionPanelRef,
+    updateInteraction,
+    registerItemSlot,
+    useItem,
+    equipItem,
+    unequipItem,
+    dropItem,
+    combineItems,
+    unloadAmmo,
+    removeBait,
+    swapLocally,
+    openAmmunitionPanel,
+    closeAmmunitionPanel,
+    transferAmount,
+    confirmAmountTransfer,
+    cancelAmountTransfer,
+    moveItem,
+    handleMouseDown,
+    handleMouseMove,
+    handleMouseUp,
+    handleClick,
+    completeDropping,
+    dropFromMenu,
+    cancelDropping,
+    openContextMenu,
+    closeActionMenu,
+    getItemFromSource,
+    getNodeRect,
+    getItemSourceFromScreenPos,
+    getItemNodeFromSource,
+    getItemSourceScreenPosition,
+    getItemRelativeScreenPositionFromSource,
+
+    $reset() {
+      itemNodes.length = 0;
+      currentInteraction.value = IDLE;
+      selectedItem.value = undefined;
+      previewingItem.value = undefined;
+      draggingItemThisFrame.value = false;
     },
-    getItemSourceFromScreenPos(x: number, y: number) {
-      const MAX_DISTANCE = 8;
-
-      const distanceToRect = (rect: DOMRect, x: number, y: number): number => {
-        const dx = x - Math.max(rect.left, Math.min(x, rect.right));
-        const dy = y - Math.max(rect.top, Math.min(y, rect.bottom));
-        return Math.sqrt(dx * dx + dy * dy);
-      };
-
-      const closest = this.itemNodes
-        .map((slot) => {
-          const rect = this.getNodeRect(slot.node.value);
-
-          if (!rect) {
-            return null;
-          }
-
-          return [slot.source, rect, distanceToRect(rect, x, y)] as const;
-        })
-        .filter(
-          (entry): entry is NonNullable<typeof entry> => entry !== null && entry[2] <= MAX_DISTANCE,
-        )
-        .sort((a, b) => a[2] - b[2])[0];
-
-      return closest ? closest[0] : null;
-    },
-    getItemNodeFromSource(source: ItemSource) {
-      const slot = this.itemNodes.find((slot) => isSameItemSource(slot.source, source));
-      return slot?.node.value;
-    },
-    getItemSourceScreenPosition(source: ItemSource) {
-      const itemNode = this.itemNodes.find((slot) => isSameItemSource(slot.source, source));
-
-      if (!itemNode) {
-        return { x: 0, y: 0 };
-      }
-
-      const rect = this.getNodeRect(itemNode.node.value);
-
-      if (!rect) {
-        return { x: 0, y: 0 };
-      }
-
-      return { x: rect.x, y: rect.y };
-    },
-    getItemRelativeScreenPositionFromSource(source: ItemSource) {
-      const node = this.getItemNodeFromSource(source);
-
-      if (!node) {
-        return { x: 0, y: 0 };
-      }
-      return { x: node.offsetLeft, y: node.offsetTop };
-    },
-  },
-});
+  };
+}

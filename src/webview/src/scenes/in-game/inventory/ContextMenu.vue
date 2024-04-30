@@ -22,14 +22,26 @@ import { useShop } from "@/store/shop.store";
 
 const props = defineProps<ItemActionMenu>();
 
-const inventory = useInventory();
+const {
+  currentInteraction,
+  selectedItem,
+  previewingItem,
+  useItem,
+  equipItem,
+  unequipItem,
+  dropFromMenu,
+  combineItems,
+  unloadAmmo,
+  removeBait,
+  closeActionMenu,
+} = useInventory();
 const shop = useShop();
 
 const item = computed(() => props.item.item);
 const itemSource = computed(() => props.item.source);
 
 const isInShop = computed(() => shop.isInShop);
-const visible = computed(() => inventory.currentInteraction.type === InteractionType.ContextMenu);
+const visible = computed(() => currentInteraction.value.type === InteractionType.ContextMenu);
 const itemName = computed(() => getItemName(item.value.key));
 
 const isUsable = computed(
@@ -88,7 +100,7 @@ const combine = computed(() => {
     };
   }
 
-  if (!inventory.selectedItem) {
+  if (!selectedItem.value) {
     return {
       type: CombineType.None,
       reverse: false,
@@ -96,7 +108,7 @@ const combine = computed(() => {
   }
 
   const target = item.value.key;
-  const source = inventory.selectedItem.item.key;
+  const source = selectedItem.value.item.key;
 
   const [type, reverse] = getCombineType(target, source);
 
@@ -109,7 +121,7 @@ const combine = computed(() => {
 const canLoadAmmo = computed(() => combine.value.type === CombineType.EquipAmmo);
 
 function executeAction(action: string) {
-  inventory.closeActionMenu();
+  closeActionMenu();
 
   const source = itemSource.value;
 
@@ -118,7 +130,7 @@ function executeAction(action: string) {
       if (source.origin !== ItemSourceOrigin.PlayerInventory) {
         return;
       }
-      inventory.useItem(source);
+      useItem(source);
       break;
     case "equip":
       if (
@@ -128,34 +140,34 @@ function executeAction(action: string) {
       ) {
         return;
       }
-      inventory.equipItem(source as PlayerInventoryItemSource | StorageItemSource);
+      equipItem(source as PlayerInventoryItemSource | StorageItemSource);
       break;
     case "preview":
-      inventory.previewingItem = props.item;
+      previewingItem.value = props.item;
       break;
     case "unequip":
       if (source.origin !== ItemSourceOrigin.PlayerEquipment) {
         return;
       }
-      inventory.unequipItem(source.equipmentSlot);
+      unequipItem(source.equipmentSlot);
       break;
     case "drop":
-      inventory.dropFromMenu(source as PlayerItemSource);
+      dropFromMenu(source as PlayerItemSource);
       break;
     case "load-ammo":
-      if (inventory.selectedItem) {
+      if (selectedItem.value) {
         if (combine.value.reverse) {
-          inventory.combineItems(inventory.selectedItem.source, source);
+          combineItems(selectedItem.value.source, source);
         } else {
-          inventory.combineItems(source, inventory.selectedItem.source);
+          combineItems(source, selectedItem.value.source);
         }
       }
       break;
     case "unload-ammo":
-      inventory.unloadAmmo(source);
+      unloadAmmo(source);
       break;
     case "remove-bait":
-      inventory.removeBait(source);
+      removeBait(source);
       break;
   }
 }
@@ -229,7 +241,7 @@ const actions = computed(() => [
     v-if="visible"
     :key="ts"
     class="absolute left-0 top-0 flex justify-start"
-    v-click-outside="inventory.closeActionMenu"
+    v-click-outside="closeActionMenu"
   >
     <Window
       v-bind="{ x, y, h: 'auto' }"

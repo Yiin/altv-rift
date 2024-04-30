@@ -23,12 +23,22 @@ const props = defineProps<{
   source: InventoryItemSource | GroundItemSource;
 }>();
 
-const inventory = useInventory();
+const {
+  items,
+  currentInteraction,
+  selectedItem,
+  previewingItem,
+  openContextMenu,
+  getItemSourceFromScreenPos,
+  useItem,
+  equipItem,
+  registerItemSlot,
+} = useInventory();
 
 const nodeRef = ref<HTMLDivElement>();
 
 const item = computed(() =>
-  inventory.items.find(
+  items.value.find(
     (item): item is SlottedPlayerInventoryItem | SlottedStorageItem | SlottedGroundItem =>
       isSameItemSource(item.source, props.source),
   ),
@@ -38,19 +48,19 @@ const { combinableWithHoveredItem, combinableWithOtherItems } = useCombinableIte
 
 const dragging = computed(
   () =>
-    inventory.currentInteraction.type === InteractionType.Dragging &&
-    !inventory.currentInteraction.maybe &&
-    isSameItemSource(inventory.currentInteraction.state.item.source, props.source),
+    currentInteraction.value.type === InteractionType.Dragging &&
+    !currentInteraction.value.maybe &&
+    isSameItemSource(currentInteraction.value.state.item.source, props.source),
 );
 
-const selected = computed(() => isSameItemSource(inventory.selectedItem?.source, props.source));
+const selected = computed(() => isSameItemSource(selectedItem.value?.source, props.source));
 
 const draggingOver = computed(() => {
-  const interaction = inventory.currentInteraction;
+  const interaction = currentInteraction.value;
 
   if (interaction.type === InteractionType.Dragging && !interaction.maybe) {
     const currentCursorPos = interaction.state.currentPosition;
-    const itemSource = inventory.getItemSourceFromScreenPos(currentCursorPos.x, currentCursorPos.y);
+    const itemSource = getItemSourceFromScreenPos(currentCursorPos.x, currentCursorPos.y);
 
     if (!itemSource) {
       return false;
@@ -75,15 +85,15 @@ function useOrEquipItem() {
     return;
   }
   if (isItemUsable(item.value.item.key)) {
-    inventory.useItem(item.value.source);
+    useItem(item.value.source);
   } else if (isItemEquipable(item.value.item.key)) {
-    inventory.equipItem(item.value.source);
+    equipItem(item.value.source);
   } else if (isItemPreviewable(item.value.item.key)) {
-    inventory.previewingItem = item.value;
+    previewingItem.value = item.value;
   }
 }
 
-inventory.registerItemSlot({
+registerItemSlot({
   source: props.source,
   node: nodeRef,
 });
@@ -107,16 +117,16 @@ inventory.registerItemSlot({
         'border-transparent': !selected,
       }"
     >
-      <ItemIcon
-        v-if="draggingOver"
-        :item="draggingOver.item.item"
-        class="opacity-25"
-      />
       <InventoryItemIcon
-        v-else-if="item"
+        v-if="item"
         :item="item"
         @dblclick="useOrEquipItem"
-        @contextmenu.prevent="(e) => item && inventory.openContextMenu(item, e)"
+        @contextmenu.prevent="(e) => item && openContextMenu(item, e)"
+      />
+      <ItemIcon
+        v-else-if="draggingOver"
+        :item="draggingOver.item.item"
+        class="opacity-25"
       />
     </div>
   </div>

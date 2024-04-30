@@ -10,10 +10,10 @@ import {
 export function useCombinableItem(
   item: Ref<SlottedItem | undefined> | ComputedRef<SlottedItem | undefined | null>,
 ) {
-  const inventory = useInventory();
+  const { items, currentInteraction } = useInventory();
 
   const hoveredItem = computed(() => {
-    const interaction = inventory.currentInteraction;
+    const interaction = currentInteraction.value;
 
     const hoveredItem =
       interaction.type === InteractionType.Hovering ? interaction.state.item : null;
@@ -52,7 +52,7 @@ export function useCombinableItem(
       return false;
     }
 
-    return inventory.items.some(
+    return items.value.some(
       ({ item: { key } }) =>
         item.value && getCombineType(key, item.value.item.key)[0] !== CombineType.None,
     );

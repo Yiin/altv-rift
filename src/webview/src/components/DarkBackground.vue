@@ -18,7 +18,7 @@ const windowSize = useWindowSize();
 <template>
   <div class="fixed inset-0 -z-10">
     <div
-      class="absolute inset-0 left-0 top-0 opacity-95"
+      class="absolute inset-0 left-0 top-0 opacity-85"
       :class="[bgClass]"
     ></div>
     <svg
