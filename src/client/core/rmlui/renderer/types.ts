@@ -4,6 +4,7 @@ import { AnchorEntityMap, AnchorType } from "./anchors";
 
 declare module "@altv/client" {
   interface RmlElement {
+    // Rendering
     entity: AnchorEntity;
     shown: boolean;
     key: string;
@@ -11,6 +12,9 @@ declare module "@altv/client" {
     renderedContent: ComputedRef<ParsedElement | null>;
     hooks: ((props: { scale: number; distance: number; pos: alt.Vector3 }) => void)[];
     cleanup: (() => void)[];
+
+    // Compass
+    tickValue: number;
   }
 }
 

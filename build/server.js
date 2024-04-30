@@ -9,12 +9,7 @@ const context = await esbuild.context({
   platform: "node",
   entryPoints: ["src/server/main.ts"],
   outfile: "resources/main/server.js",
-  external: [
-    "@altv/shared",
-    "@altv/server",
-    'alt-shared',
-    'alt-server'
-  ],
+  external: ["@altv/shared", "@altv/server", "alt-shared", "alt-server"],
   plugins: [
     yamlPlugin,
     filelocPlugin({
@@ -23,9 +18,9 @@ const context = await esbuild.context({
     {
       name: "auto-reconnect",
       setup({ onEnd }) {
-        onEnd(() => reloadResource('server'));
-      }
-    }
+        onEnd(() => reloadResource("server"));
+      },
+    },
   ],
 });
 

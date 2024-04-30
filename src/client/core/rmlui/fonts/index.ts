@@ -35,6 +35,33 @@ const googleFonts = [
       "ThinItalic",
     ],
   },
+  {
+    name: "Jost",
+    variants: [
+      "Black",
+      "BlackItalic",
+      "Bold",
+      "BoldItalic",
+      "ExtraBold",
+      "ExtraBoldItalic",
+      "ExtraLight",
+      "ExtraLightItalic",
+      "Italic",
+      "Light",
+      "LightItalic",
+      "Medium",
+      "MediumItalic",
+      "Regular",
+      "SemiBold",
+      "SemiBoldItalic",
+      "Thin",
+      "ThinItalic",
+    ],
+  },
+  {
+    name: "Akrobat",
+    variants: ["Bold", "ExtraBold", "ExtraLight", "Light", "Regular", "SemiBold", "Thin"],
+  },
 ];
 
 for (const font of googleFonts) {

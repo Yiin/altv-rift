@@ -36,6 +36,7 @@ export const FromServer = {
   CALL_NATIVE: "CALL_NATIVE",
   DISPLAY_DAMAGE_HIT: "DISPLAY_DAMAGE_HIT",
   INVENTORY_ITEM_ADD: "INVENTORY_ITEM_ADD",
+  INVOKE_NATIVE: "INVOKE_NATIVE",
 } as const;
 
 declare module "@altv/shared" {
@@ -85,6 +86,7 @@ declare module "@altv/shared" {
         type: "health" | "armor",
       ) => void;
       [FromServer.INVENTORY_ITEM_ADD]: (item: Item) => void;
+      [FromServer.INVOKE_NATIVE]: (nativeName: string, ...args: unknown[]) => void;
     }
   }
 }

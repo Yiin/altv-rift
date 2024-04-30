@@ -1,60 +1,69 @@
-import { spawn } from 'child_process';
-import ipc from 'node-ipc';
-import Watcher from 'watcher';
-import fkill from 'fkill'
-import { debounce } from 'lodash-es';
+import { spawn } from "child_process";
+import ipc from "node-ipc";
+import Watcher from "watcher";
+import fkill from "fkill";
+import { debounce } from "lodash-es";
 
-const altvProcessName = process.platform === "win32" ? './altv-server.exe' : './altv-server'
+const altvProcessName = process.platform === "win32" ? "./altv-server.exe" : "./altv-server";
 
-ipc.config.id = 'watcher';
+ipc.config.id = "watcher";
 ipc.config.retry = 1500;
 ipc.config.silent = true;
 
 ipc.serve(() => {
-  ipc.server.on('restart-server', restartServer);
+  ipc.server.on("restart-server", restartServer);
 });
 ipc.server.start();
 
-const serverWatcher = new Watcher(['./src/server/**/*.ts', './src/shared/**/*.ts'], { recursive: true, renameDetection: true });
-const clientWatcher = new Watcher(['./src/client/**/*.ts', './src/shared/**/*.ts'], { recursive: true, renameDetection: true });
-const assetsWatcher = new Watcher(['./src/client/**/*.rcss'], { recursive: true, renameDetection: true });
+const serverWatcher = new Watcher(["./src/server/**/*.ts", "./src/shared/**/*.ts"], {
+  recursive: true,
+  renameDetection: true,
+});
+const clientWatcher = new Watcher(["./src/client/**/*.ts", "./src/shared/**/*.ts"], {
+  recursive: true,
+  renameDetection: true,
+});
+const assetsWatcher = new Watcher(["./src/client/**/*.rcss"], {
+  recursive: true,
+  renameDetection: true,
+});
 
 const building = new Set();
 
-serverWatcher.on('change', () => {
-  building.add('server');
+serverWatcher.on("change", () => {
+  building.add("server");
 });
 
-clientWatcher.on('change', () => {
-  building.add('client');
+clientWatcher.on("change", () => {
+  building.add("client");
 });
 
-assetsWatcher.on('change', () => {
-  restartServer('client');
+assetsWatcher.on("change", () => {
+  restartServer("client");
 });
 
 const DEBUG_PORT = 9223;
 
-let childProcess = undefined
+let childProcess = undefined;
 
 const disconnectFromAltvServerIpc = debounce(() => {
-  ipc.disconnect('altvServer');
+  ipc.disconnect("altvServer");
 }, 3000);
 
 function kickAllPlayers() {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(resolve, 5000);
 
-    ipc.connectTo('altvServer', () => {
-      ipc.of.altvServer.on('connect', () => {
+    ipc.connectTo("altvServer", () => {
+      ipc.of.altvServer.on("connect", () => {
         if (ipc.of.altvServer) {
-          ipc.of.altvServer.emit('kick-all');
+          ipc.of.altvServer.emit("kick-all");
           disconnectFromAltvServerIpc();
         }
         resolve();
       });
     });
-  })
+  });
 }
 
 async function restartServer() {
@@ -63,17 +72,17 @@ async function restartServer() {
     await wait(500);
 
     try {
-      await fkill(':8888');
-    } catch { }
+      await fkill(":8888");
+    } catch {}
 
     if (!childProcess.killed) {
       try {
         childProcess.kill();
-      } catch { }
+      } catch {}
     }
   }
 
-  childProcess = spawn(altvProcessName, ['--convert-config-format'], { stdio: 'inherit' });
+  childProcess = spawn(altvProcessName, ["--convert-config-format"], { stdio: "inherit" });
 
   await wait(3000);
 
@@ -112,11 +121,11 @@ function wait(ms) {
   });
 }
 
-process.on('exit', exitHandler);
-process.on('beforeExit', exitHandler);
-process.on('SIGINT', exitHandler);
-process.on('SIGTERM', exitHandler);
-process.on('SIGUSR2', exitHandler);
+process.on("exit", exitHandler);
+process.on("beforeExit", exitHandler);
+process.on("SIGINT", exitHandler);
+process.on("SIGTERM", exitHandler);
+process.on("SIGUSR2", exitHandler);
 
 async function exitHandler() {
   childProcess.kill();

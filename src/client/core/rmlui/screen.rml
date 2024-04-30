@@ -15,6 +15,7 @@
     </style>
     <link type="text/rcss" href="/client/core/rmlui/components/icon/icon.rcss"/>
     <link type="text/rcss" href="/client/core/rmlui/components/indicator/indicator.rcss"/>
+    <link type="text/rcss" href="/client/core/rmlui/elements/compass/compass.rcss"/>
     <link type="text/rcss" href="/client/core/rmlui/elements/damage/damage.rcss"/>
     <link type="text/rcss" href="/client/core/rmlui/elements/ped-interaction/ped-interaction.rcss"/>
     <link type="text/rcss" href="/client/core/rmlui/elements/storage-interaction/storage-interaction.rcss"/>

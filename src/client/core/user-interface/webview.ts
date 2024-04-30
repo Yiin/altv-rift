@@ -9,6 +9,7 @@ import { ServerEvents } from "@shared/events/server";
 import { clientState } from "../store/client.store";
 import { onKeyDown } from "../utility/event-helpers";
 import { Control, ControlType } from "../constants/controls";
+import { hideRml, showRml } from "../rmlui/renderer/element-renderer";
 
 export const doesElementHaveCursor = createHookableFunction({
   name: "doesElementHaveCursor",
@@ -140,6 +141,8 @@ export function openWindow(windowType: WindowType) {
     type: windowType,
   };
   showCursor(true);
+
+  hideRml();
 }
 
 export function closeWindow() {
@@ -147,6 +150,8 @@ export function closeWindow() {
 
   clientState.ui.window = null;
   showCursor(false);
+
+  showRml();
 
   alt.Events.emitServer(ServerEvents.FromClient.CLOSE_WINDOW);
 

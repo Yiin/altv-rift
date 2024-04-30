@@ -43,7 +43,6 @@ export function craftRecipe(
     );
 
     if (!inventoryItem) {
-      console.log("ERR: Missing item in inventory", part, inventory.items);
       return false;
     }
 

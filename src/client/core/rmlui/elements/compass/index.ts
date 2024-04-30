@@ -1,112 +1,217 @@
+/**
+ * https://codepen.io/Yiin/pen/vYMMZBp?editors=1111
+ */
+
 import alt from "@altv/client";
 import game from "@altv/natives";
+import { whileInGame } from "@/core/game-state-hooks/in-game.state";
 import { document } from "../../renderer/element-renderer";
-import { createTextNode, updateTextNode } from "../../renderer/rml-renderer";
+import { createRmlElement, createTextNode, updateTextNode } from "../../renderer/rml-renderer";
+import { px } from "../../renderer/pixel";
+import { img } from "../../renderer/rml-tags";
+
+const SPACE_BETWEEN_TICKS = 58;
+const TICK_INTERVAL = 15;
+
+const compass = document.createElement("div");
+compass.addClass("compass");
+compass.style.left = `${alt.getScreenResolution().x / 2 - px(203)}px`;
+document.body.appendChild(compass);
+
+alt.Events.onWindowResolutionChange(({ newResolution }) => {
+  compass.style.left = `${newResolution.x / 2 - px(203)}px`;
+});
+
+const compassBackground = createRmlElement(
+  document,
+  img({
+    style: {
+      display: "block",
+      position: "absolute",
+      top: "0",
+      left: "50%",
+      transform: `translate(-50%, -50%)`,
+      width: "32.8125rem",
+      height: "18.75rem",
+      opacity: "0.3",
+    },
+    src: `elements/compass/background.png`,
+  }),
+);
+// compass.appendChild(compassBackground);
 
 const compassContainer = document.createElement("div");
+compassContainer.addClass("compass__container");
+compass.appendChild(compassContainer);
 
-document.body.appendChild(compassContainer);
+const compassTicks = document.createElement("div");
+compassTicks.addClass("compass__ticks");
+compassContainer.appendChild(compassTicks);
 
-const tickNodes = Array.from({ length: 13 }).map((_, index) => {
+const center = document.createElement("div");
+center.addClass("compass__center");
+compassContainer.appendChild(center);
+
+const tickNodes = Array.from({ length: 13 }, () => {
   const node = document.createElement("div");
-  const value = index * 15;
+  node.addClass("compass__tick");
+  compassTicks.appendChild(node);
 
-  node.meta.tickValue = value;
-  node.style.transform = `translateX(${index * 15}px)`;
+  const tickContainer = document.createElement("div");
+  tickContainer.addClass("compass__tick-container");
+  node.appendChild(tickContainer);
 
-  const text = createTextNode(document, value.toString());
-  node.appendChild(text);
+  const label = document.createElement("div");
+  label.addClass("compass__tick-label");
+  tickContainer.appendChild(label);
+
+  const indicator = document.createElement("div");
+  indicator.addClass("compass__tick-indicator");
+  tickContainer.appendChild(indicator);
 
   return node;
 });
 
-// <div id="0">0</div>
-// <div id="1">15</div>
-// <div id="2">30</div>
-// <div id="3">45</div>
-// <div id="4">60</div>
-// <div id="5">75</div>
-// <div id="6">90</div>
-// <div id="7">105</div>
-// <div id="8">120</div> // target direction = 130
-// <div id="9">135</div>
-// <div id="10">150</div>
-// <div id="11">165</div>
-// <div id="12">180</div>
+let lastDirectionTick: number | undefined = undefined;
+let direction = 0;
 
-// visible = [45, 60, 75, 90, 105, 120, 135, 150, 165, 180, 195, 210, 225]
-// invisible = [0, 15, 30]
-// ids = [0, 1, 2]
-// update = [195, 210, 225]
-
-// <div id="3">45</div>
-// <div id="4">60</div>
-// <div id="5">75</div>
-// <div id="6">90</div>
-// <div id="7">105</div>
-// <div id="8">120</div>
-// <div id="9">135</div>
-// <div id="10">150</div>
-// <div id="11">165</div>
-// <div id="12">180</div>
-// <div id="0">195</div>
-// <div id="1">210</div>
-// <div id="2">225</div>
-
-let lastDirectionTick = 0;
-
-alt.Timers.everyTick(() => {
-  const currentCameraHeadingDegrees = game.getGameplayCamRot(2).z;
-
-  updateTicks(currentCameraHeadingDegrees);
-
-  // update position of ticks
-});
+let updatedTickValues: number[] = [];
 
 function updateTicks(targetAngle: number) {
-  const directionTick = Math.round(targetAngle / 15);
+  const directionTick = Math.floor(targetAngle / TICK_INTERVAL);
 
   if (directionTick === lastDirectionTick) {
     // no need to update dom, we good
     return;
   }
 
-  const minAngle = Math.round(targetAngle / 15) * 15 - 90;
-  const maxAngle = Math.round(targetAngle / 15) * 15 + 90;
+  let minAngle = directionTick * TICK_INTERVAL - 90;
+  if (minAngle < 0) {
+    minAngle = 360 + minAngle;
+  }
 
-  const updatedTickValues = Array.from({ length: 13 }).map((_, index) => {
-    return minAngle + index * 15;
+  updatedTickValues = Array.from({ length: 13 }).map((_, index) => {
+    return (minAngle + index * TICK_INTERVAL) % 360;
   });
 
   /**
    * Tick elements that should be updated
    */
-  const missmatchedTicks = tickNodes.filter((node, index) => {
-    return updatedTickValues[index] !== node.meta.tickValue;
+  const missmatchedTicks = tickNodes.filter((node) => {
+    return !updatedTickValues.includes(node.tickValue);
   });
 
   /**
    * Tick values that should be applied to missmatched ticks
    */
   const missingValues = updatedTickValues.filter((value) => {
-    return !tickNodes.some((node) => node.meta.tickValue === value);
+    return !tickNodes.some((node) => node.tickValue === value);
   });
 
   missmatchedTicks.forEach((node, index) => {
     // update tick value
-    node.meta.tickValue = missingValues[index];
+    node.tickValue = missingValues[index];
 
     // update text node
-    const textNode = node.firstChild
-      ? updateTextNode(document, node.firstChild, missingValues[index].toString())
-      : createTextNode(document, missingValues[index].toString());
+    const side = {
+      0: "N",
+      90: "E",
+      180: "S",
+      270: "W",
+    }[missingValues[index]];
 
-    if (!node.firstChild) {
-      node.appendChild(textNode);
-    } else if (textNode !== node.firstChild) {
-      node.replaceChild(textNode, node.firstChild);
+    const label = node.querySelector(".compass__tick-label")!;
+    const labelText = side || missingValues[index];
+
+    if (label.childNodes.length) {
+      updateTextNode(document, label.childNodes[0], labelText.toString());
+    } else {
+      const textNode = createTextNode(document, labelText.toString());
+      label.appendChild(textNode);
+    }
+
+    if (side) {
+      node.addClass("compass__tick--side");
+    } else {
+      node.removeClass("compass__tick--side");
     }
   });
 
   lastDirectionTick = directionTick;
 }
+
+let cd = Date.now();
+
+whileInGame(() => {
+  const timer = alt.Timers.everyTick(() => {
+    direction = game.getGameplayCamRot(2).z;
+
+    direction = direction < 0 ? 360 + direction : direction;
+    direction = direction % 360;
+
+    updateTicks(direction);
+
+    const leftTickValue = updatedTickValues[6];
+    const offset =
+      Math.min(
+        (TICK_INTERVAL + direction - leftTickValue) % TICK_INTERVAL,
+        (TICK_INTERVAL + direction - leftTickValue) % TICK_INTERVAL,
+      ) * px(SPACE_BETWEEN_TICKS / TICK_INTERVAL);
+
+    // 0 870
+    // start: 0 end: 870
+    // middle width: 50%
+    // middle start: 217.5
+    // middle end: 652.5
+
+    // 193 734
+
+    const width = 812;
+    const middle = width / 2;
+    const visibleWidthPercentage = 0.5;
+    const start = px(middle - middle * visibleWidthPercentage);
+    const end = px(middle + middle * visibleWidthPercentage);
+
+    updatedTickValues.forEach((tickValue, index) => {
+      const node = tickNodes.find((node) => node.tickValue === tickValue);
+
+      const translateX = index * px(SPACE_BETWEEN_TICKS) - offset;
+
+      const position = translateX + px(SPACE_BETWEEN_TICKS);
+      const opacity =
+        Math.max(
+          0,
+          position < start
+            ? position / start
+            : position > end
+              ? 1 - (position - end) / (start - px(SPACE_BETWEEN_TICKS))
+              : 1,
+        ) ** 8;
+
+      if (cd < Date.now()) {
+        console.log(index, {
+          translateX,
+          position,
+          opacity,
+        });
+      }
+
+      if (node) {
+        node.style.transform = `translateX(${translateX}px)`;
+        node.style.opacity = opacity.toString();
+      }
+    });
+
+    if (cd < Date.now()) {
+      cd = Date.now() + 10000;
+      console.log({
+        start,
+        end,
+      });
+    }
+  });
+
+  return () => {
+    timer.destroy();
+  };
+});

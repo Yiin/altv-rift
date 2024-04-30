@@ -18,7 +18,6 @@ import FishingGame from "./fishing-game/FishingGame.vue";
 import Workbench from "./workbench/Workbench.vue";
 import VehicleShop from "./vehicle-shop/VehicleShop.vue";
 import QuickAccess from "./quick-access/QuickAccess.vue";
-import Compass from "./compass/Compass.vue";
 
 const client = useClient();
 </script>
@@ -39,7 +38,6 @@ const client = useClient();
     </template>
     <ActionMenu v-else-if="client.ui.elements.has(UIElement.ACTION_MENU)" />
     <template v-else>
-      <Compass />
       <ChatBox v-if="client.ui.elements.has(UIElement.CHAT)" />
       <QuestMenu v-if="client.ui.elements.has(UIElement.QUEST_MENU)" />
       <SkillMenu v-if="client.ui.elements.has(UIElement.SKILL_MENU)" />

@@ -4,5 +4,6 @@ export * from "./ped-interaction";
 export * from "./ped-nametag";
 export * from "./storage-interaction";
 export * from "./tree";
+export * from "./compass";
 // export * from "./vehicle-action";
 // @endindex

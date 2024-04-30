@@ -21,7 +21,7 @@ async function updateRml() {
 
   // Clear all previous links
   rmlJson.rml.head.link = rmlJson.rml.head.link.filter(
-    (link) => link._attributes.type !== "text/rcss"
+    (link) => link._attributes.type !== "text/rcss",
   );
 
   // Add new links

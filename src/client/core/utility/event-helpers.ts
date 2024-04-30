@@ -93,6 +93,9 @@ export function onKeyDown<T extends alt.Enums.KeyCode>(key: T, callback: (key: T
     if (inputFocusedTimes > 0) {
       return;
     }
+    if (alt.isConsoleOpen()) {
+      return;
+    }
     if (keyPressed === key) {
       callback(key);
     }

@@ -23,6 +23,17 @@ export function createTextNode(document: alt.RmlDocument, text: string) {
   return node;
 }
 
+export function createRmlElement(document: alt.RmlDocument, parsedElement: ParsedElement) {
+  if ("text" in parsedElement) {
+    return createTextNode(document, parsedElement.text);
+  }
+
+  const node = document.createElement(parsedElement.tagName);
+  applyClassesAndAttrs(node, parsedElement);
+
+  return node;
+}
+
 export function updateTextNode(document: alt.RmlDocument, node: alt.RmlElement, text: string) {
   if (node.meta.text === text) {
     return node;

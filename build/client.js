@@ -1,6 +1,7 @@
 import path from "path";
 import esbuild from "esbuild";
 import chokidar from "chokidar";
+import Watcher from "watcher";
 import yamlPlugin from "./plugins/yaml-plugin.js";
 import { esbuildOptions } from "./shared.js";
 import { copy, copyFile } from "./copy.js";
@@ -16,65 +17,75 @@ export const ASSETS_PATHS = [
   "src/client/**/*.rcss",
 ];
 
+const assetsWatcher = new Watcher(["src/client/**/*.rcss"], {
+  recursive: true,
+  renameDetection: true,
+});
+
+assetsWatcher.on("change", async () => {
+  for (const assetsPath of ASSETS_PATHS) {
+    await copy(assetsPath, "resources/main");
+  }
+});
+
 for (const assetsPath of ASSETS_PATHS) {
   await copy(assetsPath, "resources/main");
 }
 
-const context = await esbuild
-  .context({
-    ...esbuildOptions,
-    platform: "node",
-    entryPoints: ["src/client/main.ts"],
-    outfile: "resources/main/client.js",
-    external: [
-      "@altv/shared",
-      "@altv/client",
-      "@altv/natives",
-      "alt-server",
-      "alt-client",
-      "natives"
-    ],
-    plugins: [
-      yamlPlugin,
-      filelocPlugin({
-        rootDir: "src",
-      }),
-      rcssPlugin(),
-      {
-        name: "copy-assets",
-        setup(build) {
-          build.onEnd(() => {
-            // After esbuild finishes, copy .rml files
-            for (const assetsPath of ASSETS_PATHS) {
-              copy(assetsPath, "resources/main/");
-            }
+const context = await esbuild.context({
+  ...esbuildOptions,
+  platform: "node",
+  entryPoints: ["src/client/main.ts"],
+  outfile: "resources/main/client.js",
+  external: [
+    "@altv/shared",
+    "@altv/client",
+    "@altv/natives",
+    "alt-server",
+    "alt-client",
+    "natives",
+  ],
+  plugins: [
+    yamlPlugin,
+    filelocPlugin({
+      rootDir: "src",
+    }),
+    rcssPlugin(),
+    {
+      name: "copy-assets",
+      setup(build) {
+        build.onEnd(() => {
+          // After esbuild finishes, copy .rml files
+          for (const assetsPath of ASSETS_PATHS) {
+            copy(assetsPath, "resources/main/");
+          }
 
-            // Watch .rml files for changes
-            const watcher = chokidar.watch(ASSETS_PATHS);
+          // Watch .rml files for changes
+          const watcher = chokidar.watch(ASSETS_PATHS);
 
-            watcher.on("change", (filePath) => {
-              const relativePath = path.relative("src", filePath);
-              const destPath = path.join("resources/main", relativePath);
-              copyFile(filePath, destPath);
-            });
+          watcher.on("change", (filePath) => {
+            const relativePath = path.relative("src", filePath);
+            const destPath = path.join("resources/main", relativePath);
+            copyFile(filePath, destPath);
           });
-        }
+        });
       },
-      {
-        name: "auto-reconnect",
-        setup(build) {
-          build.onEnd(() => reloadResource('client'));
-        }
-      }
-    ],
-    define: {
-      process: JSON.stringify({
-        env: {
-          NODE_ENV: "development",
-        },
-      }),
     },
-  });
+    {
+      name: "auto-reconnect",
+      setup(build) {
+        build.onEnd(() => reloadResource("client"));
+      },
+    },
+  ],
+  define: {
+    process: JSON.stringify({
+      env: {
+        NODE_ENV: "development",
+      },
+    }),
+  },
+});
 
 await context.watch();
 // await context.dispose();
