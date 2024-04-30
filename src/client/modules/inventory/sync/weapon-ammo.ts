@@ -140,7 +140,9 @@ whileInGame(() => {
     if (clip > 0) {
       allowShooting();
     } else if (hasAmmoReserves) {
-      reloadWeapon();
+      if (weaponCanReload.value) {
+        reloadWeapon();
+      }
     } else {
       disableShooting();
     }
