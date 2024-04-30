@@ -6,12 +6,12 @@ import alt from "@altv/client";
 import game from "@altv/natives";
 import { whileInGame } from "@/core/game-state-hooks/in-game.state";
 import { document } from "../../renderer/element-renderer";
-import { createRmlElement, createTextNode, updateTextNode } from "../../renderer/rml-renderer";
+import { createTextNode, updateTextNode } from "../../renderer/rml-renderer";
 import { px } from "../../renderer/pixel";
-import { img } from "../../renderer/rml-tags";
 
 const SPACE_BETWEEN_TICKS = 58;
 const TICK_INTERVAL = 15;
+const TICK_COUNT = 13;
 
 const compass = document.createElement("div");
 compass.addClass("compass");
@@ -21,24 +21,6 @@ document.body.appendChild(compass);
 alt.Events.onWindowResolutionChange(({ newResolution }) => {
   compass.style.left = `${newResolution.x / 2 - px(203)}px`;
 });
-
-const compassBackground = createRmlElement(
-  document,
-  img({
-    style: {
-      display: "block",
-      position: "absolute",
-      top: "0",
-      left: "50%",
-      transform: `translate(-50%, -50%)`,
-      width: "32.8125rem",
-      height: "18.75rem",
-      opacity: "0.3",
-    },
-    src: `elements/compass/background.png`,
-  }),
-);
-// compass.appendChild(compassBackground);
 
 const compassContainer = document.createElement("div");
 compassContainer.addClass("compass__container");
@@ -52,7 +34,7 @@ const center = document.createElement("div");
 center.addClass("compass__center");
 compassContainer.appendChild(center);
 
-const tickNodes = Array.from({ length: 13 }, () => {
+const tickNodes = Array.from({ length: TICK_COUNT }, () => {
   const node = document.createElement("div");
   node.addClass("compass__tick");
   compassTicks.appendChild(node);
@@ -90,7 +72,7 @@ function updateTicks(targetAngle: number) {
     minAngle = 360 + minAngle;
   }
 
-  updatedTickValues = Array.from({ length: 13 }).map((_, index) => {
+  updatedTickValues = Array.from({ length: TICK_COUNT }).map((_, index) => {
     return (minAngle + index * TICK_INTERVAL) % 360;
   });
 
@@ -140,8 +122,6 @@ function updateTicks(targetAngle: number) {
   lastDirectionTick = directionTick;
 }
 
-let cd = Date.now();
-
 whileInGame(() => {
   const timer = alt.Timers.everyTick(() => {
     direction = game.getGameplayCamRot(2).z;
@@ -158,57 +138,34 @@ whileInGame(() => {
         (TICK_INTERVAL + direction - leftTickValue) % TICK_INTERVAL,
       ) * px(SPACE_BETWEEN_TICKS / TICK_INTERVAL);
 
-    // 0 870
-    // start: 0 end: 870
-    // middle width: 50%
-    // middle start: 217.5
-    // middle end: 652.5
-
-    // 193 734
-
     const width = 812;
     const middle = width / 2;
     const visibleWidthPercentage = 0.5;
     const start = px(middle - middle * visibleWidthPercentage);
     const end = px(middle + middle * visibleWidthPercentage);
+    const spaceBetweenTicks = px(SPACE_BETWEEN_TICKS);
 
     updatedTickValues.forEach((tickValue, index) => {
       const node = tickNodes.find((node) => node.tickValue === tickValue);
 
-      const translateX = index * px(SPACE_BETWEEN_TICKS) - offset;
+      const translateX = index * spaceBetweenTicks - offset;
 
-      const position = translateX + px(SPACE_BETWEEN_TICKS);
+      const position = translateX + spaceBetweenTicks;
       const opacity =
         Math.max(
           0,
           position < start
             ? position / start
             : position > end
-              ? 1 - (position - end) / (start - px(SPACE_BETWEEN_TICKS))
+              ? 1 - (position - end) / (start - spaceBetweenTicks)
               : 1,
         ) ** 8;
-
-      if (cd < Date.now()) {
-        console.log(index, {
-          translateX,
-          position,
-          opacity,
-        });
-      }
 
       if (node) {
         node.style.transform = `translateX(${translateX}px)`;
         node.style.opacity = opacity.toString();
       }
     });
-
-    if (cd < Date.now()) {
-      cd = Date.now() + 10000;
-      console.log({
-        start,
-        end,
-      });
-    }
   });
 
   return () => {

@@ -1,24 +1,7 @@
 import alt from "@altv/server";
 import { addSeconds, minutesToSeconds } from "date-fns";
 import _ from "lodash";
-import {
-  AmmoItemKey,
-  ITEMS_REGISTRY,
-  Item,
-  ItemGrade,
-  ItemKey,
-  ItemTier,
-  WeaponItem,
-  WeaponItemKey,
-  createItem,
-  getAllItemKeys,
-  getItemTier,
-  isItemKeyAmmo,
-  isItemKeyFirearmWeapon,
-  isItemKeyMeleeWeapon,
-  isItemKeyThrowableWeapon,
-  isItemKeyWeapon,
-} from "@shared/modules/items";
+import { Item, getAllItemKeys } from "@shared/modules/items";
 import { StorageType } from "@shared/store/game-state.store";
 import { AirDropType } from "@shared/modules/air-drops";
 import { registerCmd } from "../chat";
@@ -28,7 +11,7 @@ import lootTables from "./loot-tables";
 
 const airDropLocations: alt.Vector3[] = [];
 
-function buildAirDropLootTable() {
+export function buildAirDropLootTable() {
   // pick random loot table based on score
   const totalScore = lootTables.reduce((acc, table) => acc + table.score, 0);
   const randomScore = _.random(0, totalScore);

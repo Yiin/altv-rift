@@ -1,7 +1,16 @@
 import alt from "@altv/server";
 import { minutesToMilliseconds } from "date-fns";
-import { FirearmWeapon, MeleeWeapon, ThrowableWeapon, getWeaponHash } from "@shared/modules/items";
+import {
+  FirearmWeapon,
+  MeleeWeapon,
+  ThrowableWeapon,
+  createItem,
+  getWeaponHash,
+} from "@shared/modules/items";
+import { createInventory } from "@shared/modules/inventory";
 import { createTerroristPed } from "../peds/registry";
+import { createStorage } from "../items-manager";
+import { buildAirDropLootTable } from "../air-drops";
 
 const positions = [
   { x: 4842.56591796875, y: -5174.89892578125, z: 2.2929341793060303 },
@@ -55,7 +64,12 @@ const weapons = [
 
 const thugs = new Set<alt.Ped>();
 
+let loot: alt.VirtualEntity | null = null;
+
 function setupThugs() {
+  // Cleanup previous loot
+  loot?.destroy();
+
   for (const thug of thugs) {
     thug.destroy();
   }
@@ -102,6 +116,15 @@ function handleThugDeath(ped: alt.Ped) {
   if (thugs.size === 0) {
     alt.log("All thugs dead, respawning in 1 minute");
     alt.Timers.setTimeout(setupThugs, minutesToMilliseconds(1));
+
+    loot = createStorage({
+      pos: { x: 4837.678, y: -5178.569, z: 1.223 },
+      inventory: createInventory({
+        size: 10,
+        items: buildAirDropLootTable().items,
+      }),
+      label: "Main Dock Loot",
+    });
   } else {
     alt.log(`Thugs remaining: ${thugs.size}`);
   }

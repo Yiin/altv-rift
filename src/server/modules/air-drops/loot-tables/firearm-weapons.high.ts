@@ -10,8 +10,6 @@ import {
   isItemKeyFirearmWeapon,
   createItem,
   ItemGrade,
-  isItemKeyThrowableWeapon,
-  isItemKeyMeleeWeapon,
   FirearmWeaponItemKey,
   getAmmoKeyForAmmoGroup,
   getWeaponAmmoGroup,
