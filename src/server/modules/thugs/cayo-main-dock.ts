@@ -11,6 +11,8 @@ import { createInventory } from "@shared/modules/inventory";
 import { createTerroristPed } from "../peds/registry";
 import { createStorage } from "../items-manager";
 import { buildAirDropLootTable } from "../air-drops";
+import { buildLootTable } from "../loot/loot-tables";
+import { CAYO_MAIN_DOCK_LOOT } from "../loot/loot-tables/cayo-main-dock-loot.low";
 
 const positions = [
   { x: 4842.56591796875, y: -5174.89892578125, z: 2.2929341793060303 },
@@ -120,8 +122,8 @@ function handleThugDeath(ped: alt.Ped) {
     loot = createStorage({
       pos: { x: 4837.678, y: -5178.569, z: 1.223 },
       inventory: createInventory({
-        size: 10,
-        items: buildAirDropLootTable().items,
+        size: 8,
+        items: buildLootTable(CAYO_MAIN_DOCK_LOOT),
       }),
       label: "Main Dock Loot",
     });

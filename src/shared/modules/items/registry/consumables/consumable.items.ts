@@ -1,6 +1,7 @@
 import { Item, ItemKey } from "../../types";
 import { registerItems } from "../../items-registry";
 import { makeKeys } from "../../../../utility/make-keys";
+import { ItemTier } from "../../enums";
 
 export const Consumable = makeKeys<ConsumableItemKey>()({
   SIMPLE_MEDKIT: "simple_medkit",
@@ -33,6 +34,7 @@ export type ConsumableItemInfo = {
   key: ConsumableItemKey;
   name: string;
   description: string;
+  tier: ItemTier;
 };
 
 export const consumables = registerItems<ConsumableItemInfo>([
@@ -41,81 +43,97 @@ export const consumables = registerItems<ConsumableItemInfo>([
     name: "Basic Survival Medkit",
     description:
       "A compact bundle of medical essentials. This no-frills kit holds just enough to patch up small injuries and stave off infection. It may not seem like much, but in this desperate landscape, it could spell the difference between life and death.",
+    tier: ItemTier.F,
   },
   {
     key: Consumable.COOKED_TROUT,
     name: "Cooked Trout",
     description: "Delicious and nutritious when cooked.",
+    tier: ItemTier.F,
   },
   {
     key: Consumable.COOKED_SALMON,
     name: "Cooked Salmon",
     description: "Rich in flavor and healthy fats.",
+    tier: ItemTier.E,
   },
   {
     key: Consumable.COOKED_BASS,
     name: "Cooked Bass",
     description: "Tasty and fulfilling.",
+    tier: ItemTier.E,
   },
   {
     key: Consumable.COOKED_CATFISH,
     name: "Cooked Catfish",
     description: "Mild and flaky when cooked.",
+    tier: ItemTier.D,
   },
   {
     key: Consumable.COOKED_PIKE,
     name: "Cooked Pike",
     description: "Firm and lean, a filling meal.",
+    tier: ItemTier.D,
   },
   {
     key: Consumable.COOKED_TUNA,
     name: "Cooked Tuna",
     description: "Lean and rich in protein.",
+    tier: ItemTier.C,
   },
   {
     key: Consumable.COOKED_MACKEREL,
     name: "Cooked Mackerel",
     description: "Flavorful and nutritious.",
+    tier: ItemTier.C,
   },
   {
     key: Consumable.COOKED_CARP,
     name: "Cooked Carp",
     description: "Firm and satisfying.",
+    tier: ItemTier.B,
   },
   {
     key: Consumable.COOKED_RED_SNAPPER,
     name: "Cooked Red Snapper",
     description: "Tender and flavorful.",
+    tier: ItemTier.B,
   },
   {
     key: Consumable.COOKED_SWORDFISH,
     name: "Cooked Swordfish",
     description: "Hearty and filling.",
+    tier: ItemTier.A,
   },
   {
     key: Consumable.COOKED_OCTOPUS,
     name: "Cooked Octopus",
     description: "Tender and delicious when cooked.",
+    tier: ItemTier.A,
   },
   {
     key: Consumable.COOKED_ELECTRIC_EEL,
     name: "Cooked Electric Eel",
     description: "Delicacy when prepared correctly.",
+    tier: ItemTier.A,
   },
   {
     key: Consumable.COOKED_HAMMERHEAD_SHARK,
     name: "Cooked Hammerhead Shark",
     description: "Filling and rich in nutrients.",
+    tier: ItemTier.S,
   },
   {
     key: Consumable.COOKED_GIANT_SQUID,
     name: "Cooked Giant Squid",
     description: "A rare and delicious treat.",
+    tier: ItemTier.S,
   },
   {
     key: Consumable.COOKED_GOLDEN_KOI,
     name: "Cooked Golden Koi",
     description: "Grants special benefits when consumed.",
+    tier: ItemTier.S,
   },
 ]);
 

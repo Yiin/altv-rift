@@ -16,11 +16,12 @@ import {
   getWeaponClipSize,
 } from "@shared/modules/items";
 import { rollItem } from "@shared/utility/random";
+import { LootTable } from "../types";
 
 /**
  * High quality firearms drop
  */
-export default {
+export const FIREARM_WEAPONS_HIGH: LootTable = {
   type: AirDropType.FirearmWeapons,
   score: 10,
   getItemsAmount() {

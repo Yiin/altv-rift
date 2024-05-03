@@ -1,5 +1,4 @@
 import _ from "lodash";
-import { AirDropType } from "@shared/modules/air-drops";
 import {
   ItemKey,
   WeaponItemKey,
@@ -12,64 +11,44 @@ import {
   ItemGrade,
   isItemKeyThrowableWeapon,
   isItemKeyMeleeWeapon,
-  Ammo,
   getWeaponAmmoGroup,
   getAmmoKeyForAmmoGroup,
   getWeaponClipSize,
+  isItemKeyConsumable,
+  isItemKeyMaterial,
 } from "@shared/modules/items";
 import { rollItem } from "@shared/utility/random";
+import { LootTable } from "../types";
 
-export default {
-  type: AirDropType.MixWeapons,
+export const CAYO_MAIN_DOCK_LOOT: LootTable = {
   score: 1,
   getItemsAmount() {
-    return _.random(7, 10);
+    return _.random(4, 6);
   },
   filterItemKey(itemKey: ItemKey, seed: number): itemKey is WeaponItemKey | AmmoItemKey {
     const matchesWeapon =
       (isItemKeyFirearmWeapon(itemKey) &&
-        getItemTier(itemKey) ===
-          rollItem(
-            [
-              [50, ItemTier.F],
-              [30, ItemTier.E],
-              [20, ItemTier.D],
-            ],
-            seed,
-          )) ||
+        [ItemTier.D, ItemTier.C].includes(getItemTier(itemKey))) ||
       (isItemKeyThrowableWeapon(itemKey) &&
-        getItemTier(itemKey) ===
-          rollItem(
-            [
-              [30, ItemTier.E],
-              [20, ItemTier.D],
-            ],
-            seed,
-          )) ||
-      (isItemKeyMeleeWeapon(itemKey) &&
-        getItemTier(itemKey) ===
-          rollItem(
-            [
-              [10, ItemTier.F],
-              [30, ItemTier.E],
-              [20, ItemTier.D],
-              [20, ItemTier.C],
-            ],
-            seed,
-          ));
+        [ItemTier.D, ItemTier.C].includes(getItemTier(itemKey))) ||
+      (isItemKeyMeleeWeapon(itemKey) && [ItemTier.D, ItemTier.C].includes(getItemTier(itemKey)));
 
     const matchesAmmo =
-      isItemKeyAmmo(itemKey) && [ItemTier.E, ItemTier.D, ItemTier.C].includes(getItemTier(itemKey));
+      isItemKeyAmmo(itemKey) && [ItemTier.D, ItemTier.C].includes(getItemTier(itemKey));
 
-    return matchesWeapon || matchesAmmo;
+    const matchesConsumable =
+      isItemKeyConsumable(itemKey) && [ItemTier.F, ItemTier.E].includes(getItemTier(itemKey));
+
+    const matchesMaterial = isItemKeyMaterial(itemKey);
+
+    return matchesWeapon || matchesAmmo || matchesConsumable || matchesMaterial;
   },
   createItem(itemKey: ItemKey) {
     if (isItemKeyFirearmWeapon(itemKey)) {
       return createItem(itemKey, {
         grade: rollItem([
-          [50, ItemGrade.UNCOMMON],
-          [30, ItemGrade.RARE],
-          [5, ItemGrade.EPIC],
+          [70, ItemGrade.COMMON],
+          [30, ItemGrade.UNCOMMON],
         ]),
         clip: createItem(getAmmoKeyForAmmoGroup(getWeaponAmmoGroup(itemKey)), {
           amount: getWeaponClipSize(itemKey),
@@ -78,22 +57,30 @@ export default {
     }
     if (isItemKeyThrowableWeapon(itemKey)) {
       return createItem(itemKey, {
-        amount: ~~(Math.random() * 5) * 10 + 20,
+        amount: ~~(Math.random() * 3) * 5 + 10,
       });
     }
     if (isItemKeyMeleeWeapon(itemKey)) {
       return createItem(itemKey, {
         grade: rollItem([
-          [50, ItemGrade.UNCOMMON],
-          [30, ItemGrade.RARE],
-          [10, ItemGrade.EPIC],
-          [5, ItemGrade.LEGENDARY],
+          [80, ItemGrade.COMMON],
+          [20, ItemGrade.UNCOMMON],
         ]),
       });
     }
     if (isItemKeyAmmo(itemKey)) {
       return createItem(itemKey, {
-        amount: ~~(Math.random() * 8) * 100 + 200,
+        amount: ~~(Math.random() * 4) * 50 + 100,
+      });
+    }
+    if (isItemKeyConsumable(itemKey)) {
+      return createItem(itemKey, {
+        amount: ~~(Math.random() * 10) + 2,
+      });
+    }
+    if (isItemKeyMaterial(itemKey)) {
+      return createItem(itemKey, {
+        amount: ~~(Math.random() * 5) * 10 + 20,
       });
     }
     throw new Error(`Invalid item key ${itemKey}`);

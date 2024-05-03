@@ -1,45 +1,19 @@
 import alt from "@altv/server";
 import { addSeconds, minutesToSeconds } from "date-fns";
 import _ from "lodash";
-import { Item, getAllItemKeys } from "@shared/modules/items";
+import { Item } from "@shared/modules/items";
 import { StorageType } from "@shared/store/game-state.store";
 import { AirDropType } from "@shared/modules/air-drops";
 import { registerCmd } from "../chat";
 import { createStorage } from "../items-manager/storage";
 import { createInventory } from "../../../shared/modules/inventory/api";
-import lootTables from "./loot-tables";
+import { buildLootTable, pickRandomLootTable } from "../loot/loot-tables";
 
 const airDropLocations: alt.Vector3[] = [];
 
 export function buildAirDropLootTable() {
-  // pick random loot table based on score
-  const totalScore = lootTables.reduce((acc, table) => acc + table.score, 0);
-  const randomScore = _.random(0, totalScore);
-  let currentScore = 0;
-  let lootTable = lootTables[0];
-  for (const table of lootTables) {
-    currentScore += table.score;
-    if (randomScore <= currentScore) {
-      lootTable = table;
-      break;
-    }
-  }
-
-  const seed = Math.random();
-
-  // generate loot table items
-  const items: Item[] = [];
-  const itemsAmount = lootTable.getItemsAmount();
-  const validItemKeys = getAllItemKeys().filter((key) => lootTable.filterItemKey(key, seed));
-
-  for (let i = 0; i < itemsAmount; i++) {
-    const itemKey = _.sample(validItemKeys)!;
-
-    _.remove(validItemKeys, (key) => key === itemKey);
-
-    const item = lootTable.createItem(itemKey);
-    items.push(item);
-  }
+  const lootTable = pickRandomLootTable((table) => !!table.type);
+  const items = buildLootTable(lootTable);
 
   return {
     type: lootTable.type,
@@ -83,7 +57,7 @@ registerCmd("x", (player) => {
   spawnAirDrop({
     label: "Testing",
     pos: player.pos,
-    type: lootTable.type,
+    type: lootTable.type!,
     items: lootTable.items,
     durationInSeconds: minutesToSeconds(5),
   });
