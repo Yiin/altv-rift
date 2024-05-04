@@ -4,7 +4,9 @@
 
 import alt from "@altv/client";
 import game from "@altv/natives";
+import { VirtualEntityType } from "@shared/interfaces";
 import { whileInGame } from "@/core/game-state-hooks/in-game.state";
+import { whileVirtualEntityIsStreamedIn } from "@/core/game-state-hooks/virtual-entity-is-streamed-in.state";
 import { document } from "../../renderer/element-renderer";
 import { createTextNode, updateTextNode } from "../../renderer/rml-renderer";
 import { px } from "../../renderer/pixel";
@@ -12,6 +14,8 @@ import { px } from "../../renderer/pixel";
 const SPACE_BETWEEN_TICKS = 58;
 const TICK_INTERVAL = 15;
 const TICK_COUNT = 13;
+const PX_PER_DEGREE = SPACE_BETWEEN_TICKS / TICK_INTERVAL;
+const MIDDLE_OFFSET = Math.ceil(TICK_COUNT / 2) * SPACE_BETWEEN_TICKS - SPACE_BETWEEN_TICKS / 2;
 
 const compass = document.createElement("div");
 compass.addClass("compass");
@@ -53,6 +57,66 @@ const tickNodes = Array.from({ length: TICK_COUNT }, () => {
 
   return node;
 });
+
+const nearbyPointsDiv = document.createElement("div");
+nearbyPointsDiv.addClass("compass__icons");
+compassContainer.appendChild(nearbyPointsDiv);
+
+const nearbyPoints: any[] = [];
+
+function addNearbyPoint(pos: () => alt.Vector3, type: string) {
+  const node = document.createElement("div");
+  node.addClass("compass__icon");
+  nearbyPointsDiv.appendChild(node);
+
+  const iconContainer = document.createElement("div");
+  iconContainer.addClass("compass__icon-container");
+  node.appendChild(iconContainer);
+
+  const caret = document.createElement("img");
+  caret.addClass("compass__icon-caret");
+  caret.setAttribute("src", "elements/compass/caret.png");
+  iconContainer.appendChild(caret);
+
+  const actualIcon = document.createElement("img");
+  actualIcon.addClass("compass__icon-uhh-actual-icon-i-guess");
+  actualIcon.setAttribute("src", "components/icon/assets/icon-contraband.png");
+  iconContainer.appendChild(actualIcon);
+
+  const distanceLabel = document.createElement("div");
+  distanceLabel.addClass("compass__icon-distance");
+  const text = createTextNode(document, ``);
+  distanceLabel.appendChild(text);
+  iconContainer.appendChild(distanceLabel);
+
+  const nearbyPoint = {
+    calc() {
+      const playerPos = alt.Player.local.pos;
+      const targetPos = pos();
+
+      const direction = playerPos.angleToDegrees(targetPos);
+      const distance = Math.round(playerPos.distanceTo(targetPos));
+
+      return { direction, distance };
+    },
+    type,
+    node,
+  };
+  nearbyPoints.push(nearbyPoint);
+
+  return nearbyPoint;
+}
+
+function removeNearbyPoint(node: alt.RmlElement) {
+  const index = nearbyPoints.findIndex((point) => point.node === node);
+  if (index === -1) {
+    return;
+  }
+
+  nearbyPoints.splice(index, 1);
+  node.parent?.removeChild(node);
+  node.destroy();
+}
 
 let lastDirectionTick: number | undefined = undefined;
 let direction = 0;
@@ -122,21 +186,94 @@ function updateTicks(targetAngle: number) {
   lastDirectionTick = directionTick;
 }
 
-whileInGame(() => {
-  const timer = alt.Timers.everyTick(() => {
-    direction = game.getGameplayCamRot(2).z;
+function updateIcons(currentDirection: number) {
+  const directionTick = Math.floor(currentDirection / TICK_INTERVAL);
 
-    direction = direction < 0 ? 360 + direction : direction;
-    direction = direction % 360;
+  let minAngle = directionTick * TICK_INTERVAL - 90;
+  if (minAngle < 0) {
+    minAngle = 360 + minAngle;
+  }
+
+  let maxAngle = minAngle + 180;
+  if (maxAngle > 360) {
+    maxAngle -= 360;
+  }
+
+  let closestNode: alt.RmlElement | null = null;
+  let closestDiff = 360;
+
+  nearbyPoints.forEach(({ calc, node }) => {
+    const { direction, distance } = calc();
+
+    let diff = Math.min(
+      (360 + direction - currentDirection) % 360,
+      (360 + direction - currentDirection) % 360,
+    );
+
+    if (diff > 180) {
+      diff = diff - 360;
+    }
+
+    const offset = px(MIDDLE_OFFSET) + diff * px(PX_PER_DEGREE) - px(SPACE_BETWEEN_TICKS) / 2;
+
+    const absdiff = Math.abs(diff);
+
+    if (absdiff < closestDiff) {
+      closestDiff = absdiff;
+      closestNode = node;
+    }
+
+    // if absdiff is greater than 50, the opacity should decrease from
+    // 1 at 50 to 0 at 70
+    const opacity = absdiff >= 50 ? Math.max(0, 1 - (absdiff - 50) / 20) ** 8 : 1;
+
+    const distanceNode = node.querySelector(".compass__icon-distance")!;
+    const text = `${distance}`;
+
+    if (distanceNode.childNodes.length) {
+      updateTextNode(document, distanceNode.childNodes[0], text);
+    } else {
+      const textNode = createTextNode(document, text);
+      distanceNode.appendChild(textNode);
+    }
+
+    node.style.transform = `translateX(${offset}px)`;
+    node.style.opacity = opacity.toString();
+  });
+
+  nearbyPoints.forEach(({ node }) => {
+    if (closestNode !== node) {
+      node.style.opacity = (+node.style.opacity / 2).toString();
+    }
+  });
+}
+
+whileInGame(() => {
+  const stopAreaOfInterestListener = whileVirtualEntityIsStreamedIn(
+    (entity) => entity.streamSyncedMeta.entityType === VirtualEntityType.AreaOfInterest,
+    (entity) => {
+      console.log("Adding nearby point");
+      const { node } = addNearbyPoint(() => entity.pos, entity.streamSyncedMeta.areaType!);
+
+      return () => {
+        console.log("Removing nearby point");
+        removeNearbyPoint(node);
+      };
+    },
+  );
+
+  const timer = alt.Timers.everyTick(() => {
+    direction = (360 - (game.getGameplayCamRot(2).z % 360)) % 360;
 
     updateTicks(direction);
+    updateIcons(direction);
 
     const leftTickValue = updatedTickValues[6];
     const offset =
       Math.min(
         (TICK_INTERVAL + direction - leftTickValue) % TICK_INTERVAL,
         (TICK_INTERVAL + direction - leftTickValue) % TICK_INTERVAL,
-      ) * px(SPACE_BETWEEN_TICKS / TICK_INTERVAL);
+      ) * px(PX_PER_DEGREE);
 
     const width = 812;
     const middle = width / 2;
@@ -170,5 +307,6 @@ whileInGame(() => {
 
   return () => {
     timer.destroy();
+    stopAreaOfInterestListener();
   };
 });

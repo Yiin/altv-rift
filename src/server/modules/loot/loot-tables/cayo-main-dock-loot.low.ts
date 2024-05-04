@@ -17,7 +17,7 @@ import {
   isItemKeyConsumable,
   isItemKeyMaterial,
 } from "@shared/modules/items";
-import { rollItem } from "@shared/utility/random";
+import { rollOption } from "@shared/utility/random";
 import { LootTable } from "../types";
 
 export const CAYO_MAIN_DOCK_LOOT: LootTable = {
@@ -46,9 +46,10 @@ export const CAYO_MAIN_DOCK_LOOT: LootTable = {
   createItem(itemKey: ItemKey) {
     if (isItemKeyFirearmWeapon(itemKey)) {
       return createItem(itemKey, {
-        grade: rollItem([
+        grade: rollOption([
           [70, ItemGrade.COMMON],
           [30, ItemGrade.UNCOMMON],
+          [0.1, ItemGrade.CONTRABAND],
         ]),
         clip: createItem(getAmmoKeyForAmmoGroup(getWeaponAmmoGroup(itemKey)), {
           amount: getWeaponClipSize(itemKey),
@@ -62,9 +63,10 @@ export const CAYO_MAIN_DOCK_LOOT: LootTable = {
     }
     if (isItemKeyMeleeWeapon(itemKey)) {
       return createItem(itemKey, {
-        grade: rollItem([
+        grade: rollOption([
           [80, ItemGrade.COMMON],
           [20, ItemGrade.UNCOMMON],
+          [1, ItemGrade.CONTRABAND],
         ]),
       });
     }

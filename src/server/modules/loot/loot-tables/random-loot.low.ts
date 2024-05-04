@@ -11,7 +11,7 @@ import {
   isItemKeyMaterial,
   isItemKeyWeapon,
 } from "@shared/modules/items";
-import { rollItem } from "@shared/utility/random";
+import { rollOption } from "@shared/utility/random";
 import { LootTable } from "../types";
 
 export const RANDOM_LOOT: LootTable = {
@@ -24,7 +24,7 @@ export const RANDOM_LOOT: LootTable = {
     const matchesMaterial = isItemKeyMaterial(itemKey);
     const matchesWeapon =
       isItemKeyWeapon(itemKey) &&
-      rollItem(
+      rollOption(
         [
           [5, true], // 5% chance for a weapon
           [95, false],
@@ -37,7 +37,7 @@ export const RANDOM_LOOT: LootTable = {
   createItem(itemKey: ItemKey) {
     if (isItemKeyWeapon(itemKey)) {
       return createItem(itemKey, {
-        grade: rollItem([
+        grade: rollOption([
           [50, ItemGrade.UNCOMMON],
           [20, ItemGrade.RARE],
           [1, ItemGrade.LEGENDARY],

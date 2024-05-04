@@ -76,8 +76,6 @@ async function startGame(player: LoggedInPlayer, characterId: string) {
 
   player.setupCharacterStore(character);
 
-  player.updateCharacterAppearance(character.appearance);
-
   if (isInGame(player)) {
     player.character.inventory.items
       .filter(({ item }) => !isValidItem(item.key))
@@ -85,6 +83,7 @@ async function startGame(player: LoggedInPlayer, characterId: string) {
         removeItemFromInventorySlot(player.character.inventory, slot);
       });
   }
+  player.updateCharacterAppearance(character.appearance);
 
   player.spawn(character.lastPosition);
   player.rot = new alt.Vector3(character.rot);

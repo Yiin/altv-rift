@@ -16,7 +16,7 @@ import {
   getWeaponAmmoGroup,
   getWeaponClipSize,
 } from "@shared/modules/items";
-import { rollItem } from "@shared/utility/random";
+import { rollOption } from "@shared/utility/random";
 import { LootTable } from "../types";
 
 export const MIX_WEAPONS_HIGH: LootTable = {
@@ -29,7 +29,7 @@ export const MIX_WEAPONS_HIGH: LootTable = {
     const matchesWeapon =
       (isItemKeyFirearmWeapon(itemKey) &&
         getItemTier(itemKey) ===
-          rollItem(
+          rollOption(
             [
               [10, ItemTier.D],
               [30, ItemTier.C],
@@ -40,7 +40,7 @@ export const MIX_WEAPONS_HIGH: LootTable = {
           )) ||
       (isItemKeyThrowableWeapon(itemKey) &&
         getItemTier(itemKey) ===
-          rollItem(
+          rollOption(
             [
               [20, ItemTier.C],
               [30, ItemTier.B],
@@ -50,7 +50,7 @@ export const MIX_WEAPONS_HIGH: LootTable = {
           )) ||
       (isItemKeyMeleeWeapon(itemKey) &&
         getItemTier(itemKey) ===
-          rollItem(
+          rollOption(
             [
               [10, ItemTier.D],
               [30, ItemTier.C],
@@ -68,7 +68,7 @@ export const MIX_WEAPONS_HIGH: LootTable = {
   createItem(itemKey: ItemKey) {
     if (isItemKeyFirearmWeapon(itemKey)) {
       return createItem(itemKey, {
-        grade: rollItem([
+        grade: rollOption([
           [20, ItemGrade.RARE],
           [40, ItemGrade.EPIC],
           [30, ItemGrade.LEGENDARY],
@@ -86,7 +86,7 @@ export const MIX_WEAPONS_HIGH: LootTable = {
     }
     if (isItemKeyMeleeWeapon(itemKey)) {
       return createItem(itemKey, {
-        grade: rollItem([
+        grade: rollOption([
           [20, ItemGrade.EPIC],
           [40, ItemGrade.LEGENDARY],
           [30, ItemGrade.CONTRABAND],

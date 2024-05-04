@@ -20,12 +20,12 @@ function kickAll() {
 // alt.Events.onPlayer()
 
 alt.Events.onPlayerDisconnect(({ reason }) => {
-  if (reason === "timed out") {
-    ipc.connectTo("watcher", () => {
-      ipc.of.watcher.on("connect", () => {
-        ipc.of.watcher?.emit("restart-server", "client");
-        ipc.disconnect("watcher");
-      });
-    });
-  }
+  // if (reason === "timed out") {
+  //   ipc.connectTo("watcher", () => {
+  //     ipc.of.watcher.on("connect", () => {
+  //       ipc.of.watcher?.emit("restart-server", "client");
+  //       ipc.disconnect("watcher");
+  //     });
+  //   });
+  // }
 });

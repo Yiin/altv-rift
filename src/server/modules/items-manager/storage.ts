@@ -1,7 +1,7 @@
 import alt from "@altv/server";
-import { reactive, UnwrapNestedRefs, watch } from "vue";
+import { isReactive, reactive, UnwrapNestedRefs, watch } from "vue";
 import { addMinutes } from "date-fns";
-import { Inventory, ItemSourceOrigin } from "@shared/interfaces";
+import { Inventory, ItemSourceOrigin, VirtualEntityType } from "@shared/interfaces";
 import { StorageType } from "@shared/store/game-state.store";
 import { ServerEvents } from "@shared/events/server";
 import { AirDropType } from "@shared/modules/air-drops";
@@ -11,6 +11,7 @@ interface StorageData {
   label: string;
   inventory: UnwrapNestedRefs<Inventory>;
   meta?: Record<string, any>;
+  onOpen?(this: alt.VirtualEntity, player: InGamePlayer): void;
 }
 
 export const storageGroup = alt.VirtualEntityGroup.create({ maxEntitiesInStream: 50 });
@@ -28,13 +29,15 @@ export function createStorage(options: {
   };
   airDropType?: AirDropType;
   meta?: Record<string, any>;
+
+  onOpen?(this: alt.VirtualEntity, player: InGamePlayer): void;
 }): alt.VirtualEntity {
   const storage = alt.VirtualEntity.create({
     group: storageGroup,
     pos: options.pos,
     streamingDistance: 100,
     data: {
-      entityType: "storage",
+      entityType: VirtualEntityType.Storage,
       storageType: options.type ?? StorageType.Storage,
       interpolate: options.interpolate,
       airDropType: options.airDropType,
@@ -43,8 +46,9 @@ export function createStorage(options: {
 
   storageItems[storage.id] = {
     label: options.label,
-    inventory: reactive(options.inventory),
+    inventory: isReactive(options.inventory) ? options.inventory : reactive(options.inventory),
     meta: options.meta,
+    onOpen: options.onOpen,
   };
 
   return storage;
@@ -91,6 +95,10 @@ export function openStorage(player: InGamePlayer, storageId: alt.VirtualEntity["
     validUntil: storage.meta?.validUntil ?? addMinutes(Date.now(), 5).getTime(),
     inventory,
   };
+
+  if (storage.onOpen) {
+    storage.onOpen.call(ve, player);
+  }
 
   return true;
 }

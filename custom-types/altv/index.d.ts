@@ -20,7 +20,7 @@ declare module "@altv/client" {
     PLAY_SOUND: IWebviewEventHandler;
   }
 
-  export interface PedMeta { }
+  export interface PedMeta {}
 }
 
 declare module "@altv/shared" {
@@ -32,7 +32,7 @@ declare module "@altv/shared" {
   }
 
   export interface VirtualEntityStreamSyncedMeta {
-    entityType: "tree" | "item" | "storage";
+    entityType: import("../../src/shared/interfaces").VirtualEntityType;
     treeType?: import("../../src/shared/modules/woodcutting/interfaces").TreeType; // entityType: tree
     cooldownUntil?: number; // entityType: tree
     item?: import("../../src/shared/modules/items").Item; // entityType: item
@@ -43,5 +43,7 @@ declare module "@altv/shared" {
       speed: number;
     }; // entityType: storage & storageType: AirDrop
     airDropType?: import("../../src/shared/modules/items/registry/air-drop").AirDropType; // entityType: storage & storageType: AirDrop
+    areaName?: string; // entityType: areaOfInterest
+    areaType?: string; // entityType: areaOfInterest
   }
 }

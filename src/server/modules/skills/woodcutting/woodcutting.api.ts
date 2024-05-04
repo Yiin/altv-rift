@@ -3,6 +3,7 @@ import * as trees from "@shared/modules/woodcutting/trees";
 import IGNORED_TREES from "@shared/modules/woodcutting/trees-to-ignore.json";
 import { getLevel } from "@shared/modules/experience/experience-table";
 import { getTreeLevel } from "@shared/modules/woodcutting/functions";
+import { VirtualEntityType } from "@shared/interfaces";
 import { InGamePlayer } from "@/core/utility/assertions";
 
 export const virtualTreeGroup = alt.VirtualEntityGroup.create({ maxEntitiesInStream: 30 });
@@ -40,7 +41,7 @@ export async function growTrees(): Promise<void> {
         pos: new alt.Vector3(position),
         streamingDistance: 30,
         data: {
-          entityType: "tree",
+          entityType: VirtualEntityType.Tree,
           treeType: type as keyof typeof trees,
           cooldownUntil: 0,
         },

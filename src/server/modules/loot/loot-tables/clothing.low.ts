@@ -8,7 +8,7 @@ import {
   ItemTier,
   createItem,
 } from "@shared/modules/items";
-import { rollItem } from "@shared/utility/random";
+import { rollOption } from "@shared/utility/random";
 import { LootTable } from "../types";
 
 export const CLOTHING: LootTable = {
@@ -21,7 +21,7 @@ export const CLOTHING: LootTable = {
     return (
       isItemKeyClothing(itemKey) &&
       getItemTier(itemKey) ===
-        rollItem(
+        rollOption(
           [
             [50, ItemTier.F],
             [30, ItemTier.E],

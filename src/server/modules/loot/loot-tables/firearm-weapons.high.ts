@@ -15,7 +15,7 @@ import {
   getWeaponAmmoGroup,
   getWeaponClipSize,
 } from "@shared/modules/items";
-import { rollItem } from "@shared/utility/random";
+import { rollOption } from "@shared/utility/random";
 import { LootTable } from "../types";
 
 /**
@@ -31,7 +31,7 @@ export const FIREARM_WEAPONS_HIGH: LootTable = {
     const matchesWeapon =
       isItemKeyFirearmWeapon(itemKey) &&
       getItemTier(itemKey) ===
-        rollItem(
+        rollOption(
           [
             [1, ItemTier.S],
             [3, ItemTier.A],
@@ -51,7 +51,7 @@ export const FIREARM_WEAPONS_HIGH: LootTable = {
   createItem(itemKey: FirearmWeaponItemKey | AmmoItemKey) {
     if (isItemKeyFirearmWeapon(itemKey)) {
       return createItem(itemKey, {
-        grade: rollItem([
+        grade: rollOption([
           [30, ItemGrade.RARE],
           [50, ItemGrade.EPIC],
           [5, ItemGrade.LEGENDARY],

@@ -1,5 +1,6 @@
 import alt from "@altv/server";
 import { createItem, ItemGrade, ITEMS_REGISTRY } from "@shared/modules/items";
+import { VirtualEntityType } from "@shared/interfaces";
 import { registerCmd } from "../chat";
 import "./v1";
 
@@ -17,7 +18,13 @@ registerCmd("s", (player) => {
     const randomKey = keys[Math.floor(Math.random() * keys.length)];
 
     // generate random grade
-    const grades = [ItemGrade.COMMON, ItemGrade.UNCOMMON, ItemGrade.RARE, ItemGrade.EPIC, ItemGrade.LEGENDARY];
+    const grades = [
+      ItemGrade.COMMON,
+      ItemGrade.UNCOMMON,
+      ItemGrade.RARE,
+      ItemGrade.EPIC,
+      ItemGrade.LEGENDARY,
+    ];
     const randomGrade = grades[Math.floor(Math.random() * grades.length)];
 
     // generate random amount
@@ -31,7 +38,7 @@ registerCmd("s", (player) => {
     pos: player.pos,
     streamingDistance: 300,
     data: {
-      entityType: "storage",
+      entityType: VirtualEntityType.Storage,
       items,
     },
   });

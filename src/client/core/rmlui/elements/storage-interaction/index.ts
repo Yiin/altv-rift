@@ -24,7 +24,9 @@ registerElement({
         if (interaction.value === "open") {
           const canOpen = await rpc.callServer(ServerCall.FromClient.OPEN_STORAGE, ve.remoteID);
 
-          if (ve.streamSyncedMeta.storageType === StorageType.AirDrop) {
+          if (
+            [StorageType.AirDrop, StorageType.LootBox].includes(ve.streamSyncedMeta.storageType)
+          ) {
             await alt.Utils.wait(100);
 
             if (canOpen) {

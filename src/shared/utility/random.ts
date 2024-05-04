@@ -78,22 +78,22 @@ export function randomPointInPolygon(polygon: alt.Vector3[]): alt.Vector3 {
   throw new Error("Failed to generate random point in polygon.");
 }
 
-export function rollItem<T>(items: [weight: number, item: T][], seed = Math.random()): T {
-  if (items.length === 0) {
+export function rollOption<T>(options: [weight: number, option: T][], seed = Math.random()): T {
+  if (options.length === 0) {
     return undefined as T;
   }
 
-  const totalWeight = items.reduce((acc, [weight]) => acc + weight, 0);
+  const totalWeight = options.reduce((acc, [weight]) => acc + weight, 0);
   const randomNumber = seed * totalWeight;
 
   let partialSum = 0;
 
-  for (const [weight, item] of items) {
+  for (const [weight, option] of options) {
     partialSum += weight;
     if (partialSum >= randomNumber) {
-      return item;
+      return option;
     }
   }
 
-  return items[items.length - 1][1];
+  return options[options.length - 1][1];
 }

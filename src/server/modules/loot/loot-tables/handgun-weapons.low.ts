@@ -17,7 +17,7 @@ import {
   getWeaponClipSize,
 } from "@shared/modules/items";
 import { WeaponGroup, AmmoGroup } from "@shared/modules/items/registry/weapons/weapon-groups";
-import { rollItem } from "@shared/utility/random";
+import { rollOption } from "@shared/utility/random";
 import { LootTable } from "../types";
 
 export const HANDGUN_WEAPONS_LOW: LootTable = {
@@ -42,7 +42,7 @@ export const HANDGUN_WEAPONS_LOW: LootTable = {
   createItem(itemKey: ItemKey) {
     if (isItemKeyFirearmWeapon(itemKey)) {
       return createItem(itemKey, {
-        grade: rollItem([
+        grade: rollOption([
           [50, ItemGrade.COMMON],
           [30, ItemGrade.UNCOMMON],
           [20, ItemGrade.RARE],

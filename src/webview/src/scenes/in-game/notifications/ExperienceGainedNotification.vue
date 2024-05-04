@@ -19,6 +19,10 @@ const iconName = computed(() => {
   switch (props.type) {
     case "fishing":
       return "fishing-icon.svg";
+    case "woodcutting":
+      return "woodcutting-icon.svg";
+    case "mining":
+      return "mining-icon.svg";
     default:
       return "experience-icon.svg";
   }
@@ -36,11 +40,11 @@ const isWindowOpened = computed(() => useClient().ui.window !== null);
       class="h-8.5 w-12 bg-contain bg-center"
       :style="{ backgroundImage: `url(./assets/skills/${iconName})` }"
     />
-    <div class="drop-shadow-light text-center text-sm font-bold uppercase leading-[0] text-white">
+    <div class="text-center text-sm font-bold uppercase leading-[0] text-white drop-shadow-light">
       {{ type }}
     </div>
     <div class="flex items-center justify-center gap-2.5">
-      <div class="drop-shadow-light text-center text-base font-bold text-white">
+      <div class="text-center text-base font-bold text-white drop-shadow-light">
         {{ currentLevel }}
       </div>
       <div class="relative -top-0.75 w-36">
@@ -50,11 +54,11 @@ const isWindowOpened = computed(() => useClient().ui.window !== null);
           :style="{ width: `${getLevelProgress(currentXp)}%` }"
         ></div>
       </div>
-      <div class="drop-shadow-light text-center text-base font-bold text-white">
+      <div class="text-center text-base font-bold text-white drop-shadow-light">
         {{ nextLevel }}
       </div>
     </div>
-    <div class="drop-shadow-light text-center text-sm font-semibold leading-[0] text-white">
+    <div class="text-center text-sm font-semibold leading-[0] text-white drop-shadow-light">
       +{{ currentXp - previousXp }} XP
     </div>
   </div>

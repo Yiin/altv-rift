@@ -50,7 +50,7 @@ export function buildLootTable(lootTable: LootTable) {
   const itemsAmount = lootTable.getItemsAmount();
   const validItemKeys = getAllItemKeys().filter((key) => lootTable.filterItemKey(key, seed));
 
-  for (let i = 0; i < itemsAmount; i++) {
+  for (let i = 0; i < itemsAmount && validItemKeys.length > 0; i++) {
     const itemKey = _.sample(validItemKeys)!;
 
     _.remove(validItemKeys, (key) => key === itemKey);

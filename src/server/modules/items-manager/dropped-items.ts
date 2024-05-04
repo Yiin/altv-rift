@@ -2,6 +2,7 @@ import alt from "@altv/server";
 import { toRaw } from "vue";
 import { hoursToMilliseconds } from "date-fns";
 import { Item } from "@shared/modules/items";
+import { VirtualEntityType } from "@shared/interfaces";
 
 export const droppedItemsGroup = alt.VirtualEntityGroup.create({ maxEntitiesInStream: 50 });
 
@@ -11,7 +12,7 @@ export function dropItemOnTheGround(item: Item, position: alt.IVector3): alt.Vir
     pos: position,
     streamingDistance: 50,
     data: {
-      entityType: "item",
+      entityType: VirtualEntityType.Item,
       item: toRaw(item),
     } satisfies alt.VirtualEntityStreamSyncedMeta,
   });

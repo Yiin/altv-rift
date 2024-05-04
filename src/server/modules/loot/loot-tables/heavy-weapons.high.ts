@@ -17,7 +17,7 @@ import {
   isItemKeyFirearmWeapon,
 } from "@shared/modules/items";
 import { WeaponGroup, AmmoGroup } from "@shared/modules/items/registry/weapons/weapon-groups";
-import { rollItem } from "@shared/utility/random";
+import { rollOption } from "@shared/utility/random";
 import { LootTable } from "../types";
 
 export const HEAVY_WEAPONS_HIGH: LootTable = {
@@ -46,7 +46,7 @@ export const HEAVY_WEAPONS_HIGH: LootTable = {
   createItem(itemKey: ItemKey) {
     if (isItemKeyFirearmWeapon(itemKey)) {
       return createItem(itemKey, {
-        grade: rollItem([
+        grade: rollOption([
           [20, ItemGrade.RARE],
           [40, ItemGrade.EPIC],
           [30, ItemGrade.LEGENDARY],

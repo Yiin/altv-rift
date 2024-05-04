@@ -4,6 +4,7 @@
   top: 0;
   width: 25.375rem;
   height: 4.25rem;
+  font-family: akrobat-bold;
 }
 
 .compass__container {
@@ -58,7 +59,6 @@
 
   color: #FFF;
 
-  font-family: akrobat-bold;
   font-size: 0.875rem;
 }
 
@@ -80,4 +80,52 @@
 
 .compass__tick--side .compass__tick-indicator {
   background-color: #D9D9D9;
+}
+
+.compass__icons {
+  display: block;
+  position: relative;
+  width: 25.375rem;
+  height: 6.25rem;
+  margin-top: -3.5rem;
+  transform: translate(-50%, 0);
+}
+
+.compass__icon {
+  position: absolute;
+  top: 0;
+  left: 1.8125rem;
+  width: 3.625rem;
+  opacity: 0.6;
+  transform: translate(-50%, 0);
+}
+
+.compass__icon-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 3.625rem;
+  height: 4rem;
+}
+
+.compass__icon-caret {
+  display: block;
+  width: 0.5rem;
+  height: 0.3125rem;
+}
+
+.compass__icon-uhh-actual-icon-i-guess {
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  margin-top: 0.375rem;
+}
+
+.compass__icon-distance {
+  display: block;
+  font-size: 1rem;
+  text-align: center;
+  margin-top: 0.25rem;
 }

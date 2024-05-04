@@ -154,7 +154,7 @@ export const BAIT_TO_FISH_MAP = new Map([
   [FishBait.MACKEREL_STEAK, [FoodIngredient.RAW_SWORDFISH]],
   [FishBait.CRAB_MEAT, [FoodIngredient.RAW_OCTOPUS]],
   [FishBait.FROGS, [FoodIngredient.RAW_ELECTRIC_EEL]],
-  [FishBait.TUNA_HEAD, [FoodIngredient.RAW_HAMMERHEAD_SHARK]],
+  [FishBait.TUNA_HEAD, [FoodIngredient.RAW_SHARK]],
   [FishBait.SMALL_FISH_BUNDLE, [FoodIngredient.RAW_GIANT_SQUID]],
   [FishBait.GOLDEN_WORMS, [FoodIngredient.RAW_GOLDEN_KOI]],
 ]);

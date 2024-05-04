@@ -1073,7 +1073,7 @@ export const firearmWeapons = registerItems<FirearmWeaponItemInfo>([
     description: getWeaponData(1834241177).Description,
     group: WeaponGroup.HEAVY,
     ammoGroup: AmmoGroup.PLASMA_RAYS,
-    clipSize: 1,
+    clipSize: 10,
     price: 250000,
     tier: ItemTier.C,
     comparisonStats: {

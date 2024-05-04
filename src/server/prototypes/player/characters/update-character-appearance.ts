@@ -7,7 +7,10 @@ import { getDefaultClothing } from "@shared/modules/items/registry/clothing/get-
 declare module "@altv/server" {
   export interface Player {
     resetClothes(this: Player, component?: number): void;
-    updateCharacterAppearance(this: Player, appearance?: import("@prisma/client").Appearance): void;
+    updateCharacterAppearance(
+      this: Player,
+      appearance?: import("@prisma/client").Appearance,
+    ): Promise<void>;
   }
 }
 
@@ -80,7 +83,7 @@ alt.Player.prototype.resetClothes = function (component?: number) {
   }
 };
 
-alt.Player.prototype.updateCharacterAppearance = function (appearance: Appearance) {
+alt.Player.prototype.updateCharacterAppearance = async function (appearance: Appearance) {
   const isMale = appearance.sex;
 
   if (isMale) {
@@ -88,6 +91,8 @@ alt.Player.prototype.updateCharacterAppearance = function (appearance: Appearanc
   } else {
     this.model = "mp_f_freemode_01";
   }
+
+  await alt.Utils.wait(500);
 
   this.resetClothes();
 

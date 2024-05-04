@@ -14,7 +14,7 @@ export const FoodIngredient = makeKeys<FoodIngredientItemKey>()({
   RAW_SWORDFISH: "rawswordfish",
   RAW_OCTOPUS: "rawoctopus",
   RAW_ELECTRIC_EEL: "rawelectriceel",
-  RAW_HAMMERHEAD_SHARK: "rawhammerheadshark",
+  RAW_SHARK: "rawshark",
   RAW_GIANT_SQUID: "rawgiantsquid",
   RAW_GOLDEN_KOI: "rawgoldenkoi",
 });
@@ -94,8 +94,8 @@ export const foodIngredients = registerItems<FoodIngredientItemInfo>([
     description: "Handle with care. Requires cooking.",
   },
   {
-    key: FoodIngredient.RAW_HAMMERHEAD_SHARK,
-    name: "Raw Hammerhead Shark",
+    key: FoodIngredient.RAW_SHARK,
+    name: "Raw Shark",
     description: "A large predatory fish. Cook before consuming.",
   },
   {

@@ -1,18 +1,15 @@
+import { watch } from "fs";
 import alt from "@altv/server";
 import { minutesToMilliseconds } from "date-fns";
-import {
-  FirearmWeapon,
-  MeleeWeapon,
-  ThrowableWeapon,
-  createItem,
-  getWeaponHash,
-} from "@shared/modules/items";
+import { reactive, shallowReactive, watchEffect } from "vue";
+import { FirearmWeapon, getWeaponHash } from "@shared/modules/items";
 import { createInventory } from "@shared/modules/inventory";
+import { StorageType } from "@shared/store/game-state.store";
 import { createTerroristPed } from "../peds/registry";
 import { createStorage } from "../items-manager";
-import { buildAirDropLootTable } from "../air-drops";
 import { buildLootTable } from "../loot/loot-tables";
 import { CAYO_MAIN_DOCK_LOOT } from "../loot/loot-tables/cayo-main-dock-loot.low";
+import { createAreaOfInterest } from "../areas-of-interest";
 
 const positions = [
   { x: 4842.56591796875, y: -5174.89892578125, z: 2.2929341793060303 },
@@ -64,13 +61,15 @@ const weapons = [
   FirearmWeapon.SMG,
 ];
 
-const thugs = new Set<alt.Ped>();
+const thugs = shallowReactive(new Set<alt.Ped>());
 
 let loot: alt.VirtualEntity | null = null;
+let areaOfInterest: alt.VirtualEntity | null = null;
 
 function setupThugs() {
-  // Cleanup previous loot
+  // Cleanup
   loot?.destroy();
+  areaOfInterest?.destroy();
 
   for (const thug of thugs) {
     thug.destroy();
@@ -90,9 +89,48 @@ function setupThugs() {
     const thug = createTerroristPed({ model, pos, heading: 0 }, { weapon, health: 300 });
     thugs.add(thug);
   }
+
+  areaOfInterest = createAreaOfInterest({ x: 4837.678, y: -5178.569, z: 1.223 }, 500, {
+    areaName: "Cayo Perico Main Dock",
+    areaType: "contraband",
+  });
+
+  console.log(`Created area of interest`, areaOfInterest.id);
 }
 
 setupThugs();
+
+watchEffect(() => {
+  if (thugs.size > 0) {
+    return;
+  }
+
+  alt.log("All thugs dead, respawning in 1 minute");
+  alt.Timers.setTimeout(setupThugs, minutesToMilliseconds(1));
+
+  const inventory = reactive(
+    createInventory({
+      size: 8,
+      items: buildLootTable(CAYO_MAIN_DOCK_LOOT),
+    }),
+  );
+
+  loot = createStorage({
+    type: StorageType.LootBox,
+    pos: { x: 4837.678, y: -5178.569, z: 1.223 },
+    inventory,
+    label: "Main Dock Loot",
+  });
+
+  const stopWatching = watchEffect(() => {
+    if (!inventory.items.length) {
+      loot?.destroy();
+      areaOfInterest?.destroy();
+      areaOfInterest = null;
+      stopWatching();
+    }
+  });
+});
 
 alt.Events.onPedDeath(({ ped }) => {
   handleThugDeath(ped);
@@ -115,19 +153,5 @@ function handleThugDeath(ped: alt.Ped) {
     ped.destroy();
   }, 3000);
 
-  if (thugs.size === 0) {
-    alt.log("All thugs dead, respawning in 1 minute");
-    alt.Timers.setTimeout(setupThugs, minutesToMilliseconds(1));
-
-    loot = createStorage({
-      pos: { x: 4837.678, y: -5178.569, z: 1.223 },
-      inventory: createInventory({
-        size: 8,
-        items: buildLootTable(CAYO_MAIN_DOCK_LOOT),
-      }),
-      label: "Main Dock Loot",
-    });
-  } else {
-    alt.log(`Thugs remaining: ${thugs.size}`);
-  }
+  alt.log(`Thugs remaining: ${thugs.size}`);
 }

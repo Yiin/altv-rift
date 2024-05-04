@@ -10,7 +10,7 @@ import {
 } from "@shared/modules/items/registry/fish-bait.items";
 import { FishingRodItem, createItem, getItemName, isItemFishingRod } from "@shared/modules/items";
 import { EquipmentSlot, InventoryItem, ItemSourceOrigin } from "@shared/interfaces";
-import { rollItem } from "@shared/utility/random";
+import { rollOption } from "@shared/utility/random";
 import { getLevel } from "@shared/modules/experience/experience-table";
 import { InGamePlayer, isInGame } from "@/core/utility/assertions";
 import { sendChatMessage } from "@/modules/chat";
@@ -111,7 +111,7 @@ export function startCatchingFish(player: InGamePlayer, baitKey: FishBaitItemKey
 
   player.gameState.flags.add(PlayerFlags.IsCatchingAFish);
 
-  const gameType = rollItem([[1, FishingGameType.TimeClick]]);
+  const gameType = rollOption([[1, FishingGameType.TimeClick]]);
 
   switch (gameType) {
     case FishingGameType.TimeClick: {
