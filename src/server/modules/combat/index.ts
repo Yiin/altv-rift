@@ -1,3 +1,3 @@
 // @index(['./*.ts', './*'], f => `import "${f.path}";`)
-import "./damage";
+import "./damage.controller";
 // @endindex

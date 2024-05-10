@@ -7,24 +7,26 @@ import { isInGame } from "@/core/utility/assertions";
 declare module "@altv/server" {
   interface Ped {
     taskTurnPedToFaceCoord(pos: alt.IVector3, duration: number): void;
+    playAnimation(dict: string, name: string, speed: number, duration: number): void;
   }
 }
 
-alt.Ped.prototype.taskTurnPedToFaceCoord = function (pos, duration) {
-  if (!this.netOwner) {
-    this.rot = new alt.Vector3(0, 0, angleToFaceTarget(this.pos, pos));
+alt.Ped.prototype.taskTurnPedToFaceCoord = function (pos) {
+  this.rot = new alt.Vector3(0, 0, angleToFaceTarget(this.pos, pos));
+};
+
+alt.Ped.prototype.playAnimation = function (dict, name, speed, duration) {
+  if (!this.valid) {
     return;
   }
 
-  this.netOwner.emitRaw(
-    ClientEvents.FromServer.CALL_NATIVE,
-    "taskTurnPedToFaceCoord",
-    this,
-    pos.x,
-    pos.y,
-    pos.z,
+  this.streamSyncedMeta.task = {
+    type: "animation",
+    dict,
+    name,
+    speed,
     duration,
-  );
+  };
 };
 
 alt.Events.onPlayer(ServerEvents.FromClient.CONVERSATION_STARTED, (player, pedRemoteId) => {

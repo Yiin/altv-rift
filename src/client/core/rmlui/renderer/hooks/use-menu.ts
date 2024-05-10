@@ -5,6 +5,7 @@ import { StorageType } from "@shared/store/game-state.store";
 import { Control, ControlType } from "@/core/constants/controls";
 import { isInConversation } from "@/modules/questing/conversation";
 import { isAirDropInPosition } from "@/modules/inventory";
+import { everyTickWhile } from "@/core/utility/event-helpers";
 import { getCurrentNode, hasCurrentNode } from "../internals/current-node";
 import { AnchorEntity } from "../types";
 import { getFocusedEntity } from "./focused-entity";
@@ -173,8 +174,6 @@ alt.Timers.everyTick(() => {
     return;
   }
 
-  game.disablePlayerFiring(alt.Player.local, false);
-  game.disableControlAction(ControlType.PLAYER_CONTROL, Control.INPUT_ATTACK, true);
   game.disableControlAction(ControlType.PLAYER_CONTROL, Control.INPUT_WEAPON_WHEEL_NEXT, true);
   game.disableControlAction(ControlType.PLAYER_CONTROL, Control.INPUT_WEAPON_WHEEL_PREV, true);
 
@@ -186,7 +185,33 @@ alt.Timers.everyTick(() => {
     game.isDisabledControlJustPressed(ControlType.PLAYER_CONTROL, Control.INPUT_WEAPON_WHEEL_NEXT)
   ) {
     menuControls.selectNext();
-  } else if (game.isDisabledControlJustPressed(ControlType.PLAYER_CONTROL, Control.INPUT_ATTACK)) {
+  }
+});
+
+alt.Events.onKeyDown(({ key }) => {
+  if (key === alt.Enums.KeyCode.E) {
+    if (!currentEntity) {
+      return;
+    }
+
+    const currentMenu = registeredMenus.get(currentEntity);
+
+    if (!currentMenu) {
+      return;
+    }
+
+    if (!currentMenu.node.valid || !currentMenu.node.isVisible) {
+      return;
+    }
+
+    if (!menuControls.isActive) {
+      return;
+    }
+
+    if (isInConversation()) {
+      return;
+    }
+
     game.playSoundFrontend(-1, "SELECT", "HUD_FREEMODE_SOUNDSET", true);
     currentMenu.onSelect(currentMenu.options[currentIndex.value]);
   }

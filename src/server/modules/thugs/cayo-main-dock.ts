@@ -66,6 +66,20 @@ const thugs = shallowReactive(new Set<alt.Ped>());
 let loot: alt.VirtualEntity | null = null;
 let areaOfInterest: alt.VirtualEntity | null = null;
 
+// createEvent({
+//   name: "cayo-main-dock",
+//   timeout: minutesToMilliseconds(10),
+//   start() {
+
+//   },
+//   finish() {
+
+//   },
+//   cleanup() {
+
+//   },
+// });
+
 function setupThugs() {
   // Cleanup
   loot?.destroy();
@@ -106,7 +120,7 @@ watchEffect(() => {
   }
 
   alt.log("All thugs dead, respawning in 1 minute");
-  alt.Timers.setTimeout(setupThugs, minutesToMilliseconds(1));
+  alt.Timers.setTimeout(setupThugs, minutesToMilliseconds(10));
 
   const inventory = reactive(
     createInventory({

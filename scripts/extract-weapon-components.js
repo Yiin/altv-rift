@@ -1,7 +1,7 @@
 import fs from "fs";
 
 fs.readFile(
-  "C:\\Users\\stani\\Projects\\proxy-world\\src\\shared\\modules\\items\\registry\\weapons\\weapons-data.json",
+  "src/shared/modules/items/registry/weapons/weapons-data.json",
   "utf8",
   (err, fileData) => {
     const data = JSON.parse(fileData);
@@ -30,6 +30,3 @@ fs.readFile(
     fs.writeFile("./weapon-components.json", JSON.stringify(weaponComponents, null, 2), () => {});
   },
 );
-
-// auth, inventory, equipment (clothing/weapons), airdrops, questing system, woodcutting, fishing, xp & leveling
-//

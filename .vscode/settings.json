@@ -5,7 +5,7 @@
   },
   "editor.tabSize": 2,
   "[prisma]": {
-    "editor.defaultFormatter": "Prisma.prisma"
+    "editor.defaultFormatter": "ajmnz.prisma-import"
   },
   "editor.formatOnSave": false,
   "editor.codeActionsOnSave": {

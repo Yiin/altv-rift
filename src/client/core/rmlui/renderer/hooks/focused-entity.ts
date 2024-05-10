@@ -1,6 +1,7 @@
 import alt from "@altv/client";
 import game from "@altv/natives";
 import { Raw, markRaw, ref, watch } from "vue";
+import { VirtualEntityType } from "@shared/interfaces";
 import { getScreenResolution } from "@/core/utility/screen-resolution";
 import { AnchorEntity } from "../types";
 
@@ -18,10 +19,40 @@ export function resetFocusedEntity(): void {
 }
 
 export function updateFocusedEntity(entity: AnchorEntity, distanceToCenter: number): void {
+  if (!isEntityFocusable(entity)) {
+    return;
+  }
+
   if (distanceToCenter < getScreenResolution().x / 8 && distanceToCenter < closestDistance) {
     entityToFocus = entity;
     closestDistance = distanceToCenter;
   }
+}
+
+function isEntityFocusable(entity: AnchorEntity): boolean {
+  if (!entity.valid) {
+    return false;
+  }
+
+  if (entity.type === alt.Enums.BaseObjectType.PLAYER) {
+    return false;
+  }
+
+  if (entity.type === alt.Enums.BaseObjectType.PED) {
+    return !!(entity as alt.Ped).interactions?.value.length;
+  }
+
+  if (entity.type === alt.Enums.BaseObjectType.VEHICLE) {
+    return false;
+  }
+
+  if (entity.type === alt.Enums.BaseObjectType.VIRTUAL_ENTITY) {
+    if ((entity as alt.VirtualEntity).streamSyncedMeta.entityType === VirtualEntityType.Storage) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 export function getFocusedEntity(): Raw<AnchorEntity> | null {

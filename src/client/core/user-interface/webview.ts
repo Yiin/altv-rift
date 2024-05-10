@@ -10,6 +10,7 @@ import { clientState } from "../store/client.store";
 import { onKeyDown } from "../utility/event-helpers";
 import { Control, ControlType } from "../constants/controls";
 import { hideRml, showRml } from "../rmlui/renderer/element-renderer";
+import { disableControlActionsUntilKeyup } from "../utility/control-actions";
 
 export const doesElementHaveCursor = createHookableFunction({
   name: "doesElementHaveCursor",
@@ -167,40 +168,13 @@ alt.Events.onKeyDown(({ key }) => {
      * from pausing after closing the window.
      */
     if (closed) {
-      const tick = alt.Timers.everyTick(() => {
-        game.disableControlAction(
-          ControlType.FRONTEND_CONTROL,
-          Control.INPUT_FRONTEND_PAUSE,
-          false,
-        );
-        game.disableControlAction(
-          ControlType.FRONTEND_CONTROL,
-          Control.INPUT_FRONTEND_PAUSE_ALTERNATE,
-          false,
-        );
-      });
-
-      const keyUp = alt.Events.onKeyUp(({ key }) => {
-        if (key === alt.Enums.KeyCode.ESCAPE) {
-          alt.log("Destroying listeners");
-          tick.destroy();
-          keyUp.destroy();
-
-          alt.Timers.nextTick(() => {
-            alt.log("Setting Game Controls Active");
-            game.enableControlAction(
-              ControlType.FRONTEND_CONTROL,
-              Control.INPUT_FRONTEND_PAUSE,
-              false,
-            );
-            game.enableControlAction(
-              ControlType.FRONTEND_CONTROL,
-              Control.INPUT_FRONTEND_PAUSE_ALTERNATE,
-              false,
-            );
-          });
-        }
-      });
+      disableControlActionsUntilKeyup(
+        [
+          [ControlType.FRONTEND_CONTROL, Control.INPUT_FRONTEND_PAUSE],
+          [ControlType.FRONTEND_CONTROL, Control.INPUT_FRONTEND_PAUSE_ALTERNATE],
+        ],
+        alt.Enums.KeyCode.ESCAPE,
+      );
     }
   }
 });

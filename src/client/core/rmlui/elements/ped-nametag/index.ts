@@ -1,7 +1,7 @@
 import alt from "@altv/client";
 import game from "@altv/natives";
 import { Bones } from "@shared/enums/bones";
-import { PedFlags } from "@shared/modules/ped";
+import { PED_HEALTH_ZERO, PedFlags } from "@shared/modules/ped";
 import { br, div } from "../../renderer/rml-tags";
 import { AnchorType } from "../../renderer/anchors";
 import { registerElement } from "../../renderer/element-registry";
@@ -15,6 +15,9 @@ registerElement({
     const nametag = ped.streamSyncedMeta.name;
     const flags = ped.streamSyncedMeta.flags ?? 0;
     const isEnemy = !(flags & PedFlags.Peaceful);
+
+    const health = () => Math.max(0, ped.health - PED_HEALTH_ZERO);
+    const maxHealth = () => ped.maxHealth - PED_HEALTH_ZERO;
 
     return div(
       {
@@ -74,7 +77,8 @@ registerElement({
                       transform: `translateY(-4px)`,
                     },
                   },
-                  [everyFrame(() => (ped.health ? ped.health.toFixed(0) : "Dead"))],
+                  // [everyFrame(() => (ped.health ? (ped.health).toFixed(0) : "Dead"))],
+                  [everyFrame(() => `${Math.max(0, health())} / ${maxHealth()}`)],
                 ),
                 br([]),
                 div(
@@ -93,7 +97,7 @@ registerElement({
                     div({
                       style: {
                         display: "block",
-                        width: everyFrame(() => `${(ped.health / ped.maxHealth) * 100}%`),
+                        width: everyFrame(() => `${(health() / maxHealth()) * 100 || 0}%`),
                         height: "8px",
                         background: "rgb(255, 50, 50)",
                       },

@@ -16,29 +16,12 @@ export async function growTrees(): Promise<void> {
   for (const type in trees) {
     const list = trees[type as keyof typeof trees];
 
-    for (const { Position, Quaternion } of list) {
-      if (
-        IGNORED_TREES.some(
-          (tree) =>
-            tree.pos.x === Position.X &&
-            tree.pos.y === Position.Y &&
-            tree.pos.z === Position.Z &&
-            tree.type === type,
-        )
-      ) {
-        skippedTrees++;
-        continue;
-      }
-      const position = {
-        x: Position.X,
-        y: Position.Y,
-        z: Position.Z + 1.4,
-      };
-      //getUpPosition({ Position, Quaternion });
+    for (const pos of list) {
+      pos.z += 1.4;
 
       const tree = alt.VirtualEntity.create({
         group: virtualTreeGroup,
-        pos: new alt.Vector3(position),
+        pos: new alt.Vector3(pos),
         streamingDistance: 30,
         data: {
           entityType: VirtualEntityType.Tree,
@@ -50,8 +33,9 @@ export async function growTrees(): Promise<void> {
 
       validTrees++;
     }
-    await alt.Utils.waitForNextTick();
   }
+
+  console.log("Trees:", validTrees);
 }
 
 export function isPlayerNearTree(player: InGamePlayer, virtualTree: alt.VirtualEntity): boolean {

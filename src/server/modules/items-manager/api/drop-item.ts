@@ -19,7 +19,7 @@ export function dropItem(
 
     player.removeEquipedItem(source.equipmentSlot);
 
-    dropItemOnTheGround(item, options.pos ?? player.pos.sub(0, 0, 1.5));
+    dropItemOnTheGround(item, options.pos ?? player.pos.sub(0, 0, 0.5));
     return true;
   }
 
@@ -29,7 +29,7 @@ export function dropItem(
     return false;
   }
 
-  dropItemOnTheGround(item, options.pos ?? player.pos.sub(0, 0, 1.5));
+  dropItemOnTheGround(item, options.pos ?? player.pos.sub(0, 0, 0.5));
 
   return true;
 }

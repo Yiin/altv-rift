@@ -45,6 +45,8 @@ export function everyTickWhile(
     callback();
   });
   ticks.push(tick);
+
+  return tick;
 }
 
 export function waitNextTick() {
@@ -105,6 +107,27 @@ export function onKeyDown<T extends alt.Enums.KeyCode>(key: T, callback: (key: T
     ...handler,
     destroy() {
       registeredKeyDownKeys?.delete(key);
+      handler.destroy();
+    },
+  };
+}
+
+export function onKeyUp<T extends alt.Enums.KeyCode>(key: T, callback: (key: T) => void) {
+  const handler = alt.Events.onKeyUp(({ key: keyPressed }) => {
+    if (inputFocusedTimes > 0) {
+      return;
+    }
+    if (alt.isConsoleOpen()) {
+      return;
+    }
+    if (keyPressed === key) {
+      callback(key);
+    }
+  });
+
+  return {
+    ...handler,
+    destroy() {
       handler.destroy();
     },
   };

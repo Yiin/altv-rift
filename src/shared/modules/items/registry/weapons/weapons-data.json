@@ -13364,6 +13364,314 @@
             "playerDamageModifier": 1
         }
     },
+    "946196422": {
+        "HashKey": "WEAPON_UWU",
+        "NameGXT": "WT_RIFLE_CBN2",
+        "DescriptionGXT": "WTD_RIFLE_CBN2",
+        "Name": "Carbine Rifle Mk II UwU",
+        "Description": "This is bespoke, uwu firepower: you couldn't deliver a hail of bullets with more love and care if you inserted them by hand.",
+        "Group": "GROUP_RIFLE",
+        "ModelHashKey": "w_ar_uwu",
+        "DefaultClipSize": 30,
+        "AmmoType": "AMMO_RIFLE",
+        "Components": {
+            "1283078430": {
+                "HashKey": "COMPONENT_UWU_CLIP_01",
+                "NameGXT": "WCT_CLIP1",
+                "DescriptionGXT": "WCD_CLIP1",
+                "Name": "Default UwU Clip",
+                "Description": "Standard capacity for regular ammo.",
+                "ModelHashKey": "w_ar_uwu_mag1",
+                "IsDefault": true
+            },
+            "2201368575": {
+                "HashKey": "COMPONENT_AT_CR_UWU_01",
+                "NameGXT": "WCT_BARR",
+                "DescriptionGXT": "WCD_BARR",
+                "Name": "Default UwU Barrel",
+                "Description": "Stock barrel attachment.",
+                "ModelHashKey": "w_at_cr_uwu_1",
+                "IsDefault": true
+            }
+        },
+        "Tints": [
+            {
+                "NameGXT": "WCT_TINT_0",
+                "Name": "Classic Black"
+            },
+            {
+                "NameGXT": "WCT_TINT_1",
+                "Name": "Classic Gray"
+            },
+            {
+                "NameGXT": "WCT_TINT_2",
+                "Name": "Classic Two-Tone"
+            },
+            {
+                "NameGXT": "WCT_TINT_3",
+                "Name": "Classic White"
+            },
+            {
+                "NameGXT": "WCT_TINT_4",
+                "Name": "Classic Beige"
+            },
+            {
+                "NameGXT": "WCT_TINT_5",
+                "Name": "Classic Green"
+            },
+            {
+                "NameGXT": "WCT_TINT_6",
+                "Name": "Classic Blue"
+            },
+            {
+                "NameGXT": "WCT_TINT_7",
+                "Name": "Classic Earth"
+            },
+            {
+                "NameGXT": "WCT_TINT_8",
+                "Name": "Classic Brown & Black"
+            },
+            {
+                "NameGXT": "WCT_TINT_9",
+                "Name": "Red Contrast"
+            },
+            {
+                "NameGXT": "WCT_TINT_10",
+                "Name": "Blue Contrast"
+            },
+            {
+                "NameGXT": "WCT_TINT_11",
+                "Name": "Yellow Contrast"
+            },
+            {
+                "NameGXT": "WCT_TINT_12",
+                "Name": "Orange Contrast"
+            },
+            {
+                "NameGXT": "WCT_TINT_13",
+                "Name": "Bold Pink"
+            },
+            {
+                "NameGXT": "WCT_TINT_14",
+                "Name": "Bold Purple & Yellow"
+            },
+            {
+                "NameGXT": "WCT_TINT_15",
+                "Name": "Bold Orange"
+            },
+            {
+                "NameGXT": "WCT_TINT_16",
+                "Name": "Bold Green & Purple"
+            },
+            {
+                "NameGXT": "WCT_TINT_17",
+                "Name": "Bold Red Features"
+            },
+            {
+                "NameGXT": "WCT_TINT_18",
+                "Name": "Bold Green Features"
+            },
+            {
+                "NameGXT": "WCT_TINT_19",
+                "Name": "Bold Cyan Features"
+            },
+            {
+                "NameGXT": "WCT_TINT_20",
+                "Name": "Bold Yellow Features"
+            },
+            {
+                "NameGXT": "WCT_TINT_21",
+                "Name": "Bold Red & White"
+            },
+            {
+                "NameGXT": "WCT_TINT_22",
+                "Name": "Bold Blue & White"
+            },
+            {
+                "NameGXT": "WCT_TINT_23",
+                "Name": "Metallic Gold"
+            },
+            {
+                "NameGXT": "WCT_TINT_24",
+                "Name": "Metallic Platinum"
+            },
+            {
+                "NameGXT": "WCT_TINT_25",
+                "Name": "Metallic Gray & Lilac"
+            },
+            {
+                "NameGXT": "WCT_TINT_26",
+                "Name": "Metallic Purple & Lime"
+            },
+            {
+                "NameGXT": "WCT_TINT_27",
+                "Name": "Metallic Red"
+            },
+            {
+                "NameGXT": "WCT_TINT_28",
+                "Name": "Metallic Green"
+            },
+            {
+                "NameGXT": "WCT_TINT_29",
+                "Name": "Metallic Blue"
+            },
+            {
+                "NameGXT": "WCT_TINT_30",
+                "Name": "Metallic White & Aqua"
+            },
+            {
+                "NameGXT": "WCT_TINT_31",
+                "Name": "Metallic Red & Yellow"
+            }
+        ],
+        "LiveryColors": [
+            {
+                "NameGXT": "WCT_C_TINT_0",
+                "Name": "Gray"
+            },
+            {
+                "NameGXT": "WCT_C_TINT_1",
+                "Name": "Dark Gray"
+            },
+            {
+                "NameGXT": "WCT_C_TINT_2",
+                "Name": "Black"
+            },
+            {
+                "NameGXT": "WCT_C_TINT_3",
+                "Name": "White"
+            },
+            {
+                "NameGXT": "WCT_C_TINT_4",
+                "Name": "Blue"
+            },
+            {
+                "NameGXT": "WCT_C_TINT_5",
+                "Name": "Cyan"
+            },
+            {
+                "NameGXT": "WCT_C_TINT_6",
+                "Name": "Aqua"
+            },
+            {
+                "NameGXT": "WCT_C_TINT_7",
+                "Name": "Cool Blue"
+            },
+            {
+                "NameGXT": "WCT_C_TINT_8",
+                "Name": "Dark Blue"
+            },
+            {
+                "NameGXT": "WCT_C_TINT_9",
+                "Name": "Royal Blue"
+            },
+            {
+                "NameGXT": "WCT_C_TINT_10",
+                "Name": "Plum"
+            },
+            {
+                "NameGXT": "WCT_C_TINT_11",
+                "Name": "Dark Purple"
+            },
+            {
+                "NameGXT": "WCT_C_TINT_12",
+                "Name": "Purple"
+            },
+            {
+                "NameGXT": "WCT_C_TINT_13",
+                "Name": "Red"
+            },
+            {
+                "NameGXT": "WCT_C_TINT_14",
+                "Name": "Wine Red"
+            },
+            {
+                "NameGXT": "WCT_C_TINT_15",
+                "Name": "Magenta"
+            },
+            {
+                "NameGXT": "WCT_C_TINT_16",
+                "Name": "Pink"
+            },
+            {
+                "NameGXT": "WCT_C_TINT_17",
+                "Name": "Salmon"
+            },
+            {
+                "NameGXT": "WCT_C_TINT_18",
+                "Name": "Hot Pink"
+            },
+            {
+                "NameGXT": "WCT_C_TINT_19",
+                "Name": "Rust Orange"
+            },
+            {
+                "NameGXT": "WCT_C_TINT_20",
+                "Name": "Brown"
+            },
+            {
+                "NameGXT": "WCT_C_TINT_21",
+                "Name": "Earth"
+            },
+            {
+                "NameGXT": "WCT_C_TINT_22",
+                "Name": "Orange"
+            },
+            {
+                "NameGXT": "WCT_C_TINT_23",
+                "Name": "Light Orange"
+            },
+            {
+                "NameGXT": "WCT_C_TINT_24",
+                "Name": "Dark Yellow"
+            },
+            {
+                "NameGXT": "WCT_C_TINT_25",
+                "Name": "Yellow"
+            },
+            {
+                "NameGXT": "WCT_C_TINT_26",
+                "Name": "Light Brown"
+            },
+            {
+                "NameGXT": "WCT_C_TINT_27",
+                "Name": "Lime Green"
+            },
+            {
+                "NameGXT": "WCT_C_TINT_28",
+                "Name": "Olive"
+            },
+            {
+                "NameGXT": "WCT_C_TINT_29",
+                "Name": "Moss"
+            },
+            {
+                "NameGXT": "WCT_C_TINT_30",
+                "Name": "Turquoise"
+            },
+            {
+                "NameGXT": "WCT_C_TINT_31",
+                "Name": "Dark Green"
+            }
+        ],
+        "DLC": "mpgunrunning",
+        "Stats": {
+            "recoilShakeAmplitude": 0.3330000042915344,
+            "recoilAccuracyMax": 0.5,
+            "recoilAccuracyToAllowHeadshotPlayer": 0.17499999701976776,
+            "recoilRecoveryRate": 1,
+            "animReloadRate": 0.8999999761581421,
+            "vehicleReloadTime": 1,
+            "lockOnRange": 65,
+            "accuracySpread": 3,
+            "range": 120,
+            "damage": 33,
+            "clipSize": 30,
+            "timeBetweenShots": 0.13500000536441803,
+            "headshotDamageModifier": 18,
+            "playerDamageModifier": 1
+        }
+    },
     "4208062921": {
         "HashKey": "WEAPON_CARBINERIFLE_MK2",
         "NameGXT": "WT_RIFLE_CBN2",

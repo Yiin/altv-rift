@@ -2,6 +2,7 @@ import alt from "@altv/server";
 import { PedFlags } from "@shared/modules/ped";
 import { PedKey } from "@shared/modules/ped/list";
 import { createStaticPed } from "./registry";
+import "./events";
 import "./shops";
 
 const peds = [

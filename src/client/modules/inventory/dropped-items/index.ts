@@ -1,45 +1,68 @@
 import alt from "@altv/client";
 import _ from "lodash";
-import { getItemName, isStackable } from "@shared/modules/items";
+import { ItemGrade, getItemName, isStackable } from "@shared/modules/items";
+import { VirtualEntityType } from "@shared/interfaces";
 import { clientState } from "@/core/store/client.store";
-
-alt.Timers.everyTick(() => {
-  // Update the position of the dropped items
-  alt.VirtualEntity.streamedIn.forEach((entity) => {
-    if (entity.streamSyncedMeta.entityType !== "item") {
-      return;
-    }
-
-    const name = getItemName(entity.streamSyncedMeta.item!.key);
-    const amount = isStackable(entity.streamSyncedMeta.item!)
-      ? entity.streamSyncedMeta.item!.amount
-      : 1;
-    alt.Drawing.drawText3dThisFrame(
-      `${name} x ${amount}`,
-      entity.pos,
-      0.3,
-      0.32,
-      new alt.RGBA(255, 255, 255, 255),
-      true,
-      false,
-    );
-  });
-});
 
 // Update the nearby items periodically, so the ordering by distance is updated
 alt.Timers.setInterval(updateNearbyItems, 2000);
 
+alt.Events.onResourceStart(() => {
+  alt.Font.register("client/core/rmlui/fonts/jost/Jost-Regular.ttf");
+});
+
+const labels = new Map<alt.VirtualEntity, alt.TextLabel>();
+
 alt.Events.onWorldObjectStreamIn(({ object }) => {
-  if (!(object instanceof alt.VirtualEntity) || object.streamSyncedMeta.entityType !== "item") {
+  if (
+    !(object instanceof alt.VirtualEntity) ||
+    object.streamSyncedMeta.entityType !== VirtualEntityType.Item
+  ) {
     return;
   }
+
+  const item = object.streamSyncedMeta.item!;
+  const amount = isStackable(item) ? item.amount : 1;
+
+  const label = alt.TextLabel.create({
+    fontName: "Jost",
+    text: `${getItemName(item.key)} x ${amount}`,
+    color:
+      "grade" in item
+        ? {
+            [ItemGrade.COMMON]: new alt.RGBA(255, 255, 255, 255),
+            [ItemGrade.UNCOMMON]: new alt.RGBA(185, 240, 69, 255),
+            [ItemGrade.RARE]: new alt.RGBA(32, 135, 255, 255),
+            [ItemGrade.EPIC]: new alt.RGBA(187, 44, 255, 255),
+            [ItemGrade.LEGENDARY]: new alt.RGBA(255, 218, 87, 255),
+            [ItemGrade.CONTRABAND]: new alt.RGBA(255, 218, 87, 255),
+            [ItemGrade.LIMITED]: new alt.RGBA(0, 255, 234, 255),
+          }[item.grade]
+        : new alt.RGBA(255, 255, 255, 255),
+    pos: object.pos,
+    fontSize: 32,
+    fontScale: 1,
+    outlineColor: new alt.RGBA(0, 0, 0, 255),
+    outlineWidth: 1,
+  })!;
+
+  label.faceCamera = true;
+
+  labels.set(object, label);
 
   updateNearbyItems();
 });
 
 alt.Events.onWorldObjectStreamOut(({ object }) => {
-  if (!(object instanceof alt.VirtualEntity) || object.streamSyncedMeta.entityType !== "item") {
+  if (
+    !(object instanceof alt.VirtualEntity) ||
+    object.streamSyncedMeta.entityType !== VirtualEntityType.Item
+  ) {
     return;
+  }
+
+  if (object.meta.textLabel) {
+    (object.meta.textLabel as alt.TextLabel).destroy();
   }
 
   updateNearbyItems();

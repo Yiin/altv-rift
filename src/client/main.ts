@@ -29,7 +29,6 @@ import { useUser } from "./core/store/user.store";
 import { useCharacter } from "./core/store/character.store";
 import { gameState } from "./core/store/game-state.store";
 import { clientState } from "./core/store/client.store";
-import { document } from "./core/rmlui/renderer/element-renderer";
 
 alt.Events.onConsoleCommand(({ command }) => {
   if (command === "user") {
@@ -40,7 +39,7 @@ alt.Events.onConsoleCommand(({ command }) => {
     alt.log(JSON.stringify(gameState.$state), null, 2);
   } else if (command === "client") {
     alt.log(JSON.stringify(clientState.$state), null, 2);
-  } else if (command === "weapondata") {
+  } else if (command === "dump:weapon-stats") {
     _.chunk(
       alt.WeaponData.all.map((x) => ({
         [x.nameHash]: {
@@ -61,6 +60,11 @@ alt.Events.onConsoleCommand(({ command }) => {
         },
       })),
       10,
-    ).map((x) => alt.log(JSON.stringify(x)));
+    ).map((x) =>
+      alt.Events.emitServerRaw(
+        "dump:weapon-stats",
+        x.reduce((acc, curr) => ({ ...acc, ...curr }), {}),
+      ),
+    );
   }
 });

@@ -5,6 +5,7 @@
 import alt from "@altv/client";
 import game from "@altv/natives";
 import { VirtualEntityType } from "@shared/interfaces";
+import { benchmark } from "@shared/utility/perf";
 import { whileInGame } from "@/core/game-state-hooks/in-game.state";
 import { whileVirtualEntityIsStreamedIn } from "@/core/game-state-hooks/virtual-entity-is-streamed-in.state";
 import { document } from "../../renderer/element-renderer";
@@ -64,6 +65,16 @@ compassContainer.appendChild(nearbyPointsDiv);
 
 const nearbyPoints: any[] = [];
 
+function calculateBearing(x1: number, y1: number, x2: number, y2: number): number {
+  const deltaX = x2 - x1;
+  const deltaY = y2 - y1;
+  const angleRadians = Math.atan2(deltaY, deltaX);
+  let angleDegrees = angleRadians * (180 / Math.PI);
+  let bearing = (90 - angleDegrees + 360) % 360;
+
+  return bearing;
+}
+
 function addNearbyPoint(pos: () => alt.Vector3, type: string) {
   const node = document.createElement("div");
   node.addClass("compass__icon");
@@ -94,7 +105,7 @@ function addNearbyPoint(pos: () => alt.Vector3, type: string) {
       const playerPos = alt.Player.local.pos;
       const targetPos = pos();
 
-      const direction = playerPos.angleToDegrees(targetPos);
+      const direction = calculateBearing(playerPos.x, playerPos.y, targetPos.x, targetPos.y);
       const distance = Math.round(playerPos.distanceTo(targetPos));
 
       return { direction, distance };
@@ -228,7 +239,7 @@ function updateIcons(currentDirection: number) {
     const opacity = absdiff >= 50 ? Math.max(0, 1 - (absdiff - 50) / 20) ** 8 : 1;
 
     const distanceNode = node.querySelector(".compass__icon-distance")!;
-    const text = `${distance}`;
+    const text = distance.toString();
 
     if (distanceNode.childNodes.length) {
       updateTextNode(document, distanceNode.childNodes[0], text);
@@ -252,58 +263,58 @@ whileInGame(() => {
   const stopAreaOfInterestListener = whileVirtualEntityIsStreamedIn(
     (entity) => entity.streamSyncedMeta.entityType === VirtualEntityType.AreaOfInterest,
     (entity) => {
-      console.log("Adding nearby point");
       const { node } = addNearbyPoint(() => entity.pos, entity.streamSyncedMeta.areaType!);
 
       return () => {
-        console.log("Removing nearby point");
         removeNearbyPoint(node);
       };
     },
   );
 
-  const timer = alt.Timers.everyTick(() => {
-    direction = (360 - (game.getGameplayCamRot(2).z % 360)) % 360;
+  const timer = alt.Timers.everyTick(
+    benchmark("compass", () => {
+      direction = (360 - (game.getGameplayCamRot(2).z % 360)) % 360;
 
-    updateTicks(direction);
-    updateIcons(direction);
+      updateTicks(direction);
+      updateIcons(direction);
 
-    const leftTickValue = updatedTickValues[6];
-    const offset =
-      Math.min(
-        (TICK_INTERVAL + direction - leftTickValue) % TICK_INTERVAL,
-        (TICK_INTERVAL + direction - leftTickValue) % TICK_INTERVAL,
-      ) * px(PX_PER_DEGREE);
+      const leftTickValue = updatedTickValues[6];
+      const offset =
+        Math.min(
+          (TICK_INTERVAL + direction - leftTickValue) % TICK_INTERVAL,
+          (TICK_INTERVAL + direction - leftTickValue) % TICK_INTERVAL,
+        ) * px(PX_PER_DEGREE);
 
-    const width = 812;
-    const middle = width / 2;
-    const visibleWidthPercentage = 0.5;
-    const start = px(middle - middle * visibleWidthPercentage);
-    const end = px(middle + middle * visibleWidthPercentage);
-    const spaceBetweenTicks = px(SPACE_BETWEEN_TICKS);
+      const width = 812;
+      const middle = width / 2;
+      const visibleWidthPercentage = 0.5;
+      const start = px(middle - middle * visibleWidthPercentage);
+      const end = px(middle + middle * visibleWidthPercentage);
+      const spaceBetweenTicks = px(SPACE_BETWEEN_TICKS);
 
-    updatedTickValues.forEach((tickValue, index) => {
-      const node = tickNodes.find((node) => node.tickValue === tickValue);
+      updatedTickValues.forEach((tickValue, index) => {
+        const node = tickNodes.find((node) => node.tickValue === tickValue);
 
-      const translateX = index * spaceBetweenTicks - offset;
+        const translateX = index * spaceBetweenTicks - offset;
 
-      const position = translateX + spaceBetweenTicks;
-      const opacity =
-        Math.max(
-          0,
-          position < start
-            ? position / start
-            : position > end
-              ? 1 - (position - end) / (start - spaceBetweenTicks)
-              : 1,
-        ) ** 8;
+        const position = translateX + spaceBetweenTicks;
+        const opacity =
+          Math.max(
+            0,
+            position < start
+              ? position / start
+              : position > end
+                ? 1 - (position - end) / (start - spaceBetweenTicks)
+                : 1,
+          ) ** 8;
 
-      if (node) {
-        node.style.transform = `translateX(${translateX}px)`;
-        node.style.opacity = opacity.toString();
-      }
-    });
-  });
+        if (node) {
+          node.style.transform = `translateX(${translateX}px)`;
+          node.style.opacity = opacity.toString();
+        }
+      });
+    }),
+  );
 
   return () => {
     timer.destroy();

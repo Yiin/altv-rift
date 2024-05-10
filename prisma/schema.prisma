@@ -56,12 +56,13 @@ model Character {
   appearance   Appearance
   health       Float      @default(100)
   maxHealth    Float      @default(100)
+  money        Int        @default(0)
   createdAt    DateTime   @default(now())
+  questFacts   String[]   @default([])
+  blueprints   String[]   @default([])
   inventory    Inventory
   equipment    Json // typed in TS as Equipment
-  questFacts   String[]
   skills       Skills
-  blueprints   String[]
 }
 
 model Shop {

@@ -92,7 +92,7 @@ export function openStorage(player: InGamePlayer, storageId: alt.VirtualEntity["
       origin: ItemSourceOrigin.Storage,
       originId: storageId,
     },
-    validUntil: storage.meta?.validUntil ?? addMinutes(Date.now(), 5).getTime(),
+    validUntil: storage.meta?.validUntil,
     inventory,
   };
 

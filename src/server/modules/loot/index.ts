@@ -10,12 +10,26 @@ const lastOpened = new Map<alt.VirtualEntity, number>();
 
 const lootPositions = [
   // scrap & ammo
-  { x: 4881.341, y: -5112.318, z: 1.174, lootTable: SCRAP_METAL_AMMO_LOW },
+  {
+    label: "Military supplies crate",
+    x: 4881.341,
+    y: -5112.318,
+    z: 1.174,
+    lootTable: SCRAP_METAL_AMMO_LOW,
+  },
   // materials
-  { x: 4824.928, y: -5436.561, z: 15.492, lootTable: WOOD_SCRAP_METAL_LOW },
+  { label: "Trash dump", x: 4824.928, y: -5436.561, z: 15.492, lootTable: WOOD_SCRAP_METAL_LOW },
   // materials
-  { x: 4848.745, y: -5344.653, z: 12.408, lootTable: WOOD_SCRAP_METAL_LOW },
-].map(({ x, y, z, lootTable }) => {
+  { label: "Trash dump", x: 4848.745, y: -5344.653, z: 12.408, lootTable: WOOD_SCRAP_METAL_LOW },
+  // scrap & ammo
+  {
+    label: "Military supplies crate",
+    x: 4896.79,
+    y: -4791.6,
+    z: 2.001371,
+    lootTable: SCRAP_METAL_AMMO_LOW,
+  },
+].map(({ label, x, y, z, lootTable }) => {
   return {
     storage: createStorage({
       pos: { x, y, z },
@@ -23,7 +37,7 @@ const lootPositions = [
         size: 10,
         items: buildLootTable(lootTable),
       }),
-      label: "Storage Box",
+      label: label ?? "Storage Box",
       onOpen() {
         lastOpened.set(this, Date.now());
       },

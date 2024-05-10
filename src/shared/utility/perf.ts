@@ -27,3 +27,17 @@ export const perf = {
     };
   },
 };
+
+export function benchmark(name: string, fn: (...args: any[]) => any) {
+  return function (...args: any[]) {
+    const start = Date.now();
+    const ret = fn(...args);
+    const end = Date.now();
+    const diff = end - start;
+
+    if (diff > 100) {
+      console.log(`${name} took ${diff}ms`);
+    }
+    return ret;
+  };
+}

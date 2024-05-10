@@ -5,6 +5,8 @@ import { PedFlags } from "@shared/modules/ped";
 import { everyTickWhile } from "@/core/utility/event-helpers";
 import { COMBAT_ATTRIBUTE, PED_CONFIG_FLAG, PED_RESET_FLAG } from "@/core/constants/ped-flags";
 
+const pedTickUpdates = new WeakMap<alt.Ped, alt.Timers.EveryTick>();
+
 game.addRelationshipGroup("Friendly", alt.hash("Friendly"));
 game.addRelationshipGroup("Enemy", alt.hash("Enemy"));
 
@@ -16,7 +18,10 @@ alt.Timers.setInterval(() => {
   game.setPedRelationshipGroupHash(alt.Player.local, alt.hash("Friendly"));
 
   for (const ped of alt.Ped.streamedIn) {
-    if (ped.netOwner !== alt.Player.local) {
+    if (
+      ped.netOwner !== alt.Player.local ||
+      (ped.streamSyncedMeta.flags ?? 0) & PedFlags.Peaceful
+    ) {
       continue;
     }
 
@@ -34,6 +39,7 @@ alt.Timers.setInterval(() => {
 alt.Events.onNetOwnerChange(({ entity, newOwner }) => {
   if (entity instanceof alt.Ped && newOwner === alt.Player.local) {
     if (!((entity.streamSyncedMeta.flags ?? 0) & PedFlags.Peaceful)) {
+      alt.log("net owner changed");
       setupTerroristPed(entity);
     }
   }
@@ -47,10 +53,7 @@ export async function setupTerroristPed(ped: alt.Ped): Promise<void> {
   await alt.Utils.waitFor(() => ped.valid && ped.scriptID !== 0);
 
   const onSpawned = alt.Events.onSpawned(() => {
-    if (!ped.valid || !ped.scriptID) {
-      onSpawned.destroy();
-      return;
-    }
+    onSpawned.destroy();
     setupTerroristPed(ped);
   });
 
@@ -89,13 +92,18 @@ export async function setupTerroristPed(ped: alt.Ped): Promise<void> {
     game.giveWeaponToPed(ped, ped.streamSyncedMeta.weapon, 9999, true, true);
   }
 
-  everyTickWhile(
-    () => ped.valid,
-    () => {
-      game.setPedResetFlag(ped, PED_RESET_FLAG.BlockFallTaskFromExplosionDamage, true);
-      game.setPedResetFlag(ped, PED_RESET_FLAG.BlockWeaponReactionsUnlessDead, true);
-      game.setPedResetFlag(ped, PED_RESET_FLAG.DisablePotentialBlastReactions, true);
-      game.setPedResetFlag(ped, PED_RESET_FLAG.PreventAllMeleeTakedowns, true);
-    },
-  );
+  if (!pedTickUpdates.has(ped)) {
+    pedTickUpdates.set(
+      ped,
+      everyTickWhile(
+        () => ped.valid,
+        () => {
+          game.setPedResetFlag(ped, PED_RESET_FLAG.BlockFallTaskFromExplosionDamage, true);
+          game.setPedResetFlag(ped, PED_RESET_FLAG.BlockWeaponReactionsUnlessDead, true);
+          game.setPedResetFlag(ped, PED_RESET_FLAG.DisablePotentialBlastReactions, true);
+          game.setPedResetFlag(ped, PED_RESET_FLAG.PreventAllMeleeTakedowns, true);
+        },
+      ),
+    );
+  }
 }

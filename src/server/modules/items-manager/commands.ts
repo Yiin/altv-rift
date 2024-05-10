@@ -1,4 +1,4 @@
-import { isValidItem, createItem, getItemName } from "@shared/modules/items";
+import { isValidItem, createItem, getItemName, ItemGrade } from "@shared/modules/items";
 import { needsToBeInGame } from "@/core/utility/assertions";
 import { registerCmd, sendChatMessage } from "../chat";
 
@@ -10,7 +10,22 @@ registerCmd("additem", (player, [key, amount, grade]) => {
     return;
   }
 
-  const item = createItem(key, { amount: amount ? +amount : 1, grade });
+  const availableGrades = [
+    ItemGrade.COMMON,
+    ItemGrade.UNCOMMON,
+    ItemGrade.RARE,
+    ItemGrade.EPIC,
+    ItemGrade.LEGENDARY,
+    ItemGrade.CONTRABAND,
+    ItemGrade.LIMITED,
+  ];
+
+  if (grade && !availableGrades.includes(grade)) {
+    sendChatMessage(player, `Invalid item grade. Available grade: ${availableGrades.join(", ")}`);
+    return;
+  }
+
+  const item = createItem(key, { amount: amount ? Math.max(1, +amount) : 1, grade });
 
   if (!item) {
     sendChatMessage(player, "Couldn't create item.");

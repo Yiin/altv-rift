@@ -1,6 +1,7 @@
 import alt from "@altv/client";
 import game from "@altv/natives";
 import { ClientEvents } from "@shared/events/client";
+import { benchmark } from "@shared/utility/perf";
 import { everyTickWhile } from "@/core/utility/event-helpers";
 import { PED_CONFIG_FLAG } from "@/core/constants/ped-flags";
 import { document } from "../../renderer/element-renderer";
@@ -18,9 +19,13 @@ function displayHit(
   // Create a new div element for damage number
   const damageDiv = document.createElement("div");
 
-  damageDiv.innerRML = (damage < 10 ? damage.toFixed(2) : damage.toFixed(0))
-    .replace(/0+$/, "")
-    .replace(/\.$/, "");
+  const textNode = document.createTextNode(
+    damage < 10
+      ? damage.toFixed(2).replace(/0+$/, "").replace(/\.$/, "")
+      : Math.round(damage).toString(),
+  );
+  damageDiv.appendChild(textNode);
+
   damageDiv.style.position = "absolute";
   damageDiv.style["font-weight"] = "bold";
   damageDiv.style.color = type === "armor" ? "#ffffff" : "#ff2222";
@@ -37,11 +42,11 @@ function displayHit(
 
   everyTickWhile(
     () => damageDiv.valid,
-    () => {
+    benchmark("damage pos", () => {
       const { x, y } = alt.worldToScreen(pos);
       damageDiv.style.top = `${y}px`;
       damageDiv.style.left = `${x}px`;
-    },
+    }),
   );
 
   // Remove the div after the animation is done
@@ -63,26 +68,28 @@ declare module "@altv/client" {
   }
 }
 
-alt.Timers.everyTick(() => {
-  if (!game.hasPlayerDamagedAtLeastOnePed(alt.Player.local)) {
-    return;
-  }
-  for (const ped of alt.Ped.streamedIn) {
-    ped.previousHealth ??= ped.health;
-
-    if (ped.previousHealth === ped.health) {
-      continue;
+alt.Timers.everyTick(
+  benchmark("damage", () => {
+    if (!game.hasPlayerDamagedAtLeastOnePed(alt.Player.local)) {
+      return;
     }
+    for (const ped of alt.Ped.streamedIn) {
+      ped.previousHealth ??= ped.health;
 
-    const [wasDamaged, bone] = game.getPedLastDamageBone(ped);
+      if (ped.previousHealth === ped.health) {
+        continue;
+      }
 
-    if (wasDamaged) {
-      const bonePos = game.getPedBoneCoords(ped, bone, 0, 0, 0);
+      const [wasDamaged, bone] = game.getPedLastDamageBone(ped);
 
-      ped.damagedBonePos = bonePos;
+      if (wasDamaged) {
+        const bonePos = game.getPedBoneCoords(ped, bone, 0, 0, 0);
+
+        ped.damagedBonePos = bonePos;
+      }
     }
-  }
-});
+  }),
+);
 
 alt.Events.onServer(
   ClientEvents.FromServer.DISPLAY_DAMAGE_HIT,

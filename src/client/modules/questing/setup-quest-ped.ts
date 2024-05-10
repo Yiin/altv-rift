@@ -8,7 +8,7 @@ import { getPedInteractions } from "./lib/register-ped-interactions";
 
 declare module "@altv/client" {
   export interface Ped {
-    interactions: ComputedRef<PedInteraction<IconName>[]>;
+    interactions?: ComputedRef<PedInteraction<IconName>[]>;
     blip?: alt.Blip["scriptID"];
     cleanupFns: (() => void)[];
   }
@@ -43,7 +43,7 @@ alt.Events.onGameEntityCreate(({ entity }) => {
       .flat(),
   );
   entity.cleanupFns.push(() => {
-    entity.interactions.effect.stop();
+    entity.interactions?.effect.stop();
   });
 
   /**

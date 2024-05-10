@@ -7,6 +7,7 @@ import { AmmoGroup, WeaponGroup } from "./weapon-groups";
 import { getWeaponData } from "./weapon.items";
 
 export const FirearmWeapon = makeKeys<FirearmWeaponItemKey>()({
+  UWU: "uwu", // S
   ADVANCEDRIFLE: "advancedrifle", // D
   APPISTOL: "appistol", // D
   ASSAULTRIFLE: "assaultrifle", // E
@@ -112,6 +113,24 @@ export type FirearmWeaponItemInfo = {
 };
 
 export const firearmWeapons = registerItems<FirearmWeaponItemInfo>([
+  {
+    key: FirearmWeapon.UWU,
+    hash: 946196422,
+    name: "UwU",
+    description: "UwU",
+    group: WeaponGroup.ASSAULT_RIFLE,
+    ammoGroup: AmmoGroup.ASSAULT_RIFLE,
+    clipSize: 30,
+    price: 107500,
+    tier: ItemTier.B,
+    comparisonStats: {
+      damage: 36,
+      rate: 65,
+      accuracy: 55,
+      range: 45,
+      overall: 48.2,
+    },
+  },
   {
     key: FirearmWeapon.ADVANCEDRIFLE,
     hash: 2937143193,

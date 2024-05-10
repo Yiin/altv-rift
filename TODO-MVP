@@ -10,7 +10,8 @@ Introduction MVP:
       ☐ Mining
       ✔ Looting @done
     ☐ Different scrapping points for different materials
-      ☐ Random boxes in the world
+      ✔ Random boxes in the world @done
+      ☐ More random boxes in the world!
   Weapon:
     ☐ Craft weapon weapons
       ✔ Crafting menu @done
@@ -29,6 +30,49 @@ Next steps (Base game MVP):
   ☐ NPC gives you a basic transport
   ☐ Give map to player with defined areas to explore
   ☐ Random raids / events / airdrops
+
+------------------------------------------------------------------------------------------------------------------------
+
+Done:
+
+  - Discord auth
+  - Character creation
+  - Inventory
+  - Equipment (clothing/weapons)
+  - Air-drops
+  - Questing
+  - Woodcutting
+  - Fishing
+  - XP & leveling
+  - Random loot
+  - Crafting
+  - PvE contraband posts
+
+Missing:
+
+  - i18n
+  - UI for currently active events (UI ❌)
+  - Mining
+  - Cooking (UI ❌)
+  - Wood production (UI ❌)
+  - Metal production (UI ❌)
+  - Weapon components (UI ✅)
+  - Custom ammo
+  - Phone (UI ✅)
+  - PvP zones (UI ❌)
+  - Weapon shops (UI ✅)
+  - Clothing shops (UI ✅)
+  - Generic shops (UI ✅)
+    ☐ Implement money
+    ☐ Code shop UI
+    ☐ Code new inventory modals
+    ☐ Implement shop modal
+    ☐ Error messages?
+  - Professions (Mercenary, Medic, Engineer, Transporter)
+  - Guilds (UI ❌)
+  - Territory control (UI ❌)
+  - Vehicle shops (UI ✅)
+  - Housing (UI ❌)
 
 ------------------------------------------------------------------------------------------------------------------------
 

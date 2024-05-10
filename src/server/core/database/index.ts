@@ -2,7 +2,7 @@ import alt from "@altv/server";
 import { PrismaClient } from "@prisma/client";
 import _ from "lodash";
 import { container } from "@shared/dependency-injection";
-import { getDefaultCharacterData } from "@/modules/character/character-data";
+import { getDefaultCharacterData } from "@/modules/character/get-default-character-data";
 
 export const prisma = new PrismaClient();
 
@@ -31,7 +31,13 @@ async function fillMissingCharacterFieldsWithDefaultData() {
       where: {
         id: character._id["$oid"],
       },
-      data: missingData,
+      data: Object.fromEntries(
+        Object.entries(missingData).map(([key, value]) =>
+          value && typeof value === "object" && !Array.isArray(value)
+            ? [key, { set: value }]
+            : [key, value],
+        ),
+      ),
     });
   }
 }

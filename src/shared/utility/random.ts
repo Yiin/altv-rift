@@ -36,6 +36,16 @@ export function getRandomRGBA(): alt.RGBA {
   return new alt.RGBA(r, g, b, a);
 }
 
+export function getRandomPointInCircle(x: number, y: number, radius: number): alt.Vector2 {
+  const angle = Math.random() * Math.PI * 2;
+  const r = Math.random() * radius;
+
+  return new alt.Vector2({
+    x: x + r * Math.cos(angle),
+    y: y + r * Math.sin(angle),
+  });
+}
+
 export function randomPointInTriangle(a: alt.Vector3, b: alt.Vector3, c: alt.Vector3): alt.Vector3 {
   const r1 = Math.sqrt(Math.random());
   const r2 = Math.random();

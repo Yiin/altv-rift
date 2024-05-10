@@ -1,0 +1,11 @@
+files = [
+  'stream/models/*'
+]
+
+[meta]
+'stream/components/COMPONENT_AT_CR_UWU_01/weaponcomponents.meta' = 'WEAPONCOMPONENTSINFO_FILE'
+'stream/components/COMPONENT_UWU_CLIP_01/weaponcomponents.meta' = 'WEAPONCOMPONENTSINFO_FILE'
+'stream/weaponarchetypes.meta' = 'WEAPON_METADATA_FILE'
+'stream/weaponanimations.meta' = 'WEAPON_ANIMATIONS_FILE'
+'stream/pedpersonality.meta' = 'PED_PERSONALITY_FILE'
+'stream/weapons.meta' = 'WEAPONINFO_FILE'

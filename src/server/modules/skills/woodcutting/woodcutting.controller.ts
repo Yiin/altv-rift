@@ -31,9 +31,9 @@ alt.Events.onPlayer("ignoretree", (player, treeId) => {
 
   const closestMatch = trees[treeType].find((match) => {
     const position = {
-      x: match.Position.X,
-      y: match.Position.Y,
-      z: match.Position.Z + 1.8,
+      x: match.x,
+      y: match.y,
+      z: match.z + 1.8,
     };
 
     const dist = new alt.Vector3(position).distanceTo(virtualTree.pos);
@@ -43,9 +43,9 @@ alt.Events.onPlayer("ignoretree", (player, treeId) => {
 
   if (closestMatch) {
     const position = {
-      x: closestMatch.Position.X,
-      y: closestMatch.Position.Y,
-      z: closestMatch.Position.Z,
+      x: closestMatch.x,
+      y: closestMatch.y,
+      z: closestMatch.z,
     };
 
     IGNORED_TREES.push({ pos: position, type: treeType });

@@ -1,3 +1,4 @@
 //// @index('./*.ts', f => `export * from "${f.path}";`)
-import "./character-selection";
+export * from "./character-selection.controller";
+export * from "./get-default-character-data";
 // @endindex

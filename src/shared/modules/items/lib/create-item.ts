@@ -9,10 +9,8 @@ import {
 } from "../registry/weapons/throwable-weapon.items";
 import { MeleeWeaponItem, isItemKeyMeleeWeapon } from "../registry/weapons/melee-weapon.items";
 import { ClothingItem, isItemKeyClothing } from "../registry/clothing/clothing.items";
-import { ConsumableItem, isItemKeyConsumable } from "../registry/consumables/consumable.items";
-import { MaterialItem, isItemKeyMaterial } from "../registry/materials/material.items";
 import { AmmoItem, isItemKeyAmmo } from "../registry/ammo/ammo.items";
-import { FishBaitItem, isItemKeyFishBait } from "../registry";
+import { MetalItem, WoodItem, isItemKeyMetal, isItemKeyWood } from "../registry";
 import { ItemGrade } from "../enums";
 import { isItemKeyStackable } from "./get-item-flags";
 
@@ -63,18 +61,15 @@ export function getItemDefaultData(key: ItemKey): Partial<Item> {
     return {
       customName: null,
     } satisfies Partial<ClothingItem>;
-  } else if (isItemKeyConsumable(key)) {
+  } else if (isItemKeyMetal(key) || isItemKeyWood(key)) {
     return {
       amount: 1,
-    } satisfies Partial<ConsumableItem>;
-  } else if (isItemKeyMaterial(key)) {
+      grade: ItemGrade.COMMON,
+    } satisfies Partial<MetalItem | WoodItem>;
+  } else if (isItemKeyStackable(key)) {
     return {
       amount: 1,
-    } satisfies Partial<MaterialItem>;
-  } else if (isItemKeyFishBait(key)) {
-    return {
-      amount: 1,
-    } satisfies Partial<FishBaitItem>;
+    };
   }
   return {};
 }

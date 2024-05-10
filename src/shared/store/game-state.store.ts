@@ -1,5 +1,4 @@
-import alt from "@altv/shared";
-import { Inventory, PlayerItemSource, StorageSource } from "@shared/interfaces";
+import { Inventory, ItemSourceOrigin, PlayerItemSource, StorageSource } from "@shared/interfaces";
 import { FishBaitItemKey } from "@shared/modules/items";
 import { BlueprintRecipe } from "@shared/modules/production";
 
@@ -12,7 +11,7 @@ export enum PlayerFlags {
 }
 
 export enum StorageType {
-  // Shop = "Shop",
+  Shop = "Shop",
   Storage = "Storage",
   AirDrop = "AirDrop",
   LootBox = "LootBox",
@@ -45,6 +44,12 @@ export interface GameState {
         validUntil: number;
         inventory: Inventory;
       }
+    | {
+        type: StorageType.Shop;
+        label: string;
+        source: StorageSource;
+        inventory: Inventory;
+      }
     | null;
   fishingProgress: {
     baitKey: FishBaitItemKey;
@@ -67,7 +72,19 @@ export interface GameState {
 
 export const getDefaultGameState = (): GameState => ({
   flags: new Set(),
-  openedStorage: null,
+  openedStorage: {
+    type: StorageType.AirDrop,
+    label: "Loot Box",
+    inventory: {
+      size: 10,
+      items: [],
+    },
+    source: {
+      originId: 1,
+      origin: ItemSourceOrigin.Storage,
+    },
+    validUntil: Date.now() + 1000 * 60 * 60,
+  },
   fishingProgress: null,
   workbench: {
     queue: [],
