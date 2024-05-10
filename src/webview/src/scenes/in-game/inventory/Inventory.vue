@@ -146,7 +146,7 @@ onUnmounted(() => {
           >
             <div
               @click="openAmmunitionPanel()"
-              class="flex h-[45px] w-[139px] cursor-pointer items-center justify-center border border-white border-opacity-5 bg-zinc-600 bg-opacity-0 hover:bg-opacity-5"
+              class="flex h-11.25 w-34.75 cursor-pointer items-center justify-center border border-white border-opacity-5 bg-zinc-600 bg-opacity-0 hover:bg-opacity-5"
             >
               <div class="text-sm font-bold uppercase text-white">ammunition</div>
             </div>

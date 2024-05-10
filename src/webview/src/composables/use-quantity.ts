@@ -1,13 +1,13 @@
 import { ref, effect } from "vue";
 
-export function useQuantity() {
+export function useQuantity({ min = 1, max = 99 } = {}) {
   const quantity = ref<number>(1);
 
   function handleQuantityInput(e: Event) {
     const value = (e.target as HTMLInputElement).value;
 
     if (!value.length) {
-      quantity.value = 1;
+      quantity.value = min;
       return;
     }
 
@@ -21,7 +21,7 @@ export function useQuantity() {
   }
 
   effect(() => {
-    quantity.value = Math.max(1, Math.min(99, quantity.value));
+    quantity.value = Math.max(min, Math.min(max, quantity.value));
   });
 
   function handleQuantityKeydown(event: KeyboardEvent) {

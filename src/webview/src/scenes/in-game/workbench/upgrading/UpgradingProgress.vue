@@ -14,7 +14,8 @@ import WorkbenchSlot from "../components/WorkbenchSlot.vue";
 import ItemBadge from "../components/ItemBadge.vue";
 import { useUpgrading } from "../composables/use-upgrading";
 
-const { hasRecipes, selectedItem, upgradeRecipe, currentlyUpgrading } = useUpgrading();
+const { upgradeableItemSources, hasRecipes, selectedItem, upgradeRecipe, currentlyUpgrading } =
+  useUpgrading();
 
 const now = ref(Date.now());
 
@@ -34,7 +35,10 @@ const upgradingProgress = computed(() => {
 
 <template>
   <div class="flex h-full flex-col items-center justify-center text-center">
-    <div class="invisible flex h-46.25 flex-col items-center" />
+    <div
+      v-if="upgradeableItemSources.length > 0"
+      class="invisible flex h-46.25 flex-col items-center"
+    />
     <template v-if="selectedItem && upgradeRecipe">
       <div class="pointer-events-none">
         <div class="relative flex justify-center">

@@ -1,107 +1,112 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
-import { getItemName, isStackable } from "@shared/modules/items";
+import { computed, ref } from "vue";
+import {
+  getItemName,
+  isStackable,
+  getItemCategoryName,
+  getItemDescription,
+} from "@shared/modules/items";
 import { ItemSourceOrigin } from "@shared/interfaces";
 import { type TransferingAmount, useInventory } from "@/store/inventory.store";
-import { getItemImage } from "@/utils/items";
+import { useFloatingStyles } from "@/composables/use-floating-styles";
+import { useQuantity } from "@/composables/use-quantity";
+import ItemIcon from "./ItemIcon.vue";
 
 const props = defineProps<TransferingAmount>();
 
 const { confirmAmountTransfer, cancelAmountTransfer } = useInventory();
-const amount = ref(1);
+const totalAmount = computed(() => {
+  if (isStackable(props.item.item)) {
+    return props.item.item.amount;
+  }
+  return 1;
+});
 
-const itemName = computed(() => getItemName(props.item.item.key));
+const { quantity, handleQuantityInput, handleQuantityKeydown, handleQuantityPaste } = useQuantity({
+  min: 1,
+  max: totalAmount.value,
+});
+
+const isDropping = computed(() => !props.to || props.to.origin === ItemSourceOrigin.Ground);
+
+const { floatingStyles, floatingRef } = useFloatingStyles(props.position);
 </script>
 
 <template>
   <div
-    class="absolute left-1/2 top-1/2 z-max min-w-64 -translate-x-1/2 -translate-y-1/2 rounded-lg bg-neutral-900 p-8 text-white shadow-2xl"
+    ref="floatingRef"
+    v-click-outside="cancelAmountTransfer"
+    :style="floatingStyles"
+    class="drop-shadow-xl"
   >
-    <div>
-      <div>
-        <v-img
-          class="my-5 flex-grow-0 drop-shadow-md"
-          width="10rem"
-          :src="getItemImage(item.item.key)"
-        />
-        <h2 class="text-lg font-bold">
-          {{ to && to.origin !== ItemSourceOrigin.Ground ? "You're moving" : "You're dropping" }}
-          <br />
-          <span class="text-red-500">{{ itemName }}</span>
-        </h2>
+    <div class="items-start justify-start gap-2.5 bg-white p-5">
+      <div class="flex items-center justify-between">
+        <div class="text-base font-bold uppercase text-black">
+          {{ isDropping ? "You're dropping" : "You're transfering" }}
+        </div>
 
         <div
-          v-if="isStackable(item.item)"
-          class="relative mb-6 mt-2 w-full border-y-1 border-neutral-700 pb-3 pt-1"
+          class="cursor-pointer"
+          @click="cancelAmountTransfer"
         >
-          <div class="space-y-4">
-            <div class="space-y-2">
-              <label
-                class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                for="amount"
-              >
-                Amount
-              </label>
-              <div class="align-center flex gap-2">
-                <input
-                  v-model="amount"
-                  class="border-input text-md flex h-10 w-28 rounded-md border bg-neutral-700 px-3 py-2 pt-1 font-bold leading-[0] [appearance:textfield] focus:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-                  placeholder="Enter amount"
-                  type="number"
-                />
-              </div>
-            </div>
-            <div class="flex justify-between gap-2">
-              <button
-                @click="amount += 1"
-                type="button"
-                class="border-input hover:text-accent-foreground inline-flex w-1/4 items-center justify-center rounded-md border bg-neutral-800 px-2 py-1 text-sm font-medium transition-colors hover:bg-neutral-700"
-              >
-                +1
-              </button>
-              <button
-                @click="amount += 10"
-                type="button"
-                class="border-input hover:text-accent-foreground inline-flex w-1/4 items-center justify-center rounded-md border bg-neutral-800 px-2 py-1 text-sm font-medium transition-colors hover:bg-neutral-700"
-              >
-                +10
-              </button>
-              <button
-                @click="amount += 100"
-                type="button"
-                class="border-input hover:text-accent-foreground inline-flex w-1/4 items-center justify-center rounded-md border bg-neutral-800 px-2 py-1 text-sm font-medium transition-colors hover:bg-neutral-700"
-              >
-                +100
-              </button>
-              <button
-                @click="amount = item.item.amount"
-                type="button"
-                class="border-input hover:text-accent-foreground inline-flex w-1/4 items-center justify-center rounded-md border bg-neutral-800 px-2 py-1 text-sm font-medium transition-colors hover:bg-neutral-700"
-              >
-                ALL
-              </button>
+          <img
+            class="pointer-events-none"
+            src="/assets/inventory/modal-close-icon.svg"
+          />
+        </div>
+      </div>
+      <div class="my-2.75 flex w-full items-center justify-start">
+        <ItemIcon
+          :item="props.item.item"
+          height="4.0625rem"
+          width="4.0625rem"
+          hide-amount
+        />
+        <div class="flex flex-grow flex-col gap-0.5">
+          <div class="text-sm font-semibold uppercase leading-none text-zinc-500">
+            {{ getItemCategoryName(item.item.key) }}
+          </div>
+          <div class="text-base font-semibold uppercase leading-none text-black">
+            {{ getItemName(item.item.key) }}
+          </div>
+        </div>
+        <div class="items-center justify-end">
+          <div>
+            <div class="bg-main-400 p-2 text-sm font-extrabold leading-none text-white">
+              x {{ totalAmount }}
             </div>
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="mt-4 flex gap-2">
-      <button
-        @click.stop="() => confirmAmountTransfer(amount)"
-        type="button"
-        class="rounded bg-green-700 px-4 py-2 text-sm font-medium text-white transition-all hover:bg-green-600"
-      >
-        Confirm
-      </button>
-
-      <button
-        @click="cancelAmountTransfer"
-        type="button"
-        class="rounded px-4 py-2 text-sm font-medium hover:drop-shadow-glow"
-      >
-        Cancel
-      </button>
+      <div class="mb-5.5 max-w-56 text-sm font-semibold uppercase text-zinc-500">
+        {{ getItemDescription(item.item.key) }}
+      </div>
+      <div class="flex flex-col gap-2">
+        <div class="flex gap-1.25">
+          <input
+            class="flex h-12.5 w-full items-center justify-start bg-neutral-100 px-5 text-base font-extrabold uppercase text-black"
+            v-model="quantity"
+            @input="handleQuantityInput"
+            @keydown="handleQuantityKeydown"
+            @paste="handleQuantityPaste"
+          />
+          <div
+            class="flex h-12.5 w-12.5 flex-shrink-0 cursor-pointer items-center justify-center bg-main-400 text-white hover:bg-main-300"
+            @click.stop="() => confirmAmountTransfer(quantity)"
+          >
+            <img src="/assets/inventory/transfer-icon.svg" />
+          </div>
+        </div>
+        <div
+          @click.stop="() => confirmAmountTransfer(totalAmount)"
+          class="flex h-12.5 w-full cursor-pointer items-center justify-center gap-2.5 bg-zinc-900 hover:bg-zinc-800"
+        >
+          <div class="text-center text-sm font-extrabold uppercase text-white">
+            {{ isDropping ? "Drop" : "Transfer" }} all
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
+../../../composables/use-quantity

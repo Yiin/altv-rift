@@ -3,8 +3,8 @@ import { computed } from "vue";
 import { getItemName, getItemDescription } from "@shared/modules/items";
 import { hasMatchingPart } from "@shared/modules/production";
 import { useCharacter } from "@/store/synced/character.store";
+import { useQuantity } from "@/composables/use-quantity";
 import ItemIcon from "../../inventory/ItemIcon.vue";
-import { useQuantity } from "../composables/use-quantity";
 import WorkbenchSlot from "../components/WorkbenchSlot.vue";
 import { useCrafting } from "../composables/use-crafting";
 
@@ -133,3 +133,4 @@ const isCurrentlyBeingCrafted = computed(() => queue.value[0] === selectedRecipe
   filter: grayscale(1);
 }
 </style>
+../../../../composables/use-quantity

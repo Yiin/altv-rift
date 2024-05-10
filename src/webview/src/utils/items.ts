@@ -13,31 +13,25 @@ import {
 } from "@shared/modules/items";
 
 export const getItemImage = (key: string) => {
-  const imageKey = ["common_", "uncommon_", "rare_", "epic_", "legendary_"].some((grade) =>
-    key.startsWith(grade),
-  )
-    ? key.split("_").slice(1).join("_")
-    : key;
-
   if (isItemKeyClothing(key)) {
-    return `./assets/items/clothing/${imageKey}.png`;
+    return `./assets/items/clothing/${key}.png`;
   }
   if (isItemKeyWeapon(key)) {
     return `./assets/items/weapons/${getWeaponHashKey(key)}.png`;
   }
   if (isItemKeyAmmo(key)) {
-    return `./assets/items/ammo/${imageKey}.png`;
+    return `./assets/items/ammo/${key}.png`;
   }
   if (isItemKeyMaterial(key)) {
-    return `./assets/items/materials/${imageKey}.png`;
+    return `./assets/items/materials/${key}.png`;
   }
   if (isItemKeyTool(key)) {
-    return `./assets/items/tools/${imageKey}.png`;
+    return `./assets/items/tools/${key}.png`;
   }
   if (isItemKeyWeaponComponent(key)) {
     return `./assets/items/weapon-components/${getWeaponComponentHashKey(key)}.png`;
   }
-  return `./assets/items/${imageKey}.png`;
+  return `./assets/items/${key}.png`;
 };
 
 // function getFallback(item) {

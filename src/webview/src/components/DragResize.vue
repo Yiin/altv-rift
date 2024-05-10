@@ -156,7 +156,7 @@ export default {
       },
     },
     x: {
-      type: Number,
+      type: [String, Number],
       default: 0,
       validator(val) {
         return typeof val === "number";
@@ -245,8 +245,8 @@ export default {
     this.parentWidth = this.parentW ? this.parentW : this.parentElement.clientWidth;
     this.parentHeight = this.parentH ? this.parentH : this.parentElement.clientHeight;
 
-    this.left = this.x;
-    this.top = this.y;
+    this.left = this.x || (window.innerWidth - this.$el.getBoundingClientRect().width) / 2;
+    this.top = this.y || (window.innerHeight - this.$el.getBoundingClientRect().height) / 2;
     this.right =
       this.parentWidth -
       (this.w === "auto" ? this.$refs.container.scrollWidth : this.w) -

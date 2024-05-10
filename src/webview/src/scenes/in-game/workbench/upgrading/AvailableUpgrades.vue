@@ -14,13 +14,7 @@ import {
   type Blueprint,
   type BlueprintRecipe,
 } from "@shared/modules/production";
-import {
-  EquipmentSlot,
-  ItemSourceOrigin,
-  type PlayerEquipmentItemSource,
-  type PlayerInventoryItemSource,
-  type PlayerItemSource,
-} from "@shared/interfaces";
+import { type PlayerItemSource } from "@shared/interfaces";
 import type { Item } from "@shared/modules/items";
 import { useCharacter } from "@/store/synced/character.store";
 import { px } from "@/composables/use-pixel";
@@ -29,7 +23,7 @@ import ItemIcon from "../../inventory/ItemIcon.vue";
 import WorkbenchSlot from "../components/WorkbenchSlot.vue";
 import { useUpgrading, getItemFromPlayerSource } from "../composables/use-upgrading";
 
-const { blueprints, selectedItemSource, selectItem } = useUpgrading();
+const { upgradeableItemSources, selectedItemSource, selectItem } = useUpgrading();
 
 const CategoryFilter = {
   ALL: "all",
@@ -87,26 +81,6 @@ const recipesContainerHeight = computed(() => {
 const categoryFilter = ref<(typeof CategoryFilter)[keyof typeof CategoryFilter]>(
   CategoryFilter.ALL,
 );
-
-const upgradeableItemSources = computed(() => {
-  const inventoryItemSources: PlayerInventoryItemSource[] = useCharacter()
-    .inventory.items.filter(({ item }) => getUpgradeRecipe(item, blueprints.value))
-    .map(({ slot }) => ({
-      origin: ItemSourceOrigin.PlayerInventory,
-      originId: useCharacter().id,
-      inventorySlot: slot,
-    }));
-
-  const equipmentItemSources: PlayerEquipmentItemSource[] = Object.entries(useCharacter().equipment)
-    .filter(([, item]) => item && getUpgradeRecipe(item, blueprints.value))
-    .map(([slot]) => ({
-      origin: ItemSourceOrigin.PlayerEquipment,
-      originId: useCharacter().id,
-      equipmentSlot: slot as EquipmentSlot,
-    }));
-
-  return [...inventoryItemSources, ...equipmentItemSources];
-});
 
 const itemsByCategory = computed(() => {
   const items = Object.values(categories).reduce(

@@ -25,7 +25,11 @@ export const useCharacter = () =>
           [EquipmentSlot.HandgunAmmo]: {
             key: Ammo.HANDGUN_AMMO,
             amount: 1000,
+            grade: ItemGrade.RARE,
           },
+          [EquipmentSlot.Weapon]: createItem("pistol" as any, {
+            grade: ItemGrade.LIMITED,
+          }),
         },
         inventory: {
           size: 30,
@@ -60,6 +64,7 @@ export const useCharacter = () =>
               slot: 3,
               item: createItem("handgunammo" as any, {
                 amount: 100,
+                grade: ItemGrade.RARE,
               }),
             },
             {

@@ -141,12 +141,12 @@ const currentlyCrafting = computed(() => queue.value[0]);
       >
         <WorkbenchSlot
           class="h-22.5 w-22.5 flex-col"
-          v-if="getAmmoDamageMultiplier(selectedRecipe.item.key)"
+          v-if="getAmmoDamageMultiplier(selectedRecipe.item.key, selectedRecipe.item.grade)"
           static
         >
           <h3 class="text-3xl font-bold text-red-500">
             <span class="text-lg">x</span>
-            {{ getAmmoDamageMultiplier(selectedRecipe.item.key) }}
+            {{ getAmmoDamageMultiplier(selectedRecipe.item.key, selectedRecipe.item.grade) }}
           </h3>
           <div class="font-light">Dmg</div>
         </WorkbenchSlot>

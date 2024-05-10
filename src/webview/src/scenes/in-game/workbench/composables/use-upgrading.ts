@@ -7,7 +7,13 @@ import {
   type Blueprint,
 } from "@shared/modules/production";
 import { ServerCall } from "@shared/calls/server";
-import { ItemSourceOrigin, type PlayerItemSource } from "@shared/interfaces";
+import {
+  EquipmentSlot,
+  ItemSourceOrigin,
+  type PlayerEquipmentItemSource,
+  type PlayerInventoryItemSource,
+  type PlayerItemSource,
+} from "@shared/interfaces";
 import { getInventoryItemInSlot } from "@shared/modules/inventory";
 import { useCharacter } from "@/store/synced/character.store";
 import { useGameState } from "@/store/synced/game-state.store";
@@ -46,6 +52,26 @@ const canUpgradeSelectedItem = computed(
   () => upgradeRecipe.value && canCraftRecipe(upgradeRecipe.value, useCharacter().inventory),
 );
 
+const upgradeableItemSources = computed(() => {
+  const inventoryItemSources: PlayerInventoryItemSource[] = useCharacter()
+    .inventory.items.filter(({ item }) => getUpgradeRecipe(item, blueprints.value))
+    .map(({ slot }) => ({
+      origin: ItemSourceOrigin.PlayerInventory,
+      originId: useCharacter().id,
+      inventorySlot: slot,
+    }));
+
+  const equipmentItemSources: PlayerEquipmentItemSource[] = Object.entries(useCharacter().equipment)
+    .filter(([, item]) => item && getUpgradeRecipe(item, blueprints.value))
+    .map(([slot]) => ({
+      origin: ItemSourceOrigin.PlayerEquipment,
+      originId: useCharacter().id,
+      equipmentSlot: slot as EquipmentSlot,
+    }));
+
+  return [...inventoryItemSources, ...equipmentItemSources];
+});
+
 export function getItemFromPlayerSource(source: PlayerItemSource) {
   if (source.origin === ItemSourceOrigin.PlayerEquipment) {
     return useCharacter().equipment[source.equipmentSlot];
@@ -62,6 +88,7 @@ export function useUpgrading() {
     upgradeRecipe,
     canUpgradeSelectedItem,
     currentlyUpgrading,
+    upgradeableItemSources,
     selectItem(source: PlayerItemSource) {
       if (currentlyUpgrading.value) {
         return;

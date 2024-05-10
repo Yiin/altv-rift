@@ -20,6 +20,8 @@ import VehicleShop from "./vehicle-shop/VehicleShop.vue";
 import QuickAccess from "./quick-access/QuickAccess.vue";
 
 const client = useClient();
+
+console.log(client.ui.window);
 </script>
 
 <template>

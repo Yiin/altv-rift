@@ -29,7 +29,7 @@ withDefaults(
 
 <style>
 .workbench-slot--selected {
-  background: url("../../../../../public/assets/workbench/slot-background.svg");
+  background: url("/assets/workbench/slot-background.svg");
   background-size: contain;
 }
 </style>

@@ -1,6 +1,6 @@
 import { ref } from "vue";
 
-const pixelSize = ref<number>(0);
+const pixelSize = ref<number>(1);
 
 function createRemToPxDiv() {
   const div = document.createElement("div");
@@ -27,8 +27,12 @@ function calculatePixelSize() {
 }
 
 window.addEventListener("resize", calculatePixelSize);
-
-calculatePixelSize();
+setTimeout(calculatePixelSize, 100);
+setTimeout(calculatePixelSize, 200);
+setTimeout(calculatePixelSize, 300);
+setTimeout(calculatePixelSize, 400);
+setTimeout(calculatePixelSize, 500);
+setTimeout(calculatePixelSize, 1000);
 
 export function px(value: number) {
   return (value * pixelSize.value) / 4;

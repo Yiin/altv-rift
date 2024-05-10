@@ -308,23 +308,7 @@ const equipment = computed(() => {
     top: null,
     armor: null,
     accessory: null,
-    weapon:
-      "altMock" in globalThis
-        ? ({
-            item: {
-              key: "grenade",
-              durability: 100,
-              ammo: null,
-              components: [],
-              tint: 0,
-            },
-            source: {
-              origin: ItemSourceOrigin.PlayerEquipment,
-              originId: character.value.id,
-              equipmentSlot: "weapon",
-            },
-          } as any)
-        : null,
+    weapon: null,
     gloves: null,
     lefthand: null,
     pants: null,

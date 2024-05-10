@@ -16,6 +16,7 @@ import {
 import { useItemDetails } from "@/composables/use-item-details";
 import { type Hovering, useInventory } from "@/store/inventory.store";
 import { getRandomDescription } from "@/utils/items";
+import { useFloatingStyles } from "@/composables/use-floating-styles";
 
 const props = defineProps<Hovering>();
 
@@ -62,15 +63,15 @@ const combination = computed(() => {
 
   return null;
 });
+
+const { floatingStyles, floatingRef } = useFloatingStyles(props.position);
 </script>
 
 <template>
   <div
-    class="pointer-events-none absolute left-0 top-0 z-max mx-auto w-72 select-none bg-white p-4 text-black"
-    theme="light"
-    :style="{
-      transform: `translate(${position.x}px, ${position.y}px)`,
-    }"
+    ref="floatingRef"
+    class="pointer-events-none z-max mx-auto w-72 select-none bg-white p-4 text-black"
+    :style="floatingStyles"
   >
     <div
       v-if="combination"

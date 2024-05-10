@@ -4,7 +4,7 @@ import { EquipmentSlot } from "@shared/interfaces";
 import { getItemName } from "@shared/modules/items";
 import { useInventory } from "@/store/inventory.store";
 import { useCharacter } from "@/store/synced/character.store";
-import { getItemImage } from "@/utils/items";
+import ItemIcon from "./ItemIcon.vue";
 
 const { unequipItem } = useInventory();
 const equipment = computed(() => useCharacter().equipment);
@@ -28,8 +28,7 @@ const equipedAmmo = computed(() =>
     .map(({ slot, label }) => ({
       slot,
       label,
-      key: equipment.value[slot]!.key,
-      amount: equipment.value[slot]!.amount,
+      item: equipment.value[slot]!,
     })),
 );
 </script>
@@ -59,26 +58,25 @@ const equipedAmmo = computed(() =>
         class="relative max-h-135 overflow-auto rounded bg-white/5 backdrop-blur-[15px]"
       >
         <div
-          v-for="({ slot, label, key, amount }, index) of equipedAmmo"
+          v-for="({ slot, label, item }, index) of equipedAmmo"
           :key="label"
           @click="() => unequipItem(slot)"
           class="flex cursor-pointer items-center gap-5 px-5.5 pb-2.5 pt-4 hover:bg-white/5"
           :class="{ 'border-t-1 border-dashed border-t-white/10': index > 0 }"
         >
-          <div>
-            <v-img
-              :width="42"
-              :height="30"
-              :src="getItemImage(key)"
-            />
-          </div>
+          <ItemIcon
+            :item="item"
+            width="3rem"
+            height="3rem"
+            hide-amount
+          />
           <div class="flex flex-col gap-1">
-            <div class="text-sm font-bold uppercase text-white">{{ getItemName(key) }}</div>
+            <div class="text-sm font-bold uppercase text-white">{{ getItemName(item.key) }}</div>
             <div class="text-sm font-semibold uppercase text-gray-500">{{ label }}</div>
           </div>
           <div class="flex flex-1 justify-end">
             <div class="rounded bg-zinc-300/10 px-1.5 pb-0.5 pt-1 text-xs font-bold text-white">
-              {{ amount }}
+              {{ item.amount }}
             </div>
           </div>
         </div>

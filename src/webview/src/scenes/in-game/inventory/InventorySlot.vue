@@ -112,7 +112,7 @@ registerItemSlot({
       ref="nodeRef"
       class="h-21.25 w-21.25 border-2 border-solid"
       :class="{
-        'scale-105 drop-shadow-[0px_0px_6px_black]': draggingOver || (item && !dragging),
+        'scale-105 drop-shadow-[0px_0px_3px_#000000AA]': draggingOver || (item && !dragging),
         'border-white/50': selected,
         'border-transparent': !selected,
       }"
