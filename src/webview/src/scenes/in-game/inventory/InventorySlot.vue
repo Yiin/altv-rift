@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
+import { onUnmounted } from "vue";
 import { isItemUsable, isItemEquipable } from "@shared/modules/items";
 import { isItemPreviewable } from "@shared/modules/items/lib/is-item-previewable";
 import {
@@ -33,6 +34,7 @@ const {
   useItem,
   equipItem,
   registerItemSlot,
+  unregisterItemSlot,
 } = useInventory();
 
 const nodeRef = ref<HTMLDivElement>();
@@ -93,9 +95,17 @@ function useOrEquipItem() {
   }
 }
 
-registerItemSlot({
+const itemSlot = {
   source: props.source,
   node: nodeRef,
+};
+
+onMounted(() => {
+  registerItemSlot(itemSlot);
+});
+
+onUnmounted(() => {
+  unregisterItemSlot(itemSlot);
 });
 </script>
 

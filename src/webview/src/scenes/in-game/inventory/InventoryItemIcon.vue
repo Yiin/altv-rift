@@ -27,7 +27,6 @@ const isDraggingOrDropping = computed(() =>
 const shouldShow = computed(
   () =>
     currentInteraction.value.type !== InteractionType.TransferingAmount ||
-    !currentInteraction.value.state.outside ||
     !isSameItemSource(slottedItem.value.source, currentInteraction.value.state.item.source),
 );
 

@@ -1,6 +1,6 @@
 import alt from "@altv/client";
 import _ from "lodash";
-import { ItemGrade, getItemName, isStackable } from "@shared/modules/items";
+import { Item, ItemGrade, getItemName, isStackable } from "@shared/modules/items";
 import { VirtualEntityType } from "@shared/interfaces";
 import { clientState } from "@/core/store/client.store";
 
@@ -61,9 +61,33 @@ alt.Events.onWorldObjectStreamOut(({ object }) => {
     return;
   }
 
-  if (object.meta.textLabel) {
-    (object.meta.textLabel as alt.TextLabel).destroy();
+  labels.get(object)?.destroy();
+
+  updateNearbyItems();
+});
+
+alt.Events.onStreamSyncedMetaChange(({ entity, key, newValue }) => {
+  if (
+    !(entity instanceof alt.VirtualEntity) ||
+    entity.streamSyncedMeta.entityType !== VirtualEntityType.Item
+  ) {
+    return;
   }
+
+  if (key !== "item") {
+    return;
+  }
+
+  const item = newValue as Item | undefined;
+
+  if (!item) {
+    labels.get(entity)?.destroy();
+    return;
+  }
+
+  const amount = isStackable(item) ? item.amount : 1;
+
+  labels.get(entity)!.text = `${getItemName(item.key)} x ${amount}`;
 
   updateNearbyItems();
 });
@@ -75,7 +99,7 @@ function updateNearbyItems() {
 
   // Filter and update for items within the distance
   alt.VirtualEntity.streamedIn.forEach((entity) => {
-    if (entity.streamSyncedMeta.entityType !== "item") {
+    if (entity.streamSyncedMeta.entityType !== VirtualEntityType.Item) {
       return;
     }
 

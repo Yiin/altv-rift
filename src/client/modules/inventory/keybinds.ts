@@ -1,12 +1,10 @@
 import alt from "@altv/client";
-import game from "@altv/natives";
 import { watch } from "vue";
 import { WindowType } from "@shared/store/client.store";
 import { ServerCall } from "@shared/calls/server";
 import { EquipmentSlot } from "@shared/interfaces";
 import { onKeyDown } from "@/core/utility/event-helpers";
-import { clientState } from "@/core/store/client.store";
-import { closeWindow, openWindow, toggleWindow } from "@/core/user-interface/webview";
+import { isWindowOpen, toggleWindow } from "@/core/user-interface/webview";
 import { whileInGame } from "@/core/game-state-hooks/in-game.state";
 import { useCharacter } from "@/core/store/character.store";
 import { rpc } from "@/core/rpc";
@@ -74,7 +72,6 @@ function handleQuickSlot(
       [alt.Enums.KeyCode.KEY4]: EquipmentSlot.QuickSlot4,
     } as const
   )[key];
-  alt.log("Handling quick slot", quickSlot);
 
   rpc.callServer(ServerCall.FromClient.USE_QUICK_SLOT, quickSlot);
 }

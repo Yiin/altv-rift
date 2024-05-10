@@ -2,6 +2,7 @@
 import { computed } from "vue";
 import Window from "@/components/Window.vue";
 import { useCharacter } from "@/store/synced/character.store";
+import { px } from "@/composables/use-pixel";
 import SkillProgressBar from "./SkillProgressBar.vue";
 
 const character = useCharacter();
@@ -41,7 +42,7 @@ const defaultPosition = computed(() => {
   <Window
     :x="defaultPosition.x"
     :y="defaultPosition.y"
-    :minw="400"
+    :minw="px(400)"
     :is-active="false"
     :sticks="[]"
   >

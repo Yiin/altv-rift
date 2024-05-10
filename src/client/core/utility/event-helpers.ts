@@ -1,6 +1,6 @@
 import alt from "@altv/client";
 import { ClientEvents } from "@shared/events/client";
-import { useWebview } from "../user-interface/webview";
+import { isWindowOpen, useWebview } from "../user-interface/webview";
 
 const intervals: alt.Timers.Interval[] = [];
 const timeouts: alt.Timers.Timeout[] = [];
@@ -96,6 +96,9 @@ export function onKeyDown<T extends alt.Enums.KeyCode>(key: T, callback: (key: T
       return;
     }
     if (alt.isConsoleOpen()) {
+      return;
+    }
+    if (isWindowOpen()) {
       return;
     }
     if (keyPressed === key) {

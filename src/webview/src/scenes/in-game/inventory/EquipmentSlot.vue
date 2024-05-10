@@ -88,17 +88,12 @@ const equipmentSlots = {
 
 const props = defineProps<{
   name: Exclude<EquipmentSlot, AmmoEquipmentSlot>;
+  dontRegister?: boolean;
 }>();
 
 const character = useCharacter();
-const {
-  equipment,
-  currentInteraction,
-  unequipItem,
-  registerItemSlot,
-  handleMouseDown,
-  openContextMenu,
-} = useInventory();
+const { equipment, currentInteraction, unequipItem, registerItemSlot, openContextMenu } =
+  useInventory();
 
 const slot = computed(() => equipmentSlots[props.name]);
 const item = computed(() => equipment.value[props.name] ?? null);
@@ -134,14 +129,16 @@ const draggingStyle = computed(() => {
 
 const nodeRef = ref<HTMLDivElement>();
 
-registerItemSlot({
-  source: {
-    origin: ItemSourceOrigin.PlayerEquipment,
-    originId: character.id,
-    equipmentSlot: props.name,
-  },
-  node: nodeRef,
-});
+if (!props.dontRegister) {
+  registerItemSlot({
+    source: {
+      origin: ItemSourceOrigin.PlayerEquipment,
+      originId: character.id,
+      equipmentSlot: props.name,
+    },
+    node: nodeRef,
+  });
+}
 </script>
 
 <template>
@@ -154,6 +151,7 @@ registerItemSlot({
   >
     <div
       v-if="!item"
+      :key="`empty-${name}`"
       class="h-full w-full bg-[center_35%] pt-14 text-center text-xs"
       :style="{
         backgroundImage: 'image' in slot ? `url(${slot.image})` : undefined,
@@ -165,9 +163,9 @@ registerItemSlot({
     </div>
     <ItemIcon
       v-else
+      :key="`item-${item.item.key}-${name}`"
       :item="item.item"
       :style="draggingStyle"
-      @mousedown="handleMouseDown"
       @dblclick="() => unequipItem(name)"
       @contextmenu.prevent="(e) => item && openContextMenu(item, e)"
     />

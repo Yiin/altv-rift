@@ -159,6 +159,14 @@ export function closeWindow() {
   return closed;
 }
 
+export function isWindowOpen(windowType?: WindowType) {
+  if (!windowType) {
+    return !!clientState.ui.window;
+  }
+
+  return clientState.ui.window?.type === windowType;
+}
+
 alt.Events.onKeyDown(({ key }) => {
   if (key === alt.Enums.KeyCode.ESCAPE) {
     const closed = closeWindow();

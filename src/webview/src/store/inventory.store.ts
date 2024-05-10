@@ -45,7 +45,6 @@ export type TransferingAmount = {
     x: number;
     y: number;
   };
-  outside?: true;
 };
 
 export type Hovering = {
@@ -333,6 +332,12 @@ function updateInteraction(interaction: ItemInteraction) {
 function registerItemSlot(slot: ItemNode) {
   itemNodes.push(markRaw(slot));
 }
+function unregisterItemSlot(slot: ItemNode) {
+  const index = itemNodes.findIndex((s) => s.source === slot.source);
+  if (index !== -1) {
+    itemNodes.splice(index, 1);
+  }
+}
 function useItem(source: InventoryItemSource | GroundItemSource) {
   return rpc.callServer(ServerCall.FromWebview.USE_ITEM, source);
 }
@@ -414,17 +419,20 @@ function transferAmount(
 }
 function confirmAmountTransfer(amount: number) {
   if (currentInteraction.value.type !== InteractionType.TransferingAmount) {
+    console.log("not transferring amount");
     return;
   }
 
   const slottedItem = currentInteraction.value.state.item;
 
   if (!slottedItem) {
+    console.log("no item");
     currentInteraction.value.state.reject();
     return;
   }
 
   if (amount <= 0) {
+    console.log("amount is 0");
     return;
   }
 
@@ -436,6 +444,7 @@ function confirmAmountTransfer(amount: number) {
 }
 function cancelAmountTransfer() {
   if (currentInteraction.value.type === InteractionType.TransferingAmount) {
+    console.log("rejecting");
     currentInteraction.value.state.reject();
   }
 }
@@ -473,24 +482,30 @@ function handleMouseDown(e: MouseEvent) {
   const source = getItemSourceFromScreenPos(e.clientX, e.clientY);
 
   if (!source) {
+    console.log("no source");
     return;
   }
 
   const node = getItemNodeFromSource(source);
 
   if (!node) {
+    console.log("no node");
     return;
   }
 
   if (!(node.contains(e.target as HTMLElement) || (e.target as HTMLElement).contains(node))) {
+    console.log("not in node");
     return;
   }
 
   const item = getItemFromSource(source);
 
   if (!item) {
+    console.log("no item");
     return;
   }
+
+  console.log("dragging maybe");
 
   updateInteraction({
     type: InteractionType.Dragging,
@@ -618,7 +633,10 @@ async function handleMouseUp(e: MouseEvent) {
       const stopWatching = watchEffect(() => {
         const item = getItemFromSource(from);
         if (!item || ("amount" in item.item && item.item.amount < fullAmount)) {
-          if (currentInteraction.value.type === InteractionType.Dragging) {
+          if (
+            currentInteraction.value.type === InteractionType.Dragging ||
+            currentInteraction.value.type === InteractionType.TransferingAmount
+          ) {
             updateInteraction(IDLE);
           }
           stopWatching();
@@ -876,6 +894,7 @@ export function useInventory() {
     ammunitionPanelRef,
     updateInteraction,
     registerItemSlot,
+    unregisterItemSlot,
     useItem,
     equipItem,
     unequipItem,

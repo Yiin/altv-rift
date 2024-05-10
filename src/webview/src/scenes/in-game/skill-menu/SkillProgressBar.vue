@@ -22,7 +22,7 @@ const progress = computed(() => getLevelProgress(props.xp));
         {{ level }}
       </p>
     </span>
-    <div class="flex w-full flex-col items-center">
+    <div class="mt-2 flex w-full flex-col items-center">
       <span
         role="progressbar"
         aria-labelledby="ProgressLabel"

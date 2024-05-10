@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed } from "vue";
 import {
   getItemName,
   isStackable,
@@ -7,12 +7,16 @@ import {
   getItemDescription,
 } from "@shared/modules/items";
 import { ItemSourceOrigin } from "@shared/interfaces";
+import { StorageType } from "@shared/store/game-state.store";
 import { type TransferingAmount, useInventory } from "@/store/inventory.store";
 import { useFloatingStyles } from "@/composables/use-floating-styles";
 import { useQuantity } from "@/composables/use-quantity";
+import { useGameState } from "@/store/synced/game-state.store";
 import ItemIcon from "./ItemIcon.vue";
 
 const props = defineProps<TransferingAmount>();
+
+const gameState = useGameState();
 
 const { confirmAmountTransfer, cancelAmountTransfer } = useInventory();
 const totalAmount = computed(() => {
@@ -28,8 +32,47 @@ const { quantity, handleQuantityInput, handleQuantityKeydown, handleQuantityPast
 });
 
 const isDropping = computed(() => !props.to || props.to.origin === ItemSourceOrigin.Ground);
+const isBuying = computed(
+  () =>
+    props.item.source.origin === ItemSourceOrigin.Storage &&
+    props.to?.origin === ItemSourceOrigin.PlayerInventory &&
+    gameState.openedStorage?.type === StorageType.Shop,
+);
+
+const isSelling = computed(
+  () =>
+    props.item.source.origin === ItemSourceOrigin.PlayerInventory &&
+    props.to?.origin === ItemSourceOrigin.Storage &&
+    gameState.openedStorage?.type === StorageType.Shop,
+);
 
 const { floatingStyles, floatingRef } = useFloatingStyles(props.position);
+
+const title = computed(() => {
+  if (isDropping.value) {
+    return "You're dropping";
+  }
+  if (isBuying.value) {
+    return "You're buying";
+  }
+  if (isSelling.value) {
+    return "You're selling";
+  }
+  return "You're transfering";
+});
+
+const actionAll = computed(() => {
+  if (isDropping.value) {
+    return "Drop All";
+  }
+  if (isBuying.value) {
+    return "Buy All";
+  }
+  if (isSelling.value) {
+    return "Sell All";
+  }
+  return "Transfer All";
+});
 </script>
 
 <template>
@@ -37,12 +80,12 @@ const { floatingStyles, floatingRef } = useFloatingStyles(props.position);
     ref="floatingRef"
     v-click-outside="cancelAmountTransfer"
     :style="floatingStyles"
-    class="drop-shadow-xl"
+    class="z-max drop-shadow-xl"
   >
     <div class="items-start justify-start gap-2.5 bg-white p-5">
       <div class="flex items-center justify-between">
         <div class="text-base font-bold uppercase text-black">
-          {{ isDropping ? "You're dropping" : "You're transfering" }}
+          {{ title }}
         </div>
 
         <div
@@ -91,7 +134,7 @@ const { floatingStyles, floatingRef } = useFloatingStyles(props.position);
             @paste="handleQuantityPaste"
           />
           <div
-            class="flex h-12.5 w-12.5 flex-shrink-0 cursor-pointer items-center justify-center bg-main-400 text-white hover:bg-main-300"
+            class="flex h-12.5 w-12.5 flex-shrink-0 cursor-pointer items-center justify-center bg-green-600 text-white hover:bg-green-400"
             @click.stop="() => confirmAmountTransfer(quantity)"
           >
             <img src="/assets/inventory/transfer-icon.svg" />
@@ -102,7 +145,7 @@ const { floatingStyles, floatingRef } = useFloatingStyles(props.position);
           class="flex h-12.5 w-full cursor-pointer items-center justify-center gap-2.5 bg-zinc-900 hover:bg-zinc-800"
         >
           <div class="text-center text-sm font-extrabold uppercase text-white">
-            {{ isDropping ? "Drop" : "Transfer" }} all
+            {{ actionAll }}
           </div>
         </div>
       </div>

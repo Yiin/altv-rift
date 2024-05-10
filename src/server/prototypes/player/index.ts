@@ -5,6 +5,7 @@ import "./characters/delete-character";
 import "./characters/get-characters";
 import "./characters/load-character";
 import "./characters/save-character";
+import "./characters/start-game";
 import "./characters/update-character-appearance";
 import "./equipment/apply-equipment";
 import "./equipment/get-equiped-item-in-slot";
