@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { type GenericStorage } from "@shared/store/game-state.store";
+import { type ShopStorage } from "@shared/store/game-state.store";
 import InventorySlot from "../InventorySlot.vue";
 
-defineProps<GenericStorage>();
+defineProps<ShopStorage>();
 </script>
 
 <template>

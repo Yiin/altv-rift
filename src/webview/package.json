@@ -19,6 +19,7 @@
     "alpha-serializer": "^0.5.6",
     "date-fns": "^3.4.0",
     "i18next-vue": "^4.0.0",
+    "json-editor-vue": "^0.15.1",
     "lodash-es": "^4.17.21",
     "pinia": "^2.1.7",
     "vue": "^3.4.21",

@@ -2,11 +2,10 @@
 import { computed } from "vue";
 import { EquipmentSlot } from "@shared/interfaces";
 import { getItemName } from "@shared/modules/items";
-import { useInventory } from "@/store/inventory.store";
+import { unequipItem } from "@/store/inventory";
 import { useCharacter } from "@/store/synced/character.store";
 import ItemIcon from "./ItemIcon.vue";
 
-const { unequipItem } = useInventory();
 const equipment = computed(() => useCharacter().equipment);
 const equipedAmmo = computed(() =>
   (

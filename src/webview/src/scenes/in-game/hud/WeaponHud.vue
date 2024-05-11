@@ -8,15 +8,14 @@ import {
   getWeaponAmmoEquipmentSlot,
   isWeaponWithClip,
 } from "@shared/modules/items";
-import { useInventory } from "@/store/inventory.store";
+import { getSlottedEquipment } from "@/store/inventory";
 import { getItemClasses, getItemImage } from "@/utils/items";
 import { useCharacter } from "@/store/synced/character.store";
 
-const { equipment } = useInventory();
 const character = useCharacter();
 
 const weaponItem = computed(() => {
-  const { weapon } = equipment.value;
+  const { weapon } = getSlottedEquipment();
 
   if (!weapon) {
     return null;
@@ -88,7 +87,7 @@ const weapon = computed(() => {
 <template>
   <div
     v-if="weapon"
-    class="absolute right-0 top-1/3 m-10 flex flex-col items-end gap-1"
+    class="flex flex-col items-end gap-1"
   >
     <div
       class="z-max h-15 w-30 origin-bottom-right bg-contain bg-right-bottom"

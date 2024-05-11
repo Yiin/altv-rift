@@ -62,6 +62,7 @@ export enum WindowType {
   WORKBENCH,
   VEHICLE_SHOP,
   STORAGE,
+  ADMIN,
 }
 
 export type CurrentWindow = {

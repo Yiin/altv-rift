@@ -13,6 +13,8 @@ export async function growTrees(): Promise<void> {
   let skippedTrees = 0;
   let validTrees = 0;
 
+  const WAIT_EVERY = 1000;
+
   for (const type in trees) {
     const list = trees[type as keyof typeof trees];
 
@@ -32,6 +34,10 @@ export async function growTrees(): Promise<void> {
       refillTree(tree);
 
       validTrees++;
+
+      if (validTrees % WAIT_EVERY === 0) {
+        await alt.Utils.waitForNextTick();
+      }
     }
   }
 

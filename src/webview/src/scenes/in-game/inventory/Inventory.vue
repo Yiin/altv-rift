@@ -1,12 +1,24 @@
 <script setup lang="ts">
-import { onUnmounted, ref } from "vue";
+import { computed, onUnmounted, ref } from "vue";
 import { ItemSourceOrigin, EquipmentSlot as EquipmentSlotEnum } from "@shared/interfaces";
-import { InteractionType, useInventory } from "@/store/inventory.store";
+import { StorageType } from "@shared/store/game-state.store";
 import { useEventListener } from "@/composables/use-event-listener";
 import { useGapSize } from "@/composables/use-gap-size";
 import { useGameState } from "@/store/synced/game-state.store";
 import { useCharacter } from "@/store/synced/character.store";
-import Icon from "../../../components/Icon/Icon.vue";
+import {
+  handleInventoryMouseDown,
+  handleInventoryMouseMove,
+  handleInventoryMouseUp,
+  handleInventoryClick,
+  resetInventoryState,
+  closeAmmunitionPanel,
+  openAmmunitionPanel,
+  getCurrentInventoryInteraction,
+  getInventorySize,
+  getPreviewingItem,
+  InventoryInteractionType,
+} from "@/store/inventory";
 import DarkBackground from "../../../components/DarkBackground.vue";
 import BackButtons from "../../../components/buttons/BackButtons.vue";
 import ContextMenu from "./ContextMenu.vue";
@@ -14,36 +26,32 @@ import ItemInfo from "./ItemInfo.vue";
 import EquipmentSlot from "./EquipmentSlot.vue";
 import InventorySlot from "./InventorySlot.vue";
 import StorageItems from "./storage/Storage.vue";
+import ShopItems from "./storage/Shop.vue";
 import GroundItems from "./ground/Ground.vue";
 import AmountTransfer from "./AmountTransfer.vue";
 import Ammunition from "./Ammunition.vue";
 import ItemPreview from "./item-preview/ItemPreview.vue";
 
 const character = useCharacter();
-const {
-  size,
-  handleMouseDown,
-  handleMouseMove,
-  handleMouseUp,
-  handleClick,
-  currentInteraction,
-  previewingItem,
-  $reset,
-  closeAmmunitionPanel,
-  openAmmunitionPanel,
-} = useInventory();
 const gameState = useGameState();
 
 const containerRef = ref<HTMLDivElement>();
 const { gapSize, widths } = useGapSize(containerRef);
 
-useEventListener("mousedown", handleMouseDown);
-useEventListener("mousemove", handleMouseMove);
-useEventListener("mouseup", handleMouseUp);
-useEventListener("click", handleClick, true);
+const money = computed(() => {
+  return new Intl.NumberFormat("lt-LT").format(character.money);
+});
+
+useEventListener("mousedown", handleInventoryMouseDown);
+useEventListener("mousemove", handleInventoryMouseMove);
+useEventListener("mouseup", handleInventoryMouseUp);
+useEventListener("click", handleInventoryClick, true);
+
+const currentInteraction = getCurrentInventoryInteraction();
+const previewingItem = computed(() => getPreviewingItem());
 
 onUnmounted(() => {
-  $reset();
+  resetInventoryState();
 });
 </script>
 
@@ -57,52 +65,8 @@ onUnmounted(() => {
       <div>
         <div class="flex items-center gap-24 uppercase">
           <div class="flex flex-col">
-            <h3 class="text-xl font-bold text-white">Your vitals</h3>
-            <span class="text-sm font-semibold text-deepGray">health & energy</span>
-          </div>
-          <div class="flex gap-16">
-            <div class="flex items-center gap-6">
-              <div class="flex items-center justify-center border border-solid border-white/10 p-3">
-                <Icon
-                  name="health"
-                  class="fill-white"
-                  :size="1.5"
-                />
-              </div>
-              <div>
-                <p class="mb-1 text-sm text-white">
-                  {{ 100 }}
-                  <span class="text-deepGray">/ {{ 100 }}</span>
-                </p>
-                <div class="relative h-1 w-24 bg-white/10">
-                  <div
-                    class="absolute bottom-0 left-0 top-0 bg-limeZest"
-                    :style="{ width: `${100}%` }"
-                  ></div>
-                </div>
-              </div>
-            </div>
-            <div class="flex items-center gap-6">
-              <div class="flex items-center justify-center border border-solid border-white/10 p-3">
-                <Icon
-                  name="stamina"
-                  class="fill-white"
-                  :size="1.5"
-                />
-              </div>
-              <div>
-                <p class="mb-1 text-sm text-white">
-                  {{ 60 }}
-                  <span class="text-deepGray">/ {{ 200 }}</span>
-                </p>
-                <div class="relative h-1 w-24 bg-white/10">
-                  <div
-                    class="absolute bottom-0 left-0 top-0 bg-aquaBlue"
-                    :style="{ width: `${30}%` }"
-                  ></div>
-                </div>
-              </div>
-            </div>
+            <h3 class="text-xl font-bold text-white">{{ money }}</h3>
+            <span class="text-sm font-semibold text-deepGray">money</span>
           </div>
         </div>
       </div>
@@ -151,14 +115,14 @@ onUnmounted(() => {
               <div class="text-sm font-bold uppercase text-white">ammunition</div>
             </div>
             <Ammunition
-              v-if="currentInteraction?.type === InteractionType.AmmunitionPanel"
+              v-if="currentInteraction?.type === InventoryInteractionType.AmmunitionPanel"
               class="absolute right-0 top-14.5"
             />
           </div>
         </div>
         <div class="mt-5 inline-grid grid-cols-6 grid-rows-5 gap-2.5">
           <InventorySlot
-            v-for="(_, slot) in size"
+            v-for="(_, slot) in getInventorySize()"
             :key="slot"
             :source="{
               origin: ItemSourceOrigin.PlayerInventory,
@@ -169,7 +133,14 @@ onUnmounted(() => {
         </div>
       </div>
       <div class="-mb-52">
-        <StorageItems v-if="gameState.openedStorage" />
+        <StorageItems
+          v-if="gameState.openedStorage?.type === StorageType.Storage"
+          v-bind="gameState.openedStorage"
+        />
+        <ShopItems
+          v-if="gameState.openedStorage?.type === StorageType.Shop"
+          v-bind="gameState.openedStorage"
+        />
         <GroundItems v-else />
       </div>
     </div>
@@ -211,11 +182,11 @@ onUnmounted(() => {
   </div>
 
   <ContextMenu
-    v-if="currentInteraction.type === InteractionType.ContextMenu"
+    v-if="currentInteraction.type === InventoryInteractionType.ContextMenu"
     v-bind="currentInteraction.state"
   />
   <ItemInfo
-    v-if="currentInteraction.type === InteractionType.Hovering"
+    v-if="currentInteraction.type === InventoryInteractionType.Hovering"
     :key="JSON.stringify(currentInteraction.state.item.source)"
     v-bind="currentInteraction.state"
   />
@@ -225,8 +196,7 @@ onUnmounted(() => {
     v-bind="previewingItem"
   />
   <AmountTransfer
-    v-if="currentInteraction.type === InteractionType.TransferingAmount"
+    v-if="currentInteraction.type === InventoryInteractionType.TransferingAmount"
     v-bind="currentInteraction.state"
   />
-  <!-- <Confirmation v-if="transfer" /> -->
 </template>

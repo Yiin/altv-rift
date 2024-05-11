@@ -16,16 +16,11 @@ import {
   type PlayerInventoryItemSource,
   type PlayerItemSource,
 } from "@shared/interfaces";
-import { InteractionType, type ItemActionMenu, useInventory } from "@/store/inventory.store";
-import Window from "@/components/Window.vue";
-import { useShop } from "@/store/shop.store";
-
-const props = defineProps<ItemActionMenu>();
-
-const {
-  currentInteraction,
-  selectedItem,
-  previewingItem,
+import {
+  InventoryInteractionType,
+  type ItemActionMenu,
+  getCurrentInventoryInteraction,
+  getSelectedItem,
   useItem,
   equipItem,
   unequipItem,
@@ -34,19 +29,24 @@ const {
   unloadAmmo,
   removeBait,
   closeActionMenu,
-} = useInventory();
-const shop = useShop();
+  setPreviewingItem,
+} from "@/store/inventory";
+import Window from "@/components/Window.vue";
+import { isInShop } from "@/store/shop.store";
+
+const props = defineProps<ItemActionMenu>();
 
 const item = computed(() => props.item.item);
 const itemSource = computed(() => props.item.source);
 
-const isInShop = computed(() => shop.isInShop);
-const visible = computed(() => currentInteraction.value.type === InteractionType.ContextMenu);
+const visible = computed(
+  () => getCurrentInventoryInteraction().type === InventoryInteractionType.ContextMenu,
+);
 const itemName = computed(() => getItemName(item.value.key));
 
 const isUsable = computed(
   () =>
-    !isInShop.value &&
+    !isInShop() &&
     [ItemSourceOrigin.PlayerInventory, ItemSourceOrigin.Storage].includes(
       itemSource.value.origin,
     ) &&
@@ -54,16 +54,16 @@ const isUsable = computed(
 );
 
 const isBuyable = computed(
-  () => isInShop.value && itemSource.value.origin === ItemSourceOrigin.Storage,
+  () => isInShop() && itemSource.value.origin === ItemSourceOrigin.Storage,
 );
 
 const isSellable = computed(
-  () => isInShop.value && itemSource.value.origin === ItemSourceOrigin.PlayerInventory,
+  () => isInShop() && itemSource.value.origin === ItemSourceOrigin.PlayerInventory,
 );
 
 const isEquipable = computed(
   () =>
-    !isInShop.value &&
+    !isInShop() &&
     [ItemSourceOrigin.PlayerInventory, ItemSourceOrigin.Storage].includes(
       itemSource.value.origin,
     ) &&
@@ -74,21 +74,19 @@ const isUnequipable = computed(() => itemSource.value.origin === ItemSourceOrigi
 
 const isDroppable = computed(
   () =>
-    !isInShop.value &&
+    !isInShop() &&
     [ItemSourceOrigin.PlayerInventory, ItemSourceOrigin.PlayerEquipment].includes(
       itemSource.value.origin,
     ),
 );
 
-const hasAmmo = computed(
-  () => !isInShop.value && isItemFirearmWeapon(item.value) && !!item.value.clip,
-);
+const hasAmmo = computed(() => !isInShop() && isItemFirearmWeapon(item.value) && !!item.value.clip);
 
 const hasFishBait = computed(
-  () => !isInShop.value && isItemFishingRod(item.value) && !!item.value.bait,
+  () => !isInShop() && isItemFishingRod(item.value) && !!item.value.bait,
 );
 
-const isPreviewable = computed(() => !isInShop.value && isItemPreviewable(item.value.key));
+const isPreviewable = computed(() => !isInShop() && isItemPreviewable(item.value.key));
 
 const combine = computed(() => {
   if (
@@ -100,7 +98,9 @@ const combine = computed(() => {
     };
   }
 
-  if (!selectedItem.value) {
+  const selectedItem = getSelectedItem();
+
+  if (!selectedItem) {
     return {
       type: CombineType.None,
       reverse: false,
@@ -108,7 +108,7 @@ const combine = computed(() => {
   }
 
   const target = item.value.key;
-  const source = selectedItem.value.item.key;
+  const source = selectedItem.item.key;
 
   const [type, reverse] = getCombineType(target, source);
 
@@ -143,7 +143,7 @@ function executeAction(action: string) {
       equipItem(source as PlayerInventoryItemSource | StorageItemSource);
       break;
     case "preview":
-      previewingItem.value = props.item;
+      setPreviewingItem(props.item);
       break;
     case "unequip":
       if (source.origin !== ItemSourceOrigin.PlayerEquipment) {
@@ -155,11 +155,13 @@ function executeAction(action: string) {
       dropFromMenu(source as PlayerItemSource);
       break;
     case "load-ammo":
-      if (selectedItem.value) {
+      const selectedItem = getSelectedItem();
+
+      if (selectedItem) {
         if (combine.value.reverse) {
-          combineItems(selectedItem.value.source, source);
+          combineItems(selectedItem.source, source);
         } else {
-          combineItems(source, selectedItem.value.source);
+          combineItems(source, selectedItem.source);
         }
       }
       break;

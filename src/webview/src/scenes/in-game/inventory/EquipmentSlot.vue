@@ -1,7 +1,15 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { type AmmoEquipmentSlot, EquipmentSlot, ItemSourceOrigin } from "@shared/interfaces";
-import { InteractionType, useInventory, isSameItemSource } from "@/store/inventory.store";
+import {
+  InventoryInteractionType,
+  isSameItemSource,
+  getSlottedEquipment,
+  unequipItem,
+  registerItemSlot,
+  openContextMenu,
+  getCurrentInventoryInteraction,
+} from "@/store/inventory";
 import { px } from "@/composables/use-pixel";
 import { useCombinableItem } from "@/composables/use-combinable-item";
 import { useCharacter } from "@/store/synced/character.store";
@@ -92,11 +100,9 @@ const props = defineProps<{
 }>();
 
 const character = useCharacter();
-const { equipment, currentInteraction, unequipItem, registerItemSlot, openContextMenu } =
-  useInventory();
 
 const slot = computed(() => equipmentSlots[props.name]);
-const item = computed(() => equipment.value[props.name] ?? null);
+const item = computed(() => getSlottedEquipment()[props.name] ?? null);
 
 const { combinableWithHoveredItem, combinableWithOtherItems } = useCombinableItem(item);
 
@@ -104,10 +110,10 @@ const draggingStyle = computed(() => {
   if (!item.value) {
     return {};
   }
-  const interaction = currentInteraction.value;
+  const interaction = getCurrentInventoryInteraction();
 
   if (
-    interaction.type === InteractionType.Dragging &&
+    interaction.type === InventoryInteractionType.Dragging &&
     !interaction.maybe &&
     isSameItemSource(interaction.state.item.source, item.value.source)
   ) {

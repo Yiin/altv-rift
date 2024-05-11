@@ -14,7 +14,7 @@ import {
   getWeaponDamage,
 } from "@shared/modules/items";
 import { useItemDetails } from "@/composables/use-item-details";
-import { type Hovering, useInventory } from "@/store/inventory.store";
+import { type Hovering, getSelectedItem } from "@/store/inventory";
 import { getRandomDescription } from "@/utils/items";
 import { useFloatingStyles } from "@/composables/use-floating-styles";
 
@@ -42,13 +42,13 @@ const weaponStats = computed(() => {
 });
 
 const combination = computed(() => {
-  const { selectedItem } = useInventory();
+  const selectedItem = getSelectedItem();
 
-  if (!selectedItem.value) {
+  if (!selectedItem) {
     return null;
   }
   const target = item.value.key;
-  const source = selectedItem.value.item.key;
+  const source = selectedItem.item.key;
 
   const [combineType, reverse] = getCombineType(target, source);
 

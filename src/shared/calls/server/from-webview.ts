@@ -31,6 +31,7 @@ export const FromWebview = {
   REMOVE_FROM_CRAFTING_QUEUE: "REMOVE_FROM_CRAFTING_QUEUE",
   UPGRADE_ITEM: "UPGRADE_ITEM",
   CANCEL_UPGRADING: "CANCEL_UPGRADING",
+  ADMIN_ACTION: "ADMIN_ACTION",
 } as const;
 
 export interface CallFromWebview {
@@ -57,6 +58,7 @@ export interface CallFromWebview {
   [FromWebview.REMOVE_FROM_CRAFTING_QUEUE]: (index: number) => boolean;
   [FromWebview.UPGRADE_ITEM]: (itemSource: PlayerItemSource) => boolean;
   [FromWebview.CANCEL_UPGRADING]: () => boolean;
+  [FromWebview.ADMIN_ACTION]: (action: string, args: any) => void;
 }
 
 export const FromWebviewValidation = {
@@ -137,6 +139,9 @@ export const FromWebviewValidation = {
   },
   [FromWebview.CANCEL_UPGRADING]: {
     returns: z.boolean(),
+  },
+  [FromWebview.ADMIN_ACTION]: {
+    args: [z.string(), z.any()],
   },
 } satisfies Record<
   keyof typeof FromWebview,

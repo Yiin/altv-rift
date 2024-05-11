@@ -25,6 +25,7 @@ import "./modules/thugs";
 import "./modules/production";
 import "./modules/loot";
 import "./modules/dev";
+import "./modules/admin";
 
 import fs from "node:fs";
 import path from "node:path";

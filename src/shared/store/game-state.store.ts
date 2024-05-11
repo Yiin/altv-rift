@@ -21,36 +21,39 @@ export enum FishingGameType {
   TimeClick = "TimeClick",
 }
 
+export type GenericStorage = {
+  type: StorageType.Storage;
+  label: string;
+  source: StorageSource;
+  inventory: Inventory;
+};
+
+export type LootBoxStorage = {
+  type: StorageType.LootBox;
+  label: string;
+  source: StorageSource;
+  validUntil: number;
+  inventory: Inventory;
+};
+
+export type AirDropStorage = {
+  type: StorageType.AirDrop;
+  label: string;
+  source: StorageSource;
+  validUntil: number;
+  inventory: Inventory;
+};
+
+export type ShopStorage = {
+  type: StorageType.Shop;
+  label: string;
+  source: StorageSource;
+  inventory: Inventory;
+};
+
 export interface GameState {
   flags: Set<PlayerFlags>;
-  openedStorage:
-    | {
-        type: StorageType.Storage;
-        label: string;
-        source: StorageSource;
-        inventory: Inventory;
-      }
-    | {
-        type: StorageType.LootBox;
-        label: string;
-        source: StorageSource;
-        validUntil: number;
-        inventory: Inventory;
-      }
-    | {
-        type: StorageType.AirDrop;
-        label: string;
-        source: StorageSource;
-        validUntil: number;
-        inventory: Inventory;
-      }
-    | {
-        type: StorageType.Shop;
-        label: string;
-        source: StorageSource;
-        inventory: Inventory;
-      }
-    | null;
+  openedStorage: GenericStorage | LootBoxStorage | AirDropStorage | ShopStorage | null;
   fishingProgress: {
     baitKey: FishBaitItemKey;
     gameType: FishingGameType.TimeClick;
@@ -72,19 +75,7 @@ export interface GameState {
 
 export const getDefaultGameState = (): GameState => ({
   flags: new Set(),
-  openedStorage: {
-    type: StorageType.AirDrop,
-    label: "Loot Box",
-    inventory: {
-      size: 10,
-      items: [],
-    },
-    source: {
-      originId: 1,
-      origin: ItemSourceOrigin.Storage,
-    },
-    validUntil: Date.now() + 1000 * 60 * 60,
-  },
+  openedStorage: null,
   fishingProgress: null,
   workbench: {
     queue: [],

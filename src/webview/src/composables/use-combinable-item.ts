@@ -1,22 +1,23 @@
 import { type ComputedRef, type Ref, computed } from "vue";
 import { getCombineType, CombineType } from "@shared/modules/items";
 import {
-  InteractionType,
+  InventoryInteractionType,
   isSameItemSource,
-  useInventory,
   type SlottedItem,
-} from "@/store/inventory.store";
+  getCurrentInventoryInteraction,
+  getItems,
+} from "@/store/inventory";
 
 export function useCombinableItem(
   item: Ref<SlottedItem | undefined> | ComputedRef<SlottedItem | undefined | null>,
 ) {
-  const { items, currentInteraction } = useInventory();
+  const currentInteraction = getCurrentInventoryInteraction();
 
   const hoveredItem = computed(() => {
-    const interaction = currentInteraction.value;
-
     const hoveredItem =
-      interaction.type === InteractionType.Hovering ? interaction.state.item : null;
+      currentInteraction.type === InventoryInteractionType.Hovering
+        ? currentInteraction.state.item
+        : null;
 
     return hoveredItem;
   });
@@ -52,7 +53,7 @@ export function useCombinableItem(
       return false;
     }
 
-    return items.value.some(
+    return getItems().some(
       ({ item: { key } }) =>
         item.value && getCombineType(key, item.value.item.key)[0] !== CombineType.None,
     );

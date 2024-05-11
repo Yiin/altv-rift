@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import { computed } from "vue";
 import { ItemSourceOrigin } from "@shared/interfaces";
-import { useInventory } from "@/store/inventory.store";
+import { getGroundItems } from "@/store/inventory";
 import InventorySlot from "../InventorySlot.vue";
 
-const { groundItems } = useInventory();
+const groundItems = computed(() => getGroundItems());
 </script>
 
 <template>

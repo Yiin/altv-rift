@@ -9,7 +9,6 @@ import LootBox from "./loot-box/LootBox.vue";
 import Conversation from "./conversation/Conversation.vue";
 import QuestMenu from "./quest-menu/QuestMenu.vue";
 import SkillMenu from "./skill-menu/SkillMenu.vue";
-import WeaponHud from "./weapon-hud/WeaponHud.vue";
 import Notifications from "./notifications/Notifications.vue";
 import AreaIndicators from "./area-indicators/AreaIndicators.vue";
 import ActionMenu from "./action-menu/ActionMenu.vue";
@@ -18,10 +17,10 @@ import FishingGame from "./fishing-game/FishingGame.vue";
 import Workbench from "./workbench/Workbench.vue";
 import VehicleShop from "./vehicle-shop/VehicleShop.vue";
 import QuickAccess from "./quick-access/QuickAccess.vue";
+import Hud from "./hud/Hud.vue";
+import Admin from "./admin/Admin.vue";
 
 const client = useClient();
-
-console.log(client.ui.window);
 </script>
 
 <template>
@@ -37,6 +36,7 @@ console.log(client.ui.window);
       <LootBox v-if="client.ui.window.type === WindowType.LOOT_BOX" />
       <VehicleShop v-if="client.ui.window.type === WindowType.VEHICLE_SHOP" />
       <Workbench v-if="client.ui.window.type === WindowType.WORKBENCH" />
+      <Admin v-if="client.ui.window.type === WindowType.ADMIN" />
     </template>
     <ActionMenu v-else-if="client.ui.elements.has(UIElement.ACTION_MENU)" />
     <template v-else>
@@ -46,7 +46,7 @@ console.log(client.ui.window);
       <TargetAction v-if="client.ui.elements.has(UIElement.TARGET_ACTION)" />
       <Conversation />
       <AreaIndicators />
-      <WeaponHud />
+      <Hud />
       <FishingGame />
       <QuickAccess />
     </template>

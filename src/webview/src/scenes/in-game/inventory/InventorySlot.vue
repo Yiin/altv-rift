@@ -10,13 +10,22 @@ import {
 } from "@shared/interfaces";
 import { useCombinableItem } from "@/composables/use-combinable-item";
 import {
-  InteractionType,
+  InventoryInteractionType,
   type SlottedGroundItem,
   type SlottedStorageItem,
   type SlottedPlayerInventoryItem,
   isSameItemSource,
-  useInventory,
-} from "@/store/inventory.store";
+  getItems,
+  getCurrentInventoryInteraction,
+  getSelectedItem,
+  openContextMenu,
+  getItemSourceFromScreenPos,
+  useItem,
+  equipItem,
+  registerItemSlot,
+  unregisterItemSlot,
+  setPreviewingItem,
+} from "@/store/inventory";
 import ItemIcon from "./ItemIcon.vue";
 import InventoryItemIcon from "./InventoryItemIcon.vue";
 
@@ -24,23 +33,10 @@ const props = defineProps<{
   source: InventoryItemSource | GroundItemSource;
 }>();
 
-const {
-  items,
-  currentInteraction,
-  selectedItem,
-  previewingItem,
-  openContextMenu,
-  getItemSourceFromScreenPos,
-  useItem,
-  equipItem,
-  registerItemSlot,
-  unregisterItemSlot,
-} = useInventory();
-
 const nodeRef = ref<HTMLDivElement>();
 
 const item = computed(() =>
-  items.value.find(
+  getItems().find(
     (item): item is SlottedPlayerInventoryItem | SlottedStorageItem | SlottedGroundItem =>
       isSameItemSource(item.source, props.source),
   ),
@@ -48,19 +44,21 @@ const item = computed(() =>
 
 const { combinableWithHoveredItem, combinableWithOtherItems } = useCombinableItem(item);
 
+const currentInteraction = getCurrentInventoryInteraction();
+
 const dragging = computed(
   () =>
-    currentInteraction.value.type === InteractionType.Dragging &&
-    !currentInteraction.value.maybe &&
-    isSameItemSource(currentInteraction.value.state.item.source, props.source),
+    currentInteraction.type === InventoryInteractionType.Dragging &&
+    !currentInteraction.maybe &&
+    isSameItemSource(currentInteraction.state.item.source, props.source),
 );
 
-const selected = computed(() => isSameItemSource(selectedItem.value?.source, props.source));
+const selected = computed(() => isSameItemSource(getSelectedItem()?.source, props.source));
 
 const draggingOver = computed(() => {
-  const interaction = currentInteraction.value;
+  const interaction = currentInteraction;
 
-  if (interaction.type === InteractionType.Dragging && !interaction.maybe) {
+  if (interaction.type === InventoryInteractionType.Dragging && !interaction.maybe) {
     const currentCursorPos = interaction.state.currentPosition;
     const itemSource = getItemSourceFromScreenPos(currentCursorPos.x, currentCursorPos.y);
 
@@ -91,7 +89,7 @@ function useOrEquipItem() {
   } else if (isItemEquipable(item.value.item.key)) {
     equipItem(item.value.source);
   } else if (isItemPreviewable(item.value.item.key)) {
-    previewingItem.value = item.value;
+    setPreviewingItem(item.value);
   }
 }
 

@@ -1,40 +1,40 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import {
-  InteractionType,
+  InventoryInteractionType,
   type SlottedGroundItem,
   type SlottedStorageItem,
   type SlottedPlayerInventoryItem,
   isSameItemSource,
-  useInventory,
-} from "@/store/inventory.store";
+  getCurrentInventoryInteraction,
+} from "@/store/inventory";
 import ItemIcon from "./ItemIcon.vue";
 
 const props = defineProps<{
   item: SlottedPlayerInventoryItem | SlottedStorageItem | SlottedGroundItem;
 }>();
 
-const { currentInteraction } = useInventory();
+const currentInteraction = getCurrentInventoryInteraction();
 
 const slottedItem = computed(() => props.item);
 
 const isDraggingOrDropping = computed(() =>
-  [InteractionType.Dragging, InteractionType.TransferingAmount].includes(
-    currentInteraction.value.type,
+  [InventoryInteractionType.Dragging, InventoryInteractionType.TransferingAmount].includes(
+    currentInteraction.type,
   ),
 );
 
 const shouldShow = computed(
   () =>
-    currentInteraction.value.type !== InteractionType.TransferingAmount ||
-    !isSameItemSource(slottedItem.value.source, currentInteraction.value.state.item.source),
+    currentInteraction.type !== InventoryInteractionType.TransferingAmount ||
+    !isSameItemSource(slottedItem.value.source, currentInteraction.state.item.source),
 );
 
 const draggingStyle = computed(() => {
-  const interaction = currentInteraction.value;
+  const interaction = currentInteraction;
 
   if (
-    interaction.type === InteractionType.Dragging &&
+    interaction.type === InventoryInteractionType.Dragging &&
     !interaction.maybe &&
     isSameItemSource(interaction.state.item.source, slottedItem.value.source)
   ) {

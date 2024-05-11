@@ -1,70 +1,46 @@
-import { defineStore } from "pinia";
-import {
-  type StorageItemSource,
-  ItemSourceOrigin,
-  type PlayerInventoryItemSource,
-} from "@shared/interfaces";
-import { ServerCall } from "@shared/calls/server";
-import { rpc } from "@/rpc";
+import { ItemSourceOrigin } from "@shared/interfaces";
+import { StorageType } from "@shared/store/game-state.store";
+import { InventoryInteractionType, getCurrentInventoryInteraction } from "./inventory";
+import { useGameState } from "./synced/game-state.store";
 
-type State =
-  | {
-      action: null;
-      itemSource: null;
-    }
-  | {
-      action: "buy" | "sell";
-      itemSource: PlayerInventoryItemSource | StorageItemSource;
-    };
+const gameState = useGameState();
 
-export const useShop = defineStore("shop", {
-  state: (): State => ({
-    action: null,
-    itemSource: null,
-  }),
-  getters: {
-    isInShop(): boolean {
-      return this.interaction !== null;
-    },
-    interaction() {
-      return null as any;
-    },
-  },
-  actions: {
-    initiateBuying(itemSource: StorageItemSource) {
-      this.action = "buy";
-      this.itemSource = itemSource;
-    },
-    initiateSelling(itemSource: PlayerInventoryItemSource) {
-      this.action = "sell";
-      this.itemSource = itemSource;
-    },
-    submit(amount: number) {
-      if (!this.interaction) {
-        return;
-      }
+export function isInShop() {
+  return gameState.openedStorage?.type === StorageType.Shop;
+}
 
-      if (!this.itemSource) {
-        return;
-      }
+export function isBuying() {
+  const currentInteraction = getCurrentInventoryInteraction();
 
-      // const inventory = useInventory();
+  return (
+    isInShop() &&
+    currentInteraction.type === InventoryInteractionType.TransferingAmount &&
+    currentInteraction.state.item.source.origin === ItemSourceOrigin.Storage &&
+    currentInteraction.state.to?.origin === ItemSourceOrigin.PlayerInventory
+  );
+}
 
-      if (this.itemSource.origin === ItemSourceOrigin.Storage) {
-        return rpc.callServer(ServerCall.FromWebview.BUY_ITEM, this.itemSource, amount);
-      } else if (this.itemSource.origin === ItemSourceOrigin.PlayerInventory) {
-        return rpc.callServer(
-          ServerCall.FromWebview.SELL_ITEM,
-          this.interaction.source,
-          this.itemSource,
-          amount,
-        );
-      }
-      return;
-    },
-    cancel() {
-      this.action = null;
-      this.itemSource = null;
-    },
-  },
-});
+export function isSelling() {
+  const currentInteraction = getCurrentInventoryInteraction();
+
+  return (
+    isInShop() &&
+    currentInteraction.type === InventoryInteractionType.TransferingAmount &&
+    currentInteraction.state.to?.origin === ItemSourceOrigin.Storage &&
+    currentInteraction.state.item.source.origin === ItemSourceOrigin.PlayerInventory
+  );
+}
+
+export function getShopItem() {
+  const currentInteraction = getCurrentInventoryInteraction();
+
+  if (!isInShop()) {
+    return null;
+  }
+
+  if (currentInteraction.type !== InventoryInteractionType.TransferingAmount) {
+    return null;
+  }
+
+  return currentInteraction.state.item;
+}

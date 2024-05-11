@@ -21,6 +21,7 @@ export const useCharacter = () =>
         appearance: {
           sex: 1,
         },
+        money: 246435,
         equipment: {
           [EquipmentSlot.HandgunAmmo]: {
             key: Ammo.HANDGUN_AMMO,

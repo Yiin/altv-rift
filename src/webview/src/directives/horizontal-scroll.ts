@@ -7,7 +7,6 @@ const handleWheelEvent = (event: WheelEvent) => {
     // Apply the vertical scroll event's delta as horizontal scroll
     const toScroll = event.deltaY;
     event.currentTarget.scrollLeft += toScroll;
-    console.log("wheel event", event.currentTarget.scrollLeft, toScroll);
   }
 };
 

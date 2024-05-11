@@ -8,7 +8,11 @@ import {
 } from "@shared/modules/items";
 import { ItemSourceOrigin } from "@shared/interfaces";
 import { StorageType } from "@shared/store/game-state.store";
-import { type TransferingAmount, useInventory } from "@/store/inventory.store";
+import {
+  type TransferingAmount,
+  confirmAmountTransfer,
+  cancelAmountTransfer,
+} from "@/store/inventory";
 import { useFloatingStyles } from "@/composables/use-floating-styles";
 import { useQuantity } from "@/composables/use-quantity";
 import { useGameState } from "@/store/synced/game-state.store";
@@ -18,7 +22,6 @@ const props = defineProps<TransferingAmount>();
 
 const gameState = useGameState();
 
-const { confirmAmountTransfer, cancelAmountTransfer } = useInventory();
 const totalAmount = computed(() => {
   if (isStackable(props.item.item)) {
     return props.item.item.amount;
@@ -152,4 +155,3 @@ const actionAll = computed(() => {
     </div>
   </div>
 </template>
-../../../composables/use-quantity

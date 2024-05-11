@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useInventory } from "@/store/inventory.store";
+import { clearPreviewingItem } from "@/store/inventory";
 import Window from "@/components/Window.vue";
 
 defineProps<{
@@ -8,19 +8,13 @@ defineProps<{
   };
 }>();
 
-const { previewingItem } = useInventory();
-
-function closePreview() {
-  previewingItem.value = undefined;
-}
-
 const hw = window.innerWidth / 2 - 400;
 const hh = window.innerHeight / 2 - 400;
 </script>
 
 <template>
   <Window
-    v-click-outside="closePreview"
+    v-click-outside="clearPreviewingItem"
     :x="hw"
     :y="hh"
     :w="800"

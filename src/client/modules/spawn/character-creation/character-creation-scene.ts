@@ -87,7 +87,7 @@ whileInGame(async () => {
   await alt.Utils.wait(500);
   game.switchToMultiFirstpart(alt.Player.local, 0, SWITCHOUT_TYPES.ONE_STEP);
 
-  await alt.Utils.wait(2000);
+  await alt.Utils.wait(1000);
   game.disableScreenblurFade();
   game.doScreenFadeIn(1000);
 
