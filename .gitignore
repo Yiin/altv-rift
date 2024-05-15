@@ -11,3 +11,4 @@ resources/main/*
 /crashdumps
 .env
 /.server-crashes-cache
+**/*.tsbuildinfo
