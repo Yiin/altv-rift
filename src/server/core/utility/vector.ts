@@ -54,20 +54,13 @@ export function angleToFaceTarget(subject: alt.IVector2, target: alt.IVector2): 
   // Calculate the vector from subject to target
   const vectorToTarget = new alt.Vector2(target).sub(subject);
 
-  // Use the positive x-axis (1, 0) as the reference vector
-  const referenceVector = new alt.Vector2(0, 0);
+  // Calculate the angle in radians relative to the positive x-axis and adjust by -π/2
+  // Normalize the angle using modulo to ensure it stays within -π to π
+  const adjustedAngleRad =
+    ((Math.atan2(vectorToTarget.y, vectorToTarget.x) - Math.PI / 2 + Math.PI) % (2 * Math.PI)) -
+    Math.PI;
 
-  // Calculate the angle in radians between the reference vector and the vector to the target
-  const angleRad =
-    Math.atan2(vectorToTarget.y, vectorToTarget.x) -
-    Math.atan2(referenceVector.y, referenceVector.x);
-
-  return angleRad;
-
-  // Convert the angle to degrees
-  // const angleDeg = angleRad * (180 / Math.PI);
-
-  // return angleDeg;
+  return adjustedAngleRad;
 }
 
 /**

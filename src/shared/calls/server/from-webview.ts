@@ -58,7 +58,7 @@ export interface CallFromWebview {
   [FromWebview.REMOVE_FROM_CRAFTING_QUEUE]: (index: number) => boolean;
   [FromWebview.UPGRADE_ITEM]: (itemSource: PlayerItemSource) => boolean;
   [FromWebview.CANCEL_UPGRADING]: () => boolean;
-  [FromWebview.ADMIN_ACTION]: (action: string, args: any) => void;
+  [FromWebview.ADMIN_ACTION]: (action: string, args: any) => any;
 }
 
 export const FromWebviewValidation = {
@@ -142,6 +142,7 @@ export const FromWebviewValidation = {
   },
   [FromWebview.ADMIN_ACTION]: {
     args: [z.string(), z.any()],
+    returns: z.any(),
   },
 } satisfies Record<
   keyof typeof FromWebview,

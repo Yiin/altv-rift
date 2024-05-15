@@ -5,7 +5,9 @@ import {
   isItemFirearmWeapon,
 } from "@shared/modules/items/registry/weapons/firearm-weapon.items";
 import { isMatchingItem } from "@shared/modules/inventory";
+import { MessageType } from "@shared/modules/chat";
 import { InGamePlayer, isInGame } from "@/core/utility/assertions";
+import { sendChatMessage } from "@/modules/chat";
 
 declare module "@altv/server" {
   export interface Player {
@@ -17,10 +19,12 @@ alt.Player.prototype.reloadWeapon = function () {
   const weapon = this.character.equipment.weapon;
 
   if (!weapon) {
+    console.log("no weapon");
     return false;
   }
 
   if (!isItemFirearmWeapon(weapon)) {
+    console.log("not a firearm weapon");
     return false;
   }
 
@@ -28,11 +32,13 @@ alt.Player.prototype.reloadWeapon = function () {
 
   if (!clipSize) {
     // This weapon type has no clip
+    console.log("no clip size");
     return false;
   }
 
   if (weapon.clip && weapon.clip.amount >= clipSize) {
     // The clip is full
+    console.log("clip is full", weapon.clip.amount, clipSize);
     return false;
   }
 
@@ -42,6 +48,7 @@ alt.Player.prototype.reloadWeapon = function () {
 
   if (!ammo) {
     // No ammo equipped
+    console.log("no ammo equipped");
     return false;
   }
 
@@ -50,10 +57,13 @@ alt.Player.prototype.reloadWeapon = function () {
   if (rest <= 0) {
     // No ammo left
     this.removeEquipedItem(ammoEquipmentSlot);
+    console.log("no ammo left");
     return false;
   }
 
   if (weapon.clip && !isMatchingItem(ammo, weapon.clip)) {
+    // Ammo type doesn't match clip
+    sendChatMessage(this, "Weapon clip and ammo type don't match.", MessageType.Error);
     return false;
   }
 

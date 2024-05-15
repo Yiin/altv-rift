@@ -1,17 +1,22 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import Character from "./Character.vue";
+import Shops from "./Shops.vue";
+import AirDrops from "./AirDrops.vue";
+import RandomLoot from "./RandomLoot.vue";
 
 enum Tab {
   CHARACTER = "CHARACTER",
-  POSITIONS = "POSITIONS",
-  IDEAS = "IDEAS",
+  SHOPS = "SHOPS",
+  AIR_DROPS = "AIR_DROPS",
+  RANDOM_LOOT = "RANDOM_LOOT",
 }
 
 const tabs = [
   { id: Tab.CHARACTER, label: "Character" },
-  { id: Tab.POSITIONS, label: "Positions" },
-  { id: Tab.IDEAS, label: "Ideas" },
+  { id: Tab.SHOPS, label: "Shops" },
+  { id: Tab.AIR_DROPS, label: "Air Drops" },
+  { id: Tab.RANDOM_LOOT, label: "Random Loot" },
 ];
 
 const tab = ref<Tab>(Tab.CHARACTER);
@@ -49,16 +54,22 @@ const tab = ref<Tab>(Tab.CHARACTER);
       <Character />
     </div>
     <div
-      v-if="tab === Tab.POSITIONS"
+      v-if="tab === Tab.SHOPS"
       class="mt-4"
     >
-      <div class="text-lg text-gray-700">Positions</div>
+      <Shops />
     </div>
     <div
-      v-if="tab === Tab.IDEAS"
+      v-if="tab === Tab.AIR_DROPS"
       class="mt-4"
     >
-      <div class="text-lg text-gray-700">Ideas</div>
+      <AirDrops />
+    </div>
+    <div
+      v-if="tab === Tab.RANDOM_LOOT"
+      class="mt-4"
+    >
+      <RandomLoot />
     </div>
   </div>
 </template>

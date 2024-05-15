@@ -51,11 +51,10 @@ on(ServerEvents.FromServer.ITEM_EQUIP, (player, item) => {
       const torso = getTorsoForTop(player.model, itemInfo.drawableId, itemInfo.textureId);
 
       if (torso) {
-        alt.log("Found torso:", torso.drawableId, torso.textureId);
         player.setClothes(3, torso.drawableId, torso.textureId, 2);
       } else {
-        // player.setClothes(3, 14, 0, 2);
-        player.setClothes(3, 3, 0, 2);
+        player.setClothes(3, 14, 0, 2);
+        // player.setClothes(3, 3, 0, 2);
       }
     }
   } else if (isProp(equipmentSlot)) {

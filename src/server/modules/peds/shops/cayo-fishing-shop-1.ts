@@ -38,6 +38,8 @@ for (const { pos, heading } of positions) {
         },
       ],
     },
+    shopTable: "cayo-fishing-shop-1",
+    lastRefill: new Date(),
   });
 
   ped.playAnimation("rcmjosh1", "idle", 1, -1);

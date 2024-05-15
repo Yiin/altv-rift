@@ -3,6 +3,7 @@ export function getDefaultClothing(
   component: number,
 ): [number, number] | undefined {
   if (isMale) {
+    console.log("male");
     return (
       {
         1: [0, 0],
@@ -19,6 +20,7 @@ export function getDefaultClothing(
       } as Record<number, [number, number]>
     )[component];
   } else {
+    console.log("female");
     return (
       {
         1: [0, 0],

@@ -153,6 +153,7 @@ whileInGame(() => {
    */
   async function reloadWeapon() {
     if (!weaponCanReload.value) {
+      console.log("Cannot reload weapon");
       handleAmmoChange();
       return;
     }
@@ -172,6 +173,8 @@ whileInGame(() => {
 
       if (startReload) {
         game.taskReloadWeapon(player, true);
+      } else {
+        console.log("Failed to start reload");
       }
 
       await alt.Utils.waitFor(() => !player.isReloading);

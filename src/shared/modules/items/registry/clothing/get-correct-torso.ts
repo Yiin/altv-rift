@@ -43,7 +43,7 @@ export function getTorsoForTop(
   } else {
     return (
       getTorso(TORSO_FEMALE, topDrawableId, topTextureId) || {
-        drawableId: 3,
+        drawableId: 4,
         textureId: 0,
       }
     );

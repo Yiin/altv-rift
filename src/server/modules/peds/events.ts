@@ -1,6 +1,5 @@
 import alt from "@altv/server";
 import { ServerEvents } from "@shared/events/server";
-import { ClientEvents } from "@shared/events/client";
 import { angleToFaceTarget } from "@/core/utility/vector";
 import { isInGame } from "@/core/utility/assertions";
 
@@ -37,10 +36,4 @@ alt.Events.onPlayer(ServerEvents.FromClient.CONVERSATION_STARTED, (player, pedRe
   }
 
   ped.taskTurnPedToFaceCoord(player.pos, 2000);
-});
-
-alt.Events.onPlayer("clearquests", (player) => {
-  if (isInGame(player)) {
-    player.character.questFacts = [];
-  }
 });

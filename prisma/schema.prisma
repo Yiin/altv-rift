@@ -66,10 +66,29 @@ model Character {
 }
 
 model Shop {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  inventory Inventory
-  ped       Ped
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  inventory  Inventory
+  shopTable  String
+  ped        Ped
+  lastRefill DateTime?
+}
+
+model AirDrop {
+  id                String    @id @default(auto()) @map("_id") @db.ObjectId
+  pos               Position
+  radius            Float
+  lootTable         String
+  durationInSeconds Int
+  lastDrop          DateTime?
+}
+
+model RandomLoot {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  label      String
+  pos        Position
+  lootTable  String
+  lastRefill DateTime?
 }
 
 model DroppedItem {
