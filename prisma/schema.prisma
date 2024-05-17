@@ -105,9 +105,17 @@ type Ped {
 }
 
 type Skills {
-  woodcutting Int @default(0)
-  fishing     Int @default(0)
-  mining      Int @default(0)
+  woodcutting Int             @default(0)
+  fishing     Int             @default(0)
+  mining      Int             @default(0)
+  mercenary   ProfessionSkill
+  medic       ProfessionSkill
+  engineer    ProfessionSkill
+}
+
+type ProfessionSkill {
+  exp           Int      @default(0)
+  learnedSkills String[]
 }
 
 type Inventory {
