@@ -1,0 +1,233 @@
+Introduction:
+  ✔ Spawn at airport @done
+  - Get ratbike
+    - buy one from the dealer
+  - Get quest to talk with diego
+  - Diego will give a quest to do all 4 jobs: woodcutting, fishing, mining, crafting
+  - Jobs are marked on the map
+  - After completing all jobs, Diego will give a quest to hunt infected boar
+  - After completing the boar quest, Diego will give you a recipe for weapon upgrade and a task to hunt 5 more boars
+  - After completing the boar task, Diego will give you a quest to talk with a captain at the docks
+  - The captain will sail you to the main island for free. Usually it costs €1000.
+
+Questing:
+  ✔ NPC interaction menu @done
+    ✔ Design @done
+    ✔ UI @done
+  ✔ Quest progress tracking @done
+    ☐ Design
+    ✔ UI @done
+  ✔ Quest list menu @done
+    ☐ Design
+    ✔ UI @done
+  ✔ Multiple concurrent quests @done
+  ☐ Quest rewards
+    ☐ Design
+    ☐ UI
+  ☐ Quest failure states
+    ☐ Design
+    ☐ UI
+  Main quests:
+    ☐ Tutorial quest @started
+
+Skills:
+  ☐ Woodcutting
+    ☐ Design
+    ☐ UI
+    ✔ Most of the trees on the map are available for cutting. @done
+    ✔ Woodcutting skill is increased by cutting trees. @done
+    ✔ Woodcutting skill is used to determine the amount of wood collected from a tree. @done
+    ✔ Woodcutting speed depends on woodcutting skill level @done
+    ✔ Hatchet item is required for woodcutting @done
+    ☐ Hatchet item needs to appear in hand while woodcutting animation is playing
+  ☐ Fishing
+    ☐ Design
+    ☐ UI
+    ✔ Most of the water on the map is available for fishing. @done
+    ✔ Fishing skill is increased by fishing. @done
+    ☐ Fishing skill is used to determine the amount of fish collected from a fishing spot.
+    ☐ Fishing speed depends on fishing skill level
+    ✔ Fishing rod item is required for fishing. @done
+    ✔ Fishing rod item needs to appear in hand while fishing animation is playing @done
+    ☐ Fishing rod needs to disappear from hand when fishing animation is finished
+  ☐ Digging (Mining)
+    ☐ Design
+    ☐ UI
+    ☐ Define digging spots @started
+    ✔ Digging skill is increased by digging @done
+    ☐ Digging skill is used to determine the amount of sand collected from a digging spot
+    ☐ Digging speed depends on digging skill level
+    ☐ Shovel item is required for digging
+    ☐ Shovel item needs to appear in hand while digging animation is playing
+    ☐ Shovel needs to disappear from hand when digging animation is finished
+  ☐ Mining
+    ☐ Design
+    ☐ UI
+    ☐ Define mining spots
+    ☐ Mining skill is increased by mining
+    ☐ Mining skill is used to determine the amount of ore collected from a mining spot
+    ☐ Mining speed depends on mining skill level
+    ☐ Pickaxe item is required for mining
+    ☐ Pickaxe item needs to appear in hand while mining animation is playing
+    ☐ Pickaxe needs to disappear from hand when mining animation is finished
+  ☐ Crafting
+    ☐ Design
+    ☐ UI
+    ✔ Blueprint definitions @done
+    ☐ Crafting skill is increased by crafting
+    ☐ Crafting skill increases the chance of crafting success
+  ☐ Cooking
+    ☐ Design
+    ☐ UI
+    ☐ Cooking skill is increased by cooking
+    ☐ Cooking skill increases the chance of cooking success
+    ☐ Food types
+      ☐ Fish
+      ☐ Meats
+      ☐ Meals
+      ☐ Fruits
+      ☐ Vegetables
+
+Inventory:
+  ✔ Personal inventory system @done
+    ✔ Weight and size limits @done
+    ✘ Item categorization? @cancelled
+      ✔ Backend @done
+      ✘ UI @cancelled
+  ☐ Vehicle trunk inventory
+    ☐ Design
+    ☐ UI
+  ☐ Home storage system
+    ☐ Design
+    ☐ UI
+  ✔ Equippable items @done
+    ✔ Weapons @done
+    ✔ Ammo @done
+    ✔ Clothing @done
+    ✔ Tools @done
+  ✔ Consumable items @done
+    ✔ Medicine @done
+    ☐ Food
+    ☐ Drugs
+
+Shops:
+  ☐ Shop types
+    ☐ Weapons store
+      ☐ Design
+      ☐ UI
+    ☐ Clothing store
+      ☐ Design
+      ☐ UI
+    ☐ General store
+      ☐ Design
+      ☐ UI
+    ☐ Vehicle store
+      ☐ Design
+      ☐ UI
+  ☐ Selling
+  ☐ Management of stores
+
+Materials Processing:
+  ☐ Processing stations
+    ☐ Wood mill
+    ☐ Metal refinery
+  ☐ Time-based processing
+  ☐ Optional mini-games for processing
+
+Tasks:
+  ☐ Daily global tasks (per-user, class specific)
+    Generic:
+      ☐ Get a kill with specific weapon
+      ☐ Get X amount of experience
+    # Generate different recurring tasks for NPCs and activate them for each user based on some seed (e.g. user id + date?) 
+    Consult GPT
+ 
+Temporary Jobs:
+  ☐ Job types
+    ☐ Processing wood
+      ☐ Workstation
+        ☐ UI
+        ☐ Processing
+      ☐ On-foot
+        ☐ UI
+        ☐ Processing
+    ☐ Processing ores
+    ☐ Cooking food?
+  ☐ Job experience tracking
+  ☐ Job-related bonuses
+
+Professions:
+  ☐ Profession types
+  ☐ Mercenary
+      ☐ Skill tree
+      ☐ Bounty hunter skill?
+      Requires wanted mechanic
+    ☐ Medic
+      ☐ Skill tree
+        Consult GPT
+      ☐ Gathering mechanic
+      Herbs, etc for crafting medicine
+        ☐ UI
+        ☐ Types of materials to gather
+        ☐ Locations by type
+      ☐ Revive mechanic?
+        ☐ UI
+        ☐ Detection & action
+        ☐ Animations
+    ☐ Engineer
+      ☐ Skill tree
+      ☐ Building menu?
+    ☐ Transporter
+      ☐ Skill tree
+      ☐ A to B transportation tasks
+      Requires collection & delivery points
+
+Control of Territories:
+  ☐ Define controllable territories
+  ☐ Territory contestation time-frame
+  ☐ Territory management system
+    ☐ Maintenance
+    ☐ Defense mechanisms
+
+Improving Things:
+  ☐ Item upgrade system
+    ☐ Damage upgrades
+    ☐ Protection upgrades
+    ☐ Utility? (running speed, endurance, recoil?)
+
+Trade:
+  ☐ Auction house system?
+  ☐ Live exchanges (1-on-1)
+
+Raid Events:
+  ☐ Event types
+  ☐ Teamwork mechanics
+  ☐ Raid rewards
+    ☐ Rare items
+    ☐ Currency
+
+Treasure Hunts:
+  ☐ Randomly generated treasures
+  ☐ NPC-based treasures
+  ☐ Treasure rewards
+
+Vehicles:
+  ☐ Vehicle types
+    ☐ Cars
+    ☐ Boats
+    ☐ Planes/Heli
+  ☐ Upgrade system
+  ☐ Garage/parking system
+
+Animal System:
+  ☐ Pet types
+  ☐ Pet acquisition methods
+  ☐ Pet-related quests
+
+Player House:
+  ☐ House types
+  ☐ Interior customization
+  ☐ Workstations
+
+Reset flags:
+    ExtraLongWeaponRange

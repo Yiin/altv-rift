@@ -1,6 +1,0 @@
-import type { MessageType } from "@shared/modules/chat";
-
-export interface Message {
-  content: string; // The content of the message.
-  type: MessageType; // The type of the message.
-}

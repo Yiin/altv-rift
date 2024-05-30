@@ -1,14 +1,2 @@
-/node_modules
-/modules
-/altv-server.exe
-/libnode.dll
-/data
-resources/main/*
-!resources/main/.gitkeep
-/cache
-/*.log
-/server-prod.toml
-/crashdumps
+build/node_modules/
 .env
-/.server-crashes-cache
-**/*.tsbuildinfo

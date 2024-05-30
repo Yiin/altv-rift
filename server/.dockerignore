@@ -1,0 +1,14 @@
+# Exclude everything in /altv directory except what is necessary
+../altv/.git
+../altv/.gitignore
+../altv/.vscode
+../altv/node_modules
+../altv/.env.example
+../altv/.gitignore
+../altv/README.md
+../altv/TODO
+../altv/TODO-MVP
+../altv/src/webview/.vscode
+../altv/src/webview/node_modules
+../altv/src/webview/.editorconfig
+../altv/src/webview/README.md

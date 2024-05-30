@@ -1,0 +1,13 @@
+data/*.bin
+modules/*
+altv-crash-handler.exe
+altv-server.exe
+libnode.dll
+libnodev2.dll
+server.log
+**/*.tsbuildinfo
+*.log
+.env
+.server-crashes-cache/
+cache/
+node_modules/

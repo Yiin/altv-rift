@@ -1,0 +1,40 @@
+<template>
+  <svg
+    id="svg7119"
+    height="512"
+    viewBox="0 0 16.933333 16.933334"
+    width="512"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:svg="http://www.w3.org/2000/svg"
+  >
+    <g
+      id="layer1"
+      transform="translate(0 -280.067)"
+    >
+      <path
+        id="path31836"
+        d="m9.5115651 280.59581c-.08153.004-.1564777.0461-.2030883.11317l-6.0859335 8.73073c-.122364.17542.00316.41601.2170409.416h4.2105956l-.5053954 6.32984c-.019767.26758.3253531.39129.480074.17209l6.0859336-8.73022c.12223-.17523-.0029-.41559-.216524-.416h-4.2111126l.5059121-6.33036c.012691-.1594-.1178126-.29355-.2775024-.28525z"
+        font-variant-ligatures="normal"
+        font-variant-position="normal"
+        font-variant-caps="normal"
+        font-variant-numeric="normal"
+        font-variant-alternates="normal"
+        font-feature-settings="normal"
+        text-indent="0"
+        text-align="start"
+        text-decoration-line="none"
+        text-decoration-style="solid"
+        text-decoration-color="rgb(0,0,0)"
+        text-transform="none"
+        text-orientation="mixed"
+        white-space="normal"
+        shape-padding="0"
+        isolation="auto"
+        mix-blend-mode="normal"
+        solid-color="rgb(0,0,0)"
+        solid-opacity="1"
+        vector-effect="none"
+      />
+    </g>
+  </svg>
+</template>
