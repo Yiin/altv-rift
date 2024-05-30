@@ -1,4 +1,4 @@
-# alt:V proxy-world.gg (name in progress)
+# alt:V Rift
 
 ## The idea
 
@@ -18,20 +18,20 @@ Craft/find gear, level up abilities, conquer & defend territories, stay at the t
 
 ### Gameplay mechanics
 
-* Material gathering
-* Crafting
-* Gear
-* Leveling
-* Vehicles
-* Combat
-* World events
-* Territory control
+- Material gathering
+- Crafting
+- Gear
+- Leveling
+- Vehicles
+- Combat
+- World events
+- Territory control
 
 ## Setup
 
 ### Server
 
-1. `cp .env.example .env` 
+1. `cp .env.example .env`
 2. `npm i` (installing npm deps)
 3. `npm run update` (altv serverfiles)
 4. `npm run prisma:generate` (setup prisma)
