@@ -38,12 +38,19 @@ Craft/find gear, level up abilities, conquer & defend territories, stay at the t
 
 You might want to install bun (`$ npm i -g bun`), or use whatever package manager you want, should work in any case.
 
-1. `$ cd src/webview`
-2. `$ bun i` (installing npm deps)
-3. `$ bun run dev` (build & run the project)
-4. Checkout `src/webview/README.md` for more info
+1. `$ cd altv && bun i && bun run prisma:generate && cd src/webview && bun i` (install deps)
+2. `$ bun run dev` (build & run the project)
+3. Checkout `src/webview/README.md` for more info
 
 ## Development
+
+### Logs
+
+You can access logs either in graylog dashboard ([http://localhost:9000](http://localhost:9000)) or by running
+
+`$ docker logs rift-{service}-1 -f` (available services: `builder`, `server` and others specified in `docker-compose.yaml` file)
+
+e.g. `$ docker logs rift-server-1 -f` to see logs of the server.
 
 ### Data sync
 
