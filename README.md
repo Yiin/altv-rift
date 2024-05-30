@@ -31,20 +31,16 @@ Craft/find gear, level up abilities, conquer & defend territories, stay at the t
 
 ### Server
 
-1. `cp .env.example .env`
-2. `npm i` (installing npm deps)
-3. `npm run update` (altv serverfiles)
-4. `npm run prisma:generate` (setup prisma)
-5. `npm run dev` (esbuild for building code & tsc for checking types)
-6. `npm run server` (runs the database & server)
-
-Note: both `npm run dev` and `npm run server` are continuous processes, so if you want to run them both, run them in separate CLI windows.
+1. `$ cp .env.example .env`
+2. `$ docker-compose up -d` (run development server in docker)
 
 ### Webview
 
-1. `cd src/webview`
-2. `npm i` (installing npm deps)
-3. `npm run dev` (build & run the project)
+You might want to install bun (`$ npm i -g bun`), or use whatever package manager you want, should work in any case.
+
+1. `$ cd src/webview`
+2. `$ bun i` (installing npm deps)
+3. `$ bun run dev` (build & run the project)
 4. Checkout `src/webview/README.md` for more info
 
 ## Development
@@ -61,7 +57,7 @@ The sync functionality is using pinia.$subscribe to pass atomic sync events (see
 
 ## Notes
 
-### Import helper (optional, helps with auto-generating many lines of code inside index.ts files, still testing)
+### Import helper (very much optional, helps with auto-generating many lines of code inside index.ts files, just testing)
 
 ```js
 // @index('./*.ts', f => `export * from "${f.path}";`)
@@ -69,9 +65,3 @@ The sync functionality is using pinia.$subscribe to pass atomic sync events (see
 ```
 
 Requires "Generate Index" VSCode extension: https://marketplace.visualstudio.com/items?itemName=JayFong.generate-index
-
-```
-Id: JayFong.generate-index
-Description: Generating file indexes easily.
-Publisher: Jay Fong
-```
