@@ -55,12 +55,6 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Set lower case owner name
-        run: |
-          echo "OWNER_LC=${OWNER,,}" >>${GITHUB_ENV}
-        env:
-          OWNER: "${{ github.repository_owner }}"
-
       - name: SSH to Server and Deploy
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -69,13 +63,12 @@ jobs:
           key: ${{ secrets.DEPLOY_KEY }}
           script: |
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-            echo "Deploying ${IMAGE_NAME} to ${OWNER_LC}"
-            docker pull ghcr.io/${OWNER_LC}/${IMAGE_NAME}:latest
+            docker pull ghcr.io/yiin/altv-rift-server:latest
             docker stop altv-server || true
             docker rm altv-server || true
             docker run -d --name altv-server \
               -p 7788:7788 \
               -p 7790:7790 \
               -p 7799:7799 \
-              ghcr.io/${OWNER_LC}/${IMAGE_NAME}:latest
+              ghcr.io/yiin/altv-rift-server:latest
             docker image prune -f
