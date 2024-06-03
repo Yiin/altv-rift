@@ -68,7 +68,8 @@ jobs:
             docker rm altv-server || true
             docker run -d --name altv-server \
               -p 7788:7788 \
+              -p 7788:7788/udp \
               -p 7790:7790 \
-              -p 7799:7799 \
+              -p 7799:7799/udp
               ghcr.io/yiin/altv-rift-server:latest
             docker image prune -f
