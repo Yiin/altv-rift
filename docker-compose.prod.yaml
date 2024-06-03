@@ -7,8 +7,6 @@ services:
       labels:
         runnumber: "${GITHUB_RUN_ID}"
     restart: unless-stopped
-    volumes:
-      - ./altv:/altv
     stdin_open: true
     ports:
       - '7788:7788'
