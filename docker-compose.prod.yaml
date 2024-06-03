@@ -3,7 +3,7 @@ services:
     image: "${IMAGE_NAME}:latest"
     build:
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: ./Dockerfile.prod
       labels:
         runnumber: "${GITHUB_RUN_ID}"
     restart: unless-stopped
