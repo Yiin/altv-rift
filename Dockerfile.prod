@@ -32,37 +32,33 @@ ENV ALTV_RESOURCES=$ALTV_RESOURCES
 
 RUN apt-get update -y && apt-get install -y curl lsof libatomic1 libc-bin wget apt-transport-https ca-certificates gnupg procps stow && apt autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# log env vars to a file
-RUN echo "$(printenv | sort)" >> /root/.env
+# Set the working directory and copy necessary files
+WORKDIR /root
 
-COPY ./docker-scripts /root/setup
+COPY ./docker-scripts ./setup
 COPY ./altv /altv
 
-WORKDIR /root/setup
+# Install global packages, setup the environment, and build the project
+RUN echo "$(printenv | sort)" >> .env && \
+  npm install -g bun && \
+  cd setup && \
+  bun install && \
+  bun add -g altv-pkg@latest && \
+  bun run server.js && \
+  bunx altv-pkg $ALTV_BRANCH && \
+  chmod +x /altv/altv-server /altv/altv-crash-handler && \
+  cd /altv && \
+  bun install && \
+  bun run prisma:generate && \
+  bun run build && \
+  cd src/webview && \
+  bun install && \
+  bun run build-only && \
+  cp -r dist /altv/resources/main/webview && \
+  rm -rf /altv/node_modules /altv/src
 
-RUN npm i -g bun && bun install && bun add -g altv-pkg@latest
-
-WORKDIR /altv
-
-RUN bun run /root/setup/server.js
-
-RUN bunx altv-pkg $ALTV_BRANCH
-RUN chmod +x altv-server altv-crash-handler
-
-RUN bun i
-RUN bun run prisma:generate
-RUN bun run build
-
-WORKDIR /altv/src/webview
-
-RUN bun i
-RUN bun run build-only
-
-RUN cp -r dist /altv/resources/main/webview
-
-RUN rm -rf /altv/node_modules
-RUN rm -rf /altv/src
-
+# Expose necessary ports
 EXPOSE 7788/udp 7788/tcp 7799/udp 7790/tcp
 
-ENTRYPOINT [ "/altv/altv-server" ]
+# Set the entrypoint
+ENTRYPOINT ["/altv/altv-server"]
