@@ -14,6 +14,8 @@ RUN npm i -g bun && bun install && bun add -g altv-pkg@latest
 
 WORKDIR /altv
 
+RUN bun run /root/setup/server.js
+
 RUN bunx altv-pkg $ALTV_BRANCH
 RUN chmod +x altv-server altv-crash-handler
 
