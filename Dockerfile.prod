@@ -32,20 +32,17 @@ ENV ALTV_RESOURCES=$ALTV_RESOURCES
 
 RUN apt-get update -y && apt-get install -y curl lsof libatomic1 libc-bin wget apt-transport-https ca-certificates gnupg procps stow && apt autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Set the working directory and copy necessary files
-WORKDIR /root
-
-COPY ./docker-scripts ./setup
+COPY ./docker-scripts /root/setup
 COPY ./altv /altv
 
 # Install global packages, setup the environment, and build the project
 RUN echo "$(printenv | sort)" >> .env && \
   npm install -g bun && \
-  cd setup && \
-  bun install && \
   bun add -g altv-pkg@latest && \
-  bun run server.js && \
+  cd /root/setup && \
+  bun install && \
   cd /altv && \
+  bun run /root/setup/server.js && \
   bunx altv-pkg $ALTV_BRANCH && \
   chmod +x altv-server altv-crash-handler && \
   bun install && \
