@@ -38,11 +38,17 @@ jobs:
       - name: Log in to registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
+      - name: Set lower case owner name
+        run: |
+          echo "OWNER_LC=${OWNER,,}" >>${GITHUB_ENV}
+        env:
+          OWNER: "${{ github.repository_owner }}"
+
       - name: Push image
         run: |
           echo "Image name: ${IMAGE_NAME}"
-          echo "Full image tag: ghcr.io/${{ github.repository_owner }}/${IMAGE_NAME}:latest"
-          docker push ghcr.io/${{ github.repository_owner }}/${IMAGE_NAME}:latest
+          echo "Full image tag: ghcr.io/${OWNER_LC}/${IMAGE_NAME}:latest"
+          docker push ghcr.io/${OWNER_LC}/${IMAGE_NAME}:latest
 
   deploy:
     needs: build
