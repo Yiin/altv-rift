@@ -27,6 +27,9 @@ RUN bun run build-only
 
 RUN cp -r dist /altv/resources/main/webview
 
+RUN rm -rf /altv/node_modules
+RUN rm -rf /altv/src
+
 EXPOSE 7788/udp 7788/tcp 7799/udp 7790/tcp
 
 ENTRYPOINT [ "/altv/altv-server" ]
