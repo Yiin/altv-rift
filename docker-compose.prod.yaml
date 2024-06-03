@@ -3,13 +3,12 @@ services:
     image: "${IMAGE_NAME}:latest"
     build:
       context: .
-      dockerfile: ./server/Dockerfile
+      dockerfile: ./Dockerfile
       labels:
         runnumber: "${GITHUB_RUN_ID}"
     restart: unless-stopped
     volumes:
       - ./altv:/altv
-    entrypoint: ["/root/entrypoint.sh", "server"]
     stdin_open: true
     ports:
       - '7788:7788'
