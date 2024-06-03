@@ -54,6 +54,7 @@ RUN echo "$(printenv | sort)" >> .env && \
   cp -r dist /altv/resources/main/webview && \
   rm -rf /root/setup && \
   rm -rf /altv/src && \
+  cd /altv && \
   find node_modules -mindepth 1 -maxdepth 1 ! -name '.prisma' -exec rm -rf {} +
 
 # Expose necessary ports
