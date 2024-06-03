@@ -5,6 +5,9 @@ ENV ALTV_BRANCH=$BRANCH
 
 RUN apt-get update -y && apt-get install -y curl lsof libatomic1 libc-bin wget apt-transport-https ca-certificates gnupg procps stow && apt autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/*
 
+# log env vars to a file
+RUN echo "$(printenv | sort)" >> /root/.env
+
 COPY ./docker-scripts /root/setup
 COPY ./altv /altv
 
