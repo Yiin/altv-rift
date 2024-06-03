@@ -68,12 +68,12 @@ jobs:
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.DEPLOY_KEY }}
           script: |
-            docker pull ghcr.io/${OWNER_LC}/${IMAGE_NAME}:latest
-            docker stop altv-server || true
-            docker rm altv-server || true
-            docker run -d --name altv-server \
+            sudo docker pull ghcr.io/${OWNER_LC}/${IMAGE_NAME}:latest
+            sudo docker stop altv-server || true
+            sudo docker rm altv-server || true
+            sudo docker run -d --name altv-server \
               -p 7788:7788 \
               -p 7790:7790 \
               -p 7799:7799 \
               ghcr.io/${OWNER_LC}/${IMAGE_NAME}:latest
-            docker image prune -f
+            sudo docker image prune -f
