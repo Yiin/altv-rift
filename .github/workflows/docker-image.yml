@@ -11,7 +11,6 @@ env:
   IMAGE_NAME: altv-rift-server
 #
 jobs:
-  # This pushes the image to GitHub Packages.
   build:
     runs-on: ubuntu-latest
     permissions:
@@ -21,40 +20,52 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Build image
-        run: docker build . --file Dockerfile --tag $IMAGE_NAME --label "runnumber=${GITHUB_RUN_ID}"
+      - name: Build Docker image
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DISCORD_CLIENT_ID: ${{ secrets.DISCORD_CLIENT_ID }}
+          DISCORD_CLIENT_SECRET: ${{ secrets.DISCORD_CLIENT_SECRET }}
+          REDIRECT_IP: ${{ vars.REDIRECT_IP }}
+          NODE_ENV: ${{ vars.NODE_ENV }}
+          ALTV_HOST: ${{ vars.ALTV_HOST }}
+          ALTV_NAME: ${{ vars.ALTV_NAME }}
+          ALTV_PORT: ${{ vars.ALTV_PORT }}
+          ALTV_PASSWORD: ${{ vars.ALTV_PASSWORD }}
+          ALTV_ANNOUNCE: ${{ vars.ALTV_ANNOUNCE }}
+          ALTV_DEBUG: ${{ vars.ALTV_DEBUG }}
+          ALTV_MODULES: ${{ vars.ALTV_MODULES }}
+          ALTV_RESOURCES: ${{ vars.ALTV_RESOURCES }}
+        run: |
+          docker-compose -f docker-compose.prod.yaml build
+          IMAGE_ID=$(docker images -q ${IMAGE_NAME})
+          docker tag $IMAGE_ID $IMAGE_NAME:latest
+          docker label $IMAGE_ID "runnumber=${GITHUB_RUN_ID}"
 
       - name: Log in to registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-        #
+
       - name: Push image
         run: |
-          IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
+          IMAGE_ID=ghcr.io/${{ github.repository_owner }}/${IMAGE_NAME}:latest
+          docker push $IMAGE_ID
 
-          # This changes all uppercase characters to lowercase.
-          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
-          # This strips the git ref prefix from the version.
-          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-          # This strips the "v" prefix from the tag name.
-          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-          # This uses the Docker `latest` tag convention.
-          [ "$VERSION" == "main" ] && VERSION=latest
-          echo IMAGE_ID=$IMAGE_ID
-          echo VERSION=$VERSION
-          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
-          docker push $IMAGE_ID:$VERSION
-
-  # deploy:
-  #   needs: build
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: SSH to Server and Deploy
-  #       uses: appleboy/ssh-action@v1.0.3
-  #       with:
-  #         host: ${{ secrets.DEPLOY_HOST }}
-  #         username: ${{ secrets.DEPLOY_USER }}
-  #         key: ${{ secrets.DEPLOY_KEY }}
-  #         script: |
-  #           docker pull ghcr.io/${{ github.repository_owner }}/altv-server:latest
-  #           docker-compose -f ./docker-compose.prod.yml up -d
-  #           docker image prune -f
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH to Server and Deploy
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          script: |
+            docker pull ghcr.io/${{ github.repository_owner }}/altv-server:latest
+            docker stop altv-server || true
+            docker rm altv-server || true
+            docker run -d --name altv-server \
+              -p 7788:7788 \
+              -p 7790:7790 \
+              -p 7799:7799 \
+              ghcr.io/${{ github.repository_owner }}/altv-server:latest
+            docker image prune -f

@@ -12,23 +12,23 @@
 .indicator {
   display: block;
   position: relative;
-  width: 50px;
-  height: 50px;
+  width: 3.125rem;
+  height: 3.125rem;
 }
 
 .indicator__glow-wrapper {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 43px;
-  height: 43px;
+  width: 2.6875rem;
+  height: 2.6875rem;
   transform: translate(-50%, -50%);
   transform-origin: center;
 }
 
 .indicator__glow {
-  width: 43px;
-  height: 43px;
+  width: 2.6875rem;
+  height: 2.6875rem;
   animation: 3s ease-in-out infinite pulse-animation;
   transform-origin: center;
 }
@@ -38,7 +38,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 24px;
-  height: 24px;
+  width: 1.5rem;
+  height: 1.5rem;
   transform-origin: center;
 }

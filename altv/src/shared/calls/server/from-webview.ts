@@ -4,10 +4,10 @@ import { BlueprintKey } from "@shared/modules/production";
 import {
   EquipmentSlot,
   StorageItemSource,
-  StorageSource,
-  ItemSource,
-  PlayerInventoryItemSource,
-  PlayerItemSource,
+  type StorageSource,
+  type ItemSource,
+  type PlayerInventoryItemSource,
+  type PlayerItemSource,
 } from "../../interfaces";
 import { schema } from "../validation";
 

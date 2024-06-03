@@ -7,10 +7,7 @@ export const filelocPlugin = (options: { rootDir: string } = { rootDir: 'src' })
   ({
     name: "fileloc",
     setup(build) {
-      build.onLoad({ filter: /.\.(js|ts|jsx|tsx)$/, namespace: "file" }, async (args) => {
-        // options.rootDir: /src
-        // args.path: /source/src/client/main.ts
-        // rootDir needs to be: /source/src
+      build.onLoad({ filter: /.\.(js|ts)$/, namespace: "file" }, async (args) => {
         const rootDir = args.path.substring(0, args.path.indexOf(options.rootDir) + options.rootDir.length);
 
         const isWindows = /^win/.test(process.platform);

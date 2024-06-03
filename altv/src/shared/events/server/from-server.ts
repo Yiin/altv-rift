@@ -1,7 +1,7 @@
 import alt from "@altv/server";
-import { EquipmentSlot, Inventory } from "@shared/interfaces";
-import { Item } from "@shared/modules/items";
-import { InGamePlayer } from "../../../server/core/utility/assertions";
+import { EquipmentSlot, type Inventory } from "@shared/interfaces";
+import { type Item } from "@shared/modules/items";
+import { type InGamePlayer } from "../../../server/core/utility/assertions";
 
 export const FromServer = {
   USER_LOAD: "USER_LOAD",

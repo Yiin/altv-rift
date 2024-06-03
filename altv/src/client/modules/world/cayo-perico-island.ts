@@ -28,7 +28,7 @@ const islandIpls = [
   "h4_islandx_Mansion_LockUp_03",
   "h4_islandairstrip_hangar_props",
   "h4_IslandX_Mansion_B",
-  "h4_islandairstrip_doorsclosed",
+  "h4_islandairstrip_doorsopen",
   "h4_Underwater_Gate_Closed",
   "h4_mansion_gate_closed",
   "h4_aa_guns",
@@ -142,6 +142,10 @@ function loadIsland() {
   for (const ipl of islandIpls) {
     game.requestIpl(ipl);
   }
+
+  alt.Utils.wait(1000).then(() => {
+    game.removeIpl('h4_islandairstrip_doorsclosed');
+  });
 }
 
 function unloadIsland() {

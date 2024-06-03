@@ -26,6 +26,7 @@ import "./modules/production";
 import "./modules/loot";
 import "./modules/dev";
 import "./modules/admin";
+import "./scenes";
 
 import fs from "node:fs";
 import path from "node:path";
@@ -87,4 +88,4 @@ alt.Events.onPlayer(
   },
 );
 
-console.log("okayy");
+console.log("woah");

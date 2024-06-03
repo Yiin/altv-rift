@@ -24,6 +24,7 @@ services:
       - node_modules:/source/node_modules
       - altv:/altv
     entrypoint: ["/root/entrypoint.sh", "builder"]
+    stdin_open: true 
     env_file:
       - .env
     depends_on:
@@ -44,6 +45,7 @@ services:
       - node_modules:/source/node_modules
       - altv:/altv
     entrypoint: ["/root/entrypoint.sh", "server"]
+    stdin_open: true 
     ports:
       - '7788:7788'
       - '7788:7788/udp'

@@ -19,6 +19,7 @@ import {
   getPreviewingItem,
   InventoryInteractionType,
 } from "@/store/inventory";
+import Icon from "@/components/Icon/Icon.vue";
 import DarkBackground from "../../../components/DarkBackground.vue";
 import BackButtons from "../../../components/buttons/BackButtons.vue";
 import ContextMenu from "./ContextMenu.vue";
@@ -64,7 +65,14 @@ onUnmounted(() => {
       <div>
         <div class="flex items-center gap-24 uppercase">
           <div class="flex flex-col">
-            <h3 class="text-xl font-bold text-white">{{ money }}</h3>
+            <h3 class="flex items-center gap-2.25 text-xl font-bold text-white">
+              {{ money }}
+              <Icon
+                name="money"
+                class="text-white"
+                :size="1.1875"
+              />
+            </h3>
             <span class="text-sm font-semibold text-deepGray">money</span>
           </div>
         </div>

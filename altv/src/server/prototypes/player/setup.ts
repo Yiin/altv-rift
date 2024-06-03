@@ -1,7 +1,7 @@
 import alt from "@altv/server";
 import { minutesToMilliseconds } from "date-fns";
 import { ClientEvents } from "@shared/events/client";
-import { Config } from "@/core/utility/config";
+import { getVueDebugMode, getViteServer } from "@/core/utility/webview";
 import { clearMessageHistory, show } from "@/modules/chat";
 import { isInGame } from "@/core/utility/assertions";
 
@@ -28,8 +28,8 @@ alt.Player.prototype.setup = async function () {
   }, minutesToMilliseconds(1));
 
   // Setup Webview
-  if (Config.getVueDebugMode()) {
-    this.emitRaw(ClientEvents.FromServer.SETUP_WEBVIEW, await Config.getViteServer());
+  if (getVueDebugMode()) {
+    this.emitRaw(ClientEvents.FromServer.SETUP_WEBVIEW, await getViteServer());
   } else {
     this.emitRaw(ClientEvents.FromServer.SETUP_WEBVIEW);
   }

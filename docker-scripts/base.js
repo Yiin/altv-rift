@@ -22,7 +22,7 @@ export function exists(env) {
 
 export function str(env) {
   const val = process.env[env];
-  if (val == null) return undefined;
+  if (val == null || val == "unset") return undefined;
   return val;
 }
 

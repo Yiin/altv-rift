@@ -142,7 +142,7 @@ function renderParsedNode(
   }
 }
 
-interface ElementProps {
+export type ElementProps = {
   className?: string | any[];
   [key: string]: any;
 }

@@ -1,8 +1,7 @@
 import { WebSocketServer } from "ws";
 import { Subprocess, spawn, $ } from "bun";
 import Watcher from "watcher";
-import { debounce } from "lodash";
-import fkill from "fkill";
+import chokidar from "chokidar";
 
 const altvProcessName = process.platform === "win32" ? "./altv-server.exe" : "./altv-server";
 
@@ -67,31 +66,39 @@ async function restartServer() {
   restarting = false;
 }
 
-const serverWatcher = new Watcher(["./src/server/**/*.ts", "./src/shared/**/*.ts"], {
+const serverWatcher = new Watcher(["/source/src/server/**/*.ts", "/source/src/shared/**/*.ts"], {
+  recursive: true,
+  renameDetection: true,
+  native: true
+});
+const clientWatcher = new Watcher(["/source/src/client/**/*.ts", "/source/src/shared/**/*.ts"], {
   recursive: true,
   renameDetection: true,
 });
-const clientWatcher = new Watcher(["./src/client/**/*.ts", "./src/shared/**/*.ts"], {
+const assetsWatcher = new Watcher(["/source/src/client/**/*.rcss"], {
   recursive: true,
   renameDetection: true,
 });
-const assetsWatcher = new Watcher(["./src/client/**/*.rcss"], {
-  recursive: true,
-  renameDetection: true,
-});
-
-const building = new Set();
 
 serverWatcher.on("change", () => {
-  building.add("server");
+  console.log("[watcher] Server files changed");
 });
 
 clientWatcher.on("change", () => {
-  building.add("client");
+  console.log("[watcher] Client files changed");
 });
 
 assetsWatcher.on("change", () => {
+  console.log("[watcher] Assets files changed");
   restartServer();
+});
+
+chokidar.watch([
+  "/source/src/server/**/*.ts", "/source/src/shared/**/*.ts",
+  "/source/src/client/**/*.ts"
+]).on("all", () => {
+  console.log("[chokidar] Files changed");
+  // restartServer();
 });
 
 restartServer();

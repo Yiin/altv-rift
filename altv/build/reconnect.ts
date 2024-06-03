@@ -1,8 +1,12 @@
 import WebSocket from "ws";
-import { debounce } from "lodash-es";
+import { isDev } from "./env";
 
 let ws: WebSocket | undefined;
 let wasAlive = false;
+
+if (isDev()) {
+  connect();
+}
 
 function connect() {
   if (ws && ws.readyState !== ws.CLOSED) {
@@ -24,12 +28,13 @@ function connect() {
   });
 }
 
-connect();
-
-export const reloadResource = debounce(async (side) => {
+export function reloadResource() {
+  if (!isDev()) {
+    return;
+  }
   if (ws && ws.readyState === ws.OPEN) {
     ws.send("restart-server");
   } else {
     console.log("[build] Ws server not connected");
   }
-});
+}

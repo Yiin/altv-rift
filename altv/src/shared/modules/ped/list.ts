@@ -6,7 +6,7 @@ export const PedKey = {
   WOODCUTTING_TUTOR: "NATHAN_MONAHAN",
   CRAFTING_TUTOR: "SARA_MATTHEWS",
 
-  TESTING_SHOP: "TESTING_SHOP",
+  JOHN_WICK: "JOHN_WICK",
 } as const;
 
 export type PedKey = (typeof PedKey)[keyof typeof PedKey];

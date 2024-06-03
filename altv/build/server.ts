@@ -1,10 +1,11 @@
-import esbuild from "esbuild";
+import esbuild, { BuildOptions } from "esbuild";
 import yamlPlugin from "./plugins/yaml-plugin";
 import { esbuildOptions } from "./shared";
 import { filelocPlugin } from "./plugins/fileloc-plugin";
 import { reloadResource } from "./reconnect";
+import { isDev } from "./env";
 
-const context = await esbuild.context({
+const options: BuildOptions = {
   ...esbuildOptions,
   platform: "node",
   entryPoints: ["src/server/main.ts"],
@@ -18,11 +19,17 @@ const context = await esbuild.context({
     {
       name: "auto-reconnect",
       setup({ onEnd }) {
-        onEnd(() => reloadResource("server"));
+        onEnd(() => reloadResource());
       },
     },
   ],
-});
+};
 
-await context.watch();
+if (isDev()) {
+  const context = await esbuild.context(options);
+  await context.watch();
+} else {
+  await esbuild.build(options)
+}
+
 // await context.dispose();

@@ -1,13 +1,12 @@
-import path from "path";
-import esbuild from "esbuild";
-import chokidar from "chokidar";
+import esbuild, { BuildOptions } from "esbuild";
 import Watcher from "watcher";
 import yamlPlugin from "./plugins/yaml-plugin";
 import { esbuildOptions } from "./shared";
-import { copy, copyFile } from "./copy";
+import { copy } from "./copy";
 import { filelocPlugin } from "./plugins/fileloc-plugin";
 import { rcssPlugin } from "./plugins/rcss-plugin";
 import { reloadResource } from "./reconnect";
+import { isDev } from "./env";
 
 export const ASSETS_PATHS = [
   "src/resource.toml",
@@ -17,22 +16,33 @@ export const ASSETS_PATHS = [
   "src/client/**/*.rcss",
 ];
 
-const assetsWatcher = new Watcher(["src/client/**/*.rcss"], {
-  recursive: true,
-  renameDetection: true,
-});
+if (isDev()) {
+  const assetsWatcher = new Watcher(ASSETS_PATHS, {
+    recursive: true,
+    renameDetection: true,
+  });
 
-assetsWatcher.on("change", async () => {
-  for (const assetsPath of ASSETS_PATHS) {
-    await copy(assetsPath, "resources/main");
-  }
-});
+  assetsWatcher.on("change", async () => {
+    for (const assetsPath of ASSETS_PATHS) {
+      await copy(assetsPath, "resources/main");
+    }
+  });
+
+  // // Watch .rml files for changes
+  // const watcher = chokidar.watch(ASSETS_PATHS);
+
+  // watcher.on("change", (filePath) => {
+  //   const relativePath = path.relative("src", filePath);
+  //   const destPath = path.join("resources/main", relativePath);
+  //   copyFile(filePath, destPath);
+  // });
+}
 
 for (const assetsPath of ASSETS_PATHS) {
   await copy(assetsPath, "resources/main");
 }
 
-const context = await esbuild.context({
+const options: BuildOptions = {
   ...esbuildOptions,
   platform: "node",
   entryPoints: ["src/client/main.ts"],
@@ -59,22 +69,13 @@ const context = await esbuild.context({
           for (const assetsPath of ASSETS_PATHS) {
             copy(assetsPath, "resources/main/");
           }
-
-          // Watch .rml files for changes
-          const watcher = chokidar.watch(ASSETS_PATHS);
-
-          watcher.on("change", (filePath) => {
-            const relativePath = path.relative("src", filePath);
-            const destPath = path.join("resources/main", relativePath);
-            copyFile(filePath, destPath);
-          });
         });
       },
     },
     {
       name: "auto-reconnect",
       setup(build) {
-        build.onEnd(() => reloadResource("client"));
+        build.onEnd(() => reloadResource());
       },
     },
   ],
@@ -85,8 +86,13 @@ const context = await esbuild.context({
       },
     }),
   },
-});
+};
 
-await context.watch();
+if (isDev()) {
+  const context = await esbuild.context(options);
+  await context.watch();
+} else {
+  await esbuild.build(options);
+}
 
-await context.dispose();
+// await context.dispose();

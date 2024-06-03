@@ -2,7 +2,6 @@ import alt from "@altv/client";
 import { WindowType } from "@shared/store/client.store";
 import { StorageType } from "@shared/store/game-state.store";
 import { ServerCall } from "@shared/calls/server";
-import { clientState } from "@/core/store/client.store";
 import { rpc } from "@/core/rpc";
 import { openWindow } from "@/core/user-interface/webview";
 import { isAirDropInPosition } from "@/modules/inventory";
@@ -12,6 +11,8 @@ import { AnchorType } from "../../renderer/anchors";
 import { useMenu } from "../../renderer/hooks/use-menu";
 import { everyFrame } from "../../renderer/hooks/every-frame";
 import { Indicator } from "../../components/indicator";
+import { Icon } from "../../components/icon";
+import { rem } from "../../renderer/pixel";
 
 registerElement({
   key: "storage-interaction",
@@ -42,7 +43,7 @@ registerElement({
           }
         }
       },
-      drawDistance: 2,
+      drawDistance: 2.5,
     });
 
     const currentMenuIndex = menu.currentIndex();
@@ -73,30 +74,43 @@ registerElement({
             },
           },
           [
-            ...menu.interactions.map((interaction, index) =>
+            ...menu.interactions.map((interaction, index, arr) =>
               div([
                 div(
                   {
                     style: {
+                      width: "20rem",
                       display: "flex",
                       "align-items": "center",
-                      "justify-content": "center",
+                      "justify-content": "flex-start",
                       gap: "5px",
                     },
                   },
                   [
+                    Icon("key-E", {
+                      style: {
+                        'display': currentMenuIndex === index ? 'block' : 'none',
+                      },
+                      sizePx: 32,
+                    }),
                     div([
                       div(
                         {
                           className: [
                             "interaction",
-                            "interaction--storage",
                             currentMenuIndex === index && "interaction--selected",
                           ],
                         },
                         [span({ className: "label" }, [interaction.text])],
-                      ),
+                      )
                     ]),
+                    Icon("mouse-wheel", {
+                      style: {
+                        'display': currentMenuIndex === index && arr.length > 1 ? 'block' : 'none',
+                        width: rem(24),
+                        height: rem(24 * (456 / 256)),
+                      }
+                    })
                   ],
                 ),
               ]),

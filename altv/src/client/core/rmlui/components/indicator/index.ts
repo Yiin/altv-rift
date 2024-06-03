@@ -21,6 +21,7 @@ export function Indicator(): ParsedElement {
       img({
         className: "indicator__dot",
         src: `components/indicator/assets/indicator_dot.png`,
+        // src: `components/indicator/assets/keyboard-mouse/light/W.png`,
       }),
     ],
   );

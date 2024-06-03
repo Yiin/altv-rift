@@ -1,5 +1,5 @@
-import { TreeLogItemKey } from "../items";
-import { TreeType } from "./interfaces";
+import { type TreeLogItemKey } from "../items";
+import { type TreeType } from "./interfaces";
 import { TreeLevels, TreeXPPerLog } from "./tree-levels";
 import { TreeTypes } from "./tree-types";
 

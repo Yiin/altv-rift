@@ -372831,7 +372831,8 @@ var FromClient2 = {
   NOTIFY: "NOTIFY",
   WEAPON_SHOOT: "WEAPON_SHOOT",
   CONVERSATION_STARTED: "CONVERSATION_STARTED",
-  CLOSE_WINDOW: "CLOSE_WINDOW"
+  CLOSE_WINDOW: "CLOSE_WINDOW",
+  GET_RATBIKE: "GET_RATBIKE"
 };
 
 // ../source/src/shared/events/server/index.ts
@@ -373872,11 +373873,7 @@ alt14.Events.onServer(
 
 // ../source/src/client/core/rmlui/elements/ped-interaction/index.ts
 init_define_process();
-import alt27 from "@altv/client";
-import game13 from "@altv/natives";
-
-// ../source/src/shared/enums/bones.ts
-init_define_process();
+import alt28 from "@altv/client";
 
 // ../source/src/client/modules/questing/conversation.ts
 init_define_process();
@@ -374028,17 +374025,63 @@ var progress = createSelector("progress");
 
 // ../source/src/client/core/rmlui/components/icon/index.ts
 init_define_process();
-function Icon(name) {
-  return img({
+
+// ../source/src/client/core/rmlui/renderer/pixel.ts
+init_define_process();
+import alt16 from "@altv/client";
+var adjustedFontSize = 16;
+function adjustUIBaseFontSize() {
+  const { x: width, y: height } = alt16.getScreenResolution();
+  const targetAspectRatio = 16 / 9;
+  const currentAspectRatio = width / height;
+  const aspectRatioDeviation = currentAspectRatio / targetAspectRatio;
+  const baseFontSize = Math.max(10, 16 / 1080 * height);
+  adjustedFontSize = baseFontSize * Math.min(1, aspectRatioDeviation);
+  document2.body.style["font-size"] = `${adjustedFontSize.toFixed(6)}px`;
+  console.log(`Adjusted base font size to ${adjustedFontSize.toFixed(6)}px`);
+}
+__name(adjustUIBaseFontSize, "adjustUIBaseFontSize");
+adjustUIBaseFontSize();
+alt16.Events.onWindowResolutionChange(() => {
+  adjustUIBaseFontSize();
+});
+function rem(value) {
+  return `${value / 16}rem`;
+}
+__name(rem, "rem");
+function px(value) {
+  return +(value * (adjustedFontSize / 16)).toFixed(6);
+}
+__name(px, "px");
+
+// ../source/src/client/core/rmlui/components/icon/index.ts
+function Icon(name, props = {}) {
+  const sizeStyle = {
+    width: props.style?.width || rem(props.sizePx ?? 50),
+    height: props.style?.height || rem(props.sizePx ?? 50)
+  };
+  props.style = {
+    ...sizeStyle,
+    ...props.style
+  };
+  if (name.startsWith("key-")) {
+    return div(props, [img({
+      className: "icon",
+      src: `components/icon/assets/keyboard-mouse/light/${name.replace("key-", "")}.png`,
+      style: sizeStyle
+    })]);
+  }
+  return div(props, [img({
     className: "icon",
-    src: `components/icon/assets/icon-${name}.png`
-  });
+    src: `components/icon/assets/icon-${name}.png`,
+    style: sizeStyle
+  })]);
 }
 __name(Icon, "Icon");
 
 // ../source/src/client/core/rmlui/renderer/hooks/use-menu.ts
 init_define_process();
-import alt26 from "@altv/client";
+import alt27 from "@altv/client";
 import game12 from "@altv/natives";
 
 // ../source/src/shared/store/game-state.store.ts
@@ -374138,7 +374181,7 @@ init_define_process();
 // ../source/src/client/modules/inventory/air-drops.ts
 init_define_process();
 var import_lodash2 = __toESM(require_lodash(), 1);
-import alt16 from "@altv/client";
+import alt17 from "@altv/client";
 import game8 from "@altv/natives";
 
 // ../source/src/shared/modules/air-drops/index.ts
@@ -374153,30 +374196,30 @@ function syncAirDrop(entity) {
   const currentPos = interpolateAirDropPosition(entity);
   const airDrop = airDrops.get(entity.id);
   if (!airDrop) {
-    const lootBox = alt16.LocalObject.create({
+    const lootBox = alt17.LocalObject.create({
       model: getAirDropModel(entity.streamSyncedMeta.airDropType),
       streamingDistance: 300,
       pos: currentPos,
-      rot: alt16.Vector3.zero
+      rot: alt17.Vector3.zero
     });
     game8.freezeEntityPosition(lootBox.scriptID, true);
     if (!isAirDropInPosition(entity)) {
-      const parachute = alt16.LocalObject.create({
+      const parachute = alt17.LocalObject.create({
         model: "p_parachute1_s",
         streamingDistance: 300,
         pos: currentPos,
-        rot: alt16.Vector3.zero
+        rot: alt17.Vector3.zero
       });
       parachute.attachTo(
         lootBox,
         0,
-        new alt16.Vector3(0, 0, 3.3),
-        alt16.Vector3.zero,
+        new alt17.Vector3(0, 0, 3.3),
+        alt17.Vector3.zero,
         false,
         false,
         false
       );
-      const timer = alt16.Timers.everyTick(() => {
+      const timer = alt17.Timers.everyTick(() => {
         const airDrop2 = airDrops.get(entity.id);
         if (isAirDropInPosition(entity)) {
           timer.destroy();
@@ -374239,7 +374282,7 @@ function isAirDropInPosition(entity) {
   }
   const to = getDropPosition(entity);
   const { ts, from, speed } = interpolate;
-  return (alt16.getNetTime() - ts) / 1e3 >= from.distanceTo(to) / speed;
+  return (alt17.getNetTime() - ts) / 1e3 >= from.distanceTo(to) / speed;
 }
 __name(isAirDropInPosition, "isAirDropInPosition");
 function interpolateAirDropPosition(entity) {
@@ -374251,7 +374294,7 @@ function interpolateAirDropPosition(entity) {
   }
   const { ts, from, speed } = interpolate;
   const to = getDropPosition(entity);
-  const elapsed = (alt16.getNetTime() - ts) / 1e3;
+  const elapsed = (alt17.getNetTime() - ts) / 1e3;
   const distance = from.distanceTo(to);
   return from.lerp(Math.min(speed * elapsed / distance, 1), to);
 }
@@ -374278,8 +374321,8 @@ function getAirDropModel(type) {
   return "vw_prop_vw_crate_01a";
 }
 __name(getAirDropModel, "getAirDropModel");
-alt16.Events.onStreamSyncedMetaChange(({ entity, key, newValue }) => {
-  if (!(entity instanceof alt16.VirtualEntity) || entity.streamSyncedMeta.entityType !== "storage" || entity.streamSyncedMeta.storageType !== "AirDrop" /* AirDrop */ || key !== "interpolate") {
+alt17.Events.onStreamSyncedMetaChange(({ entity, key, newValue }) => {
+  if (!(entity instanceof alt17.VirtualEntity) || entity.streamSyncedMeta.entityType !== "storage" || entity.streamSyncedMeta.storageType !== "AirDrop" /* AirDrop */ || key !== "interpolate") {
     return;
   }
   if (newValue) {
@@ -374287,8 +374330,8 @@ alt16.Events.onStreamSyncedMetaChange(({ entity, key, newValue }) => {
   }
   syncAirDrop(entity);
 });
-alt16.Events.onWorldObjectStreamIn(({ object }) => {
-  if (!(object instanceof alt16.VirtualEntity) || object.streamSyncedMeta.entityType !== "storage" || object.streamSyncedMeta.storageType !== "AirDrop" /* AirDrop */) {
+alt17.Events.onWorldObjectStreamIn(({ object }) => {
+  if (!(object instanceof alt17.VirtualEntity) || object.streamSyncedMeta.entityType !== "storage" || object.streamSyncedMeta.storageType !== "AirDrop" /* AirDrop */) {
     return;
   }
   if (!object.streamSyncedMeta.interpolate) {
@@ -374300,8 +374343,8 @@ alt16.Events.onWorldObjectStreamIn(({ object }) => {
   }
   syncAirDrop(object);
 });
-alt16.Events.onWorldObjectStreamOut(({ object }) => {
-  if (!(object instanceof alt16.VirtualEntity) || object.streamSyncedMeta.entityType !== "storage" || object.streamSyncedMeta.storageType !== "AirDrop" /* AirDrop */) {
+alt17.Events.onWorldObjectStreamOut(({ object }) => {
+  if (!(object instanceof alt17.VirtualEntity) || object.streamSyncedMeta.entityType !== "storage" || object.streamSyncedMeta.storageType !== "AirDrop" /* AirDrop */) {
     return;
   }
   const airDrop = airDrops.get(object.id);
@@ -374316,7 +374359,7 @@ alt16.Events.onWorldObjectStreamOut(({ object }) => {
 // ../source/src/client/modules/inventory/dropped-items/index.ts
 init_define_process();
 var import_lodash3 = __toESM(require_lodash(), 1);
-import alt17 from "@altv/client";
+import alt18 from "@altv/client";
 
 // ../source/src/shared/modules/items/index.ts
 init_define_process();
@@ -420607,48 +420650,48 @@ init_define_process();
 init_define_process();
 
 // ../source/src/client/modules/inventory/dropped-items/index.ts
-alt17.Timers.setInterval(updateNearbyItems, 2e3);
-alt17.Events.onResourceStart(() => {
-  alt17.Font.register("client/core/rmlui/fonts/jost/Jost-Regular.ttf");
+alt18.Timers.setInterval(updateNearbyItems, 2e3);
+alt18.Events.onResourceStart(() => {
+  alt18.Font.register("client/core/rmlui/fonts/jost/Jost-Regular.ttf");
 });
 var labels = /* @__PURE__ */ new Map();
-alt17.Events.onWorldObjectStreamIn(({ object }) => {
-  if (!(object instanceof alt17.VirtualEntity) || object.streamSyncedMeta.entityType !== "item" /* Item */) {
+alt18.Events.onWorldObjectStreamIn(({ object }) => {
+  if (!(object instanceof alt18.VirtualEntity) || object.streamSyncedMeta.entityType !== "item" /* Item */) {
     return;
   }
   const item = object.streamSyncedMeta.item;
   const amount = isStackable(item) ? item.amount : 1;
-  const label2 = alt17.TextLabel.create({
+  const label2 = alt18.TextLabel.create({
     fontName: "Jost",
     text: `${getItemName(item.key)} x ${amount}`,
     color: "grade" in item ? {
-      ["common" /* COMMON */]: new alt17.RGBA(255, 255, 255, 255),
-      ["uncommon" /* UNCOMMON */]: new alt17.RGBA(185, 240, 69, 255),
-      ["rare" /* RARE */]: new alt17.RGBA(32, 135, 255, 255),
-      ["epic" /* EPIC */]: new alt17.RGBA(187, 44, 255, 255),
-      ["legendary" /* LEGENDARY */]: new alt17.RGBA(255, 218, 87, 255),
-      ["contraband" /* CONTRABAND */]: new alt17.RGBA(255, 218, 87, 255),
-      ["limited" /* LIMITED */]: new alt17.RGBA(0, 255, 234, 255)
-    }[item.grade] : new alt17.RGBA(255, 255, 255, 255),
+      ["common" /* COMMON */]: new alt18.RGBA(255, 255, 255, 255),
+      ["uncommon" /* UNCOMMON */]: new alt18.RGBA(185, 240, 69, 255),
+      ["rare" /* RARE */]: new alt18.RGBA(32, 135, 255, 255),
+      ["epic" /* EPIC */]: new alt18.RGBA(187, 44, 255, 255),
+      ["legendary" /* LEGENDARY */]: new alt18.RGBA(255, 218, 87, 255),
+      ["contraband" /* CONTRABAND */]: new alt18.RGBA(255, 218, 87, 255),
+      ["limited" /* LIMITED */]: new alt18.RGBA(0, 255, 234, 255)
+    }[item.grade] : new alt18.RGBA(255, 255, 255, 255),
     pos: object.pos,
     fontSize: 32,
     fontScale: 1,
-    outlineColor: new alt17.RGBA(0, 0, 0, 255),
+    outlineColor: new alt18.RGBA(0, 0, 0, 255),
     outlineWidth: 1
   });
   label2.faceCamera = true;
   labels.set(object, label2);
   updateNearbyItems();
 });
-alt17.Events.onWorldObjectStreamOut(({ object }) => {
-  if (!(object instanceof alt17.VirtualEntity) || object.streamSyncedMeta.entityType !== "item" /* Item */) {
+alt18.Events.onWorldObjectStreamOut(({ object }) => {
+  if (!(object instanceof alt18.VirtualEntity) || object.streamSyncedMeta.entityType !== "item" /* Item */) {
     return;
   }
   labels.get(object)?.destroy();
   updateNearbyItems();
 });
-alt17.Events.onStreamSyncedMetaChange(({ entity, key, newValue }) => {
-  if (!(entity instanceof alt17.VirtualEntity) || entity.streamSyncedMeta.entityType !== "item" /* Item */) {
+alt18.Events.onStreamSyncedMetaChange(({ entity, key, newValue }) => {
+  if (!(entity instanceof alt18.VirtualEntity) || entity.streamSyncedMeta.entityType !== "item" /* Item */) {
     return;
   }
   if (key !== "item") {
@@ -420666,11 +420709,11 @@ alt17.Events.onStreamSyncedMetaChange(({ entity, key, newValue }) => {
 function updateNearbyItems() {
   const processedItemIDs = /* @__PURE__ */ new Set();
   const DISTANCE_TO_REACH = 5;
-  alt17.VirtualEntity.streamedIn.forEach((entity) => {
+  alt18.VirtualEntity.streamedIn.forEach((entity) => {
     if (entity.streamSyncedMeta.entityType !== "item" /* Item */) {
       return;
     }
-    const distance = entity.pos.distanceTo(alt17.Player.local.pos);
+    const distance = entity.pos.distanceTo(alt18.Player.local.pos);
     const isWithinRange = distance <= DISTANCE_TO_REACH;
     const itemID = entity.remoteID;
     const alreadyListed = clientState.nearbyItems.some((item) => item.id === itemID);
@@ -420688,10 +420731,10 @@ function updateNearbyItems() {
   });
   const removedItems = import_lodash3.default.remove(clientState.nearbyItems, (item) => !processedItemIDs.has(item.id));
   clientState.nearbyItems.sort((a, b) => {
-    const entityA = alt17.VirtualEntity.getByRemoteID(a.id);
-    const entityB = alt17.VirtualEntity.getByRemoteID(b.id);
-    const distanceA = entityA ? entityA.pos.distanceTo(alt17.Player.local.pos) : Infinity;
-    const distanceB = entityB ? entityB.pos.distanceTo(alt17.Player.local.pos) : Infinity;
+    const entityA = alt18.VirtualEntity.getByRemoteID(a.id);
+    const entityB = alt18.VirtualEntity.getByRemoteID(b.id);
+    const distanceA = entityA ? entityA.pos.distanceTo(alt18.Player.local.pos) : Infinity;
+    const distanceB = entityB ? entityB.pos.distanceTo(alt18.Player.local.pos) : Infinity;
     return distanceA - distanceB;
   });
 }
@@ -420699,14 +420742,14 @@ __name(updateNearbyItems, "updateNearbyItems");
 
 // ../source/src/client/modules/inventory/inventory.controller.ts
 init_define_process();
-import alt18 from "@altv/client";
-alt18.Events.onServer(ClientEvents.FromServer.INVENTORY_ITEM_ADD, (item) => {
+import alt19 from "@altv/client";
+alt19.Events.onServer(ClientEvents.FromServer.INVENTORY_ITEM_ADD, (item) => {
   useWebview((webview2) => webview2.emit(WebviewEvents.FromClient.INVENTORY_ITEM_ADD, item));
 });
 
 // ../source/src/client/modules/inventory/keybinds.ts
 init_define_process();
-import alt23 from "@altv/client";
+import alt24 from "@altv/client";
 
 // ../source/src/shared/calls/server/index.ts
 init_define_process();
@@ -425620,7 +425663,7 @@ init_define_process();
 
 // ../source/src/client/core/rpc/with-server.ts
 init_define_process();
-import alt19 from "@altv/client";
+import alt20 from "@altv/client";
 
 // ../source/src/shared/calls/constants.ts
 init_define_process();
@@ -425679,11 +425722,11 @@ var serverHandlers = /* @__PURE__ */ new Map();
 var callServer = /* @__PURE__ */ __name((name, ...args) => {
   return new Promise((resolve, reject) => {
     const payload = createPayload(name, args);
-    alt19.Events.emitServerRaw(CALL_SERVER_FROM_CLIENT, payload);
+    alt20.Events.emitServerRaw(CALL_SERVER_FROM_CLIENT, payload);
     serverHandlers.set(payload.id, { name, resolve, reject });
   });
 }, "callServer");
-alt19.Events.onServer(CALL_SERVER_FROM_CLIENT_RESPONSE, (response) => {
+alt20.Events.onServer(CALL_SERVER_FROM_CLIENT_RESPONSE, (response) => {
   const handler = serverHandlers.get(response.id);
   if (!handler) {
     return;
@@ -425698,7 +425741,7 @@ alt19.Events.onServer(CALL_SERVER_FROM_CLIENT_RESPONSE, (response) => {
     if ("returns" in schema) {
       const result = schema.returns.safeParse(response.result);
       if (!result.success) {
-        alt19.logError(
+        alt20.logError(
           `CALL_SERVER_FROM_CLIENT_RESPONSE: Validation error in ${handler.name}:`,
           result.error
         );
@@ -425706,7 +425749,7 @@ alt19.Events.onServer(CALL_SERVER_FROM_CLIENT_RESPONSE, (response) => {
       }
     }
   } else {
-    alt19.logWarning(`CALL_SERVER_FROM_CLIENT_RESPONSE: No validation schema for ${handler.name}`);
+    alt20.logWarning(`CALL_SERVER_FROM_CLIENT_RESPONSE: No validation schema for ${handler.name}`);
   }
   handler.resolve(response.result);
 });
@@ -425719,7 +425762,7 @@ var registerServer = /* @__PURE__ */ __name((name, handler) => {
 var unregisterServer = /* @__PURE__ */ __name((name) => {
   serverProcedures.delete(name);
 }, "unregisterServer");
-alt19.Events.onServer(CALL_CLIENT_FROM_SERVER, async (payload) => {
+alt20.Events.onServer(CALL_CLIENT_FROM_SERVER, async (payload) => {
   const { id, name, args } = payload;
   const callback = serverProcedures.get(name);
   try {
@@ -425732,15 +425775,15 @@ alt19.Events.onServer(CALL_CLIENT_FROM_SERVER, async (payload) => {
         z.tuple(schema.args).parse(args);
       }
     } else {
-      alt19.logWarning(`CALL_CLIENT_FROM_SERVER: No validation schema for ${name}`);
+      alt20.logWarning(`CALL_CLIENT_FROM_SERVER: No validation schema for ${name}`);
     }
     const result = await callback(...args);
-    alt19.Events.emitServerRaw(CALL_CLIENT_FROM_SERVER_RESPONSE, {
+    alt20.Events.emitServerRaw(CALL_CLIENT_FROM_SERVER_RESPONSE, {
       id,
       result
     });
   } catch (error) {
-    alt19.Events.emitServerRaw(CALL_CLIENT_FROM_SERVER_RESPONSE, {
+    alt20.Events.emitServerRaw(CALL_CLIENT_FROM_SERVER_RESPONSE, {
       id,
       error
     });
@@ -425749,7 +425792,7 @@ alt19.Events.onServer(CALL_CLIENT_FROM_SERVER, async (payload) => {
 
 // ../source/src/client/core/rpc/with-webview.ts
 init_define_process();
-import alt20 from "@altv/client";
+import alt21 from "@altv/client";
 
 // ../source/src/shared/calls/webview/index.ts
 init_define_process();
@@ -425799,7 +425842,7 @@ useWebview(
       if ("returns" in schema) {
         const result = schema.returns.safeParse(response.result);
         if (!result.success) {
-          alt20.logError(
+          alt21.logError(
             `CALL_WEBVIEW_FROM_CLIENT_RESPONSE: Validation error in ${handler.name}:`,
             result.error
           );
@@ -425807,7 +425850,7 @@ useWebview(
         }
       }
     } else {
-      alt20.logWarning(`CALL_WEBVIEW_FROM_CLIENT_RESPONSE: No validation schema for ${handler.name}`);
+      alt21.logWarning(`CALL_WEBVIEW_FROM_CLIENT_RESPONSE: No validation schema for ${handler.name}`);
     }
     handler.resolve(response.result);
   })
@@ -425835,7 +425878,7 @@ useWebview((webview2) => {
           z.tuple(schema).parse(args);
         }
       } else {
-        alt20.logWarning(`CALL_SERVER_FROM_WEBVIEW: No validation schema for ${name}`);
+        alt21.logWarning(`CALL_SERVER_FROM_WEBVIEW: No validation schema for ${name}`);
       }
       const result = await callback(...args);
       webview2.emitRaw(CALL_CLIENT_FROM_WEBVIEW_RESPONSE, {
@@ -425853,22 +425896,22 @@ useWebview((webview2) => {
 
 // ../source/src/client/core/rpc/server-webview-middleware.ts
 init_define_process();
-import alt21 from "@altv/client";
-alt21.Events.onServer(CALL_WEBVIEW_FROM_SERVER, async (payload) => {
+import alt22 from "@altv/client";
+alt22.Events.onServer(CALL_WEBVIEW_FROM_SERVER, async (payload) => {
   useWebview((webview2) => {
     webview2.emitRaw(CALL_WEBVIEW_FROM_SERVER, payload);
   });
 });
 useWebview((webview2) => {
   webview2.on(CALL_WEBVIEW_FROM_SERVER_RESPONSE, (response) => {
-    alt21.Events.emitServerRaw(CALL_WEBVIEW_FROM_SERVER_RESPONSE, deserialize(response));
+    alt22.Events.emitServerRaw(CALL_WEBVIEW_FROM_SERVER_RESPONSE, deserialize(response));
   });
   webview2.on(CALL_SERVER_FROM_WEBVIEW, (payload) => {
     [payload] = deserialize(payload);
-    alt21.Events.emitServerRaw(CALL_SERVER_FROM_WEBVIEW, payload);
+    alt22.Events.emitServerRaw(CALL_SERVER_FROM_WEBVIEW, payload);
   });
 });
-alt21.Events.onServer(CALL_SERVER_FROM_WEBVIEW_RESPONSE, (response) => {
+alt22.Events.onServer(CALL_SERVER_FROM_WEBVIEW_RESPONSE, (response) => {
   useWebview((webview2) => {
     webview2.emitRaw(CALL_SERVER_FROM_WEBVIEW_RESPONSE, response);
   });
@@ -425886,18 +425929,18 @@ var rpc = {
 
 // ../source/src/client/modules/inventory/player-ped-preview.ts
 init_define_process();
-import alt22 from "@altv/client";
+import alt23 from "@altv/client";
 import game9 from "@altv/natives";
 var equipmentPed = null;
 var previousHudColor = null;
 function updatePlayerPedPreview() {
   if (equipmentPed) {
-    game9.clonePedToTargetAlt(alt22.Player.local, equipmentPed, true);
+    game9.clonePedToTargetAlt(alt23.Player.local, equipmentPed, true);
   }
 }
 __name(updatePlayerPedPreview, "updatePlayerPedPreview");
 var isPreviewingPlayer = (0, vue_exports.ref)(false);
-alt22.Events.onWindowFocusChange(() => {
+alt23.Events.onWindowFocusChange(() => {
   if (equipmentPed) {
     hideGameCursor();
   }
@@ -425929,19 +425972,19 @@ async function createPedPreview() {
   game9.activateFrontendMenu(game9.getHashKey("FE_MENU_VERSION_EMPTY_NO_BACKGROUND"), false, -1);
   hideGameCursor();
   while (!equipmentPed) {
-    equipmentPed = game9.clonePed(alt22.Player.local, false, false, true);
-    await alt22.Utils.waitForNextTick();
+    equipmentPed = game9.clonePed(alt23.Player.local, false, false, true);
+    await alt23.Utils.waitForNextTick();
   }
   game9.setEntityCoordsNoOffset(
     equipmentPed,
-    alt22.Player.local.pos.x,
-    alt22.Player.local.pos.y,
-    alt22.Player.local.pos.z - 50,
+    alt23.Player.local.pos.x,
+    alt23.Player.local.pos.y,
+    alt23.Player.local.pos.z - 50,
     false,
     false,
     false
   );
-  await alt22.Utils.wait(200);
+  await alt23.Utils.wait(200);
   if (!equipmentPed) {
     return;
   }
@@ -425952,14 +425995,14 @@ async function createPedPreview() {
   game9.setPauseMenuPedLighting(true);
   game9.setPauseMenuPedSleepState(true);
   const [r, g, b, a] = game9.getHudColour(177);
-  previousHudColor = new alt22.RGBA(r, g, b, a);
+  previousHudColor = new alt23.RGBA(r, g, b, a);
   game9.replaceHudColourWithRgba(117, 0, 0, 0, 0);
   isCreatingPedPreview = false;
 }
 __name(createPedPreview, "createPedPreview");
 async function clearPedPreview() {
   if (isCreatingPedPreview) {
-    await alt22.Utils.waitFor(() => !isCreatingPedPreview);
+    await alt23.Utils.waitFor(() => !isCreatingPedPreview);
   }
   game9.clearPedInPauseMenu();
   game9.setFrontendActive(false);
@@ -425991,12 +426034,12 @@ __name(clearPedPreview, "clearPedPreview");
 
 // ../source/src/client/modules/inventory/keybinds.ts
 whileInGame(() => {
-  const inventoryToggleHandler = onKeyDown(alt23.Enums.KeyCode.B, togglePlayerInventory);
+  const inventoryToggleHandler = onKeyDown(alt24.Enums.KeyCode.B, togglePlayerInventory);
   const quickSlotHandlers = [
-    alt23.Enums.KeyCode.KEY1,
-    alt23.Enums.KeyCode.KEY2,
-    alt23.Enums.KeyCode.KEY3,
-    alt23.Enums.KeyCode.KEY4
+    alt24.Enums.KeyCode.KEY1,
+    alt24.Enums.KeyCode.KEY2,
+    alt24.Enums.KeyCode.KEY3,
+    alt24.Enums.KeyCode.KEY4
   ].map((key) => onKeyDown(key, handleQuickSlot));
   const stopWatching = (0, vue_exports.watch)(
     () => [
@@ -426016,7 +426059,7 @@ whileInGame(() => {
       "shoes"
     ].map((visibleSlot) => useCharacter().equipment[visibleSlot]),
     () => {
-      alt23.Timers.setTimeout(updatePlayerPedPreview, 300);
+      alt24.Timers.setTimeout(updatePlayerPedPreview, 300);
     }
   );
   return () => {
@@ -426031,10 +426074,10 @@ function togglePlayerInventory() {
 __name(togglePlayerInventory, "togglePlayerInventory");
 function handleQuickSlot(key) {
   const quickSlot = {
-    [alt23.Enums.KeyCode.KEY1]: "quick1" /* QuickSlot1 */,
-    [alt23.Enums.KeyCode.KEY2]: "quick2" /* QuickSlot2 */,
-    [alt23.Enums.KeyCode.KEY3]: "quick3" /* QuickSlot3 */,
-    [alt23.Enums.KeyCode.KEY4]: "quick4" /* QuickSlot4 */
+    [alt24.Enums.KeyCode.KEY1]: "quick1" /* QuickSlot1 */,
+    [alt24.Enums.KeyCode.KEY2]: "quick2" /* QuickSlot2 */,
+    [alt24.Enums.KeyCode.KEY3]: "quick3" /* QuickSlot3 */,
+    [alt24.Enums.KeyCode.KEY4]: "quick4" /* QuickSlot4 */
   }[key];
   rpc.callServer(ServerCall.FromClient.USE_QUICK_SLOT, quickSlot);
 }
@@ -426045,9 +426088,9 @@ init_define_process();
 
 // ../source/src/client/modules/inventory/sync/weapon-ammo.ts
 init_define_process();
-import alt24 from "@altv/client";
+import alt25 from "@altv/client";
 import game10 from "@altv/natives";
-var player = alt24.Player.local;
+var player = alt25.Player.local;
 whileInGame(() => {
   const currentFirearm = (0, vue_exports.computed)(() => {
     const character = useCharacter();
@@ -426093,11 +426136,11 @@ whileInGame(() => {
     return true;
   });
   const stopWatchingAmmo = (0, vue_exports.watchEffect)(handleAmmoChange);
-  const playerWeaponChangeListener = alt24.Events.onPlayerWeaponChange(onPlayerWeaponChange);
-  const keyDownListener = alt24.Events.onKeyDown(handleManualReload);
-  const playerWeaponShootListener = alt24.Events.onPlayerWeaponShoot(onPlayerWeaponShoot);
+  const playerWeaponChangeListener = alt25.Events.onPlayerWeaponChange(onPlayerWeaponChange);
+  const keyDownListener = alt25.Events.onKeyDown(handleManualReload);
+  const playerWeaponShootListener = alt25.Events.onPlayerWeaponShoot(onPlayerWeaponShoot);
   function onPlayerWeaponShoot() {
-    alt24.Events.emitServerRaw(ServerEvents.FromClient.WEAPON_SHOOT);
+    alt25.Events.emitServerRaw(ServerEvents.FromClient.WEAPON_SHOOT);
   }
   __name(onPlayerWeaponShoot, "onPlayerWeaponShoot");
   function onPlayerWeaponChange() {
@@ -426107,14 +426150,14 @@ whileInGame(() => {
     if (currentAmmo.value.clip > 0) {
       allowShooting();
     }
-    alt24.Utils.waitFor(() => !game10.isPedSwitchingWeapon(player), 3e3).then(() => alt24.Utils.wait(1e3)).finally(handleAmmoChange);
+    alt25.Utils.waitFor(() => !game10.isPedSwitchingWeapon(player), 3e3).then(() => alt25.Utils.wait(1e3)).finally(handleAmmoChange);
   }
   __name(onPlayerWeaponChange, "onPlayerWeaponChange");
   function handleManualReload({ key }) {
-    if (key === alt24.Enums.KeyCode.R) {
+    if (key === alt25.Enums.KeyCode.R) {
       reloadWeapon();
     }
-    if (key === alt24.Enums.KeyCode.MOUSE_RIGHT || key === alt24.Enums.KeyCode.MOUSE_LEFT) {
+    if (key === alt25.Enums.KeyCode.MOUSE_RIGHT || key === alt25.Enums.KeyCode.MOUSE_LEFT) {
       handleAmmoChange();
     }
   }
@@ -426143,7 +426186,7 @@ whileInGame(() => {
       handleAmmoChange();
       return;
     }
-    const disableMeleeAttackLight_R = alt24.Timers.everyTick(() => {
+    const disableMeleeAttackLight_R = alt25.Timers.everyTick(() => {
       game10.disableControlAction(0 /* PLAYER_CONTROL */, 140 /* INPUT_MELEE_ATTACK_LIGHT */, true);
       game10.disableControlAction(0 /* PLAYER_CONTROL */, 141 /* INPUT_MELEE_ATTACK_HEAVY */, true);
       game10.disableControlAction(
@@ -426159,7 +426202,7 @@ whileInGame(() => {
       } else {
         console.log("Failed to start reload");
       }
-      await alt24.Utils.waitFor(() => !player.isReloading);
+      await alt25.Utils.waitFor(() => !player.isReloading);
     } finally {
       disableMeleeAttackLight_R.destroy();
     }
@@ -426190,13 +426233,13 @@ whileInGame(() => {
 
 // ../source/src/client/core/rmlui/renderer/hooks/focused-entity.ts
 init_define_process();
-import alt25 from "@altv/client";
+import alt26 from "@altv/client";
 import game11 from "@altv/natives";
 var entityToFocus = null;
 var closestDistance = Number.MAX_SAFE_INTEGER;
 var currentlyFocusedEntity = (0, vue_exports.ref)(null);
 (0, vue_exports.watch)(currentlyFocusedEntity, (entity) => {
-  game11.setPedCanSwitchWeapon(alt25.Player.local, entity === null);
+  game11.setPedCanSwitchWeapon(alt26.Player.local, entity === null);
 });
 function resetFocusedEntity() {
   entityToFocus = null;
@@ -426217,16 +426260,16 @@ function isEntityFocusable(entity) {
   if (!entity.valid) {
     return false;
   }
-  if (entity.type === alt25.Enums.BaseObjectType.PLAYER) {
+  if (entity.type === alt26.Enums.BaseObjectType.PLAYER) {
     return false;
   }
-  if (entity.type === alt25.Enums.BaseObjectType.PED) {
+  if (entity.type === alt26.Enums.BaseObjectType.PED) {
     return !!entity.interactions?.value.length;
   }
-  if (entity.type === alt25.Enums.BaseObjectType.VEHICLE) {
+  if (entity.type === alt26.Enums.BaseObjectType.VEHICLE) {
     return false;
   }
-  if (entity.type === alt25.Enums.BaseObjectType.VIRTUAL_ENTITY) {
+  if (entity.type === alt26.Enums.BaseObjectType.VIRTUAL_ENTITY) {
     if (entity.streamSyncedMeta.entityType === "storage" /* Storage */) {
       return true;
     }
@@ -426334,7 +426377,7 @@ var menuControls = {
     if (!currentEntity) {
       return false;
     }
-    if (currentEntity instanceof alt26.VirtualEntity && currentEntity.streamSyncedMeta.storageType === "AirDrop" /* AirDrop */) {
+    if (currentEntity instanceof alt27.VirtualEntity && currentEntity.streamSyncedMeta.storageType === "AirDrop" /* AirDrop */) {
       if (!isAirDropInPosition(currentEntity)) {
         return false;
       }
@@ -426343,10 +426386,10 @@ var menuControls = {
     if (!currentMenu) {
       return false;
     }
-    return currentMenu.drawDistance ? currentMenu.drawDistance > alt26.Player.local.pos.distanceTo(currentEntity.pos) : true;
+    return currentMenu.drawDistance ? currentMenu.drawDistance > alt27.Player.local.pos.distanceTo(currentEntity.pos) : true;
   }
 };
-alt26.Timers.everyTick(() => {
+alt27.Timers.everyTick(() => {
   if (!currentEntity) {
     return;
   }
@@ -426371,8 +426414,8 @@ alt26.Timers.everyTick(() => {
     menuControls.selectNext();
   }
 });
-alt26.Events.onKeyDown(({ key }) => {
-  if (key === alt26.Enums.KeyCode.E) {
+alt27.Events.onKeyDown(({ key }) => {
+  if (key === alt27.Enums.KeyCode.E) {
     if (!currentEntity) {
       return;
     }
@@ -426404,10 +426447,39 @@ function everyFrame(compute) {
 }
 __name(everyFrame, "everyFrame");
 
+// ../source/src/client/core/rmlui/components/indicator/index.ts
+init_define_process();
+function Indicator() {
+  return div(
+    {
+      className: "indicator"
+    },
+    [
+      div(
+        {
+          className: "indicator__glow-wrapper"
+        },
+        [
+          img({
+            className: "indicator__glow",
+            src: `components/indicator/assets/indicator-glow.png`
+          })
+        ]
+      ),
+      img({
+        className: "indicator__dot",
+        src: `components/indicator/assets/indicator_dot.png`
+        // src: `components/indicator/assets/keyboard-mouse/light/W.png`,
+      })
+    ]
+  );
+}
+__name(Indicator, "Indicator");
+
 // ../source/src/client/core/rmlui/elements/ped-interaction/index.ts
 registerElement({
   key: "ped-interaction",
-  renderDistance: 3,
+  renderDistance: 15,
   anchorType: 1 /* Ped */,
   focusable: true,
   render({ entity: ped }) {
@@ -426418,7 +426490,8 @@ registerElement({
       },
       onLeave() {
         stopConversation();
-      }
+      },
+      drawDistance: 2.5
     });
     const currentMenuIndex = menu.currentIndex();
     if (!menu.interactions.length) {
@@ -426429,29 +426502,56 @@ registerElement({
         className: "interaction-wrapper",
         style: {
           transform: everyFrame(() => {
-            const { x, y } = alt27.worldToScreen(
-              game13.getPedBoneCoords(ped, 11816 /* SKEL_Pelvis */, 0, 0, 0.2)
-            );
-            return `translate(-50%, -50%) translate(${x}px, ${y}px)`;
+            const { x, y } = alt28.worldToScreen(ped.pos);
+            return `translate(${rem(x - 25)}, ${rem(y - 25)})`;
           }),
           opacity: menu.isActive ? 1 : 0.5
         }
       },
       [
+        div([Indicator()]),
         div(
           {
             className: "interaction-content",
             style: {
-              transform: everyFrame(({ scale }) => `scale(${scale})`)
+              transform: `translate(${rem(55)}, ${rem(-47)})`,
+              opacity: everyFrame(() => menu.isActive ? 1 : 0)
             }
           },
           menu.interactions.map(
-            (interaction, index) => div([
+            (interaction, index, arr) => div([
               div(
                 {
-                  className: ["interaction", currentMenuIndex === index && "interaction--selected"]
+                  style: {
+                    width: rem(320),
+                    display: "flex",
+                    "align-items": "center",
+                    "justify-content": "flex-start",
+                    gap: rem(5)
+                  }
                 },
-                [Icon(interaction.icon), span({ className: "label" }, [interaction.label])]
+                [
+                  div([
+                    div(
+                      {
+                        className: ["interaction", currentMenuIndex === index && "interaction--selected"]
+                      },
+                      [
+                        currentMenuIndex === index ? Icon("key-E", { sizePx: 32 }) : Icon(interaction.icon),
+                        span({
+                          className: "label"
+                        }, [interaction.label])
+                      ]
+                    )
+                  ]),
+                  Icon("mouse-wheel", {
+                    style: {
+                      "display": currentMenuIndex === index && arr.length > 1 ? "block" : "none",
+                      width: rem(24),
+                      height: rem(24 * (456 / 256))
+                    }
+                  })
+                ]
               )
             ])
           )
@@ -426463,8 +426563,11 @@ registerElement({
 
 // ../source/src/client/core/rmlui/elements/ped-nametag/index.ts
 init_define_process();
-import alt28 from "@altv/client";
-import game14 from "@altv/natives";
+import alt29 from "@altv/client";
+import game13 from "@altv/natives";
+
+// ../source/src/shared/enums/bones.ts
+init_define_process();
 
 // ../source/src/shared/modules/ped/index.ts
 init_define_process();
@@ -426490,7 +426593,7 @@ registerElement({
           position: "absolute",
           "text-align": "center",
           transform: everyFrame(() => {
-            const headPos = game14.getPedBoneCoords(
+            const headPos = game13.getPedBoneCoords(
               ped,
               31086 /* SKEL_Head */,
               // adjust z position based on distance
@@ -426498,7 +426601,7 @@ registerElement({
               0,
               0
             );
-            const { x, y } = alt28.worldToScreen({ x: ped.pos.x, y: ped.pos.y, z: headPos.z });
+            const { x, y } = alt29.worldToScreen({ x: ped.pos.x, y: ped.pos.y, z: headPos.z });
             return `translate(-50%, -50%) translate(${x}px, ${y}px)`;
           })
         }
@@ -426576,37 +426679,7 @@ registerElement({
 
 // ../source/src/client/core/rmlui/elements/storage-interaction/index.ts
 init_define_process();
-import alt29 from "@altv/client";
-
-// ../source/src/client/core/rmlui/components/indicator/index.ts
-init_define_process();
-function Indicator() {
-  return div(
-    {
-      className: "indicator"
-    },
-    [
-      div(
-        {
-          className: "indicator__glow-wrapper"
-        },
-        [
-          img({
-            className: "indicator__glow",
-            src: `components/indicator/assets/indicator-glow.png`
-          })
-        ]
-      ),
-      img({
-        className: "indicator__dot",
-        src: `components/indicator/assets/indicator_dot.png`
-      })
-    ]
-  );
-}
-__name(Indicator, "Indicator");
-
-// ../source/src/client/core/rmlui/elements/storage-interaction/index.ts
+import alt30 from "@altv/client";
 registerElement({
   key: "storage-interaction",
   renderDistance: 15,
@@ -426620,7 +426693,7 @@ registerElement({
         if (interaction.value === "open") {
           const canOpen = await rpc.callServer(ServerCall.FromClient.OPEN_STORAGE, ve.remoteID);
           if (["AirDrop" /* AirDrop */, "LootBox" /* LootBox */].includes(ve.streamSyncedMeta.storageType)) {
-            await alt29.Utils.wait(100);
+            await alt30.Utils.wait(100);
             if (canOpen) {
               openWindow(2 /* LOOT_BOX */);
             }
@@ -426631,7 +426704,7 @@ registerElement({
           }
         }
       },
-      drawDistance: 2
+      drawDistance: 2.5
     });
     const currentMenuIndex = menu.currentIndex();
     if (!menu.interactions.length) {
@@ -426642,7 +426715,7 @@ registerElement({
         className: "interaction-wrapper",
         style: {
           transform: everyFrame(({ pos }) => {
-            const { x, y } = alt29.worldToScreen(pos);
+            const { x, y } = alt30.worldToScreen(pos);
             return `translate(-50%, -50%) translate(${x}px, ${y}px)`;
           }),
           display: everyFrame(() => isAirDropInPosition(ve) ? "block" : "none")
@@ -426660,29 +426733,42 @@ registerElement({
           },
           [
             ...menu.interactions.map(
-              (interaction, index) => div([
+              (interaction, index, arr) => div([
                 div(
                   {
                     style: {
+                      width: "20rem",
                       display: "flex",
                       "align-items": "center",
-                      "justify-content": "center",
+                      "justify-content": "flex-start",
                       gap: "5px"
                     }
                   },
                   [
+                    Icon("key-E", {
+                      style: {
+                        "display": currentMenuIndex === index ? "block" : "none"
+                      },
+                      sizePx: 32
+                    }),
                     div([
                       div(
                         {
                           className: [
                             "interaction",
-                            "interaction--storage",
                             currentMenuIndex === index && "interaction--selected"
                           ]
                         },
                         [span({ className: "label" }, [interaction.text])]
                       )
-                    ])
+                    ]),
+                    Icon("mouse-wheel", {
+                      style: {
+                        "display": currentMenuIndex === index && arr.length > 1 ? "block" : "none",
+                        width: rem(24),
+                        height: rem(24 * (456 / 256))
+                      }
+                    })
                   ]
                 )
               ])
@@ -426696,7 +426782,7 @@ registerElement({
 
 // ../source/src/client/core/rmlui/elements/tree/index.ts
 init_define_process();
-import alt30 from "@altv/client";
+import alt31 from "@altv/client";
 
 // ../source/src/shared/modules/experience/experience-table.ts
 init_define_process();
@@ -427361,7 +427447,7 @@ registerElement({
         className: "tree-wrapper",
         style: {
           transform: everyFrame(() => {
-            const { x, y } = alt30.worldToScreen(tree2.pos);
+            const { x, y } = alt31.worldToScreen(tree2.pos);
             return `translate(-50%, -50%) translate(${x}px, ${y}px)`;
           })
         }
@@ -427399,15 +427485,15 @@ registerElement({
 // ../source/src/client/core/rmlui/elements/compass/index.ts
 init_define_process();
 import alt33 from "@altv/client";
-import game15 from "@altv/natives";
+import game14 from "@altv/natives";
 
 // ../source/src/client/core/game-state-hooks/virtual-entity-is-streamed-in.state.ts
 init_define_process();
-import alt31 from "@altv/client";
+import alt32 from "@altv/client";
 function whileVirtualEntityIsStreamedIn(check, fn) {
   const map = /* @__PURE__ */ new Map();
   async function create({ object }) {
-    if (object instanceof alt31.VirtualEntity && check(object)) {
+    if (object instanceof alt32.VirtualEntity && check(object)) {
       const cleanup = await fn(object);
       if (cleanup) {
         map.set(object, cleanup);
@@ -427415,13 +427501,13 @@ function whileVirtualEntityIsStreamedIn(check, fn) {
     }
   }
   __name(create, "create");
-  const onWorldObjectStreamIn = alt31.Events.onWorldObjectStreamIn(create);
-  const existingEntities = alt31.VirtualEntity.streamedIn.filter(check);
+  const onWorldObjectStreamIn = alt32.Events.onWorldObjectStreamIn(create);
+  const existingEntities = alt32.VirtualEntity.streamedIn.filter(check);
   for (const existingEntity of existingEntities) {
     create({ object: existingEntity });
   }
-  const onWorldObjectStreamOut = alt31.Events.onWorldObjectStreamOut(({ object }) => {
-    if (object instanceof alt31.VirtualEntity && check(object)) {
+  const onWorldObjectStreamOut = alt32.Events.onWorldObjectStreamOut(({ object }) => {
+    if (object instanceof alt32.VirtualEntity && check(object)) {
       const cleanup = map.get(object);
       if (cleanup) {
         cleanup();
@@ -427438,30 +427524,6 @@ function whileVirtualEntityIsStreamedIn(check, fn) {
   };
 }
 __name(whileVirtualEntityIsStreamedIn, "whileVirtualEntityIsStreamedIn");
-
-// ../source/src/client/core/rmlui/renderer/pixel.ts
-init_define_process();
-import alt32 from "@altv/client";
-var adjustedFontSize = 16;
-function adjustUIBaseFontSize() {
-  const { x: width, y: height } = alt32.getScreenResolution();
-  const targetAspectRatio = 16 / 9;
-  const currentAspectRatio = width / height;
-  const aspectRatioDeviation = currentAspectRatio / targetAspectRatio;
-  const baseFontSize = Math.max(10, 16 / 1080 * height);
-  adjustedFontSize = baseFontSize * Math.min(1, aspectRatioDeviation);
-  document2.body.style["font-size"] = `${adjustedFontSize.toFixed(6)}px`;
-  console.log(`Adjusted base font size to ${adjustedFontSize.toFixed(6)}px`);
-}
-__name(adjustUIBaseFontSize, "adjustUIBaseFontSize");
-adjustUIBaseFontSize();
-alt32.Events.onWindowResolutionChange(() => {
-  adjustUIBaseFontSize();
-});
-function px(value) {
-  return +(value * (adjustedFontSize / 16)).toFixed(6);
-}
-__name(px, "px");
 
 // ../source/src/client/core/rmlui/elements/compass/index.ts
 var SPACE_BETWEEN_TICKS = 58;
@@ -427659,7 +427721,7 @@ whileInGame(() => {
     }
   );
   const timer = alt33.Timers.everyTick(() => {
-    direction = (360 - game15.getGameplayCamRot(2).z % 360) % 360;
+    direction = (360 - game14.getGameplayCamRot(2).z % 360) % 360;
     updateTicks(direction);
     updateIcons(direction);
     const leftTickValue = updatedTickValues[6];
@@ -427701,7 +427763,7 @@ import alt36 from "@altv/client";
 // ../source/src/client/core/rmlui/renderer/element-updater.ts
 init_define_process();
 import alt34 from "@altv/client";
-import game16 from "@altv/natives";
+import game15 from "@altv/natives";
 var frameDataMap = /* @__PURE__ */ new Map();
 var screenRes = alt34.getScreenResolution().div(
   2.2,
@@ -427739,7 +427801,7 @@ function getAnchorType(entity) {
 }
 __name(getAnchorType, "getAnchorType");
 function prepareFrameForEntity(entity) {
-  const isVisible = alt34.isPointOnScreen(entity.pos) && (entity instanceof alt34.Entity ? game16.hasEntityClearLosToEntity(alt34.Player.local, entity, 17) : game16.isSphereVisible(entity.pos.x, entity.pos.y, entity.pos.z, 0.0099999998));
+  const isVisible = alt34.isPointOnScreen(entity.pos) && (entity instanceof alt34.Entity ? game15.hasEntityClearLosToEntity(alt34.Player.local, entity, 17) : game15.isSphereVisible(entity.pos.x, entity.pos.y, entity.pos.z, 0.0099999998));
   if (isVisible) {
     const screenPosition = alt34.worldToScreen(entity.pos);
     const zIndex = ~~(screenPosition.z * 1e5);
@@ -427878,10 +427940,10 @@ alt36.Timers.everyTick(() => {
 // ../source/src/client/core/remote-native/index.ts
 init_define_process();
 import alt37 from "@altv/client";
-import game17 from "@altv/natives";
+import game16 from "@altv/natives";
 alt37.Events.onServer(ClientEvents.FromServer.CALL_NATIVE, (native, ...args) => {
   try {
-    game17[native]?.(...args);
+    game16[native]?.(...args);
   } catch {
   }
 });
@@ -427898,7 +427960,7 @@ init_define_process();
 // ../source/src/client/modules/world/cayo-perico-island.ts
 init_define_process();
 import alt38 from "@altv/client";
-import game18 from "@altv/natives";
+import game17 from "@altv/natives";
 var islandIpls = [
   "h4_islandairstrip",
   "h4_islandairstrip_props",
@@ -427926,7 +427988,7 @@ var islandIpls = [
   "h4_islandx_Mansion_LockUp_03",
   "h4_islandairstrip_hangar_props",
   "h4_IslandX_Mansion_B",
-  "h4_islandairstrip_doorsclosed",
+  "h4_islandairstrip_doorsopen",
   "h4_Underwater_Gate_Closed",
   "h4_mansion_gate_closed",
   "h4_aa_guns",
@@ -428028,25 +428090,28 @@ var islandArea = alt38.ColShapeCircle.create({ pos: islandCenter, radius: 3e3 })
 islandArea.playersOnly = true;
 function loadIsland() {
   nearIsland = true;
-  game18.setIslandEnabled("HeistIsland", true);
-  game18.setScenarioGroupEnabled("Heist_Island_Peds", true);
-  game18.setAudioFlag("PlayerOnDLCHeist4Island", true);
-  game18.setAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Zones", true, true);
-  game18.setAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Disabled_Zones", false, true);
+  game17.setIslandEnabled("HeistIsland", true);
+  game17.setScenarioGroupEnabled("Heist_Island_Peds", true);
+  game17.setAudioFlag("PlayerOnDLCHeist4Island", true);
+  game17.setAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Zones", true, true);
+  game17.setAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Disabled_Zones", false, true);
   for (const ipl of islandIpls) {
-    game18.requestIpl(ipl);
+    game17.requestIpl(ipl);
   }
+  alt38.Utils.wait(1e3).then(() => {
+    game17.removeIpl("h4_islandairstrip_doorsclosed");
+  });
 }
 __name(loadIsland, "loadIsland");
 function unloadIsland() {
   nearIsland = false;
-  game18.setIslandEnabled("HeistIsland", false);
-  game18.setScenarioGroupEnabled("Heist_Island_Peds", false);
-  game18.setAudioFlag("PlayerOnDLCHeist4Island", false);
-  game18.setAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Zones", false, false);
-  game18.setAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Disabled_Zones", false, false);
+  game17.setIslandEnabled("HeistIsland", false);
+  game17.setScenarioGroupEnabled("Heist_Island_Peds", false);
+  game17.setAudioFlag("PlayerOnDLCHeist4Island", false);
+  game17.setAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Zones", false, false);
+  game17.setAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Disabled_Zones", false, false);
   for (const ipl of islandIpls) {
-    game18.removeIpl(ipl);
+    game17.removeIpl(ipl);
   }
 }
 __name(unloadIsland, "unloadIsland");
@@ -428073,8 +428138,8 @@ alt38.Events.onEntityColShapeLeave(({ colShape, entity }) => {
 });
 alt38.Timers.everyTick(() => {
   if (nearIsland) {
-    game18.setRadarAsExteriorThisFrame();
-    game18.setRadarAsInteriorThisFrame(alt38.hash("h4_fake_islandx"), 4700, -5145, 0, 0);
+    game17.setRadarAsExteriorThisFrame();
+    game17.setRadarAsInteriorThisFrame(alt38.hash("h4_fake_islandx"), 4700, -5145, 0, 0);
   }
 });
 
@@ -428084,7 +428149,7 @@ init_define_process();
 // ../source/src/client/modules/auth/discord/events.ts
 init_define_process();
 import alt39 from "@altv/client";
-import game19 from "@altv/natives";
+import game18 from "@altv/natives";
 var DISCORD_CLIENT_ID = "1063548870640029727";
 async function beginAuth() {
   if (alt39.LocalStorage.has("token")) {
@@ -428113,7 +428178,7 @@ async function beginAuth() {
     useWebview((webview2) => {
       webview2.emitRaw(WebviewEvents.FromClient.SETUP_DISCORD_AUTH, url2);
     });
-    game19.doScreenFadeIn(1e3);
+    game18.doScreenFadeIn(1e3);
   }
 }
 __name(beginAuth, "beginAuth");
@@ -428134,7 +428199,7 @@ init_define_process();
 // ../source/src/client/modules/spawn/character-creation/character-creation-scene.ts
 init_define_process();
 import alt47 from "@altv/client";
-import game24 from "@altv/natives";
+import game23 from "@altv/natives";
 
 // ../source/src/shared/modules/game/ui/switch-out-types.ts
 init_define_process();
@@ -428192,7 +428257,7 @@ __name(whileCreatingCharacter, "whileCreatingCharacter");
 // ../source/src/client/core/utility/ped-appearance.ts
 init_define_process();
 import alt41 from "@altv/client";
-import game20 from "@altv/natives";
+import game19 from "@altv/natives";
 
 // ../source/src/shared/modules/items/registry/clothing/get-default-clothing.ts
 init_define_process();
@@ -428232,13 +428297,13 @@ __name(getDefaultClothing, "getDefaultClothing");
 
 // ../source/src/client/core/utility/ped-appearance.ts
 function setPedAppearance(ped, appearance2) {
-  if (!ped || !game20.doesEntityExist(ped)) {
+  if (!ped || !game19.doesEntityExist(ped)) {
     return;
   }
-  game20.clearPedBloodDamage(ped);
-  game20.clearPedDecorations(ped);
-  game20.setPedHeadBlendData(ped, 0, 0, 0, 0, 0, 0, 0, 0, 0, false);
-  game20.setPedHeadBlendData(
+  game19.clearPedBloodDamage(ped);
+  game19.clearPedDecorations(ped);
+  game19.setPedHeadBlendData(ped, 0, 0, 0, 0, 0, 0, 0, 0, 0, false);
+  game19.setPedHeadBlendData(
     ped,
     appearance2.faceMother,
     appearance2.faceFather,
@@ -428253,12 +428318,12 @@ function setPedAppearance(ped, appearance2) {
   );
   for (let i = 0; i < appearance2.features.length; i++) {
     const value = appearance2.features[i];
-    game20.setPedMicroMorph(ped, i, value);
+    game19.setPedMicroMorph(ped, i, value);
   }
   for (const [id, overlay] of Object.entries(appearance2.headOverlays)) {
-    game20.setPedHeadOverlay(ped, +id, overlay.value, overlay.opacity ?? 1);
+    game19.setPedHeadOverlay(ped, +id, overlay.value, overlay.opacity ?? 1);
     if (typeof overlay.color1 !== "undefined" && overlay.color1 !== null) {
-      game20.setPedHeadOverlayTint(
+      game19.setPedHeadOverlayTint(
         ped,
         +id,
         [1, 2, 10].includes(+id) ? 1 : [5, 8].includes(+id) ? 2 : 0,
@@ -428274,23 +428339,23 @@ function setPedAppearance(ped, appearance2) {
       alt41.log(
         `Adding ped decoration. ${appearance2.hairCollection} (${collection}), ${appearance2.hairOverlay} (${overlay})`
       );
-      game20.addPedDecorationFromHashes(ped, collection, overlay);
+      game19.addPedDecorationFromHashes(ped, collection, overlay);
     } catch {
       alt41.log(`Error adding ped decoration. Hair: `, appearance2.hair);
     }
   }
   if (typeof appearance2.hairDlc === "undefined" || appearance2.hairDlc === 0) {
-    game20.setPedComponentVariation(ped, 2, appearance2.hair, 0, 0);
+    game19.setPedComponentVariation(ped, 2, appearance2.hair, 0, 0);
   } else {
     alt41.setDlcClothes(ped.scriptID, appearance2.hairDlc, 2, appearance2.hair, 0, 0);
   }
-  game20.setPedHairTint(ped, appearance2.hairColor1, appearance2.hairColor2);
-  game20.setHeadBlendEyeColor(ped, appearance2.eyes);
-  game20.clearAllPedProps(ped, false);
+  game19.setPedHairTint(ped, appearance2.hairColor1, appearance2.hairColor2);
+  game19.setHeadBlendEyeColor(ped, appearance2.eyes);
+  game19.clearAllPedProps(ped, false);
 }
 __name(setPedAppearance, "setPedAppearance");
 function setPedEquipment(ped, components, isMale = true) {
-  if (!ped || !game20.doesEntityExist(ped)) {
+  if (!ped || !game19.doesEntityExist(ped)) {
     return;
   }
   for (let i = 2; i < 12; i++) {
@@ -428298,7 +428363,7 @@ function setPedEquipment(ped, components, isMale = true) {
     if (!defaults) {
       continue;
     }
-    game20.setPedComponentVariation(ped, i, defaults[0], defaults[1], 0);
+    game19.setPedComponentVariation(ped, i, defaults[0], defaults[1], 0);
   }
   if (!components || !Array.isArray(components)) {
     return;
@@ -428319,7 +428384,7 @@ function setPedEquipment(ped, components, isMale = true) {
         }
         if (component.isProp) {
           if (drawable <= -1) {
-            game20.clearPedProp(ped, id, false);
+            game19.clearPedProp(ped, id, false);
             continue;
           }
           alt41.setDlcProps(ped.scriptID, id, drawable, texture, dlc);
@@ -428330,12 +428395,12 @@ function setPedEquipment(ped, components, isMale = true) {
       }
       if (component.isProp) {
         if (drawable <= -1) {
-          game20.clearPedProp(ped, id, false);
+          game19.clearPedProp(ped, id, false);
           continue;
         }
-        game20.setPedPropIndex(ped, id, drawable, texture, true, false);
+        game19.setPedPropIndex(ped, id, drawable, texture, true, false);
       } else {
-        game20.setPedComponentVariation(ped, id, drawable, texture, 0);
+        game19.setPedComponentVariation(ped, id, drawable, texture, 0);
       }
     }
   }
@@ -428345,7 +428410,7 @@ __name(setPedEquipment, "setPedEquipment");
 // ../source/src/client/modules/peds/setup-ped/setup-peaceful-ped.ts
 init_define_process();
 import alt42 from "@altv/client";
-import game21 from "@altv/natives";
+import game20 from "@altv/natives";
 
 // ../source/src/shared/enums/ragdoll-blocking-flags.ts
 init_define_process();
@@ -428355,23 +428420,23 @@ init_define_process();
 
 // ../source/src/client/modules/peds/setup-ped/setup-peaceful-ped.ts
 function setupPeacefulPed(ped, { everyTick = true } = {}) {
-  game21.taskSetBlockingOfNonTemporaryEvents(ped, true);
-  game21.setPedConfigFlag(ped, 423 /* TreatAsFriendlyForTargetingAndDamage */, true);
-  game21.setPedConfigFlag(ped, 208 /* DisableExplosionReactions */, true);
-  game21.setRagdollBlockingFlags(ped, 262143 /* RBF_ALL */);
-  game21.setEntityProofs(ped, true, true, true, true, true, true, true, true);
-  game21.setPedRelationshipGroupHash(ped, alt42.hash("Friendly"));
+  game20.taskSetBlockingOfNonTemporaryEvents(ped, true);
+  game20.setPedConfigFlag(ped, 423 /* TreatAsFriendlyForTargetingAndDamage */, true);
+  game20.setPedConfigFlag(ped, 208 /* DisableExplosionReactions */, true);
+  game20.setRagdollBlockingFlags(ped, 262143 /* RBF_ALL */);
+  game20.setEntityProofs(ped, true, true, true, true, true, true, true, true);
+  game20.setPedRelationshipGroupHash(ped, alt42.hash("Friendly"));
   executeTask(ped);
   if (everyTick) {
     everyTickWhile(
       () => ped.valid,
       () => {
-        game21.setPedConfigFlag(ped, 423 /* TreatAsFriendlyForTargetingAndDamage */, true);
-        game21.setPedResetFlag(ped, 458 /* BlockFallTaskFromExplosionDamage */, true);
-        game21.setPedResetFlag(ped, 64 /* BlockWeaponReactionsUnlessDead */, true);
-        game21.setPedResetFlag(ped, 249 /* DisablePotentialBlastReactions */, true);
-        if (game21.isPedFleeing(ped)) {
-          game21.clearPedTasksImmediately(ped);
+        game20.setPedConfigFlag(ped, 423 /* TreatAsFriendlyForTargetingAndDamage */, true);
+        game20.setPedResetFlag(ped, 458 /* BlockFallTaskFromExplosionDamage */, true);
+        game20.setPedResetFlag(ped, 64 /* BlockWeaponReactionsUnlessDead */, true);
+        game20.setPedResetFlag(ped, 249 /* DisablePotentialBlastReactions */, true);
+        if (game20.isPedFleeing(ped)) {
+          game20.clearPedTasksImmediately(ped);
           setupPeacefulPed(ped, { everyTick: false });
         }
       }
@@ -428387,13 +428452,13 @@ alt42.Events.onStreamSyncedMetaChange(({ entity, key, newValue }) => {
 function executeTask(ped) {
   const task = ped.streamSyncedMeta.task;
   if (!task) {
-    game21.clearPedTasksImmediately(ped);
-    game21.taskSetBlockingOfNonTemporaryEvents(ped, true);
+    game20.clearPedTasksImmediately(ped);
+    game20.taskSetBlockingOfNonTemporaryEvents(ped, true);
     return;
   }
   if (task.type === "animation") {
     console.log("Playing animation", task.dict, task.name, task.speed, task.duration);
-    game21.taskPlayAnim(ped, task.dict, task.name, 8, 8, task.duration, 0, 0, false, false, false);
+    game20.taskPlayAnim(ped, task.dict, task.name, 8, 8, task.duration, 0, 0, false, false, false);
   }
 }
 __name(executeTask, "executeTask");
@@ -428401,28 +428466,28 @@ __name(executeTask, "executeTask");
 // ../source/src/client/modules/spawn/character-creation/camera.ts
 init_define_process();
 import alt45 from "@altv/client";
-import game23 from "@altv/natives";
+import game22 from "@altv/natives";
 
 // ../source/src/client/core/utility/scene.ts
 init_define_process();
 import alt43 from "@altv/client";
-import game22 from "@altv/natives";
+import game21 from "@altv/natives";
 function loadSceneAtCoords(pos) {
   let timerHandle;
   const start = Date.now();
   return new Promise((resolve) => {
-    game22.newLoadSceneStartSphere(
+    game21.newLoadSceneStartSphere(
       pos.x,
       pos.y,
-      pos.z ?? game22.getApproxHeightForPoint(pos.x, pos.y),
+      pos.z ?? game21.getApproxHeightForPoint(pos.x, pos.y),
       2,
       1
     );
     timerHandle = alt43.Timers.setInterval(() => {
-      if (!game22.isNewLoadSceneActive()) {
+      if (!game21.isNewLoadSceneActive()) {
         return resolve(false);
       }
-      if (!game22.isNewLoadSceneLoaded()) {
+      if (!game21.isNewLoadSceneLoaded()) {
         if (Date.now() - start > 1e4) {
           alt43.logError("Failed to load scene");
           return resolve(false);
@@ -428432,7 +428497,7 @@ function loadSceneAtCoords(pos) {
       return resolve(true);
     }, 10);
   }).finally(() => {
-    game22.newLoadSceneStop();
+    game21.newLoadSceneStop();
     timerHandle.destroy();
   });
 }
@@ -428456,7 +428521,7 @@ var mouseStartPos;
 async function createCharacterCreationCamera(targetPosition, cameraPositionBaseline) {
   const fov = 60;
   const startCamPosition = cameraPositionBaseline;
-  camera = game23.createCamWithParams(
+  camera = game22.createCamWithParams(
     "DEFAULT_SCRIPTED_CAMERA",
     ...vec3ToArr(startCamPosition),
     ...vec3ToArr(alt45.Vector3.zero),
@@ -428464,13 +428529,13 @@ async function createCharacterCreationCamera(targetPosition, cameraPositionBasel
     true,
     0
   );
-  game23.setCamActive(camera, true);
-  game23.renderScriptCams(true, false, 0, true, false, 0);
-  game23.pointCamAtCoord(camera, targetPosition.x, targetPosition.y, targetPosition.z + 0.8);
-  game23.requestCollisionAtCoord(targetPosition.x, targetPosition.y, targetPosition.z);
-  game23.setFocusPosAndVel(targetPosition.x, targetPosition.y, targetPosition.z, 0, 0, 0);
+  game22.setCamActive(camera, true);
+  game22.renderScriptCams(true, false, 0, true, false, 0);
+  game22.pointCamAtCoord(camera, targetPosition.x, targetPosition.y, targetPosition.z + 0.8);
+  game22.requestCollisionAtCoord(targetPosition.x, targetPosition.y, targetPosition.z);
+  game22.setFocusPosAndVel(targetPosition.x, targetPosition.y, targetPosition.z, 0, 0, 0);
   loadSceneAtCoords(targetPosition);
-  const front = game23.getOffsetFromCoordAndHeadingInWorldCoords(
+  const front = game22.getOffsetFromCoordAndHeadingInWorldCoords(
     targetPosition.x,
     targetPosition.y,
     targetPosition.z,
@@ -428479,7 +428544,7 @@ async function createCharacterCreationCamera(targetPosition, cameraPositionBasel
     1.5,
     0
   );
-  const back = game23.getOffsetFromCoordAndHeadingInWorldCoords(
+  const back = game22.getOffsetFromCoordAndHeadingInWorldCoords(
     targetPosition.x,
     targetPosition.y,
     targetPosition.z,
@@ -428491,17 +428556,17 @@ async function createCharacterCreationCamera(targetPosition, cameraPositionBasel
   everyTickWhile(
     () => camera !== void 0,
     () => {
-      game23.drawLightWithRange(front.x, front.y, front.z, 255, 234, 207, 5, 2);
-      game23.drawLightWithRange(back.x, back.y, back.z, 255, 234, 207, 5, 2);
-      game23.disableControlAction(0 /* PLAYER_CONTROL */, 15 /* INPUT_WEAPON_WHEEL_PREV */, true);
-      game23.disableControlAction(0 /* PLAYER_CONTROL */, 14 /* INPUT_WEAPON_WHEEL_NEXT */, true);
-      if (game23.isDisabledControlJustPressed(
+      game22.drawLightWithRange(front.x, front.y, front.z, 255, 234, 207, 5, 2);
+      game22.drawLightWithRange(back.x, back.y, back.z, 255, 234, 207, 5, 2);
+      game22.disableControlAction(0 /* PLAYER_CONTROL */, 15 /* INPUT_WEAPON_WHEEL_PREV */, true);
+      game22.disableControlAction(0 /* PLAYER_CONTROL */, 14 /* INPUT_WEAPON_WHEEL_NEXT */, true);
+      if (game22.isDisabledControlJustPressed(
         0 /* PLAYER_CONTROL */,
         15 /* INPUT_WEAPON_WHEEL_PREV */
       )) {
         zoom = Math.max(0.35, zoom - 0.05);
       }
-      if (game23.isDisabledControlJustPressed(
+      if (game22.isDisabledControlJustPressed(
         0 /* PLAYER_CONTROL */,
         14 /* INPUT_WEAPON_WHEEL_NEXT */
       )) {
@@ -428532,9 +428597,9 @@ async function createCharacterCreationCamera(targetPosition, cameraPositionBasel
     webview2.off(ClientEvents.FromWebview.CAMERA_MOVE_START, onCameraMoveStart);
     webview2.off(ClientEvents.FromWebview.CAMERA_MOVE_END, onCameraMoveEnd);
     onCameraMoveEnd();
-    game23.clearFocus();
-    game23.destroyAllCams(true);
-    game23.renderScriptCams(false, false, 0, false, false, 0);
+    game22.clearFocus();
+    game22.destroyAllCams(true);
+    game22.renderScriptCams(false, false, 0, false, false, 0);
     cameraHorizontalOffset = 0;
     cameraVerticalOffset = 0;
     camera = void 0;
@@ -428566,8 +428631,8 @@ function updateCharacterCreationCameraPosition(targetPosition, cameraPositionBas
   const x1 = targetPosition.x + Math.cos(cameraHorizontalOffset) * zoom;
   const y1 = targetPosition.y + Math.sin(cameraHorizontalOffset) * zoom;
   const z2 = cameraPositionBaseline.z + Math.tan(cameraVerticalOffset);
-  game23.setCamCoord(camera, x1, y1, z2);
-  game23.pointCamAtCoord(camera, targetPosition.x, targetPosition.y, targetPosition.z + 0.8);
+  game22.setCamCoord(camera, x1, y1, z2);
+  game22.pointCamAtCoord(camera, targetPosition.x, targetPosition.y, targetPosition.z + 0.8);
 }
 __name(updateCharacterCreationCameraPosition, "updateCharacterCreationCameraPosition");
 
@@ -428596,8 +428661,8 @@ whileCreatingCharacter(async () => {
   const female = createPedModel(false, PED_MODEL_POSITION.sub(2, 0, 0), PED_MODEL_HEADING);
   await alt47.Utils.waitFor(() => male.scriptID !== 0 && female.scriptID !== 0, 1e3);
   await alt47.Utils.wait(500);
-  game24.setEntityAlpha(male, 0, false);
-  game24.setEntityAlpha(female, 0, false);
+  game23.setEntityAlpha(male, 0, false);
+  game23.setEntityAlpha(female, 0, false);
   resetModelPed(male);
   resetModelPed(female);
   let currentModel = male;
@@ -428607,19 +428672,19 @@ whileCreatingCharacter(async () => {
   );
   setScene("create-character" /* CREATE_CHARACTER */, { hasCursor: true });
   alt47.log("Character Creation Scene Started");
-  game24.setEntityAlpha(currentModel, 255, false);
-  game24.doScreenFadeIn(1e3);
-  game24.disableScreenblurFade();
+  game23.setEntityAlpha(currentModel, 255, false);
+  game23.doScreenFadeIn(1e3);
+  game23.disableScreenblurFade();
   const webview2 = await waitForUserInterface();
   async function onUpdateCharacterAppearance(newAppearance) {
     const currentSex = currentModel === male ? 1 : 0;
     if (currentSex !== newAppearance.sex) {
-      game24.setEntityAlpha(currentModel, 0, false);
+      game23.setEntityAlpha(currentModel, 0, false);
       currentModel.pos = PED_MODEL_POSITION.sub(2, 0, 0);
       currentModel = currentModel === male ? female : male;
       currentModel.pos = PED_MODEL_POSITION;
       resetModelPed(currentModel);
-      game24.setEntityAlpha(currentModel, 255, false);
+      game23.setEntityAlpha(currentModel, 255, false);
     }
     setPedAppearance(currentModel, newAppearance);
   }
@@ -428634,16 +428699,16 @@ whileCreatingCharacter(async () => {
 });
 whileInGame(async () => {
   alt47.log("Starting game");
-  game24.freezeEntityPosition(alt47.Player.local, true);
+  game23.freezeEntityPosition(alt47.Player.local, true);
   alt47.setGameControlsActive(false);
   await alt47.Utils.wait(500);
-  game24.switchToMultiFirstpart(alt47.Player.local, 0, 2 /* ONE_STEP */);
+  game23.switchToMultiFirstpart(alt47.Player.local, 0, 2 /* ONE_STEP */);
   await alt47.Utils.wait(1e3);
-  game24.disableScreenblurFade();
-  game24.doScreenFadeIn(1e3);
+  game23.disableScreenblurFade();
+  game23.doScreenFadeIn(1e3);
   await alt47.Utils.wait(1e3);
-  game24.switchToMultiSecondpart(alt47.Player.local);
-  game24.freezeEntityPosition(alt47.Player.local, false);
+  game23.switchToMultiSecondpart(alt47.Player.local);
+  game23.freezeEntityPosition(alt47.Player.local, false);
   alt47.setGameControlsActive(true);
   setScene("in-game" /* IN_GAME */, { hasCursor: false });
 });
@@ -428658,15 +428723,15 @@ __name(resetModelPed, "resetModelPed");
 // ../source/src/client/modules/spawn/connection-complete.ts
 init_define_process();
 import alt48 from "@altv/client";
-import game25 from "@altv/natives";
+import game24 from "@altv/natives";
 alt48.Events.onConnectionComplete(handleConnectionComplete);
 alt48.setWatermarkPosition(4);
 async function handleConnectionComplete() {
-  game25.destroyAllCams(true);
-  game25.renderScriptCams(false, false, 0, false, false, 0);
-  game25.freezeEntityPosition(alt48.Player.local, true);
-  game25.doScreenFadeOut(0);
-  game25.triggerScreenblurFadeIn(0);
+  game24.destroyAllCams(true);
+  game24.renderScriptCams(false, false, 0, false, false, 0);
+  game24.freezeEntityPosition(alt48.Player.local, true);
+  game24.doScreenFadeOut(0);
+  game24.triggerScreenblurFadeIn(0);
   alt48.ConfigFlag.set(alt48.Enums.ConfigFlag.DISABLE_IDLE_CAMERA, true);
   alt48.ConfigFlag.set(alt48.Enums.ConfigFlag.DISABLE_PED_PROP_KNOCK_OFF, true);
   alt48.ConfigFlag.set(alt48.Enums.ConfigFlag.DISABLE_AUTO_WEAPON_SWAP, true);
@@ -428681,38 +428746,38 @@ async function handleConnectionComplete() {
 }
 __name(handleConnectionComplete, "handleConnectionComplete");
 function setupGameSettings() {
-  game25.startAudioScene("FBI_HEIST_H5_MUTE_AMBIENCE_SCENE");
-  game25.cancelAllPoliceReports();
-  game25.clearAmbientZoneState("AZ_COUNTRYSIDE_PRISON_01_ANNOUNCER_GENERAL", false);
-  game25.clearAmbientZoneState("AZ_COUNTRYSIDE_PRISON_01_ANNOUNCER_WARNING", false);
-  game25.clearAmbientZoneState("AZ_COUNTRYSIDE_PRISON_01_ANNOUNCER_ALARM", false);
-  game25.setAmbientZoneState("", false, false);
-  game25.clearAmbientZoneState("AZ_DISTANT_SASQUATCH", false);
-  game25.setAudioFlag("LoadMPData", true);
-  game25.setAudioFlag("DisableFlightMusic", true);
-  game25.setPedCanSwitchWeapon(alt48.Player.local, false);
-  game25.setPedConfigFlag(alt48.Player.local, 35 /* UseHelmet */, false);
+  game24.startAudioScene("FBI_HEIST_H5_MUTE_AMBIENCE_SCENE");
+  game24.cancelAllPoliceReports();
+  game24.clearAmbientZoneState("AZ_COUNTRYSIDE_PRISON_01_ANNOUNCER_GENERAL", false);
+  game24.clearAmbientZoneState("AZ_COUNTRYSIDE_PRISON_01_ANNOUNCER_WARNING", false);
+  game24.clearAmbientZoneState("AZ_COUNTRYSIDE_PRISON_01_ANNOUNCER_ALARM", false);
+  game24.setAmbientZoneState("", false, false);
+  game24.clearAmbientZoneState("AZ_DISTANT_SASQUATCH", false);
+  game24.setAudioFlag("LoadMPData", true);
+  game24.setAudioFlag("DisableFlightMusic", true);
+  game24.setPedCanSwitchWeapon(alt48.Player.local, false);
+  game24.setPedConfigFlag(alt48.Player.local, 35 /* UseHelmet */, false);
 }
 __name(setupGameSettings, "setupGameSettings");
 alt48.Events.onSpawned(() => {
   setupGameSettings();
 });
 alt48.Timers.everyTick(() => {
-  game25.hideHudComponentThisFrame(1);
-  game25.hideHudComponentThisFrame(2);
-  game25.hideHudComponentThisFrame(3);
-  game25.hideHudComponentThisFrame(4);
-  game25.hideHudComponentThisFrame(6);
+  game24.hideHudComponentThisFrame(1);
+  game24.hideHudComponentThisFrame(2);
+  game24.hideHudComponentThisFrame(3);
+  game24.hideHudComponentThisFrame(4);
+  game24.hideHudComponentThisFrame(6);
   if (alt48.Player.local.vehicle) {
-    game25.hideHudComponentThisFrame(7);
+    game24.hideHudComponentThisFrame(7);
   }
-  game25.hideHudComponentThisFrame(8);
-  game25.hideHudComponentThisFrame(9);
-  game25.hideHudComponentThisFrame(13);
-  game25.hideHudComponentThisFrame(19);
-  game25.hideHudComponentThisFrame(20);
-  game25.hideHudComponentThisFrame(21);
-  game25.hideHudComponentThisFrame(22);
+  game24.hideHudComponentThisFrame(8);
+  game24.hideHudComponentThisFrame(9);
+  game24.hideHudComponentThisFrame(13);
+  game24.hideHudComponentThisFrame(19);
+  game24.hideHudComponentThisFrame(20);
+  game24.hideHudComponentThisFrame(21);
+  game24.hideHudComponentThisFrame(22);
 });
 
 // ../source/src/client/modules/chat/index.ts
@@ -429962,13 +430027,13 @@ init_define_process();
 // ../source/src/client/modules/player/sync/player-decorations.ts
 init_define_process();
 import alt52 from "@altv/client";
-import game26 from "@altv/natives";
+import game25 from "@altv/natives";
 alt52.Events.onServer(ClientEvents.FromServer.SET_PLAYER_DECORATIONS, (decorations) => {
-  game26.clearPedDecorations(alt52.Player.local);
+  game25.clearPedDecorations(alt52.Player.local);
   for (const decoration of decorations) {
     const collection = decoration.collection;
     const overlay = decoration.overlay;
-    game26.addPedDecorationFromHashes(alt52.Player.local, collection, overlay);
+    game25.addPedDecorationFromHashes(alt52.Player.local, collection, overlay);
   }
 });
 
@@ -429986,25 +430051,25 @@ import alt55 from "@altv/client";
 // ../source/src/client/modules/peds/setup-ped/setup-terrorist-ped.ts
 init_define_process();
 import alt54 from "@altv/client";
-import game27 from "@altv/natives";
+import game26 from "@altv/natives";
 var pedTickUpdates = /* @__PURE__ */ new WeakMap();
-game27.addRelationshipGroup("Friendly", alt54.hash("Friendly"));
-game27.addRelationshipGroup("Enemy", alt54.hash("Enemy"));
-game27.setRelationshipBetweenGroups(0, alt54.hash("Friendly"), alt54.hash("Friendly"));
-game27.setRelationshipBetweenGroups(5, alt54.hash("Friendly"), alt54.hash("Enemy"));
-game27.setRelationshipBetweenGroups(5, alt54.hash("Enemy"), alt54.hash("Friendly"));
+game26.addRelationshipGroup("Friendly", alt54.hash("Friendly"));
+game26.addRelationshipGroup("Enemy", alt54.hash("Enemy"));
+game26.setRelationshipBetweenGroups(0, alt54.hash("Friendly"), alt54.hash("Friendly"));
+game26.setRelationshipBetweenGroups(5, alt54.hash("Friendly"), alt54.hash("Enemy"));
+game26.setRelationshipBetweenGroups(5, alt54.hash("Enemy"), alt54.hash("Friendly"));
 alt54.Timers.setInterval(() => {
-  game27.setPedRelationshipGroupHash(alt54.Player.local, alt54.hash("Friendly"));
+  game26.setPedRelationshipGroupHash(alt54.Player.local, alt54.hash("Friendly"));
   for (const ped of alt54.Ped.streamedIn) {
     if (ped.netOwner !== alt54.Player.local || (ped.streamSyncedMeta.flags ?? 0) & 1 /* Peaceful */) {
       continue;
     }
-    game27.setPedRelationshipGroupHash(ped, alt54.hash("Enemy"));
-    if (!game27.isPedInCombat(ped, 0) && ped.meta.wasInCombat) {
-      game27.taskGuardAssignedDefensiveArea(ped, ped.pos.x, ped.pos.y, ped.pos.z, 0, 50, -1);
+    game26.setPedRelationshipGroupHash(ped, alt54.hash("Enemy"));
+    if (!game26.isPedInCombat(ped, 0) && ped.meta.wasInCombat) {
+      game26.taskGuardAssignedDefensiveArea(ped, ped.pos.x, ped.pos.y, ped.pos.z, 0, 50, -1);
       ped.meta.wasInCombat = false;
     } else {
-      ped.meta.wasInCombat = game27.isPedInCombat(ped, 0);
+      ped.meta.wasInCombat = game26.isPedInCombat(ped, 0);
     }
   }
 }, 100);
@@ -430025,26 +430090,26 @@ async function setupTerroristPed(ped) {
     onSpawned.destroy();
     setupTerroristPed(ped);
   });
-  game27.setPedAsEnemy(ped, true);
-  game27.setEntityAsMissionEntity(ped, true, true);
-  game27.setRagdollBlockingFlags(ped, 262143 /* RBF_ALL */);
-  game27.setPedConfigFlag(ped, 2 /* NoCriticalHits */, true);
-  game27.setPedConfigFlag(ped, 25 /* ForceDieIfInjured */, false);
-  game27.setPedConfigFlag(ped, 281 /* DisableGoToWritheWhenInjured */, true);
-  game27.setPedConfigFlag(ped, 401 /* TreatNonFriendlyAsHateWhenInCombat */, true);
-  game27.setPedCombatAttributes(ped, 13 /* Aggressive */, true);
-  game27.setPedCombatAttributes(ped, 83 /* RequiresLosToAim */, true);
-  game27.setPedCombatAttributes(ped, 23 /* RequiresLosToShoot */, true);
-  game27.setPedCombatAttributes(ped, 5 /* AlwaysFight */, true);
-  game27.setPedCombatAttributes(ped, 50 /* CanCharge */, true);
-  game27.setPedCombatAttributes(ped, 71 /* PermitChargeBeyondDefensiveArea */, false);
-  game27.setPedCombatAttributes(ped, 21 /* CanChaseTargetOnFoot */, false);
-  game27.setPedCombatAttributes(ped, 46 /* CanFightArmedPedsWhenNotArmed */, true);
-  game27.setPedCombatAttributes(ped, 78 /* DisableAllRandomsFlee */, true);
-  game27.setPedCombatAttributes(ped, 38 /* DisableBulletReactions */, true);
-  game27.setPedCombatAttributes(ped, 0 /* UseCover */, Math.random() > 0.5);
-  game27.setPedCombatAttributes(ped, 43 /* SwitchToAdvanceIfCantFindCover */, true);
-  game27.taskGuardAssignedDefensiveArea(
+  game26.setPedAsEnemy(ped, true);
+  game26.setEntityAsMissionEntity(ped, true, true);
+  game26.setRagdollBlockingFlags(ped, 262143 /* RBF_ALL */);
+  game26.setPedConfigFlag(ped, 2 /* NoCriticalHits */, true);
+  game26.setPedConfigFlag(ped, 25 /* ForceDieIfInjured */, false);
+  game26.setPedConfigFlag(ped, 281 /* DisableGoToWritheWhenInjured */, true);
+  game26.setPedConfigFlag(ped, 401 /* TreatNonFriendlyAsHateWhenInCombat */, true);
+  game26.setPedCombatAttributes(ped, 13 /* Aggressive */, true);
+  game26.setPedCombatAttributes(ped, 83 /* RequiresLosToAim */, true);
+  game26.setPedCombatAttributes(ped, 23 /* RequiresLosToShoot */, true);
+  game26.setPedCombatAttributes(ped, 5 /* AlwaysFight */, true);
+  game26.setPedCombatAttributes(ped, 50 /* CanCharge */, true);
+  game26.setPedCombatAttributes(ped, 71 /* PermitChargeBeyondDefensiveArea */, false);
+  game26.setPedCombatAttributes(ped, 21 /* CanChaseTargetOnFoot */, false);
+  game26.setPedCombatAttributes(ped, 46 /* CanFightArmedPedsWhenNotArmed */, true);
+  game26.setPedCombatAttributes(ped, 78 /* DisableAllRandomsFlee */, true);
+  game26.setPedCombatAttributes(ped, 38 /* DisableBulletReactions */, true);
+  game26.setPedCombatAttributes(ped, 0 /* UseCover */, Math.random() > 0.5);
+  game26.setPedCombatAttributes(ped, 43 /* SwitchToAdvanceIfCantFindCover */, true);
+  game26.taskGuardAssignedDefensiveArea(
     ped,
     ped.pos.x,
     ped.pos.y,
@@ -430054,7 +430119,7 @@ async function setupTerroristPed(ped) {
     -1
   );
   if (ped.streamSyncedMeta.weapon) {
-    game27.giveWeaponToPed(ped, ped.streamSyncedMeta.weapon, 9999, true, true);
+    game26.giveWeaponToPed(ped, ped.streamSyncedMeta.weapon, 9999, true, true);
   }
   if (!pedTickUpdates.has(ped)) {
     pedTickUpdates.set(
@@ -430062,10 +430127,10 @@ async function setupTerroristPed(ped) {
       everyTickWhile(
         () => ped.valid,
         () => {
-          game27.setPedResetFlag(ped, 458 /* BlockFallTaskFromExplosionDamage */, true);
-          game27.setPedResetFlag(ped, 64 /* BlockWeaponReactionsUnlessDead */, true);
-          game27.setPedResetFlag(ped, 249 /* DisablePotentialBlastReactions */, true);
-          game27.setPedResetFlag(ped, 187 /* PreventAllMeleeTakedowns */, true);
+          game26.setPedResetFlag(ped, 458 /* BlockFallTaskFromExplosionDamage */, true);
+          game26.setPedResetFlag(ped, 64 /* BlockWeaponReactionsUnlessDead */, true);
+          game26.setPedResetFlag(ped, 249 /* DisablePotentialBlastReactions */, true);
+          game26.setPedResetFlag(ped, 187 /* PreventAllMeleeTakedowns */, true);
         }
       )
     );
@@ -430105,7 +430170,7 @@ var PedKey = {
   MINING_TUTOR: "SAN_LEE",
   WOODCUTTING_TUTOR: "NATHAN_MONAHAN",
   CRAFTING_TUTOR: "SARA_MATTHEWS",
-  TESTING_SHOP: "TESTING_SHOP"
+  JOHN_WICK: "JOHN_WICK"
 };
 
 // ../source/src/shared/modules/quests/index.ts
@@ -430733,7 +430798,7 @@ registerPedInteractions(PedKey.CRAFTING_TUTOR, (ped) => {
 // ../source/src/client/modules/questing/setup-quest-ped.ts
 init_define_process();
 import alt58 from "@altv/client";
-import game28 from "@altv/natives";
+import game27 from "@altv/natives";
 alt58.Events.onGameEntityCreate(({ entity }) => {
   if (!(entity instanceof alt58.Ped)) {
     return;
@@ -430755,28 +430820,28 @@ alt58.Events.onGameEntityCreate(({ entity }) => {
   const stopBlipWatch = (0, vue_exports.watch)([entity.interactions, clientState], ([interactions]) => {
     if (!interactions.length) {
       if (entity.blip) {
-        game28.removeBlip(entity.blip);
+        game27.removeBlip(entity.blip);
         entity.blip = void 0;
       }
     } else {
       if (!entity.blip) {
-        entity.blip = game28.addBlipForEntity(entity);
-        game28.setBlipSprite(entity.blip, 456);
+        entity.blip = game27.addBlipForEntity(entity);
+        game27.setBlipSprite(entity.blip, 456);
       }
       const trackingSameQuest = interactions.some(
         (interaction) => interaction.key === clientState.trackingQuest
       );
       if (trackingSameQuest) {
-        game28.setBlipColour(entity.blip, alt58.Enums.BlipColor.YELLOW_ORANGE);
+        game27.setBlipColour(entity.blip, alt58.Enums.BlipColor.YELLOW_ORANGE);
       } else {
-        game28.setBlipColour(entity.blip, alt58.Enums.BlipColor.WHITE);
+        game27.setBlipColour(entity.blip, alt58.Enums.BlipColor.WHITE);
       }
     }
   });
   entity.cleanupFns.push(() => {
     stopBlipWatch();
     if (entity.blip) {
-      game28.removeBlip(entity.blip);
+      game27.removeBlip(entity.blip);
     }
   });
 });
@@ -430832,7 +430897,7 @@ alt59.Events.onServer(ClientEvents.FromServer.SET_GAME_STATE, (state) => {
 // ../source/src/client/modules/skills/fishing/utils/fishing-task.ts
 init_define_process();
 import alt60 from "@altv/client";
-import game29 from "@altv/natives";
+import game28 from "@altv/natives";
 var rodObject;
 var stoppedFishingByServer = true;
 function getRodObject() {
@@ -430879,8 +430944,8 @@ function removeRod() {
   const rodObject2 = getRodObject();
   if (rodObject2) {
     try {
-      game29.setEntityAsMissionEntity(rodObject2, true, true);
-      game29.deleteEntity(rodObject2);
+      game28.setEntityAsMissionEntity(rodObject2, true, true);
+      game28.deleteEntity(rodObject2);
     } finally {
       resetRodObject();
     }
@@ -430891,12 +430956,12 @@ __name(removeRod, "removeRod");
 // ../source/src/client/modules/skills/fishing/utils/track-can-fish-flag.ts
 init_define_process();
 import alt62 from "@altv/client";
-import game31 from "@altv/natives";
+import game30 from "@altv/natives";
 
 // ../source/src/client/modules/skills/fishing/utils/test-probe-against-water-in-front-of-player.ts
 init_define_process();
 import alt61 from "@altv/client";
-import game30 from "@altv/natives";
+import game29 from "@altv/natives";
 var top = [0, 1];
 var bottom = [0, -1];
 var left = [-1, 0];
@@ -430904,18 +430969,18 @@ var right = [1, 0];
 var center2 = [0, 0];
 var directions = [top, bottom, left, right, center2];
 function testProbeAgainstWaterInFrontOfPlayer() {
-  const from = game30.getOffsetFromEntityInWorldCoords(alt61.Player.local, 0, 0.8, 0.7);
+  const from = game29.getOffsetFromEntityInWorldCoords(alt61.Player.local, 0, 0.8, 0.7);
   let hit = false;
   let pos = { x: 0, y: 0, z: 0 };
   let target = { x: 0, y: 0, z: 0 };
   for (const [horizontal, vertical] of directions) {
-    target = game30.getOffsetFromEntityInWorldCoords(
+    target = game29.getOffsetFromEntityInWorldCoords(
       alt61.Player.local,
       horizontal,
       10 + vertical,
       -10
     );
-    [hit, pos] = game30.testProbeAgainstWater(from.x, from.y, from.z, target.x, target.y, target.z);
+    [hit, pos] = game29.testProbeAgainstWater(from.x, from.y, from.z, target.x, target.y, target.z);
     if (!hit) {
       break;
     }
@@ -430936,7 +431001,7 @@ function trackCanFishFlag() {
       }
     } else {
       waterTestingTick ??= alt62.Timers.everyTick(() => {
-        if (game31.isPedSwimming(alt62.Player.local)) {
+        if (game30.isPedSwimming(alt62.Player.local)) {
           clientState.flags.delete("CanFish" /* CanFish */);
           return;
         }
@@ -430996,13 +431061,13 @@ init_define_process();
 // ../source/src/client/modules/skills/mining/utils/digging-task.ts
 init_define_process();
 import alt64 from "@altv/client";
-import game32 from "@altv/natives";
+import game31 from "@altv/natives";
 async function startDiggingTask() {
   await rpc.callServer(ServerCall.FromClient.START_DIGGING);
 }
 __name(startDiggingTask, "startDiggingTask");
 async function stopDiggingTask() {
-  game32.clearPedTasks(alt64.Player.local);
+  game31.clearPedTasks(alt64.Player.local);
   await rpc.callServer(ServerCall.FromClient.STOP_DIGGING);
 }
 __name(stopDiggingTask, "stopDiggingTask");
@@ -431113,7 +431178,7 @@ init_define_process();
 // ../source/src/client/modules/skills/woodcutting/lib/align-player-to-tree.ts
 init_define_process();
 import alt65 from "@altv/client";
-import game33 from "@altv/natives";
+import game32 from "@altv/natives";
 var diff;
 var angle;
 var currentHeading;
@@ -431121,16 +431186,16 @@ async function alignPlayerToTree(requiredHeading) {
   const player5 = alt65.Player.local;
   everyTickWhile(
     () => {
-      currentHeading = game33.getEntityHeading(player5);
+      currentHeading = game32.getEntityHeading(player5);
       diff = Math.abs(requiredHeading - currentHeading);
       angle = Math.min(diff, 360 - diff);
       return angle > 10;
     },
     () => {
       if (currentHeading < requiredHeading) {
-        game33.setEntityHeading(player5, currentHeading + 5);
+        game32.setEntityHeading(player5, currentHeading + 5);
       } else {
-        game33.setEntityHeading(player5, currentHeading - 5);
+        game32.setEntityHeading(player5, currentHeading - 5);
       }
     }
   );
@@ -431172,14 +431237,14 @@ __name(setIsChoppingTree, "setIsChoppingTree");
 // ../source/src/client/modules/skills/woodcutting/lib/keep-player-in-place.ts
 init_define_process();
 import alt66 from "@altv/client";
-import game34 from "@altv/natives";
+import game33 from "@altv/natives";
 var unfreezeAt = 0;
 function keepPlayerInPlace(keep) {
   if (keep) {
-    game34.freezeEntityPosition(alt66.Player.local, true);
+    game33.freezeEntityPosition(alt66.Player.local, true);
     unfreezeAt = Date.now() + 1e3;
   } else if (unfreezeAt && unfreezeAt < Date.now()) {
-    game34.freezeEntityPosition(alt66.Player.local, false);
+    game33.freezeEntityPosition(alt66.Player.local, false);
     unfreezeAt = 0;
   }
 }
@@ -431188,7 +431253,7 @@ __name(keepPlayerInPlace, "keepPlayerInPlace");
 // ../source/src/client/modules/skills/woodcutting/lib/perform-chop-animation.ts
 init_define_process();
 import alt67 from "@altv/client";
-import game35 from "@altv/natives";
+import game34 from "@altv/natives";
 var player2 = alt67.Player.local;
 async function performChopAnimation(tree2) {
   await loadAssets();
@@ -431197,9 +431262,9 @@ async function performChopAnimation(tree2) {
     setIsChoppingTree(false);
   });
   await alt67.Utils.wait(500);
-  game35.useParticleFxAsset("core");
-  const { x, y, z: z2 } = player2.pos.add(game35.getEntityForwardVector(player2)).mul(1);
-  const effect = game35.startParticleFxLoopedAtCoord(
+  game34.useParticleFxAsset("core");
+  const { x, y, z: z2 } = player2.pos.add(game34.getEntityForwardVector(player2)).mul(1);
+  const effect = game34.startParticleFxLoopedAtCoord(
     "bul_wood_splinter",
     x,
     y,
@@ -431219,7 +431284,7 @@ async function performChopAnimation(tree2) {
   );
   const logs = await rpc.callServer(ServerCall.FromClient.TREE_HIT, tree2.remoteID);
   if (logs) {
-    game35.playSoundFromCoord(
+    game34.playSoundFromCoord(
       -1,
       "Object_Dropped_Remote",
       x,
@@ -431232,17 +431297,17 @@ async function performChopAnimation(tree2) {
     );
   }
   await alt67.Utils.wait(1e3);
-  game35.stopParticleFxLooped(effect, false);
+  game34.stopParticleFxLooped(effect, false);
 }
 __name(performChopAnimation, "performChopAnimation");
 async function loadAssets() {
-  if (!game35.hasNamedPtfxAssetLoaded("core")) {
-    game35.requestNamedPtfxAsset("core");
-    await alt67.Utils.waitFor(() => game35.hasNamedPtfxAssetLoaded("core"));
+  if (!game34.hasNamedPtfxAssetLoaded("core")) {
+    game34.requestNamedPtfxAsset("core");
+    await alt67.Utils.waitFor(() => game34.hasNamedPtfxAssetLoaded("core"));
   }
-  if (!game35.hasAnimDictLoaded("melee@hatchet@streamed_core")) {
-    game35.requestAnimDict("melee@hatchet@streamed_core");
-    await alt67.Utils.waitFor(() => game35.hasAnimDictLoaded("melee@hatchet@streamed_core"));
+  if (!game34.hasAnimDictLoaded("melee@hatchet@streamed_core")) {
+    game34.requestAnimDict("melee@hatchet@streamed_core");
+    await alt67.Utils.waitFor(() => game34.hasAnimDictLoaded("melee@hatchet@streamed_core"));
   }
 }
 __name(loadAssets, "loadAssets");
@@ -431280,7 +431345,7 @@ __name(getNearbyTrees, "getNearbyTrees");
 // ../source/src/client/modules/skills/woodcutting/lib/raycast-tree-edge.ts
 init_define_process();
 import alt69 from "@altv/client";
-import game36 from "@altv/natives";
+import game35 from "@altv/natives";
 
 // ../source/src/client/core/constants/shapetest.ts
 init_define_process();
@@ -431307,7 +431372,7 @@ function raycastTreeEdge(playerPos, treePos, offset) {
     const offsetVector = perpendicular.mul(offset * i);
     const startPos = playerPos.add(0, 0, 0.7).add(offsetVector);
     const endPos = targetPos.add(offsetVector);
-    const hitTest = game36.startExpensiveSynchronousShapeTestLosProbe(
+    const hitTest = game35.startExpensiveSynchronousShapeTestLosProbe(
       startPos.x,
       startPos.y,
       startPos.z,
@@ -431318,7 +431383,7 @@ function raycastTreeEdge(playerPos, treePos, offset) {
       player3,
       options
     );
-    const [_didComplete, didHit, position, _surfaceNormal, materialHash, _entityHit] = game36.getShapeTestResultIncludingMaterial(hitTest);
+    const [_didComplete, didHit, position, _surfaceNormal, materialHash, _entityHit] = game35.getShapeTestResultIncludingMaterial(hitTest);
     if (didHit && materialHash === 2379541433 /* TreeBark */) {
       const distance = playerPos.distanceTo(position);
       if (distance < minDistance) {
@@ -431389,11 +431454,11 @@ __name(hasHatchetInHand, "hasHatchetInHand");
 // ../source/src/client/modules/skills/woodcutting/lib/is-trying-to-chop.ts
 init_define_process();
 import alt72 from "@altv/client";
-import game37 from "@altv/natives";
+import game36 from "@altv/natives";
 function isTryingToChop() {
-  game37.disablePlayerFiring(alt72.Player.local, false);
-  game37.disableControlAction(0 /* PLAYER_CONTROL */, 24 /* INPUT_ATTACK */, true);
-  return !isChoppingTree() && game37.isDisabledControlJustPressed(0 /* PLAYER_CONTROL */, 24 /* INPUT_ATTACK */);
+  game36.disablePlayerFiring(alt72.Player.local, false);
+  game36.disableControlAction(0 /* PLAYER_CONTROL */, 24 /* INPUT_ATTACK */, true);
+  return !isChoppingTree() && game36.isDisabledControlJustPressed(0 /* PLAYER_CONTROL */, 24 /* INPUT_ATTACK */);
 }
 __name(isTryingToChop, "isTryingToChop");
 
@@ -431422,22 +431487,41 @@ onKeyDown(alt74.Enums.KeyCode.L, () => {
   toggleWindow(3 /* WORKBENCH */);
 });
 
+// ../source/src/client/scenes/index.ts
+init_define_process();
+
+// ../source/src/client/scenes/cayo-air-port/index.ts
+init_define_process();
+import alt75 from "@altv/client";
+registerPedInteractions(PedKey.JOHN_WICK, (ped) => {
+  const interactions = [];
+  interactions.push({
+    key: "get-ratbike",
+    icon: "trade",
+    label: "Get Ratbike",
+    onSelect() {
+      alt75.Events.emitServerRaw(ServerEvents.FromClient.GET_RATBIKE);
+    }
+  });
+  return interactions;
+});
+
 // ../source/src/client/main.ts
 var import_lodash4 = __toESM(require_lodash(), 1);
-import alt75 from "@altv/client";
-console.log("wtf");
-alt75.Events.onConsoleCommand(({ command }) => {
+import alt76 from "@altv/client";
+console.log("??");
+alt76.Events.onConsoleCommand(({ command }) => {
   if (command === "user") {
-    alt75.log(JSON.stringify(useUser()?.$state), null, 2);
+    alt76.log(JSON.stringify(useUser()?.$state), null, 2);
   } else if (command === "character") {
-    alt75.log(JSON.stringify(useCharacter()?.$state), null, 2);
+    alt76.log(JSON.stringify(useCharacter()?.$state), null, 2);
   } else if (command === "gamestate") {
-    alt75.log(JSON.stringify(gameState.$state), null, 2);
+    alt76.log(JSON.stringify(gameState.$state), null, 2);
   } else if (command === "client") {
-    alt75.log(JSON.stringify(clientState.$state), null, 2);
+    alt76.log(JSON.stringify(clientState.$state), null, 2);
   } else if (command === "dump:weapon-stats") {
     import_lodash4.default.chunk(
-      alt75.WeaponData.all.map((x) => ({
+      alt76.WeaponData.all.map((x) => ({
         [x.nameHash]: {
           recoilShakeAmplitude: x.recoilShakeAmplitude,
           recoilAccuracyMax: x.recoilAccuracyMax,
@@ -431457,7 +431541,7 @@ alt75.Events.onConsoleCommand(({ command }) => {
       })),
       10
     ).map(
-      (x) => alt75.Events.emitServerRaw(
+      (x) => alt76.Events.emitServerRaw(
         "dump:weapon-stats",
         x.reduce((acc, curr) => ({ ...acc, ...curr }), {})
       )

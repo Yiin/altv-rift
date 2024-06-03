@@ -1,0 +1,32 @@
+FROM node:20.11.0-bookworm-slim as base
+USER root
+ARG BRANCH=dev
+ENV ALTV_BRANCH=$BRANCH
+
+RUN apt-get update -y && apt-get install -y curl lsof libatomic1 libc-bin wget apt-transport-https ca-certificates gnupg procps stow && apt autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+COPY ./docker-scripts /root/setup
+
+WORKDIR /root/setup
+
+RUN npm i -g bun && bun install && bun add -g altv-pkg@latest
+
+WORKDIR /altv
+
+RUN bunx altv-pkg $ALTV_BRANCH
+RUN chmod +x altv-server altv-crash-handler
+
+RUN bun i
+RUN bun run prisma:generate
+RUN bun run build
+
+WORKDIR /altv/src/webview
+
+RUN bun i
+RUN bun run build-only
+
+RUN cp -r dist /altv/resources/main/webview
+
+EXPOSE 7788/udp 7788/tcp 7799/udp 7790/tcp
+
+ENTRYPOINT [ "/altv/altv-server" ]

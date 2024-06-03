@@ -7,7 +7,6 @@
 }
 
 .interaction-content {
-  font-size: 31pt;
   color: #ffffffff;
   transform-origin: center center;
   display: flex;
@@ -18,8 +17,8 @@
 .interaction {
   display: flex;
   align-items: center;
-  padding: 2px 0;
-  width: 200px;
+  padding: 0.125rem 0;
+  width: 12.5rem;
   white-space: nowrap;
   transform-origin: left center 0;
   transform: scale(0.8);
@@ -32,6 +31,7 @@
 }
 
 .interaction .label {
-  padding-left: 6px;
-  margin-top: 2px;
+  padding-left: 0.375rem;
+  margin-top: 0.125rem;
+  font-size: 2rem;
 }

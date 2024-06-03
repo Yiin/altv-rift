@@ -1,0 +1,29 @@
+name: altv-rift-server
+services:
+  server:
+    build:
+      context: .
+      dockerfile: ./server/Dockerfile
+    restart: unless-stopped
+    volumes:
+      - ./altv:/altv
+    entrypoint: ["/root/entrypoint.sh", "server"]
+    stdin_open: true
+    ports:
+      - '7788:7788'
+      - '7788:7788/udp'
+      - '7790:7790' # discord login
+    environment:
+      - DATABASE_URL
+      - DISCORD_CLIENT_ID
+      - DISCORD_CLIENT_SECRET
+      - REDIRECT_IP
+      - NODE_ENV
+      - ALTV_HOST
+      - ALTV_NAME
+      - ALTV_PORT
+      - ALTV_PASSWORD
+      - ALTV_ANNOUNCE
+      - ALTV_DEBUG
+      - ALTV_MODULES
+      - ALTV_RESOURCES

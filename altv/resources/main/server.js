@@ -604594,7 +604594,8 @@ var FromClient2 = {
   NOTIFY: "NOTIFY",
   WEAPON_SHOOT: "WEAPON_SHOOT",
   CONVERSATION_STARTED: "CONVERSATION_STARTED",
-  CLOSE_WINDOW: "CLOSE_WINDOW"
+  CLOSE_WINDOW: "CLOSE_WINDOW",
+  GET_RATBIKE: "GET_RATBIKE"
 };
 
 // ../source/src/shared/events/server/index.ts
@@ -697923,21 +697924,15 @@ alt32.Events.onPlayerDisconnect(({ player }) => {
 var import_date_fns2 = __toESM(require_date_fns(), 1);
 import alt33 from "@altv/server";
 
-// ../source/src/server/core/utility/config.ts
-var DefaultViteServer = "127.0.0.1";
-var DefaultVitePort = 5173;
-var isVueDebug = true;
-var Config = {
-  isDevMode() {
-    return true;
-  },
-  getViteServer() {
-    return `http://${DefaultViteServer}:${DefaultVitePort}/client/webview/`;
-  },
-  getVueDebugMode() {
-    return isVueDebug;
-  }
-};
+// ../source/src/server/core/utility/webview.ts
+function getViteServer() {
+  return `http://127.0.0.1:5173/client/webview/`;
+}
+__name(getViteServer, "getViteServer");
+function getVueDebugMode() {
+  return process.env.NODE_ENV === "development";
+}
+__name(getVueDebugMode, "getVueDebugMode");
 
 // ../source/src/server/prototypes/player/setup.ts
 alt33.Player.prototype.setup = async function() {
@@ -697951,8 +697946,8 @@ alt33.Player.prototype.setup = async function() {
       this.saveCharacter();
     }
   }, (0, import_date_fns2.minutesToMilliseconds)(1));
-  if (Config.getVueDebugMode()) {
-    this.emitRaw(ClientEvents.FromServer.SETUP_WEBVIEW, await Config.getViteServer());
+  if (getVueDebugMode()) {
+    this.emitRaw(ClientEvents.FromServer.SETUP_WEBVIEW, await getViteServer());
   } else {
     this.emitRaw(ClientEvents.FromServer.SETUP_WEBVIEW);
   }
@@ -702048,7 +702043,7 @@ var PedKey = {
   MINING_TUTOR: "SAN_LEE",
   WOODCUTTING_TUTOR: "NATHAN_MONAHAN",
   CRAFTING_TUTOR: "SARA_MATTHEWS",
-  TESTING_SHOP: "TESTING_SHOP"
+  JOHN_WICK: "JOHN_WICK"
 };
 
 // ../source/src/server/modules/peds/events.ts
@@ -713064,10 +713059,97 @@ rpc.registerWebview(ServerCall.FromWebview.ADMIN_ACTION, async (player, action, 
   return;
 });
 
+// ../source/src/server/scenes/cayo-air-port/index.ts
+import alt60 from "@altv/server";
+var ratbikes = [
+  {
+    x: 4453.9384765625,
+    y: -4468.931640625,
+    z: 3.7861328125,
+    rot: {
+      x: -0.14125892519950867,
+      y: -0.04815739020705223,
+      z: -1.404533863067627
+    }
+  },
+  {
+    x: 4453.66162109375,
+    y: -4470.77783203125,
+    z: 3.7861328125,
+    rot: {
+      x: -0.13660040497779846,
+      y: -0.0076276580803096294,
+      z: -1.6886130571365356
+    }
+  },
+  {
+    x: 4455.0595703125,
+    y: -4466.61083984375,
+    z: 3.7861328125,
+    rot: {
+      x: -0.0795850083231926,
+      y: -0.13555096089839935,
+      z: -0.6799421906471252
+    }
+  },
+  {
+    x: 4454.0966796875,
+    y: -4465.89892578125,
+    z: 3.7861328125,
+    rot: {
+      x: -0.09737370163202286,
+      y: -0.09127698093652725,
+      z: -0.9920035004615784
+    }
+  },
+  {
+    x: 4453.490234375,
+    y: -4464.35595703125,
+    z: 3.7861328125,
+    rot: {
+      x: -0.13779506087303162,
+      y: -0.10241547226905823,
+      z: -1.0774649381637573
+    }
+  }
+].map(({ rot, ...pos }) => {
+  const ratbike = alt60.Vehicle.create({
+    model: "ratbike",
+    pos,
+    rot
+  });
+  ratbike.frozen = true;
+});
+var seller = createStaticPed({
+  model: "CSB_Ramp_hic",
+  pos: { x: 4451.68359375, y: -4468.0087890625, z: 4.3253173828125 },
+  heading: 2.12737774848938,
+  name: "John Wick",
+  flags: 1 /* Peaceful */,
+  key: PedKey.JOHN_WICK
+});
+var assignedRatbikes = /* @__PURE__ */ new Map();
+alt60.Events.onPlayer(ServerEvents.FromClient.GET_RATBIKE, (player) => {
+  const existingRatBike = assignedRatbikes.get(player);
+  if (existingRatBike) {
+    if (player.vehicle === existingRatBike) {
+      return;
+    }
+    existingRatBike.destroy();
+  }
+  const ratbike = alt60.Vehicle.create({
+    model: "ratbike",
+    pos: player.pos,
+    rot: player.rot
+  });
+  assignedRatbikes.set(player, ratbike);
+  player.setIntoVehicle(ratbike, 1);
+});
+
 // ../source/src/server/main.ts
 import fs3 from "node:fs";
 import path4 from "node:path";
-import alt60 from "@altv/server";
+import alt61 from "@altv/server";
 var __fileloc4 = {
   filename: "/source/src/server/main.ts",
   dirname: "/source/src/server",
@@ -713075,7 +713157,7 @@ var __fileloc4 = {
   relativedirname: "/server"
 };
 registerCmd("v", (player) => {
-  alt60.Vehicle.create({
+  alt61.Vehicle.create({
     model: "ignus",
     pos: player.pos.add(2, 0, 0)
   });
@@ -713086,7 +713168,7 @@ registerCmd("b", (player, [blueprint]) => {
     player.addBlueprint(blueprint);
   }
 });
-alt60.Events.onPlayer(
+alt61.Events.onPlayer(
   "dump:weapon-stats",
   (player, stats) => {
     const weaponStatsJsonFilePath = path4.join(
@@ -713100,7 +713182,7 @@ alt60.Events.onPlayer(
     fs3.writeFileSync(weaponStatsJsonFilePath, JSON.stringify(weaponStats, null, 2));
   }
 );
-console.log("okayy");
+console.log("woah");
 /*! Bundled license information:
 
 @prisma/client/runtime/binary.js:

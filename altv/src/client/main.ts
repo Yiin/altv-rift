@@ -22,9 +22,9 @@ import "./modules/peds";
 import "./modules/questing";
 import "./modules/skills";
 import "./modules/production";
+import "./scenes";
 
 import alt from "@altv/client";
-import game from "@altv/natives";
 import _ from "lodash";
 import { useUser } from "./core/store/user.store";
 import { useCharacter } from "./core/store/character.store";
@@ -39,7 +39,7 @@ import { clientState } from "./core/store/client.store";
 
 // game.setVehicleModKit()
 
-console.log("wtf");
+console.log("??");
 
 alt.Events.onConsoleCommand(({ command }) => {
   if (command === "user") {
