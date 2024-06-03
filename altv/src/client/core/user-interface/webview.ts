@@ -220,6 +220,10 @@ alt.Events.onServer(
 
     console.log(`valid?`, webview.valid);
 
+    webview.on('load', () => {
+      console.log(`webview loaded`, webview.url);
+    });
+
     webview.on(ClientEvents.FromWebview.VIEW_READY, () => {
       webview.focused = true;
       markWebViewAsReady(webview);
@@ -230,7 +234,3 @@ alt.Events.onServer(
     webview.on(ClientEvents.FromWebview.CLOSE_WINDOW, closeWindow);
   },
 );
-
-alt.Events.onDisconnect(() => {
-  webview && webview.valid && webview.destroy();
-});

@@ -18,6 +18,7 @@ const app = createApp(App)
   .directive("click-outside", vClickOutside)
   .directive("horizontal-scroll", vHorizontalScroll);
 
+console.log("Mounting the vue app...");
 app.mount("#app");
 
 function adjustUIBaseFontSize() {

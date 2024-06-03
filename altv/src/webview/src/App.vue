@@ -34,7 +34,10 @@ useEventListener(
   true,
 );
 
+console.log("App.vue");
+
 onMounted(() => {
+  console.log("App mounted");
   alt.emit(ClientEvents.FromWebview.VIEW_READY);
 });
 </script>
