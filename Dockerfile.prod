@@ -58,4 +58,5 @@ RUN echo "$(printenv | sort)" >> .env && \
 EXPOSE 7788/udp 7788/tcp 7799/udp 7790/tcp
 
 # Set the entrypoint
-ENTRYPOINT ["/altv/altv-server"]
+WORKDIR /altv
+ENTRYPOINT ["altv-server"]
