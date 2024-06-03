@@ -69,6 +69,7 @@ jobs:
           key: ${{ secrets.DEPLOY_KEY }}
           script: |
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            echo "Deploying ${IMAGE_NAME} to ${OWNER_LC}"
             docker pull ghcr.io/${OWNER_LC}/${IMAGE_NAME}:latest
             docker stop altv-server || true
             docker rm altv-server || true
