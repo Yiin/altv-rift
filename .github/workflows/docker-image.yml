@@ -34,6 +34,7 @@ jobs:
           ALTV_MODULES: ${{ vars.ALTV_MODULES }}
           ALTV_RESOURCES: ${{ vars.ALTV_RESOURCES }}
         run: |
+          export COMPOSE_PROJECT_NAME=${IMAGE_NAME}
           docker-compose -f docker-compose.prod.yaml build
           IMAGE_ID=$(docker images -q ${IMAGE_NAME})
           docker tag $IMAGE_ID $IMAGE_NAME:latest

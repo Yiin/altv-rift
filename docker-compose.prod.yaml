@@ -1,4 +1,3 @@
-name: altv-rift-server
 services:
   server:
     build:
