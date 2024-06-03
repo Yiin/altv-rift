@@ -70,6 +70,6 @@ jobs:
               -p 7788:7788 \
               -p 7788:7788/udp \
               -p 7790:7790 \
-              -p 7799:7799/udp
+              -p 7799:7799/udp \
               ghcr.io/yiin/altv-rift-server:latest
             docker image prune -f

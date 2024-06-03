@@ -92,7 +92,7 @@ export function showCursor(state?: boolean) {
       alt.Cursor.visible = state;
       cursors = Math.max(0, state ? cursors + 1 : cursors - 1);
     }
-  } catch {}
+  } catch { }
 
   alt.Timers.nextTick(() => {
     if (cursors) {
@@ -204,6 +204,8 @@ alt.Events.onServer(
   (webviewUrl = `http://resource/client/webview/index.html`) => {
     url = webviewUrl;
 
+    console.log(`Loading Webview: ${url}`);
+
     if (url.includes("localhost")) {
       alt.logWarning(
         `Running WebService in Development Mode. Nobody can see these pages but the host computer.`,
@@ -215,6 +217,8 @@ alt.Events.onServer(
     }
 
     webview = alt.WebView.create({ url: `${url}#/`, overlay: false });
+
+    console.log(`valid?`, webview.valid);
 
     webview.on(ClientEvents.FromWebview.VIEW_READY, () => {
       webview.focused = true;
