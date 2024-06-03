@@ -1,8 +1,11 @@
 services:
   server:
+    image: "${IMAGE_NAME}:latest"
     build:
       context: .
       dockerfile: ./server/Dockerfile
+      labels:
+        runnumber: "${GITHUB_RUN_ID}"
     restart: unless-stopped
     volumes:
       - ./altv:/altv
