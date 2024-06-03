@@ -6,23 +6,23 @@ services:
       dockerfile: ./Dockerfile.prod
       labels:
         runnumber: "${GITHUB_RUN_ID}"
+      args:
+        - DATABASE_URL=${DATABASE_URL}
+        - DISCORD_CLIENT_ID=${DISCORD_CLIENT_ID}
+        - DISCORD_CLIENT_SECRET=${DISCORD_CLIENT_SECRET}
+        - REDIRECT_IP=${REDIRECT_IP}
+        - NODE_ENV=${NODE_ENV}
+        - ALTV_HOST=${ALTV_HOST}
+        - ALTV_NAME=${ALTV_NAME}
+        - ALTV_PORT=${ALTV_PORT}
+        - ALTV_PASSWORD=${ALTV_PASSWORD}
+        - ALTV_ANNOUNCE=${ALTV_ANNOUNCE}
+        - ALTV_DEBUG=${ALTV_DEBUG}
+        - ALTV_MODULES=${ALTV_MODULES}
+        - ALTV_RESOURCES=${ALTV_RESOURCES}
     restart: unless-stopped
     stdin_open: true
     ports:
       - '7788:7788'
       - '7788:7788/udp'
       - '7790:7790' # discord login
-    environment:
-      - DATABASE_URL
-      - DISCORD_CLIENT_ID
-      - DISCORD_CLIENT_SECRET
-      - REDIRECT_IP
-      - NODE_ENV
-      - ALTV_HOST
-      - ALTV_NAME
-      - ALTV_PORT
-      - ALTV_PASSWORD
-      - ALTV_ANNOUNCE
-      - ALTV_DEBUG
-      - ALTV_MODULES
-      - ALTV_RESOURCES
