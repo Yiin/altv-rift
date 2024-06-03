@@ -34,9 +34,9 @@ jobs:
           ALTV_MODULES: ${{ vars.ALTV_MODULES }}
           ALTV_RESOURCES: ${{ vars.ALTV_RESOURCES }}
         run: |
-          export COMPOSE_PROJECT_NAME=${IMAGE_NAME}
-          docker-compose -f docker-compose.prod.yaml build
-          IMAGE_ID=$(docker images -q ${IMAGE_NAME})
+          COMPOSE_PROJECT_NAME=${IMAGE_NAME} docker-compose -f docker-compose.prod.yaml build
+          IMAGE_ID=$(docker images -q ${IMAGE_NAME}-*)
+          echo IMAGE_ID=$IMAGE_ID
           docker tag $IMAGE_ID $IMAGE_NAME:latest
           docker label $IMAGE_ID "runnumber=${GITHUB_RUN_ID}"
 
