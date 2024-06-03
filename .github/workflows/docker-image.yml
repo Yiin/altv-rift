@@ -68,6 +68,7 @@ jobs:
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.DEPLOY_KEY }}
           script: |
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
             sudo docker pull ghcr.io/${OWNER_LC}/${IMAGE_NAME}:latest
             sudo docker stop altv-server || true
             sudo docker rm altv-server || true
