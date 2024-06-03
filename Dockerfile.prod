@@ -47,13 +47,14 @@ RUN echo "$(printenv | sort)" >> .env && \
   chmod +x altv-server altv-crash-handler && \
   bun install && \
   bun run prisma:generate && \
-  cp node_modules/.prisma/client/query-engine-* prisma && \
   bun run build && \
   cd src/webview && \
   bun install && \
   bun run build-only && \
   cp -r dist /altv/resources/main/webview && \
-  rm -rf /altv/node_modules /altv/src
+  rm -rf /root/setup && \
+  rm -rf /altv/src && \
+  find node_modules -mindepth 1 -maxdepth 1 ! -name '.prisma' -exec rm -rf {} +
 
 # Expose necessary ports
 EXPOSE 7788/udp 7788/tcp 7799/udp 7790/tcp
