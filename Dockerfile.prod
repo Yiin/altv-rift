@@ -47,7 +47,7 @@ RUN echo "$(printenv | sort)" >> .env && \
   chmod +x altv-server altv-crash-handler && \
   bun install && \
   bun run prisma:generate && \
-  cp node_modules/.prisma/client/query-engine-* prisma \
+  cp node_modules/.prisma/client/query-engine-* prisma && \
   bun run build && \
   cd src/webview && \
   bun install && \
