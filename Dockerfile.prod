@@ -59,4 +59,4 @@ EXPOSE 7788/udp 7788/tcp 7799/udp 7790/tcp
 
 # Set the entrypoint
 WORKDIR /altv
-ENTRYPOINT ["altv-server"]
+ENTRYPOINT ["/altv/altv-server"]
