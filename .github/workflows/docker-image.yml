@@ -48,6 +48,7 @@ jobs:
         run: |
           echo "Image name: ${IMAGE_NAME}"
           echo "Full image tag: ghcr.io/${OWNER_LC}/${IMAGE_NAME}:latest"
+          docker tag ${IMAGE_NAME}:latest ghcr.io/${OWNER_LC}/${IMAGE_NAME}:latest
           docker push ghcr.io/${OWNER_LC}/${IMAGE_NAME}:latest
 
   deploy:
