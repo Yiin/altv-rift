@@ -73,3 +73,19 @@ jobs:
               -p 7799:7799/udp \
               ghcr.io/yiin/altv-rift-server:latest
             docker image prune -f
+
+      - name: Notify Build Success
+        if: success()
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        uses: Ilshidur/action-discord@master
+        with:
+          args: "{{ EVENT_PAYLOAD.repository.full_name }} has been updated."
+
+      - name: Notify Build Failure
+        if: failure()
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        uses: Ilshidur/action-discord@master
+        with:
+          args: "Build failed. Check GitHub Actions logs for more details."
