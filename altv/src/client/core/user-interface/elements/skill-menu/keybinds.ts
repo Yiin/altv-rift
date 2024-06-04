@@ -1,6 +1,6 @@
 import alt from "@altv/client";
 import { UIElement } from "@shared/enums/ui";
-import { onKeyDown } from "@/core/utility/event-helpers";
+import { onKeyDown } from "@/core/user-interface/event-helpers";
 import { doesElementHaveCursor, toggleElement } from "../../webview";
 
 onKeyDown(alt.Enums.KeyCode.I, () => {

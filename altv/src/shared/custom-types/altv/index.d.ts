@@ -29,6 +29,8 @@ declare module "@altv/shared" {
     flags?: PedFlags;
     name?: string;
     weapon?: number;
+    maxHealth: number;
+    health: number;
   }
 
   export interface VirtualEntityStreamSyncedMeta {

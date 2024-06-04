@@ -9,7 +9,7 @@ import {
   isWeaponWithClip,
   getWeaponDamage,
 } from "@shared/modules/items";
-import { PED_HEALTH_ZERO } from "@shared/modules/ped";
+import { PED_HEALTH_ZERO, PED_HEALTH_ZERO_DEFAULT } from "@shared/modules/ped";
 import { isInGame } from "@/core/utility/assertions";
 
 alt.Events.onWeaponDamage(
@@ -62,15 +62,15 @@ alt.Events.onWeaponDamage(
     const totalDamage = weaponDamage + ammoDamage + bodyPartDamage;
 
     if (totalDamage > 0) {
-      setDamageValue(totalDamage);
-
       if (target instanceof alt.Ped) {
         const newHealth = Math.max(
           PED_HEALTH_ZERO,
-          Math.min(target.maxHealth, target.health - totalDamage),
+          Math.min(target.streamSyncedMeta.maxHealth, target.streamSyncedMeta.health - totalDamage),
         );
 
-        target.health = newHealth;
+        target.health = newHealth + PED_HEALTH_ZERO_DEFAULT;
+      } else {
+        setDamageValue(totalDamage);
       }
 
       if (weaponDamage + bodyPartDamage > 0) {

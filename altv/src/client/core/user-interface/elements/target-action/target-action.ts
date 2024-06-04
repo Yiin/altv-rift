@@ -6,7 +6,7 @@ import { UIElement } from "@shared/enums/ui";
 import { clientState } from "@/core/store/client.store";
 import Raycast from "@/core/utility/raycast";
 import { VehicleBones } from "@/core/constants/vehicle-bones";
-import { everyTickWhile } from "@/core/utility/event-helpers";
+import { everyTickWhile } from "@/core/user-interface/event-helpers";
 import { getScreenResolution } from "@/core/utility/screen-resolution";
 import { toggleElement } from "../../webview";
 
@@ -99,7 +99,7 @@ function searchForAction() {
                   text: "Open trunk",
                   screenPos: { x: x * getScreenResolution().x, y: y * getScreenResolution().y },
                 },
-                onAction() {},
+                onAction() { },
               };
               return;
             }

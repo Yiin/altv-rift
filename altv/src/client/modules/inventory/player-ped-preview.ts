@@ -2,7 +2,7 @@ import alt from "@altv/client";
 import game from "@altv/natives";
 import { ref, watch } from "vue";
 import { ClientEvents } from "@shared/events/client";
-import { everyTickWhile } from "@/core/utility/event-helpers";
+import { everyTickWhile } from "@/core/user-interface/event-helpers";
 import { useWebview } from "@/core/user-interface/webview";
 
 let equipmentPed: number | null = null;

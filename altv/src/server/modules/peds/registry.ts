@@ -1,5 +1,5 @@
 import alt from "@altv/server";
-import { PED_HEALTH_ZERO, PedFlags } from "@shared/modules/ped/constants";
+import { PED_HEALTH_ZERO, PED_HEALTH_ZERO_DEFAULT, PedFlags } from "@shared/modules/ped/constants";
 import { PedKey } from "@shared/modules/ped/list";
 
 const pedsMap = new Map<string, alt.Ped>();
@@ -56,8 +56,8 @@ export function createTerroristPed(
 
   Object.assign(ped.streamSyncedMeta, meta);
 
-  ped.maxHealth = PED_HEALTH_ZERO + (health ?? 100);
-  ped.health = ped.maxHealth;
+  ped.health = ped.maxHealth = PED_HEALTH_ZERO_DEFAULT + (health ?? 100);
+  ped.streamSyncedMeta.health = ped.streamSyncedMeta.maxHealth = health ?? 100;
 
   return ped;
 }

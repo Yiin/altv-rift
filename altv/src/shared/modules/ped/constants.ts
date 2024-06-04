@@ -1,4 +1,5 @@
-export const PED_HEALTH_ZERO = 99;
+export const PED_HEALTH_ZERO_DEFAULT = 99;
+export const PED_HEALTH_ZERO = 0;
 
 export enum PedType {
   STATIC = 0,

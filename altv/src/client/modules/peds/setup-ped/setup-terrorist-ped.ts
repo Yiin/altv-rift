@@ -2,7 +2,7 @@ import alt from "@altv/client";
 import game from "@altv/natives";
 import { RAGDOLL_BLOCKING_FLAGS } from "@shared/enums/ragdoll-blocking-flags";
 import { PedFlags } from "@shared/modules/ped";
-import { everyTickWhile } from "@/core/utility/event-helpers";
+import { everyTickWhile } from "@/core/user-interface/event-helpers";
 import { COMBAT_ATTRIBUTE, PED_CONFIG_FLAG, PED_RESET_FLAG } from "@/core/constants/ped-flags";
 
 const pedTickUpdates = new WeakMap<alt.Ped, alt.Timers.EveryTick>();

@@ -5,7 +5,7 @@ import { StorageType } from "@shared/store/game-state.store";
 import { Control, ControlType } from "@/core/constants/controls";
 import { isInConversation } from "@/modules/questing/conversation";
 import { isAirDropInPosition } from "@/modules/inventory";
-import { everyTickWhile } from "@/core/utility/event-helpers";
+import { everyTickWhile } from "@/core/user-interface/event-helpers";
 import { getCurrentNode, hasCurrentNode } from "../internals/current-node";
 import { AnchorEntity } from "../types";
 import { getFocusedEntity } from "./focused-entity";

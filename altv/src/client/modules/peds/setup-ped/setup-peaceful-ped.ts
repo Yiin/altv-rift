@@ -1,7 +1,7 @@
 import alt from "@altv/client";
 import game from "@altv/natives";
 import { RAGDOLL_BLOCKING_FLAGS } from "@shared/enums/ragdoll-blocking-flags";
-import { everyTickWhile } from "@/core/utility/event-helpers";
+import { everyTickWhile } from "@/core/user-interface/event-helpers";
 import { PED_CONFIG_FLAG, PED_RESET_FLAG } from "@/core/constants/ped-flags";
 
 export function setupPeacefulPed(ped: alt.Ped, { everyTick = true } = {}): void {

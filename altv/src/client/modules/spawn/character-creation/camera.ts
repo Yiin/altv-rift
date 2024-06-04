@@ -3,7 +3,7 @@ import game from "@altv/natives";
 import { ClientEvents } from "@shared/events/client";
 import { loadSceneAtCoords } from "@/core/utility/scene";
 import { Control, ControlType } from "@/core/constants/controls";
-import { everyTickWhile } from "@/core/utility/event-helpers";
+import { everyTickWhile } from "@/core/user-interface/event-helpers";
 import { waitForUserInterface } from "@/core/user-interface/webview";
 import { vec3ToArr } from "@/core/utility/vectors";
 

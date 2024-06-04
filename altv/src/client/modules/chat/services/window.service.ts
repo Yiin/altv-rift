@@ -5,6 +5,7 @@ import { UIElement } from "@shared/enums/ui";
 import { deserialize } from "@shared/utility/serializer";
 import { doesElementHaveCursor, useWebview, toggleElement } from "@/core/user-interface/webview";
 import type { Message } from "../interfaces";
+import { GameControlReason, disableGameControls, enableGameControls } from "@/core/user-interface/event-helpers";
 
 let isFocused = false;
 
@@ -34,7 +35,7 @@ export class WindowService {
     this.webView.emitRaw("vchat:focus", true);
     this.webView.focused = true;
     isFocused = true;
-    alt.setGameControlsActive(false);
+    disableGameControls(GameControlReason.CHAT);
     alt.Cursor.visible = true;
   }
 
@@ -43,7 +44,7 @@ export class WindowService {
     this.webView.emitRaw("vchat:focus", false);
     this.webView.focused = true;
     isFocused = false;
-    alt.setGameControlsActive(true);
+    enableGameControls(GameControlReason.CHAT);
     alt.Cursor.visible = false;
   }
 

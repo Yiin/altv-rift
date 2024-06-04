@@ -1,7 +1,7 @@
 import alt from "@altv/client";
 import game from "@altv/natives";
 import { ClientEvents } from "@shared/events/client";
-import { everyTickWhile } from "@/core/utility/event-helpers";
+import { everyTickWhile } from "@/core/user-interface/event-helpers";
 import { PED_CONFIG_FLAG } from "@/core/constants/ped-flags";
 import { document } from "../../renderer/element-renderer";
 
@@ -72,9 +72,9 @@ alt.Timers.everyTick(() => {
     return;
   }
   for (const ped of alt.Ped.streamedIn) {
-    ped.previousHealth ??= ped.health;
+    ped.previousHealth ??= ped.streamSyncedMeta.health;
 
-    if (ped.previousHealth === ped.health) {
+    if (ped.previousHealth === ped.streamSyncedMeta.health) {
       continue;
     }
 
@@ -104,7 +104,7 @@ alt.Events.onServer(
         const ped = alt.Ped.getByRemoteID(entityRemoteID);
 
         if (ped) {
-          if (ped.health === 0) {
+          if (ped.streamSyncedMeta.health === 0) {
             alt.Timers.setTimeout(() => {
               alt.log(`Fading out ped ${ped.scriptID}`);
               game.networkFadeOutEntity(ped.scriptID, true, false);

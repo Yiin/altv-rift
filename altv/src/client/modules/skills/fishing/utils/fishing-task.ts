@@ -3,7 +3,7 @@ import game from "@altv/natives";
 import { watchEffect } from "vue";
 import { ServerCall } from "@shared/calls/server";
 import { PlayerFlags } from "@shared/store/game-state.store";
-import { everyTickWhile } from "@/core/utility/event-helpers";
+import { everyTickWhile } from "@/core/user-interface/event-helpers";
 import { rpc } from "@/core/rpc";
 import { gameState } from "@/core/store/game-state.store";
 import { whileInGame } from "@/core/game-state-hooks/in-game.state";

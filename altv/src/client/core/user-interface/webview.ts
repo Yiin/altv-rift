@@ -7,7 +7,7 @@ import { serialize } from "@shared/utility/serializer";
 import { WindowType } from "@shared/store/client.store";
 import { ServerEvents } from "@shared/events/server";
 import { clientState } from "../store/client.store";
-import { onKeyDown } from "../utility/event-helpers";
+import { GameControlReason, disableGameControls, enableGameControls, onKeyDown } from "./event-helpers";
 import { Control, ControlType } from "../constants/controls";
 import { hideRml, showRml } from "../rmlui/renderer/element-renderer";
 import { disableControlActionsUntilKeyup } from "../utility/control-actions";
@@ -102,7 +102,7 @@ export function showCursor(state?: boolean) {
         }
       }
       webview.focused = true;
-      alt.setGameControlsActive(false);
+      disableGameControls(GameControlReason.UI_WINDOW);
     } else {
       clearCursor();
     }
@@ -120,7 +120,7 @@ export function clearCursor() {
     }
   }
 
-  alt.setGameControlsActive(true);
+  enableGameControls(GameControlReason.UI_WINDOW);
   webview.focused = false;
   cursors = 0;
   return cursorCount;

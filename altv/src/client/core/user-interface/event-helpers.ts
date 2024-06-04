@@ -1,30 +1,62 @@
 import alt from "@altv/client";
+import game from "@altv/natives";
 import { ClientEvents } from "@shared/events/client";
-import { isWindowOpen, useWebview } from "../user-interface/webview";
+import { isWindowOpen, useWebview } from "./webview";
 
-const intervals: alt.Timers.Interval[] = [];
-const timeouts: alt.Timers.Timeout[] = [];
-const ticks: alt.Timers.EveryTick[] = [];
-let inputFocusedTimes = 0;
-const registeredKeyDownKeys = new Set();
+export enum GameControlReason {
+  UI_WINDOW = 'UI Window',
+  CHAT = 'Chat',
+  QA = 'QA',
+  CHARACTER_CREATOR = 'Character Creator',
+}
 
-export function tick() {
-  return new Promise((resolve) => {
-    alt.Timers.nextTick(resolve);
-  });
+export enum ScreenBlurReason {
+  UI_WINDOW = 'UI Window',
+  JOINED_SERVER = 'Joined server',
+}
+
+const focusedInputs = new Set<string>();
+const activeBlurs = new Set<ScreenBlurReason>();
+const disabledGameControls = new Set<GameControlReason>();
+const registeredKeyDownKeys = new Set<alt.Enums.KeyCode>();
+
+export function disableGameControls(reason: GameControlReason) {
+  disabledGameControls.add(reason);
+  alt.setGameControlsActive(false);
+}
+
+export function enableGameControls(reason: GameControlReason) {
+  disabledGameControls.delete(reason);
+  if (!disabledGameControls.size) {
+    alt.setGameControlsActive(true);
+  }
+}
+
+export function areGameControlsActive() {
+  return disabledGameControls.size === 0;
+}
+
+export function blurScreen(reason: ScreenBlurReason) {
+  activeBlurs.add(reason);
+  game.triggerScreenblurFadeIn(0);
+}
+
+export function unblurScreen(reason: ScreenBlurReason) {
+  activeBlurs.delete(reason);
+  if (!activeBlurs.size) {
+    game.disableScreenblurFade();
+  }
 }
 
 export function intervalWhile(condition: () => boolean, callback: () => void, intervalTime = 0) {
   const interval = alt.Timers.setInterval(() => {
     if (!condition()) {
       interval?.destroy();
-      intervals.splice(intervals.indexOf(interval), 1);
       return;
     }
 
     callback();
   }, intervalTime);
-  intervals.push(interval);
 }
 
 export function everyTickWhile(
@@ -36,7 +68,6 @@ export function everyTickWhile(
   const tick = alt.Timers.everyTick(() => {
     if (!options.skipFirstCheck && !condition()) {
       tick.destroy();
-      ticks.splice(ticks.indexOf(tick), 1);
       onEnd?.();
       return;
     }
@@ -44,45 +75,8 @@ export function everyTickWhile(
 
     callback();
   });
-  ticks.push(tick);
 
   return tick;
-}
-
-export function waitNextTick() {
-  return new Promise<void>((resolve) => {
-    alt.Timers.nextTick(() => {
-      resolve();
-    });
-  });
-}
-
-export function waitUntil(condition: () => boolean, timeoutMS = 10000) {
-  return new Promise<void>((resolve) => {
-    const timeout = alt.Timers.setTimeout(() => {
-      timeouts.splice(timeouts.indexOf(timeout), 1);
-      resolve();
-    }, timeoutMS);
-
-    const tick = alt.Timers.everyTick(() => {
-      if (!condition()) {
-        return;
-      }
-      try {
-        timeout.destroy();
-        tick.destroy();
-      } catch {}
-      ticks.splice(ticks.indexOf(tick), 1);
-      resolve();
-    });
-    timeouts.push(timeout);
-    ticks.push(tick);
-  });
-}
-
-export function everyTick(callback: () => void) {
-  const tick = alt.Timers.everyTick(callback);
-  ticks.push(tick);
 }
 
 export function onKeyDown<T extends alt.Enums.KeyCode>(key: T, callback: (key: T) => void) {
@@ -92,7 +86,7 @@ export function onKeyDown<T extends alt.Enums.KeyCode>(key: T, callback: (key: T
   registeredKeyDownKeys?.add(key);
 
   const handler = alt.Events.onKeyDown(({ key: keyPressed }) => {
-    if (inputFocusedTimes > 0) {
+    if (focusedInputs.size > 0) {
       return;
     }
     if (alt.isConsoleOpen()) {
@@ -117,7 +111,7 @@ export function onKeyDown<T extends alt.Enums.KeyCode>(key: T, callback: (key: T
 
 export function onKeyUp<T extends alt.Enums.KeyCode>(key: T, callback: (key: T) => void) {
   const handler = alt.Events.onKeyUp(({ key: keyPressed }) => {
-    if (inputFocusedTimes > 0) {
+    if (focusedInputs.size > 0) {
       return;
     }
     if (alt.isConsoleOpen()) {
@@ -137,18 +131,30 @@ export function onKeyUp<T extends alt.Enums.KeyCode>(key: T, callback: (key: T) 
 }
 
 alt.Events.on("qa-tools:codeEditor", (isFocused: boolean) => {
-  inputFocusedTimes += isFocused ? 1 : -1;
+  if (isFocused) {
+    focusedInputs.add("qa-tools:codeEditor");
+  } else {
+    focusedInputs.delete("qa-tools:codeEditor");
+  }
 });
 
 alt.Events.on("vchat:focus", (isFocused: boolean) => {
-  inputFocusedTimes += isFocused ? 1 : -1;
+  if (isFocused) {
+    focusedInputs.add("vchat:focus");
+  } else {
+    focusedInputs.delete("vchat:focus");
+  }
 });
 
 // This is a workaround for cyclic dependency between webview and event-helpers
 alt.Timers.nextTick(() => {
   useWebview((webview) => {
-    webview.on(ClientEvents.FromWebview.INPUT_FOCUS, (isFocused: boolean) => {
-      inputFocusedTimes += isFocused ? 1 : -1;
+    webview.on(ClientEvents.FromWebview.INPUT_FOCUS, (isFocused) => {
+      if (isFocused) {
+        focusedInputs.add("webview:input");
+      } else {
+        focusedInputs.delete("webview:input");
+      }
     });
   });
 });

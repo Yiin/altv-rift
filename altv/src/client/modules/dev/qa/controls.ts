@@ -1,9 +1,9 @@
-import alt from "@altv/client";
+import { GameControlReason, disableGameControls, enableGameControls } from "@/core/user-interface/event-helpers";
 
 export default class ControlsController {
   static readonly instance = new ControlsController();
 
-  private constructor() {}
+  private constructor() { }
 
   private _blockers: string[] = [];
 
@@ -13,11 +13,11 @@ export default class ControlsController {
 
   block(name: string) {
     this._blockers.push(name);
-    alt.setGameControlsActive(false);
+    disableGameControls(GameControlReason.QA);
   }
 
   unblock(name: string) {
     this._blockers = this._blockers.filter((b) => b != name);
-    if (!this._blockers.length) alt.setGameControlsActive(true);
+    if (!this._blockers.length) enableGameControls(GameControlReason.QA);
   }
 }

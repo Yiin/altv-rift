@@ -11,6 +11,7 @@ import { setPedAppearance, setPedEquipment } from "@/core/utility/ped-appearance
 import { setupPeacefulPed } from "@/modules/peds/setup-ped/setup-peaceful-ped";
 import { createCharacterCreationCamera } from "./camera";
 import { createPedModel } from "./ped-model";
+import { GameControlReason, ScreenBlurReason, disableGameControls, enableGameControls, unblurScreen } from "@/core/user-interface/event-helpers";
 
 const PED_MODEL_POSITION = new alt.Vector3(1507.9, -1732.3, 78.65);
 const PED_MODEL_HEADING = 288;
@@ -44,7 +45,7 @@ whileCreatingCharacter(async () => {
   game.setEntityAlpha(currentModel, 255, false);
 
   game.doScreenFadeIn(1000);
-  game.disableScreenblurFade();
+  unblurScreen(ScreenBlurReason.JOINED_SERVER);
 
   const webview = await waitForUserInterface();
 
@@ -81,8 +82,10 @@ whileCreatingCharacter(async () => {
 
 whileInGame(async () => {
   alt.log("Starting game");
+  setScene(Scene.IN_GAME, { hasCursor: false });
+
   game.freezeEntityPosition(alt.Player.local, true);
-  alt.setGameControlsActive(false);
+  disableGameControls(GameControlReason.CHARACTER_CREATOR);
 
   await alt.Utils.wait(500);
   game.switchToMultiFirstpart(alt.Player.local, 0, SWITCHOUT_TYPES.ONE_STEP);
@@ -95,9 +98,7 @@ whileInGame(async () => {
   game.switchToMultiSecondpart(alt.Player.local);
 
   game.freezeEntityPosition(alt.Player.local, false);
-  alt.setGameControlsActive(true);
-
-  setScene(Scene.IN_GAME, { hasCursor: false });
+  enableGameControls(GameControlReason.CHARACTER_CREATOR);
 });
 
 function resetModelPed(ped: alt.LocalPed) {

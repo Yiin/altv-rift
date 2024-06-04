@@ -3,6 +3,7 @@ import game from "@altv/natives";
 import { ServerEvents } from "@shared/events/server";
 import { waitForUserInterface } from "@/core/user-interface/webview";
 import { PED_CONFIG_FLAG } from "@/core/constants/ped-flags";
+import { ScreenBlurReason, blurScreen } from "@/core/user-interface/event-helpers";
 
 alt.Events.onConnectionComplete(handleConnectionComplete);
 alt.setWatermarkPosition(4);
@@ -12,7 +13,7 @@ async function handleConnectionComplete() {
   game.renderScriptCams(false, false, 0, false, false, 0);
   game.freezeEntityPosition(alt.Player.local, true);
   game.doScreenFadeOut(0);
-  game.triggerScreenblurFadeIn(0);
+  blurScreen(ScreenBlurReason.JOINED_SERVER);
 
   alt.ConfigFlag.set(alt.Enums.ConfigFlag.DISABLE_IDLE_CAMERA, true);
   alt.ConfigFlag.set(alt.Enums.ConfigFlag.DISABLE_PED_PROP_KNOCK_OFF, true);

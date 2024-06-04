@@ -151,7 +151,7 @@ alt.Events.onPedDeath(({ ped }) => {
 });
 
 alt.Events.onPedDamage(({ ped }) => {
-  if (ped.health === 0) {
+  if (ped.streamSyncedMeta.health === 0) {
     handleThugDeath(ped);
   }
 });

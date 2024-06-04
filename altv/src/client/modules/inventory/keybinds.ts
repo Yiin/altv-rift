@@ -3,7 +3,7 @@ import { watch } from "vue";
 import { WindowType } from "@shared/store/client.store";
 import { ServerCall } from "@shared/calls/server";
 import { EquipmentSlot } from "@shared/interfaces";
-import { onKeyDown } from "@/core/utility/event-helpers";
+import { onKeyDown } from "@/core/user-interface/event-helpers";
 import { isWindowOpen, toggleWindow } from "@/core/user-interface/webview";
 import { whileInGame } from "@/core/game-state-hooks/in-game.state";
 import { useCharacter } from "@/core/store/character.store";
