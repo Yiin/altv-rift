@@ -51,7 +51,7 @@ RUN echo "$(printenv | sort)" >> .env && \
   cd src/webview && \
   bun install && \
   bun run build-only && \
-  cp -r dist /altv/resources/main/webview && \
+  mv dist /altv/resources/main/webview && \
   rm -rf /root/setup && \
   rm -rf /altv/src && \
   cd /altv && \
