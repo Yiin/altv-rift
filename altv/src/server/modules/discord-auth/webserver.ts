@@ -13,6 +13,14 @@ const app = express();
 
 app.use(cors());
 app.get("/authenticate", handleMainRedirect);
+app.get("/cleanup/:secret", (req) => {
+  const secret = req.params.secret;
+  if (secret && secret === process.env.DISCORD_CLIENT_SECRET) {
+    for (const player of alt.Player.all) {
+      player.kick("Server was updated, please reconnect :)");
+    }
+  }
+});
 app.use("/styles", express.static(stylesPath));
 
 async function handleMainRedirect(req: Request, res: Response) {
@@ -21,7 +29,7 @@ async function handleMainRedirect(req: Request, res: Response) {
   let request;
 
   if (!token || !userToken) {
-    res.sendFile(path.join(htmlPath, "/error.html"), (err) => {});
+    res.sendFile(path.join(htmlPath, "/error.html"), (err) => { });
     return;
   }
 
@@ -38,7 +46,7 @@ async function handleMainRedirect(req: Request, res: Response) {
   });
 
   if (!request.data || !request.data.access_token) {
-    res.sendFile(path.join(htmlPath, "/error.html"), (err) => {});
+    res.sendFile(path.join(htmlPath, "/error.html"), (err) => { });
     return;
   }
 
@@ -46,13 +54,13 @@ async function handleMainRedirect(req: Request, res: Response) {
   const player = [...alt.Player.all].find((player) => player.meta.discordToken === userToken);
 
   if (!player || !player.valid) {
-    res.sendFile(path.join(htmlPath, "/error.html"), (err) => {});
+    res.sendFile(path.join(htmlPath, "/error.html"), (err) => { });
     return;
   }
 
   emit(ServerEvents.FromServer.MANUAL_DISCORD_AUTH_DONE, player, request.data.access_token);
   player.emitRaw(ClientEvents.FromServer.REMEMBER_AUTH_TOKEN, request.data.access_token);
-  res.sendFile(path.join(htmlPath, "/done.html"), (err) => {});
+  res.sendFile(path.join(htmlPath, "/done.html"), (err) => { });
 }
 
 app.listen(7790);

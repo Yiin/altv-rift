@@ -1,6 +1,6 @@
 import { watch } from "fs";
 import alt from "@altv/server";
-import { minutesToMilliseconds } from "date-fns";
+import { addMilliseconds, minutesToMilliseconds } from "date-fns";
 import { reactive, shallowReactive, watchEffect } from "vue";
 import { FirearmWeapon, getWeaponHash } from "@shared/modules/items";
 import { createInventory } from "@shared/modules/inventory";
@@ -119,8 +119,8 @@ watchEffect(() => {
     return;
   }
 
-  alt.log("All thugs dead, respawning in 1 minute");
-  alt.Timers.setTimeout(setupThugs, minutesToMilliseconds(10));
+  const restartAfterMs = minutesToMilliseconds(10);
+  alt.Timers.setTimeout(setupThugs, restartAfterMs);
 
   const inventory = reactive(
     createInventory({
@@ -134,6 +134,9 @@ watchEffect(() => {
     pos: { x: 4837.678, y: -5178.569, z: 1.223 },
     inventory,
     label: "Main Dock Loot",
+    meta: {
+      validUntil: addMilliseconds(Date.now(), restartAfterMs),
+    }
   });
 
   const stopWatching = watchEffect(() => {
