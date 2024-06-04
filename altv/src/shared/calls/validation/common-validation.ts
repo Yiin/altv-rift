@@ -14,117 +14,117 @@ export const appearance = z
     sex: z.union([z.literal(0), z.literal(1)]),
     faceFather: z
       .number()
-      .min(0)
-      .max(parents.length - 1)
+      .gte(0)
+      .lt(parents.length)
       .step(1),
     faceMother: z
       .number()
-      .min(0)
-      .max(parents.length - 1)
+      .gte(0)
+      .lt(parents.length)
       .step(1),
     skinFather: z
       .number()
-      .min(0)
-      .max(parents.length - 1)
+      .gte(0)
+      .lt(parents.length)
       .step(1),
     skinMother: z
       .number()
-      .min(0)
-      .max(parents.length - 1)
+      .gte(0)
+      .lt(parents.length)
       .step(1),
-    faceMix: z.number().min(0).max(1),
-    skinMix: z.number().min(0).max(1),
-    features: z.array(z.number().min(-1).max(1)).length(featureNames.length),
+    faceMix: z.number().gte(0).lte(1),
+    skinMix: z.number().gte(0).lte(1),
+    features: z.array(z.number().gte(-1).lte(1)).length(featureNames.length),
     hair: z.number(), // Validated in the refine, below
     hairCollection: z.string(), // same
     hairOverlay: z.string(), // same
     hairDlc: z.literal(0),
     hairColor1: z
       .number()
-      .min(0)
-      .max(MAX_HAIR_COLOR - 1)
+      .gte(0)
+      .lt(MAX_HAIR_COLOR)
       .step(1),
     hairColor2: z
       .number()
-      .min(0)
-      .max(MAX_HAIR_COLOR - 1)
+      .gte(0)
+      .lt(MAX_HAIR_COLOR)
       .step(1),
     eyes: z
       .number()
-      .min(0)
-      .max(MAX_EYE_COLOR - 1)
+      .gte(0)
+      .lt(MAX_EYE_COLOR)
       .step(1),
     headOverlays: z.array(
       z.union([
         z.object({
           id: z.literal(OverlayType.Blemishes),
-          value: z.number().min(0).max(23).or(z.literal(255)),
-          opacity: z.number().min(0).max(1),
+          value: z.number().gte(0).lte(23).or(z.literal(255)),
+          opacity: z.number().gte(0).lte(1),
         }),
         z.object({
           id: z.literal(OverlayType.FacialHair),
-          value: z.number().min(0).max(28).or(z.literal(255)),
-          opacity: z.number().min(0).max(1),
-          color1: z.number().min(0).max(78).step(1),
-          color2: z.number().min(0).max(78).step(1),
+          value: z.number().gte(0).lte(28).or(z.literal(255)),
+          opacity: z.number().gte(0).lte(1),
+          color1: z.number().gte(0).lte(78).step(1),
+          color2: z.number().gte(0).lte(78).step(1),
         }),
         z.object({
           id: z.literal(OverlayType.Eyebrows),
-          value: z.number().min(0).max(33).or(z.literal(255)),
-          opacity: z.number().min(0).max(1),
-          color1: z.number().min(0).max(63).step(1),
-          color2: z.number().min(0).max(63).step(1),
+          value: z.number().gte(0).lte(33).or(z.literal(255)),
+          opacity: z.number().gte(0).lte(1),
+          color1: z.number().gte(0).lte(63).step(1),
+          color2: z.number().gte(0).lte(63).step(1),
         }),
         z.object({
           id: z.literal(OverlayType.Age),
-          value: z.number().min(0).max(14).or(z.literal(255)),
-          opacity: z.number().min(0).max(1),
+          value: z.number().gte(0).lte(14).or(z.literal(255)),
+          opacity: z.number().gte(0).lte(1),
         }),
         z.object({
           id: z.literal(OverlayType.Makeup),
-          value: z.number().min(0).max(74).or(z.literal(255)),
-          opacity: z.number().min(0).max(1),
-          color1: z.number().min(0).max(63).step(1),
-          color2: z.number().min(0).max(63).step(1),
+          value: z.number().gte(0).lte(74).or(z.literal(255)),
+          opacity: z.number().gte(0).lte(1),
+          color1: z.number().gte(0).lte(63).step(1),
+          color2: z.number().gte(0).lte(63).step(1),
         }),
         z.object({
           id: z.literal(OverlayType.Blush),
-          value: z.number().min(0).max(6).or(z.literal(255)),
-          opacity: z.number().min(0).max(1),
-          color1: z.number().min(0).max(63).step(1),
+          value: z.number().gte(0).lte(6).or(z.literal(255)),
+          opacity: z.number().gte(0).lte(1),
+          color1: z.number().gte(0).lte(63).step(1),
         }),
         z.object({
           id: z.literal(OverlayType.Complexion),
-          value: z.number().min(0).max(11).or(z.literal(255)),
-          opacity: z.number().min(0).max(1),
+          value: z.number().gte(0).lte(11).or(z.literal(255)),
+          opacity: z.number().gte(0).lte(1),
         }),
         z.object({
           id: z.literal(OverlayType.SunDamage),
-          value: z.number().min(0).max(10).or(z.literal(255)),
-          opacity: z.number().min(0).max(1),
+          value: z.number().gte(0).lte(10).or(z.literal(255)),
+          opacity: z.number().gte(0).lte(1),
         }),
         z.object({
           id: z.literal(OverlayType.Lipstick),
-          value: z.number().min(0).max(9).or(z.literal(255)),
-          opacity: z.number().min(0).max(1),
-          color1: z.number().min(0).max(63).step(1),
-          color2: z.number().min(0).max(63).step(1),
+          value: z.number().gte(0).lte(9).or(z.literal(255)),
+          opacity: z.number().gte(0).lte(1),
+          color1: z.number().gte(0).lte(63).step(1),
+          color2: z.number().gte(0).lte(63).step(1),
         }),
         z.object({
           id: z.literal(OverlayType.Freckles),
-          value: z.number().min(0).max(17).or(z.literal(255)),
-          opacity: z.number().min(0).max(1),
+          value: z.number().gte(0).lte(17).or(z.literal(255)),
+          opacity: z.number().gte(0).lte(1),
         }),
         z.object({
           id: z.literal(OverlayType.ChestHair),
-          value: z.number().min(0).max(16).or(z.literal(255)),
-          opacity: z.number().min(0).max(1),
-          color1: z.number().min(0).max(78).step(1),
+          value: z.number().gte(0).lte(16).or(z.literal(255)),
+          opacity: z.number().gte(0).lte(1),
+          color1: z.number().gte(0).lte(78).step(1),
         }),
         z.object({
           id: z.literal(OverlayType.BodyBlemish),
-          value: z.number().min(0).max(11).or(z.literal(255)),
-          opacity: z.number().min(0).max(1),
+          value: z.number().gte(0).lte(11).or(z.literal(255)),
+          opacity: z.number().gte(0).lte(1),
         }),
       ]),
     ),
