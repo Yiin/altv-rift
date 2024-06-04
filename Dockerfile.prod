@@ -36,8 +36,7 @@ COPY ./docker-scripts /root/setup
 COPY ./altv /altv
 
 # Install global packages, setup the environment, and build the project
-RUN echo "$(printenv | sort)" >> .env && \
-  npm install -g bun && \
+RUN npm install -g bun && \
   bun add -g altv-pkg@latest && \
   cd /root/setup && \
   bun install && \
@@ -51,11 +50,11 @@ RUN echo "$(printenv | sort)" >> .env && \
   cd src/webview && \
   bun install && \
   bun run build-only && \
+  echo $(ls dist) && \
   mv dist /altv/resources/main/webview && \
-  rm -rf /root/setup && \
-  rm -rf /altv/src && \
-  cd /altv && \
-  find node_modules -mindepth 1 -maxdepth 1 ! -name '.prisma' -exec rm -rf {} +
+  echo $(ls /altv/resources/main/webview) && \
+  # rm -rf /root/setup /altv/src && \
+  find /altv/node_modules -mindepth 1 -maxdepth 1 ! -name '.prisma' -exec rm -rf {} +
 
 # Expose necessary ports
 EXPOSE 7788/udp 7788/tcp 7799/udp 7790/tcp

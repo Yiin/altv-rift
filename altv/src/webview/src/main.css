@@ -75,9 +75,9 @@ body {
   background-size: cover; */
 }
 
-*:has(::-webkit-scrollbar) {
+/* *:has(::-webkit-scrollbar) {
   @apply -mr-[14px];
-}
+} */
 
 ::-webkit-scrollbar {
   height: var(--scrollbar-width, 4.5rem);
