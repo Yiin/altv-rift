@@ -22,6 +22,8 @@ export const useCharacter = () => {
 };
 
 alt.Events.onServer(ClientEvents.FromServer.UPDATE_CHARACTER_STATE, (event: any) => {
+  alt.log("Updating character state", event);
+
   useWebview((webview) => webview.emitRaw(WebviewEvents.FromClient.UPDATE_CHARACTER_STATE, event));
 
   const character = useCharacter();

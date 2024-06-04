@@ -7,6 +7,7 @@ import { br, div } from "../../renderer/rml-tags";
 import { AnchorType } from "../../renderer/anchors";
 import { registerElement } from "../../renderer/element-registry";
 import { everyFrame } from "../../renderer/hooks/every-frame";
+import { rem } from "../../renderer/pixel";
 import { Icon } from "../../components/icon";
 
 registerElement({
@@ -41,17 +42,17 @@ registerElement({
             },
           },
           [
-            div({ style: { position: "absolute", transform: "translate(-30px, -25px)" } }, [
+            div({ style: { position: "absolute", transform: `translate(${rem(-30)}, ${rem(-25)})` } }, [
               isUnavailable || isOnCooldown ? Icon("axe-cooldown") : Icon("axe"),
             ]),
-            div({ style: { "text-align": "left", width: "400px" } }, [
-              div({ style: { "font-size": "9pt", "margin-top": "-20px", "margin-left": "30px" } }, [
+            div({ style: { "text-align": "left", width: rem(400) } }, [
+              div({ style: { "font-size": rem(10), "margin-top": rem(-20), "margin-left": rem(30) } }, [
                 isUnavailable ? "Level too low" : isOnCooldown ? "On cooldown" : "Ready to cut",
               ]),
               br([]),
               div([name]),
               br([]),
-              div({ style: { "font-size": "10pt" } }, [`Level ${level}`]),
+              div({ style: { "font-size": rem(12) } }, [`Level ${level}`]),
             ]),
           ],
         ),

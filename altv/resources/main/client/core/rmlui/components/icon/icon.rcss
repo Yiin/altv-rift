@@ -1,6 +1,0 @@
-/**
- * Icons
- */
-.icon {
-  font-effect: outline(1px black);
-}
