@@ -69,6 +69,7 @@ alt.Events.onWeaponDamage(
         );
 
         target.health = newHealth + PED_HEALTH_ZERO_DEFAULT;
+        target.streamSyncedMeta.health = newHealth;
       } else {
         setDamageValue(totalDamage);
       }
