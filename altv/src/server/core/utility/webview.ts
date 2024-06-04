@@ -3,5 +3,5 @@ export function getViteServer(): string {
 }
 
 export function getVueDebugMode(): boolean {
-  return process.env.NODE_ENV === "development";
+  return process.env.SERVER_ENV === "development";
 }

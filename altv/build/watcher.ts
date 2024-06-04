@@ -51,9 +51,7 @@ async function restartServer() {
   }
 
   // just in case
-  await $`kill -9 $(lsof -t -i:7788)`.then(() => {
-    console.log("Just in case was needed");
-  }).catch(() => { });
+  await $`kill -9 $(lsof -t -i:7788)`.catch(() => { });
 
   childProcess = spawn([altvProcessName, "--convert-config-format"], {
     stdio: ["ignore", "inherit", "inherit"],
