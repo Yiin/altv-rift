@@ -50,10 +50,8 @@ RUN npm install -g bun && \
   cd src/webview && \
   bun install && \
   bun run build-only && \
-  echo $(ls dist) && \
-  mv dist /altv/resources/main/webview && \
-  echo $(ls /altv/resources/main/webview) && \
-  # rm -rf /root/setup /altv/src && \
+  mv dist /altv/resources/main/client/webview && \
+  rm -rf /root/setup /altv/src && \
   find /altv/node_modules -mindepth 1 -maxdepth 1 ! -name '.prisma' -exec rm -rf {} +
 
 # Expose necessary ports
