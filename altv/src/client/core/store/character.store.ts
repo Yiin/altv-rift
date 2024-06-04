@@ -32,6 +32,7 @@ alt.Events.onServer(ClientEvents.FromServer.UPDATE_CHARACTER_STATE, (event: any)
 });
 
 alt.Events.onServer(ClientEvents.FromServer.SET_CHARACTER_STATE, (state: any) => {
+  alt.log("Setting character state", state);
   useWebview((webview) => webview.emitRaw(WebviewEvents.FromClient.SET_CHARACTER_STATE, state));
 
   if (characterStore) {
