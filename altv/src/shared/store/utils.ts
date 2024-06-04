@@ -41,6 +41,7 @@ export function subscribeToStore<T extends Store>(
   return store.$subscribe(
     (mutation, state) => {
       if (!mutation.events) {
+        console.log('wtf', mutation);
         onSetState(toRaw(state));
         return;
       }
