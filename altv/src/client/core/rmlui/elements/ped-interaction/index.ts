@@ -39,7 +39,7 @@ registerElement({
         style: {
           transform: everyFrame(() => {
             const { x, y } = alt.worldToScreen(ped.pos);
-            return `translate(${rem(x - 25)}, ${rem(y - 25)})`;
+            return `translate(${px(x - 25)}px, ${px(y - 25)}px)`;
           }),
           opacity: menu.isActive ? 1 : 0.5
         },
@@ -50,7 +50,7 @@ registerElement({
           {
             className: "interaction-content",
             style: {
-              transform: `translate(${rem(55)}, ${rem(-47)})`,
+              transform: `translate(${px(55)}px, ${px(-47)}px)`,
               opacity: everyFrame(() => (menu.isActive ? 1 : 0)),
             },
           },
