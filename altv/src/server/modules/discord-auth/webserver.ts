@@ -13,13 +13,14 @@ const app = express();
 
 app.use(cors());
 app.get("/authenticate", handleMainRedirect);
-app.get("/cleanup/:secret", (req) => {
+app.get("/cleanup/:secret", (req, res) => {
   const secret = req.params.secret;
   if (secret && secret === process.env.DISCORD_CLIENT_SECRET) {
     for (const player of alt.Player.all) {
       player.kick("Server was updated, please reconnect :)");
     }
   }
+  res.send("");
 });
 app.use("/styles", express.static(stylesPath));
 
