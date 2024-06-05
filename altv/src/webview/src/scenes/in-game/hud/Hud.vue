@@ -17,7 +17,7 @@ const money = computed(() => new Intl.NumberFormat("lt-LT").format(character.mon
       <Icon
         name="money"
         class="text-white"
-        :size="1.1875"
+        :size="19"
       />
     </div>
     <WeaponHud />

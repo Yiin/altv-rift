@@ -8,7 +8,4 @@
 ../altv/README.md
 ../altv/TODO
 ../altv/TODO-MVP
-../altv/src/webview/.vscode
-../altv/src/webview/node_modules
-../altv/src/webview/.editorconfig
-../altv/src/webview/README.md
+../altv/src/webview

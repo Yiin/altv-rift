@@ -25,7 +25,6 @@ const active = ref(false);
   >
     <Icon
       :name="client.targetAction.icon"
-      :size="2"
       v-bind="client.targetAction.iconProps"
     />
     <div

@@ -37,3 +37,7 @@ setTimeout(calculatePixelSize, 1000);
 export function px(value: number) {
   return (value * pixelSize.value) / 4;
 }
+
+export function rem(px: number) {
+  return px / 16;
+}

@@ -114,8 +114,8 @@ const selectCar = (car: any) => {
             </div>
             <Icon
               :name="item.manufacturer"
-              :width="4"
-              :height="2.5"
+              :width="64"
+              :height="40"
             />
           </div>
         </div>

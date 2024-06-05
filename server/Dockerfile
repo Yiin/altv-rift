@@ -1,6 +1,6 @@
 FROM node:20.11.0-bookworm-slim as base
 USER root
-RUN apt-get update -y && apt-get install -y curl lsof libatomic1 libc-bin wget apt-transport-https ca-certificates gnupg procps stow && apt autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN apt-get update -y && apt-get install -y curl lsof libatomic1 libc-bin wget apt-transport-https ca-certificates gnupg procps stow rsync && apt autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/*
 COPY ./docker-scripts /root/setup
 COPY ./server/entrypoint.sh /root/
 WORKDIR /root/setup

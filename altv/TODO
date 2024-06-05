@@ -1,7 +1,7 @@
 Introduction:
   ✔ Spawn at airport @done
-  - Get ratbike
-    - buy one from the dealer
+  ✔ Get ratbike @done
+    ✔ buy one from the dealer @done
   - Get quest to talk with diego
   - Diego will give a quest to do all 4 jobs: woodcutting, fishing, mining, crafting
   - Jobs are marked on the map
@@ -32,8 +32,8 @@ Questing:
 
 Skills:
   ☐ Woodcutting
-    ☐ Design
-    ☐ UI
+    ✔ Design @done
+    ✔ UI @done
     ✔ Most of the trees on the map are available for cutting. @done
     ✔ Woodcutting skill is increased by cutting trees. @done
     ✔ Woodcutting skill is used to determine the amount of wood collected from a tree. @done
@@ -41,12 +41,12 @@ Skills:
     ✔ Hatchet item is required for woodcutting @done
     ☐ Hatchet item needs to appear in hand while woodcutting animation is playing
   ☐ Fishing
-    ☐ Design
-    ☐ UI
+    ✔ Design @done
+    ✔ UI @done
     ✔ Most of the water on the map is available for fishing. @done
     ✔ Fishing skill is increased by fishing. @done
-    ☐ Fishing skill is used to determine the amount of fish collected from a fishing spot.
-    ☐ Fishing speed depends on fishing skill level
+    ✔ Fishing skill is used to determine the amount of fish collected from a fishing spot. @done
+    ✔ Fishing speed depends on fishing skill level @done
     ✔ Fishing rod item is required for fishing. @done
     ✔ Fishing rod item needs to appear in hand while fishing animation is playing @done
     ☐ Fishing rod needs to disappear from hand when fishing animation is finished
@@ -71,8 +71,8 @@ Skills:
     ☐ Pickaxe item needs to appear in hand while mining animation is playing
     ☐ Pickaxe needs to disappear from hand when mining animation is finished
   ☐ Crafting
-    ☐ Design
-    ☐ UI
+    ✔ Design @done
+    ✔ UI @done
     ✔ Blueprint definitions @done
     ☐ Crafting skill is increased by crafting
     ☐ Crafting skill increases the chance of crafting success
@@ -113,16 +113,16 @@ Inventory:
 Shops:
   ☐ Shop types
     ☐ Weapons store
-      ☐ Design
+      ✔ Design @done
       ☐ UI
     ☐ Clothing store
-      ☐ Design
+      ✔ Design @done
       ☐ UI
     ☐ General store
-      ☐ Design
+      ✔ Design @done
       ☐ UI
     ☐ Vehicle store
-      ☐ Design
+      ✔ Design @done
       ☐ UI
   ☐ Selling
   ☐ Management of stores
@@ -194,6 +194,14 @@ Improving Things:
     ☐ Damage upgrades
     ☐ Protection upgrades
     ☐ Utility? (running speed, endurance, recoil?)
+  ☐ Pick up items from the ground with indicator menu
+  ☐ Online list on TAB
+  ☐ Current active area hud notification and status
+  ☐ Current active quest hud notification and direction
+  ☐ Configurable keybinds?
+  ☐ Voice chat
+  ☐ Background music?
+  ☐ Locations for airdrops
 
 Trade:
   ☐ Auction house system?

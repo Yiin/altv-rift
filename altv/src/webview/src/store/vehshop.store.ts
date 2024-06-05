@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-export const useVehshop = defineStore("useVehshop", {
+export const useVehshop = defineStore("vehicle-shop", {
   state: (): any => ({
     carTypes: ["pickups", "sedans", "vans", "sport cars", "motorcycle", "imports"],
     sections: [{ value: 25 }, { value: 25 }],
@@ -20,7 +20,7 @@ export const useVehshop = defineStore("useVehshop", {
         modelMain: "ASTON MARTIN",
         modelSub: "Sportback 2013",
         price: "$ 5 518 655",
-        manufacturer: "astonMartin",
+        manufacturer: "aston-martin",
         maxSpeed: "250",
         acceleration: "99",
         breaking: "30",

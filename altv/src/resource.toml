@@ -1,5 +1,6 @@
 type = "jsv2"
 main = "server.js"
+client-type = "jsb"
 client-main = "client.js"
 client-files = ["client/*"]
 

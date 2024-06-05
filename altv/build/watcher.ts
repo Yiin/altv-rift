@@ -91,14 +91,6 @@ assetsWatcher.on("change", () => {
   restartServer();
 });
 
-chokidar.watch([
-  "/source/src/server/**/*.ts", "/source/src/shared/**/*.ts",
-  "/source/src/client/**/*.ts"
-]).on("all", () => {
-  console.log("[chokidar] Files changed");
-  // restartServer();
-});
-
 restartServer();
 
 async function getLocalClientStatus() {

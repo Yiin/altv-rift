@@ -70,7 +70,7 @@ onUnmounted(() => {
               <Icon
                 name="money"
                 class="text-white"
-                :size="1.1875"
+                :size="19"
               />
             </h3>
             <span class="text-sm font-semibold text-deepGray">money</span>
