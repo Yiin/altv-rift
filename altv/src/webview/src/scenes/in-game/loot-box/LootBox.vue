@@ -20,7 +20,9 @@ const client = useClient();
 const lootBox = useLootBox();
 
 setInterval(() => {
-  if (lootBox.type !== StorageType.AirDrop) return;
+  if (!lootBox.validUntil) {
+    return;
+  }
   timeLeft.value = format(differenceInMilliseconds(lootBox.validUntil, Date.now()), "mm:ss");
 }, 100);
 
