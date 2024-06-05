@@ -64,8 +64,8 @@ jobs:
           script: |
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
             docker pull ghcr.io/yiin/altv-rift-server:latest
-            curl http://altv.rift.lt:7790/cleanup/${{ secrets.DISCORD_CLIENT_SECRET }}
-            sleep 1000
+            curl http://altv.rift.lt:7790/cleanup/${{ secrets.DISCORD_CLIENT_SECRET }} > /dev/null 2>&1 &
+            sleep 1
             docker stop altv-server || true
             docker rm altv-server || true
             docker run -d --name altv-server \
