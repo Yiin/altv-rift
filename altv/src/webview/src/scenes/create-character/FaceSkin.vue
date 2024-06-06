@@ -5,6 +5,7 @@ import {
   getRandomResemblance,
 } from "@shared/modules/character/appearance-data";
 import { px } from "@/composables/use-pixel";
+import { asset } from "@/utils/asset";
 import { useCreateCharacter } from "../../store/create-character.store";
 import SlideOption from "../../components/SlideOption.vue";
 import XSelection from "../../components/XSelection.vue";
@@ -37,13 +38,13 @@ const randomSkin = () => {
           transition="parent-fade"
           class="parent-image z-10 -mr-10 flex"
           :height="px(150)"
-          :src="`./assets/faces/${createCharacter.currentAppearance.skinMother}.png`"
+          :src="asset(`assets/faces/${createCharacter.currentAppearance.skinMother}.png`)"
         />
         <v-img
           class="parent-image"
           transition="parent-fade"
           :height="px(150)"
-          :src="`./assets/faces/${createCharacter.currentAppearance.skinFather}.png`"
+          :src="asset(`assets/faces/${createCharacter.currentAppearance.skinFather}.png`)"
         />
       </div>
       <div class="p-2 pt-0">

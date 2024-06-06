@@ -4,6 +4,7 @@ import Icon from "@/components/Icon/Icon.vue";
 import Donut from "@/components/Donut.vue";
 import DarkBackground from "@/components/DarkBackground.vue";
 import BackButtons from "@/components/buttons/BackButtons.vue";
+import { asset } from "@/utils/asset";
 
 const vehshop = useVehshop();
 
@@ -20,7 +21,7 @@ const selectCar = (car: any) => {
   <div class="relative flex h-full w-full flex-col justify-between px-20 py-11">
     <DarkBackground />
     <div class="mx-auto flex w-full items-center justify-between">
-      <div class="w-40"><v-img :src="`./assets/vehicles/logo.png`" /></div>
+      <div class="w-40"><v-img :src="asset(`assets/vehicles/logo.png`)" /></div>
       <div
         class="no-scrollbar mx-20 flex gap-2.5 overflow-x-auto whitespace-nowrap text-base font-bold uppercase text-white"
       >
@@ -102,7 +103,7 @@ const selectCar = (car: any) => {
         >
           <div v-if="item.modelSub === vehshop.selectedCarInfo.modelSub">
             <v-img
-              :src="`./assets/vehicles/${item.manufacturer}.png`"
+              :src="asset(`assets/vehicles/${item.manufacturer}.png`)"
               class="h-20"
             />
           </div>

@@ -10,6 +10,7 @@ import {
 } from "@shared/modules/items";
 import { getItemImage } from "@/utils/items";
 import { useFrame } from "@/composables/use-frame";
+import { asset } from "@/utils/asset";
 import WorkbenchSlot from "../components/WorkbenchSlot.vue";
 import ItemBadge from "../components/ItemBadge.vue";
 import { useUpgrading } from "../composables/use-upgrading";
@@ -56,7 +57,7 @@ const upgradingProgress = computed(() => {
       </div>
       <div class="my-10 flex justify-center">
         <img
-          :src="`./assets/workbench/ornament.svg`"
+          :src="asset(`assets/workbench/ornament.svg`)"
           class="align-self-center h-3 w-18.5"
         />
       </div>
@@ -125,7 +126,7 @@ const upgradingProgress = computed(() => {
     <template v-else-if="hasRecipes">
       <div class="flex flex-col items-center justify-center">
         <img
-          :src="`./assets/workbench/upgrade-emblem.svg`"
+          :src="asset(`assets/workbench/upgrade-emblem.svg`)"
           class="align-self-center h-29.5 w-29.5"
         />
         <div class="mt-10 text-center text-3xl font-bold leading-none text-white">
@@ -139,7 +140,7 @@ const upgradingProgress = computed(() => {
     <template v-else>
       <div class="flex flex-col items-center justify-center">
         <img
-          :src="`./assets/workbench/upgrade-emblem.svg`"
+          :src="asset(`assets/workbench/upgrade-emblem.svg`)"
           class="align-self-center h-29.5 w-29.5"
         />
         <div class="mt-10 text-center text-3xl font-bold leading-none text-white">

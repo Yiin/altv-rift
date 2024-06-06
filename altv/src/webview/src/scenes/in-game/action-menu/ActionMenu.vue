@@ -4,6 +4,7 @@ import { ClientEvents } from "@shared/events/client";
 import { type ActionItem } from "@shared/store/client.store";
 import { useEventListener } from "@/composables/use-event-listener";
 import { useClient } from "@/store/synced/client.store";
+import { asset } from "@/utils/asset";
 
 type Slice = ActionItem & {
   empty: boolean;
@@ -154,7 +155,7 @@ function select() {
         >
           <image
             v-if="!currentSlice.empty"
-            :href="`./assets/actions/${currentSlice.type}.png`"
+            :href="`${asset(`assets/actions/${currentSlice.type}.png`)}`"
             :x="currentSlice.centroid.x - 150"
             :y="currentSlice.centroid.y - 175"
             width="350"

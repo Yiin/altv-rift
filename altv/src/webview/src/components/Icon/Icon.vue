@@ -18,7 +18,7 @@ withDefaults(defineProps<IconProps>(), {
   <div
     class="bg-contain"
     :style="{
-      backgroundImage: `url(${asset(`./assets/icons/${name}.svg`)})`,
+      backgroundImage: `url(${asset(`assets/icons/${name}.svg`)})`,
       width: rem(width || size),
       height: rem(height || size),
     }"

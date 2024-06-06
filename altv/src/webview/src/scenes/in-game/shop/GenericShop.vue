@@ -7,6 +7,7 @@ import BackButtons from "@/components/buttons/BackButtons.vue";
 import { useGameState } from "@/store/synced/game-state.store";
 import { getItemGradeTextColor, getItemImage } from "@/utils/items";
 import { useCharacter } from "@/store/synced/character.store";
+import { asset } from "@/utils/asset";
 import ShopItemIcon from "./ShopItemIcon.vue";
 import ShopActionModal from "./ShopActionModal.vue";
 import { canBuy } from "./shop.utils";
@@ -43,7 +44,7 @@ function buyItem(inventoryItem: InventoryItem) {
         <div class="mb-8 flex items-center gap-4 py-4">
           <div
             class="h-12 w-12 bg-contain bg-center"
-            :style="{ 'background-image': `url('./assets/icons/fishing-shop-logo.svg')` }"
+            :style="{ 'background-image': `url(${asset('assets/icons/fishing-shop-logo.svg')})` }"
           />
           <!-- Shop name -->
           <div class="text-2xl font-bold uppercase text-white">Uncle Bob Fishing shop</div>
@@ -117,7 +118,7 @@ function buyItem(inventoryItem: InventoryItem) {
               >
                 <div
                   class="h-6 w-6 bg-contain bg-center"
-                  :style="{ 'background-image': `url('./assets/icons/pointer.svg')` }"
+                  :style="{ 'background-image': `url(${asset('assets/icons/pointer.svg')})` }"
                 ></div>
                 <div class="text-lg font-bold text-white">CLICK TO BUY</div>
               </div>

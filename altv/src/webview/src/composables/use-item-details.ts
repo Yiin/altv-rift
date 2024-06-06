@@ -1,5 +1,6 @@
 import { computed, type ComputedRef, ref, type Ref, unref } from "vue";
 import { getItemDescription, getItemName, type Item } from "@shared/modules/items";
+import { asset } from "@/utils/asset";
 
 export const useItemDetails = (itemRef: Item | Ref<Item> | ComputedRef<Item>) => {
   const item = ref(itemRef);
@@ -13,7 +14,7 @@ export const useItemDetails = (itemRef: Item | Ref<Item> | ComputedRef<Item>) =>
     return null;
   });
   const description = computed(() => getItemDescription(item.value.key));
-  const image = computed(() => `./assets/items/${item.value.key}.png`);
+  const image = computed(() => asset(`assets/items/${item.value.key}.png`));
   const imageScale = computed(
     () =>
       (

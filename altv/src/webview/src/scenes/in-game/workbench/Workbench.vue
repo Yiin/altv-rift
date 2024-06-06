@@ -27,7 +27,7 @@ const view = ref<View>(View.CRAFTING);
     <div class="mx-auto flex w-full items-center justify-between">
       <div class="pointer-events-none">
         <v-img
-          :src="`./assets/workbench/logo.svg`"
+          :src="asset(`assets/workbench/logo.svg`)"
           class="h-[3.88875rem] w-[9.84rem]"
         />
       </div>
@@ -58,7 +58,7 @@ const view = ref<View>(View.CRAFTING);
             {{ label }}
           </span>
           <img
-            :src="`./assets/workbench/ornament.svg`"
+            :src="asset(`assets/workbench/ornament.svg`)"
             class="h-3 w-18.5"
             :class="[view === link ? 'visible' : 'invisible']"
           />

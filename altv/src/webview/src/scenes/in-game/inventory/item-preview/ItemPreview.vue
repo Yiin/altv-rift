@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { clearPreviewingItem } from "@/store/inventory";
 import Window from "@/components/Window.vue";
+import { asset } from "@/utils/asset";
 
 defineProps<{
   item: {
@@ -24,7 +25,7 @@ const hh = window.innerHeight / 2 - 400;
     :sticks="[]"
   >
     <img
-      :src="`./assets/item-previews/${item.key}.png`"
+      :src="asset(`assets/item-previews/${item.key}.png`)"
       class="h-full w-full"
     />
   </Window>

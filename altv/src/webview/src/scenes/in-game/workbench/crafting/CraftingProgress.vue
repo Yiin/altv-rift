@@ -12,6 +12,7 @@ import {
 } from "@shared/modules/items";
 import { getItemImage } from "@/utils/items";
 import { useFrame } from "@/composables/use-frame";
+import { asset } from "@/utils/asset";
 import ItemIcon from "../../inventory/ItemIcon.vue";
 import WorkbenchSlot from "../components/WorkbenchSlot.vue";
 import ItemBadge from "../components/ItemBadge.vue";
@@ -47,7 +48,7 @@ const currentlyCrafting = computed(() => queue.value[0]);
         <div class="text-lg font-bold leading-tight">In queue</div>
         <div class="my-2 mb-3.75 flex justify-center">
           <img
-            :src="`./assets/workbench/long-separator.svg`"
+            :src="asset(`assets/workbench/long-separator.svg`)"
             class="align-self-center h-5.25 w-139.5"
           />
         </div>
@@ -83,7 +84,7 @@ const currentlyCrafting = computed(() => queue.value[0]);
       </div>
       <div class="my-10 flex justify-center">
         <img
-          :src="`./assets/workbench/ornament.svg`"
+          :src="asset(`assets/workbench/ornament.svg`)"
           class="align-self-center h-3 w-18.5"
         />
       </div>
@@ -171,7 +172,7 @@ const currentlyCrafting = computed(() => queue.value[0]);
     <template v-else-if="hasRecipes">
       <div class="flex flex-col items-center justify-center">
         <img
-          :src="`./assets/workbench/crafting-emblem.svg`"
+          :src="asset(`assets/workbench/crafting-emblem.svg`)"
           class="align-self-center h-29.5 w-29.5"
         />
         <div class="mt-10 text-center text-3xl font-bold leading-none text-white">
@@ -185,7 +186,7 @@ const currentlyCrafting = computed(() => queue.value[0]);
     <template v-else>
       <div class="flex flex-col items-center justify-center">
         <img
-          :src="`./assets/workbench/crafting-emblem.svg`"
+          :src="asset(`assets/workbench/crafting-emblem.svg`)"
           class="align-self-center h-29.5 w-29.5"
         />
         <div class="mt-10 text-center text-3xl font-bold leading-none text-white">

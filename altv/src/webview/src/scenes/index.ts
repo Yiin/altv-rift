@@ -4,9 +4,10 @@ import { discordAuthRoute } from "./discord-auth";
 import { inGameRoute } from "./in-game";
 import { weaponModulesRoute } from "./weapon-modules";
 import { weaponShopRoute } from "./weapon-shop";
+import Empty from "./Empty.vue";
 
 export const routes = [
-  { path: '/', component: () => import('./Empty.vue') },
+  { path: "/", component: Empty },
   discordAuthRoute,
   createCharacterRoute,
   inGameRoute,

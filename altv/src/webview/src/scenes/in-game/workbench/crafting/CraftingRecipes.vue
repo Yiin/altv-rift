@@ -14,6 +14,7 @@ import {
 import { getItemName } from "@shared/modules/items";
 import { useCharacter } from "@/store/synced/character.store";
 import { px } from "@/composables/use-pixel";
+import { asset } from "@/utils/asset";
 import ItemIcon from "../../inventory/ItemIcon.vue";
 import WorkbenchSlot from "../components/WorkbenchSlot.vue";
 import { getBlueprintRecipes, useCrafting } from "../composables/use-crafting";
@@ -137,7 +138,7 @@ const recipesByCategory = computed(() => {
           >
             <img
               v-if="category !== 'all'"
-              :src="`./assets/workbench/categories/${category}.svg`"
+              :src="asset(`assets/workbench/categories/${category}.svg`)"
               :class="[category === 'weapon_components' ? 'h-6 w-6' : 'h-4 w-4']"
             />
             <span

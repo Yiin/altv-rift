@@ -19,6 +19,7 @@ import type { Item } from "@shared/modules/items";
 import { useCharacter } from "@/store/synced/character.store";
 import { px } from "@/composables/use-pixel";
 import { isSameItemSource } from "@/store/inventory";
+import { asset } from "@/utils/asset";
 import ItemIcon from "../../inventory/ItemIcon.vue";
 import WorkbenchSlot from "../components/WorkbenchSlot.vue";
 import { useUpgrading, getItemFromPlayerSource } from "../composables/use-upgrading";
@@ -149,7 +150,7 @@ const itemsByCategory = computed(() => {
           >
             <img
               v-if="category !== 'all'"
-              :src="`./assets/workbench/categories/${category}.svg`"
+              :src="asset(`assets/workbench/categories/${category}.svg`)"
               class="h-4 w-4"
             />
             <span
