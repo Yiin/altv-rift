@@ -175,7 +175,7 @@ RUN npm install -g bun && \
   mkdir /altv/resources/main/client/webview && \
   mv dist/index.html /altv/resources/main/client/webview && \
   echo $(ls dist/) && \
-  s3cmd sync dist/ s3://altv-rift/webview-assets/ --acl-public --delete-removed && \
+  s3cmd sync dist/ s3://altv-rift/webview-assets/ --acl-public --guess-mime-type && \
   rm -rf /root/setup /altv/src && \
   find /altv/node_modules -mindepth 1 -maxdepth 1 ! -name '.prisma' -exec rm -rf {} +
 

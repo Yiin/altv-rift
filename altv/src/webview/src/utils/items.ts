@@ -15,24 +15,24 @@ import {
 
 export const getItemImage = (key: string) => {
   if (isItemKeyClothing(key)) {
-    return `./assets/items/clothing/${key}.png`;
+    return `./assets/items/clothing/${key}.webp`;
   }
   if (isItemKeyWeapon(key)) {
-    return `./assets/items/weapons/${getWeaponHashKey(key)}.png`;
+    return `./assets/items/weapons/${getWeaponHashKey(key)}.webp`;
   }
   if (isItemKeyAmmo(key)) {
-    return `./assets/items/ammo/${key}.png`;
+    return `./assets/items/ammo/${key}.webp`;
   }
   if (isItemKeyMaterial(key)) {
-    return `./assets/items/materials/${key}.png`;
+    return `./assets/items/materials/${key}.webp`;
   }
   if (isItemKeyTool(key)) {
-    return `./assets/items/tools/${key}.png`;
+    return `./assets/items/tools/${key}.webp`;
   }
   if (isItemKeyWeaponComponent(key)) {
-    return `./assets/items/weapon-components/${getWeaponComponentHashKey(key)}.png`;
+    return `./assets/items/weapon-components/${getWeaponComponentHashKey(key)}.webp`;
   }
-  return `./assets/items/${key}.png`;
+  return `./assets/items/${key}.webp`;
 };
 
 export function getItemGradeTextColor(grade: ItemGrade) {
