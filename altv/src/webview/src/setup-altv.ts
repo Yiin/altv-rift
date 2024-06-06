@@ -89,6 +89,10 @@ if (!("alt" in globalThis)) {
 }
 
 declare global {
+  // Using var because with const or let the variable is not being picked up by tsc in the source
+  // eslint-disable-next-line no-var
+  var CDN_URL: string;
+
   // eslint-disable-next-line no-var
   var altMock: boolean;
 

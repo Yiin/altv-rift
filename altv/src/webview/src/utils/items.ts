@@ -12,27 +12,28 @@ import {
   isItemKeyWeapon,
   isItemKeyWeaponComponent,
 } from "@shared/modules/items";
+import { asset } from "./asset";
 
 export const getItemImage = (key: string) => {
   if (isItemKeyClothing(key)) {
-    return `./assets/items/clothing/${key}.webp`;
+    return asset(`./assets/items/clothing/${key}.webp`);
   }
   if (isItemKeyWeapon(key)) {
-    return `./assets/items/weapons/${getWeaponHashKey(key)}.webp`;
+    return asset(`./assets/items/weapons/${getWeaponHashKey(key)}.webp`);
   }
   if (isItemKeyAmmo(key)) {
-    return `./assets/items/ammo/${key}.webp`;
+    return asset(`./assets/items/ammo/${key}.webp`);
   }
   if (isItemKeyMaterial(key)) {
-    return `./assets/items/materials/${key}.webp`;
+    return asset(`./assets/items/materials/${key}.webp`);
   }
   if (isItemKeyTool(key)) {
-    return `./assets/items/tools/${key}.webp`;
+    return asset(`./assets/items/tools/${key}.webp`);
   }
   if (isItemKeyWeaponComponent(key)) {
-    return `./assets/items/weapon-components/${getWeaponComponentHashKey(key)}.webp`;
+    return asset(`./assets/items/weapon-components/${getWeaponComponentHashKey(key)}.webp`);
   }
-  return `./assets/items/${key}.webp`;
+  return asset(`./assets/items/${key}.webp`);
 };
 
 export function getItemGradeTextColor(grade: ItemGrade) {

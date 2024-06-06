@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { rem } from "@/composables/use-pixel";
+import { asset } from "@/utils/asset";
 
 interface IconProps {
   name: string;
@@ -17,7 +18,7 @@ withDefaults(defineProps<IconProps>(), {
   <div
     class="bg-contain"
     :style="{
-      backgroundImage: `url(./assets/icons/${name}.svg)`,
+      backgroundImage: `url(${asset(`./assets/icons/${name}.svg`)})`,
       width: rem(width || size),
       height: rem(height || size),
     }"

@@ -2,6 +2,7 @@
 import { computed } from "vue";
 import { getLevel, getLevelProgress, isLevelUp } from "@shared/modules/experience/experience-table";
 import { useClient } from "@/store/synced/client.store";
+import { asset } from "@/utils/asset";
 
 const props = defineProps<{
   type: "fishing" | "mining" | "woodcutting";
@@ -38,7 +39,7 @@ const isWindowOpened = computed(() => useClient().ui.window !== null);
   >
     <div
       class="h-8.5 w-12 bg-contain bg-center"
-      :style="{ backgroundImage: `url(./assets/skills/${iconName})` }"
+      :style="{ backgroundImage: `url(${asset(`assets/skills/${iconName}`)})` }"
     />
     <div class="text-center text-sm font-bold uppercase leading-[0] text-white drop-shadow-light">
       {{ type }}

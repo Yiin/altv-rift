@@ -1,1 +1,5 @@
-export const asset = (path: string, url: string) => new URL(path, url).href;
+const BASE_URL = import.meta.env.MODE === "production" ? window.CDN_URL : "./";
+
+export function asset(path: string): string {
+  return `${BASE_URL}${path.replace(/^\.\//, "")}`;
+}

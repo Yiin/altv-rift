@@ -13,72 +13,73 @@ import {
 import { px } from "@/composables/use-pixel";
 import { useCombinableItem } from "@/composables/use-combinable-item";
 import { useCharacter } from "@/store/synced/character.store";
+import { asset } from "@/utils/asset";
 import ItemIcon from "./ItemIcon.vue";
 
 const equipmentSlots = {
   [EquipmentSlot.Headwear]: {
     label: "Headwear",
-    image: "./assets/inventory/headwear.png",
+    image: asset("assets/inventory/headwear.png"),
   },
   [EquipmentSlot.Mask]: {
     label: "Mask",
-    image: "./assets/inventory/mask.png",
+    image: asset("assets/inventory/mask.png"),
   },
   [EquipmentSlot.Glasses]: {
     label: "Glasses",
-    image: "./assets/inventory/glasses.png",
+    image: asset("assets/inventory/glasses.png"),
   },
   [EquipmentSlot.Backpack]: {
     label: "Backpack",
-    image: "./assets/inventory/backpack.png",
+    image: asset("assets/inventory/backpack.png"),
   },
   [EquipmentSlot.Earrings]: {
     label: "Earrings",
-    image: "./assets/inventory/earrings.png",
+    image: asset("assets/inventory/earrings.png"),
   },
   [EquipmentSlot.Accessory]: {
     label: "Accessories",
-    image: "./assets/inventory/bowtie.png",
+    image: asset("assets/inventory/bowtie.png"),
   },
   [EquipmentSlot.Top]: {
     label: "Top",
-    image: "./assets/inventory/top.png",
+    image: asset("assets/inventory/top.png"),
   },
   [EquipmentSlot.Armor]: {
     label: "Armor",
-    image: "./assets/inventory/armor.png",
+    image: asset("assets/inventory/armor.png"),
   },
   [EquipmentSlot.Gloves]: {
     label: "Gloves",
-    image: "./assets/inventory/gloves.png",
+    image: asset("assets/inventory/gloves.png"),
   },
   [EquipmentSlot.Weapon]: {
     label: "Weapon",
-    image: "./assets/inventory/weapon.png",
+    image: asset("assets/inventory/weapon.png"),
   },
   [EquipmentSlot.Pants]: {
     label: "Pants",
-    image: "./assets/inventory/pants.png",
+    image: asset("assets/inventory/pants.png"),
   },
   [EquipmentSlot.LeftHand]: {
     label: "Left hand",
-    image: "./assets/inventory/watch.png",
+    image: asset("assets/inventory/watch.png"),
   },
   [EquipmentSlot.RightHand]: {
     label: "Right hand",
-    image: "./assets/inventory/bracelet.png",
+    image: asset("assets/inventory/bracelet.png"),
   },
   [EquipmentSlot.Shoes]: {
     label: "Shoes",
-    image: "./assets/inventory/shoes.png",
+    image: asset("assets/inventory/shoes.png"),
   },
   [EquipmentSlot.Phone]: {
     label: "Phone",
-    image: "./assets/inventory/phone.png",
+    image: asset("assets/inventory/phone.png"),
   },
   [EquipmentSlot.Tool]: {
     label: "Tool",
-    image: "./assets/inventory/tool.png",
+    image: asset("assets/inventory/tool.png"),
   },
   [EquipmentSlot.QuickSlot1]: {
     label: "Num 1",

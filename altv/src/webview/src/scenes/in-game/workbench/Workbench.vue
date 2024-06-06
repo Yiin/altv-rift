@@ -4,6 +4,7 @@ import BackButtons from "@/components/buttons/BackButtons.vue";
 import DarkBackground from "@/components/DarkBackground.vue";
 import CraftingView from "@/scenes/in-game/workbench/CraftingView.vue";
 import UpgradingView from "@/scenes/in-game/workbench/UpgradingView.vue";
+import { asset } from "@/utils/asset";
 import GearIcon from "./icons/GearIcon.vue";
 import WrenchIcon from "./icons/WrenchIcon.vue";
 
@@ -41,7 +42,7 @@ const view = ref<View>(View.CRAFTING);
             'text-gray-500 transition duration-200': view !== link,
             'bg-contain': view === link,
           }"
-          :style="{ backgroundImage: `url(./assets/workbench/rectangle.svg)` }"
+          :style="{ backgroundImage: `url(${asset(`assets/workbench/rectangle.svg`)})` }"
         >
           <WrenchIcon
             v-if="link === View.CRAFTING"
