@@ -1,4 +1,29 @@
-FROM node:20.11.0-bookworm-slim as base
+FROM node:20.11.0-bookworm-slim as deps
+USER root
+
+RUN apt-get update -y && \
+  apt-get install -y \
+  # for altv server
+  curl \
+  lsof \
+  libatomic1 \
+  libc-bin \
+  wget \
+  apt-transport-https \
+  ca-certificates \
+  gnupg \
+  # utils
+  procps \
+  stow \
+  # cdn sync
+  s3cmd && \
+  # cleanup
+  apt autoremove -y && \
+  apt-get clean && \
+  rm -rf /var/lib/apt/lists/*
+
+FROM deps as base
+
 USER root
 ARG BRANCH=dev
 ARG DATABASE_URL
@@ -41,27 +66,6 @@ ENV S3_HOST_BASE=$S3_HOST_BASE
 ENV S3_HOST_BUCKET=$S3_HOST_BUCKET
 ENV S3_SECRET_KEY=$S3_SECRET_KEY
 ENV S3_WEBSITE_ENDPOINT=$S3_WEBSITE_ENDPOINT
-
-RUN apt-get update -y && \
-  apt-get install -y \
-  # for altv server
-  curl \
-  lsof \
-  libatomic1 \
-  libc-bin \
-  wget \
-  apt-transport-https \
-  ca-certificates \
-  gnupg \
-  # utils
-  procps \
-  stow \
-  # cdn sync
-  s3cmd && \
-  # cleanup
-  apt autoremove -y && \
-  apt-get clean && \
-  rm -rf /var/lib/apt/lists/*
 
 # Generate .s3cfg for CDN sync
 RUN echo "[default]\n\
@@ -178,7 +182,7 @@ RUN npm install -g bun && \
   rm -rf /root/setup /altv/src && \
   find /altv/node_modules -mindepth 1 -maxdepth 1 ! -name '.prisma' -exec rm -rf {} +
 
-FROM node:20.11.0-bookworm-slim
+FROM deps
 WORKDIR /altv
 
 COPY --from=base /altv /altv
