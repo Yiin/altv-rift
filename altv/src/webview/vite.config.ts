@@ -5,8 +5,11 @@ import externalGlobals from "rollup-plugin-external-globals";
 import vue from "@vitejs/plugin-vue";
 
 // https://vitejs.dev/config/
-export default defineConfig({
-  base: "/client/webview/",
+export default defineConfig(({ mode }) => ({
+  base:
+    mode === "production"
+      ? "https://altv-rift.fra1.digitaloceanspaces.com/webview-assets/"
+      : "/client/webview/",
   build: {
     // outDir: "../../resources/main/client/webview",
     emptyOutDir: true,
@@ -43,4 +46,4 @@ export default defineConfig({
       },
     }),
   ],
-});
+}));

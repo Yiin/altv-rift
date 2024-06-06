@@ -20,6 +20,12 @@ services:
         - ALTV_DEBUG=${ALTV_DEBUG}
         - ALTV_MODULES=${ALTV_MODULES}
         - ALTV_RESOURCES=${ALTV_RESOURCES}
+        - S3_ACCESS_KEY=${S3_ACCESS_KEY}
+        - S3_REGION=${S3_REGION}
+        - S3_HOST_BASE=${S3_HOST_BASE}
+        - S3_HOST_BUCKET=${S3_HOST_BUCKET}
+        - S3_SECRET_KEY=${S3_SECRET_KEY}
+        - S3_WEBSITE_ENDPOINT=${S3_WEBSITE_ENDPOINT}
     restart: unless-stopped
     stdin_open: true
     ports:
