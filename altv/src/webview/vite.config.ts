@@ -34,7 +34,7 @@ export default defineConfig(({ mode }) => ({
     preserveSymlinks: true,
   },
   define: {
-    CDN_URL,
+    CDN_URL: JSON.stringify(CDN_URL),
   },
   plugins: [
     externalGlobals({
