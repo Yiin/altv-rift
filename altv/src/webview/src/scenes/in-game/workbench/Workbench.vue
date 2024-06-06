@@ -42,7 +42,10 @@ const view = ref<View>(View.CRAFTING);
             'text-gray-500 transition duration-200': view !== link,
             'bg-contain': view === link,
           }"
-          :style="{ backgroundImage: `url(${asset(`assets/workbench/rectangle.svg`)})` }"
+          :style="{
+            backgroundImage:
+              view === link ? `url(${asset(`assets/workbench/rectangle.svg`)})` : undefined,
+          }"
         >
           <WrenchIcon
             v-if="link === View.CRAFTING"
