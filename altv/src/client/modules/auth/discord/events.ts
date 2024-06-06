@@ -59,7 +59,10 @@ async function beginAuth() {
     game.doScreenFadeIn(1000);
   }
 }
-alt.Events.onServer(ClientEvents.FromServer.BEGIN_NATIVE_DISCORD_AUTH, beginAuth);
+
+alt.Events.onServer(ClientEvents.FromServer.BEGIN_NATIVE_DISCORD_AUTH, () => {
+  beginAuth().catch(console.error);
+});
 
 function cacheAuthToken(token: string) {
   alt.LocalStorage.set("token", token);
