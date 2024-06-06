@@ -64,8 +64,7 @@ RUN apt-get update -y && \
   rm -rf /var/lib/apt/lists/*
 
 # Generate .s3cfg for CDN sync
-RUN echo "\
-  [default]\n\
+RUN echo "[default]\n\
   access_key = ${S3_ACCESS_KEY}\n\
   access_token =\n\
   add_encoding_exts =\n\
@@ -175,7 +174,7 @@ RUN npm install -g bun && \
   mkdir /altv/resources/main/client/webview && \
   mv dist/index.html /altv/resources/main/client/webview && \
   echo $(ls dist/) && \
-  s3cmd sync dist/ s3://altv-rift/webview-assets/ --acl-public --guess-mime-type && \
+  s3cmd sync dist/ s3://altv-rift/webview-assets/ --acl-public --delete-removed --guess-mime-type && \
   rm -rf /root/setup /altv/src && \
   find /altv/node_modules -mindepth 1 -maxdepth 1 ! -name '.prisma' -exec rm -rf {} +
 
