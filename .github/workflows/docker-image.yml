@@ -33,6 +33,7 @@ jobs:
           ALTV_DEBUG: ${{ vars.ALTV_DEBUG }}
           ALTV_MODULES: ${{ vars.ALTV_MODULES }}
           ALTV_RESOURCES: ${{ vars.ALTV_RESOURCES }}
+          VITE_CDN_URL: ${{ vars.VITE_CDN_URL }}
           S3_ACCESS_KEY: ${{ secrets.S3_ACCESS_KEY }}
           S3_REGION: ${{ vars.S3_REGION }}
           S3_HOST_BASE: ${{ vars.S3_HOST_BASE }}
