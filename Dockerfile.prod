@@ -178,9 +178,12 @@ RUN npm install -g bun && \
   rm -rf /root/setup /altv/src && \
   find /altv/node_modules -mindepth 1 -maxdepth 1 ! -name '.prisma' -exec rm -rf {} +
 
+FROM node:20.11.0-bookworm-slim
+WORKDIR /altv
+
+COPY --from=base /altv /altv
+
 # Expose necessary ports
 EXPOSE 7788/udp 7788/tcp 7799/udp 7790/tcp
 
-# Set the entrypoint
-WORKDIR /altv
 ENTRYPOINT ["/altv/altv-server"]
