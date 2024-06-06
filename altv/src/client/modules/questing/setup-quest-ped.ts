@@ -19,18 +19,13 @@ alt.Events.onGameEntityCreate(({ entity }) => {
     return;
   }
 
-  alt.log("Ped created", entity.id);
-
   entity.cleanupFns = [];
 
   const key = entity.streamSyncedMeta.key;
 
   if (!key) {
-    alt.log("Ped has no key");
     return;
   }
-
-  alt.log("Registering interactions for ped", key);
 
   /**
    * How can we interact with this ped?
