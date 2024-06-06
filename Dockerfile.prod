@@ -164,6 +164,8 @@ RUN echo "[default]\n\
 COPY ./docker-scripts /root/setup
 COPY ./altv /altv
 
+RUN echo "Vite cdn url: $VITE_CDN_URL"
+
 # Install global packages, setup the environment, and build the project
 RUN npm install -g bun && \
   bun add -g altv-pkg@latest && \

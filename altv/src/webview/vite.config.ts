@@ -4,6 +4,8 @@ import vuetify from "vite-plugin-vuetify";
 import externalGlobals from "rollup-plugin-external-globals";
 import vue from "@vitejs/plugin-vue";
 
+console.log("CDN_URL from vite:", process.env.VITE_CDN_URL);
+
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   base: mode === "production" ? process.env.VITE_CDN_URL : "/client/webview/",
