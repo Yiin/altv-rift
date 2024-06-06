@@ -146,7 +146,7 @@ export function startCatchingFish(player: InGamePlayer, baitKey: FishBaitItemKey
         }
 
         stopFishing(player);
-      }, durationMs + 1000);
+      }, durationMs * 3);
 
       const stopWatching = watchEffect(() => {
         const notCatchingAFish = !player.gameState.flags.has(PlayerFlags.IsCatchingAFish);

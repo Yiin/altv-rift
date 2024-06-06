@@ -5,6 +5,7 @@ import { FishingGameType, PlayerFlags } from "@shared/store/game-state.store";
 import { rpc } from "@/core/rpc";
 import { needsToBeInGame } from "@/core/utility/assertions";
 import { catchAFish, startFishing, stopFishing } from "./fishing.api";
+import { sendChatMessage } from "@/modules/chat";
 
 rpc.registerClient(ServerCall.FromClient.START_FISHING, (player) => {
   needsToBeInGame(player);
@@ -33,7 +34,7 @@ rpc.registerClient(ServerCall.FromClient.REGISTER_KEY_PRESS, (player, key) => {
       const { startedAt, durationMs, targetPosition, targetSize } =
         player.gameState.fishingProgress;
 
-      const timePassed = (currentTime - startedAt) / durationMs;
+      const timePassed = ((currentTime - startedAt) % durationMs) / durationMs;
 
       // target limits
       const errorMargin = (player.ping + 50) / durationMs;
@@ -48,6 +49,7 @@ rpc.registerClient(ServerCall.FromClient.REGISTER_KEY_PRESS, (player, key) => {
       if (hitTheTarget) {
         catchAFish(player, player.gameState.fishingProgress.baitKey);
       } else {
+        sendChatMessage(player, `TP: ${timePassed.toFixed(2)} | err margin: ${errorMargin.toFixed(2)} | min: ${min.toFixed(2)} | max: ${max.toFixed(2)} | adj: ${minAdjusted.toFixed(2)}, ${maxAdjusted.toFixed(2)}`);
         stopFishing(player);
       }
       break;
