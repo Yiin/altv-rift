@@ -20,6 +20,7 @@ services:
         - ALTV_DEBUG=${ALTV_DEBUG}
         - ALTV_MODULES=${ALTV_MODULES}
         - ALTV_RESOURCES=${ALTV_RESOURCES}
+        - VITE_CDN_URL=${VITE_CDN_URL}
         - S3_ACCESS_KEY=${S3_ACCESS_KEY}
         - S3_REGION=${S3_REGION}
         - S3_HOST_BASE=${S3_HOST_BASE}
