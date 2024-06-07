@@ -16,14 +16,12 @@ export const isCharacterStoreAvailable = ref(false);
 
 export const useCharacter = () => {
   if (!characterStore) {
-    throw new Error("Character store have not been setup.");
+    throw new Error("Character store is not ready.");
   }
   return characterStore(pinia);
 };
 
 alt.Events.onServer(ClientEvents.FromServer.UPDATE_CHARACTER_STATE, (event: any) => {
-  alt.log("Updating character state", event);
-
   useWebview((webview) => webview.emitRaw(WebviewEvents.FromClient.UPDATE_CHARACTER_STATE, event));
 
   const character = useCharacter();
@@ -32,7 +30,6 @@ alt.Events.onServer(ClientEvents.FromServer.UPDATE_CHARACTER_STATE, (event: any)
 });
 
 alt.Events.onServer(ClientEvents.FromServer.SET_CHARACTER_STATE, (state: any) => {
-  alt.log("Setting character state", state);
   useWebview((webview) => webview.emitRaw(WebviewEvents.FromClient.SET_CHARACTER_STATE, state));
 
   if (characterStore) {

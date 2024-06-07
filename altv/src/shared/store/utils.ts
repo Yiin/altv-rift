@@ -1,6 +1,6 @@
 import { get, set } from "lodash-es";
 import { Store } from "pinia";
-import { TriggerOpTypes, toRaw, isRef, isReactive, isProxy, DebuggerEvent } from "@vue/reactivity";
+import { TriggerOpTypes, toRaw, isRef, isReactive, isProxy } from "@vue/reactivity";
 import { findPath, findPathApproximate } from "@shared/utility/object";
 
 export type StoreUpdatePayload =
@@ -41,7 +41,6 @@ export function subscribeToStore<T extends Store>(
   return store.$subscribe(
     (mutation, state) => {
       if (!mutation.events) {
-        console.log('wtf', mutation);
         onSetState(toRaw(state));
         return;
       }

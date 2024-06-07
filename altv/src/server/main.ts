@@ -87,5 +87,3 @@ alt.Events.onPlayer(
     fs.writeFileSync(weaponStatsJsonFilePath, JSON.stringify(weaponStats, null, 2));
   },
 );
-
-console.log("woah");

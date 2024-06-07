@@ -16,7 +16,7 @@ export const isUserStoreAvailable = ref(false);
 
 export const useUser = () => {
   if (!userStore) {
-    throw new Error("User store have not been setup.");
+    throw new Error("User store is not ready.");
   }
   return userStore(pinia);
 };
@@ -40,6 +40,5 @@ alt.Events.onServer(ClientEvents.FromServer.SET_USER_STATE, (state: any) => {
       state: () => state,
     });
     isUserStoreAvailable.value = true;
-    alt.log("User store is now available.");
   }
 });

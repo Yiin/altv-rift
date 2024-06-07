@@ -16,7 +16,6 @@ subscribeToStore(clientState, {
     useWebview((webView) => webView.emitRaw(WebviewEvents.FromClient.SET_CLIENT_STATE, state));
   },
   onUpdateState: (payload) => {
-    console.log("Updating client state", payload);
     useWebview((webView) => webView.emitRaw(WebviewEvents.FromClient.UPDATE_CLIENT_STATE, payload));
   },
 });
