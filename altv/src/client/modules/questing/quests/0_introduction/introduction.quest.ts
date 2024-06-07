@@ -29,13 +29,6 @@ import WOODCUTTING_TUTOR_COMPLETE from "./conversations/12_WOODCUTTING_TUTOR_COM
 import FISHING_TUTOR_COMPLETE from "./conversations/13_FISHING_TUTOR_COMPLETE.yaml";
 import MINING_TUTOR_COMPLETE from "./conversations/14_MINING_TUTOR_COMPLETE.yaml";
 
-whileEntityIsStreamedIn(
-  (entity): entity is alt.Ped => entity instanceof alt.Ped,
-  (entity) => {
-    return () => {};
-  },
-);
-
 registerQuest(Quests.Introduction.Key, {
   name: "Introduction",
   summary: "An introduction to the game",

@@ -10,6 +10,8 @@ import { whileVirtualEntityIsStreamedIn } from "@/core/game-state-hooks/virtual-
 import { document } from "../../renderer/element-renderer";
 import { createTextNode, updateTextNode } from "../../renderer/rml-renderer";
 import { px } from "../../renderer/pixel";
+import { whileEntityIsStreamedIn } from "@/core/game-state-hooks/entity-is-streamed-in.state";
+import { isQuestPed } from "@/modules/peds/lib/is-quest-ped";
 
 const SPACE_BETWEEN_TICKS = 58;
 const TICK_INTERVAL = 15;
@@ -64,8 +66,11 @@ const nearbyPointsDiv = document.createElement("div");
 nearbyPointsDiv.addClass("compass__icons");
 compassContainer.appendChild(nearbyPointsDiv);
 
-const nearbyPoints: any[] = [];
-
+const nearbyPoints: {
+  calc(): { direction: number; distance: number; };
+  type: string;
+  node: alt.RmlElement;
+}[] = [];
 
 function calculateBearing(x1: number, y1: number, x2: number, y2: number): number {
   const deltaX = x2 - x1;
@@ -93,7 +98,7 @@ function addNearbyPoint(pos: () => alt.Vector3, type: string) {
 
   const actualIcon = document.createElement("img");
   actualIcon.addClass("compass__icon-uhh-actual-icon-i-guess");
-  actualIcon.setAttribute("src", "components/icon/assets/icon-contraband.png");
+  actualIcon.setAttribute("src", `components/icon/assets/icon-${type}.png`);
   iconContainer.appendChild(actualIcon);
 
   const distanceLabel = document.createElement("div");
@@ -270,6 +275,18 @@ whileInGame(() => {
     },
   );
 
+  const stopEntityListener = whileEntityIsStreamedIn(
+    (entity): entity is alt.Ped => entity instanceof alt.Ped && isQuestPed(entity),
+    (entity) => {
+      const type = 'quest';
+      const { node } = addNearbyPoint(() => entity.pos, type);
+
+      return () => {
+        removeNearbyPoint(node);
+      }
+    }
+  );
+
   const timer = alt.Timers.everyTick(() => {
     direction = (360 - (game.getGameplayCamRot(2).z % 360)) % 360;
 
@@ -317,5 +334,6 @@ whileInGame(() => {
     compass.style.display = "none";
     timer.destroy();
     stopAreaOfInterestListener();
+    stopEntityListener();
   };
 });
