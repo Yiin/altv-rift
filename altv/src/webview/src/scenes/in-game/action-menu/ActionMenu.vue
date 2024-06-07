@@ -155,7 +155,7 @@ function select() {
         >
           <image
             v-if="!currentSlice.empty"
-            :href="`${asset(`assets/actions/${currentSlice.type}.png`)}`"
+            :href="`${asset(`assets/actions/${currentSlice.type}.webp`)}`"
             :x="currentSlice.centroid.x - 150"
             :y="currentSlice.centroid.y - 175"
             width="350"
@@ -205,7 +205,7 @@ function select() {
 
 <style scoped>
 .game-bg {
-  background-image: url(https://cdn.discordapp.com/attachments/940539225856684042/1139882621187407972/image.png);
+  background-image: url(https://cdn.discordapp.com/attachments/940539225856684042/1139882621187407972/image.webp);
   background-size: cover;
   background-position: 20%;
 }

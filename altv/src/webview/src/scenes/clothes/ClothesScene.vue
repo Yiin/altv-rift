@@ -3,17 +3,17 @@ import { ref } from "vue";
 import Screen from "@/components/Screen.vue";
 import { type ClothingItem } from "./types";
 
-const Bg = "/assets/bg/clothing-bg.png";
-const Jaket1 = "/assets/clothes/jaket-1.png";
-const Jaket2 = "/assets/clothes/jaket-2.png";
-const Jaket3 = "/assets/clothes/jaket-3.png";
-const Jaket4 = "/assets/clothes/jaket-4.png";
-const Shirt1 = "/assets/clothes/shirt-1.png";
-const Shirt2 = "/assets/clothes/shirt-2.png";
-const TShirt1 = "/assets/clothes/t-shirt-1.png";
-const TShirt2 = "/assets/clothes/t-shirt-2.png";
-const TShirt3 = "/assets/clothes/t-shirt-3.png";
-const TShirt4 = "/assets/clothes/t-shirt-4.png";
+const Bg = "/assets/bg/clothing-bg.webp";
+const Jaket1 = "/assets/clothes/jaket-1.webp";
+const Jaket2 = "/assets/clothes/jaket-2.webp";
+const Jaket3 = "/assets/clothes/jaket-3.webp";
+const Jaket4 = "/assets/clothes/jaket-4.webp";
+const Shirt1 = "/assets/clothes/shirt-1.webp";
+const Shirt2 = "/assets/clothes/shirt-2.webp";
+const TShirt1 = "/assets/clothes/t-shirt-1.webp";
+const TShirt2 = "/assets/clothes/t-shirt-2.webp";
+const TShirt3 = "/assets/clothes/t-shirt-3.webp";
+const TShirt4 = "/assets/clothes/t-shirt-4.webp";
 
 const clothes = ref<ClothingItem[]>([
   { name: "Grey T-shirt", images: [TShirt1, TShirt2, TShirt3, TShirt4], currentIndex: 0 },

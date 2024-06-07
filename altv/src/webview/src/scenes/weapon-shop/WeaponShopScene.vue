@@ -3,11 +3,11 @@ import { ref } from "vue";
 import Screen from "@/components/Screen.vue";
 import { type RifleType } from "./types";
 
-const Bg = "/assets/bg/weapon-shop-bg.png";
-const AdvancedRifle1 = "/assets/items/advancedrifle1.png";
-const AssultRifle1 = "/assets/items/assaultrifle1.png";
-const CarbineRifle1 = "/assets/items/carbinerifle1.png";
-const SpecialCarbine1 = "/assets/items/specialcarbine1.png";
+const Bg = "/assets/bg/weapon-shop-bg.webp";
+const AdvancedRifle1 = "/assets/items/advancedrifle1.webp";
+const AssultRifle1 = "/assets/items/assaultrifle1.webp";
+const CarbineRifle1 = "/assets/items/carbinerifle1.webp";
+const SpecialCarbine1 = "/assets/items/specialcarbine1.webp";
 
 const rifles = ref<RifleType[]>([
   {

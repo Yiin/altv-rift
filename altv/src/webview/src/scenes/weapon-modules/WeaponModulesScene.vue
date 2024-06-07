@@ -6,12 +6,12 @@ import InstalledModules from "./InstalledModules.vue";
 import WeaponryList from "./WeaponryList.vue";
 import { type AvailableWeaponModuleType, type WeaponModuleType } from "./types";
 
-const Bg = "/assets/bg/weapon-module-bg.png";
-const AdvancedRifle1 = "/assets/items/advancedrifle1.png";
-const AssaultRifle1 = "/assets/items/assaultrifle1.png";
-const CarbineRifle2 = "/assets/items/carbinerifle2.png";
-const PipeBrushed = "/assets/items/pipe-brushed.png";
-const Suppressor = "/assets/items/suppressor.png";
+const Bg = "/assets/bg/weapon-module-bg.webp";
+const AdvancedRifle1 = "/assets/items/advancedrifle1.webp";
+const AssaultRifle1 = "/assets/items/assaultrifle1.webp";
+const CarbineRifle2 = "/assets/items/carbinerifle2.webp";
+const PipeBrushed = "/assets/items/pipe-brushed.webp";
+const Suppressor = "/assets/items/suppressor.webp";
 
 const weaponModules = ref<WeaponModuleType[]>([
   {

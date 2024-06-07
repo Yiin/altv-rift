@@ -25,7 +25,7 @@ const hh = window.innerHeight / 2 - 400;
     :sticks="[]"
   >
     <img
-      :src="asset(`assets/item-previews/${item.key}.png`)"
+      :src="asset(`assets/item-previews/${item.key}.webp`)"
       class="h-full w-full"
     />
   </Window>

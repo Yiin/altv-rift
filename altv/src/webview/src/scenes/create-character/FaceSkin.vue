@@ -38,13 +38,13 @@ const randomSkin = () => {
           transition="parent-fade"
           class="parent-image z-10 -mr-10 flex"
           :height="px(150)"
-          :src="asset(`assets/faces/${createCharacter.currentAppearance.skinMother}.png`)"
+          :src="asset(`assets/faces/${createCharacter.currentAppearance.skinMother}.webp`)"
         />
         <v-img
           class="parent-image"
           transition="parent-fade"
           :height="px(150)"
-          :src="asset(`assets/faces/${createCharacter.currentAppearance.skinFather}.png`)"
+          :src="asset(`assets/faces/${createCharacter.currentAppearance.skinFather}.webp`)"
         />
       </div>
       <div class="p-2 pt-0">

@@ -14,7 +14,7 @@ export const useItemDetails = (itemRef: Item | Ref<Item> | ComputedRef<Item>) =>
     return null;
   });
   const description = computed(() => getItemDescription(item.value.key));
-  const image = computed(() => asset(`assets/items/${item.value.key}.png`));
+  const image = computed(() => asset(`assets/items/${item.value.key}.webp`));
   const imageScale = computed(
     () =>
       (
