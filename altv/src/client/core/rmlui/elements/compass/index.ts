@@ -12,6 +12,7 @@ import { createTextNode, updateTextNode } from "../../renderer/rml-renderer";
 import { px } from "../../renderer/pixel";
 import { whileEntityIsStreamedIn } from "@/core/game-state-hooks/entity-is-streamed-in.state";
 import { isQuestPed } from "@/modules/peds/lib/is-quest-ped";
+import { watch, watchEffect } from "vue";
 
 const SPACE_BETWEEN_TICKS = 58;
 const TICK_INTERVAL = 15;
@@ -276,14 +277,31 @@ whileInGame(() => {
   );
 
   const stopEntityListener = whileEntityIsStreamedIn(
-    (entity): entity is alt.Ped => entity instanceof alt.Ped && isQuestPed(entity),
+    (entity): entity is alt.Ped => entity instanceof alt.Ped,
     (entity) => {
-      const type = 'quest';
-      const { node } = addNearbyPoint(() => entity.pos, type);
+      let node: alt.RmlElement | null = null;
+
+      const stopWatching = watchEffect(() => {
+        if (isQuestPed(entity)) {
+          const point = addNearbyPoint(() => entity.pos, 'quest');
+          node = point.node;
+        }
+
+        return () => {
+          if (node) {
+            removeNearbyPoint(node);
+            node = null;
+          }
+        }
+      });
 
       return () => {
-        removeNearbyPoint(node);
-      }
+        stopWatching();
+
+        if (node) {
+          removeNearbyPoint(node);
+        }
+      };
     }
   );
 
