@@ -4,6 +4,7 @@ import { ServerEvents } from "@shared/events/server";
 import { waitForUserInterface } from "@/core/user-interface/webview";
 import { PED_CONFIG_FLAG } from "@/core/constants/ped-flags";
 import { ScreenBlurReason, blurScreen } from "@/core/user-interface/event-helpers";
+import { Control, ControlType } from "@/core/constants/controls";
 
 alt.Events.onConnectionComplete(handleConnectionComplete);
 alt.setWatermarkPosition(4);
@@ -53,6 +54,7 @@ alt.Events.onSpawned(() => {
 });
 
 alt.Timers.everyTick(() => {
+  game.disableControlAction(ControlType.PLAYER_CONTROL, Control.INPUT_SELECT_WEAPON, true);
   game.hideHudComponentThisFrame(1); // Wanted Stars
   game.hideHudComponentThisFrame(2); // Weapon Icon
   game.hideHudComponentThisFrame(3); // Cash
