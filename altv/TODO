@@ -1,3 +1,29 @@
+Current TODO list:
+  ☐ Zombie boars killing quest
+  ☐ Updated label designs
+    ☐ Quest NPC
+    ☐ Shop NPC
+    ☐ Enemy NPC
+    ☐ Player
+    ☐ Boss NPC
+    ☐ Crate
+  ☐ Updated helpful tips designs
+    ☐ Woodcutting
+    ☐ Fishing
+    ☐ Mining
+  ☐ Voice chat
+  ☐ Online list on TAB
+  ☐ Pick up items from the ground with indicator menu
+  ☐ Locations for airdrops
+  ☐ Current active area hud notification and status
+  ☐ Current active quest hud notification and direction
+  ☐ Item upgrade effects
+    ☐ Damage upgrades
+    ☐ Protection upgrades
+    ☐ Utility? (running speed, endurance, recoil?)
+  ☐ Configurable keybinds?
+  ☐ Background music?
+
 Introduction:
   ✔ Spawn at airport @done
   ✔ Talk with cal, he will give you meds, some cash and directions. @done(24-06-08 20:55)
@@ -195,20 +221,6 @@ Control of Territories:
   ☐ Territory management system
     ☐ Maintenance
     ☐ Defense mechanisms
-
-Improving Things:
-  ☐ Item upgrade system
-    ☐ Damage upgrades
-    ☐ Protection upgrades
-    ☐ Utility? (running speed, endurance, recoil?)
-  ☐ Pick up items from the ground with indicator menu
-  ☐ Online list on TAB
-  ☐ Current active area hud notification and status
-  ☐ Current active quest hud notification and direction
-  ☐ Configurable keybinds?
-  ☐ Voice chat
-  ☐ Background music?
-  ☐ Locations for airdrops
 
 Trade:
   ☐ Auction house system?
