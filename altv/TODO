@@ -1,5 +1,4 @@
 Current TODO list:
-  ☐ Zombie boars killing quest
   ☐ Updated label designs
     ☐ Quest NPC
     ☐ Shop NPC
@@ -11,6 +10,21 @@ Current TODO list:
     ☐ Woodcutting
     ☐ Fishing
     ☐ Mining
+  ☐ Zombie boars killing quest
+    ☐ Give pistol if player doesn't have one yet
+    ☐ : Create spawn points for zombie boars
+    ☐ : Add new material - leather
+    ☐ Task player to kill one and get leather
+    ☐ : Update bodyarmor recipe requirements, add leather
+    ☐ After they do, give them materials to upgrade weapon and blueprint for body armor
+    ☐ Task player to kill 10 more boars
+    ☐ Task player to create body armor
+    ☐ Once they do, upgrade it to uncommon grade
+    ☐ Task player to visit main island
+    ☐ : Create captain NPC
+    ☐ : Create ship
+    ☐ : Teleport player to island
+    ☐ : ???
   ☐ Voice chat
   ☐ Online list on TAB
   ☐ Pick up items from the ground with indicator menu
