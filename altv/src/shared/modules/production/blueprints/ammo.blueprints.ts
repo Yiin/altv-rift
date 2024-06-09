@@ -34,13 +34,13 @@ export type AmmoBlueprintKey = Brand<string, "AmmoBlueprintKey">;
   registerBlueprint({
     key,
     name: `${getItemName(itemKey)} blueprint`,
-    recipes: [
+    recipes: ([
       ItemGrade.COMMON,
       ItemGrade.UNCOMMON,
       ItemGrade.RARE,
       ItemGrade.EPIC,
       ItemGrade.LEGENDARY,
-    ].map((grade) => ({
+    ] as const).map((grade) => ({
       key: key + grade,
       durationSeconds: 1,
       item: {
@@ -49,6 +49,13 @@ export type AmmoBlueprintKey = Brand<string, "AmmoBlueprintKey">;
         grade,
       } as AmmoItem,
       parts: [{ key: Metal.METAL, grade, amount: 1 }],
+      levelRequired: ({
+        [ItemGrade.COMMON]: 1,
+        [ItemGrade.UNCOMMON]: 5,
+        [ItemGrade.RARE]: 20,
+        [ItemGrade.EPIC]: 45,
+        [ItemGrade.LEGENDARY]: 80,
+      })[grade]
     })),
   });
 });

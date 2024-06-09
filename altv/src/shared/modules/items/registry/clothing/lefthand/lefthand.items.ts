@@ -323,7 +323,7 @@ export type LeftHandItem = {
   key: LeftHandItemKey;
 
   customName?: string | null;
-  tier: ItemGrade;
+  grade: ItemGrade;
 };
 
 export type LeftHandItemInfo = {

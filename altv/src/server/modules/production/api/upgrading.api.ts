@@ -44,8 +44,7 @@ export function upgradeItem(player: InGamePlayer, itemSource: PlayerItemSource) 
     return false;
   }
 
-  if (!canCraftRecipe(recipe, player.character.inventory)) {
-    alt.log(`Can't craft recipe`);
+  if (!canCraftRecipe(player.character, recipe)) {
     return false;
   }
 
@@ -62,7 +61,7 @@ export function upgradeItem(player: InGamePlayer, itemSource: PlayerItemSource) 
         return;
       }
 
-      if (craftRecipe(recipe, player.character.inventory) !== CraftingResult.OK) {
+      if (craftRecipe(player.character, recipe) !== CraftingResult.OK) {
         return;
       }
 

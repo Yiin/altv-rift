@@ -49,7 +49,7 @@ const upgradeRecipe = computed<BlueprintRecipe | null>(() => {
 });
 
 const canUpgradeSelectedItem = computed(
-  () => upgradeRecipe.value && canCraftRecipe(upgradeRecipe.value, useCharacter().inventory),
+  () => upgradeRecipe.value && canCraftRecipe(useCharacter(), upgradeRecipe.value),
 );
 
 const upgradeableItemSources = computed(() => {

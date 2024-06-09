@@ -12,7 +12,7 @@
     "format": "eslint --fix src/client/**/*.ts src/server/**/*.ts src/shared/**/*.ts",
     "build": "bun run build:server && bun run build:client",
     "upd-altv-types": "bun i @altv/shared@latest @altv/client@latest @altv/server@latest @altv/natives@latest",
-    "prisma:generate": "prisma generate",
+    "prisma:generate": "bunx prisma generate",
     "watcher": "bun run build/watcher.ts",
     "server": "bun run watcher"
   },

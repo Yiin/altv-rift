@@ -1,6 +1,10 @@
-import { isEqual } from "lodash-es";
 import { EquipmentSlot, Inventory, InventoryItem } from "@shared/interfaces";
 import { Item, ItemByKey, ItemKey } from "../../items";
+
+export enum ItemMatchFlags {
+  NONE = 0,
+  IGNORE_AMOUNT = 1,
+}
 
 export function getInventoryItemInSlot(
   inventory: Inventory,
@@ -11,10 +15,11 @@ export function getInventoryItemInSlot(
 
 export function getInventoryItem<T extends Item>(
   inventory: Inventory,
-  item: T,
+  item: Partial<T>,
+  flags = ItemMatchFlags.NONE
 ): InventoryItem<T> | undefined {
   return inventory.items.find((inventoryItem): inventoryItem is InventoryItem<T> =>
-    isMatchingItem(inventoryItem.item, item),
+    isMatchingItem(item, inventoryItem.item, flags),
   );
 }
 
@@ -46,12 +51,22 @@ export function isEquipmentSlotQuickSlot(
   return isQuickSlot;
 }
 
-export function isMatchingItem(part: Item, item: Item): boolean {
-  if (part.key !== item.key) {
+/**
+ * Returns true if part matches itemToMatch properties and it's amount is same or lower than the items.
+ * In other words, part is the item we're looking for and itemToMatch is item we're comparing against.
+ * If we're looking for grade RARE and amount 100, it itemToMatch has
+ * grade COMMON or amount < 100, we return false.
+ */
+export function isMatchingItem(itemToMatch: Partial<Item>, item: Item, flags = ItemMatchFlags.NONE): boolean {
+  if (itemToMatch.key !== item.key) {
     return false;
   }
 
-  if ("grade" in part && "grade" in item && part.grade !== item.grade) {
+  if ("grade" in itemToMatch && "grade" in item && itemToMatch.grade !== item.grade) {
+    return false;
+  }
+
+  if (!(flags & ItemMatchFlags.IGNORE_AMOUNT) && "amount" in itemToMatch && "amount" in item && (!itemToMatch.amount || itemToMatch.amount > item.amount)) {
     return false;
   }
 

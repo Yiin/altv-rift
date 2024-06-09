@@ -78,10 +78,11 @@ function processNextItemInQueue(player: InGamePlayer) {
 
       queue.splice(recipeIndex, 1);
 
-      const result = craftRecipe(recipe, player.character.inventory);
+      const result = craftRecipe(player.character, recipe);
+
+      notifyPlayerOfCraftingResult(player, recipe, result);
 
       if (result !== CraftingResult.OK) {
-        notifyPlayerOfCraftingResult(player, recipe, result);
         processNextItemInQueue(player);
         return;
       }
@@ -108,6 +109,10 @@ export function notifyPlayerOfCraftingResult(
         player,
         `Not enough space in the inventory to craft ${getItemName(recipe.item.key)}.`,
       );
+      break;
+    case CraftingResult.OK:
+      const levelRequired = recipe.levelRequired ?? 1;
+      player.character.skills.crafting += levelRequired * 20;
       break;
   }
 }

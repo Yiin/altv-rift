@@ -24,6 +24,7 @@ export interface QuestTaskInfo {
   completedFact: string;
   title: string;
   summary: string;
+  hints?: string[];
 }
 
 export interface QuestInfo {
@@ -93,20 +94,20 @@ export const getDefaultClientStoreState = (): ClientState => ({
     elements:
       "altMock" in globalThis
         ? // browser context
-          new Set()
+        new Set()
         : // game context
-          new Set(),
+        new Set(),
     window:
       "altMock" in globalThis
         ? // browser context
-          {
-            type: WindowType.SHOP,
-          }
+        {
+          type: WindowType.SHOP,
+        }
         : // {
-          //   type: WindowType.PLAYER_INVENTORY,
-          // }
-          // game context
-          null,
+        //   type: WindowType.PLAYER_INVENTORY,
+        // }
+        // game context
+        null,
   },
   conversation: null,
   trackingQuest: null,

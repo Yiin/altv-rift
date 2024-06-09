@@ -4,6 +4,7 @@ import {
   getWeaponHashKey,
   isItemKeyAmmo,
   isItemKeyClothing,
+  isItemKeyConsumable,
   isItemKeyFirearmWeapon,
   isItemKeyMaterial,
   isItemKeyPants,
@@ -32,6 +33,9 @@ export const getItemImage = (key: string) => {
   }
   if (isItemKeyWeaponComponent(key)) {
     return asset(`assets/items/weapon-components/${getWeaponComponentHashKey(key)}.webp`);
+  }
+  if (isItemKeyConsumable(key)) {
+    return asset(`assets/items/consumables/${key}.webp`);
   }
   return asset(`assets/items/${key}.webp`);
 };

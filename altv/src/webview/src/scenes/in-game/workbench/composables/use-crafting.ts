@@ -17,7 +17,7 @@ const queue = computed(() => useGameState().workbench.queue);
 const startedCraftingAt = computed(() => useGameState().workbench.startedAt);
 const selectedRecipe = ref<BlueprintRecipe>();
 const canCraftSelectedRecipe = computed(
-  () => selectedRecipe.value && canCraftRecipe(selectedRecipe.value, useCharacter().inventory),
+  () => selectedRecipe.value && canCraftRecipe(useCharacter(), selectedRecipe.value),
 );
 const currentlyCrafting = computed(() => queue.value[0]);
 

@@ -45,6 +45,7 @@ registerBlueprint({
         { key: Wood.WOOD, grade: ItemGrade.UNCOMMON, amount: 10 },
         { key: Scrap.SCRAP, grade: ItemGrade.UNCOMMON, amount: 2 },
       ],
+      levelRequired: 5,
     },
     {
       key: MeleeWeapon.BAT + "+2",
@@ -59,6 +60,7 @@ registerBlueprint({
         { key: Wood.WOOD, grade: ItemGrade.RARE, amount: 10 },
         { key: Scrap.SCRAP, grade: ItemGrade.RARE, amount: 2 },
       ],
+      levelRequired: 10,
     },
     {
       key: MeleeWeapon.BAT + "+3",
@@ -73,6 +75,7 @@ registerBlueprint({
         { key: Wood.WOOD, grade: ItemGrade.EPIC, amount: 10 },
         { key: Scrap.SCRAP, grade: ItemGrade.EPIC, amount: 2 },
       ],
+      levelRequired: 15,
     },
     {
       key: MeleeWeapon.BAT + "+4",
@@ -87,6 +90,7 @@ registerBlueprint({
         { key: Wood.WOOD, grade: ItemGrade.LEGENDARY, amount: 10 },
         { key: Scrap.SCRAP, grade: ItemGrade.LEGENDARY, amount: 2 },
       ],
+      levelRequired: 20,
     },
   ],
 });

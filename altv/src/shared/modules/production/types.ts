@@ -1,9 +1,12 @@
 import { Item } from "@shared/modules/items";
 import { ToolBlueprintKey } from "./blueprints/tool.blueprints";
 import {
+  AmmoBlueprintKey,
+  ClothingBlueprintKey,
   FirearmWeaponBlueprintKey,
   MeleeWeaponBlueprintKey,
   ThrowableWeaponBlueprintKey,
+  WeaponComponentBlueprintKey,
 } from "./blueprints";
 
 /**
@@ -15,6 +18,7 @@ export type BlueprintRecipe = {
   durationSeconds: number;
   item: Item;
   parts: Item[];
+  levelRequired?: number;
 };
 
 export type Blueprint = {
@@ -25,7 +29,10 @@ export type Blueprint = {
 };
 
 export type BlueprintKey =
+  | AmmoBlueprintKey
   | ToolBlueprintKey
   | FirearmWeaponBlueprintKey
   | ThrowableWeaponBlueprintKey
-  | MeleeWeaponBlueprintKey;
+  | MeleeWeaponBlueprintKey
+  | ClothingBlueprintKey
+  | WeaponComponentBlueprintKey;

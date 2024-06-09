@@ -16,18 +16,25 @@ prisma.$connect().then(async () => {
 function getMissingKeysRecursive(
   defaultData: Record<string, any>,
   characterData: Record<string, any>,
+  depth = 0,
 ): Record<string, any> {
   let missingData: Record<string, any> = {};
 
   for (const key in defaultData) {
     if (!characterData.hasOwnProperty(key)) {
-      missingData[key] = defaultData[key];
+      const value = defaultData[key];
+      const isObject = value && typeof value === "object" && !Array.isArray(value);
+
+      missingData[key] = isObject
+        ? {
+          set: value,
+        } : value;
     } else if (
       typeof defaultData[key] === "object" &&
       defaultData[key] !== null &&
       !Array.isArray(defaultData[key])
     ) {
-      const nestedMissingData = getMissingKeysRecursive(defaultData[key], characterData[key]);
+      const nestedMissingData = getMissingKeysRecursive(defaultData[key], characterData[key], depth + 1);
       if (Object.keys(nestedMissingData).length > 0) {
         missingData[key] = nestedMissingData;
       }
@@ -46,21 +53,26 @@ async function fillMissingCharacterFieldsWithDefaultData() {
   const characters = (await prisma.character.findRaw()) as any as Record<string, any>[];
 
   for (const character of characters) {
-    const missingData = getMissingKeysRecursive(getDefaultCharacterData(), character);
+    let missingData = getMissingKeysRecursive(getDefaultCharacterData(), character);
 
     if (Object.keys(missingData).length === 0) continue;
+
+    missingData = Object.fromEntries(Object.entries(missingData).map(([key, value]) => {
+      if (value && typeof value === "object" && !Array.isArray(value)) {
+        if (character.hasOwnProperty(key)) {
+          return [key, { update: value }];
+        } else {
+          return [key, { set: value }];
+        }
+      }
+      return [key, value];
+    }));
 
     await prisma.character.update({
       where: {
         id: character._id["$oid"],
       },
-      data: Object.fromEntries(
-        Object.entries(missingData).map(([key, value]) =>
-          value && typeof value === "object" && !Array.isArray(value)
-            ? [key, { set: value }]
-            : [key, value],
-        ),
-      ),
+      data: missingData,
     });
   }
 }

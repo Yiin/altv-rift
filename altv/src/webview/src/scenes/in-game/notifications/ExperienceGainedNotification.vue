@@ -5,7 +5,7 @@ import { useClient } from "@/store/synced/client.store";
 import { asset } from "@/utils/asset";
 
 const props = defineProps<{
-  type: "fishing" | "mining" | "woodcutting";
+  type: "fishing" | "mining" | "woodcutting" | "crafting";
   previousXp: number;
   currentXp: number;
 }>();
@@ -24,8 +24,28 @@ const iconName = computed(() => {
       return "woodcutting-icon.svg";
     case "mining":
       return "mining-icon.svg";
+    // case "crafting":
+    //   return "crafting-icon.svg";
     default:
       return "experience-icon.svg";
+  }
+});
+
+const color = computed(() => {
+  if (isLevelUp(props.previousXp, props.currentXp)) {
+    return "bg-amber-300";
+  }
+  switch (props.type) {
+    case "fishing":
+      return "bg-cyan-300";
+    case "woodcutting":
+      return "bg-lime-300";
+    case "mining":
+      return "bg-gray-300";
+    // case "crafting":
+    //   return "bg-orange-300";
+    default:
+      return "bg-amber-300";
   }
 });
 
@@ -51,7 +71,8 @@ const isWindowOpened = computed(() => useClient().ui.window !== null);
       <div class="relative -top-0.75 w-36">
         <div class="absolute left-0 top-0 h-1.5 w-full rounded-lg bg-black/25"></div>
         <div
-          class="absolute left-0 top-0 h-1.5 rounded-lg bg-amber-300"
+          class="absolute left-0 top-0 h-1.5 rounded-lg"
+          :class="[color]"
           :style="{ width: `${getLevelProgress(currentXp)}%` }"
         ></div>
       </div>

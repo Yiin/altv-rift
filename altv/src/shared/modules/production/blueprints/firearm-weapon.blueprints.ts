@@ -1,7 +1,7 @@
 import { makeKeys } from "@shared/utility/make-keys";
 import { getItemName, getItemTier } from "@shared/modules/items/lib";
 import { Metal } from "@shared/modules/items/registry/materials/metal.items";
-import { ItemGrade, ItemTier } from "@shared/modules/items/enums";
+import { ItemGrade } from "@shared/modules/items/enums";
 import { Scrap } from "@shared/modules/items/registry/materials/scrap.items";
 import {
   FirearmWeapon,
@@ -21,15 +21,7 @@ Object.values(FirearmWeaponBlueprint).forEach((key) => {
   const tier = getItemTier(itemKey);
   const multiplier =
     tier !== null
-      ? {
-          [ItemTier.S]: 10,
-          [ItemTier.A]: 8,
-          [ItemTier.B]: 6,
-          [ItemTier.C]: 4,
-          [ItemTier.D]: 3,
-          [ItemTier.E]: 2,
-          [ItemTier.F]: 1,
-        }[tier]
+      ? 2
       : 1;
 
   registerBlueprint({
@@ -55,7 +47,7 @@ Object.values(FirearmWeaponBlueprint).forEach((key) => {
       {
         key: itemKey + "+1",
         isUpgrade: true,
-        durationSeconds: 5,
+        durationSeconds: 4,
         item: {
           key: itemKey,
           grade: ItemGrade.UNCOMMON,
@@ -65,13 +57,14 @@ Object.values(FirearmWeaponBlueprint).forEach((key) => {
           { key: Metal.METAL, grade: ItemGrade.UNCOMMON, amount: 10 * multiplier },
           { key: Scrap.SCRAP, grade: ItemGrade.UNCOMMON, amount: 10 * multiplier },
         ],
+        levelRequired: 15,
       },
 
       // +2
       {
         key: itemKey + "+2",
         isUpgrade: true,
-        durationSeconds: 10,
+        durationSeconds: 6,
         item: {
           key: itemKey,
           grade: ItemGrade.RARE,
@@ -81,13 +74,14 @@ Object.values(FirearmWeaponBlueprint).forEach((key) => {
           { key: Metal.METAL, grade: ItemGrade.RARE, amount: 15 * multiplier },
           { key: Scrap.SCRAP, grade: ItemGrade.RARE, amount: 15 * multiplier },
         ],
+        levelRequired: 30,
       },
 
       // +3
       {
         key: itemKey + "+3",
         isUpgrade: true,
-        durationSeconds: 20,
+        durationSeconds: 8,
         item: {
           key: itemKey,
           grade: ItemGrade.EPIC,
@@ -97,13 +91,14 @@ Object.values(FirearmWeaponBlueprint).forEach((key) => {
           { key: Metal.METAL, grade: ItemGrade.EPIC, amount: 20 * multiplier },
           { key: Scrap.SCRAP, grade: ItemGrade.EPIC, amount: 20 * multiplier },
         ],
+        levelRequired: 45,
       },
 
       // +4
       {
         key: itemKey + "+4",
         isUpgrade: true,
-        durationSeconds: 30,
+        durationSeconds: 10,
         item: {
           key: itemKey,
           grade: ItemGrade.LEGENDARY,
@@ -113,6 +108,7 @@ Object.values(FirearmWeaponBlueprint).forEach((key) => {
           { key: Metal.METAL, grade: ItemGrade.LEGENDARY, amount: 25 * multiplier },
           { key: Scrap.SCRAP, grade: ItemGrade.LEGENDARY, amount: 25 * multiplier },
         ],
+        levelRequired: 60,
       },
     ],
   });

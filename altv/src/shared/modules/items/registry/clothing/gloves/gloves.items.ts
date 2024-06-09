@@ -2193,7 +2193,7 @@ export type GlovesItem = {
   key: GlovesItemKey;
 
   customName?: string | null;
-  tier: ItemGrade;
+  grade: ItemGrade;
 };
 
 export type GlovesItemInfo = {

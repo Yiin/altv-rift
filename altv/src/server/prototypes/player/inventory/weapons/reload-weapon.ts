@@ -4,7 +4,7 @@ import {
   getWeaponClipSize,
   isItemFirearmWeapon,
 } from "@shared/modules/items/registry/weapons/firearm-weapon.items";
-import { isMatchingItem } from "@shared/modules/inventory";
+import { ItemMatchFlags, isMatchingItem } from "@shared/modules/inventory";
 import { MessageType } from "@shared/modules/chat";
 import { InGamePlayer, isInGame } from "@/core/utility/assertions";
 import { sendChatMessage } from "@/modules/chat";
@@ -61,7 +61,7 @@ alt.Player.prototype.reloadWeapon = function () {
     return false;
   }
 
-  if (weapon.clip && !isMatchingItem(ammo, weapon.clip)) {
+  if (weapon.clip && !isMatchingItem(ammo, weapon.clip, ItemMatchFlags.IGNORE_AMOUNT)) {
     // Ammo type doesn't match clip
     sendChatMessage(this, "Weapon clip and ammo type don't match.", MessageType.Error);
     return false;

@@ -179,7 +179,7 @@ const itemsByCategory = computed(() => {
             @click="() => selectItem(source)"
             :key="`${JSON.stringify(source)}`"
             class="h-18.75 w-18.75 p-0"
-            :class="{ 'opacity-50': !canCraftRecipe(recipe, character.inventory) }"
+            :class="{ 'opacity-50': !canCraftRecipe(character, recipe) }"
             :selected="isSameItemSource(source, selectedItemSource)"
           >
             <ItemIcon

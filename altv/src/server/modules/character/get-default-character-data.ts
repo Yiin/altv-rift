@@ -7,7 +7,7 @@ type CharacterData = Omit<Prisma.CharacterCreateInput, "user" | "name" | "appear
 const defaultData = {
   inventory: {
     items: [],
-    size: 25,
+    size: 24,
   },
   equipment: {
     mask: null,
@@ -30,6 +30,7 @@ const defaultData = {
     woodcutting: 0,
     fishing: 0,
     mining: 0,
+    crafting: 0,
     engineer: {
       exp: 0,
       learnedSkills: [],

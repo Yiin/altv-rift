@@ -21,7 +21,7 @@ function displayHit(
   const textNode = document.createTextNode(
     damage < 10
       ? damage.toFixed(2).replace(/0+$/, "").replace(/\.$/, "")
-      : Math.round(damage).toString(),
+      : Math.round(damage).toFixed(0).toString(),
   );
   damageDiv.appendChild(textNode);
 
@@ -91,8 +91,6 @@ alt.Timers.everyTick(() => {
 alt.Events.onServer(
   ClientEvents.FromServer.DISPLAY_DAMAGE_HIT,
   (entityType, entityRemoteID, damage, type) => {
-    alt.log("Displaying damage hit", entityType, entityRemoteID, damage, type);
-
     switch (entityType) {
       // case alt.Enums.BaseObjectType.PLAYER: {
       //   const player = alt.Player.getByRemoteID(entityRemoteID);
@@ -106,15 +104,12 @@ alt.Events.onServer(
         if (ped) {
           if (ped.streamSyncedMeta.health === 0) {
             alt.Timers.setTimeout(() => {
-              alt.log(`Fading out ped ${ped.scriptID}`);
               game.networkFadeOutEntity(ped.scriptID, true, false);
             }, 2000);
           }
 
           displayHit(ped.damagedBonePos ?? ped.pos, damage, type, ped);
           ped.damagedBonePos = undefined;
-        } else {
-          alt.log("Ped not found", entityType, entityRemoteID);
         }
         break;
       }

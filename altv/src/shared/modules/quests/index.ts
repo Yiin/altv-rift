@@ -1,4 +1,4 @@
-import { Introduction } from "./0_Introduction";
+import { Introduction } from "./0_introduction";
 
 export const Quests = {
   Introduction,

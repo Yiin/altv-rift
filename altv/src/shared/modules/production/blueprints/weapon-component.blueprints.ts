@@ -551,6 +551,7 @@ Object.entries({
           amount: 5 * (+component[component.length - 1] || 1),
         },
       ],
+      levelRequired: 5,
     })),
   });
 });

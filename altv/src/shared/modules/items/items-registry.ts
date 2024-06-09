@@ -6,7 +6,7 @@ export const ITEMS_REGISTRY: Map<ItemKey, ItemInfo> = new Map();
  * Register an item in the items registry so it's available for use.
  */
 export function registerItem(info: ItemInfo): void {
-  if (ITEMS_REGISTRY.has(info.key)) {
+  if (ITEMS_REGISTRY.has(info.key) && !window) {
     throw new Error(
       `Item with key "${info.key}" is already registered: ${JSON.stringify(ITEMS_REGISTRY.get(info.key))} -> ${JSON.stringify(info)}`,
     );

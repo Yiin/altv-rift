@@ -1,11 +1,17 @@
 Introduction:
   ✔ Spawn at airport @done
-  ☐ Talk with cal, he will give you meds, some cash and directions.
+  ✔ Talk with cal, he will give you meds, some cash and directions. @done(24-06-08 20:55)
+    - GOT_INTRODUCTION
+  ✔ Notification to open inventory and see your items @done(24-06-08 21:02)
+    - OPEN_INVENTORY
   ✔ Get ratbike @done
-    ✔ buy one from the dealer @done
-  - Get quest to talk with diego
-  - Diego will give a quest to do all 4 jobs: woodcutting, fishing, mining, crafting
-  - Jobs are marked on the map
+    - GOT_RATBIKE
+  ☐ Turn on engine
+    - TURN_ON_ENGINE
+  ✔ Get quest to talk with diego @done(24-06-09 05:33)
+  ✔ Diego will give a quest to do all 4 jobs: woodcutting, fishing, mining, crafting @done(24-06-09 05:33)
+    - TALKED_WITH_DIEGO
+  ☐ Jobs are marked on the map
   - After completing all jobs, Diego will give a quest to hunt infected boar
   - After completing the boar quest, Diego will give you a recipe for weapon upgrade and a task to hunt 5 more boars
   - After completing the boar task, Diego will give you a quest to talk with a captain at the docks

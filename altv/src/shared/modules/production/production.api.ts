@@ -1,8 +1,9 @@
-import { Inventory } from "@shared/interfaces";
+import { Character, Inventory } from "@shared/interfaces";
 import { deepCloneObject } from "@shared/utility/deep-copy";
 import { Item } from "../items";
 import { findFreeInventorySlot, removeItemFromInventorySlot } from "../inventory/api";
 import { BlueprintRecipe } from "./types";
+import { getLevel } from "../experience/experience-table";
 
 export enum CraftingResult {
   OK,
@@ -10,16 +11,19 @@ export enum CraftingResult {
   NO_SPACE_IN_INVENTORY,
 }
 
-export function canCraftRecipe(recipe: BlueprintRecipe, inventory: Inventory): boolean {
-  return craftRecipe(recipe, inventory, { isTestRun: true }) === CraftingResult.OK;
+export function canCraftRecipe(character: Character, recipe: BlueprintRecipe): boolean {
+  return (!recipe.levelRequired || getLevel(character.skills.crafting) >= recipe.levelRequired)
+    && craftRecipe(character, recipe, { isTestRun: true }) === CraftingResult.OK;
 }
 
 export function craftRecipe(
+  character: Character,
   recipe: BlueprintRecipe,
-  inventory: Inventory,
   { isTestRun = false } = {},
 ): CraftingResult {
   const { parts } = recipe;
+
+  let inventory = character.inventory;
 
   // If we're not currently in the test, we should run a test
   // before operating on the real inventory.
@@ -28,7 +32,7 @@ export function craftRecipe(
   // inventory slot is freed by using resources need for the
   // crafting. And of course we check if we have enough resources.
   if (!isTestRun) {
-    const testRunSuccess = craftRecipe(recipe, inventory, { isTestRun: true });
+    const testRunSuccess = craftRecipe(character, recipe, { isTestRun: true });
 
     if (testRunSuccess !== CraftingResult.OK) {
       return testRunSuccess;

@@ -50,6 +50,7 @@ Object.values(ToolBlueprint).forEach((key) => {
           { key: Wood.WOOD, grade: ItemGrade.UNCOMMON, amount: 5 },
           { key: Metal.METAL, grade: ItemGrade.UNCOMMON, amount: 5 },
         ],
+        levelRequired: 10,
       },
       {
         key: itemKey + "+2",
@@ -64,6 +65,7 @@ Object.values(ToolBlueprint).forEach((key) => {
           { key: Wood.WOOD, grade: ItemGrade.RARE, amount: 5 },
           { key: Metal.METAL, grade: ItemGrade.RARE, amount: 5 },
         ],
+        levelRequired: 20,
       },
       {
         key: itemKey + "+3",
@@ -78,6 +80,7 @@ Object.values(ToolBlueprint).forEach((key) => {
           { key: Wood.WOOD, grade: ItemGrade.EPIC, amount: 5 },
           { key: Metal.METAL, grade: ItemGrade.EPIC, amount: 5 },
         ],
+        levelRequired: 30,
       },
       {
         key: itemKey + "+4",
@@ -92,6 +95,7 @@ Object.values(ToolBlueprint).forEach((key) => {
           { key: Wood.WOOD, grade: ItemGrade.LEGENDARY, amount: 5 },
           { key: Metal.METAL, grade: ItemGrade.LEGENDARY, amount: 5 },
         ],
+        levelRequired: 40,
       },
     ],
   });

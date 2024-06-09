@@ -85,7 +85,7 @@ const recipesByCategory = computed(() => {
       const blueprintRecipes = Object.values(blueprints)
         .filter((blueprint) => character.blueprints.includes(blueprint))
         .flatMap((blueprint) => getBlueprintRecipes(blueprint))
-        .filter((recipe) => !hideUnavailable.value || canCraftRecipe(recipe, character.inventory))
+        .filter((recipe) => !hideUnavailable.value || canCraftRecipe(character, recipe))
         .filter(
           (recipe) =>
             getItemName(recipe.item.key).toLowerCase().includes(search.value.toLowerCase()) ||
@@ -167,7 +167,7 @@ const recipesByCategory = computed(() => {
             v-for="(recipe, index) in recipes"
             :key="`${recipe.item.key}-${index}`"
             class="h-18.75 w-18.75 p-0"
-            :class="{ 'opacity-50': !canCraftRecipe(recipe, character.inventory) }"
+            :class="{ 'opacity-50': !canCraftRecipe(character, recipe) }"
             :selected="JSON.stringify(selectedRecipe) === JSON.stringify(recipe)"
           >
             <ItemIcon

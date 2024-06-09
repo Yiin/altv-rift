@@ -108,6 +108,7 @@ type Skills {
   woodcutting Int             @default(0)
   fishing     Int             @default(0)
   mining      Int             @default(0)
+  crafting    Int             @default(0)
   mercenary   ProfessionSkill
   medic       ProfessionSkill
   engineer    ProfessionSkill
