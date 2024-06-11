@@ -281,26 +281,19 @@ whileInGame(() => {
     (entity) => {
       let node: alt.RmlElement | null = null;
 
-      console.log("start watching");
       const stopWatching = watchEffect((onCleanup) => {
-        console.log("trigger effect");
         if (isQuestPed(entity)) {
-          console.log("still quest ped");
           const point = addNearbyPoint(() => entity.pos, 'quest');
           node = point.node;
-        } else {
-          console.log("no longer quest ped");
         }
 
         onCleanup(() => {
-          console.log("cleanup");
           if (node) {
-            console.log("removing nearby point");
             removeNearbyPoint(node);
             node = null;
           }
         });
-      }, { flush: 'sync' });
+      });
 
       return () => {
         console.log("stop watching");
@@ -313,6 +306,13 @@ whileInGame(() => {
       };
     }
   );
+
+  const width = 812;
+  const middle = width / 2;
+  const visibleWidthPercentage = 0.5;
+  const start = px(middle - middle * visibleWidthPercentage);
+  const end = px(middle + middle * visibleWidthPercentage);
+  const spaceBetweenTicks = px(SPACE_BETWEEN_TICKS);
 
   const timer = alt.Timers.everyTick(() => {
     if (!alt.isGameFocused()) {
@@ -331,13 +331,6 @@ whileInGame(() => {
         (TICK_INTERVAL + direction - leftTickValue) % TICK_INTERVAL,
       ) * px(PX_PER_DEGREE);
 
-    const width = 812;
-    const middle = width / 2;
-    const visibleWidthPercentage = 0.5;
-    const start = px(middle - middle * visibleWidthPercentage);
-    const end = px(middle + middle * visibleWidthPercentage);
-    const spaceBetweenTicks = px(SPACE_BETWEEN_TICKS);
-
     updatedTickValues.forEach((tickValue, index) => {
       const node = tickNodes.find((node) => node.tickValue === tickValue);
 
@@ -352,7 +345,7 @@ whileInGame(() => {
             : position > end
               ? 1 - (position - end) / (start - spaceBetweenTicks)
               : 1,
-        ) ** 8;
+        ) ** 8; // ** for exponential opacity change, otherwise it takes too long and looks weird
 
       if (node) {
         node.style.transform = `translateX(${translateX}px)`;

@@ -57,15 +57,7 @@ registerElement({
           menu.interactions.map((interaction, index, arr) =>
             div([
               div(
-                {
-                  style: {
-                    width: rem(320),
-                    display: "flex",
-                    "align-items": "center",
-                    "justify-content": "flex-start",
-                    gap: rem(5),
-                  },
-                },
+                { class: "interaction-item" },
                 [
                   div([
                     div(
