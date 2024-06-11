@@ -103,6 +103,10 @@ function getClosestPart(vehicle: alt.Vehicle) {
 }
 
 alt.Timers.everyTick(() => {
+  if (!alt.isGameFocused()) {
+    return;
+  }
+
   // Do not show actions if player's in a vehicle
   if (alt.Player.local.vehicle) {
     prevClosest.value = {
@@ -181,7 +185,7 @@ registerElement({
 
     return div(
       {
-        className: "vehicle-action",
+        class: "vehicle-action",
         style: {
           transform: everyFrame(({ pos }) => {
             const { x, y } = alt.worldToScreen(pos);
@@ -212,7 +216,7 @@ registerElement({
           );
         }),
         br([]),
-        div({ className: "vehicle-action__text" }, [`[E]`]),
+        div({ class: "vehicle-action__text" }, [`[E]`]),
       ],
     );
   },

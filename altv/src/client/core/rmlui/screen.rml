@@ -18,6 +18,9 @@
     <link type="text/rcss" href="/client/core/rmlui/elements/compass/compass.rcss"/>
     <link type="text/rcss" href="/client/core/rmlui/elements/damage/damage.rcss"/>
     <link type="text/rcss" href="/client/core/rmlui/elements/ped-interaction/ped-interaction.rcss"/>
+    <link type="text/rcss" href="/client/core/rmlui/elements/ped-nametag/enemy-nametag.rcss"/>
+    <link type="text/rcss" href="/client/core/rmlui/elements/ped-nametag/ped-nametag.rcss"/>
+    <link type="text/rcss" href="/client/core/rmlui/elements/ped-nametag/quest-nametag.rcss"/>
     <link type="text/rcss" href="/client/core/rmlui/elements/tree/tree.rcss"/>
     <link type="text/rcss" href="/client/core/rmlui/elements/vehicle-action/vehicle-action.rcss"/>
   </head>

@@ -46,6 +46,7 @@ export function renderElement(node: alt.RmlElement): void {
 
   if (node.isFresh) {
     node.isFresh = false;
+    console.log(`Node is not fresh, re-render`, registeredElement.key);
     renderer.render(element, node);
   }
 
@@ -60,19 +61,27 @@ export function renderElement(node: alt.RmlElement): void {
 }
 
 export function calculateElementScale(camDistToPed: number): number {
-  const { x: screenX, y: screenY } = alt.getScreenResolution();
-  const aspectRatio = screenX / screenY; // Aspect ratio of the screen
-  const screenDiagonal = Math.sqrt(screenX ** 2 + screenY ** 2);
-  const scale = screenDiagonal / 2600;
+  const fov = 50; // Field of View
+  const avgPedHeight = 2; // Average pedestrian height
 
-  // Calculate the inverse distance factor
-  const inverseDistanceFactor = 1 / (Math.min(camDistToPed, 15) + 0.00001);
+  // The scaling formula can be adjusted as needed
+  // Here we use a simple linear relationship for demonstration
+  const scale = Math.min(1.5, 6 / camDistToPed);
 
-  // Now the scaleFactor combines both the inverse distance and the perspective projection
-  const scaleFactor = inverseDistanceFactor * 3;
+  return scale;
+  // const { x: screenX, y: screenY } = alt.getScreenResolution();
+  // const aspectRatio = screenX / screenY; // Aspect ratio of the screen
+  // const screenDiagonal = Math.sqrt(screenX ** 2 + screenY ** 2);
+  // const scale = screenDiagonal / 2600;
 
-  // Calculate the scale of font size
-  return Math.min(1, scaleFactor * aspectRatio) * scale;
+  // // Calculate the inverse distance factor
+  // const inverseDistanceFactor = 1 / (Math.min(camDistToPed, 15) + 0.00001);
+
+  // // Now the scaleFactor combines both the inverse distance and the perspective projection
+  // const scaleFactor = inverseDistanceFactor * 3;
+
+  // // Calculate the scale of font size
+  // return Math.min(1, scaleFactor * aspectRatio) * scale;
 }
 
 export function markElementAsVisible(element: alt.RmlElement): void {

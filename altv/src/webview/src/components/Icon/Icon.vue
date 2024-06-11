@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { rem } from "@/composables/use-pixel";
-import { asset } from "@/utils/asset";
+import { useSvgIcon } from "@/composables/use-svg-icon";
 
 interface IconProps {
   name: string;
@@ -9,18 +9,16 @@ interface IconProps {
   height?: number;
 }
 
-withDefaults(defineProps<IconProps>(), {
+const props = withDefaults(defineProps<IconProps>(), {
   size: 32,
 });
+
+const svgContent = useSvgIcon(props.name);
 </script>
 
 <template>
   <div
-    class="bg-contain"
-    :style="{
-      backgroundImage: `url(${asset(`assets/icons/${name}.svg`)})`,
-      width: rem(width || size),
-      height: rem(height || size),
-    }"
+    :style="{ width: rem(width || size), height: rem(height || size) }"
+    v-html="svgContent"
   />
 </template>

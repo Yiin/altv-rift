@@ -1,0 +1,12 @@
+@keyframes levitation {
+	0% {
+		transform: translateY(-0.3rem);
+	}
+	to { 
+		transform: translateY(0.3rem);
+	}
+}
+
+.ped-nametag {
+	animation: 1s cubic-in-out infinite alternate levitation;
+}

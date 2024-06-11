@@ -1,12 +1,12 @@
 import { toRaw } from "vue";
-import { getInventoryItem } from "@shared/modules/inventory";
+import { ItemMatchFlags, getInventoryItem } from "@shared/modules/inventory";
 import { Item, StackableItem, isStackable } from "@shared/modules/items";
 import { Inventory } from "@shared/interfaces";
 import { findFreeInventorySlot } from "./find-free-inventory-slot";
 
 export function addItemToInventory(inventory: Inventory, item: Item, slot?: number): boolean {
   if (isStackable(item)) {
-    const existingItem = getInventoryItem(inventory, item as Partial<StackableItem>);
+    const existingItem = getInventoryItem(inventory, item as Partial<StackableItem>, ItemMatchFlags.IGNORE_AMOUNT);
 
     if (existingItem) {
       existingItem.item.amount += item.amount;

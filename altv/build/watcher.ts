@@ -1,7 +1,5 @@
 import { WebSocketServer } from "ws";
 import { Subprocess, spawn, $ } from "bun";
-import Watcher from "watcher";
-import chokidar from "chokidar";
 
 const altvProcessName = process.platform === "win32" ? "./altv-server.exe" : "./altv-server";
 
@@ -63,33 +61,6 @@ async function restartServer() {
 
   restarting = false;
 }
-
-const serverWatcher = new Watcher(["/source/src/server/**/*.ts", "/source/src/shared/**/*.ts"], {
-  recursive: true,
-  renameDetection: true,
-  native: true
-});
-const clientWatcher = new Watcher(["/source/src/client/**/*.ts", "/source/src/shared/**/*.ts"], {
-  recursive: true,
-  renameDetection: true,
-});
-const assetsWatcher = new Watcher(["/source/src/client/**/*.rcss"], {
-  recursive: true,
-  renameDetection: true,
-});
-
-serverWatcher.on("change", () => {
-  console.log("[watcher] Server files changed");
-});
-
-clientWatcher.on("change", () => {
-  console.log("[watcher] Client files changed");
-});
-
-assetsWatcher.on("change", () => {
-  console.log("[watcher] Assets files changed");
-  restartServer();
-});
 
 restartServer();
 

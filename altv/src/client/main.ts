@@ -39,14 +39,6 @@ import { clientState } from "./core/store/client.store";
 
 // game.setVehicleModKit()
 
-async function main() {
-  const ped = alt.LocalPed.create({
-    model: 'mp_f_freemode_01', pos: new alt.Vector3(-0.7, 0, 71), heading: 0, useStreaming: false, dimension: alt.Player.local.dimension
-  });
-}
-
-main().catch(console.log)
-
 alt.Events.onConsoleCommand(({ command }) => {
   if (command === "user") {
     alt.log(JSON.stringify(useUser()?.$state), null, 2);

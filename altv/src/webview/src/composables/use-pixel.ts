@@ -39,5 +39,5 @@ export function px(value: number) {
 }
 
 export function rem(px: number) {
-  return px / 16;
+  return `${px / 16}rem`;
 }

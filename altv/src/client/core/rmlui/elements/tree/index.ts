@@ -24,7 +24,7 @@ registerElement({
 
     return div(
       {
-        className: "tree-wrapper",
+        class: "tree-wrapper",
         style: {
           transform: everyFrame(() => {
             const { x, y } = alt.worldToScreen(tree.pos);
@@ -35,7 +35,7 @@ registerElement({
       [
         div(
           {
-            className: "tree",
+            class: "tree",
             style: {
               color: isUnavailable ? "gray" : isOnCooldown ? "silver" : "white",
               "text-align": "left",

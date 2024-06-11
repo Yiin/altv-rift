@@ -6,107 +6,79 @@ import { br, div } from "../../renderer/rml-tags";
 import { AnchorType } from "../../renderer/anchors";
 import { registerElement } from "../../renderer/element-registry";
 import { everyFrame } from "../../renderer/hooks/every-frame";
+import { isQuestPed } from "@/modules/peds/lib/is-quest-ped";
+import { QuestNametag } from "./quest-nametag";
+import { px, rem } from "../../renderer/pixel";
+import { EnemyNametag } from "./enemy-nametag";
+import { Icon } from "../../components/icon";
 
 registerElement({
   key: "ped-nametag",
-  renderDistance: 50,
+  renderDistance: 40,
   anchorType: AnchorType.Ped,
   render({ entity: ped }) {
-    const nametag = ped.streamSyncedMeta.name;
+    const name = ped.streamSyncedMeta.name;
     const flags = ped.streamSyncedMeta.flags ?? 0;
     const isEnemy = !(flags & PedFlags.Peaceful);
+    const isQuest = isQuestPed(ped);
 
-    const health = () => Math.max(0, ped.streamSyncedMeta.health);
-    const maxHealth = () => ped.streamSyncedMeta.maxHealth;
+    console.log(isQuest, JSON.stringify(ped.interactions?.value));
 
-    return div(
-      {
-        style: {
-          position: "absolute",
-          "text-align": "center",
-          transform: everyFrame(() => {
-            const headPos = game.getPedBoneCoords(
-              ped,
-              Bones.SKEL_Head,
-              // adjust z position based on distance
-              0.4,
-              0,
-              0,
-            );
-            const { x, y } = alt.worldToScreen({ x: ped.pos.x, y: ped.pos.y, z: headPos.z });
-            return `translate(-50%, -50%) translate(${x}px, ${y}px)`;
-          }),
-        },
-      },
-      [
-        div(
-          {
-            style: {
-              "transform-origin": "center center",
-              transform: everyFrame(({ scale }) => `scale(${scale})`),
-            },
+    return div({
+      style: {
+        position: "absolute",
+      }
+    }, [
+      div(
+        {
+          style: {
+            "text-align": "center",
+            "transform-origin": "center bottom 0px",
+            width: rem(200),
+            height: rem(300),
+            display: "flex",
+            "flex-direction": "column",
+            "justify-content": "flex-end",
+            "align-items": "center",
+            transform: everyFrame(() => {
+              const headPos = game.getPedBoneCoords(
+                ped,
+                Bones.SKEL_Head,
+                // adjust z position based on distance
+                0.4,
+                0,
+                0,
+              );
+              const { x, y } = alt.worldToScreen({ x: ped.pos.x, y: ped.pos.y, z: headPos.z });
+
+              return `translate(${x - px(100)}px, ${y - px(300)}px)`;
+            }),
           },
-          [
-            ...(nametag
-              ? [
-                div(
-                  {
-                    style: {
-                      "font-effect": "outline(2px black)",
-                      "font-style": "normal",
-                      "font-size": "30pt",
-                      color: "white",
-                    },
-                  },
-                  [nametag],
-                ),
-                br([]),
-              ]
-              : []),
-            // Health bar
-            isEnemy &&
-            div([
-              div(
-                {
-                  style: {
-                    color: "white",
-                    "font-family": "josefinsans-semibold",
-                    "font-style": "normal",
-                    "font-size": "20pt",
-                    "font-effect": "outline(1px black)",
-                    transform: `translateY(-4px)`,
-                  },
-                },
-                [everyFrame(() => `${Math.max(0, health())} / ${maxHealth()}`)],
-              ),
-              br([]),
-              div(
-                {
-                  style: {
-                    transform: `translateY(-50%)`,
-                    display: "block",
-                    background: "rgb(120, 0, 0)",
-                    border: "3px black",
-                    opacity: "1",
-                    width: "120px",
-                    height: "8px",
-                  },
-                },
-                [
-                  div({
-                    style: {
-                      display: "block",
-                      width: everyFrame(() => `${(health() / maxHealth()) * 100 || 0}%`),
-                      height: "8px",
-                      background: "rgb(255, 50, 50)",
-                    },
-                  }),
-                ],
-              ),
-            ]),
-          ],
-        ),
-      ],
-    );
+        },
+        [
+          div(
+            {
+              style: {
+                "transform-origin": "center bottom",
+                transform: everyFrame(({ scale }) => `scale(${scale})`),
+              },
+            },
+            [
+              isQuest
+                ? QuestNametag(ped)
+                : isEnemy
+                  ? EnemyNametag(ped)
+                  : div({
+                    class: "questNameTagContainer"
+                  }, [
+                    div({
+                      class: "questNameTagName"
+                    }, [name]),
+                  ]),
+            ],
+          ),
+        ],
+      )
+    ]);
   },
 });

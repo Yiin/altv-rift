@@ -54,7 +54,7 @@ registerElement({
 
     return div(
       {
-        className: "interaction-wrapper",
+        class: "interaction-wrapper",
         style: {
           transform: everyFrame(({ pos }) => {
             const { x, y } = alt.worldToScreen(pos);
@@ -67,7 +67,7 @@ registerElement({
         div([Indicator()]),
         div(
           {
-            className: "interaction-content",
+            class: "interaction-content",
             style: {
               transform: `translate(55px, -47px)`,
               opacity: everyFrame(() => (menu.isActive ? 1 : 0)),
@@ -96,12 +96,12 @@ registerElement({
                     div([
                       div(
                         {
-                          className: [
+                          class: [
                             "interaction",
                             currentMenuIndex === index && "interaction--selected",
                           ],
                         },
-                        [span({ className: "label" }, [interaction.text])],
+                        [span({ class: "label" }, [interaction.text])],
                       )
                     ]),
                     Icon("mouse-wheel", {

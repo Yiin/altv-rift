@@ -4,22 +4,22 @@ import { ParsedElement } from "../../renderer/types";
 export function Indicator(): ParsedElement {
   return div(
     {
-      className: "indicator",
+      class: "indicator",
     },
     [
       div(
         {
-          className: "indicator__glow-wrapper",
+          class: "indicator__glow-wrapper",
         },
         [
           img({
-            className: "indicator__glow",
+            class: "indicator__glow",
             src: `components/indicator/assets/indicator-glow.png`,
           }),
         ],
       ),
       img({
-        className: "indicator__dot",
+        class: "indicator__dot",
         src: `components/indicator/assets/indicator_dot.png`,
         // src: `components/indicator/assets/keyboard-mouse/light/W.png`,
       }),

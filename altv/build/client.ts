@@ -1,19 +1,21 @@
 import esbuild, { BuildOptions } from "esbuild";
 import Watcher from "watcher";
+import chokidar from "chokidar";
+import path from "path";
 import yamlPlugin from "./plugins/yaml-plugin";
 import { esbuildOptions } from "./shared";
-import { copy } from "./copy";
+import { copy, copyFile } from "./copy";
 import { filelocPlugin } from "./plugins/fileloc-plugin";
 import { rcssPlugin } from "./plugins/rcss-plugin";
 import { reloadResource } from "./reconnect";
 import { isDev } from "./env";
 
 export const ASSETS_PATHS = [
-  "src/resource.toml",
-  "src/client/**/*.rml",
-  "src/client/**/*.ttf",
-  "src/client/**/*.png",
-  "src/client/**/*.rcss",
+  "/source/src/resource.toml",
+  "/source/src/client/**/*.rml",
+  "/source/src/client/**/*.ttf",
+  "/source/src/client/**/*.png",
+  "/source/src/client/**/*.rcss",
 ];
 
 if (isDev()) {
@@ -29,13 +31,20 @@ if (isDev()) {
   });
 
   // // Watch .rml files for changes
-  // const watcher = chokidar.watch(ASSETS_PATHS);
+  const watcher = chokidar.watch(ASSETS_PATHS);
 
-  // watcher.on("change", (filePath) => {
-  //   const relativePath = path.relative("src", filePath);
-  //   const destPath = path.join("resources/main", relativePath);
-  //   copyFile(filePath, destPath);
-  // });
+  watcher.on("change", (filePath) => {
+    const rootDir = "src";
+    const absoluteRootDir = filePath.substring(0, filePath.indexOf(rootDir) + rootDir.length);
+    const relativePath = path.relative(absoluteRootDir, filePath);
+    const destPath = path.join("resources/main", relativePath);
+    console.log("Assets changed, copying", { filePath, relativePath, destPath });
+    copyFile(filePath, destPath);
+
+    if (!filePath.endsWith("screen.rml")) {
+      reloadResource();
+    }
+  });
 }
 
 for (const assetsPath of ASSETS_PATHS) {

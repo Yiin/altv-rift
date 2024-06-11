@@ -23,17 +23,17 @@ services:
       - ./altv:/source
       - node_modules:/source/node_modules
       - altv:/altv
-    entrypoint: ["/root/entrypoint.sh", "builder"]
-    stdin_open: true 
+    entrypoint: [ "/root/entrypoint.sh", "builder" ]
+    stdin_open: true
     env_file:
       - .env
-    depends_on:
-      - graylog
-    logging:
-      driver: gelf
-      options:
-        gelf-address: "udp://127.0.0.1:12201"
-        tag: "builder"
+    # depends_on:
+    #   - graylog
+    # logging:
+    #   driver: gelf
+    #   options:
+    #     gelf-address: "udp://127.0.0.1:12201"
+    #     tag: "builder"
 
   server:
     build:
@@ -44,8 +44,8 @@ services:
       - ./altv:/source
       - node_modules:/source/node_modules
       - altv:/altv
-    entrypoint: ["/root/entrypoint.sh", "server"]
-    stdin_open: true 
+    entrypoint: [ "/root/entrypoint.sh", "server" ]
+    stdin_open: true
     ports:
       - '7788:7788'
       - '7788:7788/udp'
@@ -54,88 +54,88 @@ services:
     depends_on:
       - mongo
       - builder
-      - graylog
+      # - graylog
     env_file:
       - .env
-    logging:
-      driver: gelf
-      options:
-        gelf-address: "udp://127.0.0.1:12201"
-        tag: "server"
+    # logging:
+    #   driver: gelf
+    #   options:
+    #     gelf-address: "udp://127.0.0.1:12201"
+    #     tag: "server"
 
-  # Run webview locally, HMR is broken in Docker: https://github.com/vitejs/vite/issues/4116
-  # webview:
-  #   build:
-  #     context: .
-  #     dockerfile: ./server/Dockerfile
-  #   restart: unless-stopped
-  #   volumes:
-  #     - ./altv:/source
-  #     - node_modules:/source/node_modules
-  #     - webview_node_modules:/source/src/webview/node_modules
-  #     - altv:/altv
-  #   entrypoint: ["/root/entrypoint.sh", "webview"]
-  #   ports:
-  #     - '5173:5173'
-  #     - '24678:24678' # HMR WebSocket port
-  #   depends_on:
-  #     - server
-  #     - graylog
-  #   env_file:
-  #     - .env
-  #   logging:
-  #     driver: gelf
-  #     options:
-  #       gelf-address: "udp://127.0.0.1:12201"
-  #       tag: "webview"
+    # Run webview locally, HMR is broken in Docker: https://github.com/vitejs/vite/issues/4116
+    # webview:
+    #   build:
+    #     context: .
+    #     dockerfile: ./server/Dockerfile
+    #   restart: unless-stopped
+    #   volumes:
+    #     - ./altv:/source
+    #     - node_modules:/source/node_modules
+    #     - webview_node_modules:/source/src/webview/node_modules
+    #     - altv:/altv
+    #   entrypoint: ["/root/entrypoint.sh", "webview"]
+    #   ports:
+    #     - '5173:5173'
+    #     - '24678:24678' # HMR WebSocket port
+    #   depends_on:
+    #     - server
+    #     - graylog
+    #   env_file:
+    #     - .env
+    #   logging:
+    #     driver: gelf
+    #     options:
+    #       gelf-address: "udp://127.0.0.1:12201"
+    #       tag: "webview"
 
-  opensearch:
-    image: "opensearchproject/opensearch:2.12.0"
-    environment:
-      - "OPENSEARCH_JAVA_OPTS=-Xms1g -Xmx1g"
-      - "bootstrap.memory_lock=true"
-      - "discovery.type=single-node"
-      - "action.auto_create_index=false"
-      - "plugins.security.ssl.http.enabled=false"
-      - "plugins.security.disabled=true"
-      # Can generate a password for `OPENSEARCH_INITIAL_ADMIN_PASSWORD` using a linux device via:
-      # tr -dc A-Z-a-z-0-9_@#%^-_=+ < /dev/urandom  | head -c${1:-32}
-      - OPENSEARCH_INITIAL_ADMIN_PASSWORD=Xnza0mT0yvcmWJlDcEWoygdweed#Iuaf
-    ulimits:
-      memlock:
-        hard: -1
-        soft: -1
-      nofile:
-        soft: 65536
-        hard: 65536
-    restart: "on-failure"
+    # opensearch:
+    #   image: "opensearchproject/opensearch:2.12.0"
+    #   environment:
+    #     - "OPENSEARCH_JAVA_OPTS=-Xms1g -Xmx1g"
+    #     - "bootstrap.memory_lock=true"
+    #     - "discovery.type=single-node"
+    #     - "action.auto_create_index=false"
+    #     - "plugins.security.ssl.http.enabled=false"
+    #     - "plugins.security.disabled=true"
+    #     # Can generate a password for `OPENSEARCH_INITIAL_ADMIN_PASSWORD` using a linux device via:
+    #     # tr -dc A-Z-a-z-0-9_@#%^-_=+ < /dev/urandom  | head -c${1:-32}
+    #     - OPENSEARCH_INITIAL_ADMIN_PASSWORD=Xnza0mT0yvcmWJlDcEWoygdweed#Iuaf
+    #   ulimits:
+    #     memlock:
+    #       hard: -1
+    #       soft: -1
+    #     nofile:
+    #       soft: 65536
+    #       hard: 65536
+    #   restart: "on-failure"
 
-  graylog:
-    hostname: "server"
-    image: "graylog/graylog:6.0.0"
-    depends_on:
-      - mongo
-      - opensearch
-    entrypoint: "/usr/bin/tini -- wait-for-it elasticsearch:9200 --  /docker-entrypoint.sh"
-    ports:
-      - "9000:9000/tcp" # Graylog web interface and REST API
-      - "5044:5044/tcp" # Beats
-      - "5140:5140/tcp" # Syslog TCP
-      - "5140:5140/udp" # Syslog UDP
-      - "12201:12201/tcp" # GELF TCP
-      - "12201:12201/udp" # GELF UDP
-      - "13301:13301/tcp" # Forwarder data
-      - "13302:13302/tcp" # Forwarder config
-    volumes:
-      - "graylog_data:/usr/share/graylog/data/data"
-      - "graylog_journal:/usr/share/graylog/data/journal"
-    restart: "on-failure"
-    env_file:
-      - .env
+    # graylog:
+    #   hostname: "server"
+    #   image: "graylog/graylog:6.0.0"
+    #   depends_on:
+    #     - mongo
+    #     - opensearch
+    #   entrypoint: "/usr/bin/tini -- wait-for-it elasticsearch:9200 --  /docker-entrypoint.sh"
+    #   ports:
+    #     - "9000:9000/tcp" # Graylog web interface and REST API
+    #     - "5044:5044/tcp" # Beats
+    #     - "5140:5140/tcp" # Syslog TCP
+    #     - "5140:5140/udp" # Syslog UDP
+    #     - "12201:12201/tcp" # GELF TCP
+    #     - "12201:12201/udp" # GELF UDP
+    #     - "13301:13301/tcp" # Forwarder data
+    #     - "13302:13302/tcp" # Forwarder config
+    #   volumes:
+    #     - "graylog_data:/usr/share/graylog/data/data"
+    #     - "graylog_journal:/usr/share/graylog/data/journal"
+    #   restart: "on-failure"
+    #   env_file:
+    #     - .env
 
 volumes:
   node_modules:
   mongo_data:
   altv:
-  graylog_data:
-  graylog_journal:
+    # graylog_data:
+    # graylog_journal:

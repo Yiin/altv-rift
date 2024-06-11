@@ -39,13 +39,13 @@ export function Icon(name: IconName | string, props: IconProps = {}): ParsedElem
 
   if (name.startsWith('key-')) {
     return div(props, [img({
-      className: "icon",
+      class: "icon",
       src: `components/icon/assets/keyboard-mouse/light/${name.replace('key-', '')}.png`,
       style: sizeStyle,
     })]);
   }
   return div(props, [img({
-    className: "icon",
+    class: "icon",
     src: `components/icon/assets/icon-${name}.png`,
     style: sizeStyle,
   })]);

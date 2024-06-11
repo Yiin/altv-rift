@@ -124,7 +124,10 @@ processQuestFact.hook((player, questFact) => {
     case Quests.Introduction.Facts.COMPLETED_MINING_STARTED_SMITHING: {
       if (
         player.isNearPed(PedKey.MINING_TUTOR) &&
-        player.removeInventoryItemByKey(Ore.IRON_ORE, Quests.Introduction.Constants.IRON_ORE_NEEDED)
+        player.hasItem({
+          key: Ore.IRON_ORE,
+          amount: Quests.Introduction.Constants.IRON_ORE_NEEDED,
+        })
       ) {
         return true;
       } else {

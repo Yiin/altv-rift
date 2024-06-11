@@ -15,6 +15,10 @@ alt.Events.onConsoleCommand(({ command }) => {
 });
 
 alt.Timers.everyTick(() => {
+  if (!alt.isGameFocused()) {
+    return;
+  }
+
   // Cleanup previous frame
   visibleElementsHeap.clear();
   notRenderedElements.clear();

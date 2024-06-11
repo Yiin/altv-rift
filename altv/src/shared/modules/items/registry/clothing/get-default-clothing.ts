@@ -3,7 +3,6 @@ export function getDefaultClothing(
   component: number,
 ): [number, number] | undefined {
   if (isMale) {
-    console.log("male");
     return (
       {
         1: [0, 0],

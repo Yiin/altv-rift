@@ -1,0 +1,46 @@
+.nameTagContainer {
+  color: white;
+  font-family: josefinsans-semibold;
+  font-style: normal;
+  font-size: 1.25rem; /* 20pt */
+  font-effect: outline(1px black);
+  transform: translateY(-0.25rem); /* -4px */
+}
+
+.healthBarContainer {
+  position: relative;
+  transform: translateY(-50%);
+  display: block;
+  background: #EE2E244D;
+  width: 7.5rem; /* 120px */
+  height: 0.5rem; /* 8px */
+}
+
+.healthBar {
+  position: relative;
+  display: block;
+  height: 0.5rem; /* 8px */
+  background: #EE2E24;
+}
+
+.healthBarTopGradient {
+  position: absolute;
+  top: -0.21875rem; /* -3.5px */
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 0.25rem; /* 4px */
+  decorator: gradient(vertical #EE2E2400 #EE2E24);
+  opacity: 0.8;
+}
+
+.healthBarBottomGradient {
+  position: absolute;
+  top: 0.46875rem; /* (8px - 0.5px) */
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 0.25rem; /* 4px */
+  decorator: gradient(vertical #EE2E24 #EE2E2400);
+  opacity: 0.8;
+}

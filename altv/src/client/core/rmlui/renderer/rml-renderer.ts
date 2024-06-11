@@ -49,10 +49,18 @@ export function updateTextNode(document: alt.RmlDocument, node: alt.RmlElement, 
 
 function renderParsedNode(
   rmlNode: alt.RmlElement | undefined,
-  parsedElement: ParsedElement,
+  parsedElement: ParsedElement | null,
   parent: alt.RmlElement,
   document: alt.RmlDocument,
 ) {
+  if (!parsedElement) {
+    if (rmlNode) {
+      console.log("Parsed element doesn't exist, removing node");
+      parent.removeChild(rmlNode);
+      rmlNode.destroy();
+    }
+    return;
+  }
   // Initial render or previous render didn't rendered anything
   if (!rmlNode) {
     if ("text" in parsedElement) {
@@ -100,15 +108,15 @@ function renderParsedNode(
   let currentChildren = rmlNode.childNodes;
   const parsedChildren = parsedElement.children;
 
-  // if (currentChildren.length !== parsedChildren.length) {
-  //   // If the number of children has changed, we need to re-render the whole thing
-  //   currentChildren = [];
+  if (currentChildren.length !== parsedChildren.length) {
+    // If the number of children has changed, we need to re-render the whole thing
+    currentChildren = [];
 
-  //   for (const child of rmlNode.childNodes) {
-  //     rmlNode.removeChild(child);
-  //     child.destroy();
-  //   }
-  // }
+    for (const child of rmlNode.childNodes) {
+      rmlNode.removeChild(child);
+      child.destroy();
+    }
+  }
 
   // Diff children
   for (let i = 0; i < parsedChildren.length; i++) {
@@ -153,13 +161,13 @@ function parseElement(
   children: (string | ParsedElement)[],
 ): ParsedElement {
   const classNames: string[] =
-    typeof props.className === "string"
-      ? [props.className]
-      : Array.isArray(props.className)
-        ? props.className.filter(Boolean)
+    typeof props.class === "string"
+      ? [props.class]
+      : Array.isArray(props.class)
+        ? props.class.filter(Boolean)
         : [];
 
-  delete props.className;
+  delete props.class;
 
   const type = tagName || "div";
 

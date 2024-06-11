@@ -281,24 +281,33 @@ whileInGame(() => {
     (entity) => {
       let node: alt.RmlElement | null = null;
 
-      const stopWatching = watchEffect(() => {
+      console.log("start watching");
+      const stopWatching = watchEffect((onCleanup) => {
+        console.log("trigger effect");
         if (isQuestPed(entity)) {
+          console.log("still quest ped");
           const point = addNearbyPoint(() => entity.pos, 'quest');
           node = point.node;
+        } else {
+          console.log("no longer quest ped");
         }
 
-        return () => {
+        onCleanup(() => {
+          console.log("cleanup");
           if (node) {
+            console.log("removing nearby point");
             removeNearbyPoint(node);
             node = null;
           }
-        }
-      });
+        });
+      }, { flush: 'sync' });
 
       return () => {
+        console.log("stop watching");
         stopWatching();
 
         if (node) {
+          console.log("removing nearby point");
           removeNearbyPoint(node);
         }
       };
@@ -306,6 +315,10 @@ whileInGame(() => {
   );
 
   const timer = alt.Timers.everyTick(() => {
+    if (!alt.isGameFocused()) {
+      return;
+    }
+
     direction = (360 - (game.getGameplayCamRot(2).z % 360)) % 360;
 
     updateTicks(direction);
