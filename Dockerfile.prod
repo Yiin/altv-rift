@@ -186,7 +186,7 @@ RUN npm install -g bun && \
   rm -rf /root/setup /altv/src && \
   find /altv/node_modules -mindepth 1 -maxdepth 1 ! -name '.prisma' -exec rm -rf {} +
 
-FROM deps
+FROM deps as runtime
 WORKDIR /altv
 
 COPY --from=base /altv /altv

@@ -10,12 +10,14 @@ import { rcssPlugin } from "./plugins/rcss-plugin";
 import { reloadResource } from "./reconnect";
 import { isDev } from "./env";
 
+const sourceRoot = isDev() ? "/source" : "/altv";
+
 export const ASSETS_PATHS = [
-  "/source/src/resource.toml",
-  "/source/src/client/**/*.rml",
-  "/source/src/client/**/*.ttf",
-  "/source/src/client/**/*.png",
-  "/source/src/client/**/*.rcss",
+  `${sourceRoot}/src/resource.toml`,
+  `${sourceRoot}/src/client/**/*.rml`,
+  `${sourceRoot}/src/client/**/*.ttf`,
+  `${sourceRoot}/src/client/**/*.png`,
+  `${sourceRoot}/src/client/**/*.rcss`,
 ];
 
 if (isDev()) {

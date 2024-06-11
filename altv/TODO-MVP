@@ -77,29 +77,31 @@ Missing:
 Mercenary:
   ☐ xp: Kill enemies
   ☐ xp: Complete mercenary tasks
-  Skills:
-    - Adrenaline Surge: Boosts damage resistance for a short duration.
-    - Overdrive: Infinite ammo for a short period.
-    - Target Lock: Mark an enemy to take additional damage from you and allies for a short period.
-    - Critical Hit: Chance to deal extra damage with each attack.
+Skills:
+- Adrenaline Surge: Boosts damage resistance for a short duration.
+- Overdrive: Infinite ammo for a short period.
+- Target Lock: Mark an enemy to take additional damage from you and allies for a short period.
+- Critical Hit: Chance to deal extra damage with each attack.
+
 Medic:
   ☐ xp: Use medicine
   ☐ xp: CC enemies(?)
-  Skills:
-    - Revive: Quickly revive a fallen teammate with a portion of their health restored.
-    - First Aid: Directly heal a target.
-    - Regeneration Aura: Allies near the medic gradually regenerate health.
-    - Efficient Healing: Healing items and abilities are 50% more effective.
-    - Quick Revive: Revive fallen teammates faster.
-    - Healing Proficiency: Increased effectiveness of healing over time (HoT) abilities.
+Skills:
+- Revive: Quickly revive a fallen teammate with a portion of their health restored.
+- First Aid: Directly heal a target.
+- Regeneration Aura: Allies near the medic gradually regenerate health.
+- Efficient Healing: Healing items and abilities are 50% more effective.
+- Quick Revive: Revive fallen teammates faster.
+- Healing Proficiency: Increased effectiveness of healing over time (HoT) abilities.
+
 Engineer:
   ☐ xp: Craft items
   ☐ xp: Repair items
   ☐ xp: Build structures(?)
-  Skills:
-    - Repair Drone: Deploy a drone
-    - Advanced Crafting: Craft higher-grade items and equipment.
-    - ???
+Skills:
+- Repair Drone: Deploy a drone
+- Advanced Crafting: Craft higher-grade items and equipment.
+- ???
 
   - Guilds (UI ❌)
   - Territory control (UI ❌)
