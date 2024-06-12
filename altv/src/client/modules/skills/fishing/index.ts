@@ -1,6 +1,6 @@
 import alt from "@altv/client";
 import { FishingGameType, PlayerFlags } from "@shared/store/game-state.store";
-import { ActionType, ClientFlags } from "@shared/store/client.store";
+import { ActionTipType, ActionType, ClientFlags } from "@shared/store/client.store";
 import { ServerCall } from "@shared/calls/server";
 import { gameState } from "@/core/store/game-state.store";
 import { clientState } from "@/core/store/client.store";
@@ -26,6 +26,11 @@ registerActions(() => {
       },
     });
   } else if (clientState.flags.has(ClientFlags.CanFish)) {
+    if (!clientState.actionTip) {
+      clientState.actionTip = {
+        type: ActionTipType.FISHING,
+      };
+    }
     actions.push({
       item: {
         type: ActionType.FISHING,
@@ -35,6 +40,10 @@ registerActions(() => {
         startFishingTask();
       },
     });
+  } else {
+    if (clientState.actionTip?.type === ActionTipType.FISHING) {
+      clientState.actionTip = null;
+    }
   }
 
   return actions;

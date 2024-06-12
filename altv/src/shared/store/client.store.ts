@@ -70,6 +70,18 @@ export type CurrentWindow = {
   type: WindowType;
 };
 
+export enum ActionTipType {
+  MINING = 'mining',
+  WOODCUTTING = 'woodcutting',
+  FISHING = 'fishing',
+  PLANT_SEED = 'plant-seed',
+  HARVEST = 'harvest',
+}
+
+export type ActionTip = {
+  type: ActionTipType;
+};
+
 export interface ClientState {
   ui: {
     scene: Scene | null;
@@ -82,6 +94,7 @@ export interface ClientState {
   flags: Set<ClientFlags>;
   actionMenu: ActionItem[];
   targetAction: TargetAction | null;
+  actionTip: ActionTip | null;
   nearbyItems: {
     item: Item;
     id: GroundItemSource["originId"];
@@ -115,5 +128,6 @@ export const getDefaultClientStoreState = (): ClientState => ({
   flags: new Set(),
   actionMenu: [],
   targetAction: null,
+  actionTip: null,
   nearbyItems: [],
 });

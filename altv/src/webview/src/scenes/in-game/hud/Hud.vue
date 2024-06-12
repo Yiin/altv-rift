@@ -3,6 +3,7 @@ import { computed } from "vue";
 import { useCharacter } from "@/store/synced/character.store";
 import Icon from "@/components/Icon/Icon.vue";
 import WeaponHud from "./WeaponHud.vue";
+import ActionTip from "./ActionTip.vue";
 
 const character = useCharacter();
 
@@ -21,5 +22,8 @@ const money = computed(() => new Intl.NumberFormat("lt-LT").format(character.mon
       />
     </div>
     <WeaponHud />
+  </div>
+  <div class="absolute-center-y left-0 m-10">
+    <ActionTip />
   </div>
 </template>
