@@ -21,6 +21,8 @@ alt.Player.prototype.resetClothes = function (component?: number) {
     }
     return;
   }
+  this.clearClothes(component);
+
   if (this.model === alt.hash("mp_f_freemode_01")) {
     switch (component) {
       case 3: {

@@ -97,7 +97,7 @@ Skills:
     ✔ Fishing rod item is required for fishing. @done
     ✔ Fishing rod item needs to appear in hand while fishing animation is playing @done
     ☐ Fishing rod needs to disappear from hand when fishing animation is finished
-  ☐ Digging (Mining)
+  ✘ Digging (Mining) @cancelled(24-06-13 10:37)
     ☐ Design
     ☐ UI
     ☐ Define digging spots @started
@@ -114,15 +114,15 @@ Skills:
     ☐ Mining skill is increased by mining
     ☐ Mining skill is used to determine the amount of ore collected from a mining spot
     ☐ Mining speed depends on mining skill level
-    ☐ Pickaxe item is required for mining
+    ✔ Pickaxe item is required for mining @done
     ☐ Pickaxe item needs to appear in hand while mining animation is playing
     ☐ Pickaxe needs to disappear from hand when mining animation is finished
   ☐ Crafting
     ✔ Design @done
     ✔ UI @done
     ✔ Blueprint definitions @done
-    ☐ Crafting skill is increased by crafting
-    ☐ Crafting skill increases the chance of crafting success
+    ✔ Crafting skill is increased by crafting @done
+    ✘ Crafting skill increases the chance of crafting success @cancelled
   ☐ Cooking
     ☐ Design
     ☐ UI

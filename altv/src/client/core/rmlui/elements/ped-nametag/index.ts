@@ -1,8 +1,8 @@
 import alt from "@altv/client";
 import game from "@altv/natives";
 import { Bones } from "@shared/enums/bones";
-import { PED_HEALTH_ZERO, PedFlags } from "@shared/modules/ped";
-import { br, div } from "../../renderer/rml-tags";
+import { PedFlags } from "@shared/modules/ped";
+import { div } from "../../renderer/rml-tags";
 import { AnchorType } from "../../renderer/anchors";
 import { registerElement } from "../../renderer/element-registry";
 import { everyFrame } from "../../renderer/hooks/every-frame";
@@ -10,7 +10,7 @@ import { isQuestPed } from "@/modules/peds/lib/is-quest-ped";
 import { QuestNametag } from "./quest-nametag";
 import { px, rem } from "../../renderer/pixel";
 import { EnemyNametag } from "./enemy-nametag";
-import { Icon } from "../../components/icon";
+
 
 registerElement({
   key: "ped-nametag",
@@ -21,8 +21,6 @@ registerElement({
     const flags = ped.streamSyncedMeta.flags ?? 0;
     const isEnemy = !(flags & PedFlags.Peaceful);
     const isQuest = isQuestPed(ped);
-
-    console.log(isQuest, JSON.stringify(ped.interactions?.value));
 
     return div({
       style: {
