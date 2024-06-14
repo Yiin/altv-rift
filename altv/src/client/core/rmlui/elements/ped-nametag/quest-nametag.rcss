@@ -29,6 +29,14 @@
 
 .questNameTagIcon {
   margin-top: 1.0625rem; /* 17px */
-  width: 1rem; /* 16px */
-  height: 0.5rem; /* 8px */
+	animation: 1s cubic-in-out infinite alternate levitation;
+}
+
+@keyframes levitation {
+	0% {
+		transform: translateY(-0.3rem);
+	}
+	to { 
+		transform: translateY(0.3rem);
+	}
 }

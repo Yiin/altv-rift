@@ -1,12 +1,18 @@
-@keyframes levitation {
-	0% {
-		transform: translateY(-0.3rem);
-	}
-	to { 
-		transform: translateY(0.3rem);
-	}
+.pedNameTagContainer {
+	position: absolute;
 }
 
-.ped-nametag {
-	animation: 1s cubic-in-out infinite alternate levitation;
+.pedNameTag {
+	text-align: center;
+	transform-origin: center bottom 0px;
+	width: 12.5rem; /* 200px */
+	height: 18.75rem; /* 300px */
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+.pedNameTagContent {
+	transform-origin: center bottom;
 }

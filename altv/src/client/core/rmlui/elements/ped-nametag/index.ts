@@ -22,61 +22,52 @@ registerElement({
     const isEnemy = !(flags & PedFlags.Peaceful);
     const isQuest = isQuestPed(ped);
 
-    return div({
-      style: {
-        position: "absolute",
-      }
-    }, [
-      div(
-        {
-          style: {
-            "text-align": "center",
-            "transform-origin": "center bottom 0px",
-            width: rem(200),
-            height: rem(300),
-            display: "flex",
-            "flex-direction": "column",
-            "justify-content": "flex-end",
-            "align-items": "center",
-            transform: everyFrame(() => {
-              const headPos = game.getPedBoneCoords(
-                ped,
-                Bones.SKEL_Head,
-                // adjust z position based on distance
-                0.4,
-                0,
-                0,
-              );
-              const { x, y } = alt.worldToScreen({ x: ped.pos.x, y: ped.pos.y, z: headPos.z });
+    return div(
+      { class: "pedNameTagContainer" },
+      [
+        div(
+          {
+            class: "pedNameTag",
+            style: {
+              transform: everyFrame(() => {
+                const headPos = game.getPedBoneCoords(
+                  ped,
+                  Bones.SKEL_Head,
+                  0.4, 0, 0
+                );
+                const { x, y } = alt.worldToScreen({ x: ped.pos.x, y: ped.pos.y, z: headPos.z });
 
-              return `translate(${x - px(100)}px, ${y - px(300)}px)`;
-            }),
-          },
-        },
-        [
-          div(
-            {
-              style: {
-                "transform-origin": "center bottom",
-                transform: everyFrame(({ scale }) => `scale(${scale})`),
-              },
+                // 100 and 300 are values from .ped-nametag width & height
+                // x - width / 2
+                // y - height
+                return `translate(${x - px(100)}px, ${y - px(300)}px)`;
+              }),
             },
-            [
-              isQuest
-                ? QuestNametag(ped)
-                : isEnemy
-                  ? EnemyNametag(ped)
-                  : div({
-                    class: "questNameTagContainer"
-                  }, [
-                    div({
-                      class: "questNameTagName"
-                    }, [name]),
-                  ]),
-            ],
-          ),
-        ],
-      )
-    ]);
+          },
+          [
+            div(
+              {
+                class: "pedNameTagContent",
+                style: {
+                  transform: everyFrame(({ scale }) => `scale(${scale})`),
+                },
+              },
+              [
+                isQuest
+                  ? QuestNametag(ped)
+                  : isEnemy
+                    ? EnemyNametag(ped)
+                    : div({
+                      class: "questNameTagContainer"
+                    }, [
+                      div({
+                        class: "questNameTagName"
+                      }, [name]),
+                    ]),
+              ],
+            ),
+          ],
+        )
+      ]);
   },
 });

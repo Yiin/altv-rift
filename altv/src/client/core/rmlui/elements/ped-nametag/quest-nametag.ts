@@ -1,6 +1,7 @@
 import alt from "@altv/client";
 import { div } from "../../renderer/rml-tags";
 import { Icon } from "../../components/icon";
+import { rem } from "../../renderer/pixel";
 
 export function QuestNametag(ped: alt.Ped) {
   const name = ped.streamSyncedMeta.name;
@@ -17,8 +18,5 @@ export function QuestNametag(ped: alt.Ped) {
     div({
       class: "questNameTagQuestAvailable"
     }, ["Quest Available"]),
-    Icon("triangle-down", {
-      class: "questNameTagIcon",
-    }),
   ]);
 }
