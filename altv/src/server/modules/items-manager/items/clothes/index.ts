@@ -9,6 +9,7 @@ import {
   isUnisexClothing,
   isMaleClothing,
   isComponentVariation,
+  TopItemInfo,
 } from "@shared/modules/items";
 import { getTorsoForTop } from "@shared/modules/items/registry/clothing/get-correct-torso";
 import { on } from "@/core/events/emit";
@@ -48,7 +49,7 @@ on(ServerEvents.FromServer.ITEM_EQUIP, (player, item) => {
     player.setClothes(itemInfo.componentId, itemInfo.drawableId, itemInfo.textureId, 2);
 
     if (itemInfo.componentId === 11) {
-      const torso = getTorsoForTop(player.model, itemInfo.drawableId, itemInfo.textureId);
+      const torso = getTorsoForTop(player.model, itemInfo as TopItemInfo);
 
       if (torso) {
         player.setClothes(3, torso.drawableId, torso.textureId, 2);

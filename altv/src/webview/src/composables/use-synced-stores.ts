@@ -66,7 +66,7 @@ export function useSyncedStores() {
     }
 
     try {
-      console.log("[WebView] Setting character store state");
+      console.log("[WebView] Setting character store state", JSON.stringify(state));
       setCharacterStore(
         defineStore("character", {
           state: () => state,

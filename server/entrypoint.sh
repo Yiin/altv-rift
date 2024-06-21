@@ -37,6 +37,9 @@ case "$1" in
     #   rsync -av --delete "$BACKUP_DIR/" "$MODULE_DIR/"
     # fi
 
+    echo "ALTV_RESOURCES:"
+    echo $ALTV_RESOURCES
+
     chmod +x altv-server altv-crash-handler
     bun run /root/setup/server.js
     bun run server

@@ -25,8 +25,8 @@ alt.Player.prototype.startGame = async function (characterId: string) {
       .forEach(({ slot }) => {
         removeItemFromInventorySlot(this.character.inventory, slot);
       });
+    this.updateCharacterAppearance(character.appearance);
   }
-  this.updateCharacterAppearance(character.appearance);
 
   this.spawn(character.lastPosition);
   this.rot = new alt.Vector3(character.rot);

@@ -1,14 +1,16 @@
+import { InGamePlayer } from "@/core/utility/assertions";
 import alt from "@altv/server";
 import { type Appearance } from "@prisma/client";
 import { ClientEvents } from "@shared/events/client";
+import { getItemInfoByKey } from "@shared/modules/items";
 import { getTorsoForTop } from "@shared/modules/items/registry/clothing/get-correct-torso";
 import { getDefaultClothing } from "@shared/modules/items/registry/clothing/get-default-clothing";
 
 declare module "@altv/server" {
   export interface Player {
-    resetClothes(this: Player, component?: number): void;
+    resetClothes(this: InGamePlayer, component?: number): void;
     updateCharacterAppearance(
-      this: Player,
+      this: InGamePlayer,
       appearance?: import("@prisma/client").Appearance,
     ): Promise<void>;
   }
@@ -26,10 +28,20 @@ alt.Player.prototype.resetClothes = function (component?: number) {
   if (this.model === alt.hash("mp_f_freemode_01")) {
     switch (component) {
       case 3: {
-        // gloves
-        const top = this.getClothes(11);
+        // torso
+        const top = this.character.equipment.top;
 
-        const torso = getTorsoForTop(this.model, top.drawable, top.texture);
+        if (!top) {
+          return;
+        }
+
+        const topInfo = getItemInfoByKey(top.key);
+
+        if (!topInfo) {
+          return;
+        }
+
+        const torso = getTorsoForTop(this.model, topInfo);
 
         if (torso) {
           this.setClothes(3, torso.drawableId, torso.textureId, 2);
@@ -55,22 +67,30 @@ alt.Player.prototype.resetClothes = function (component?: number) {
   } else {
     switch (component) {
       case 3: {
-        // gloves
-        const top = this.getClothes(11);
+        // torso
+        const top = this.character.equipment.top;
 
-        try {
-          const torso = getTorsoForTop(this.model, top.drawable, top.texture);
+        if (!top) {
+          return;
+        }
 
-          if (torso) {
-            this.setClothes(3, torso.drawableId, torso.textureId, 2);
-          }
-        } catch {
+        const topInfo = getItemInfoByKey(top.key);
+
+        if (!topInfo) {
+          return;
+        }
+
+        const torso = getTorsoForTop(this.model, topInfo);
+
+        if (torso) {
+          this.setClothes(3, torso.drawableId, torso.textureId, 2);
+        } else {
           const defaults = getDefaultClothing(true, component);
           if (defaults) {
             this.setClothes(component, defaults[0], defaults[1], 2);
           }
+          break;
         }
-        break;
       }
       default:
         const defaults = getDefaultClothing(true, component);

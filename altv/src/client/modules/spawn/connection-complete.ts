@@ -5,6 +5,8 @@ import { waitForUserInterface } from "@/core/user-interface/webview";
 import { PED_CONFIG_FLAG } from "@/core/constants/ped-flags";
 import { ScreenBlurReason, blurScreen } from "@/core/user-interface/event-helpers";
 import { Control, ControlType } from "@/core/constants/controls";
+import { useCharacter } from "@/core/store/character.store";
+import { TopItemInfo, getItemInfoByKey } from "@shared/modules/items";
 
 alt.Events.onConnectionComplete(handleConnectionComplete);
 alt.setWatermarkPosition(4);
@@ -41,10 +43,20 @@ function setupGameSettings() {
   game.clearAmbientZoneState("AZ_COUNTRYSIDE_PRISON_01_ANNOUNCER_GENERAL", false); // Turn off prison sound
   game.clearAmbientZoneState("AZ_COUNTRYSIDE_PRISON_01_ANNOUNCER_WARNING", false); // Turn off prison sound
   game.clearAmbientZoneState("AZ_COUNTRYSIDE_PRISON_01_ANNOUNCER_ALARM", false); // Turn off prison sound
+
+  game.startAudioScene("DLC_MPHEIST_TRANSITION_TO_APT_FADE_IN_RADIO_SCENE") // removes the music
+  game.setStaticEmitterEnabled("LOS_SANTOS_VANILLA_UNICORN_01_STAGE", false) // disables the audio from unicorn
+  game.setStaticEmitterEnabled("LOS_SANTOS_VANILLA_UNICORN_02_MAIN_ROOM", false) // disables the audio from unicorn
+  game.setStaticEmitterEnabled("LOS_SANTOS_VANILLA_UNICORN_03_BACK_ROOM", false) // disables the audio from unicorn
+  game.setAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Zones", true, true) // cayo ambient
+  game.setAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Disabled_Zones", false, true)  // cayo ambien
+  game.startAudioScene("CHARACTER_CHANGE_IN_SKY_SCENE") // starts the sky scene audio if you use a another audio scene e.g DLC_VW_Casino_General you must stop the CHARACTER_CHANGE_IN_SKY_SCENE audio scene before starting the another scene
+  game.setAudioFlag("PoliceScannerDisabled", true) // Disables the police scanner audio functionality
+  game.setAudioFlag("DisableFlightMusic", true) // Disables the flight audio functionality
+  game.setAudioFlag("LoadMPData", true);
+
   game.setAmbientZoneState("", false, false);
   game.clearAmbientZoneState("AZ_DISTANT_SASQUATCH", false);
-  game.setAudioFlag("LoadMPData", true);
-  game.setAudioFlag("DisableFlightMusic", true);
   game.setPedCanSwitchWeapon(alt.Player.local, false);
   game.setPedConfigFlag(alt.Player.local, PED_CONFIG_FLAG.UseHelmet, false);
 }
@@ -70,4 +82,112 @@ alt.Timers.everyTick(() => {
   game.hideHudComponentThisFrame(20); // Weapon Wheel Stats
   game.hideHudComponentThisFrame(21); // HUD Components
   game.hideHudComponentThisFrame(22); // HUD Weapons
+});
+
+
+alt.Events.onConsoleCommand(({ command }) => {
+  if (command === "torso") {
+    const top = useCharacter().equipment.top;
+
+    if (!top) {
+      alt.log(`You have no top!`);
+      return;
+    }
+
+    const eItem = getItemInfoByKey(top.key) as TopItemInfo;
+
+    let eReturnItem: number = -1337;
+
+    const isMale = useCharacter().appearance.sex;
+
+    if (isMale) {
+      if (eItem.drawableId == 0 && eItem.textureId <= 15) eReturnItem = 0
+      else if (eItem.drawableId == 1 && eItem.textureId <= 15) eReturnItem = 0
+      else if (eItem.drawableId == 2 && eItem.textureId <= 15) eReturnItem = 2
+      else if (eItem.drawableId == 3 && eItem.textureId <= 15) eReturnItem = 1		// track jackets use 1	
+      else if (eItem.drawableId == 4 && eItem.textureId <= 15) eReturnItem = 1		// suit jackets use torso 1
+      else if (eItem.drawableId == 5 && eItem.textureId <= 15) eReturnItem = 5
+      else if (eItem.drawableId == 6 && eItem.textureId <= 15) eReturnItem = 12
+      else if (eItem.drawableId == 7 && eItem.textureId <= 15) eReturnItem = 1		// hoodies use 1
+      else if (eItem.drawableId == 8 && eItem.textureId <= 15) eReturnItem = 8
+      else if (eItem.drawableId == 9 && eItem.textureId <= 15) eReturnItem = 0
+      else if (eItem.drawableId == 1 && eItem.textureId <= 15) eReturnItem = 1		// suit jackets use torso 1	
+      else if (eItem.drawableId == 1 && eItem.textureId <= 15) eReturnItem = 11
+      else if (eItem.drawableId == 12 && eItem.textureId <= 15) eReturnItem = 12
+      else if (eItem.drawableId == 13 && eItem.textureId <= 15) eReturnItem = 11
+      else if (eItem.drawableId == 14 && eItem.textureId <= 15) eReturnItem = 4
+      else if (eItem.drawableId == 15 && eItem.textureId <= 15) eReturnItem = 15
+      else {
+        if (eItem.restrictionTags?.includes("DRAW_11")) {
+          eReturnItem = 15;
+        } else {
+          // Look up the forced components for this DLC item.
+          // iItemNameHash = GET_NAME_HASH_FROM_PED_COMP_ITEM(eModel, eItem, COMP_TYPE_JBIB, 3)
+          const iItemNameHash = alt.hash(eItem.key);
+          if (iItemNameHash != -1) {
+            const iForcedComps = game.getShopPedApparelForcedComponentCount(iItemNameHash);
+            alt.log(`Forced components: ${iForcedComps}`);
+            for (let iForcedComp = 0; iForcedComp < iForcedComps; ++iForcedComp) {
+              const [iRetNameHash, iRetCompEnum, iRetType] = game.getForcedComponent(iItemNameHash, iForcedComp);
+              if (iRetType == 3 /* PED_COMP_TORSO */) {
+                // Forced DLC item
+                if (iRetNameHash != 0 && iRetNameHash != 1849449579 /* 1849449579 = "0" */) {
+                  // eReturnItem = GET_PED_COMP_ITEM_FROM_NAME_HASH(eModel, iRetNameHash, COMP_TYPE_TORSO, 3);
+                  eReturnItem = iRetNameHash;
+                  alt.log("name hash");
+                  // Forced on-disk item
+                } else {
+                  eReturnItem = iRetCompEnum;
+                  alt.log("ret enum?");
+                }
+                break;
+              }
+            }
+          }
+        }
+      }
+    } else {
+      if (eItem.drawableId === 0) eReturnItem = 0;
+      else if (eItem.drawableId == 1 && eItem.textureId <= 15) eReturnItem = 5;
+      else if (eItem.drawableId == 2 && eItem.textureId <= 15) eReturnItem = 2;
+      else if (eItem.drawableId == 3 && eItem.textureId <= 15) eReturnItem = 3;
+      else if (eItem.drawableId == 4 && eItem.textureId <= 15) eReturnItem = 4;
+      else if (eItem.drawableId == 5 && eItem.textureId <= 15) eReturnItem = 4;
+      else if (eItem.drawableId == 6 && eItem.textureId <= 15) eReturnItem = 5;
+      else if (eItem.drawableId == 7 && eItem.textureId <= 15) eReturnItem = 6;
+      else if (eItem.drawableId == 8 && eItem.textureId <= 15) eReturnItem = 5;
+      else if (eItem.drawableId == 9 && eItem.textureId <= 15) eReturnItem = 9;
+      else if (eItem.drawableId == 10 && eItem.textureId <= 15) eReturnItem = 7;
+      else if (eItem.drawableId == 11 && eItem.textureId <= 15) eReturnItem = 11;
+      else if (eItem.drawableId == 12 && eItem.textureId <= 15) eReturnItem = 12;
+      else if (eItem.drawableId == 13 && eItem.textureId <= 15) eReturnItem = 4;
+      else if (eItem.drawableId == 14 && eItem.textureId <= 15) eReturnItem = 14;
+      else if (eItem.drawableId == 15 && eItem.textureId <= 15) eReturnItem = 15;
+      else {
+        // Look up the forced components for this DLC item.
+        // iItemNameHash = GET_NAME_HASH_FROM_PED_COMP_ITEM(eModel, eItem, COMP_TYPE_JBIB, 4)
+        const iItemNameHash = alt.hash(eItem.key);
+        if (iItemNameHash != -1) {
+          const iForcedComps = game.getShopPedApparelForcedComponentCount(iItemNameHash);
+          alt.log(`Forced components: ${iForcedComps}`);
+          for (let iForcedComp = 0; iForcedComp < iForcedComps; ++iForcedComp) {
+            const [iRetNameHash, iRetCompEnum, iRetType] = game.getForcedComponent(iItemNameHash, iForcedComp);
+            if (iRetType === 3 /* torso */) {
+              // Forced DLC item
+              if (iRetNameHash != 0 && iRetNameHash != 1849449579 /* 1849449579 = "0" */) {
+                eReturnItem = iRetNameHash;
+                // eReturnItem = GET_PED_COMP_ITEM_FROM_NAME_HASH(eModel, iRetNameHash, 3/* COMP_TYPE_TORSO */, 4);
+                // Forced on-disk item
+              } else {
+                eReturnItem = iRetCompEnum
+                break;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    alt.log(`Found torso? ${eReturnItem}`);
+  }
 });

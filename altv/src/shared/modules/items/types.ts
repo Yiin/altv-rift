@@ -1,6 +1,6 @@
 import { EquipmentSlot } from "@shared/interfaces";
 import { AmmoItem, AmmoItemInfo, AmmoItemKey } from "./registry/ammo/ammo.items";
-import { ClothingItem, ClothingItemKey } from "./registry/clothing/clothing.items";
+import { ClothingItemKey } from "./registry/clothing/clothing.items";
 import {
   ConsumableItem,
   ConsumableItemInfo,
@@ -195,26 +195,26 @@ export type ItemByKey<Key extends ItemKey> = ItemMapping<Key>[0];
 export type ItemInfoByKey<Key extends ItemKey> = ItemMapping<Key>[1];
 
 export type Equipment = {
-  [EquipmentSlot.Mask]?: ClothingItem | null;
-  [EquipmentSlot.Glasses]?: ClothingItem | null;
-  [EquipmentSlot.Headwear]?: ClothingItem | null;
-  [EquipmentSlot.Earrings]?: ClothingItem | null;
-  [EquipmentSlot.Top]?: ClothingItem | null;
-  [EquipmentSlot.Armor]?: ClothingItem | null;
-  [EquipmentSlot.Accessory]?: ClothingItem | null;
+  [EquipmentSlot.Mask]?: MaskItem | null;
+  [EquipmentSlot.Glasses]?: GlassesItem | null;
+  [EquipmentSlot.Headwear]?: HeadwearItem | null;
+  [EquipmentSlot.Earrings]?: EarringsItem | null;
+  [EquipmentSlot.Top]?: TopItem | null;
+  [EquipmentSlot.Armor]?: ArmorItem | null;
+  [EquipmentSlot.Accessory]?: AccessoryItem | null;
   [EquipmentSlot.Weapon]?: FirearmWeaponItem | ThrowableWeaponItem | MeleeWeaponItem | null;
-  [EquipmentSlot.Gloves]?: ClothingItem | null;
-  [EquipmentSlot.LeftHand]?: ClothingItem | null;
-  [EquipmentSlot.Pants]?: ClothingItem | null;
-  [EquipmentSlot.RightHand]?: ClothingItem | null;
+  [EquipmentSlot.Gloves]?: GlovesItem | null;
+  [EquipmentSlot.LeftHand]?: LeftHandItem | null;
+  [EquipmentSlot.Pants]?: PantsItem | null;
+  [EquipmentSlot.RightHand]?: RightHandItem | null;
   [EquipmentSlot.Backpack]?: null;
-  [EquipmentSlot.Shoes]?: ClothingItem | null;
+  [EquipmentSlot.Shoes]?: ShoesItem | null;
   [EquipmentSlot.Phone]?: null;
   [EquipmentSlot.Tool]?: ToolItem | FishingRodItem | null;
-  [EquipmentSlot.QuickSlot1]?: ConsumableItem | null;
-  [EquipmentSlot.QuickSlot2]?: ConsumableItem | null;
-  [EquipmentSlot.QuickSlot3]?: ConsumableItem | null;
-  [EquipmentSlot.QuickSlot4]?: ConsumableItem | null;
+  [EquipmentSlot.QuickSlot1]?: Item | null;
+  [EquipmentSlot.QuickSlot2]?: Item | null;
+  [EquipmentSlot.QuickSlot3]?: Item | null;
+  [EquipmentSlot.QuickSlot4]?: Item | null;
   [EquipmentSlot.AssaultRifleAmmo]?: AmmoItem | null;
   [EquipmentSlot.HandgunAmmo]?: AmmoItem | null;
   [EquipmentSlot.MachineGunAmmo]?: AmmoItem | null;

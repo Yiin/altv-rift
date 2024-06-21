@@ -1,0 +1,4 @@
+files = [ 'stream/models/*' ]
+
+[meta]
+'stream/IG_Bankman.meta' = 'PED_METADATA_FILE'

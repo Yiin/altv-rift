@@ -1,6 +1,7 @@
 import alt from "@altv/shared";
 import TORSO_MALE from "./torso_male.json";
 import TORSO_FEMALE from "./torso_female.json";
+import { TopItemInfo } from "./top/top.items";
 
 function getTorso(
   obj: any,
@@ -27,22 +28,33 @@ function getTorso(
 
 export function getTorsoForTop(
   model: number,
-  topDrawableId: number,
-  topTextureId: number,
+  topItemInfo: TopItemInfo,
 ): {
   drawableId: number;
   textureId: number;
 } {
   if (alt.hash("mp_m_freemode_01") === model) {
-    return (
-      getTorso(TORSO_MALE, topDrawableId, topTextureId) || {
+    const torso = getTorso(TORSO_MALE, topItemInfo.drawableId, topItemInfo.textureId);
+
+    if (torso) {
+      return torso;
+    }
+
+    else if (topItemInfo.restrictionTags?.includes('OPEN_JACKET')) {
+      return {
+        drawableId: 14,
+        textureId: 0,
+      };
+    }
+    else {
+      return {
         drawableId: 15,
         textureId: 0,
-      }
-    );
+      };
+    }
   } else {
     return (
-      getTorso(TORSO_FEMALE, topDrawableId, topTextureId) || {
+      getTorso(TORSO_FEMALE, topItemInfo.drawableId, topItemInfo.textureId) || {
         drawableId: 4,
         textureId: 0,
       }
