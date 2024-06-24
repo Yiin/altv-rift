@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, watch } from "vue";
 import { UIElement } from "@shared/enums/ui";
 import { WindowType } from "@shared/store/client.store";
 import { StorageType } from "@shared/store/game-state.store";
 import Screen from "@/components/Screen.vue";
 import { useClient } from "@/store/synced/client.store";
-import { useCharacter } from "@/store/synced/character.store";
+import { isCharacterStoreAvailable } from "@/store/synced/character.store";
 import { useGameState } from "@/store/synced/game-state.store";
 import ChatBox from "./chat-box/ChatBox.vue";
 import Inventory from "./inventory/Inventory.vue";
@@ -25,7 +25,6 @@ import QuickAccess from "./quick-access/QuickAccess.vue";
 import Hud from "./hud/Hud.vue";
 import Admin from "./admin/Admin.vue";
 
-const character = useCharacter();
 const client = useClient();
 const gameState = useGameState();
 
@@ -35,15 +34,28 @@ const isShopOpen = computed(
   () => windowType.value === WindowType.SHOP && storageType.value === StorageType.Shop,
 );
 const isLootBoxOpen = computed(
-  () => windowType.value === WindowType.LOOT_BOX && storageType.value === StorageType.LootBox,
+  () =>
+    windowType.value === WindowType.LOOT_BOX &&
+    (storageType.value === StorageType.LootBox || storageType.value === StorageType.AirDrop),
 );
 const isVehicleShopOpen = computed(() => windowType.value === WindowType.VEHICLE_SHOP);
 const isWorkbenchOpen = computed(() => windowType.value === WindowType.WORKBENCH);
 const isAdminOpen = computed(() => windowType.value === WindowType.ADMIN);
+
+watch(
+  () => !!gameState.openedStorage,
+  (isOpen) => {
+    if (!isOpen) {
+      if ([WindowType.LOOT_BOX, WindowType.SHOP].includes(windowType.value)) {
+        client.closeWindow();
+      }
+    }
+  },
+);
 </script>
 
 <template>
-  <Screen v-if="character">
+  <Screen v-if="isCharacterStoreAvailable()">
     <template v-if="client.ui.window">
       <Inventory v-if="[WindowType.PLAYER_INVENTORY, WindowType.STORAGE].includes(windowType)" />
       <GenericShop v-else-if="isShopOpen" />

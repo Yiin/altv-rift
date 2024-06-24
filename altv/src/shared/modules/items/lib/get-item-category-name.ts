@@ -6,7 +6,7 @@ import {
   isItemKeyConsumable,
   isItemKeyEarrings,
   isItemKeyFirearmWeapon,
-  isItemKeyFishBait,
+  isItemKeyFishingBait,
   isItemKeyFoodIngredient,
   isItemKeyGlasses,
   isItemKeyGloves,
@@ -47,7 +47,7 @@ export function getItemCategoryName(key: ItemKey) {
   if (isItemKeyFirearmWeapon(key)) {
     return "Firearm weapon";
   }
-  if (isItemKeyFishBait(key)) {
+  if (isItemKeyFishingBait(key)) {
     return "Fish bait";
   }
   if (isItemKeyFoodIngredient(key)) {

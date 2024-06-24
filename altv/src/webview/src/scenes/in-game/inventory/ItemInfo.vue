@@ -56,7 +56,7 @@ const combination = computed(() => {
     case CombineType.EquipAmmo:
       const [ammo, weapon] = reverse ? [target, source] : [source, target];
       return `Click to load ${getItemName(weapon)} with ${getItemName(ammo)}`;
-    case CombineType.EquipFishBait:
+    case CombineType.EquipFishingBait:
       const [bait, rod] = reverse ? [target, source] : [source, target];
       return `Click to use ${getItemName(bait)} for ${getItemName(rod)}`;
   }

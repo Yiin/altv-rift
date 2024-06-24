@@ -66,12 +66,10 @@ model Character {
 }
 
 model Shop {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  name       String
-  inventory  Inventory
-  shopTable  String
-  ped        Ped
-  lastRefill DateTime?
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  inventory Inventory
+  ped       Ped
 }
 
 model AirDrop {
@@ -127,7 +125,7 @@ type Inventory {
 type InventoryItem {
   slot  Int
   item  Json // typed in TS as Item
-  price Int?
+  price Int? // for shop inventory
 }
 
 type Position {

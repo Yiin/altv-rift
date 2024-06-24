@@ -1,5 +1,6 @@
 import { Inventory, ItemSourceOrigin, PlayerItemSource, StorageSource } from "@shared/interfaces";
-import { FishBaitItemKey } from "@shared/modules/items";
+import { createInventory } from "@shared/modules/inventory";
+import { FishingBait, FishingBaitItemKey, FishingRod, ItemGrade, createItem } from "@shared/modules/items";
 import { BlueprintRecipe } from "@shared/modules/production";
 
 export enum PlayerFlags {
@@ -55,7 +56,7 @@ export interface GameState {
   flags: Set<PlayerFlags>;
   openedStorage: GenericStorage | LootBoxStorage | AirDropStorage | ShopStorage | null;
   fishingProgress: {
-    baitKey: FishBaitItemKey;
+    baitKey: FishingBaitItemKey;
     gameType: FishingGameType.TimeClick;
     startedAt: number;
     durationMs: number;
@@ -75,18 +76,7 @@ export interface GameState {
 
 export const getDefaultGameState = (): GameState => ({
   flags: new Set(),
-  openedStorage: {
-    type: StorageType.Shop,
-    inventory: {
-      size: 8,
-      items: [],
-    },
-    label: "24/7 Grocery store",
-    source: {
-      origin: ItemSourceOrigin.Storage,
-      originId: 0,
-    },
-  },
+  openedStorage: null,
   fishingProgress: null,
   workbench: {
     queue: [],

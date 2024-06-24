@@ -181,6 +181,7 @@ const registerWebview = <T extends FromWebviewKey, R extends ReturnType<CallFrom
   if (webviewProcedures.has(name)) {
     throw new Error(`registerWebview: Procedure ${name} already exists`);
   }
+  alt.log(`registerWebview: Procedure ${name} successfully registered`);
   webviewProcedures.set(name, callback);
 };
 

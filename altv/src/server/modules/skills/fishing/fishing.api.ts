@@ -3,10 +3,10 @@ import { watch, watchEffect } from "vue";
 import { FishingGameType, PlayerFlags } from "@shared/store/game-state.store";
 import {
   BAIT_TO_FISH_MAP,
-  FishBaitItem,
-  FishBaitItemKey,
+  FishingBaitItem,
+  FishingBaitItemKey,
   getBaitChance,
-  isItemFishBait,
+  isItemFishingBait,
 } from "@shared/modules/items/registry/fish-bait.items";
 import { FishingRodItem, createItem, getItemName, isItemFishingRod } from "@shared/modules/items";
 import { EquipmentSlot, InventoryItem, ItemSourceOrigin } from "@shared/interfaces";
@@ -60,7 +60,7 @@ export function startFishing(player: InGamePlayer): void {
 
   if (!fishingRod.bait) {
     const firstBait = player.character.inventory.items.find(
-      (item): item is InventoryItem<FishBaitItem> => isItemFishBait(item.item),
+      (item): item is InventoryItem<FishingBaitItem> => isItemFishingBait(item.item),
     );
 
     if (!firstBait) {
@@ -98,7 +98,7 @@ export function stopFishing(player: InGamePlayer): void {
 /**
  * Start catching a fish.
  */
-export function startCatchingFish(player: InGamePlayer, baitKey: FishBaitItemKey): void {
+export function startCatchingFish(player: InGamePlayer, baitKey: FishingBaitItemKey): void {
   if (!player.gameState.flags.has(PlayerFlags.IsFishing)) {
     // Player is not fishing
     return;
@@ -169,7 +169,7 @@ export function stopCatchingAFish(player: InGamePlayer): void {
   player.gameState.fishingProgress = null;
 }
 
-export function catchAFish(player: InGamePlayer, baitKey: FishBaitItemKey): void {
+export function catchAFish(player: InGamePlayer, baitKey: FishingBaitItemKey): void {
   const possibleCatch = BAIT_TO_FISH_MAP.get(baitKey);
 
   if (!possibleCatch) {

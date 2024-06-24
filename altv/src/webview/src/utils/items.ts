@@ -6,6 +6,7 @@ import {
   isItemKeyClothing,
   isItemKeyConsumable,
   isItemKeyFirearmWeapon,
+  isItemKeyFishingBait,
   isItemKeyMaterial,
   isItemKeyPants,
   isItemKeyThrowableWeapon,
@@ -36,6 +37,9 @@ export const getItemImage = (key: string) => {
   }
   if (isItemKeyConsumable(key)) {
     return asset(`assets/items/consumables/${key}.webp`);
+  }
+  if (isItemKeyFishingBait(key)) {
+    return asset(`assets/items/fish-bait/${key}.webp`);
   }
   return asset(`assets/items/${key}.webp`);
 };

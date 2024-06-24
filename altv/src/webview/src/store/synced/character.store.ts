@@ -1,17 +1,18 @@
 import { type Store, type StoreDefinition } from "pinia";
+import { ref } from "vue";
 import { type Character, EquipmentSlot } from "@shared/interfaces";
 import { Ammo, ItemGrade, UnlearnedBlueprint, createItem } from "@shared/modules/items";
 
 type CharacterStore = StoreDefinition<"character", Character, {}, {}>;
 
-let characterStore: CharacterStore;
+const characterStore = ref<CharacterStore | null>(null);
 
 export function setCharacterStore(store: CharacterStore) {
-  characterStore = store;
+  characterStore.value = store;
 }
 
 export function isCharacterStoreAvailable() {
-  return !!characterStore;
+  return "altMock" in globalThis || !!characterStore.value;
 }
 
 export const useCharacter = () =>
@@ -93,4 +94,4 @@ export const useCharacter = () =>
           woodcutting: 0,
         },
       } as any as Store<"character", Character, {}, {}>)
-    : characterStore?.();
+    : characterStore.value?.();

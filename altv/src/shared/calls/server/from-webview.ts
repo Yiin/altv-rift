@@ -109,11 +109,11 @@ export const FromWebviewValidation = {
     returns: z.boolean(),
   },
   [FromWebview.BUY_ITEM]: {
-    args: [schema.storageItemSource, z.number()],
+    args: [schema.storageItemSource, z.number().min(1)],
     returns: z.boolean(),
   },
   [FromWebview.SELL_ITEM]: {
-    args: [schema.storageSource, schema.playerInventoryItemSource, z.number()],
+    args: [schema.storageSource, schema.playerInventoryItemSource, z.number().min(0)],
     returns: z.boolean(),
   },
   [FromWebview.TAKE_ITEM]: {
@@ -123,14 +123,14 @@ export const FromWebviewValidation = {
     args: [schema.storageSource],
   },
   [FromWebview.CRAFT_ITEM]: {
-    args: [z.string(), z.number()],
+    args: [z.string(), z.number().min(1)],
     returns: z.boolean(),
   },
   [FromWebview.CANCEL_CRAFTING]: {
     returns: z.boolean(),
   },
   [FromWebview.REMOVE_FROM_CRAFTING_QUEUE]: {
-    args: [z.number()],
+    args: [z.number().min(0)],
     returns: z.boolean(),
   },
   [FromWebview.UPGRADE_ITEM]: {

@@ -1,4 +1,4 @@
-import { FishBaitItem, Item, ItemGrade, registerItems } from "@shared/modules/items";
+import { FishingBaitItem, Item, ItemGrade, registerItems } from "@shared/modules/items";
 import { makeKeys } from "@shared/utility/make-keys";
 
 export const FishingRod = makeKeys<FishingRodItemKey>()({
@@ -9,7 +9,7 @@ export type FishingRodItemKey = Brand<string, "FishingRodItemKey">;
 
 export type FishingRodItem = {
   key: FishingRodItemKey;
-  bait?: FishBaitItem | null;
+  bait?: FishingBaitItem | null;
   grade: ItemGrade;
 };
 
@@ -22,7 +22,7 @@ export type FishingRodItemInfo = {
 export const fishingRods = registerItems<FishingRodItemInfo>([
   {
     key: FishingRod.FISHING_ROD,
-    name: "Basic Fishing Rod",
+    name: "Fishing Rod",
     description: "A simple rod and reel for catching fish. Ideal for beginners.",
   },
 ]);

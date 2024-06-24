@@ -8,9 +8,9 @@ import {
   PlayerEquipmentItemSource,
 } from "@shared/interfaces";
 import {
-  FishBaitItem,
+  FishingBaitItem,
   FishingRodItem,
-  isItemFishBait,
+  isItemFishingBait,
   isItemFishingRod,
 } from "@shared/modules/items";
 import { addItemToInventory } from "@shared/modules/inventory";
@@ -18,41 +18,41 @@ import { InGamePlayer } from "@/core/utility/assertions";
 import { dropItemOnTheGround } from "../dropped-items";
 import { findItem, findInventoryByItemSource, removeItem } from "../api";
 
-export function useFishBaitOnFishingRod(
+export function useFishingBaitOnFishingRod(
   fishingRodSource: ItemSource,
-  fishBaitSource: InventoryItemSource | PlayerEquipmentItemSource | GroundItemSource,
+  fishingBaitSource: InventoryItemSource | PlayerEquipmentItemSource | GroundItemSource,
 ): boolean {
   const fishingRod = findItem(fishingRodSource);
-  const fishBait = findItem(fishBaitSource);
-  const fishBaitInventory =
-    fishBaitSource.origin === ItemSourceOrigin.Ground
+  const fishingBait = findItem(fishingBaitSource);
+  const fishingBaitInventory =
+    fishingBaitSource.origin === ItemSourceOrigin.Ground
       ? null
-      : findInventoryByItemSource(fishBaitSource);
+      : findInventoryByItemSource(fishingBaitSource);
 
   if (
     !fishingRod ||
-    !fishBait ||
-    (fishBaitSource.origin !== ItemSourceOrigin.Ground && !fishBaitInventory)
+    !fishingBait ||
+    (fishingBaitSource.origin !== ItemSourceOrigin.Ground && !fishingBaitInventory)
   ) {
     return false;
   }
 
-  if (!isItemFishingRod(fishingRod) || !isItemFishBait(fishBait)) {
+  if (!isItemFishingRod(fishingRod) || !isItemFishingBait(fishingBait)) {
     return false;
   }
 
   const droppedItemPos =
-    fishBaitSource.origin === ItemSourceOrigin.Ground
-      ? alt.VirtualEntity.getByID(fishBaitSource.originId)?.pos
+    fishingBaitSource.origin === ItemSourceOrigin.Ground
+      ? alt.VirtualEntity.getByID(fishingBaitSource.originId)?.pos
       : null;
 
-  removeItem(fishBaitSource);
+  removeItem(fishingBaitSource);
 
-  const previousBait = useFishBaitItemOnFishingRoadItem(fishingRod, fishBait);
+  const previousBait = useFishingBaitItemOnFishingRoadItem(fishingRod, fishingBait);
 
   if (previousBait) {
-    if (fishBaitInventory) {
-      addItemToInventory(fishBaitInventory, previousBait);
+    if (fishingBaitInventory) {
+      addItemToInventory(fishingBaitInventory, previousBait);
     } else if (droppedItemPos) {
       dropItemOnTheGround(previousBait, droppedItemPos);
     }
@@ -109,7 +109,7 @@ export function removeBaitFromFishingRod(source: ItemSource): boolean {
 
     if (!addItemToInventory(player.character.inventory, bait)) {
       // If player inventory is full, load bait back into the weapon
-      useFishBaitItemOnFishingRoadItem(fishingRod, bait);
+      useFishingBaitItemOnFishingRoadItem(fishingRod, bait);
       return false;
     }
 
@@ -130,39 +130,39 @@ export function removeBaitFromFishingRod(source: ItemSource): boolean {
 
   if (!addItemToInventory(inventory, ammo)) {
     // If inventory is full, load ammo back into the weapon
-    useFishBaitItemOnFishingRoadItem(fishingRod, ammo);
+    useFishingBaitItemOnFishingRoadItem(fishingRod, ammo);
     return false;
   }
   return true;
 }
 
-export function useFishBaitItemOnFishingRoadItem(
+export function useFishingBaitItemOnFishingRoadItem(
   fishingRod: FishingRodItem,
-  fishBait: FishBaitItem,
-): FishBaitItem | null {
+  fishingBait: FishingBaitItem,
+): FishingBaitItem | null {
   // Different kind of bait, swap
-  if (fishingRod.bait && fishingRod.bait.key !== fishBait.key) {
+  if (fishingRod.bait && fishingRod.bait.key !== fishingBait.key) {
     const unequippedItem = fishingRod.bait;
 
-    fishingRod.bait = fishBait;
+    fishingRod.bait = fishingBait;
 
     return unequippedItem;
   }
   // Same kind of bait, add to existing
   else if (fishingRod.bait) {
-    fishingRod.bait.amount += fishBait.amount;
+    fishingRod.bait.amount += fishingBait.amount;
 
     return null;
   }
   // No bait, equip
   else {
-    fishingRod.bait = toRaw(fishBait);
+    fishingRod.bait = toRaw(fishingBait);
 
     return null;
   }
 }
 
-export function removeBaitFromFishingRodItem(item: FishingRodItem): FishBaitItem | null {
+export function removeBaitFromFishingRodItem(item: FishingRodItem): FishingBaitItem | null {
   const bait = item.bait;
 
   if (!bait) {

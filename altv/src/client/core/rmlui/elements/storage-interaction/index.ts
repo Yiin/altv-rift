@@ -13,6 +13,7 @@ import { everyFrame } from "../../renderer/hooks/every-frame";
 import { Indicator } from "../../components/indicator";
 import { Icon } from "../../components/icon";
 import { rem } from "../../renderer/pixel";
+import { gameState } from "@/core/store/game-state.store";
 
 registerElement({
   key: "storage-interaction",
@@ -20,30 +21,31 @@ registerElement({
   anchorType: AnchorType.Storage,
   focusable: true,
   render({ entity: ve }) {
-    console.log(ve.streamSyncedMeta.storageLabel, ve.streamSyncedMeta.storageType === StorageType.Storage);
+    const isLootBox = [StorageType.AirDrop, StorageType.LootBox].includes(ve.streamSyncedMeta.storageType);
+    const isShop = ve.streamSyncedMeta.storageType === StorageType.Shop;
 
-    const label = ve.streamSyncedMeta.storageLabel ?? "Open";
-    const menu = useMenu([{ text: label, value: "open" }], {
+    const label = isShop ? "Shop" : "Open";
+
+    const menu = useMenu([{ text: label, value: "open-storage" }], {
       async onSelect(interaction) {
-        if (interaction.value === "open") {
+        if (interaction.value === "open-storage") {
           const canOpen = await rpc.callServer(ServerCall.FromClient.OPEN_STORAGE, ve.remoteID);
 
-          if (
-            [StorageType.AirDrop, StorageType.LootBox].includes(ve.streamSyncedMeta.storageType)
-          ) {
-            await alt.Utils.wait(100);
+          if (canOpen) {
+            await alt.Utils.waitFor(() => !!gameState.openedStorage);
 
-            if (canOpen) {
+            if (isLootBox) {
               openWindow(WindowType.LOOT_BOX);
             }
-          } else {
-            if (canOpen) {
+            else if (isShop) {
+              openWindow(WindowType.SHOP);
+            } else {
               openWindow(WindowType.STORAGE);
             }
           }
         }
       },
-      drawDistance: 2.5,
+      drawDistance: 3,
     });
 
     const currentMenuIndex = menu.currentIndex();

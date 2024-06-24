@@ -15,10 +15,10 @@ import {
   isUnisexClothing,
 } from "@shared/modules/items";
 import { addItemToInventory } from "@shared/modules/inventory";
-import { isItemFishBait } from "@shared/modules/items/registry/fish-bait.items";
+import { isItemFishingBait } from "@shared/modules/items/registry/fish-bait.items";
 import { InGamePlayer } from "@/core/utility/assertions";
 import { findItem, findInventoryByItemSource, removeItem } from "@/modules/items-manager";
-import { useFishBaitOnFishingRod } from "@/modules/items-manager/items/fishing-rod";
+import { useFishingBaitOnFishingRod } from "@/modules/items-manager/items/fishing-rod";
 import { emit } from "@/core/events/emit";
 import { dropItemOnTheGround } from "@/modules/items-manager/dropped-items";
 
@@ -62,13 +62,13 @@ alt.Player.prototype.equipItem = function (source, equipmentSlot) {
     EquipmentSlot.QuickSlot4,
   ].includes(equipmentSlot);
 
-  const equipmentSlotOrFishbait = isToQuickSlot
+  const equipmentSlotOrFishingBait = isToQuickSlot
     ? equipmentSlot
-    : isItemFishBait(item)
-      ? "fishbait"
+    : isItemFishingBait(item)
+      ? "fishing-bait"
       : getItemEquipmentSlot(item);
 
-  if (!equipmentSlotOrFishbait) {
+  if (!equipmentSlotOrFishingBait) {
     alt.log(`[equipItem] Item ${item.key} doesn't have equipment slot.`);
     return false;
   }
@@ -84,9 +84,9 @@ alt.Player.prototype.equipItem = function (source, equipmentSlot) {
     return false;
   }
 
-  if (equipmentSlotOrFishbait === "fishbait") {
+  if (equipmentSlotOrFishingBait === "fishing-bait") {
     if (
-      !useFishBaitOnFishingRod(
+      !useFishingBaitOnFishingRod(
         {
           equipmentSlot: EquipmentSlot.Tool,
           origin: ItemSourceOrigin.PlayerEquipment,
@@ -100,7 +100,7 @@ alt.Player.prototype.equipItem = function (source, equipmentSlot) {
   }
   // Normal flow
   else {
-    const equipmentSlot = equipmentSlotOrFishbait;
+    const equipmentSlot = equipmentSlotOrFishingBait;
 
     if (
       isItemKeyClothing(item.key) &&

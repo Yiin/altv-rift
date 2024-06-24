@@ -3,7 +3,7 @@ import { getItemInfoByKey } from "../items-registry";
 import {
   isItemKeyAmmo,
   isItemKeyConsumable,
-  isItemKeyFishBait,
+  isItemKeyFishingBait,
   isItemKeyMaterial,
   isItemKeyNote,
   isItemKeyThrowableWeapon,
@@ -29,7 +29,7 @@ export function getItemFlagsByKey(key: ItemKey): ItemFlags {
     isItemKeyAmmo(key) ||
     isItemKeyConsumable(key) ||
     isItemKeyMaterial(key) ||
-    isItemKeyFishBait(key) ||
+    isItemKeyFishingBait(key) ||
     isItemKeyWeaponComponent(key)
   ) {
     flags |= ItemFlags.IsStackable;

@@ -82,7 +82,7 @@ const isDroppable = computed(
 
 const hasAmmo = computed(() => !isInShop() && isItemFirearmWeapon(item.value) && !!item.value.clip);
 
-const hasFishBait = computed(
+const hasFishingBait = computed(
   () => !isInShop() && isItemFishingRod(item.value) && !!item.value.bait,
 );
 
@@ -226,7 +226,7 @@ const actions = computed(() => [
   {
     name: "Remove bait",
     icon: "mdi-chart-bubble",
-    enabled: hasFishBait.value,
+    enabled: hasFishingBait.value,
     select: () => executeAction("remove-bait"),
   },
   {

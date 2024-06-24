@@ -7,9 +7,11 @@ import { AnchorType } from "../../renderer/anchors";
 import { registerElement } from "../../renderer/element-registry";
 import { everyFrame } from "../../renderer/hooks/every-frame";
 import { isQuestPed } from "@/modules/peds/lib/is-quest-ped";
-import { QuestNametag } from "./quest-nametag";
+import { QuestNametag } from "./quest/quest-nametag";
 import { px, rem } from "../../renderer/pixel";
-import { EnemyNametag } from "./enemy-nametag";
+import { EnemyNametag } from "./enemy/enemy-nametag";
+import { isShopPed } from "@/modules/peds/lib/is-shop-ped";
+import { ShopNametag } from "./shop/shop-nametag";
 
 
 registerElement({
@@ -21,6 +23,7 @@ registerElement({
     const flags = ped.streamSyncedMeta.flags ?? 0;
     const isEnemy = !(flags & PedFlags.Peaceful);
     const isQuest = isQuestPed(ped);
+    const isShop = isShopPed(ped);
 
     return div(
       { class: "pedNameTagContainer" },
@@ -57,6 +60,8 @@ registerElement({
                   ? QuestNametag(ped)
                   : isEnemy
                     ? EnemyNametag(ped)
+                    : isShop
+                    ? ShopNametag(ped)
                     : div({
                       class: "questNameTagContainer"
                     }, [

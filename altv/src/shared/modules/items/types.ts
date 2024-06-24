@@ -22,9 +22,9 @@ import {
   FirearmWeaponItem,
   FirearmWeaponItemInfo,
   FirearmWeaponItemKey,
-  FishBaitItem,
-  FishBaitItemInfo,
-  FishBaitItemKey,
+  FishingBaitItem,
+  FishingBaitItemInfo,
+  FishingBaitItemKey,
   FishingRodItem,
   FishingRodItemInfo,
   FishingRodItemKey,
@@ -109,7 +109,7 @@ export type ItemKey =
   | ClothingItemKey
   | ConsumableItemKey
   | MaterialItemKey
-  | FishBaitItemKey
+  | FishingBaitItemKey
   | ToolItemKey
   | NoteItemKey
   | UnlearnedBlueprintItemKey;
@@ -165,8 +165,8 @@ type ItemMapping<T> = T extends FirearmWeaponItemKey
   ? [SandItem, SandItemInfo]
   : T extends ScrapItemKey
   ? [ScrapItem, ScrapItemInfo]
-  : T extends FishBaitItemKey
-  ? [FishBaitItem, FishBaitItemInfo]
+  : T extends FishingBaitItemKey
+  ? [FishingBaitItem, FishingBaitItemInfo]
   : T extends HatchetItemKey
   ? [HatchetItem, HatchetItemInfo]
   : T extends PickaxeItemKey

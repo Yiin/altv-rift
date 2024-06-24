@@ -1,0 +1,35 @@
+.shopNameTagContainer {
+  width: 18rem; /* 300px */
+  height: 3rem; /* 48px */
+  display: flex;
+  align-items: center;
+}
+
+.shopNameTagContent {
+  display: block;
+  width: 14.9375rem; /* 300px - 48px (icon) - 13px (gap) = 239px */
+  height: 3rem; /* 48px */
+  margin-left: 0.8125rem; /* 13px */
+}
+
+.shopNameTagTitle {
+  display: block;
+  width: 14.9375rem; /* 300px - 48px (icon) - 13px (gap) = 239px */
+  text-align: left;
+  color: #FFF;
+  font-effect: shadow(0px 2px #00000088);
+  font-family: akrobat-extrabold;
+  font-size: 1.25rem; /* 20px */
+  text-transform: uppercase;
+}
+
+.shopNameTagSummary {
+  display: block;
+  width: 14.9375rem; /* 300px - 48px (icon) - 13px (gap) = 239px */
+  text-align: left;
+  color: #B9F045;
+  font-effect: shadow(0px 2px #00000088);
+  font-family: akrobat-extrabold;
+  font-size: 0.8125rem; /* 13px */
+  text-transform: uppercase; 
+}

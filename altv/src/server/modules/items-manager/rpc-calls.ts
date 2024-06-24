@@ -15,7 +15,7 @@ import { ServerEvents } from "@shared/events/server";
 import { rpc } from "@/core/rpc";
 import { needsToBeInGame } from "@/core/utility/assertions";
 import { emit } from "@/core/events/emit";
-import { removeBaitFromFishingRod, useFishBaitOnFishingRod } from "./items/fishing-rod";
+import { removeBaitFromFishingRod, useFishingBaitOnFishingRod } from "./items/fishing-rod";
 import { getStorageInventory, openStorage } from "./storage";
 import { loadWeaponWithAmmo, unloadAmmoFromWeapon } from "./items";
 import {
@@ -44,28 +44,6 @@ rpc.registerWebview(ServerCall.FromWebview.USE_ITEM, (player, itemSource): boole
   }
 
   return useItemFromSource(player, itemSource) !== false;
-});
-
-/**
- * Player tries to buy an item.
- */
-rpc.registerWebview(ServerCall.FromWebview.BUY_ITEM, (player, itemSource): boolean => {
-  needsToBeInGame(player);
-
-  if (itemSource.origin !== ItemSourceOrigin.Storage) {
-    return false;
-  }
-
-  if (!canInteractWithItemSource(player, itemSource)) {
-    return false;
-  }
-
-  // find source
-  // check if shop
-
-  return false;
-
-  // return player.buyItem(itemSource);
 });
 
 /**
@@ -134,7 +112,7 @@ rpc.registerWebview(ServerCall.FromWebview.COMBINE_ITEMS, (player, sourceA, sour
 
       return loadWeaponWithAmmo(weaponSource, ammoSource);
     }
-    case CombineType.EquipFishBait: {
+    case CombineType.EquipFishingBait: {
       const [fishingRodSource, baitSource] = reverse ? [sourceB, sourceA] : [sourceA, sourceB];
 
       if (baitSource.origin === ItemSourceOrigin.PlayerEquipment) {
@@ -142,7 +120,7 @@ rpc.registerWebview(ServerCall.FromWebview.COMBINE_ITEMS, (player, sourceA, sour
         return false;
       }
 
-      return useFishBaitOnFishingRod(fishingRodSource, baitSource);
+      return useFishingBaitOnFishingRod(fishingRodSource, baitSource);
     }
   }
   return false;

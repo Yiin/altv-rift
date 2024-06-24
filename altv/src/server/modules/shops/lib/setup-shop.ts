@@ -2,6 +2,8 @@ import { Shop } from "@shared/interfaces";
 import { StorageType } from "@shared/store/game-state.store";
 import { createStorage } from "@/modules/items-manager";
 import { getShopsRegistry } from "../registry";
+import { createStaticPed } from "@/modules/peds/registry";
+import { PedFlags } from "@shared/modules/ped";
 
 export function setupShop(shop: Shop): void {
   getShopsRegistry().set(shop.id, shop);
@@ -16,7 +18,8 @@ export function setupShop(shop: Shop): void {
     },
   });
 
-  // createStaticPed(shop.id as PedKey, shop.ped, {
-  //   name: shop.name,
-  // });
+  createStaticPed({
+    ...shop.ped,
+    flags: PedFlags.Peaceful | PedFlags.ShopKeeper,
+  });
 }

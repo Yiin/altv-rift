@@ -1,0 +1,42 @@
+.questNameTagContainer {
+  display: flex;
+  flex-direction: column;
+  width: 11.25rem; /* 180px */
+  align-items: center;
+}
+
+.questNameTagName {
+  margin-top: 0.5rem; /* 8px */
+  color: #FFFFFF;
+  font-family: akrobat-extrabold;
+  font-size: 1.25rem; /* 20px */
+  text-transform: uppercase;
+  font-effect: glow(2px 4px 2px 3px #00000088);
+  width: 11.25rem; /* 180px */
+  text-align: center;
+}
+
+.questNameTagQuestAvailable {
+  margin-top: 0.0625rem; /* 1px */
+  color: #FFDA57;
+  font-family: akrobat-extrabold;
+  font-size: 0.8125rem; /* 13px */
+  text-transform: uppercase;
+  font-effect: glow(2px 4px 2px 3px #00000088);
+  width: 11.25rem; /* 180px */
+  text-align: center;
+}
+
+.questNameTagIcon {
+  margin-top: 1.0625rem; /* 17px */
+	animation: 1s cubic-in-out infinite alternate levitation;
+}
+
+@keyframes levitation {
+	0% {
+		transform: translateY(-0.3rem);
+	}
+	to { 
+		transform: translateY(0.3rem);
+	}
+}

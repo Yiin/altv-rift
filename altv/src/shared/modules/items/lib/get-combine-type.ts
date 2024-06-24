@@ -3,12 +3,12 @@ import { getItemInfoByKey } from "../items-registry";
 import { isItemKeyFishingRod, isItemKeyWeapon } from "../registry";
 import { isItemKeyAmmo } from "../registry/ammo/ammo.items";
 import { isItemKeyFirearmWeapon } from "../registry/weapons/firearm-weapon.items";
-import { isItemKeyFishBait } from "../registry/fish-bait.items";
+import { isItemKeyFishingBait } from "../registry/fish-bait.items";
 
 export enum CombineType {
   None = "None",
   EquipAmmo = "EquipAmmo",
-  EquipFishBait = "EquipFishBait",
+  EquipFishingBait = "EquipFishingBait",
 }
 
 export function getCombineType(
@@ -31,8 +31,8 @@ export function getCombineType(
   }
 
   // Fishing rod - Fish bait
-  if (isItemKeyFishingRod(target) && isItemKeyFishBait(source)) {
-    return [CombineType.EquipFishBait, reverse];
+  if (isItemKeyFishingRod(target) && isItemKeyFishingBait(source)) {
+    return [CombineType.EquipFishingBait, reverse];
   }
 
   // Check reverse

@@ -2,7 +2,7 @@ import alt from "@altv/server";
 import { Quests } from "@shared/modules/quests";
 import {
   Consumable,
-  FishBait,
+  FishingBait,
   FishingRod,
   FoodIngredient,
   Hatchet,
@@ -150,7 +150,7 @@ processQuestFact.hook((player, questFact) => {
     case Quests.Introduction.Facts.STARTED_FISHING: {
       if (player.isNearPed(PedKey.FISHING_TUTOR)) {
         player.addItem(createItem(FishingRod.FISHING_ROD, { grade: ItemGrade.COMMON }));
-        player.addItem(createItem(FishBait.WORMS, { amount: 100 }));
+        player.addItem(createItem(FishingBait.WORMS, { amount: 100 }));
         return true;
       } else {
         reportAbuse(player, questFact);
@@ -167,7 +167,7 @@ processQuestFact.hook((player, questFact) => {
         )
       ) {
         player.addBlueprint(ToolBlueprint.FISHING_ROD);
-        player.addItem(createItem(FishBait.WORMS, { amount: 300 }));
+        player.addItem(createItem(FishingBait.WORMS, { amount: 300 }));
         player.character.skills.fishing += 1000;
         return true;
       } else {

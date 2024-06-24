@@ -24,6 +24,7 @@ import "./modules/user-interface";
 import "./modules/thugs";
 import "./modules/production";
 import "./modules/loot";
+import "./modules/shops";
 import "./modules/dev";
 import "./modules/admin";
 import "./scenes";

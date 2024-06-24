@@ -13,13 +13,6 @@ const positions: { pos: alt.IVector3; heading: number }[] = [
 ];
 
 for (const { pos, heading } of positions) {
-  const ped = createStaticPed({
-    model: "U_M_O_TapHillBilly",
-    pos,
-    heading,
-    flags: PedFlags.Peaceful | PedFlags.ShopKeeper,
-  });
-
   const shop = setupShop({
     id: "cayo-fishing-shop-1",
     name: "Cayo Fishing Shop",
@@ -42,5 +35,5 @@ for (const { pos, heading } of positions) {
     lastRefill: new Date(),
   });
 
-  ped.playAnimation("rcmjosh1", "idle", 1, -1);
+  // ped.playAnimation("rcmjosh1", "idle", 1, -1);
 }

@@ -1,14 +1,16 @@
 import { defineStore } from "pinia";
-import { getDefaultClientStoreState, type QuestInfo } from "@shared/store/client.store";
+import { WindowType, getDefaultClientStoreState, type QuestInfo } from "@shared/store/client.store";
 import { ClientEvents } from "@shared/events/client";
+import { StorageType } from "@shared/store/game-state.store";
 import { useCharacter } from "./character.store";
+import { useGameState } from "./game-state.store";
 
 export const useClient = defineStore("client", {
   state: getDefaultClientStoreState,
   getters: {
     questFacts() {
       return (
-        useCharacter().questFacts ?? [
+        useCharacter()?.questFacts ?? [
           "Quests.Introduction.Facts.GOT_INTRODUCTION",
           "Quests.Introduction.Facts.USED_MEDKIT",
           "Quests.Introduction.Facts.GOT_DIRECTIONS",

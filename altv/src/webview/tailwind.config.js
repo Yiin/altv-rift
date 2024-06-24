@@ -84,6 +84,8 @@ module.exports = {
           "linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.00) 100%)",
         passionateRubyBlaze:
           "linear-gradient(180deg, rgba(255, 36, 49, 0.40) 0%, rgba(255, 36, 49, 0.00) 100%)",
+        passionateRubyBlaze2:
+          "linear-gradient(180deg, rgba(255, 36, 49, 1) 0%, rgba(255, 36, 49, 0.5) 100%)",
         sunriseYellowToBlack:
           "linear-gradient(180deg, rgba(255, 218, 87, 0.15) 0%, rgba(255, 218, 87, 0.01) 100%)",
         // with variable

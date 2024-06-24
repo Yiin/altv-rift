@@ -188,7 +188,7 @@ alt.Timers.everyTick(() => {
   }
 });
 
-alt.Events.onKeyDown(({ key }) => {
+alt.Events.onKeyDown(async ({ key }) => {
   if (key === alt.Enums.KeyCode.E) {
     if (!currentEntity) {
       return;
@@ -213,6 +213,10 @@ alt.Events.onKeyDown(({ key }) => {
     }
 
     game.playSoundFrontend(-1, "SELECT", "HUD_FREEMODE_SOUNDSET", true);
-    currentMenu.onSelect(currentMenu.options[currentIndex.value]);
+    try {
+      await currentMenu.onSelect(currentMenu.options[currentIndex.value]);
+    } catch (e) {
+      alt.log(e);
+    }
   }
 });

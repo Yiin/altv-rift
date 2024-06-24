@@ -50,9 +50,7 @@ export function getAnchorType(entity: alt.BaseObject): AnchorType | null {
 export function prepareFrameForEntity(entity: AnchorEntity): void {
   const isVisible =
     alt.isPointOnScreen(entity.pos) &&
-    (entity instanceof alt.Entity
-      ? game.hasEntityClearLosToEntity(alt.Player.local, entity, 17)
-      : game.isSphereVisible(entity.pos.x, entity.pos.y, entity.pos.z, 0.0099999998));
+    game.isSphereVisible(entity.pos.x, entity.pos.y, entity.pos.z, 0.0099999998);
 
   if (isVisible) {
     const screenPosition = alt.worldToScreen(entity.pos);
