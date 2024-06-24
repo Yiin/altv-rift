@@ -1,7 +1,7 @@
 Current TODO list:
   ☐ Updated label designs
     ✔ Quest NPC @done
-    ☐ Shop NPC
+    ✔ Shop NPC @done
     ✔ Enemy NPC @done
     ☐ Player
     ☐ Boss NPC
@@ -10,7 +10,9 @@ Current TODO list:
     ✔ Woodcutting @done
     ✔ Fishing @done
     ✔ Mining @done
-  ☐ Test modded skins
+    ✔ Test modded skins @done
+  ✔ Buying from the shop @done
+  ☐ Selling to the shop
   ☐ Zombie boars killing quest
     ☐ Give pistol if player doesn't have one yet
     ☐ : Create spawn points for zombie boars
@@ -28,7 +30,7 @@ Current TODO list:
     ☐ : ???
   ☐ Voice chat
   ☐ Online list on TAB
-  ☐ Pick up items from the ground with indicator menu
+  ☐ Pick up items from the ground with indicator menu?
   ☐ Locations for airdrops
   ☐ Current active area hud notification and status
   ☐ Current active quest hud notification and direction

@@ -1,6 +1,5 @@
 import { Appearance, ScreenPosition } from "@prisma/client/edge";
 import { z } from "zod";
-import { BlueprintKey } from "@shared/modules/production";
 import {
   EquipmentSlot,
   StorageItemSource,
@@ -146,5 +145,5 @@ export const FromWebviewValidation = {
   },
 } satisfies Record<
   keyof typeof FromWebview,
-  { args?: [z.ZodTypeAny, ...z.ZodTypeAny[]]; returns?: z.ZodTypeAny }
+  { args?: z.ZodTypeAny[]; returns?: z.ZodTypeAny }
 >;
