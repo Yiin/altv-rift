@@ -1,7 +1,6 @@
 import esbuild, { BuildOptions } from "esbuild";
 import Watcher from "watcher";
 import chokidar from "chokidar";
-import path from "path";
 import yamlPlugin from "./plugins/yaml-plugin";
 import { esbuildOptions } from "./shared";
 import { copy, copyFile } from "./copy";
@@ -13,11 +12,18 @@ import { isDev } from "./env";
 const sourceRoot = isDev() ? "/source" : "/altv";
 
 export const ASSETS_PATHS = [
+  // config
   `${sourceRoot}/src/resource.toml`,
+  // rml
   `${sourceRoot}/src/client/**/*.rml`,
-  `${sourceRoot}/src/client/**/*.ttf`,
-  `${sourceRoot}/src/client/**/*.png`,
   `${sourceRoot}/src/client/**/*.rcss`,
+  // fonts
+  `${sourceRoot}/src/client/**/*.ttf`,
+  // images
+  `${sourceRoot}/src/client/**/*.png`,
+  // audio
+  `${sourceRoot}/src/client/**/*.mp3`,
+  `${sourceRoot}/src/client/**/*.wav`,
 ];
 
 if (isDev()) {
@@ -28,7 +34,7 @@ if (isDev()) {
 
   assetsWatcher.on("change", async () => {
     for (const assetsPath of ASSETS_PATHS) {
-      await copy(assetsPath, "resources/main");
+      await copy(assetsPath, "resources/main/");
     }
   });
 
@@ -36,12 +42,7 @@ if (isDev()) {
   const watcher = chokidar.watch(ASSETS_PATHS);
 
   watcher.on("change", (filePath) => {
-    const rootDir = "src";
-    const absoluteRootDir = filePath.substring(0, filePath.indexOf(rootDir) + rootDir.length);
-    const relativePath = path.relative(absoluteRootDir, filePath);
-    const destPath = path.join("resources/main", relativePath);
-    console.log("Assets changed, copying", { filePath, relativePath, destPath });
-    copyFile(filePath, destPath);
+    copyFile(filePath, "resources/main/");
 
     if (!filePath.endsWith("screen.rml")) {
       reloadResource();
@@ -50,7 +51,7 @@ if (isDev()) {
 }
 
 for (const assetsPath of ASSETS_PATHS) {
-  await copy(assetsPath, "resources/main");
+  await copy(assetsPath, "resources/main/");
 }
 
 const options: BuildOptions = {

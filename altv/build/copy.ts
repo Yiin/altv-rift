@@ -3,9 +3,12 @@ import path from "path";
 import glob from "glob";
 
 export const copyFile = (source: string, dest: string) => {
-  fs.mkdirSync(path.dirname(dest), { recursive: true });
+  const destPath = source.replace("src/", dest);
 
-  fs.copyFileSync(source, dest);
+  if (fs.existsSync(source)) {
+    fs.mkdirSync(path.dirname(destPath), { recursive: true });
+    fs.copyFileSync(source, destPath);
+  }
 };
 
 export const copy = async (globPattern: string, dest: string) => {
@@ -13,12 +16,10 @@ export const copy = async (globPattern: string, dest: string) => {
     const files = await glob(globPattern);
 
     files.forEach((file) => {
-      const relativePath = path.relative("src", file);
-      const destPath = path.join(dest, relativePath);
-      copyFile(file, destPath);
+      copyFile(file, dest);
     });
   } catch (err) {
-    console.error("Failed to read", globPattern, "err:", err);
-    process.exit(-1);
+    console.error(err);
+    // process.exit(-1);
   }
 };

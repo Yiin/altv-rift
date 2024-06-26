@@ -10,6 +10,7 @@ declare module "@altv/server" {
 import "./core/user-interface";
 import "./core/rmlui";
 import "./core/remote-native";
+import "./core/sounds";
 import "./modules/dev";
 import "./modules/world";
 import "./modules/auth";

@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { FishingBait, createItem, getItemDescription, getItemName } from "@shared/modules/items";
+import { getItemDescription, getItemName } from "@shared/modules/items";
 import { type InventoryItem } from "@shared/interfaces";
-import { createInventory } from "@shared/modules/inventory";
 import { ServerCall } from "@shared/calls/server";
 import DarkBackground from "@/components/DarkBackground.vue";
 import BackButtons from "@/components/buttons/BackButtons.vue";
@@ -12,6 +11,7 @@ import { useCharacter } from "@/store/synced/character.store";
 import { asset } from "@/utils/asset";
 import { rpc } from "@/rpc";
 import Icon from "@/components/Icon/Icon.vue";
+import { Sound, playSound } from "@/utils/sounds";
 import ShopItemIcon from "./ShopItemIcon.vue";
 import ShopActionModal from "./ShopActionModal.vue";
 import { canBuy } from "./shop.utils";
@@ -19,13 +19,13 @@ import { canBuy } from "./shop.utils";
 const gameState = useGameState();
 const character = useCharacter();
 
-const shopStorage = computed(() => gameState.openedStorage);
+const shopStorage = computed(() => gameState.openedStorage!);
 
 const modal = ref<InventoryItem | null>(null);
 
 const items = computed(
   () =>
-    shopStorage.value?.inventory.items
+    shopStorage.value.inventory.items
       .map((inventoryItem) => ({
         ...inventoryItem,
         price: inventoryItem.price ?? 50,
@@ -41,16 +41,19 @@ function openBuyModal(inventoryItem: InventoryItem) {
 }
 
 async function buy(inventoryItem: InventoryItem, amount: number) {
+  playSound(Sound.BUY);
+  modal.value = null;
+
+  await new Promise((resolve) => setTimeout(resolve, 500));
+
   await rpc.callServer(
     ServerCall.FromWebview.BUY_ITEM,
     {
-      ...shopStorage.value!.source,
+      ...shopStorage.value.source,
       inventorySlot: inventoryItem.slot,
     },
     amount,
   );
-
-  modal.value = null;
 }
 </script>
 

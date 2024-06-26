@@ -228,8 +228,10 @@ alt.Events.onServer(
       webview.focused = true;
       markWebViewAsReady(webview);
     });
-    webview.on(ClientEvents.FromWebview.PLAY_SOUND, (audioName: string, ref: string) => {
-      game.playSoundFrontend(-1, audioName, ref, true);
+    webview.on(ClientEvents.FromWebview.PLAY_SOUND, (audioName, ref) => {
+      if (typeof ref === 'string') {
+        game.playSoundFrontend(-1, audioName, ref, true);
+      }
     });
     webview.on(ClientEvents.FromWebview.CLOSE_WINDOW, closeWindow);
   },

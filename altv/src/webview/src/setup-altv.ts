@@ -1,3 +1,4 @@
+import { isRpcEvent } from "@shared/calls/constants";
 import { deserialize, serialize } from "@shared/utility/serializer";
 
 // @ts-ignore
@@ -27,7 +28,11 @@ if (!("alt" in globalThis)) {
   const emit = globalThis.alt.emit;
 
   globalThis.alt.emitRaw = function (eventName: string, ...args: any[]) {
-    emit(eventName, serialize(args));
+    if (isRpcEvent(eventName)) {
+      emit(eventName, serialize(args));
+    } else {
+      emit(eventName, ...args);
+    }
   };
 
   const handlers: {
@@ -39,8 +44,7 @@ if (!("alt" in globalThis)) {
   globalThis.alt.on = function (eventName: string, listener: (...args: any[]) => void) {
     function handler(...args: any[]) {
       try {
-        const deserializedArgs = args.flatMap((arg) => arg && deserialize(arg));
-        listener(...deserializedArgs);
+        listener(...args.flatMap((arg) => arg && deserialize(arg)));
       } catch (e) {
         console.error("err", eventName, args, e);
       }

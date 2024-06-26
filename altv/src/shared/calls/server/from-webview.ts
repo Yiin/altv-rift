@@ -145,5 +145,5 @@ export const FromWebviewValidation = {
   },
 } satisfies Record<
   keyof typeof FromWebview,
-  { args?: z.ZodTypeAny[]; returns?: z.ZodTypeAny }
+  { args?: [z.ZodTypeAny, ...z.ZodTypeAny[]]; returns?: z.ZodTypeAny }
 >;
