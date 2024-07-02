@@ -2,7 +2,6 @@
 import type { NotificationSchema } from '../notiwind'
 import { NotificationTypes } from '../notiwind'
 
-
 const props = defineProps<{
   notification: NotificationSchema
 }>()
