@@ -4,9 +4,16 @@ import {
   defineNotificationComponent,
 } from "notiwind";
 
+export enum NotificationTypes {
+  Error = 'error',
+  Success = 'success',
+  Info = 'info',
+  Warning = 'warning'
+}
+
 export type NotificationSchema = {
   text: string;
-  type: string;
+  type: NotificationTypes;
 };
 
 export const notify = createNotifier<NotificationSchema>();
