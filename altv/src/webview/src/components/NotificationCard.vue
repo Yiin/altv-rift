@@ -30,7 +30,7 @@ const props = defineProps<{
     >
       <div class="shrink-0">
         <div
-          class="flex items-center justify-center text-xs border rounded h-14 w-14"
+          class="flex items-center justify-center text-xs border rounded h-14 w-14 bg-white/5"
           :class="{
             'border-[#FF2431]/15 text-[#FF2431]': props.notification.type === NotificationType.Error,
             'border-[#A1D631]/15 text-[#A1D631]': props.notification.type === NotificationType.Success,
