@@ -45,28 +45,28 @@ onMounted(() => {
   notify(
     {
       type: NotificationType.Error,
-      text: "Amet mollit velit occaecat reprehenderit officia",
+      text: "You don't have enough money",
     },
     300000,
   );
   notify(
     {
       type: NotificationType.Success,
-      text: "Pariatur laboris cupidatat non dolore id",
+      text: "Quest completed successfully",
     },
     300000,
   );
   notify(
     {
       type: NotificationType.Info,
-      text: "Lorem consequat fugiat est consequat",
+      text: "You entered a safe zone",
     },
     300000,
   );
   notify(
     {
       type: NotificationType.Warning,
-      text: "Consequat aliquip magna quis voluptate amet.",
+      text: "Upon death you will lose all your items",
     },
     300000,
   );
