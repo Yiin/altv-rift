@@ -3,6 +3,7 @@ import { defineConfig } from "vite";
 import vuetify from "vite-plugin-vuetify";
 import externalGlobals from "rollup-plugin-external-globals";
 import vue from "@vitejs/plugin-vue";
+import AutoImport from "unplugin-auto-import/vite";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -41,6 +42,16 @@ export default defineConfig(({ mode }) => ({
       styles: {
         configFile: "src/vuetify-config.scss",
       },
+    }),
+    AutoImport({
+      imports: ["vue", "vue-router", "pinia"],
+      dirs: [
+        "src/composables/**",
+        "src/store/**",
+        "src/components/**",
+        "src/rpc/**",
+        "../shared/**",
+      ],
     }),
   ],
 }));

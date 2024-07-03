@@ -1,28 +1,40 @@
 <script setup lang="ts">
 import { NotificationType } from "@shared/interfaces";
 import { asset } from "@/utils/asset";
+import Icon from "./Icon/Icon.vue";
 import type { Notification } from "../plugins/notiwind";
 
-const props = defineProps<{
+defineProps<{
   notification: Notification;
 }>();
 </script>
 
 <template>
   <div
+<<<<<<< Updated upstream
     class="text-white rounded-lg"
+=======
+    class="bg-black-900/100 relative max-w-80 rounded-lg text-white"
+>>>>>>> Stashed changes
     role="alert"
   >
     <div
       class="flex items-center gap-4 p-4 rounded-lg"
       :class="{
+<<<<<<< Updated upstream
         'bg-[#110000]/85': props.notification.type === NotificationType.Error,
         'bg-[#0B3800]/85': props.notification.type === NotificationType.Success,
         'bg-[#002857]/85': props.notification.type === NotificationType.Info,
         'bg-black/85': props.notification.type === NotificationType.Warning,
+=======
+        'bg-[#290000]/85': notification.type === NotificationType.Error,
+        'bg-[#0B3800]/85': notification.type === NotificationType.Success,
+        'bg-[#002857]/85': notification.type === NotificationType.Info,
+        'bg-black/85': notification.type === NotificationType.Warning,
+>>>>>>> Stashed changes
       }"
       :style="[
-        props.notification.type === NotificationType.Warning && {
+        notification.type === NotificationType.Warning && {
           'background-image': `url(${asset('assets/notifications/warning-background.svg')})`,
           backgroundRepeat: 'repeat',
         },
@@ -32,6 +44,7 @@ const props = defineProps<{
         <div
           class="flex items-center justify-center text-xs border rounded h-14 w-14"
           :class="{
+<<<<<<< Updated upstream
             'border-[#FF2431]/15 text-[#FF2431] bg-[#FF2431]/5': props.notification.type === NotificationType.Error,
             'border-[#A1D631]/15 text-[#A1D631] bg-[#A1D631]/5': props.notification.type === NotificationType.Success,
             'border-[#2087FF]/15 text-[#2087FF] bg-[#2087FF]/5': props.notification.type === NotificationType.Info,
@@ -79,7 +92,36 @@ const props = defineProps<{
           >{{ props.notification.type }}</div>
         </div>
         <div class="text-base font-bold leading-tight">{{ props.notification.text }}</div>
+=======
+            'border-[#FF24311F]': notification.type === NotificationType.Error,
+            'border-[#A3DF221F]': notification.type === NotificationType.Success,
+            'border-[#2087FF1F]': notification.type === NotificationType.Info,
+            'border-[#F2CB401F] bg-[#252210]': notification.type === NotificationType.Warning,
+          }"
+        >
+          <Icon
+            :name="`notification-${notification.type}`"
+            :size="notification.type === NotificationType.Info ? 11 : 22"
+            :class="{
+              '-mt-2': notification.type === NotificationType.Info,
+            }"
+          />
+        </div>
       </div>
+      <div class="grid gap-1">
+        <div class="text-lg font-semibold leading-tight">{{ notification.text }}</div>
+>>>>>>> Stashed changes
+      </div>
+      <img
+        v-if="notification.type === NotificationType.Error"
+        :src="asset('assets/notifications/error-x.svg')"
+        class="absolute bottom-0.5 right-3.5 h-13.5 w-13.5"
+      />
+      <img
+        v-if="notification.type === NotificationType.Success"
+        :src="asset('assets/notifications/success-check.svg')"
+        class="absolute bottom-2 right-3 h-13.75 w-19.25"
+      />
     </div>
   </div>
 </template>
