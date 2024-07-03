@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 import { ClientEvents } from "@shared/events/client";
-import { notify, Notification, NotificationGroup } from "./notiwind";
+import { NotificationType } from "@shared/interfaces";
+import { notify, Notification, NotificationGroup } from "./plugins/notiwind";
 import { useEventListener } from "./composables/use-event-listener";
 import { useSceneManager } from "./composables/use-scene-manager";
 import { useSyncedStores } from "./composables/use-synced-stores";
-
-import NotificationCard from './components/NotificationCard.vue'
+import NotificationCard from "./components/NotificationCard.vue";
 
 window.addEventListener("error", (e) => {
   if (e instanceof ErrorEvent) {
@@ -42,28 +42,40 @@ console.log("App.vue");
 onMounted(() => {
   console.log("App mounted");
   alt.emit(ClientEvents.FromWebview.VIEW_READY);
-  notify({
-    type: "error",
-    text: "Amet mollit velit occaecat reprehenderit officia",
-  }, 7000);
-  notify({
-    type: "success",
-    text: "Pariatur laboris cupidatat non dolore id",
-  }, 1500);
-  notify({
-    type: "info",
-    text: "Lorem consequat fugiat est consequat",
-  }, 4500);
-  notify({
-    type: "warning",
-    text: "Consequat aliquip magna quis voluptate amet et ipsum adipisicing Laboris incididunt enim cupidatat aute mollit incididunt nostrud est.",
-  }, 3000);
+  notify(
+    {
+      type: NotificationType.Error,
+      text: "Amet mollit velit occaecat reprehenderit officia",
+    },
+    7000,
+  );
+  notify(
+    {
+      type: NotificationType.Success,
+      text: "Pariatur laboris cupidatat non dolore id",
+    },
+    1500,
+  );
+  notify(
+    {
+      type: NotificationType.Info,
+      text: "Lorem consequat fugiat est consequat",
+    },
+    4500,
+  );
+  notify(
+    {
+      type: NotificationType.Warning,
+      text: "Consequat aliquip magna quis voluptate amet et ipsum adipisicing Laboris incididunt enim cupidatat aute mollit incididunt nostrud est.",
+    },
+    3000,
+  );
 });
 </script>
 
 <template>
   <NotificationGroup>
-    <div class="fixed top-0 right-0 z-10 grid items-start justify-end w-full max-w-md gap-2 p-6">
+    <div class="fixed right-0 top-0 z-10 grid w-full max-w-md items-start justify-end gap-2 p-6">
       <Notification
         v-slot="{ notifications }"
         enter="transform ease-out duration-300 transition"
@@ -83,7 +95,7 @@ onMounted(() => {
       </Notification>
     </div>
   </NotificationGroup>
-  
+
   <v-app>
     <v-main class="relative select-none">
       <router-view />
