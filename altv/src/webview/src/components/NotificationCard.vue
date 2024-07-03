@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { NotificationType } from "@shared/interfaces";
+import { asset } from "@/utils/asset";
 import type { Notification } from "../plugins/notiwind";
 
 const props = defineProps<{
@@ -9,46 +10,39 @@ const props = defineProps<{
 
 <template>
   <div
-    class="bg-black-900/100 relative rounded-lg text-white backdrop-blur"
+    class="bg-black-900/100 relative rounded-lg text-white"
     role="alert"
   >
     <div
       class="flex items-center gap-4 rounded-lg p-4"
       :class="{
-        'bg-red-900/10': props.notification.type === NotificationType.Error,
-        'bg-green-900/10': props.notification.type === NotificationType.Success,
-        'bg-blue-900/10': props.notification.type === NotificationType.Info,
-        'bg-yellow-900/10': props.notification.type === NotificationType.Warning,
+        'bg-[#110000]/85': props.notification.type === NotificationType.Error,
+        'bg-[#0E1400]/85': props.notification.type === NotificationType.Success,
+        'bg-[#000E1F]/85': props.notification.type === NotificationType.Info,
+        'bg-black/85': props.notification.type === NotificationType.Warning,
       }"
+      :style="[
+        props.notification.type === NotificationType.Warning && {
+          'background-image': `url(${asset('assets/notifications/warning-background.svg')})`,
+          backgroundRepeat: 'repeat',
+        },
+      ]"
     >
       <div class="shrink-0">
         <div
           class="flex h-14 w-14 items-center justify-center rounded border text-xs"
           :class="{
-            'border-red-500': props.notification.type === NotificationType.Error,
-            'border-green-500': props.notification.type === NotificationType.Success,
-            'border-blue-500': props.notification.type === NotificationType.Info,
-            'border-yellow-500': props.notification.type === NotificationType.Warning,
+            'border-[#FF24311F]': props.notification.type === NotificationType.Error,
+            'border-[#A3DF221F]': props.notification.type === NotificationType.Success,
+            'border-[#2087FF1F]': props.notification.type === NotificationType.Info,
+            'border-[#F2CB401F] bg-[#252210]': props.notification.type === NotificationType.Warning,
           }"
         >
           icon
         </div>
       </div>
       <div class="grid gap-1">
-        <div>
-          <div
-            class="inline-flex rounded p-1 text-xs font-semibold uppercase leading-none"
-            :class="{
-              'bg-red-500': props.notification.type === NotificationType.Error,
-              'bg-green-500': props.notification.type === NotificationType.Success,
-              'bg-blue-500': props.notification.type === NotificationType.Info,
-              'bg-yellow-500': props.notification.type === NotificationType.Warning,
-            }"
-          >
-            {{ props.notification.type }}
-          </div>
-        </div>
-        <div class="text-lg font-bold leading-tight">{{ props.notification.text }}</div>
+        <div class="text-lg font-semibold leading-tight">{{ props.notification.text }}</div>
       </div>
     </div>
   </div>
