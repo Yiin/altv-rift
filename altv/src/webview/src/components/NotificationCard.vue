@@ -30,12 +30,12 @@ const props = defineProps<{
     >
       <div class="shrink-0">
         <div
-          class="flex items-center justify-center text-xs border rounded h-14 w-14 bg-white/5"
+          class="flex items-center justify-center text-xs border rounded h-14 w-14"
           :class="{
-            'border-[#FF2431]/15 text-[#FF2431]': props.notification.type === NotificationType.Error,
-            'border-[#A1D631]/15 text-[#A1D631]': props.notification.type === NotificationType.Success,
-            'border-[#2087FF]/15 text-[#2087FF]': props.notification.type === NotificationType.Info,
-            'border-[#F2CB40]/15 text-[#F2CB40]': props.notification.type === NotificationType.Warning,
+            'border-[#FF2431]/15 text-[#FF2431] bg-[#FF2431]/5': props.notification.type === NotificationType.Error,
+            'border-[#A1D631]/15 text-[#A1D631] bg-[#A1D631]/5': props.notification.type === NotificationType.Success,
+            'border-[#2087FF]/15 text-[#2087FF] bg-[#2087FF]/5': props.notification.type === NotificationType.Info,
+            'border-[#F2CB40]/15 text-[#F2CB40] bg-[#F2CB40]/5': props.notification.type === NotificationType.Warning,
           }"
         >
           <div class="w-[22px] h-[22px]">
