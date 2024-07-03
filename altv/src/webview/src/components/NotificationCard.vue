@@ -1,34 +1,34 @@
 <script setup lang="ts">
-import type { Notification } from '../plugins/notiwind'
-import { NotificationType } from '../plugins/notiwind'
+import { NotificationType } from "@shared/interfaces";
+import type { Notification } from "../plugins/notiwind";
 
 const props = defineProps<{
-  notification: Notification
-}>()
+  notification: Notification;
+}>();
 </script>
 
 <template>
   <div
-    class="relative text-white rounded-lg bg-black-900/100 backdrop-blur"
+    class="bg-black-900/100 relative rounded-lg text-white backdrop-blur"
     role="alert"
   >
     <div
-      class="flex items-center gap-4 p-4 rounded-lg"
+      class="flex items-center gap-4 rounded-lg p-4"
       :class="{
         'bg-red-900/10': props.notification.type === NotificationType.Error,
         'bg-green-900/10': props.notification.type === NotificationType.Success,
         'bg-blue-900/10': props.notification.type === NotificationType.Info,
-        'bg-yellow-900/10': props.notification.type === NotificationType.Warning
+        'bg-yellow-900/10': props.notification.type === NotificationType.Warning,
       }"
     >
       <div class="shrink-0">
         <div
-          class="flex items-center justify-center text-xs border rounded w-14 h-14"
+          class="flex h-14 w-14 items-center justify-center rounded border text-xs"
           :class="{
             'border-red-500': props.notification.type === NotificationType.Error,
             'border-green-500': props.notification.type === NotificationType.Success,
             'border-blue-500': props.notification.type === NotificationType.Info,
-            'border-yellow-500': props.notification.type === NotificationType.Warning
+            'border-yellow-500': props.notification.type === NotificationType.Warning,
           }"
         >
           icon
@@ -37,12 +37,12 @@ const props = defineProps<{
       <div class="grid gap-1">
         <div>
           <div
-            class="inline-flex p-1 text-xs font-semibold leading-none uppercase rounded"
+            class="inline-flex rounded p-1 text-xs font-semibold uppercase leading-none"
             :class="{
               'bg-red-500': props.notification.type === NotificationType.Error,
               'bg-green-500': props.notification.type === NotificationType.Success,
               'bg-blue-500': props.notification.type === NotificationType.Info,
-              'bg-yellow-500': props.notification.type === NotificationType.Warning
+              'bg-yellow-500': props.notification.type === NotificationType.Warning,
             }"
           >
             {{ props.notification.type }}
