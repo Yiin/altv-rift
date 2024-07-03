@@ -47,28 +47,28 @@ onMounted(() => {
       type: NotificationType.Error,
       text: "Amet mollit velit occaecat reprehenderit officia",
     },
-    7000,
+    300000,
   );
   notify(
     {
       type: NotificationType.Success,
       text: "Pariatur laboris cupidatat non dolore id",
     },
-    1500,
+    300000,
   );
   notify(
     {
       type: NotificationType.Info,
       text: "Lorem consequat fugiat est consequat",
     },
-    4500,
+    300000,
   );
   notify(
     {
       type: NotificationType.Warning,
-      text: "Consequat aliquip magna quis voluptate amet et ipsum adipisicing Laboris incididunt enim cupidatat aute mollit incididunt nostrud est.",
+      text: "Consequat aliquip magna quis voluptate amet.",
     },
-    3000,
+    300000,
   );
 });
 </script>
