@@ -41,10 +41,19 @@ function openBuyModal(inventoryItem: InventoryItem) {
 }
 
 async function buy(inventoryItem: InventoryItem, amount: number) {
+  if (amount <= 0) {
+    return;
+  }
+
   playSound(Sound.BUY);
+
+  // close the modal
   modal.value = null;
 
-  await new Promise((resolve) => setTimeout(resolve, 500));
+  // wait a bit so first the sound plays as the money
+  // are being "exchanged" and only then notification
+  // about added item is shown
+  await new Promise((resolve) => setTimeout(resolve, 300));
 
   await rpc.callServer(
     ServerCall.FromWebview.BUY_ITEM,

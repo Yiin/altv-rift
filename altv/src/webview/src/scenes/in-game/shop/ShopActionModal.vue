@@ -28,7 +28,7 @@ const {
   canIncrease,
   canDecrease,
 } = useQuantity({
-  min: 1,
+  min: 0,
   max: maxAmount,
 });
 
@@ -107,10 +107,12 @@ const price = computed(() => quantity.value * (props.price ?? 0));
             Max
           </div>
           <div
-            class="hover:bg-passionateRubyBlaze2 flex w-full cursor-pointer items-center justify-center border border-white/10 bg-white/5 px-8 py-2.5 transition-all duration-75"
+            class="flex w-full cursor-pointer items-center justify-center border border-white/10 bg-white/5 px-8 py-2.5 transition-all duration-75 hover:bg-passionateRubyBlaze2"
             @click="() => emit('submit', { item, slot, price }, quantity)"
           >
-            <div class="text-sm font-extrabold uppercase text-white">purchase</div>
+            <div class="text-sm font-extrabold uppercase text-white">
+              {{ canBuy(props) ? "purchase" : "not enough money" }}
+            </div>
           </div>
         </div>
       </div>
