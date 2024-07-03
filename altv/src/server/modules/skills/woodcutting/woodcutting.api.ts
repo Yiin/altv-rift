@@ -1,6 +1,5 @@
 import alt from "@altv/server";
 import * as trees from "@shared/modules/woodcutting/trees";
-import IGNORED_TREES from "@shared/modules/woodcutting/trees-to-ignore.json";
 import { getLevel } from "@shared/modules/experience/experience-table";
 import { getTreeLevel } from "@shared/modules/woodcutting/functions";
 import { VirtualEntityType } from "@shared/interfaces";
@@ -10,7 +9,6 @@ export const virtualTreeGroup = alt.VirtualEntityGroup.create({ maxEntitiesInStr
 export const playerHittingTree: WeakMap<InGamePlayer, number> = new WeakMap();
 
 export async function growTrees(): Promise<void> {
-  let skippedTrees = 0;
   let validTrees = 0;
 
   const WAIT_EVERY = 1000;

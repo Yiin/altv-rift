@@ -16,7 +16,7 @@ Current TODO list:
   ☐ Zombie boars killing quest
     ☐ Give pistol if player doesn't have one yet
     ☐ : Create spawn points for zombie boars
-    ☐ : Add new material - leather
+    ✔ : Add new materials - hide & leather @done
     ☐ Task player to kill one and get leather
     ☐ : Update bodyarmor recipe requirements, add leather
     ☐ After they do, give them materials to upgrade weapon and blueprint for body armor
@@ -28,6 +28,13 @@ Current TODO list:
     ☐ : Create ship
     ☐ : Teleport player to island
     ☐ : ???
+  ☐ Activities in cayo perico:
+    ✔ Fishing @done
+    ☐ Mining
+    ✔ Raid @done
+    ☐ Air drops
+    ☐ Aircraft carrier
+    ☐ Control posts
   ☐ Voice chat
   ☐ Online list on TAB
   ☐ Pick up items from the ground with indicator menu?
@@ -43,7 +50,7 @@ Current TODO list:
 
 Loot by area:
   area specific recipes/workstations/materials
-
+  area specific boses?
 
 Introduction:
   ✔ Spawn at airport @done

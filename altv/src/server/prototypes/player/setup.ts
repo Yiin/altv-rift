@@ -29,8 +29,10 @@ alt.Player.prototype.setup = async function () {
 
   // Setup Webview
   if (getVueDebugMode()) {
+    console.log("Setting up Webview... (dev)");
     this.emitRaw(ClientEvents.FromServer.SETUP_WEBVIEW, await getViteServer());
   } else {
+    console.log("Setting up Webview... (prod)");
     this.emitRaw(ClientEvents.FromServer.SETUP_WEBVIEW);
   }
 };

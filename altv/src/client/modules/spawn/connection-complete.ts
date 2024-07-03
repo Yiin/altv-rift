@@ -190,4 +190,56 @@ alt.Events.onConsoleCommand(({ command }) => {
 
     alt.log(`Found torso? ${eReturnItem}`);
   }
+
+  if (command === "torso2") {
+    const top = useCharacter().equipment.top;
+
+    if (!top) {
+      alt.log(`You have no top!`);
+      return;
+    }
+
+    const { drawableId, textureId } = getItemInfoByKey(top.key);
+
+    const ped = alt.Player.local;
+
+    const topHash = game.getHashNameForComponent(ped, 11, drawableId, textureId);
+
+    let fcTorsoDrawable = -1, fcTorsoTexture = -1;
+
+    console.log(topHash, 11, drawableId, textureId);
+
+    for (let i = 0; i < game.getShopPedApparelForcedComponentCount(topHash); i++) {
+      let [fcNameHash, fcEnumValue, fcType] = game.getForcedComponent(topHash, i);
+
+      console.log({ fcNameHash, fcEnumValue, fcType });
+
+      if (fcType == 3) {
+        if (fcNameHash == 0 || fcNameHash == alt.hash("0")) {
+          fcTorsoDrawable = fcEnumValue;
+          fcTorsoTexture = 0;
+        }
+        else {
+          const torsoData = game.getShopPedComponent(fcNameHash);
+
+          console.log({ torsoData });
+
+          fcTorsoDrawable = torsoData.drawable;
+          fcTorsoTexture = torsoData.texture;
+        }
+      } else {
+        console.log('fc:', fcType, 'dcEnumValue', fcEnumValue, 'torsoData', game.getShopPedComponent(fcNameHash));
+      }
+    }
+
+    console.log("Current top: " + drawableId + " - " + textureId);
+    console.log("Proper torso drawable: " + fcTorsoDrawable);
+    console.log("Proper torso texture: " + fcTorsoTexture);
+
+    if (fcTorsoDrawable !== -1 || fcTorsoTexture !== -1) {
+      game.setPedComponentVariation(ped, 3, fcTorsoDrawable, fcTorsoTexture, 2);
+    }
+
+    return;// [fcTorsoDrawable, fcTorsoTexture];
+  }
 });

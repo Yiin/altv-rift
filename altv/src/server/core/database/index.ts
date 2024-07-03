@@ -3,6 +3,8 @@ import _ from "lodash";
 import { container } from "@shared/dependency-injection";
 import { getDefaultCharacterData } from "@/modules/character";
 
+console.log('PrismaClient', PrismaClient, typeof PrismaClient);
+
 export const prisma = new PrismaClient();
 
 let connected = false;
@@ -11,6 +13,10 @@ prisma.$connect().then(async () => {
   connected = true;
 
   fillMissingCharacterFieldsWithDefaultData();
+
+  // await prisma.character.deleteMany().then(() => {
+  //   console.log("Removed all characters");
+  // });
 });
 
 function getMissingKeysRecursive(

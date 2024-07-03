@@ -1,6 +1,6 @@
 import alt from "@altv/client";
 import game from "@altv/natives";
-import { Bones } from "@shared/enums/bones";
+import { PedBone } from "@shared/enums/bones";
 import { PedFlags } from "@shared/modules/ped";
 import { div } from "../../renderer/rml-tags";
 import { AnchorType } from "../../renderer/anchors";
@@ -35,7 +35,7 @@ registerElement({
               transform: everyFrame(() => {
                 const headPos = game.getPedBoneCoords(
                   ped,
-                  Bones.SKEL_Head,
+                  PedBone.SKEL_Head,
                   0.4, 0, 0
                 );
                 const { x, y } = alt.worldToScreen({ x: ped.pos.x, y: ped.pos.y, z: headPos.z });

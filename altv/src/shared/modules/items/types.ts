@@ -99,6 +99,8 @@ import {
   WoodItemInfo,
   WoodItemKey,
 } from "./registry";
+import { LeatherItem, LeatherItemInfo, LeatherItemKey } from "./registry/materials/leather.items";
+import { HideItemKey, HideItem, HideItemInfo } from "./registry/materials/hide.items";
 
 export type StackableItem = Extract<Item, { amount: number }>;
 
@@ -161,6 +163,10 @@ type ItemMapping<T> = T extends FirearmWeaponItemKey
   ? [OreItem, OreItemInfo]
   : T extends MetalItemKey
   ? [MetalItem, MetalItemInfo]
+  : T extends HideItemKey
+  ? [HideItem, HideItemInfo]
+  : T extends LeatherItemKey
+  ? [LeatherItem, LeatherItemInfo]
   : T extends SandItemKey
   ? [SandItem, SandItemInfo]
   : T extends ScrapItemKey
