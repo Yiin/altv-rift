@@ -11,7 +11,8 @@
     "type-check": "vue-tsc --build --force",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "format": "prettier --write src/",
-    "webp": "./scripts/convert-images-to-webp.sh"
+    "webp": "./scripts/convert-images-to-webp.sh",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@floating-ui/dom": "^1.6.5",
