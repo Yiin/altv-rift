@@ -25,6 +25,7 @@
     "json-editor-vue": "^0.15.1",
     "lodash-es": "^4.17.21",
     "notiwind": "^2.0.2",
+    "patch-package": "^8.0.0",
     "pinia": "^2.1.7",
     "unplugin-auto-import": "^0.17.6",
     "vue": "^3.4.21",

@@ -5,13 +5,14 @@
     "./src/**/*",
     "./src/**/*.vue",
     "../shared/**/*",
-    "../../node_modules/@prisma/client/**/*"
+    "../../node_modules/@prisma/client/**/*",
+    "./auto-imports.d.ts"
   ],
   "compilerOptions": {
     "typeRoots": [
       "./node_modules/@altv",
       "./node_modules/@types",
-      "./src/typings"
+      "./src/typings",
     ],
     "paths": {
       "@/*": ["./src/*"],

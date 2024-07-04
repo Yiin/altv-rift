@@ -1,13 +1,4 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
-import { ClientEvents } from "@shared/events/client";
-import { NotificationType } from "@shared/interfaces";
-import { notify, Notification, NotificationGroup } from "./plugins/notiwind";
-import { useEventListener } from "./composables/use-event-listener";
-import { useSceneManager } from "./composables/use-scene-manager";
-import { useSyncedStores } from "./composables/use-synced-stores";
-import NotificationCard from "./components/NotificationCard.vue";
-
 window.addEventListener("error", (e) => {
   if (e instanceof ErrorEvent) {
     console.error(e.message, e.filename, e.lineno, e.colno);

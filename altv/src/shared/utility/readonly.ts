@@ -8,6 +8,6 @@
  * mutate the state.
  */
 
-export function readonly<T extends (...args: any[]) => any>(fn: T) {
-  return () => fn() as Readonly<ReturnType<T>>;
-}
+// export function readonly<T extends (...args: any[]) => any>(fn: T) {
+//   return () => fn() as Readonly<ReturnType<T>>;
+// }
