@@ -23,7 +23,7 @@ export type OreItemInfo = {
   description: string;
 };
 
-export const ore = registerItems<OreItemInfo>([
+export const ores = registerItems<OreItemInfo>([
   {
     key: Ore.IRON_ORE,
     name: "Iron ore",
@@ -57,7 +57,7 @@ export const ore = registerItems<OreItemInfo>([
 ]);
 
 export function isItemKeyOre(key: string): key is OreItemKey {
-  return ore.has(key as OreItemKey);
+  return ores.has(key as OreItemKey);
 }
 
 export function isItemOre(item: Item): item is OreItem {

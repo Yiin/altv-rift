@@ -83,6 +83,8 @@ declare global {
   const MessageType: typeof import('../shared/modules/chat/enums/message-type.enum')['MessageType']
   const Metal: typeof import('../shared/modules/items/registry/materials/metal.items')['Metal']
   const Note: typeof import('../shared/modules/items/registry/note.items')['Note']
+  const Notification: typeof import('./src/plugins/notiwind')['Notification']
+  const NotificationGroup: typeof import('./src/plugins/notiwind')['NotificationGroup']
   const NotificationType: typeof import('../shared/interfaces/notification')['NotificationType']
   const Ore: typeof import('../shared/modules/items/registry/materials/ore.items')['Ore']
   const OverlayType: typeof import('../shared/modules/character/appearance-data/overlays')['OverlayType']
@@ -316,6 +318,7 @@ declare global {
   const headOverlays: typeof import('../shared/modules/character/appearance-data/overlays')['headOverlays']
   const headwears: typeof import('../shared/modules/items/registry/clothing/headwear/headwear.items')['headwears']
   const hiddenOverlaysForGender: typeof import('../shared/modules/character/appearance-data/head-overlays')['hiddenOverlaysForGender']
+  const hides: typeof import('../shared/modules/items/registry/materials/hide.items')['hides']
   const indexD: typeof import('../shared/custom-types/vendor/index.d')['default']
   const inject: typeof import('vue')['inject']
   const isBuying: typeof import('./src/store/shop.store')['isBuying']
@@ -431,6 +434,7 @@ declare global {
   const join: typeof import('../shared/utility/path')['join']
   const lefthand: typeof import('../shared/modules/items/registry/clothing/lefthand/lefthand.items')['lefthand']
   const lerp: typeof import('../shared/utility/vector')['lerp']
+  const loadFonts: typeof import('./src/plugins/webfontloader')['loadFonts']
   const makeEnum: typeof import('../shared/utility/make-enum')['makeEnum']
   const makeKeys: typeof import('../shared/utility/make-keys')['makeKeys']
   const mapActions: typeof import('pinia')['mapActions']
@@ -445,6 +449,7 @@ declare global {
   const nextTick: typeof import('vue')['nextTick']
   const notRandomizableOverlaysForGender: typeof import('../shared/modules/character/appearance-data/head-overlays')['notRandomizableOverlaysForGender']
   const notes: typeof import('../shared/modules/items/registry/note.items')['notes']
+  const notify: typeof import('./src/plugins/notiwind')['notify']
   const onActivated: typeof import('vue')['onActivated']
   const onBeforeMount: typeof import('vue')['onBeforeMount']
   const onBeforeRouteLeave: typeof import('vue-router')['onBeforeRouteLeave']
@@ -463,6 +468,7 @@ declare global {
   const openAmmunitionPanel: typeof import('./src/store/inventory/inventory.actions')['openAmmunitionPanel']
   const openContextMenu: typeof import('./src/store/inventory/inventory.actions')['openContextMenu']
   const ore: typeof import('../shared/modules/items/registry/materials/ore.items')['ore']
+  const ores: typeof import('../shared/modules/items/registry/materials/ore.items')['ores']
   const overlayColors: typeof import('../shared/modules/character/appearance-data/aspects')['overlayColors']
   const pants: typeof import('../shared/modules/items/registry/clothing/pants/pants.items')['pants']
   const parents: typeof import('../shared/modules/character/appearance-data/parents')['parents']
@@ -534,7 +540,7 @@ declare global {
   const randomPointInPolygon: typeof import('../shared/utility/random')['randomPointInPolygon']
   const randomPointInTriangle: typeof import('../shared/utility/random')['randomPointInTriangle']
   const reactive: typeof import('vue')['reactive']
-  const readonly: typeof import('../shared/utility/readonly')['readonly']
+  const readonly: typeof import('vue')['readonly']
   const ref: typeof import('vue')['ref']
   const registerBlueprint: typeof import('../shared/modules/production/blueprints.registry')['registerBlueprint']
   const registerClient: typeof import('./src/rpc/with-client')['registerClient']
@@ -619,6 +625,7 @@ declare global {
   const useWindowSize: typeof import('./src/composables/use-window-size')['useWindowSize']
   const useWindows: typeof import('./src/store/windows.store')['useWindows']
   const vectorLerp: typeof import('../shared/utility/vector')['vectorLerp']
+  const vuetify: typeof import('./src/plugins/vuetify')['default']
   const watch: typeof import('vue')['watch']
   const watchEffect: typeof import('vue')['watchEffect']
   const watchPostEffect: typeof import('vue')['watchPostEffect']
@@ -631,7 +638,7 @@ declare global {
   export type { Component, ComponentPublicInstance, ComputedRef, ExtractDefaultPropTypes, ExtractPropTypes, ExtractPublicPropTypes, InjectionKey, PropType, Ref, VNode, WritableComputedRef } from 'vue'
   import('vue')
   // @ts-ignore
-  export type { InventoryInteractionType } from './src/store/inventory/inventory.types'
+  export type { InventoryInteractionType, InventoryInteractionType } from './src/store/inventory/inventory.types'
   import('./src/store/inventory/inventory.types')
   // @ts-ignore
   export type { PedBone, Bones } from '../shared/enums/bones'
@@ -664,6 +671,9 @@ declare global {
   export type { AirDropType } from '../shared/modules/air-drops/index'
   import('../shared/modules/air-drops/index')
   // @ts-ignore
+  export type { MessageType, MessageType, MessageType } from '../shared/modules/chat/enums/message-type.enum'
+  import('../shared/modules/chat/enums/message-type.enum')
+  // @ts-ignore
   export type { ItemMatchFlags, ItemMatchFlags, ItemMatchFlags } from '../shared/modules/inventory/api/rest'
   import('../shared/modules/inventory/api/rest')
   // @ts-ignore
@@ -673,10 +683,13 @@ declare global {
   export type { CombineType, CombineType, CombineType } from '../shared/modules/items/lib/get-combine-type'
   import('../shared/modules/items/lib/get-combine-type')
   // @ts-ignore
+  export type { ConsumableItemEffectType, ConsumableItemEffectType, ConsumableItemEffectType } from '../shared/modules/items/registry/consumables/consumable.items'
+  import('../shared/modules/items/registry/consumables/consumable.items')
+  // @ts-ignore
   export type { PedType, PedFlags, PedType, PedFlags } from '../shared/modules/ped/constants'
   import('../shared/modules/ped/constants')
   // @ts-ignore
-  export type { CraftingResult } from '../shared/modules/production/production.api'
+  export type { CraftingResult, CraftingResult } from '../shared/modules/production/production.api'
   import('../shared/modules/production/production.api')
   // @ts-ignore
   export type { Gender, Aspect, Gender, Aspect } from '../shared/modules/character/appearance-data/aspects'
@@ -684,9 +697,6 @@ declare global {
   // @ts-ignore
   export type { OverlayType, OverlayType } from '../shared/modules/character/appearance-data/overlays'
   import('../shared/modules/character/appearance-data/overlays')
-  // @ts-ignore
-  export type { MessageType } from '../shared/modules/chat/enums/message-type.enum'
-  import('../shared/modules/chat/enums/message-type.enum')
   // @ts-ignore
   export type { SCREEN_EFFECTS } from '../shared/modules/game/ui/screen-effects'
   import('../shared/modules/game/ui/screen-effects')
@@ -696,9 +706,6 @@ declare global {
   // @ts-ignore
   export type { SPINNER_TYPE } from '../shared/modules/game/ui/spinner/spinner-type'
   import('../shared/modules/game/ui/spinner/spinner-type')
-  // @ts-ignore
-  export type { ConsumableItemEffectType } from '../shared/modules/items/registry/consumables/consumable.items'
-  import('../shared/modules/items/registry/consumables/consumable.items')
   // @ts-ignore
   export type { WeaponGroup, AmmoGroup } from '../shared/modules/items/registry/weapons/weapon-groups'
   import('../shared/modules/items/registry/weapons/weapon-groups')

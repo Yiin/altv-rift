@@ -19,7 +19,7 @@ export type HideItemInfo = {
   description: string;
 };
 
-export const ore = registerItems<HideItemInfo>([
+export const hides = registerItems<HideItemInfo>([
   {
     key: Hide.DEMON_BOAR_HIDE,
     name: "Demon Boar Hide",
@@ -28,7 +28,7 @@ export const ore = registerItems<HideItemInfo>([
 ]);
 
 export function isItemKeyHide(key: string): key is HideItemKey {
-  return ore.has(key as HideItemKey);
+  return hides.has(key as HideItemKey);
 }
 
 export function isItemHide(item: Item): item is HideItem {
