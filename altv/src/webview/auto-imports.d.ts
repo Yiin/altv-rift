@@ -111,6 +111,7 @@ declare global {
   const ServerCall: typeof import('../shared/calls/server/index')['ServerCall']
   const ServerEvents: typeof import('../shared/events/server/index')['ServerEvents']
   const Shoes: typeof import('../shared/modules/items/registry/clothing/shoes/shoes.items')['Shoes']
+  const Sound: typeof import('./src/utils/sounds')['Sound']
   const StorageType: typeof import('../shared/store/game-state.store')['StorageType']
   const StringBuffer: typeof import('../shared/utility/buffer')['StringBuffer']
   const ThrowableWeapon: typeof import('../shared/modules/items/registry/weapons/throwable-weapon.items')['ThrowableWeapon']
@@ -131,6 +132,7 @@ declare global {
   const WebviewEvents: typeof import('../shared/events/webview/index')['WebviewEvents']
   const WindowType: typeof import('../shared/store/client.store')['WindowType']
   const Wood: typeof import('../shared/modules/items/registry/materials/wood.items')['Wood']
+  const _: typeof import('lodash')['_']
   const acceptHMRUpdate: typeof import('pinia')['acceptHMRUpdate']
   const accessories: typeof import('../shared/modules/items/registry/clothing/accessory/accessory.items')['accessories']
   const addItemToInventory: typeof import('../shared/modules/inventory/api/add-item-to-inventory')['addItemToInventory']
@@ -138,6 +140,7 @@ declare global {
   const appearance: typeof import('../shared/calls/validation/common-validation')['appearance']
   const armors: typeof import('../shared/modules/items/registry/clothing/armor/armor.items')['armors']
   const aspects: typeof import('../shared/modules/character/appearance-data/aspects')['aspects']
+  const asset: typeof import('./src/utils/asset')['asset']
   const benchmark: typeof import('../shared/utility/perf')['benchmark']
   const bind: typeof import('../shared/decorators/bind')['bind']
   const blueprints: typeof import('../shared/modules/items/registry/blueprint.items')['blueprints']
@@ -230,11 +233,15 @@ declare global {
   const getInventoryItems: typeof import('./src/store/inventory/inventory.state')['getInventoryItems']
   const getInventorySize: typeof import('./src/store/inventory/inventory.state')['getInventorySize']
   const getItemCategoryName: typeof import('../shared/modules/items/lib/get-item-category-name')['getItemCategoryName']
+  const getItemClasses: typeof import('./src/utils/items')['getItemClasses']
   const getItemDefaultData: typeof import('../shared/modules/items/lib/create-item')['getItemDefaultData']
   const getItemDescription: typeof import('../shared/modules/items/items-registry')['getItemDescription']
   const getItemEquipmentSlot: typeof import('../shared/modules/items/lib/get-item-equipment-slot')['getItemEquipmentSlot']
   const getItemFlagsByKey: typeof import('../shared/modules/items/lib/get-item-flags')['getItemFlagsByKey']
   const getItemFromSource: typeof import('./src/store/inventory/inventory.utils')['getItemFromSource']
+  const getItemGradeTextColor: typeof import('./src/utils/items')['getItemGradeTextColor']
+  const getItemIconPosition: typeof import('./src/utils/items')['getItemIconPosition']
+  const getItemImage: typeof import('./src/utils/items')['getItemImage']
   const getItemInfoByKey: typeof import('../shared/modules/items/items-registry')['getItemInfoByKey']
   const getItemKeyEquipmentSlot: typeof import('../shared/modules/items/lib/get-item-equipment-slot')['getItemKeyEquipmentSlot']
   const getItemName: typeof import('../shared/modules/items/lib/get-item-name')['getItemName']
@@ -253,6 +260,7 @@ declare global {
   const getRandomBeardColor: typeof import('../shared/modules/character/appearance-data/aspects')['getRandomBeardColor']
   const getRandomBlushColor: typeof import('../shared/modules/character/appearance-data/aspects')['getRandomBlushColor']
   const getRandomChestHairColor: typeof import('../shared/modules/character/appearance-data/aspects')['getRandomChestHairColor']
+  const getRandomDescription: typeof import('./src/utils/items')['getRandomDescription']
   const getRandomEyeColor: typeof import('../shared/modules/character/appearance-data/aspects')['getRandomEyeColor']
   const getRandomEyebrowColor: typeof import('../shared/modules/character/appearance-data/aspects')['getRandomEyebrowColor']
   const getRandomFeatureValue: typeof import('../shared/modules/character/appearance-data/features')['getRandomFeatureValue']
@@ -411,6 +419,7 @@ declare global {
   const isMaleClothing: typeof import('../shared/modules/items/registry/clothing/clothing.items')['isMaleClothing']
   const isMatchingItem: typeof import('../shared/modules/inventory/api/rest')['isMatchingItem']
   const isMatchingPart: typeof import('../shared/modules/production/production.api')['isMatchingPart']
+  const isNodeFocusable: typeof import('./src/utils/dom')['isNodeFocusable']
   const isProxy: typeof import('vue')['isProxy']
   const isReactive: typeof import('vue')['isReactive']
   const isReadonly: typeof import('vue')['isReadonly']
@@ -475,6 +484,7 @@ declare global {
   const perf: typeof import('../shared/utility/perf')['perf']
   const pickaxes: typeof import('../shared/modules/items/registry/tools/pickaxe.items')['pickaxes']
   const pinia: typeof import('./src/store/index')['pinia']
+  const playSound: typeof import('./src/utils/sounds')['playSound']
   const playerEquipmentItemSource: typeof import('../shared/calls/validation/common-validation')['playerEquipmentItemSource']
   const playerInventoryItemSource: typeof import('../shared/calls/validation/common-validation')['playerInventoryItemSource']
   const playerInventorySource: typeof import('../shared/calls/validation/common-validation')['playerInventorySource']
@@ -631,6 +641,7 @@ declare global {
   const watchPostEffect: typeof import('vue')['watchPostEffect']
   const watchSyncEffect: typeof import('vue')['watchSyncEffect']
   const weaponComponent: typeof import('../shared/modules/items/registry/weapon-components/weapon-component.items')['weaponComponent']
+  const wrap: typeof import('./src/utils/wrap')['wrap']
 }
 // for type re-export
 declare global {
@@ -640,6 +651,9 @@ declare global {
   // @ts-ignore
   export type { InventoryInteractionType, InventoryInteractionType } from './src/store/inventory/inventory.types'
   import('./src/store/inventory/inventory.types')
+  // @ts-ignore
+  export type { Sound } from './src/utils/sounds'
+  import('./src/utils/sounds')
   // @ts-ignore
   export type { PedBone, Bones } from '../shared/enums/bones'
   import('../shared/enums/bones')

@@ -44,13 +44,21 @@ export default defineConfig(({ mode }) => ({
       },
     }),
     AutoImport({
-      imports: ["vue", "vue-router", "pinia"],
+      imports: [
+        "vue",
+        "vue-router",
+        "pinia",
+        {
+          lodash: ["_"],
+        },
+      ],
       dirs: [
         "src/composables/**",
         "src/store/**",
         "src/components/**",
         "src/plugins/**",
         "src/rpc/**",
+        "src/utils/**",
         "../shared/**/*",
         "!../shared/calls/**/from-*",
         "!../shared/events/**/from-*",
