@@ -5,7 +5,7 @@ export enum NotificationType {
   Warning = "warning",
 }
 
-export interface Notification {
+export type NotificationSchema = {
   type: NotificationType;
   text: string;
 }

@@ -2,7 +2,8 @@ import { makeKeys } from "@shared/utility/make-keys";
 import { getItemName } from "@shared/modules/items/lib";
 import { Metal } from "@shared/modules/items/registry/materials/metal.items";
 import { Scrap } from "@shared/modules/items/registry/materials/scrap.items";
-import { Armor, ArmorItem } from "@shared/modules/items/registry/clothing/armor/armor.items";
+import { ArmorItem } from "@shared/modules/items/registry/clothing/armor/armor.items";
+import { Armor } from "@shared/modules/items/registry/clothing/armor/armor.keys";
 import { ItemGrade } from "@shared/modules/items/enums";
 import { registerBlueprint } from "../blueprints.registry";
 

@@ -4,45 +4,51 @@ import { Item } from "../../types";
 import {
   AccessoryItem,
   AccessoryItemInfo,
-  AccessoryItemKey,
   isItemKeyAccessory,
 } from "./accessory/accessory.items";
-import { ArmorItem, ArmorItemInfo, ArmorItemKey, isItemKeyArmor } from "./armor/armor.items";
+import { AccessoryItemKey } from "./accessory/accessory.keys";
+import { ArmorItem, ArmorItemInfo, isItemKeyArmor } from "./armor/armor.items";
+import { ArmorItemKey } from "./armor/armor.keys";
 import {
   EarringsItem,
   EarringsItemInfo,
-  EarringsItemKey,
   isItemKeyEarrings,
 } from "./earrings/earrings.items";
+import { EarringsItemKey } from "./earrings/earrings.keys";
 import {
   GlassesItem,
   GlassesItemInfo,
-  GlassesItemKey,
   isItemKeyGlasses,
 } from "./glasses/glasses.items";
-import { GlovesItem, GlovesItemInfo, GlovesItemKey, isItemKeyGloves } from "./gloves/gloves.items";
+import { GlassesItemKey } from "./glasses/glasses.keys";
+import { GlovesItem, GlovesItemInfo, isItemKeyGloves } from "./gloves/gloves.items";
+import { GlovesItemKey } from "./gloves/gloves.keys";
 import {
   HeadwearItem,
   HeadwearItemInfo,
-  HeadwearItemKey,
   isItemKeyHeadwear,
 } from "./headwear/headwear.items";
+import { HeadwearItemKey } from "./headwear/headwear.keys";
 import {
   LeftHandItem,
   LeftHandItemInfo,
-  LeftHandItemKey,
   isItemKeyLeftHand,
 } from "./lefthand/lefthand.items";
-import { MaskItem, MaskItemInfo, MaskItemKey, isItemKeyMask } from "./masks/mask.items";
-import { PantsItem, PantsItemInfo, PantsItemKey, isItemKeyPants } from "./pants/pants.items";
+import { LeftHandItemKey } from "./lefthand/lefthand.keys";
+import { MaskItem, MaskItemInfo, isItemKeyMask } from "./mask/mask.items";
+import { MaskItemKey } from "./mask/mask.keys";
+import { PantsItem, PantsItemInfo, isItemKeyPants } from "./pants/pants.items";
+import { PantsItemKey } from "./pants/pants.keys";
 import {
   RightHandItem,
   RightHandItemInfo,
-  RightHandItemKey,
   isItemKeyRightHand,
 } from "./righthand/righthand.items";
-import { ShoesItem, ShoesItemInfo, ShoesItemKey, isItemKeyShoes } from "./shoes/shoes.items";
-import { TopItem, TopItemInfo, TopItemKey, isItemKeyTop } from "./top/top.items";
+import { RightHandItemKey } from "./righthand/righthand.keys";
+import { ShoesItem, ShoesItemInfo, isItemKeyShoes } from "./shoes/shoes.items";
+import { ShoesItemKey } from "./shoes/shoes.keys";
+import { TopItem, TopItemInfo, isItemKeyTop } from "./top/top.items";
+import { TopItemKey } from "./top/top.keys";
 
 export type ClothingItemKey =
   | AccessoryItemKey

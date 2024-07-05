@@ -13,6 +13,7 @@ import {
 } from "@shared/modules/items";
 import { getTorsoForTop } from "@shared/modules/items/registry/clothing/get-correct-torso";
 import { on } from "@/core/events/emit";
+import { getDefaultClothing } from "@shared/modules/items/registry/clothing/get-default-clothing";
 
 function applyGenderClothing(player: alt.Player, key: ClothingItemKey): ClothingItemKey {
   if (player.model === alt.hash("mp_f_freemode_01")) {
@@ -46,20 +47,19 @@ on(ServerEvents.FromServer.ITEM_EQUIP, (player, item) => {
   const itemInfo = getItemInfoByKey(applyGenderClothing(player, item.key));
 
   if (isComponentVariation(equipmentSlot)) {
-    player.setClothes(itemInfo.componentId, itemInfo.drawableId, itemInfo.textureId, 2);
+    if (itemInfo.dlc !== 'mp_f_freemode_01' && itemInfo.dlc !== 'mp_m_freemode_01') {
+      console.log('dlc', itemInfo.componentId, itemInfo.drawableId, itemInfo.textureId);
+      player.setDlcClothes(itemInfo.componentId, itemInfo.dlcDrawableId, itemInfo.textureId, 2, alt.hash(itemInfo.dlc));
+    } else {
+      console.log('base', itemInfo.componentId, itemInfo.drawableId, itemInfo.textureId);
+      player.setClothes(itemInfo.componentId, itemInfo.drawableId, itemInfo.textureId, 2);
+    }
 
     if (itemInfo.componentId === 11) {
-      const torso = getTorsoForTop(player.model, itemInfo as TopItemInfo);
-
-      if (torso) {
-        player.setClothes(3, torso.drawableId, torso.textureId, 2);
-      } else {
-        player.setClothes(3, 14, 0, 2);
-        // player.setClothes(3, 3, 0, 2);
-      }
+      player.resetClothes(3);
     }
   } else if (isProp(equipmentSlot)) {
-    player.setProp(itemInfo.componentId, itemInfo.drawableId, itemInfo.textureId);
+    player.setDlcProp(itemInfo.componentId, itemInfo.dlcDrawableId, itemInfo.textureId, alt.hash(itemInfo.dlc));
   }
 });
 

@@ -12,3 +12,4 @@ server.log
 .server-crashes-cache/
 cache/
 node_modules/
+data-dump/

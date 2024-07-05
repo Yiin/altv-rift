@@ -31,25 +31,26 @@ alt.Player.prototype.resetClothes = function (component?: number) {
         // torso
         const top = this.character.equipment.top;
 
-        if (!top) {
-          return;
-        }
+        if (top) {
+          const topInfo = getItemInfoByKey(top.key);
 
-        const topInfo = getItemInfoByKey(top.key);
+          if (topInfo) {
+            const torso = getTorsoForTop(topInfo);
 
-        if (!topInfo) {
-          return;
-        }
-
-        const torso = getTorsoForTop(this.model, topInfo);
-
-        if (torso) {
-          this.setClothes(3, torso.drawableId, torso.textureId, 2);
-        } else {
-          const defaults = getDefaultClothing(false, component);
-          if (defaults) {
-            this.setClothes(component, defaults[0], defaults[1], 2);
+            if (torso) {
+              if (torso.dlc !== 'mp_f_freemode_01' && torso.dlc !== 'mp_m_freemode_01') {
+                this.setDlcClothes(3, torso.dlcDrawableId, torso.textureId, 2, alt.hash(torso.dlc));
+              } else {
+                this.setClothes(3, torso.drawableId, torso.textureId, 2);
+              }
+              break;
+            }
           }
+        }
+
+        const defaults = getDefaultClothing(false, component);
+        if (defaults) {
+          this.setClothes(component, defaults[0], defaults[1], 2);
         }
         break;
       }
@@ -70,27 +71,28 @@ alt.Player.prototype.resetClothes = function (component?: number) {
         // torso
         const top = this.character.equipment.top;
 
-        if (!top) {
-          return;
-        }
+        if (top) {
+          const topInfo = getItemInfoByKey(top.key);
 
-        const topInfo = getItemInfoByKey(top.key);
+          if (topInfo) {
+            const torso = getTorsoForTop(topInfo);
 
-        if (!topInfo) {
-          return;
-        }
-
-        const torso = getTorsoForTop(this.model, topInfo);
-
-        if (torso) {
-          this.setClothes(3, torso.drawableId, torso.textureId, 2);
-        } else {
-          const defaults = getDefaultClothing(true, component);
-          if (defaults) {
-            this.setClothes(component, defaults[0], defaults[1], 2);
+            if (torso) {
+              if (torso.dlc !== 'mp_f_freemode_01' && torso.dlc !== 'mp_m_freemode_01') {
+                this.setDlcClothes(3, torso.dlcDrawableId, torso.textureId, 2, alt.hash(torso.dlc));
+              } else {
+                this.setClothes(3, torso.drawableId, torso.textureId, 2);
+              }
+              break;
+            }
           }
-          break;
         }
+
+        const defaults = getDefaultClothing(true, component);
+        if (defaults) {
+          this.setClothes(component, defaults[0], defaults[1], 2);
+        }
+        break;
       }
       default:
         const defaults = getDefaultClothing(true, component);

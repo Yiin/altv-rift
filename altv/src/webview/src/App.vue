@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import NotificationCard from "./components/NotificationCard.vue";
+import { NotificationGroup, Notification } from "./plugins/notiwind";
+
 window.addEventListener("error", (e) => {
   if (e instanceof ErrorEvent) {
     console.error(e.message, e.filename, e.lineno, e.colno);

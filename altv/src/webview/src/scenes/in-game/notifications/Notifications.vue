@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, reactive, ref, watch } from "vue";
 import { WebviewEvents } from "@shared/events/webview";
-import { type Notification } from "@shared/interfaces";
+import { type NotificationSchema } from "@shared/interfaces";
 import { type Item } from "@shared/modules/items";
 import { useAlt } from "@/composables/use-alt";
 import { useCharacter } from "@/store/synced/character.store";
@@ -11,7 +11,7 @@ import ExperienceGainedNotification from "./ExperienceGainedNotification.vue";
 
 const alt = useAlt();
 const character = useCharacter();
-const notifications = reactive<Notification[]>([]);
+const notifications = reactive<NotificationSchema[]>([]);
 const addedItem = ref<{
   timeout: any;
   item: Item;
