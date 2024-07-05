@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { NotificationType } from "@shared/interfaces";
+import { NotificationType, type NotificationSchema } from "@shared/interfaces";
 import { asset } from "@/utils/asset";
-import Icon from "./Icon/Icon.vue";
-import type { Notification } from "../plugins/notiwind";
 
 defineProps<{
-  notification: Notification;
+  notification: NotificationSchema;
 }>();
 </script>
 

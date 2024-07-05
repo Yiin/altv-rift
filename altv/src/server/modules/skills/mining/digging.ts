@@ -23,7 +23,7 @@ function diggingTick(player: alt.Player) {
 
   const luckFactor = Math.random() < 0.5 ? 1 : 2;
 
-  player.character.skills.mining += 30 * luckFactor;
+  player.character.skills.mining += 3 * luckFactor;
 
   player.addItem(createItem(Sand.GRAVEL, { amount: 1 * luckFactor }));
 }

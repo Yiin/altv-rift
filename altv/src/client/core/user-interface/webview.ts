@@ -226,6 +226,7 @@ alt.Events.onServer(
 
     webview.on(ClientEvents.FromWebview.VIEW_READY, () => {
       webview.focused = true;
+      console.log('marking webview as ready');
       markWebViewAsReady(webview);
     });
     webview.on(ClientEvents.FromWebview.PLAY_SOUND, (audioName, ref) => {

@@ -1,8 +1,158 @@
-import fs from "node:fs";
-import path from "node:path";
+import fs from "fs";
+import path from "path";
 
-processWeapons();
-processTrees();
+if (process.env.ALL === "true" || process.env.CLOTHES === "true") {
+  processClothes();
+}
+if (process.env.ALL === "true" || process.env.WEAPONS === "true") {
+  processWeapons();
+}
+if (process.env.ALL === "true" || process.env.TREES === "true") {
+  processTrees();
+}
+
+async function processClothes() {
+  const componentMap: { [key: string]: string } = {
+    "1": "mask",
+    "3": "gloves",
+    "4": "pants",
+    "5": "bags",
+    "6": "shoes",
+    "7": "accessory",
+    "9": "armor",
+    "11": "top"
+  };
+
+  const propsMap: { [key: string]: string } = {
+    "0": "headwear",
+    "1": "glasses",
+    "2": "earrings",
+    "6": "lefthand",
+    "7": "righthand"
+  };
+  const rawData = fs.readFileSync(path.resolve("data-dump/pedComponentVariations.json"), "utf8");
+  const data: PedVariation[] = JSON.parse(rawData);
+
+  const outputData: { [key: string]: { [key: string]: any } } = {};
+  const keyData: { [key: string]: { [key: string]: string } } = {};
+
+  const typeMap: { [key: string]: string } = {
+    "mask": "Mask",
+    "gloves": "Gloves",
+    "pants": "Pants",
+    "bags": "Bags",
+    "shoes": "Shoes",
+    "accessory": "Accessory",
+    "armor": "Armor",
+    "top": "Top",
+    "headwear": "Headwear",
+    "glasses": "Glasses",
+    "earrings": "Earrings",
+    "lefthand": "LeftHand",
+    "righthand": "RightHand"
+  };
+
+  for (const pedVariation of data) {
+    for (const component of pedVariation.ComponentVariations) {
+      const componentType = componentMap[component.ComponentId.toString()];
+      if (componentType) {
+        if (!outputData[componentType]) {
+          outputData[componentType] = {};
+          keyData[componentType] = {};
+        }
+        outputData[componentType][component.NameHash] = {
+          ped: pedVariation.PedName,
+          key: component.NameHash,
+          dlc: pedVariation.DlcCollectionName,
+          dlcDrawableId: component.RelativeCollectionDrawableId,
+          componentId: component.ComponentId,
+          drawableId: component.DrawableId,
+          textureId: component.TextureId,
+          name: component.TranslatedLabel?.English,
+          price: component.Price,
+          torsos: component.FittingTorso,
+          gloves: component.FittingGloves,
+          restrictionTags: component.RestrictionTags
+        };
+
+        let keyName = component.TranslatedLabel?.English
+          ? toPascalCase(component.TranslatedLabel.English, pedVariation.PedName === "mp_m_freemode_01")
+          : null;
+
+        if (keyName) {
+          if (keyData[componentType][keyName]) {
+            keyName = `${keyName}_${component.DrawableId}_${component.TextureId}`;
+          }
+
+          keyData[componentType][keyName] = component.NameHash;
+        }
+      }
+    }
+
+    if (pedVariation.Props) {
+      for (const prop of pedVariation.Props) {
+        const propType = propsMap[prop.ComponentId.toString()];
+        if (propType) {
+          if (!outputData[propType]) {
+            outputData[propType] = {};
+            keyData[propType] = {};
+          }
+          outputData[propType][prop.NameHash] = {
+            ped: pedVariation.PedName,
+            key: prop.NameHash,
+            anchorPoint: prop.AnchorPoint,
+            dlc: pedVariation.DlcCollectionName,
+            dlcDrawableId: prop.RelativeCollectionDrawableId,
+            componentId: prop.ComponentId,
+            drawableId: prop.DrawableId,
+            textureId: prop.TextureId,
+            name: prop.TranslatedLabel?.English,
+            price: prop.Price,
+            restrictionTags: prop.RestrictionTags
+          };
+
+          let keyName = prop.TranslatedLabel?.English
+            ? toPascalCase(prop.TranslatedLabel.English, pedVariation.PedName === "mp_m_freemode_01")
+            : null;
+
+          if (keyName) {
+            if (keyData[propType][keyName]) {
+              keyName = `${keyName}_${prop.DrawableId}_${prop.TextureId}`;
+            }
+
+            keyData[propType][keyName] = prop.NameHash;
+          }
+        }
+      }
+    }
+  }
+
+  for (const [fileName, fileData] of Object.entries(outputData)) {
+    try {
+      fs.writeFileSync(`src/shared/modules/items/registry/clothing/${fileName}/${fileName}.json`, JSON.stringify(fileData, null, 2));
+      console.log(`Writing ${fileName}.json...`);
+    } catch {
+      console.warn(`Skipping ${fileName}.json...`);
+    }
+  }
+
+  for (const [fileName, fileData] of Object.entries(keyData)) {
+    const typeName = typeMap[fileName];
+    const content = `import { makeKeys } from "@shared/utility/make-keys";
+
+export type ${typeName}ItemKey = Brand<string, "${typeName}ItemKey">;
+export const ${typeName} = makeKeys<${typeName}ItemKey>()({
+${Object.entries(fileData).map(([key, value]) => `  ${key}: "${value}",`).join('\n')}
+});
+`;
+    try {
+      fs.writeFileSync(`src/shared/modules/items/registry/clothing/${fileName}/${fileName}.keys.ts`, content);
+      console.log(`Writing ${fileName}.keys.ts...`);
+    } catch {
+      console.warn(`Skipping ${fileName}.json...`);
+    }
+  }
+}
 
 async function processWeapons() {
   const response = await fetch("https://raw.githubusercontent.com/DurtyFree/gta-v-data-dumps/master/weapons.json");
@@ -562,3 +712,54 @@ function processTrees() {
   ],
   Liveries: [],
 });
+
+function toPascalCase(str: string, isMale: boolean): string {
+  const result = (isMale ? 'Male' : 'Female') + str.replace(/(\w)(\w*)/g, (_, g1, g2) => g1.toUpperCase() + g2.toLowerCase())
+    .replace(/[^a-zA-Z0-9]/g, '');
+
+  if (/^\d/.test(result)) {
+    return '_' + result;
+  }
+
+  return result;
+}
+
+interface ComponentVariation {
+  NameHash: string;
+  ComponentType: string;
+  ComponentId: number;
+  RelativeCollectionDrawableId: number;
+  DrawableId: number;
+  TextureId: number;
+  TranslatedLabel: {
+    English: string;
+    Name: string;
+  } | null;
+  Price: number;
+  RestrictionTags: string[] | null;
+  FittingTorso: string[] | null;
+  FittingGloves: string[] | null;
+}
+
+interface Prop {
+  NameHash: string;
+  AnchorPoint: string;
+  ComponentId: number;
+  DrawableId: number;
+  RelativeCollectionDrawableId: number;
+  TextureId: number;
+  TranslatedLabel: {
+    English: string;
+    Name: string;
+  } | null;
+  Price: number;
+  RestrictionTags: string[] | null;
+}
+
+interface PedVariation {
+  LastUpdateDlcName: string;
+  DlcCollectionName: string;
+  PedName: string;
+  ComponentVariations: ComponentVariation[];
+  Props: Prop[] | null;
+}
