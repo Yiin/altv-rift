@@ -14,11 +14,11 @@ export enum EquipmentSlot {
   Backpack = "backpack",
   Shoes = "shoes",
   Phone = "phone",
-  Tool = "tool",
   QuickSlot1 = "quick1",
   QuickSlot2 = "quick2",
   QuickSlot3 = "quick3",
   QuickSlot4 = "quick4",
+  QuickSlot5 = "quick5",
 
   // Ammo
   AssaultRifleAmmo = "assaultrifleammo",

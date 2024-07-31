@@ -9,7 +9,7 @@ import {
   isWeaponWithClip,
 } from "@shared/modules/items";
 import { getSlottedEquipment } from "@/store/inventory";
-import { getItemClasses, getItemImage } from "@/utils/items";
+import { getItemClasses, getItemImage } from "@/lib/utils";
 import { useCharacter } from "@/store/synced/character.store";
 
 const character = useCharacter();
@@ -90,7 +90,7 @@ const weapon = computed(() => {
     class="flex flex-col items-end gap-1"
   >
     <div
-      class="z-max h-15 w-30 origin-bottom-right bg-contain bg-right-bottom"
+      class="z-max h-15 w-30 origin-bottom-right bg-contain bg-right-bottom bg-no-repeat"
       :class="[getItemClasses(weapon.item)]"
       :style="{
         backgroundImage: `url(${getItemImage(weapon.item.key)})`,

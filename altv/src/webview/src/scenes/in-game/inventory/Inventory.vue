@@ -84,8 +84,8 @@ onUnmounted(() => {
       class="flex justify-around"
     >
       <div>
-        <h2 class="text-2xl font-bold uppercase text-white">character</h2>
-        <div class="text-base uppercase text-deepGray">equipment</div>
+        <h2 class="text-2xl font-bold uppercase text-white">equipment</h2>
+        <div class="text-base uppercase text-deepGray">items</div>
         <div class="mt-5 inline-grid grid-cols-3 place-content-center gap-2.5 uppercase">
           <EquipmentSlot :name="EquipmentSlotEnum.Headwear" />
           <EquipmentSlot :name="EquipmentSlotEnum.Mask" />
@@ -150,17 +150,20 @@ onUnmounted(() => {
     <div class="flex w-full justify-around py-8">
       <div :style="{ width: `${widths[0]}px` }">
         <div class="relative mb-5 flex items-center justify-center gap-2.75">
-          <div class="h-px w-full border border-white opacity-10"></div>
+          <div class="h-px w-full border border-white opacity-10" />
           <div
             class="h-3 w-3 flex-shrink-0 origin-center -rotate-45 border border-white opacity-30"
-          ></div>
-          <div class="h-px w-full border border-white opacity-10"></div>
+          />
+          <div class="h-px w-full border border-white opacity-10" />
         </div>
         <h2 class="text-2xl font-bold uppercase text-white">extras</h2>
         <div class="text-base uppercase text-deepGray">other equipment</div>
         <div class="mb-8 mt-5 inline-grid grid-cols-3 place-content-center gap-2.5">
-          <EquipmentSlot :name="EquipmentSlotEnum.Tool" />
           <EquipmentSlot :name="EquipmentSlotEnum.Phone" />
+          <EquipmentSlot
+            :name="EquipmentSlotEnum.Weapon"
+            class="w-44.5"
+          />
         </div>
       </div>
       <div
@@ -170,17 +173,14 @@ onUnmounted(() => {
         <h2 class="text-2xl font-bold uppercase text-white">backpack</h2>
         <div class="text-base uppercase text-deepGray">quick access</div>
         <div class="mt-2.5 flex gap-2.5">
-          <EquipmentSlot
-            :name="EquipmentSlotEnum.Weapon"
-            class="w-44.5"
-          />
           <EquipmentSlot :name="EquipmentSlotEnum.QuickSlot1" />
           <EquipmentSlot :name="EquipmentSlotEnum.QuickSlot2" />
           <EquipmentSlot :name="EquipmentSlotEnum.QuickSlot3" />
           <EquipmentSlot :name="EquipmentSlotEnum.QuickSlot4" />
+          <EquipmentSlot :name="EquipmentSlotEnum.QuickSlot5" />
         </div>
       </div>
-      <div :style="{ width: `${widths[2]}px` }"></div>
+      <div :style="{ width: `${widths[2]}px` }" />
     </div>
   </div>
 

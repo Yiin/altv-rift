@@ -7,12 +7,14 @@ alt.Events.onGameEntityCreate(async ({ entity }) => {
   if (entity instanceof alt.Ped) {
     await alt.Utils.waitFor(() => entity.valid && entity.scriptID !== 0);
 
-    const flags = entity.streamSyncedMeta.flags as PedFlags;
+    const flags = entity.streamSyncedMeta.flags;
 
-    if (flags & PedFlags.Peaceful) {
-      setupPeacefulPed(entity);
-    } else {
-      setupTerroristPed(entity);
+    if (typeof flags !== 'undefined') {
+      if (flags & PedFlags.Peaceful) {
+        setupPeacefulPed(entity);
+      } else {
+        setupTerroristPed(entity);
+      }
     }
   }
 });

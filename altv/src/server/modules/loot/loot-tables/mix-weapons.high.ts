@@ -20,6 +20,7 @@ import { rollOption } from "@shared/utility/random";
 import { LootTable } from "../types";
 
 export const MIX_WEAPONS_HIGH: LootTable = {
+  key: "mix-weapons-high",
   type: AirDropType.MixWeaponsLarge,
   score: 3,
   getItemsAmount() {
@@ -29,36 +30,36 @@ export const MIX_WEAPONS_HIGH: LootTable = {
     const matchesWeapon =
       (isItemKeyFirearmWeapon(itemKey) &&
         getItemTier(itemKey) ===
-          rollOption(
-            [
-              [10, ItemTier.D],
-              [30, ItemTier.C],
-              [40, ItemTier.B],
-              [20, ItemTier.A],
-            ],
-            seed,
-          )) ||
+        rollOption(
+          [
+            [10, ItemTier.D],
+            [30, ItemTier.C],
+            [40, ItemTier.B],
+            [20, ItemTier.A],
+          ],
+          seed,
+        )) ||
       (isItemKeyThrowableWeapon(itemKey) &&
         getItemTier(itemKey) ===
-          rollOption(
-            [
-              [20, ItemTier.C],
-              [30, ItemTier.B],
-              [10, ItemTier.A],
-            ],
-            seed,
-          )) ||
+        rollOption(
+          [
+            [20, ItemTier.C],
+            [30, ItemTier.B],
+            [10, ItemTier.A],
+          ],
+          seed,
+        )) ||
       (isItemKeyMeleeWeapon(itemKey) &&
         getItemTier(itemKey) ===
-          rollOption(
-            [
-              [10, ItemTier.D],
-              [30, ItemTier.C],
-              [40, ItemTier.B],
-              [20, ItemTier.A],
-            ],
-            seed,
-          ));
+        rollOption(
+          [
+            [10, ItemTier.D],
+            [30, ItemTier.C],
+            [40, ItemTier.B],
+            [20, ItemTier.A],
+          ],
+          seed,
+        ));
 
     const matchesAmmo =
       isItemKeyAmmo(itemKey) && [ItemTier.C, ItemTier.B, ItemTier.A].includes(getItemTier(itemKey));

@@ -13,7 +13,7 @@ import {
 import { px } from "@/composables/use-pixel";
 import { useCombinableItem } from "@/composables/use-combinable-item";
 import { useCharacter } from "@/store/synced/character.store";
-import { asset } from "@/utils/asset";
+import { asset } from "@/lib/utils";
 import ItemIcon from "./ItemIcon.vue";
 
 const equipmentSlots = {
@@ -54,7 +54,7 @@ const equipmentSlots = {
     image: asset("assets/inventory/gloves.webp"),
   },
   [EquipmentSlot.Weapon]: {
-    label: "Weapon",
+    label: "Weapon or Tool",
     image: asset("assets/inventory/weapon.webp"),
   },
   [EquipmentSlot.Pants]: {
@@ -77,10 +77,6 @@ const equipmentSlots = {
     label: "Phone",
     image: asset("assets/inventory/phone.webp"),
   },
-  [EquipmentSlot.Tool]: {
-    label: "Tool",
-    image: asset("assets/inventory/tool.webp"),
-  },
   [EquipmentSlot.QuickSlot1]: {
     label: "Num 1",
   },
@@ -92,6 +88,9 @@ const equipmentSlots = {
   },
   [EquipmentSlot.QuickSlot4]: {
     label: "Num 4",
+  },
+  [EquipmentSlot.QuickSlot5]: {
+    label: "Num 5",
   },
 } satisfies Record<Exclude<EquipmentSlot, AmmoEquipmentSlot>, { label: string; image?: string }>;
 
@@ -159,10 +158,10 @@ if (!props.dontRegister) {
     <div
       v-if="!item"
       :key="`empty-${name}`"
-      class="h-full w-full bg-[center_35%] pt-14 text-center text-xs"
+      class="h-full w-full bg-[center_35%] bg-no-repeat pt-14 text-center text-xs"
       :style="{
         backgroundImage: 'image' in slot ? `url(${slot.image})` : undefined,
-        backgroundSize: `30%`,
+        backgroundSize: name === EquipmentSlot.Weapon ? `65%` : `30%`,
         filter: `contrast(0) opacity(0.9)`,
       }"
     >

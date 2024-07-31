@@ -16,6 +16,10 @@ function connect() {
   });
 
   ws.on("message", (message) => {
+    message = message.toString();
+
+    alt.log('received message', message);
+
     if (message === "kick-all") {
       console.log("[resource-control] Kicking all players");
       kickAll();

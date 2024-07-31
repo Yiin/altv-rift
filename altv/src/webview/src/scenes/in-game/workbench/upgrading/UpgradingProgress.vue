@@ -8,9 +8,9 @@ import {
   isItemKeyAmmo,
   isItemKeyThrowableWeapon,
 } from "@shared/modules/items";
-import { getItemImage } from "@/utils/items";
+import { getItemImage } from "@/lib/utils";
 import { useFrame } from "@/composables/use-frame";
-import { asset } from "@/utils/asset";
+import { asset } from "@/lib/utils";
 import WorkbenchSlot from "../components/WorkbenchSlot.vue";
 import ItemBadge from "../components/ItemBadge.vue";
 import { useUpgrading } from "../composables/use-upgrading";
@@ -45,7 +45,7 @@ const upgradingProgress = computed(() => {
         <div class="relative flex justify-center">
           <ItemBadge :grade="'grade' in upgradeRecipe.item ? upgradeRecipe.item.grade : 'none'" />
           <div
-            class="absolute-center h-66.5 w-135 bg-contain bg-center"
+            class="absolute-center h-66.5 w-135 bg-contain bg-center bg-no-repeat"
             :class="{
               '-mt-4 scale-50':
                 isItemKeyAmmo(upgradeRecipe.item.key) ||

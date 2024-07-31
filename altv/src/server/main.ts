@@ -43,14 +43,6 @@ registerCmd("v", (player) => {
   });
 });
 
-registerCmd("b", (player, [blueprint]) => {
-  needsToBeInGame(player);
-
-  if (getBlueprint(blueprint)) {
-    player.addBlueprint(blueprint as any);
-  }
-});
-
 alt.Events.onPlayer(
   "dump:weapon-stats",
   (

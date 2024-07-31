@@ -15,7 +15,7 @@ import {
 } from "@shared/modules/items";
 import { useItemDetails } from "@/composables/use-item-details";
 import { type Hovering, getSelectedItem } from "@/store/inventory";
-import { getRandomDescription } from "@/utils/items";
+import { getRandomDescription } from "@/lib/utils";
 import { useFloatingStyles } from "@/composables/use-floating-styles";
 
 const props = defineProps<Hovering>();

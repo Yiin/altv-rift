@@ -15,6 +15,7 @@ import { rollOption } from "@shared/utility/random";
 import { LootTable } from "../types";
 
 export const RANDOM_LOOT: LootTable = {
+  key: "random-loot",
   score: 1,
   getItemsAmount() {
     return _.random(3, 6);

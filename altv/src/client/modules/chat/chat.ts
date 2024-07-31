@@ -3,6 +3,7 @@ import { inject } from "inversify";
 import { bind } from "@shared/decorators";
 import { ClientOptions, CommandSuggestion, MessageType, WindowOptions } from "@shared/modules/chat";
 import { WindowService, EventService, MessageHistoryService, OptionsService } from "./services";
+import { onKeyDown } from "@/core/user-interface/event-helpers";
 
 @bind()
 export class Chat {
@@ -13,7 +14,7 @@ export class Chat {
     private readonly messageHistoryService: MessageHistoryService,
     @inject(OptionsService) private readonly optionsService: OptionsService,
     @inject(WindowService) private readonly windowService: WindowService,
-  ) {}
+  ) { }
 
   public start() {
     this.eventService.onServer("vchat:toggleVisibility", this.toggleWindowVisibility.bind(this));
@@ -34,7 +35,8 @@ export class Chat {
     this.eventService.onServer("vchat:updateOption", this.updateOption.bind(this));
     this.eventService.onServer("vchat:updateOptions", this.updateOptions.bind(this));
 
-    alt.Events.onKeyUp(this.toggleWindowFocusOnKey.bind(this));
+    onKeyDown(alt.Enums.KeyCode.Y, () => this.windowService.focus());
+    onKeyDown(alt.Enums.KeyCode.F11, () => this.windowService.unfocus());
 
     this.windowService.on("vchat:requestSettings", this.requestSettings.bind(this));
     this.windowService.once("vchat:mounted", this.markAsMounted.bind(this));
@@ -96,12 +98,6 @@ export class Chat {
   public updateOptions(options: Partial<ClientOptions & WindowOptions>) {
     this.optionsService.update(options);
     this.windowService.updateOptions(this.optionsService.getWindowOptions());
-  }
-
-  public toggleWindowFocusOnKey({ key }: { key: alt.Enums.KeyCode }) {
-    if (alt.isConsoleOpen()) return;
-    if (this.optionsService.get("unfocusKey") === key) this.windowService.unfocus();
-    else if (this.optionsService.get("focusKey") === key) this.windowService.focus();
   }
 
   public requestSettings() {

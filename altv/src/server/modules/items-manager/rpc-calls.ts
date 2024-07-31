@@ -15,7 +15,7 @@ import { ServerEvents } from "@shared/events/server";
 import { rpc } from "@/core/rpc";
 import { needsToBeInGame } from "@/core/utility/assertions";
 import { emit } from "@/core/events/emit";
-import { removeBaitFromFishingRod, useFishingBaitOnFishingRod } from "./items/fishing-rod";
+import { removeBaitFromFishingRod, useFishingBaitOnFishingRod } from "./items/fishing-rod.manager";
 import { getStorageInventory, openStorage } from "./storage";
 import { loadWeaponWithAmmo, unloadAmmoFromWeapon } from "./items";
 import {
@@ -291,7 +291,7 @@ rpc.registerWebview(ServerCall.FromWebview.MOVE_ITEM, (player, from, to, amount 
           // @ts-expect-error
           player.character.equipment[toSlot] = player.character.equipment[fromSlot];
           player.character.equipment[fromSlot] = undefined;
-          emit(ServerEvents.FromServer.ITEM_UNEQUIP, player, fromSlot);
+          emit(ServerEvents.FromServer.ITEM_UNEQUIP, player, fromSlot, player.character.equipment[toSlot]!);
           emit(ServerEvents.FromServer.ITEM_EQUIP, player, fromItem);
           return true;
         }
@@ -312,10 +312,10 @@ rpc.registerWebview(ServerCall.FromWebview.MOVE_ITEM, (player, from, to, amount 
       ];
 
       if (isEquipmentSlotQuickSlot(fromSlot)) {
-        emit(ServerEvents.FromServer.ITEM_UNEQUIP, player, toSlot);
+        emit(ServerEvents.FromServer.ITEM_UNEQUIP, player, toSlot, player.character.equipment[fromSlot]);
         emit(ServerEvents.FromServer.ITEM_EQUIP, player, fromItem);
       } else {
-        emit(ServerEvents.FromServer.ITEM_UNEQUIP, player, fromSlot);
+        emit(ServerEvents.FromServer.ITEM_UNEQUIP, player, fromSlot, player.character.equipment[toSlot]);
         emit(ServerEvents.FromServer.ITEM_EQUIP, player, toItem);
       }
       return true;

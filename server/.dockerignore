@@ -2,7 +2,7 @@
 ../altv/.git
 ../altv/.gitignore
 ../altv/.vscode
-../altv/node_modules
+#../altv/node_modules
 ../altv/.env.example
 ../altv/.gitignore
 ../altv/README.md

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { NotificationType, type NotificationSchema } from "@shared/interfaces";
-import { asset } from "@/utils/asset";
+import { asset } from "@/lib/utils";
 
 defineProps<{
   notification: NotificationSchema;

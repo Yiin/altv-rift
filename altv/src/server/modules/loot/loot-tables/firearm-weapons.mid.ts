@@ -18,6 +18,7 @@ import { rollOption } from "@shared/utility/random";
 import { LootTable } from "../types";
 
 export const FIREARM_WEAPONS_MID: LootTable = {
+  key: "firearm-weapons-mid",
   type: AirDropType.FirearmWeapons,
   score: 2,
   getItemsAmount() {
@@ -27,15 +28,15 @@ export const FIREARM_WEAPONS_MID: LootTable = {
     const matchesWeapon =
       isItemKeyFirearmWeapon(itemKey) &&
       getItemTier(itemKey) ===
-        rollOption(
-          [
-            [10, ItemTier.E],
-            [30, ItemTier.D],
-            [40, ItemTier.C],
-            [20, ItemTier.B],
-          ],
-          seed,
-        );
+      rollOption(
+        [
+          [10, ItemTier.E],
+          [30, ItemTier.D],
+          [40, ItemTier.C],
+          [20, ItemTier.B],
+        ],
+        seed,
+      );
 
     const matchesAmmo =
       isItemKeyAmmo(itemKey) && [ItemTier.D, ItemTier.C, ItemTier.B].includes(getItemTier(itemKey));

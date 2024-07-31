@@ -95,7 +95,7 @@ export function getItemKeyEquipmentSlot(key: ItemKey): EquipmentSlot | undefined
     }
   }
   if (isItemKeyTool(key)) {
-    return EquipmentSlot.Tool;
+    return EquipmentSlot.Weapon;
   }
   return;
 }

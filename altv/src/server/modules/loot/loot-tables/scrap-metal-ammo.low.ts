@@ -16,6 +16,7 @@ import { rollOption } from "@shared/utility/random";
 import { LootTable } from "../types";
 
 export const SCRAP_METAL_AMMO_LOW: LootTable = {
+  key: "scrap-metal-ammo-low",
   score: 1,
   getItemsAmount() {
     return _.random(2, 3);

@@ -5,7 +5,7 @@ import {
   getRandomResemblance,
 } from "@shared/modules/character/appearance-data";
 import { px } from "@/composables/use-pixel";
-import { asset } from "@/utils/asset";
+import { asset } from "@/lib/utils";
 import { useCreateCharacter } from "../../store/create-character.store";
 import SlideOption from "../../components/SlideOption.vue";
 import XSelection from "../../components/XSelection.vue";

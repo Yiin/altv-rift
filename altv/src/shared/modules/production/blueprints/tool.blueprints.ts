@@ -1,18 +1,14 @@
 import { makeKeys } from "@shared/utility/make-keys";
 import { Wood } from "@shared/modules/items/registry/materials/wood.items";
 import { Metal } from "@shared/modules/items/registry/materials/metal.items";
-import { FishingRod } from "@shared/modules/items/registry/tools/fishing-rod.items";
-import { Hatchet } from "@shared/modules/items/registry/tools/hatchet.items";
-import { Pickaxe } from "@shared/modules/items/registry/tools/pickaxe.items";
-import { ToolItem, ToolItemKey } from "@shared/modules/items/registry/tools/tool.items";
+import { Tool } from "@shared/modules/items/registry/tool.items";
+import { ToolItem, ToolItemKey } from "@shared/modules/items/registry/tool.items";
 import { getItemName } from "@shared/modules/items/lib";
 import { ItemGrade } from "@shared/modules/items/enums";
 import { registerBlueprint } from "../blueprints.registry";
 
 export const ToolBlueprint = makeKeys<ToolBlueprintKey>()({
-  ...FishingRod,
-  ...Hatchet,
-  ...Pickaxe,
+  ...Tool,
 });
 
 export type ToolBlueprintKey = Brand<string, "ToolBlueprintKey">;

@@ -1,20 +1,19 @@
 import "./setup-altv";
 import { createApp } from "vue";
-import App from "./App.vue";
-import vuetify from "./plugins/vuetify";
+import { ClientEvents } from "@shared/events/client";
 import { loadFonts } from "./plugins/webfontloader";
-import { router } from "./router";
-import { pinia } from "./store";
-import "./main.css";
 import { vClickOutside } from "./directives/click-outside";
 import { vHorizontalScroll } from "./directives/horizontal-scroll";
+import { router } from "./router";
+import { pinia } from "./store";
+import App from "./App.vue";
+import "./main.css";
 
 loadFonts();
 
 const app = createApp(App)
   .use(router)
   .use(pinia)
-  .use(vuetify)
   .directive("click-outside", vClickOutside)
   .directive("horizontal-scroll", vHorizontalScroll);
 
@@ -35,3 +34,16 @@ function adjustUIBaseFontSize() {
 
 adjustUIBaseFontSize();
 window.addEventListener("resize", adjustUIBaseFontSize);
+
+window.addEventListener("wheel", (event) => {
+  const scrolledUp = event.deltaY < 0 ? -event.deltaY : 0;
+  const scrolledDown = event.deltaY > 0 ? event.deltaY : 0;
+
+  if (scrolledUp) {
+    alt.emitRaw(ClientEvents.FromWebview.WHEEL_UP, Math.abs(event.deltaY));
+  }
+
+  if (scrolledDown) {
+    alt.emitRaw(ClientEvents.FromWebview.WHEEL_DOWN, Math.abs(event.deltaY));
+  }
+});

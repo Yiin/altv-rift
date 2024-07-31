@@ -24,6 +24,7 @@ import VehicleShop from "./vehicle-shop/VehicleShop.vue";
 import QuickAccess from "./quick-access/QuickAccess.vue";
 import Hud from "./hud/Hud.vue";
 import Admin from "./admin/Admin.vue";
+import Builder from "./builder/Builder.vue";
 
 const client = useClient();
 const gameState = useGameState();
@@ -41,6 +42,7 @@ const isLootBoxOpen = computed(
 const isVehicleShopOpen = computed(() => windowType.value === WindowType.VEHICLE_SHOP);
 const isWorkbenchOpen = computed(() => windowType.value === WindowType.WORKBENCH);
 const isAdminOpen = computed(() => windowType.value === WindowType.ADMIN);
+const isBuilderOpen = computed(() => windowType.value === WindowType.BUILDER);
 
 watch(
   () => !!gameState.openedStorage,
@@ -57,12 +59,14 @@ watch(
 <template>
   <Screen v-if="isCharacterStoreAvailable()">
     <template v-if="client.ui.window">
-      <Inventory v-if="[WindowType.PLAYER_INVENTORY, WindowType.STORAGE].includes(windowType)" />
+      <Inventory />
+      <!-- <Inventory v-if="[WindowType.PLAYER_INVENTORY, WindowType.STORAGE].includes(windowType)" />
       <GenericShop v-else-if="isShopOpen" />
       <LootBox v-else-if="isLootBoxOpen" />
       <VehicleShop v-else-if="isVehicleShopOpen" />
       <Workbench v-else-if="isWorkbenchOpen" />
       <Admin v-else-if="isAdminOpen" />
+      <Builder v-else-if="isBuilderOpen" /> -->
     </template>
     <ActionMenu v-else-if="client.ui.elements.has(UIElement.ACTION_MENU)" />
     <template v-else>

@@ -14,6 +14,7 @@ import { rollOption } from "@shared/utility/random";
 import { LootTable } from "../types";
 
 export const WOOD_SCRAP_METAL_LOW: LootTable = {
+  key: "wood-scrap-metal-low",
   score: 1,
   getItemsAmount() {
     return _.random(2, 4);

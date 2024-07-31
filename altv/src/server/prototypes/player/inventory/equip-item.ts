@@ -18,7 +18,7 @@ import { addItemToInventory } from "@shared/modules/inventory";
 import { isItemFishingBait } from "@shared/modules/items/registry/fish-bait.items";
 import { InGamePlayer } from "@/core/utility/assertions";
 import { findItem, findInventoryByItemSource, removeItem } from "@/modules/items-manager";
-import { useFishingBaitOnFishingRod } from "@/modules/items-manager/items/fishing-rod";
+import { useFishingBaitOnFishingRod } from "@/modules/items-manager/items/fishing-rod.manager";
 import { emit } from "@/core/events/emit";
 import { dropItemOnTheGround } from "@/modules/items-manager/dropped-items";
 
@@ -88,7 +88,7 @@ alt.Player.prototype.equipItem = function (source, equipmentSlot) {
     if (
       !useFishingBaitOnFishingRod(
         {
-          equipmentSlot: EquipmentSlot.Tool,
+          equipmentSlot: EquipmentSlot.Weapon,
           origin: ItemSourceOrigin.PlayerEquipment,
           originId: this.character.id,
         },
@@ -150,6 +150,10 @@ alt.Player.prototype.equipItem = function (source, equipmentSlot) {
           to: equipmentSlot,
         });
       }
+    }
+
+    if (unequippedItem) {
+      emit(ServerEvents.FromServer.ITEM_UNEQUIP, this, equipmentSlot, unequippedItem);
     }
   }
 

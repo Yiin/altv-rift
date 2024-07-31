@@ -21,6 +21,7 @@ import { rollOption } from "@shared/utility/random";
 import { LootTable } from "../types";
 
 export const HEAVY_WEAPONS_HIGH: LootTable = {
+  key: "heavy-weapons-high",
   type: AirDropType.HeavyWeapons,
   score: 3,
   getItemsAmount() {

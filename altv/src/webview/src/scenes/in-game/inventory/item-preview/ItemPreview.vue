@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { clearPreviewingItem } from "@/store/inventory";
 import Window from "@/components/Window.vue";
-import { asset } from "@/utils/asset";
+import { asset } from "@/lib/utils";
 
 defineProps<{
   item: {

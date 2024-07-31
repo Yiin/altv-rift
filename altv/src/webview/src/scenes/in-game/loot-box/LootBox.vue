@@ -3,7 +3,6 @@ import { format, differenceInMilliseconds } from "date-fns";
 import { ref } from "vue";
 import { type Item } from "@shared/modules/items";
 import { ServerCall } from "@shared/calls/server";
-import { StorageType } from "@shared/store/game-state.store";
 import { rpc } from "@/rpc";
 import { useClient } from "@/store/synced/client.store";
 import BackButtons from "@/components/buttons/BackButtons.vue";
@@ -20,7 +19,7 @@ const client = useClient();
 const lootBox = useLootBox();
 
 setInterval(() => {
-  if (!lootBox.validUntil) {
+  if ("validUntil" in lootBox === false) {
     return;
   }
   timeLeft.value = format(differenceInMilliseconds(lootBox.validUntil, Date.now()), "mm:ss");

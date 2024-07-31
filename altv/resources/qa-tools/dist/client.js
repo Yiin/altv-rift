@@ -2402,7 +2402,7 @@ var _FlyController = class {
     }
   }
   getNewPos(pos) {
-    natives4.hudSuppressWeaponWheelResultsThisFrame();
+    // natives4.hudSuppressWeaponWheelResultsThisFrame();
     for (let blockedKey of _FlyController.blockedKeys) {
       natives4.disableControlAction(0, blockedKey, true);
     }

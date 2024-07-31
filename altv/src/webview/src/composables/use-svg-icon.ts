@@ -1,5 +1,5 @@
 import { ref, type Ref } from "vue";
-import { asset } from "@/utils/asset";
+import { asset } from "@/lib/utils";
 
 const svgCache: { [key: string]: Ref<string | null> } = {};
 

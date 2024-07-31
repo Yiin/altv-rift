@@ -11,7 +11,8 @@ import {
 import { rollOption } from "@shared/utility/random";
 import { LootTable } from "../types";
 
-export const CLOTHING: LootTable = {
+export const CLOTHING_LOW: LootTable = {
+  key: "clothing-low",
   type: AirDropType.Clothing,
   score: 1,
   getItemsAmount() {
@@ -21,14 +22,14 @@ export const CLOTHING: LootTable = {
     return (
       isItemKeyClothing(itemKey) &&
       getItemTier(itemKey) ===
-        rollOption(
-          [
-            [50, ItemTier.F],
-            [30, ItemTier.E],
-            [20, ItemTier.D],
-          ],
-          seed,
-        )
+      rollOption(
+        [
+          [50, ItemTier.F],
+          [30, ItemTier.E],
+          [20, ItemTier.D],
+        ],
+        seed,
+      )
     );
   },
   createItem,

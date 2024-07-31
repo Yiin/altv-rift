@@ -57,7 +57,7 @@ function setupGameSettings() {
 
   game.setAmbientZoneState("", false, false);
   game.clearAmbientZoneState("AZ_DISTANT_SASQUATCH", false);
-  game.setPedCanSwitchWeapon(alt.Player.local, false);
+  // game.setPedCanSwitchWeapon(alt.Player.local, false);
   game.setPedConfigFlag(alt.Player.local, PED_CONFIG_FLAG.UseHelmet, false);
 }
 

@@ -3,7 +3,7 @@ import { StorageType } from "../../store/game-state.store";
 
 declare module "@altv/server" {
   export interface Player {
-    hasFullySpawned: boolean;
+    objectInHand?: import("@altv/server").Object['id'];
   }
 
   export interface BaseObjectMeta {
@@ -37,6 +37,7 @@ declare module "@altv/shared" {
     entityType: import("../../interfaces").VirtualEntityType;
     treeType?: import("../../modules/woodcutting/interfaces").TreeType; // entityType: tree
     cooldownUntil?: number; // entityType: tree
+    capacity?: number; // entityType: tree & entityType: ore
     item?: import("../../modules/items").Item; // entityType: item
     storageType?: StorageType; // entityType: storage
     storageLabel?: string; // entityType: storage
@@ -48,5 +49,6 @@ declare module "@altv/shared" {
     airDropType?: import("../../modules/items/registry/air-drop").AirDropType; // entityType: storage & storageType: AirDrop
     areaName?: string; // entityType: areaOfInterest
     areaType?: string; // entityType: areaOfInterest
+    oreType?: import("../../modules/items").Ore; // entityType: ore
   }
 }

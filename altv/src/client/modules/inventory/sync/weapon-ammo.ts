@@ -1,5 +1,5 @@
 import alt from "@altv/client";
-import game from "@altv/natives";
+import game, { getNameOfScriptWithThisId } from "@altv/natives";
 import { computed, watchEffect } from "vue";
 import { ServerEvents } from "@shared/events/server";
 import { ServerCall } from "@shared/calls/server";
@@ -10,10 +10,16 @@ import {
 } from "@shared/modules/items/registry/weapons/firearm-weapon.items";
 import { rpc } from "@/core/rpc";
 import { useCharacter } from "@/core/store/character.store";
-import { Control, ControlType } from "@/core/constants/controls";
 import { whileInGame } from "@/core/game-state-hooks/in-game.state";
 
 const player = alt.Player.local;
+
+/**
+ * 1. Has clip
+ * Shooting normally, sync clip and rest on each shot/weapon swap/aim action
+ * 2. Has no rest
+ * To prevent player weapon from disappearing, we set ammo to infinite and clip to clip amount
+ */
 
 whileInGame(() => {
   const currentFirearm = computed(() => {
@@ -83,7 +89,7 @@ whileInGame(() => {
     return true;
   });
 
-  const stopWatchingAmmo = watchEffect(handleAmmoChange);
+  const stopWatchingAmmo = watchEffect(syncAmmo);
 
   const playerWeaponChangeListener = alt.Events.onPlayerWeaponChange(onPlayerWeaponChange);
   const keyDownListener = alt.Events.onKeyDown(handleManualReload);
@@ -105,106 +111,53 @@ whileInGame(() => {
       return;
     }
 
-    if (currentAmmo.value.clip > 0) {
-      allowShooting();
-    }
+    syncAmmo();
 
     alt.Utils.waitFor(() => !game.isPedSwitchingWeapon(player), 3000)
       .then(() => alt.Utils.wait(1000))
-      .finally(handleAmmoChange);
+      .finally(syncAmmo);
   }
 
   /**
    * Reloads the weapon when the player presses the reload key.
    */
   function handleManualReload({ key }: alt.Events.KeyUpDownEventParameters) {
-    if (key === alt.Enums.KeyCode.R) {
-      reloadWeapon();
-    }
     if (key === alt.Enums.KeyCode.MOUSE_RIGHT || key === alt.Enums.KeyCode.MOUSE_LEFT) {
-      handleAmmoChange();
+      syncAmmo();
     }
   }
 
-  /**
-   * Reloads the weapon if the clip is empty.
-   */
-  function handleAmmoChange() {
-    const weapon = currentFirearm?.value;
+  function syncAmmo() {
+    alt.log(`[syncAmmo]`);
 
-    if (!weapon) {
-      return;
-    }
+    const clip = currentAmmo.value?.clip ?? 0;
+    const rest = currentAmmo.value?.rest ?? 0;
 
-    const ammo = currentAmmo.value;
-
-    const { hasAmmoReserves, clip } = ammo ?? { hasAmmoReserves: false, clip: 0, rest: 0 };
-
-    if (clip > 0) {
-      allowShooting();
-    } else if (hasAmmoReserves) {
-      if (weaponCanReload.value) {
-        reloadWeapon();
-      }
-    } else {
-      disableShooting();
-    }
+    game.setPedAmmo(player, player.currentWeapon, clip + rest, true);
+    game.setAmmoInClip(player, player.currentWeapon, clip);
   }
 
-  /**
-   * Tries to reload the weapon.
-   */
-  async function reloadWeapon() {
-    if (!weaponCanReload.value) {
-      console.log("Cannot reload weapon");
-      handleAmmoChange();
-      return;
+  let wasReloading = false;
+
+  const reloadTrackingTick = alt.Timers.everyTick(() => {
+    if (player.isReloading && !wasReloading) {
+      wasReloading = true;
+      rpc.callServer(ServerCall.FromClient.RELOAD_WEAPON).then(canReload => {
+        if (!canReload) {
+          game.clearPedTasksImmediately(player);
+        }
+      });
     }
-
-    const disableMeleeAttackLight_R = alt.Timers.everyTick(() => {
-      game.disableControlAction(ControlType.PLAYER_CONTROL, Control.INPUT_MELEE_ATTACK_LIGHT, true);
-      game.disableControlAction(ControlType.PLAYER_CONTROL, Control.INPUT_MELEE_ATTACK_HEAVY, true);
-      game.disableControlAction(
-        ControlType.PLAYER_CONTROL,
-        Control.INPUT_MELEE_ATTACK_ALTERNATE,
-        true,
-      );
-    });
-
-    try {
-      const startReload = await rpc.callServer(ServerCall.FromClient.RELOAD_WEAPON);
-
-      if (startReload) {
-        game.taskReloadWeapon(player, true);
-      } else {
-        console.log("Failed to start reload");
-      }
-
-      await alt.Utils.waitFor(() => !player.isReloading);
-    } finally {
-      disableMeleeAttackLight_R.destroy();
+    if (!player.isReloading && wasReloading) {
+      wasReloading = false;
     }
-  }
-
-  function allowShooting() {
-    // Setting 1 ammo in clip because infinite ammo
-    // doesn't do anything if there is no ammo in clip
-    game.setAmmoInClip(player, player.currentWeapon, 1);
-    game.setPedInfiniteAmmoClip(player, true);
-  }
-
-  function disableShooting() {
-    if (player.isReloading) {
-      game.clearPedTasksImmediately(player);
-    }
-    game.setAmmoInClip(player, player.currentWeapon, 0);
-    game.setPedInfiniteAmmoClip(player, false);
-  }
+  });
 
   return () => {
     playerWeaponChangeListener.destroy();
     keyDownListener.destroy();
     playerWeaponShootListener.destroy();
+    reloadTrackingTick.destroy();
     stopWatchingAmmo();
     weaponCanReload.effect.stop();
     currentFirearm.effect.stop();

@@ -19,7 +19,7 @@ import type { Item } from "@shared/modules/items";
 import { useCharacter } from "@/store/synced/character.store";
 import { px } from "@/composables/use-pixel";
 import { isSameItemSource } from "@/store/inventory";
-import { asset } from "@/utils/asset";
+import { asset } from "@/lib/utils";
 import ItemIcon from "../../inventory/ItemIcon.vue";
 import WorkbenchSlot from "../components/WorkbenchSlot.vue";
 import { useUpgrading, getItemFromPlayerSource } from "../composables/use-upgrading";

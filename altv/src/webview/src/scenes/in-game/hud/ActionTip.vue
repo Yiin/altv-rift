@@ -2,7 +2,7 @@
 import { computed } from "vue";
 import { ActionTipType } from "@shared/store/client.store";
 import { useClient } from "@/store/synced/client.store";
-import { asset } from "@/utils/asset";
+import { asset } from "@/lib/utils";
 
 const client = useClient();
 

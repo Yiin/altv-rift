@@ -14,13 +14,16 @@ game.setRelationshipBetweenGroups(0, alt.hash("Friendly"), alt.hash("Friendly"))
 game.setRelationshipBetweenGroups(5, alt.hash("Friendly"), alt.hash("Enemy"));
 game.setRelationshipBetweenGroups(5, alt.hash("Enemy"), alt.hash("Friendly"));
 
+/**
+ * Not sure if needed, added just in case ped behaves weirdly to newly streamed-in players
+ */
 alt.Timers.setInterval(() => {
   game.setPedRelationshipGroupHash(alt.Player.local, alt.hash("Friendly"));
 
   for (const ped of alt.Ped.streamedIn) {
     if (
       ped.netOwner !== alt.Player.local ||
-      (ped.streamSyncedMeta.flags ?? 0) & PedFlags.Peaceful
+      ped.streamSyncedMeta.flags === undefined || ped.streamSyncedMeta.flags & PedFlags.Peaceful
     ) {
       continue;
     }
@@ -36,20 +39,8 @@ alt.Timers.setInterval(() => {
   }
 }, 100);
 
-alt.Events.onNetOwnerChange(({ entity, newOwner }) => {
-  if (entity instanceof alt.Ped && newOwner === alt.Player.local) {
-    if (!((entity.streamSyncedMeta.flags ?? 0) & PedFlags.Peaceful)) {
-      alt.log("net owner changed");
-      setupTerroristPed(entity);
-    }
-  }
-});
-
 export async function setupTerroristPed(ped: alt.Ped): Promise<void> {
-  if (ped.netOwner !== alt.Player.local) {
-    return;
-  }
-
+  console.log("Setting up terrorist ped", ped);
   await alt.Utils.waitFor(() => ped.valid && ped.scriptID !== 0);
 
   const onSpawned = alt.Events.onSpawned(() => {
@@ -78,18 +69,20 @@ export async function setupTerroristPed(ped: alt.Ped): Promise<void> {
   game.setPedCombatAttributes(ped, COMBAT_ATTRIBUTE.UseCover, Math.random() > 0.5);
   game.setPedCombatAttributes(ped, COMBAT_ATTRIBUTE.SwitchToAdvanceIfCantFindCover, true);
 
-  game.taskGuardAssignedDefensiveArea(
-    ped,
-    ped.pos.x,
-    ped.pos.y,
-    ped.pos.z,
-    0,
-    5 + Math.random() * 5,
-    -1,
-  );
+  if (ped.netOwner === alt.Player.local) {
+    game.taskGuardAssignedDefensiveArea(
+      ped,
+      ped.pos.x,
+      ped.pos.y,
+      ped.pos.z,
+      0,
+      5 + Math.random() * 5,
+      -1,
+    );
 
-  if (ped.streamSyncedMeta.weapon) {
-    game.giveWeaponToPed(ped, ped.streamSyncedMeta.weapon, 9999, true, true);
+    if (ped.streamSyncedMeta.weapon) {
+      game.giveWeaponToPed(ped, ped.streamSyncedMeta.weapon, 9999, true, true);
+    }
   }
 
   if (!pedTickUpdates.has(ped)) {

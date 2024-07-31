@@ -25,7 +25,7 @@ function fishingTick(player: alt.Player) {
     return;
   }
 
-  const fishingRod = player.getEquipedItemInSlot(EquipmentSlot.Tool);
+  const fishingRod = player.getEquipedItemInSlot(EquipmentSlot.Weapon);
 
   if (!fishingRod || !isItemFishingRod(fishingRod) || !fishingRod.bait) {
     // Player either unequipped the fishing rod or ran out of bait

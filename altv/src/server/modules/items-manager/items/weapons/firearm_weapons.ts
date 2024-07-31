@@ -7,6 +7,7 @@ import {
   getItemInfoByKey,
   getWeaponAmmoEquipmentSlot,
   isItemAmmo,
+  isItemKeyWeapon,
 } from "@shared/modules/items";
 import {
   FirearmWeaponItem,
@@ -46,6 +47,10 @@ alt.Events.onPlayer(ServerEvents.FromClient.WEAPON_SHOOT, (player) => {
   const equipedWeapon = player.character.equipment.weapon;
 
   if (!equipedWeapon) {
+    return;
+  }
+
+  if (!isItemKeyWeapon(equipedWeapon.key)) {
     return;
   }
 

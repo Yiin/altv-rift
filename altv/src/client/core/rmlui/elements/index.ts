@@ -1,9 +1,9 @@
-// @index(['./**/index.ts', /\/_/g], f => `export * from "${f.path.replace('/index', '')}";`)
-export * from "./damage";
-export * from "./ped-interaction";
-export * from "./ped-nametag";
-export * from "./storage-interaction";
-export * from "./tree";
-export * from "./compass";
-// export * from "./vehicle-action";
+// @index(['./**/*.(rml|rml-element).ts', /\/_/g], f => `export * from "${f.path.replace('/index', '')}";`)
+export * from "./compass/compass.rml";
+export * from "./damage/damage.rml";
+export * from "./ped-interaction/ped-interaction.rml-element";
+export * from "./ped-nametag/ped-nametag.rml-element";
+export * from "./storage-interaction/storage-interaction.rml-element";
+export * from "./tree/tree-interaction.rml-element";
+// export * from "./vehicle-action/vehicle-action.rml-element";
 // @endindex

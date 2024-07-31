@@ -22,6 +22,7 @@ import { LootTable } from "../types";
  * High quality firearms drop
  */
 export const FIREARM_WEAPONS_HIGH: LootTable = {
+  key: "firearm-weapons-high",
   type: AirDropType.FirearmWeapons,
   score: 10,
   getItemsAmount() {
@@ -31,14 +32,14 @@ export const FIREARM_WEAPONS_HIGH: LootTable = {
     const matchesWeapon =
       isItemKeyFirearmWeapon(itemKey) &&
       getItemTier(itemKey) ===
-        rollOption(
-          [
-            [1, ItemTier.S],
-            [3, ItemTier.A],
-            [5, ItemTier.B],
-          ],
-          seed,
-        );
+      rollOption(
+        [
+          [1, ItemTier.S],
+          [3, ItemTier.A],
+          [5, ItemTier.B],
+        ],
+        seed,
+      );
 
     const matchesAmmo =
       isItemKeyAmmo(itemKey) &&

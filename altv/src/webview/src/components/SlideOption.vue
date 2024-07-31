@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { wrap } from "../utils/wrap";
+import { wrap } from "@/lib/utils";
 
 const props = defineProps<{
   options: any[];

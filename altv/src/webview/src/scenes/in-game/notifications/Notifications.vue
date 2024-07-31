@@ -5,7 +5,6 @@ import { type NotificationSchema } from "@shared/interfaces";
 import { type Item } from "@shared/modules/items";
 import { useAlt } from "@/composables/use-alt";
 import { useCharacter } from "@/store/synced/character.store";
-import GenericNotification from "./GenericNotification.vue";
 import ItemReceivedNotification from "./ItemReceivedNotification.vue";
 import ExperienceGainedNotification from "./ExperienceGainedNotification.vue";
 
@@ -102,19 +101,19 @@ alt.on(WebviewEvents.FromClient.INVENTORY_ITEM_ADD, async (item) => {
 </script>
 
 <template>
-  <transition-group
+  <!-- <transition-group
     name="notification"
     tag="div"
     class="absolute right-6 top-6"
   >
     <GenericNotification
-      v-for="notification in notifications"
-      :key="notification.key"
+      v-for="(notification, index) in notifications"
+      :key="index"
       :type="notification.type"
-      :title="notification.title"
+      :title="''"
       :text="notification.text"
     />
-  </transition-group>
+  </transition-group> -->
   <transition-group
     name="notification"
     tag="div"
