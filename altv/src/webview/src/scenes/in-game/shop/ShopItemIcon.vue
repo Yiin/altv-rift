@@ -133,7 +133,7 @@ defineProps<{ imageUrl: string; id: number }>();
     </svg>
 
     <div
-      class="absolute-center z-10 h-23 w-23 bg-contain bg-center"
+      class="absolute-center z-10 h-23 w-23 bg-contain bg-center bg-no-repeat"
       :style="{ backgroundImage: `url(${imageUrl})` }"
     />
   </div>

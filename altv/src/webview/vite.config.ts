@@ -1,6 +1,5 @@
 import { fileURLToPath, URL } from "node:url";
 import { defineConfig } from "vite";
-import vuetify from "vite-plugin-vuetify";
 import externalGlobals from "rollup-plugin-external-globals";
 import vue from "@vitejs/plugin-vue";
 import AutoImport from "unplugin-auto-import/vite";
@@ -37,12 +36,6 @@ export default defineConfig(({ mode }) => ({
       "@altv/shared": "alt",
     }),
     vue(),
-    vuetify({
-      autoImport: true,
-      styles: {
-        configFile: "src/vuetify-config.scss",
-      },
-    }),
     AutoImport({
       imports: [
         "vue",
@@ -52,18 +45,8 @@ export default defineConfig(({ mode }) => ({
           lodash: ["_"],
         },
       ],
-      dirs: [
-        "src/composables/**",
-        "src/store/**",
-        "src/components/**",
-        "src/plugins/**",
-        "src/rpc/**",
-        "src/utils/**",
-        "../shared/**/*",
-        "!../shared/calls/**/from-*",
-        "!../shared/events/**/from-*",
-      ],
       dts: true,
+      vueTemplate: true,
     }),
   ],
 }));

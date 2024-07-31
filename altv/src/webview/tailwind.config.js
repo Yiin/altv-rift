@@ -1,12 +1,54 @@
+const animate = require("tailwindcss-animate");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./index.html", "./src/**/*.{ts,vue}"],
+  darkMode: ["class"],
+  safelist: ["dark"],
+  prefix: "",
+  content: ["./src/**/*.{ts,tsx,vue}", "./index.html"],
   theme: {
-    extend: {
-      fontFamily: {
-        sans: ["Akrobat", "sans-serif"],
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
       },
+    },
+    extend: {
       colors: {
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
         main: {
           100: "#ffab45",
           200: "#ff943b",
@@ -45,6 +87,36 @@ module.exports = {
         saffronBlaze: "#FA8633",
         ceruleanSky: "#3382FA",
       },
+      borderRadius: {
+        xl: "calc(var(--radius) + 4px)",
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
+      keyframes: {
+        "accordion-down": {
+          from: { height: 0 },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: 0 },
+        },
+        "collapsible-down": {
+          from: { height: 0 },
+          to: { height: "var(--radix-collapsible-content-height)" },
+        },
+        "collapsible-up": {
+          from: { height: "var(--radix-collapsible-content-height)" },
+          to: { height: 0 },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+        "collapsible-down": "collapsible-down 0.2s ease-in-out",
+        "collapsible-up": "collapsible-up 0.2s ease-in-out",
+      },
       contain: {
         content: "content",
       },
@@ -54,41 +126,16 @@ module.exports = {
         weaponCardA:
           "linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(102,102,102,0.2) 100%), linear-gradient(to bottom, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.15) 100%)",
         darkRadialGradient: "radial-gradient(47.55% 47.55% at 50% 0%, #050623 0%, #00010F 100%)",
-        semiTransparentRadialGradient:
-          "radial-gradient(116.43% 121.73% at 0% 0%, rgba(255, 218, 87, 0.20) 0%, rgba(255, 218, 87, 0.00) 100%)",
         subtleDarkRadialGradient:
           "radial-gradient(47.55% 47.55% at 50% 0%, rgba(18, 18, 18, 0.80) 17.5%, rgba(0, 0, 0, 0.80) 100%)",
         darkLinearGradient:
           "linear-gradient(90deg, rgba(0, 0, 0, 0.80) 0%, rgba(1, 1, 1, 0.76) 33.58%, rgba(18, 18, 18, 0.00) 61.81%)",
-        vibrantBlueRadialGradient:
-          "radial-gradient(47.55% 47.55% at 50% 0%, rgba(60, 63, 129, 0.80) 17.5%, rgba(0, 2, 50, 0.80) 100%)",
-        softWhiteRadialGradient:
-          "radial-gradient(665.83% 139.08% at 0% 0%, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.00) 100%)",
-        tealCyanRadialGradient:
-          "radial-gradient(665.83% 139.08% at 0% 0%, rgba(81, 195, 195, 0.15) 0%, rgba(81, 195, 195, 0.00) 100%)",
-        freshGreenRadialGradient:
-          "radial-gradient(665.83% 139.08% at 0% 0%, rgba(149, 200, 42, 0.15) 0%, rgba(149, 200, 42, 0.00) 100%)",
-        freshGreenRadialGradient2:
-          "radial-gradient(665.83% 139.08% at 0% 0%, rgba(149, 200, 42, 1) 0%, rgba(149, 200, 42, 0.00) 100%)",
-        subtleMidnightMist:
-          "radial-gradient(48.75% 48.75% at 50% 51.25%, #050623 0%, rgba(0, 1, 15, 0.88) 100%)",
-        eclipseShadow:
-          "linear-gradient(90deg, #000 0%, rgba(0, 0, 0, 0.50) 19.01%, rgba(0, 0, 0, 0.00) 50.5%, rgba(0, 0, 0, 0.50) 83.9%, #000 100%)",
-        celestialBlueNebula:
-          "radial-gradient(209.03% 141.29% at 100% 0%, rgba(72, 80, 255, 0.40) 0%, rgba(72, 80, 255, 0.17) 19.03%, rgba(72, 80, 255, 0.00) 100%)",
-        crimsonCometGlow:
-          "radial-gradient(665.83% 139.08% at 0% 0%, rgba(255, 74, 74, 0.15) 0%, rgba(255, 74, 74, 0.00) 100%)",
-        sublimeCitrusHaze:
-          "linear-gradient(180deg, rgba(185, 240, 69, 0.10) 0%, rgba(185, 240, 69, 0.00) 100%)",
-        delicateWhiteVeil:
-          "linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.00) 100%)",
         passionateRubyBlaze:
           "linear-gradient(180deg, rgba(255, 36, 49, 0.40) 0%, rgba(255, 36, 49, 0.00) 100%)",
         passionateRubyBlaze2:
           "linear-gradient(180deg, rgba(255, 36, 49, 1) 0%, rgba(255, 36, 49, 0.5) 100%)",
         sunriseYellowToBlack:
           "linear-gradient(180deg, rgba(255, 218, 87, 0.15) 0%, rgba(255, 218, 87, 0.01) 100%)",
-        // with variable
         variable: "var(--bg)",
         pistol:
           "url(https://cdn.leonardo.ai/users/dff1175f-28d6-4b1d-9dce-8c6d881d7fd4/generations/31d3f50b-97c1-42a2-957a-95b9189ba2a2/Default_even_sheet_of_army_clothing_texture_wallpaper_1.jpg?w=512)",
@@ -138,6 +185,7 @@ module.exports = {
     },
   },
   plugins: [
+    animate,
     function ({ addBase, theme }) {
       function extractColorVars(colorObj, colorGroup = "") {
         return Object.keys(colorObj).reduce((vars, colorKey) => {

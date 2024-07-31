@@ -68,7 +68,7 @@ alt.Player.prototype.reloadWeapon = function () {
   }
 
   setTimeout(() => {
-    if (this.valid && isInGame(this) && this.isReloading) {
+    if (this.valid && isInGame(this) /* && this.isReloading */) {
       if (weapon.clip) {
         // Refill clip
         const amount = Math.min(clipSize - weapon.clip.amount, rest);

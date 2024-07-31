@@ -4,7 +4,7 @@ import BackButtons from "@/components/buttons/BackButtons.vue";
 import DarkBackground from "@/components/DarkBackground.vue";
 import CraftingView from "@/scenes/in-game/workbench/CraftingView.vue";
 import UpgradingView from "@/scenes/in-game/workbench/UpgradingView.vue";
-import { asset } from "@/utils/asset";
+import { asset } from "@/lib/utils";
 import GearIcon from "./icons/GearIcon.vue";
 import WrenchIcon from "./icons/WrenchIcon.vue";
 
@@ -36,7 +36,7 @@ const view = ref<View>(View.CRAFTING);
           v-for="[link, label] in links"
           :key="link"
           @click="view = link"
-          class="flex h-45 w-35 flex-col items-center justify-end pb-6.75"
+          class="flex h-45 w-35 flex-col items-center justify-end pb-6.75 bg-no-repeat"
           :class="{
             'text-white': view === link,
             'text-gray-500 transition duration-200': view !== link,

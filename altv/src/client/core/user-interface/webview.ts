@@ -137,11 +137,13 @@ export function toggleWindow(windowType: WindowType) {
   }
 }
 
-export function openWindow(windowType: WindowType) {
+export function openWindow(windowType: WindowType, shouldShowCursor = true) {
   clientState.ui.window = {
     type: windowType,
   };
-  showCursor(true);
+  if (shouldShowCursor) {
+    showCursor(true);
+  }
 
   hideRml();
 }

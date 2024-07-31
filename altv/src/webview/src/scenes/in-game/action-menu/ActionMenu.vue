@@ -4,7 +4,7 @@ import { ClientEvents } from "@shared/events/client";
 import { type ActionItem } from "@shared/store/client.store";
 import { useEventListener } from "@/composables/use-event-listener";
 import { useClient } from "@/store/synced/client.store";
-import { asset } from "@/utils/asset";
+import { asset } from "@/lib/utils";
 
 type Slice = ActionItem & {
   empty: boolean;

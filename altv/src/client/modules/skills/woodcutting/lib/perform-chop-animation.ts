@@ -21,7 +21,7 @@ export async function performChopAnimation(tree: alt.VirtualEntity) {
 
   const { x, y, z } = player.pos.add(game.getEntityForwardVector(player)).mul(1.0);
 
-  const effect = game.startParticleFxLoopedAtCoord(
+  game.startNetworkedParticleFxNonLoopedAtCoord(
     "bul_wood_splinter",
     x,
     y,
@@ -52,7 +52,6 @@ export async function performChopAnimation(tree: alt.VirtualEntity) {
   }
 
   await alt.Utils.wait(1000);
-  game.stopParticleFxLooped(effect, false);
 }
 
 // Function to load necessary assets

@@ -1,9 +1,6 @@
 import alt from "@altv/server";
-import { PedFlags } from "@shared/modules/ped";
-import { createInventory } from "@shared/modules/inventory";
-import { FishingRod, ItemGrade, createItem } from "@shared/modules/items";
+import { ItemGrade, Tool, createItem } from "@shared/modules/items";
 import { setupShop } from "@/modules/shops/lib/setup-shop";
-import { createStaticPed } from "../registry";
 
 const positions: { pos: alt.IVector3; heading: number }[] = [
   {
@@ -26,7 +23,7 @@ for (const { pos, heading } of positions) {
       items: [
         {
           slot: 0,
-          item: createItem(FishingRod.FISHING_ROD, { grade: ItemGrade.COMMON }),
+          item: createItem(Tool.FISHING_ROD, { grade: ItemGrade.COMMON }),
           price: 1000,
         },
       ],

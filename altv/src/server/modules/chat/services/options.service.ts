@@ -77,10 +77,8 @@ export class OptionsService {
 
   public getClientOptions() {
     return {
-      focusKey: this.options.focusKey,
       hideOnConnect: this.options.hideOnConnect,
       maxMessageHistory: this.options.maxMessageHistory,
-      unfocusKey: this.options.unfocusKey,
     } as ClientOptions;
   }
 

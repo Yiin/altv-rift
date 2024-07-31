@@ -1,6 +1,9 @@
 import fs from "fs";
 import path from "path";
 
+// if (process.env.ALL === "true" || process.env.TORSOS === "true") {
+//   processTorsos();
+// }
 if (process.env.ALL === "true" || process.env.CLOTHES === "true") {
   processClothes();
 }
@@ -10,6 +13,27 @@ if (process.env.ALL === "true" || process.env.WEAPONS === "true") {
 if (process.env.ALL === "true" || process.env.TREES === "true") {
   processTrees();
 }
+
+// async function processTorsos() {
+//   const [femaleResponse, maleResponse] = await Promise.all([
+//     fetch("https://raw.githubusercontent.com/Yiin/gtav-top-organizer/main/tops/female.json"),
+//     fetch("https://raw.githubusercontent.com/Yiin/gtav-top-organizer/main/tops/male.json"),
+//   ]);
+
+//   const [female, male] = await Promise.all<({ category: string; dlc: string; drawable: number; torsos: number[] })[]>(
+//     [
+//       femaleResponse.json(),
+//       maleResponse.json()
+//     ]
+//   );
+
+//   const processedTorsos = {
+//     female: female.map(({ dlc, drawable, torsos }) => ({ dlc, drawable, torsos })),
+//     male: male.map(({ dlc, drawable, torsos }) => ({ dlc, drawable, torsos })),
+//   };
+
+//   fs.writeFileSync(`src/shared/modules/items/registry/clothing/top-torsos.json`, JSON.stringify(processedTorsos, null, 2));
+// }
 
 async function processClothes() {
   const componentMap: { [key: string]: string } = {
@@ -52,6 +76,24 @@ async function processClothes() {
     "righthand": "RightHand"
   };
 
+  // Fetch and process torsos data
+  const [femaleResponse, maleResponse] = await Promise.all([
+    fetch("https://raw.githubusercontent.com/Yiin/gtav-top-organizer/main/tops/female.json"),
+    fetch("https://raw.githubusercontent.com/Yiin/gtav-top-organizer/main/tops/male.json"),
+  ]);
+
+  const [female, male] = await Promise.all<({ category: string; dlc: string; drawable: number; torsos: number[] })[]>(
+    [
+      femaleResponse.json(),
+      maleResponse.json()
+    ]
+  );
+
+  const processedTorsos = {
+    female: female.map(({ dlc, drawable, torsos }) => ({ dlc, drawable, torsos })),
+    male: male.map(({ dlc, drawable, torsos }) => ({ dlc, drawable, torsos })),
+  };
+
   for (const pedVariation of data) {
     for (const component of pedVariation.ComponentVariations) {
       const componentType = componentMap[component.ComponentId.toString()];
@@ -60,18 +102,24 @@ async function processClothes() {
           outputData[componentType] = {};
           keyData[componentType] = {};
         }
+
+        // Use processedTorsos data for tops
+        const gender = pedVariation.PedName === "mp_m_freemode_01" ? 'male' : 'female';
+        const torsos = componentType === 'top'
+          && processedTorsos[gender].find(t => t.dlc === pedVariation.DlcCollectionName && t.drawable === component.DrawableId)?.torsos
+          || null;
+
         outputData[componentType][component.NameHash] = {
           ped: pedVariation.PedName,
           key: component.NameHash,
-          dlc: pedVariation.DlcCollectionName,
+          dlc: pedVariation.DlcCollectionName === pedVariation.PedName ? '' : pedVariation.DlcCollectionName,
           dlcDrawableId: component.RelativeCollectionDrawableId,
           componentId: component.ComponentId,
           drawableId: component.DrawableId,
           textureId: component.TextureId,
           name: component.TranslatedLabel?.English,
           price: component.Price,
-          torsos: component.FittingTorso,
-          gloves: component.FittingGloves,
+          torsos,
           restrictionTags: component.RestrictionTags
         };
 
@@ -101,7 +149,7 @@ async function processClothes() {
             ped: pedVariation.PedName,
             key: prop.NameHash,
             anchorPoint: prop.AnchorPoint,
-            dlc: pedVariation.DlcCollectionName,
+            dlc: pedVariation.DlcCollectionName === pedVariation.PedName ? '' : pedVariation.DlcCollectionName,
             dlcDrawableId: prop.RelativeCollectionDrawableId,
             componentId: prop.ComponentId,
             drawableId: prop.DrawableId,

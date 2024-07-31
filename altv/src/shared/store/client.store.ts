@@ -64,6 +64,7 @@ export enum WindowType {
   VEHICLE_SHOP,
   STORAGE,
   ADMIN,
+  BUILDER,
 }
 
 export type CurrentWindow = {
@@ -114,7 +115,7 @@ export const getDefaultClientStoreState = (): ClientState => ({
       "altMock" in globalThis
         ? // browser context
         {
-          type: WindowType.PLAYER_INVENTORY,
+          type: WindowType.BUILDER,
         }
         : // {
         //   type: WindowType.PLAYER_INVENTORY,

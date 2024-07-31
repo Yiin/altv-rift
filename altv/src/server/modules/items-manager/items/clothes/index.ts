@@ -47,13 +47,7 @@ on(ServerEvents.FromServer.ITEM_EQUIP, (player, item) => {
   const itemInfo = getItemInfoByKey(applyGenderClothing(player, item.key));
 
   if (isComponentVariation(equipmentSlot)) {
-    if (itemInfo.dlc !== 'mp_f_freemode_01' && itemInfo.dlc !== 'mp_m_freemode_01') {
-      console.log('dlc', itemInfo.componentId, itemInfo.drawableId, itemInfo.textureId);
-      player.setDlcClothes(itemInfo.componentId, itemInfo.dlcDrawableId, itemInfo.textureId, 2, alt.hash(itemInfo.dlc));
-    } else {
-      console.log('base', itemInfo.componentId, itemInfo.drawableId, itemInfo.textureId);
-      player.setClothes(itemInfo.componentId, itemInfo.drawableId, itemInfo.textureId, 2);
-    }
+    player.setDlcClothes(itemInfo.componentId, itemInfo.dlcDrawableId, itemInfo.textureId, 2, alt.hash(itemInfo.dlc));
 
     if (itemInfo.componentId === 11) {
       player.resetClothes(3);

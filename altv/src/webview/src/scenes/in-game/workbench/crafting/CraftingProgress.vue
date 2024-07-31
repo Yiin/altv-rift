@@ -10,9 +10,9 @@ import {
   isItemKeyThrowableWeapon,
   getWeaponDamage,
 } from "@shared/modules/items";
-import { getItemImage } from "@/utils/items";
+import { getItemImage } from "@/lib/utils";
 import { useFrame } from "@/composables/use-frame";
-import { asset } from "@/utils/asset";
+import { asset } from "@/lib/utils";
 import ItemIcon from "../../inventory/ItemIcon.vue";
 import WorkbenchSlot from "../components/WorkbenchSlot.vue";
 import ItemBadge from "../components/ItemBadge.vue";

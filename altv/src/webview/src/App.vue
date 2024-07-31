@@ -1,5 +1,9 @@
 <script setup lang="ts">
+import { useEventListener } from "@vueuse/core";
+import { ClientEvents } from "@shared/events/client";
 import NotificationCard from "./components/NotificationCard.vue";
+import { useSceneManager } from "./composables/use-scene-manager";
+import { useSyncedStores } from "./composables/use-synced-stores";
 import { NotificationGroup, Notification } from "./plugins/notiwind";
 
 window.addEventListener("error", (e) => {
@@ -36,34 +40,34 @@ console.log("App.vue");
 onMounted(() => {
   console.log("App mounted");
   alt.emit(ClientEvents.FromWebview.VIEW_READY);
-  notify(
-    {
-      type: NotificationType.Error,
-      text: "You don't have enough money",
-    },
-    300000,
-  );
-  notify(
-    {
-      type: NotificationType.Success,
-      text: "Quest completed successfully",
-    },
-    300000,
-  );
-  notify(
-    {
-      type: NotificationType.Info,
-      text: "You entered a safe zone",
-    },
-    300000,
-  );
-  notify(
-    {
-      type: NotificationType.Warning,
-      text: "Upon death you will lose all your items",
-    },
-    300000,
-  );
+  // notify(
+  //   {
+  //     type: NotificationType.Error,
+  //     text: "You don't have enough money",
+  //   },
+  //   300000,
+  // );
+  // notify(
+  //   {
+  //     type: NotificationType.Success,
+  //     text: "Quest completed successfully",
+  //   },
+  //   300000,
+  // );
+  // notify(
+  //   {
+  //     type: NotificationType.Info,
+  //     text: "You entered a safe zone",
+  //   },
+  //   300000,
+  // );
+  // notify(
+  //   {
+  //     type: NotificationType.Warning,
+  //     text: "Upon death you will lose all your items",
+  //   },
+  //   300000,
+  // );
 });
 </script>
 
@@ -90,9 +94,7 @@ onMounted(() => {
     </div>
   </NotificationGroup>
 
-  <v-app>
-    <v-main class="relative select-none">
-      <router-view />
-    </v-main>
-  </v-app>
+  <div class="select-none">
+    <router-view />
+  </div>
 </template>

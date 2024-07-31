@@ -1,5 +1,4 @@
 import alt from "@altv/client";
-import { VirtualEntityType } from "@shared/interfaces";
 
 export function whileVirtualEntityIsStreamedIn(
   check: (entity: alt.VirtualEntity) => boolean,

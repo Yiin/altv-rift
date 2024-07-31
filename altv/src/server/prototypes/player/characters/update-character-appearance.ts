@@ -78,11 +78,7 @@ alt.Player.prototype.resetClothes = function (component?: number) {
             const torso = getTorsoForTop(topInfo);
 
             if (torso) {
-              if (torso.dlc !== 'mp_f_freemode_01' && torso.dlc !== 'mp_m_freemode_01') {
-                this.setDlcClothes(3, torso.dlcDrawableId, torso.textureId, 2, alt.hash(torso.dlc));
-              } else {
-                this.setClothes(3, torso.drawableId, torso.textureId, 2);
-              }
+              this.setDlcClothes(3, torso.dlcDrawableId, torso.textureId, 2, alt.hash(torso.dlc));
               break;
             }
           }

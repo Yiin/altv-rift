@@ -25,9 +25,6 @@ import {
   FishingBaitItem,
   FishingBaitItemInfo,
   FishingBaitItemKey,
-  FishingRodItem,
-  FishingRodItemInfo,
-  FishingRodItemKey,
   FoodIngredientItem,
   FoodIngredientItemInfo,
   FoodIngredientItemKey,
@@ -37,9 +34,6 @@ import {
   GlovesItem,
   GlovesItemInfo,
   GlovesItemKey,
-  HatchetItem,
-  HatchetItemInfo,
-  HatchetItemKey,
   HeadwearItem,
   HeadwearItemInfo,
   HeadwearItemKey,
@@ -65,9 +59,6 @@ import {
   PantsItem,
   PantsItemInfo,
   PantsItemKey,
-  PickaxeItem,
-  PickaxeItemInfo,
-  PickaxeItemKey,
   RightHandItem,
   RightHandItemInfo,
   RightHandItemKey,
@@ -98,6 +89,7 @@ import {
   WoodItem,
   WoodItemInfo,
   WoodItemKey,
+  ToolItemInfo,
 } from "./registry";
 import { LeatherItem, LeatherItemInfo, LeatherItemKey } from "./registry/materials/leather.items";
 import { HideItemKey, HideItem, HideItemInfo } from "./registry/materials/hide.items";
@@ -173,12 +165,8 @@ type ItemMapping<T> = T extends FirearmWeaponItemKey
   ? [ScrapItem, ScrapItemInfo]
   : T extends FishingBaitItemKey
   ? [FishingBaitItem, FishingBaitItemInfo]
-  : T extends HatchetItemKey
-  ? [HatchetItem, HatchetItemInfo]
-  : T extends PickaxeItemKey
-  ? [PickaxeItem, PickaxeItemInfo]
-  : T extends FishingRodItemKey
-  ? [FishingRodItem, FishingRodItemInfo]
+  : T extends ToolItemKey
+  ? [ToolItem, ToolItemInfo]
   : T extends NoteItemKey
   ? [NoteItem, NoteItemInfo]
   : T extends UnlearnedBlueprintItemKey
@@ -208,7 +196,7 @@ export type Equipment = {
   [EquipmentSlot.Top]?: TopItem | null;
   [EquipmentSlot.Armor]?: ArmorItem | null;
   [EquipmentSlot.Accessory]?: AccessoryItem | null;
-  [EquipmentSlot.Weapon]?: FirearmWeaponItem | ThrowableWeaponItem | MeleeWeaponItem | null;
+  [EquipmentSlot.Weapon]?: FirearmWeaponItem | ThrowableWeaponItem | MeleeWeaponItem | ToolItem | null;
   [EquipmentSlot.Gloves]?: GlovesItem | null;
   [EquipmentSlot.LeftHand]?: LeftHandItem | null;
   [EquipmentSlot.Pants]?: PantsItem | null;
@@ -216,11 +204,11 @@ export type Equipment = {
   [EquipmentSlot.Backpack]?: null;
   [EquipmentSlot.Shoes]?: ShoesItem | null;
   [EquipmentSlot.Phone]?: null;
-  [EquipmentSlot.Tool]?: ToolItem | FishingRodItem | null;
   [EquipmentSlot.QuickSlot1]?: Item | null;
   [EquipmentSlot.QuickSlot2]?: Item | null;
   [EquipmentSlot.QuickSlot3]?: Item | null;
   [EquipmentSlot.QuickSlot4]?: Item | null;
+  [EquipmentSlot.QuickSlot5]?: Item | null;
   [EquipmentSlot.AssaultRifleAmmo]?: AmmoItem | null;
   [EquipmentSlot.HandgunAmmo]?: AmmoItem | null;
   [EquipmentSlot.MachineGunAmmo]?: AmmoItem | null;

@@ -7,7 +7,7 @@ import {
   getItemIconPosition,
   getItemClasses,
   getItemGradeTextColor,
-} from "@/utils/items";
+} from "@/lib/utils";
 import { px } from "@/composables/use-pixel";
 import LogIcon from "./dynamic-icons/LogIcon.vue";
 
@@ -65,7 +65,7 @@ watch(
     </template>
     <div
       v-else
-      class="relative h-full w-full bg-contain"
+      class="relative h-full w-full bg-contain bg-no-repeat"
       :class="[getItemClasses(item)]"
       :style="{
         backgroundImage: `url(${getItemImage(item.key)})`,

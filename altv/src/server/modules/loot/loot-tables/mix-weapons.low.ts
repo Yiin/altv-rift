@@ -20,6 +20,7 @@ import { rollOption } from "@shared/utility/random";
 import { LootTable } from "../types";
 
 export const MIX_WEAPONS_LOW: LootTable = {
+  key: "mix-weapons-low",
   type: AirDropType.MixWeapons,
   score: 1,
   getItemsAmount() {

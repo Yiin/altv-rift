@@ -2,7 +2,7 @@ import { Appearance, ScreenPosition } from "@prisma/client/edge";
 import { z } from "zod";
 import {
   EquipmentSlot,
-  StorageItemSource,
+  type StorageItemSource,
   type StorageSource,
   type ItemSource,
   type PlayerInventoryItemSource,

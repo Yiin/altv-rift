@@ -1,0 +1,8 @@
+files = [ 'stream/*' ]
+
+[meta]
+'meta/weaponcomponents.meta' = 'WEAPONCOMPONENTSINFO_FILE'
+'meta/weaponarchetypes.meta' = 'WEAPON_METADATA_FILE'
+'meta/weaponanimations.meta' = 'WEAPON_ANIMATIONS_FILE'
+'meta/pedpersonality.meta' = 'PED_PERSONALITY_FILE'
+'meta/weapons.meta' = 'WEAPONINFO_FILE'

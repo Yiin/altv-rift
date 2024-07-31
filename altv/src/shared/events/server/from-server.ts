@@ -24,6 +24,7 @@ export interface CustomServerEvent {
   [FromServer.ITEM_UNEQUIP]: (
     player: InGamePlayer,
     equipmentSlot: EquipmentSlot,
+    item: Item,
   ) => Promise<void> | void;
   [FromServer.ITEM_DROP]: (player: InGamePlayer, item: Item) => Promise<void> | void;
   [FromServer.INVENTORY_ITEM_ADD]: (event: {

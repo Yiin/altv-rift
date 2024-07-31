@@ -8,10 +8,8 @@ declare module "vchat" {
   export type MessageFormatter = (message: string) => string;
   export type MountCallback = (player: Player, mounted: boolean) => void;
   export interface ClientOptions {
-    focusKey: number;
     hideOnConnect: boolean;
     maxMessageHistory: number;
-    unfocusKey: number;
   }
   export interface WindowOptions {
     maxCommandSuggestions: number;

@@ -9,6 +9,8 @@ export const FromWebview = {
   TOGGLE_PLAYER_PREVIEW: "TOGGLE_PLAYER_PREVIEW",
   TRACK_QUEST: "TRACK_QUEST",
   CLOSE_WINDOW: "CLOSE_WINDOW",
+  WHEEL_UP: "WHEEL_UP",
+  WHEEL_DOWN: "WHEEL_DOWN",
 } as const;
 
 declare module "@altv/shared" {
@@ -26,6 +28,8 @@ declare module "@altv/shared" {
       [FromWebview.TOGGLE_PLAYER_PREVIEW]: (show: boolean) => void;
       [FromWebview.TRACK_QUEST]: (key: string) => void;
       [FromWebview.CLOSE_WINDOW]: () => void;
+      [FromWebview.WHEEL_UP]: (delta: number) => void;
+      [FromWebview.WHEEL_DOWN]: (delta: number) => void;
     }
   }
 }

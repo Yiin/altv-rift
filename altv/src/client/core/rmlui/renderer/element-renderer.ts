@@ -13,6 +13,12 @@ export const document = alt.RmlDocument.create({
   url: join(__relativedirname, "../screen.rml"),
 });
 
+alt.Events.onDisconnect(() => {
+  alt.setRmlControlsActive(false);
+  alt.toggleRmlDebugger(false);
+  document.destroy();
+});
+
 // Container we render to
 export const container = document.getElementByID("container")!;
 

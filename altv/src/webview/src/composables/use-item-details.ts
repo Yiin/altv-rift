@@ -1,6 +1,6 @@
 import { computed, type ComputedRef, ref, type Ref, unref } from "vue";
 import { getItemDescription, getItemName, type Item } from "@shared/modules/items";
-import { asset } from "@/utils/asset";
+import { asset } from "@/lib/utils";
 
 export const useItemDetails = (itemRef: Item | Ref<Item> | ComputedRef<Item>) => {
   const item = ref(itemRef);

@@ -12,7 +12,7 @@ import {
   getRandomOverlayItemValue,
   headOverlays,
 } from "@shared/modules/character/appearance-data";
-import { wrap } from "@/utils/wrap";
+import { wrap } from "@/lib/utils";
 import { useCreateCharacter } from "../../store/create-character.store";
 import SlideOption from "../../components/SlideOption.vue";
 import SliderSelection from "../../components/SliderSelection.vue";

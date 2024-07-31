@@ -3,7 +3,7 @@ import { computed } from "vue";
 import { getItemDescription, getItemName, type Item } from "@shared/modules/items";
 import type { InventoryItem } from "@shared/interfaces";
 import { useQuantity } from "@/composables/use-quantity";
-import { getItemGradeTextColor, getItemImage } from "@/utils/items";
+import { getItemGradeTextColor, getItemImage } from "@/lib/utils";
 import ShopItemIcon from "./ShopItemIcon.vue";
 import { canBuy } from "./shop.utils";
 

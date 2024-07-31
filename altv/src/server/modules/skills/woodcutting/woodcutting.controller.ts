@@ -1,9 +1,5 @@
-import fs from "fs";
-import path from "path";
 import alt from "@altv/server";
 import { minutesToMilliseconds } from "date-fns";
-import * as trees from "@shared/modules/woodcutting/trees";
-import IGNORED_TREES from "@shared/modules/woodcutting/trees-to-ignore.json";
 import { ServerCall } from "@shared/calls/server";
 import { getLevel } from "@shared/modules/experience/experience-table";
 import { createItem } from "@shared/modules/items";
@@ -19,44 +15,6 @@ import {
   canPlayerHitTheTree,
   refillTree,
 } from "./woodcutting.api";
-
-alt.Events.onPlayer("ignoretree", (player, treeId) => {
-  const virtualTree = alt.VirtualEntity.getByID(treeId);
-
-  if (!virtualTree) {
-    return;
-  }
-
-  const treeType = virtualTree.streamSyncedMeta.treeType!;
-
-  const closestMatch = (trees as Record<string, alt.IVector3[]>)[treeType].find((match) => {
-    const position = {
-      x: match.x,
-      y: match.y,
-      z: match.z + 1.8,
-    };
-
-    const dist = new alt.Vector3(position).distanceTo(virtualTree.pos);
-
-    return dist < 1;
-  });
-
-  if (closestMatch) {
-    const position = {
-      x: closestMatch.x,
-      y: closestMatch.y,
-      z: closestMatch.z,
-    };
-
-    IGNORED_TREES.push({ pos: position, type: treeType });
-
-    // save to file as well
-    fs.writeFileSync(
-      path.join(__dirname, "../../src/shared/modules/woodcutting/trees-to-ignore.json"),
-      JSON.stringify(IGNORED_TREES, null, 2),
-    );
-  }
-});
 
 rpc.registerClient(ServerCall.FromClient.BEGIN_TREE_HIT, (player, virtualTreeId) => {
   needsToBeInGame(player);

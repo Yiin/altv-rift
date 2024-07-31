@@ -17,6 +17,8 @@ export const FromClient = {
   OPEN_STORAGE: "OPEN_STORAGE",
   REGISTER_KEY_PRESS: "REGISTER_KEY_PRESS",
   USE_QUICK_SLOT: "USE_QUICK_SLOT",
+  BEGIN_ORE_HIT: "BEGIN_ORE_HIT",
+  ORE_HIT: "ORE_HIT",
 } as const;
 
 export interface CallFromClient {
@@ -37,6 +39,8 @@ export interface CallFromClient {
   [FromClient.OPEN_STORAGE]: (storageId: number) => boolean;
   [FromClient.REGISTER_KEY_PRESS]: (key: alt.Enums.KeyCode) => void;
   [FromClient.USE_QUICK_SLOT]: (slot: EquipmentSlot) => boolean;
+  [FromClient.BEGIN_ORE_HIT]: (virtualOreId: number) => number;
+  [FromClient.ORE_HIT]: (virtualOreId: number) => number;
 }
 
 export const FromClientValidation = {
@@ -75,6 +79,14 @@ export const FromClientValidation = {
   [FromClient.USE_QUICK_SLOT]: {
     args: [schema.equipmentSlot],
     returns: z.boolean(),
+  },
+  [FromClient.BEGIN_ORE_HIT]: {
+    args: [z.number()],
+    returns: z.number(),
+  },
+  [FromClient.ORE_HIT]: {
+    args: [z.number()],
+    returns: z.number(),
   },
 } satisfies Record<
   keyof typeof FromClient,

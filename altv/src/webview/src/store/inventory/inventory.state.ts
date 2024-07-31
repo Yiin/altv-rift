@@ -153,6 +153,11 @@ const slottedEquipment = computed(() => {
     backpack: null,
     shoes: null,
     phone: null,
+    quick1: null,
+    quick2: null,
+    quick3: null,
+    quick4: null,
+    quick5: null,
   };
 
   for (const item of equipmentItems.value) {

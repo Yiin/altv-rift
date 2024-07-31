@@ -21,6 +21,7 @@ import { rollOption } from "@shared/utility/random";
 import { LootTable } from "../types";
 
 export const CAYO_MAIN_DOCK_LOOT: LootTable = {
+  key: "cayo-main-dock-loot",
   score: 1,
   getItemsAmount() {
     return _.random(4, 6);

@@ -1,4 +1,4 @@
-import { GlovesItemKey, Item, registerItems } from "@shared/modules/items";
+import { GlovesItemKey, Item, registerItems, gloves } from "@shared/modules/items";
 import { TopItemKey } from "./top.keys";
 const TOP_ITEMS: Record<string, TopItemInfo> = (await import("./top.json")).default as any;
 
@@ -18,12 +18,18 @@ export type TopItemInfo = {
   textureId: number;
   name: string;
   price: number;
-  torsos: Partial<GlovesItemKey[]> | null;
-  gloves: string[] | null;
+  torsos: Partial<GlovesItemKey[]> | null; // 0-16
+  // gloves: string[] | null; // all the other torsos that have gloves on hands
   restrictionTags: string[] | null;
 };
 
-export const tops = registerItems(Object.values(TOP_ITEMS));
+export const tops = registerItems(Object.values(TOP_ITEMS).map(top => ({
+  ...top,
+  // for context, torsos are gloves
+  // we get glove drawableIds from top.torsos array, but
+  // we need glove keys instead:
+  torsos: [...gloves.values()].filter(({ drawableId }) => top.torsos?.includes(drawableId)).map(({ key }) => key) ?? null,
+})));
 
 /**
  * Type guards for tops

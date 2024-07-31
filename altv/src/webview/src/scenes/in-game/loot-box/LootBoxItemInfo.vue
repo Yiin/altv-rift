@@ -12,7 +12,7 @@ import {
   isFemaleClothing,
 } from "@shared/modules/items";
 import { useItemDetails } from "@/composables/use-item-details";
-import { getRandomDescription } from "@/utils/items";
+import { getRandomDescription } from "@/lib/utils";
 import { useEventListener } from "@/composables/use-event-listener";
 
 const props = defineProps<{

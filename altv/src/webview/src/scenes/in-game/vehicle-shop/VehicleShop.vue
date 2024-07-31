@@ -4,7 +4,7 @@ import Icon from "@/components/Icon/Icon.vue";
 import Donut from "@/components/Donut.vue";
 import DarkBackground from "@/components/DarkBackground.vue";
 import BackButtons from "@/components/buttons/BackButtons.vue";
-import { asset } from "@/utils/asset";
+import { asset } from "@/lib/utils";
 
 const vehshop = useVehshop();
 

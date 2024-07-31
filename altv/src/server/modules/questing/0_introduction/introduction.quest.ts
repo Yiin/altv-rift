@@ -3,13 +3,11 @@ import { Quests } from "@shared/modules/quests";
 import {
   Consumable,
   FishingBait,
-  FishingRod,
   FoodIngredient,
-  Hatchet,
   ItemGrade,
   Metal,
   Ore,
-  Pickaxe,
+  Tool,
   TreeLogs,
   createItem,
 } from "@shared/modules/items";
@@ -122,7 +120,7 @@ processQuestFact.hook((player, questFact) => {
     // MARK: Woodcutting start
     case Quests.Introduction.Facts.STARTED_WOODCUTTING: {
       if (player.isNearPed(PedKey.WOODCUTTING_TUTOR)) {
-        player.addItem(createItem(Hatchet.HATCHET));
+        player.addItem(createItem(Tool.HATCHET));
         return true;
       } else {
         reportAbuse(player, questFact);
@@ -149,7 +147,7 @@ processQuestFact.hook((player, questFact) => {
     // MARK: Fishing start
     case Quests.Introduction.Facts.STARTED_FISHING: {
       if (player.isNearPed(PedKey.FISHING_TUTOR)) {
-        player.addItem(createItem(FishingRod.FISHING_ROD, { grade: ItemGrade.COMMON }));
+        player.addItem(createItem(Tool.FISHING_ROD, { grade: ItemGrade.COMMON }));
         player.addItem(createItem(FishingBait.WORMS, { amount: 100 }));
         return true;
       } else {
@@ -177,7 +175,7 @@ processQuestFact.hook((player, questFact) => {
     // MARK: Mining start
     case Quests.Introduction.Facts.STARTED_MINING: {
       if (player.isNearPed(PedKey.MINING_TUTOR)) {
-        player.addItem(createItem(Pickaxe.PICKAXE, { grade: ItemGrade.COMMON }));
+        player.addItem(createItem(Tool.PICKAXE, { grade: ItemGrade.COMMON }));
         return true;
       }
     }

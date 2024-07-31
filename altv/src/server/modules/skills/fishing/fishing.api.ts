@@ -19,7 +19,9 @@ import { sendChatMessage } from "@/modules/chat";
  * Start fishing action for the player.
  */
 export function startFishing(player: InGamePlayer): void {
-  if (!player.getEquipedItemInSlot(EquipmentSlot.Tool)) {
+  const equipedItem = player.getEquipedItemInSlot(EquipmentSlot.Weapon);
+
+  if (!equipedItem || !isItemFishingRod(equipedItem)) {
     const bestFishingRod = player.character.inventory.items.reduce(
       (best, next) => {
         if (best && isItemFishingRod(next.item)) {
@@ -51,7 +53,7 @@ export function startFishing(player: InGamePlayer): void {
     }
   }
 
-  const fishingRod = player.getEquipedItemInSlot(EquipmentSlot.Tool);
+  const fishingRod = player.getEquipedItemInSlot(EquipmentSlot.Weapon);
 
   if (!fishingRod || !isItemFishingRod(fishingRod)) {
     sendChatMessage(player, `You dont have a fishing rod!`);
@@ -82,6 +84,13 @@ export function startFishing(player: InGamePlayer): void {
 
   player.gameState.flags.add(PlayerFlags.IsFishing);
   player.playScenario("WORLD_HUMAN_STAND_FISHING");
+
+  if (player.objectInHand) {
+    const obj = alt.Object.getByID(player.objectInHand);
+    if (obj) {
+      obj.visible = false;
+    }
+  }
 }
 
 /**
@@ -93,6 +102,13 @@ export function stopFishing(player: InGamePlayer): void {
   player.clearTasks();
   //
   player.applyEquipment();
+
+  if (player.objectInHand) {
+    const obj = alt.Object.getByID(player.objectInHand);
+    if (obj) {
+      obj.visible = true;
+    }
+  }
 }
 
 /**

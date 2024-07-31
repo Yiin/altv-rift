@@ -47,7 +47,7 @@ alt.Player.prototype.unequipItem = function (equipmentSlot, to) {
 
   this.character.equipment[slot] = null;
 
-  emit(ServerEvents.FromServer.ITEM_UNEQUIP, this, equipmentSlot);
+  emit(ServerEvents.FromServer.ITEM_UNEQUIP, this, equipmentSlot, item);
   return true;
 };
 
@@ -61,6 +61,6 @@ alt.Player.prototype.removeEquipedItem = function (equipmentSlot) {
 
   this.character.equipment[slot] = null;
 
-  emit(ServerEvents.FromServer.ITEM_UNEQUIP, this, equipmentSlot);
+  emit(ServerEvents.FromServer.ITEM_UNEQUIP, this, equipmentSlot, item);
   return item;
 };

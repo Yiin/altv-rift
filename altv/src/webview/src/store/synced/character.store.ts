@@ -1,4 +1,4 @@
-import { type Store, type StoreDefinition } from "pinia";
+import { type StoreDefinition } from "pinia";
 import { ref } from "vue";
 import { type Character, EquipmentSlot } from "@shared/interfaces";
 import { Ammo, ItemGrade, UnlearnedBlueprint, createItem } from "@shared/modules/items";
@@ -29,9 +29,9 @@ export const useCharacter = () =>
             amount: 1000,
             grade: ItemGrade.RARE,
           }),
-          [EquipmentSlot.Weapon]: createItem("pistol" as any, {
-            grade: ItemGrade.LIMITED,
-          }),
+          // [EquipmentSlot.Weapon]: createItem("pistol" as any, {
+          //   grade: ItemGrade.LIMITED,
+          // }),
         },
         inventory: createInventory({
           size: 30,

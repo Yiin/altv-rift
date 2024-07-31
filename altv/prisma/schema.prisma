@@ -81,12 +81,44 @@ model AirDrop {
   lastDrop          DateTime?
 }
 
-model RandomLoot {
+model WorldLoot {
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
   label      String
   pos        Position
   lootTable  String
   lastRefill DateTime?
+}
+
+model WorldEvent {
+  id                String             @id @default(auto()) @map("_id") @db.ObjectId
+  label             String
+  rewards           WorldEventReward[]
+  radius            Float
+  restartAt         DateTime?
+  cooldownInSeconds Int
+  enemies           EnemyPed[]
+}
+
+type WorldEventReward {
+  label     String
+  lootTable String
+  pos       Position
+}
+
+model EnemyPed {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  worldEventId String?     @db.ObjectId
+  worldEvent   WorldEvent? @relation(fields: [worldEventId], references: [id])
+
+  spawnPositions Position[]
+  model          String
+  weapon         String
+  enemyGroup     String
+
+  health           Int
+  damageMultiplier Float
+  bossType         Int?
 }
 
 model DroppedItem {

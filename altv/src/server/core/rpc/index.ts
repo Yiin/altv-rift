@@ -149,7 +149,7 @@ alt.Events.onPlayer(CALL_WEBVIEW_FROM_SERVER_RESPONSE, (_, response) => {
   if (handler.name in WebviewCall.FromServerValidation) {
     const schema =
       WebviewCall.FromServerValidation[
-        handler.name as keyof typeof WebviewCall.FromServerValidation
+      handler.name as keyof typeof WebviewCall.FromServerValidation
       ];
 
     if ("returns" in schema) {
@@ -181,7 +181,6 @@ const registerWebview = <T extends FromWebviewKey, R extends ReturnType<CallFrom
   if (webviewProcedures.has(name)) {
     throw new Error(`registerWebview: Procedure ${name} already exists`);
   }
-  alt.log(`registerWebview: Procedure ${name} successfully registered`);
   webviewProcedures.set(name, callback);
 };
 

@@ -1,4 +1,4 @@
-import { TopItemInfo } from "./top/top.items";
+import { type TopItemInfo } from "./top/top.items";
 import { getItemInfoByKey } from "../../items-registry";
 
 export function getTorsoForTop(

@@ -2,7 +2,7 @@
 export * from "./air-drops";
 export * from "./dropped-items";
 export * from "./inventory.controller";
-export * from "./keybinds";
+export * from "./quick-slot.keybinds";
 // export * from "./player-ped-preview";
 export * from "./sync";
 // @endindex

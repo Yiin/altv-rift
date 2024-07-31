@@ -8,6 +8,7 @@ import {
   getWeaponAmmoEquipmentSlot,
   isWeaponWithClip,
   getWeaponDamage,
+  isItemWeapon,
 } from "@shared/modules/items";
 import { PED_HEALTH_ZERO, PED_HEALTH_ZERO_DEFAULT } from "@shared/modules/ped";
 import { isInGame } from "@/core/utility/assertions";
@@ -33,68 +34,60 @@ alt.Events.onWeaponDamage(
 
     const equipedWeapon = source.character.equipment.weapon;
 
-    if (!equipedWeapon) {
+    if (equipedWeapon && isItemWeapon(equipedWeapon) && getItemInfoByKey(equipedWeapon.key).hash !== weaponHash) {
       return cancel();
     }
 
-    const weaponInfo = getItemInfoByKey(equipedWeapon.key);
+    const ammo = equipedWeapon && isItemFirearmWeapon(equipedWeapon)
+      ? isWeaponWithClip(equipedWeapon.key)
+        ? equipedWeapon.clip
+        : source.getEquipedItemInSlot(getWeaponAmmoEquipmentSlot(equipedWeapon.key))
+      : false;
 
-    if (weaponInfo.hash !== weaponHash) {
+    if (!ammo && ammo !== false) {
       return cancel();
     }
 
-    if (!isItemFirearmWeapon(equipedWeapon)) {
-      return cancel();
-    }
-
-    const ammo = isWeaponWithClip(equipedWeapon.key)
-      ? equipedWeapon.clip
-      : source.getEquipedItemInSlot(getWeaponAmmoEquipmentSlot(equipedWeapon.key));
-
-    if (!ammo) {
-      return cancel();
-    }
-
-    const weaponDamage = getWeaponDamage(equipedWeapon.key, equipedWeapon.grade);
-    const ammoDamage = weaponDamage * getAmmoDamageMultiplier(ammo.key, ammo.grade) - weaponDamage;
+    const weaponDamage = equipedWeapon && isItemWeapon(equipedWeapon) ? getWeaponDamage(equipedWeapon.key, equipedWeapon.grade) : damage;
+    const ammoDamage = ammo ? weaponDamage * getAmmoDamageMultiplier(ammo.key, ammo.grade) - weaponDamage : 0;
     const bodyPartDamage = weaponDamage * getBodyPartDamageMultiplier(bodyPart) - weaponDamage;
 
     const totalDamage = weaponDamage + ammoDamage + bodyPartDamage;
 
-    if (totalDamage > 0) {
-      if (target instanceof alt.Ped) {
-        const newHealth = Math.max(
-          PED_HEALTH_ZERO,
-          Math.min(target.streamSyncedMeta.maxHealth, target.streamSyncedMeta.health - totalDamage),
-        );
+    if (totalDamage <= 0) {
+      return cancel();
+    }
 
-        target.health = newHealth + PED_HEALTH_ZERO_DEFAULT;
-        target.streamSyncedMeta.health = newHealth;
-      } else {
-        setDamageValue(totalDamage);
-      }
+    if (target instanceof alt.Ped) {
+      const newHealth = Math.max(
+        PED_HEALTH_ZERO,
+        Math.min(target.streamSyncedMeta.maxHealth, target.streamSyncedMeta.health - totalDamage),
+      );
 
-      if (weaponDamage + bodyPartDamage > 0) {
-        source.emit(
-          ClientEvents.FromServer.DISPLAY_DAMAGE_HIT,
-          target.type,
-          target.id,
-          weaponDamage + bodyPartDamage,
-          "health",
-        );
-      }
-
-      if (ammoDamage > 0) {
-        source.emit(
-          ClientEvents.FromServer.DISPLAY_DAMAGE_HIT,
-          target.type,
-          target.id,
-          ammoDamage,
-          "armor",
-        );
-      }
+      target.health = newHealth + PED_HEALTH_ZERO_DEFAULT;
+      target.streamSyncedMeta.health = newHealth;
     } else {
-      cancel();
+      setDamageValue(totalDamage);
+    }
+
+    if (weaponDamage + bodyPartDamage > 0) {
+      source.emit(
+        ClientEvents.FromServer.DISPLAY_DAMAGE_HIT,
+        target.type,
+        target.id,
+        weaponDamage + bodyPartDamage,
+        "health",
+      );
+    }
+
+    if (ammoDamage > 0) {
+      source.emit(
+        ClientEvents.FromServer.DISPLAY_DAMAGE_HIT,
+        target.type,
+        target.id,
+        ammoDamage,
+        "armor",
+      );
     }
   },
 );
