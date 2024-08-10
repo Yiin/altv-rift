@@ -59,14 +59,14 @@ watch(
 <template>
   <Screen v-if="isCharacterStoreAvailable()">
     <template v-if="client.ui.window">
-      <Inventory />
-      <!-- <Inventory v-if="[WindowType.PLAYER_INVENTORY, WindowType.STORAGE].includes(windowType)" />
+      <!-- <Inventory /> -->
+      <Inventory v-if="[WindowType.PLAYER_INVENTORY, WindowType.STORAGE].includes(windowType)" />
       <GenericShop v-else-if="isShopOpen" />
       <LootBox v-else-if="isLootBoxOpen" />
       <VehicleShop v-else-if="isVehicleShopOpen" />
       <Workbench v-else-if="isWorkbenchOpen" />
       <Admin v-else-if="isAdminOpen" />
-      <Builder v-else-if="isBuilderOpen" /> -->
+      <Builder v-else-if="isBuilderOpen" />
     </template>
     <ActionMenu v-else-if="client.ui.elements.has(UIElement.ACTION_MENU)" />
     <template v-else>

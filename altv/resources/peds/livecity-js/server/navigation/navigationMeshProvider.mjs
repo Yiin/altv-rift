@@ -31,7 +31,7 @@ export class CellCoord {
     set y(y) {
         this.y = y
     }
-    
+
     toString() {
         return 'CellCoord[' + this.x + ', ' + this.y + ']'
     }
@@ -149,11 +149,11 @@ class NavigationMeshPolyFootpath {
         this.CellY = footPahArray[3]
         this.Vertices = footPahArray[4]
     }
-    
+
     get Index() {
         return this.Index
     }
-    
+
     set Index(i) {
         this.Index = i
     }
@@ -191,7 +191,7 @@ class NavigationMeshPolyFootpath {
     }
 }
 
-export class NavigationMeshProvider  {
+export class NavigationMeshProvider {
     #randomProvider = new RandomProvider()
     FootpathPolygons = new Map()
 
@@ -201,23 +201,23 @@ export class NavigationMeshProvider  {
 
         return a.mul(1.0 - Math.sqrt(r1)).add(b.mul(Math.sqrt(r1) * (1.0 - r2))).add(c.mul(Math.sqrt(r1) * r2))
     }
-    
+
     GetCenterPositionOfTriangle(a, b, c) {
         const x = (a.x + b.x + c.x) / 3
         const y = (a.y + b.y + c.y) / 3
         const z = (a.z + b.z + c.z) / 3
-        
+
         return new alt.Vector3(x, y, z)
     }
-    
-    constructor () {
-        
+
+    constructor() {
+
     }
 
     async loadNavigationMeshProvider() {
-            //ExtractFootpathFromNavMesh();
+        //ExtractFootpathFromNavMesh();
         //	return;
-        const data = await readFile('./resources/livecity-js/server/data/footpath.msgpack')
+        const data = await readFile('/altv/resources/peds/livecity-js/server/data/footpath.msgpack')
 
         const allFootpaths = await decode(data)
 

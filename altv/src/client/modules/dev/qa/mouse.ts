@@ -1,5 +1,6 @@
 import alt from "@altv/client";
 import ControlsController from "./controls";
+import { isTyping } from "@/core/user-interface/event-helpers";
 
 export default class MouseController {
   public static instance = new MouseController();
@@ -15,6 +16,10 @@ export default class MouseController {
   }
 
   private onKeyDown = ({ key }: alt.Events.KeyUpDownEventParameters) => {
+    if (isTyping()) {
+      return;
+    }
+
     if (key !== 113) return;
     this.toggleMouse();
   };

@@ -92,7 +92,7 @@ Questing:
     ☐ Tutorial quest @started
 
 Skills:
-  ☐ Woodcutting
+  ✔ Woodcutting @done
     ✔ Design @done
     ✔ UI @done
     ✔ Most of the trees on the map are available for cutting. @done
@@ -100,8 +100,8 @@ Skills:
     ✔ Woodcutting skill is used to determine the amount of wood collected from a tree. @done
     ✔ Woodcutting speed depends on woodcutting skill level @done
     ✔ Hatchet item is required for woodcutting @done
-    ☐ Hatchet item needs to appear in hand while woodcutting animation is playing
-  ☐ Fishing
+    ✔ Hatchet item needs to appear in hand while woodcutting animation is playing @done
+  ✔ Fishing @done
     ✔ Design @done
     ✔ UI @done
     ✔ Most of the water on the map is available for fishing. @done
@@ -110,7 +110,7 @@ Skills:
     ✔ Fishing speed depends on fishing skill level @done
     ✔ Fishing rod item is required for fishing. @done
     ✔ Fishing rod item needs to appear in hand while fishing animation is playing @done
-    ☐ Fishing rod needs to disappear from hand when fishing animation is finished
+    ✔ Fishing rod needs to disappear from hand when fishing animation is finished @done
   ✘ Digging (Mining) @cancelled(24-06-13 10:37)
     ☐ Design
     ☐ UI
@@ -122,21 +122,22 @@ Skills:
     ☐ Shovel item needs to appear in hand while digging animation is playing
     ☐ Shovel needs to disappear from hand when digging animation is finished
   ☐ Mining
-    ☐ Design
-    ☐ UI
+    ✔ Design @done
+    ✔ UI @done
     ☐ Define mining spots
-    ☐ Mining skill is increased by mining
-    ☐ Mining skill is used to determine the amount of ore collected from a mining spot
-    ☐ Mining speed depends on mining skill level
+    ✔ Mining skill is increased by mining @done
+    ✔ Mining skill is used to determine the amount of ore collected from a mining spot @done
+    ✔ Mining speed depends on mining skill level @done
     ✔ Pickaxe item is required for mining @done
-    ☐ Pickaxe item needs to appear in hand while mining animation is playing
-    ☐ Pickaxe needs to disappear from hand when mining animation is finished
+    ✔ Pickaxe item needs to appear in hand while mining animation is playing @done
+    ✔ Pickaxe needs to disappear from hand when mining animation is finished @done
   ☐ Crafting
     ✔ Design @done
     ✔ UI @done
     ✔ Blueprint definitions @done
     ✔ Crafting skill is increased by crafting @done
     ✘ Crafting skill increases the chance of crafting success @cancelled
+    ☐ Crafting stations
   ☐ Cooking
     ☐ Design
     ☐ UI
@@ -148,6 +149,7 @@ Skills:
       ☐ Meals
       ☐ Fruits
       ☐ Vegetables
+    ☐ Cooking stations
 
 Inventory:
   ✔ Personal inventory system @done
@@ -179,9 +181,9 @@ Shops:
     ☐ Clothing store
       ✔ Design @done
       ☐ UI
-    ☐ General store
+    ✔ General store @done
       ✔ Design @done
-      ☐ UI
+      ✔ UI @done
     ☐ Vehicle store
       ✔ Design @done
       ☐ UI

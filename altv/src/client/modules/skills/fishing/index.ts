@@ -9,6 +9,7 @@ import { registerActions } from "@/core/user-interface/elements";
 import { rpc } from "@/core/rpc";
 import { startFishingTask, stopFishingTask } from "./utils/fishing-task";
 import { trackCanFishFlag } from "./utils/track-can-fish-flag";
+import { isTyping } from "@/core/user-interface/event-helpers";
 
 whileInGame(trackCanFishFlag);
 
@@ -50,6 +51,10 @@ registerActions(() => {
 });
 
 alt.Events.onKeyDown(({ key }) => {
+  if (isTyping()) {
+    return;
+  }
+
   if (gameState.fishingProgress?.gameType === FishingGameType.TimeClick) {
     if (key === alt.Enums.KeyCode.MOUSE_LEFT) {
       rpc.callServer(ServerCall.FromClient.REGISTER_KEY_PRESS, key);

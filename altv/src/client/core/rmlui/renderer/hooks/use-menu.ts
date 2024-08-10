@@ -5,7 +5,7 @@ import { StorageType } from "@shared/store/game-state.store";
 import { Control, ControlType } from "@/core/constants/controls";
 import { isInConversation } from "@/modules/questing/conversation";
 import { isAirDropInPosition } from "@/modules/inventory";
-import { everyTickWhile } from "@/core/user-interface/event-helpers";
+import { everyTickWhile, isTyping } from "@/core/user-interface/event-helpers";
 import { getCurrentNode, hasCurrentNode } from "../internals/current-node";
 import { AnchorEntity } from "../types";
 import { getFocusedEntity } from "./focused-entity";
@@ -189,6 +189,10 @@ alt.Timers.everyTick(() => {
 });
 
 alt.Events.onKeyDown(async ({ key }) => {
+  if (isTyping()) {
+    return;
+  }
+
   if (key === alt.Enums.KeyCode.E) {
     if (!currentEntity) {
       return;

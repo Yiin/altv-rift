@@ -5,6 +5,7 @@ import { closeWindow, isWindowOpen, openWindow, useWebview } from "../user-inter
 import { reactive, watch } from "vue";
 import { ClientEvents } from "@shared/events/client";
 import { loadSceneAtCoords } from "../utility/scene";
+import { isTyping } from "../user-interface/event-helpers";
 
 let cam: number | null = null;
 
@@ -119,6 +120,10 @@ alt.Timers.everyTick(() => {
     return;
   }
 
+  if (isTyping()) {
+    return;
+  }
+
   const delta = lastTick ? Date.now() - lastTick : 16;
 
   if (alt.getKeyState(alt.Enums.KeyCode.Q).isDown) {
@@ -175,6 +180,10 @@ useWebview((webview) => {
 });
 
 alt.Events.onKeyDown(({ key }) => {
+  if (isTyping()) {
+    return;
+  }
+
   if (key === alt.Enums.KeyCode["'"]) {
     if (isBuilderEnabled()) {
       disableBuilder();

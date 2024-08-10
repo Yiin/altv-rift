@@ -1,5 +1,6 @@
 data/*.bin
 modules/*
+custom-modules/*
 resources/main/*
 altv-crash-handler.exe
 altv-server.exe

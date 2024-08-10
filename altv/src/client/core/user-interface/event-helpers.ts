@@ -20,6 +20,10 @@ const activeBlurs = new Set<ScreenBlurReason>();
 const disabledGameControls = new Set<GameControlReason>();
 const registeredKeyDownKeys = new Set<alt.Enums.KeyCode>();
 
+export function isTyping() {
+  return focusedInputs.size > 0;
+}
+
 export function disableGameControls(reason: GameControlReason) {
   disabledGameControls.add(reason);
   alt.setGameControlsActive(false);
@@ -86,7 +90,7 @@ export function onKeyDown<T extends alt.Enums.KeyCode>(key: T, callback: (key: T
   registeredKeyDownKeys?.add(key);
 
   const handler = alt.Events.onKeyDown(({ key: keyPressed }) => {
-    if (focusedInputs.size > 0) {
+    if (isTyping()) {
       return;
     }
     if (alt.isConsoleOpen()) {

@@ -1,9 +1,6 @@
 import fs from "fs";
 import path from "path";
 
-// if (process.env.ALL === "true" || process.env.TORSOS === "true") {
-//   processTorsos();
-// }
 if (process.env.ALL === "true" || process.env.CLOTHES === "true") {
   processClothes();
 }
@@ -13,27 +10,6 @@ if (process.env.ALL === "true" || process.env.WEAPONS === "true") {
 if (process.env.ALL === "true" || process.env.TREES === "true") {
   processTrees();
 }
-
-// async function processTorsos() {
-//   const [femaleResponse, maleResponse] = await Promise.all([
-//     fetch("https://raw.githubusercontent.com/Yiin/gtav-top-organizer/main/tops/female.json"),
-//     fetch("https://raw.githubusercontent.com/Yiin/gtav-top-organizer/main/tops/male.json"),
-//   ]);
-
-//   const [female, male] = await Promise.all<({ category: string; dlc: string; drawable: number; torsos: number[] })[]>(
-//     [
-//       femaleResponse.json(),
-//       maleResponse.json()
-//     ]
-//   );
-
-//   const processedTorsos = {
-//     female: female.map(({ dlc, drawable, torsos }) => ({ dlc, drawable, torsos })),
-//     male: male.map(({ dlc, drawable, torsos }) => ({ dlc, drawable, torsos })),
-//   };
-
-//   fs.writeFileSync(`src/shared/modules/items/registry/clothing/top-torsos.json`, JSON.stringify(processedTorsos, null, 2));
-// }
 
 async function processClothes() {
   const componentMap: { [key: string]: string } = {
@@ -77,22 +53,31 @@ async function processClothes() {
   };
 
   // Fetch and process torsos data
-  const [femaleResponse, maleResponse] = await Promise.all([
+  const [femaleTopsResponse, maleTopsResponse, femaleTorsosResponse, maleTorsosResponse] = await Promise.all([
     fetch("https://raw.githubusercontent.com/Yiin/gtav-top-organizer/main/tops/female.json"),
     fetch("https://raw.githubusercontent.com/Yiin/gtav-top-organizer/main/tops/male.json"),
+    fetch("https://raw.githubusercontent.com/Yiin/gtav-top-organizer/main/torsos/female.json"),
+    fetch("https://raw.githubusercontent.com/Yiin/gtav-top-organizer/main/torsos/male.json"),
   ]);
 
-  const [female, male] = await Promise.all<({ category: string; dlc: string; drawable: number; torsos: number[] })[]>(
+  /**
+   * Gloves are also torsos bus with gloves on hands.
+   * Torso drawable 0-16 are default torso with bare hands,
+   * while drawable other than defaults have some kind of gloves on hands.
+   * Each torso with glove is fit to match some torso without gloves.
+   * So we need to map all torsos without gloves and assign them matching torsos with gloves.
+   */
+  const [femaleTops, maleTops] = await Promise.all<({ category: string; dlc: string; drawable: number; torsos: number[] })[]>(
     [
-      femaleResponse.json(),
-      maleResponse.json()
+      femaleTopsResponse.json(),
+      maleTopsResponse.json(),
     ]
   );
 
-  const processedTorsos = {
-    female: female.map(({ dlc, drawable, torsos }) => ({ dlc, drawable, torsos })),
-    male: male.map(({ dlc, drawable, torsos }) => ({ dlc, drawable, torsos })),
-  };
+  const [femaleTorsos, maleTorsos] = await Promise.all<{ [torsoDrawable: number]: { dlc: string; drawable: number } }>([
+    femaleTorsosResponse.json(),
+    maleTorsosResponse.json(),
+  ])
 
   for (const pedVariation of data) {
     for (const component of pedVariation.ComponentVariations) {
@@ -104,10 +89,22 @@ async function processClothes() {
         }
 
         // Use processedTorsos data for tops
-        const gender = pedVariation.PedName === "mp_m_freemode_01" ? 'male' : 'female';
-        const torsos = componentType === 'top'
-          && processedTorsos[gender].find(t => t.dlc === pedVariation.DlcCollectionName && t.drawable === component.DrawableId)?.torsos
-          || null;
+        const { torsos, gloves } = (() => {
+          if (componentType !== 'top') {
+            return { torsos: null, gloves: null };
+          }
+
+          const isMale = pedVariation.PedName.startsWith("mp_m");
+
+          const genderTops = (isMale ? maleTops : femaleTops);
+          const torsos = genderTops
+            .find(t => t.dlc === pedVariation.DlcCollectionName && t.drawable === component.DrawableId)?.torsos
+            || null;
+
+          const genderGloves = (isMale ? maleTorsos : femaleTorsos);
+          const gloves = torsos && torsos.flatMap(torso => genderGloves[torso]);
+          return { torsos, gloves };
+        })();
 
         outputData[componentType][component.NameHash] = {
           ped: pedVariation.PedName,
@@ -119,8 +116,8 @@ async function processClothes() {
           textureId: component.TextureId,
           name: component.TranslatedLabel?.English,
           price: component.Price,
-          torsos,
-          restrictionTags: component.RestrictionTags
+          restrictionTags: component.RestrictionTags,
+          ...(componentType === 'top' ? { torsos, gloves } : {}),
         };
 
         let keyName = component.TranslatedLabel?.English

@@ -11,6 +11,7 @@ import {
 import { rpc } from "@/core/rpc";
 import { useCharacter } from "@/core/store/character.store";
 import { whileInGame } from "@/core/game-state-hooks/in-game.state";
+import { isTyping } from "@/core/user-interface/event-helpers";
 
 const player = alt.Player.local;
 
@@ -122,6 +123,10 @@ whileInGame(() => {
    * Reloads the weapon when the player presses the reload key.
    */
   function handleManualReload({ key }: alt.Events.KeyUpDownEventParameters) {
+    if (isTyping()) {
+      return;
+    }
+
     if (key === alt.Enums.KeyCode.MOUSE_RIGHT || key === alt.Enums.KeyCode.MOUSE_LEFT) {
       syncAmmo();
     }

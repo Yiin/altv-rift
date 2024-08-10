@@ -368,7 +368,7 @@ class PopScheduleEntry {
     PedGroupProbsSorted
     VehGroupProbs
     VehGroupProbsSorted
-    
+
     constructor() {
     }
 
@@ -483,14 +483,14 @@ class PopScheduleEntry {
     set VehGroupProbsSorted(vgps) {
         this.VehGroupProbsSorted = vgps
     }
-    
+
 }
 
 class PopSchedule {
     Entries = []
-    
+
     constructor() {
-        for(let i = 0; i < 12; i++) {
+        for (let i = 0; i < 12; i++) {
             this.Entries.push(new PopScheduleEntry())
         }
     }
@@ -502,7 +502,7 @@ class CarGenerator {
     OrientY
     Model
     PopGroup
-    
+
     constructor(Position, Model, PopGroup, OrientX, OrientY) {
         this.Position = Position
         this.Model = Model
@@ -553,451 +553,497 @@ class CarGenerator {
 }
 
 export class LiveCityDataService {
-        streetNodes
-        vehicleNodes = new Map()
-        #vehicleNodesGrid = new Map()
+    streetNodes
+    vehicleNodes = new Map()
+    #vehicleNodesGrid = new Map()
 
-        #waterNodes = new Map()
+    #waterNodes = new Map()
 
-        #allowedScenarios 
-        #scenarioMap = new Map()
+    #allowedScenarios
+    #scenarioMap = new Map()
 
-        #carGenerators = new Map()
-        #carGeneratorsGrid = new Map()
+    #carGenerators = new Map()
+    #carGeneratorsGrid = new Map()
 
-        #zones = new Map()
+    #zones = new Map()
 
-        #carModels 
-        #colorlessCars = []
-        #carColorsNum 
+    #carModels
+    #colorlessCars = []
+    #carColorsNum
 
-        #carGenProhibitedModels = new Map()
-        #ambientCarProhibitedModels = new Map()
+    #carGenProhibitedModels = new Map()
+    #ambientCarProhibitedModels = new Map()
 
-        #randomProvider
-        #navigationMeshProvider
+    #randomProvider
+    #navigationMeshProvider
 
-        PedComponentVariations
+    PedComponentVariations
 
-        PedGroups = new Map()
-        VehGroups = new Map()
-        PedModelGroups = new Map()
-        ZoneSchedules = new Map()
-        ScenarioPoints = new Map()
+    PedGroups = new Map()
+    VehGroups = new Map()
+    PedModelGroups = new Map()
+    ZoneSchedules = new Map()
+    ScenarioPoints = new Map()
 
-        ClockHoursByPlayer = new Map()
+    ClockHoursByPlayer = new Map()
 
-        #numberPlateChars = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+    #numberPlateChars = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
 
-        statsTest = []
-        statsTest2 = []
+    statsTest = []
+    statsTest2 = []
 
-        constructor()
-        {
-            if (!globalConfig.EnableNavigationDataLoad) return
+    constructor() {
+        if (!globalConfig.EnableNavigationDataLoad) return
 
-            this.#randomProvider = new RandomProvider
-            this.#navigationMeshProvider = new NavigationMeshProvider
+        this.#randomProvider = new RandomProvider
+        this.#navigationMeshProvider = new NavigationMeshProvider
 
-            
-        }
-    
-    async loadLiveCityDataService () {
-            if (!globalConfig.EnableNavigationDataLoad) return
-        
-            await this.#navigationMeshProvider.loadNavigationMeshProvider()
-            
-            await this.#ParseZones()
-            await this.#LoadPopCycles()
-            await this.#LoadPopGroups()
-            await this.#LoadCarGenerators()
-            this.#LoadCarGenProhibitedModels()
-            this.#LoadCarData()
-            this.#LoadScenarioPoints()
-            this.#LoadStreetNodes()
-            this.#LoadPedComponentVariations()
-        }
 
-        #LoadStreetNodes() {
-            this.streetNodes = StreetNodes
-            for (let i = 0; i < this.streetNodes.length; i++) {
-                const streetNode = this.streetNodes[i]
-                if (!streetNode.IsPedCrossway && !streetNode.IsOnWater && streetNode.StreetName !== "0" && !streetNode.IsBackroad) {
-                    this.vehicleNodes.set(streetNode.Id, streetNode)
-                    const x = Math.floor(streetNode.Position.X / 100)
-                    const y = Math.floor(streetNode.Position.Y / 100)
-                    const key = new CellCoord(x, y).toString()
-                    if (!this.#vehicleNodesGrid.has(key)) {
-                        this.#vehicleNodesGrid.set(key, [])
-                    }
-                    this.#vehicleNodesGrid.get(key).push(streetNode)
-                } else if (streetNode.IsOnWater) {
-                    this.#waterNodes.set(streetNode.Id, streetNode)
+    }
+
+    async loadLiveCityDataService() {
+        if (!globalConfig.EnableNavigationDataLoad) return
+
+        await this.#navigationMeshProvider.loadNavigationMeshProvider()
+
+        await this.#ParseZones()
+        await this.#LoadPopCycles()
+        await this.#LoadPopGroups()
+        await this.#LoadCarGenerators()
+        this.#LoadCarGenProhibitedModels()
+        this.#LoadCarData()
+        this.#LoadScenarioPoints()
+        this.#LoadStreetNodes()
+        this.#LoadPedComponentVariations()
+    }
+
+    #LoadStreetNodes() {
+        this.streetNodes = StreetNodes
+        for (let i = 0; i < this.streetNodes.length; i++) {
+            const streetNode = this.streetNodes[i]
+            if (!streetNode.IsPedCrossway && !streetNode.IsOnWater && streetNode.StreetName !== "0" && !streetNode.IsBackroad) {
+                this.vehicleNodes.set(streetNode.Id, streetNode)
+                const x = Math.floor(streetNode.Position.X / 100)
+                const y = Math.floor(streetNode.Position.Y / 100)
+                const key = new CellCoord(x, y).toString()
+                if (!this.#vehicleNodesGrid.has(key)) {
+                    this.#vehicleNodesGrid.set(key, [])
                 }
+                this.#vehicleNodesGrid.get(key).push(streetNode)
+            } else if (streetNode.IsOnWater) {
+                this.#waterNodes.set(streetNode.Id, streetNode)
             }
-            
-            alt.log("Successfully loaded dump file ExtendedNodes.json.", this.vehicleNodes.size, this.#vehicleNodesGrid.size, this.#waterNodes.size)
         }
 
-        #LoadPedComponentVariations() {
-            this.PedComponentVariations = PedComponentVariations
-            
-            alt.log("Successfully loaded dump file pedComponentVariations.json.", Object.keys(this.PedComponentVariations).length)
-        }
+        alt.log("Successfully loaded dump file ExtendedNodes.json.", this.vehicleNodes.size, this.#vehicleNodesGrid.size, this.#waterNodes.size)
+    }
 
-        #LoadCarGenProhibitedModels() {
-            const allVehicles = vehicles
-            for (let i = 0; i < allVehicles.length; i++) {
-                const vehicle = allVehicles[i]
-                if (Array.isArray(vehicle.Flags) && vehicle.Flags.includes("FLAG_DONT_SPAWN_IN_CARGEN")) {
-                    this.#carGenProhibitedModels.set(vehicle.Hash, vehicle.Name.toLowerCase())
-                }
+    #LoadPedComponentVariations() {
+        this.PedComponentVariations = PedComponentVariations
 
-                if (Array.isArray(vehicle.Flags) && vehicle.Flags.includes("FLAG_DONT_SPAWN_AS_AMBIENT")) {
-                    this.#ambientCarProhibitedModels.set(vehicle.Hash, vehicle.Name.toLowerCase());
-                }
-            }
-            
-            alt.log("Successfully loaded dump file vehicles.json.", this.#carGenProhibitedModels.size, this.#ambientCarProhibitedModels.size)
-        }
+        alt.log("Successfully loaded dump file pedComponentVariations.json.", Object.keys(this.PedComponentVariations).length)
+    }
 
-        async #LoadCarGenerators() {
-            const data = await readFile('./resources/livecity-js/server/data/LiveCity/CarGenerators.xml')
-
-                const result = await xmlJs.xml2js(data, {compact: true, nativeType: true, ignoreAttributes: true })
-
-                const cargeneratorElements = result.ArrayOfCarGenerator.CarGenerator
-
-                for (let i = 0; i < cargeneratorElements.length; i++) {
-                    const cElement = cargeneratorElements[i]
-                    this.#carGenerators.set(i, new CarGenerator(
-                        new alt.Vector3(cElement.Position.X._text, cElement.Position.Y._text, cElement.Position.Z._text),
-                        cElement.Model._text,
-                        cElement.PopGroup._text,
-                        cElement.OrientX._text,
-                        cElement.OrientY._text
-                        ))
-                }
-
-                this.#carGenerators.forEach((carGenerator, key) => {
-                    const x = Math.floor(carGenerator.Position.x / 100)
-                    const y = Math.floor(carGenerator.Position.y / 100)
-                    const k = new CellCoord(x, y).toString()
-
-                    if (!this.#carGeneratorsGrid.has(k)) {
-                        this.#carGeneratorsGrid.set(k, [])
-                    }
-                    this.#carGeneratorsGrid.get(k).push(carGenerator)
-                })
-                
-            alt.log("Successfully loaded dump file CarGenerators.xml.", this.#carGenerators.size, this.#carGeneratorsGrid.size)
-        }
-
-        GenerateNumberPlate() {
-            let numberplate = ""
-
-            for (let i = 0; i < 8; i++) {
-                numberplate += this.#randomProvider.choice(this.#numberPlateChars);
+    #LoadCarGenProhibitedModels() {
+        const allVehicles = vehicles
+        for (let i = 0; i < allVehicles.length; i++) {
+            const vehicle = allVehicles[i]
+            if (Array.isArray(vehicle.Flags) && vehicle.Flags.includes("FLAG_DONT_SPAWN_IN_CARGEN")) {
+                this.#carGenProhibitedModels.set(vehicle.Hash, vehicle.Name.toLowerCase())
             }
 
-            return numberplate
+            if (Array.isArray(vehicle.Flags) && vehicle.Flags.includes("FLAG_DONT_SPAWN_AS_AMBIENT")) {
+                this.#ambientCarProhibitedModels.set(vehicle.Hash, vehicle.Name.toLowerCase());
+            }
         }
 
-        async #ParseZones() {
-            const zoneBindings = new Map()
-            const data = await readFile('./resources/livecity-js/server/data/LiveCity/ZoneBind.ymt')
-                
-            const result = await xmlJs.xml2js(data, {compact: true, nativeType: true, ignoreAttributes: true })
-            
-            const zonesItems = result.collision_03ba8d5a_9vr968c.zones.Item
-            
-            for (let i = 0; i < zonesItems.length; i++) {
-                const zElement = zonesItems[i]
-                const zoneName = zElement.zoneName._text.toLowerCase()
-                const spName = zElement.spName._text.toLowerCase()
-                const mpName = zElement.mpName._text.toLowerCase()
-                zoneBindings.set(zoneName, [spName, mpName])
-            }
-            
-            alt.log("Successfully loaded dump file ZoneBind.ymt.", zoneBindings.size)
-            
-            const data2 = await readFile('./resources/livecity-js/server/data/LiveCity/Zones.txt')
-    
-            const rl = data2.toString().split('\n')
-            
-            for (let i = 0; i < rl.length; i++) {
-                const zone = {}
-                const splitted = rl[i].split(',')
-                zone.ZoneName = splitted[0].toLowerCase()
-                zone.Min = new alt.Vector3(parseFloat(splitted[1]), parseFloat(splitted[2]), parseFloat(splitted[3]))
-                zone.Max = new alt.Vector3(parseFloat(splitted[4]), parseFloat(splitted[5]), parseFloat(splitted[6]))
-                zone.AreaName = splitted[7].toLowerCase()
-                zone.SpName = zoneBindings.get(zone.ZoneName)[0].toLowerCase()
-                zone.MpName = zoneBindings.get(zone.ZoneName)[1].toLowerCase()
-                
-                this.#zones.set(zone.ZoneName, zone) 
-            }
-            
-            alt.log("Successfully loaded dump file Zones.txt.", this.#zones.size)
+        alt.log("Successfully loaded dump file vehicles.json.", this.#carGenProhibitedModels.size, this.#ambientCarProhibitedModels.size)
+    }
+
+    async #LoadCarGenerators() {
+        const data = await readFile('./resources/peds/livecity-js/server/data/LiveCity/CarGenerators.xml')
+
+        const result = await xmlJs.xml2js(data, { compact: true, nativeType: true, ignoreAttributes: true })
+
+        const cargeneratorElements = result.ArrayOfCarGenerator.CarGenerator
+
+        for (let i = 0; i < cargeneratorElements.length; i++) {
+            const cElement = cargeneratorElements[i]
+            this.#carGenerators.set(i, new CarGenerator(
+                new alt.Vector3(cElement.Position.X._text, cElement.Position.Y._text, cElement.Position.Z._text),
+                cElement.Model._text,
+                cElement.PopGroup._text,
+                cElement.OrientX._text,
+                cElement.OrientY._text
+            ))
         }
 
-        async #LoadPopCycles() {
-            const data = await readFile('./resources/livecity-js/server/data/LiveCity/PopCycle')
+        this.#carGenerators.forEach((carGenerator, key) => {
+            const x = Math.floor(carGenerator.Position.x / 100)
+            const y = Math.floor(carGenerator.Position.y / 100)
+            const k = new CellCoord(x, y).toString()
 
-            const rl = data.toString().split('\n')
-            
-            let schedule = new PopSchedule()
-            let currentTimeIndex = 0
-            let currentZone = ""
-            
-            for (let i = 0; i < rl.length; i++) {
-                const s = rl[i]
-                if (s.startsWith("//") || s.length === 0) continue
-                
-                if (s.startsWith("POP_SCHEDULE:")) {
-                    schedule = new PopSchedule()
-                } else if (s.startsWith("      ")) {
-                    const scheduleSplitted = s.split(' ').filter(Boolean)
-                    const entry = new PopScheduleEntry()
-                    entry.MaxAmbientPeds = parseInt(scheduleSplitted[0])
-                    entry.MaxScenarioPeds = parseInt(scheduleSplitted[1])
-                    entry.MaxCars = parseInt(scheduleSplitted[2])
-                    entry.MaxParkedCars = parseInt(scheduleSplitted[3])
-                    entry.MaxLowParkedCars = parseInt(scheduleSplitted[4])
-                    entry.CopsCarPercentage = parseInt(scheduleSplitted[5]) * 0.01
-                    entry.CopsPedPercentage = parseInt(scheduleSplitted[6]) * 0.01
-                    //unused 7 8 9
-                    entry.PedGroupProbs = new Map()
-                    entry.VehGroupProbs = new Map()
-                    let pedsMode = true;
-                    let currentGroup = "";
-                    for (let i = 10; i < scheduleSplitted.length; i++) {
-                        if (scheduleSplitted[i] === "peds") continue
+            if (!this.#carGeneratorsGrid.has(k)) {
+                this.#carGeneratorsGrid.set(k, [])
+            }
+            this.#carGeneratorsGrid.get(k).push(carGenerator)
+        })
 
-                        if (scheduleSplitted[i] === "cars") {
-                            pedsMode = false
-                        } else {
-                            const probability = parseInt(scheduleSplitted[i])
-                            if (!isNaN(probability)) {
-                                const prob = probability * 0.01
-                                if (pedsMode) {
-                                    entry.PedGroupProbs.set(currentGroup, prob)
-                                } else {
-                                    entry.VehGroupProbs.set(currentGroup, prob)
-                                }
+        alt.log("Successfully loaded dump file CarGenerators.xml.", this.#carGenerators.size, this.#carGeneratorsGrid.size)
+    }
+
+    GenerateNumberPlate() {
+        let numberplate = ""
+
+        for (let i = 0; i < 8; i++) {
+            numberplate += this.#randomProvider.choice(this.#numberPlateChars);
+        }
+
+        return numberplate
+    }
+
+    async #ParseZones() {
+        const zoneBindings = new Map()
+        const data = await readFile('./resources/peds/livecity-js/server/data/LiveCity/ZoneBind.ymt')
+
+        const result = await xmlJs.xml2js(data, { compact: true, nativeType: true, ignoreAttributes: true })
+
+        const zonesItems = result.collision_03ba8d5a_9vr968c.zones.Item
+
+        for (let i = 0; i < zonesItems.length; i++) {
+            const zElement = zonesItems[i]
+            const zoneName = zElement.zoneName._text.toLowerCase()
+            const spName = zElement.spName._text.toLowerCase()
+            const mpName = zElement.mpName._text.toLowerCase()
+            zoneBindings.set(zoneName, [spName, mpName])
+        }
+
+        alt.log("Successfully loaded dump file ZoneBind.ymt.", zoneBindings.size)
+
+        const data2 = await readFile('./resources/peds/livecity-js/server/data/LiveCity/Zones.txt')
+
+        const rl = data2.toString().split('\n')
+
+        for (let i = 0; i < rl.length; i++) {
+            const zone = {}
+            const splitted = rl[i].split(',')
+            zone.ZoneName = splitted[0].toLowerCase()
+            zone.Min = new alt.Vector3(parseFloat(splitted[1]), parseFloat(splitted[2]), parseFloat(splitted[3]))
+            zone.Max = new alt.Vector3(parseFloat(splitted[4]), parseFloat(splitted[5]), parseFloat(splitted[6]))
+            zone.AreaName = splitted[7].toLowerCase()
+            zone.SpName = zoneBindings.get(zone.ZoneName)[0].toLowerCase()
+            zone.MpName = zoneBindings.get(zone.ZoneName)[1].toLowerCase()
+
+            this.#zones.set(zone.ZoneName, zone)
+        }
+
+        alt.log("Successfully loaded dump file Zones.txt.", this.#zones.size)
+    }
+
+    async #LoadPopCycles() {
+        const data = await readFile('./resources/peds/livecity-js/server/data/LiveCity/PopCycle')
+
+        const rl = data.toString().split('\n')
+
+        let schedule = new PopSchedule()
+        let currentTimeIndex = 0
+        let currentZone = ""
+
+        for (let i = 0; i < rl.length; i++) {
+            const s = rl[i]
+            if (s.startsWith("//") || s.length === 0) continue
+
+            if (s.startsWith("POP_SCHEDULE:")) {
+                schedule = new PopSchedule()
+            } else if (s.startsWith("      ")) {
+                const scheduleSplitted = s.split(' ').filter(Boolean)
+                const entry = new PopScheduleEntry()
+                entry.MaxAmbientPeds = parseInt(scheduleSplitted[0])
+                entry.MaxScenarioPeds = parseInt(scheduleSplitted[1])
+                entry.MaxCars = parseInt(scheduleSplitted[2])
+                entry.MaxParkedCars = parseInt(scheduleSplitted[3])
+                entry.MaxLowParkedCars = parseInt(scheduleSplitted[4])
+                entry.CopsCarPercentage = parseInt(scheduleSplitted[5]) * 0.01
+                entry.CopsPedPercentage = parseInt(scheduleSplitted[6]) * 0.01
+                //unused 7 8 9
+                entry.PedGroupProbs = new Map()
+                entry.VehGroupProbs = new Map()
+                let pedsMode = true;
+                let currentGroup = "";
+                for (let i = 10; i < scheduleSplitted.length; i++) {
+                    if (scheduleSplitted[i] === "peds") continue
+
+                    if (scheduleSplitted[i] === "cars") {
+                        pedsMode = false
+                    } else {
+                        const probability = parseInt(scheduleSplitted[i])
+                        if (!isNaN(probability)) {
+                            const prob = probability * 0.01
+                            if (pedsMode) {
+                                entry.PedGroupProbs.set(currentGroup, prob)
                             } else {
-                                currentGroup = scheduleSplitted[i].trim().toLowerCase()
+                                entry.VehGroupProbs.set(currentGroup, prob)
+                            }
+                        } else {
+                            currentGroup = scheduleSplitted[i].trim().toLowerCase()
+                        }
+                    }
+                }
+
+                schedule.Entries[currentTimeIndex] = entry
+
+                // Sort data for probability in future
+                entry.VehGroupProbsSorted = [...entry.VehGroupProbs.entries()].sort((a, b) => a[1] - b[1])
+
+                entry.PedGroupProbsSorted = [...entry.PedGroupProbs.entries()].sort((a, b) => a[1] - b[1])
+
+                currentTimeIndex++;
+            } else if (s.startsWith("END_POP_SCHEDULE")) {
+                this.ZoneSchedules.set(currentZone, schedule)
+                currentTimeIndex = 0;
+            } else if (s.length > 0) {
+                currentZone = s.trim().toLowerCase()
+            }
+        }
+
+        alt.log("Successfully loaded dump file PopCycle.", this.ZoneSchedules.size)
+    }
+
+    async #LoadPopGroups() {
+        const data = await readFile('./resources/peds/livecity-js/server/data/LiveCity/PopGroups.xml')
+
+        const result = await xmlJs.xml2js(data, { compact: true, nativeType: true, ignoreAttributes: true })
+
+        const pedGroupElements = result.CPopGroupList.pedGroups.Item
+
+        for (let i = 0; i < pedGroupElements.length; i++) {
+            const pElement = pedGroupElements[i]
+            const groupName = pElement.Name._text.toLowerCase()
+
+            const models = new Map()
+            const modelElementsItem = pElement.models.Item
+            if (Array.isArray(modelElementsItem)) {
+                for (let j = 0; j < modelElementsItem.length; j++) {
+                    models.set(j, modelElementsItem[j].Name._text.toLowerCase())
+                }
+            } else {
+                models.set(0, modelElementsItem.Name._text.toLowerCase())
+            }
+
+            this.PedGroups.set(groupName, models)
+        }
+
+        const vehGroupElements = result.CPopGroupList.vehGroups.Item
+
+        for (let i = 0; i < vehGroupElements.length; i++) {
+            const vElement = vehGroupElements[i]
+            const groupName = vElement.Name._text.toLowerCase()
+
+            const models = new Map()
+            const modelElementsItem = vElement.models.Item
+            if (Array.isArray(modelElementsItem)) {
+                for (let j = 0; j < modelElementsItem.length; j++) {
+                    models.set(j, modelElementsItem[j].Name._text.toLowerCase())
+                }
+            } else {
+                models.set(0, modelElementsItem.Name._text.toLowerCase())
+            }
+
+            //if (groupName === 'veh_transport_mp') alt.logDebug('models', models, 'modelElementsItem', modelElementsItem, 'modelElements.length', modelElementsItem.length)
+
+            this.VehGroups.set(groupName, models)
+        }
+
+        alt.log("Successfully loaded dump file PopGroups.xml.", this.PedGroups.size, this.VehGroups.size)
+    }
+
+    #LoadScenarioPoints() {
+        const allScenarioPoints = ScenarioPoints
+        this.#allowedScenarios = AllowedScenarios
+
+        for (let key in PedModelGroup) {
+            if (PedModelGroup.hasOwnProperty(key)) {
+                const value = PedModelGroup[key]
+                this.PedModelGroups.set(key.toLowerCase(), value)
+            }
+        }
+
+        for (let i = 0; i < allScenarioPoints.length; i++) {
+            const scenarioPoint = allScenarioPoints[i]
+            if (this.#allowedScenarios.includes(scenarioPoint.IType)) {
+                this.ScenarioPoints.set(scenarioPoint.IType, scenarioPoint)
+
+                const cellX = Math.floor(scenarioPoint.Position.X / 100)
+                const cellY = Math.floor(scenarioPoint.Position.Y / 100)
+
+                const key = new CellCoord(cellX, cellY).toString()
+
+                if (!this.#scenarioMap.has(key)) {
+                    this.#scenarioMap.set(key, [])
+                }
+                this.#scenarioMap.get(key).push(scenarioPoint)
+            }
+        }
+
+        alt.log("Successfully loaded dump file ScenarioPoints.json, AllowedScenarios.json and PedModelGroup.json.", allScenarioPoints.length, this.#allowedScenarios.length, this.PedModelGroups.size, this.ScenarioPoints.size, this.#scenarioMap.size)
+
+        // From pedsync repo - search adjacent scenario points. Probably related to each other
+        //foreach (ScenarioPoint scenarioPoint2 in ScenarioPoints)
+        //{
+        //	int cellX = (int)Math.Ceiling(scenarioPoint2.Position.X / 10),
+        //		cellY = (int)Math.Ceiling(scenarioPoint2.Position.Y / 10);
+
+        //	scenarioPoint2.NearScenarioPoints = new List<ScenarioPoint>();
+
+        //	//if (
+        //	//	!m_scenarioMap.ContainsKey((cellX, cellY)) &&
+        //	//	!m_scenarioMap.ContainsKey((cellX, cellY - 1)) &&
+        //	//	!m_scenarioMap.ContainsKey((cellX, cellY + 1)) &&
+        //	//	!m_scenarioMap.ContainsKey((cellX - 1, cellY)) &&
+        //	//	!m_scenarioMap.ContainsKey((cellX - 1, cellY - 1)) &&
+        //	//	!m_scenarioMap.ContainsKey((cellX - 1, cellY + 1)) &&
+        //	//	!m_scenarioMap.ContainsKey((cellX + 1, cellY)) &&
+        //	//	!m_scenarioMap.ContainsKey((cellX + 1, cellY - 1)) &&
+        //	//	!m_scenarioMap.ContainsKey((cellX + 1, cellY + 1))
+        //	//) continue;
+
+        //	//for (int i = -1; i < 2; i++)
+        //	//{
+        //	//	for (int j = -1; j < 2; j++)
+        //	//	{
+        //	//		//Check if zone exists
+        //	//		if (m_scenarioMap.ContainsKey((cellX + i, cellY + j)))
+        //	//		{
+        //	//			foreach (ScenarioPoint scenarioPoint3 in m_scenarioMap[(cellX + i, cellY + j)])
+        //	//			{
+        //	//				double distance = Vector3.Distance(
+        //	//					new Vector3(scenarioPoint2.Position.X, scenarioPoint2.Position.Y,
+        //	//						scenarioPoint2.Position.Z),
+        //	//					new Vector3(scenarioPoint3.Position.X, scenarioPoint3.Position.Y,
+        //	//						scenarioPoint3.Position.Z));
+
+        //	//				if (distance is < 3 and > 1 && scenarioPoint2.TimeStart == scenarioPoint3.TimeStart)
+        //	//				{
+        //	//					scenarioPoint2.NearScenarioPoints.Add(scenarioPoint3);
+        //	//				}
+        //	//			}
+        //	//		}
+        //	//	}
+        //	//}
+        //}
+    }
+
+    #LoadCarData() {
+        this.#carModels = CarModels
+        const colorlessCars = ColorlessCars
+        for (let i = 0; i < colorlessCars.length; i++) {
+            const car = colorlessCars[i]
+            this.#colorlessCars.push(alt.hash(car));
+        }
+        this.#carColorsNum = CarColorsNum
+
+        alt.log("Successfully loaded dump file CarModels.json, ColorlessCars.json and CarColorsNum.json.", this.#carModels.length, this.#colorlessCars.length, this.#carColorsNum.length)
+    }
+
+    GetZoneByPosition(position) {
+        for (let [key, zone] of this.#zones) {
+            if (zone.Min.x > zone.Max.x) {
+                zone.Min = new alt.Vector3(zone.Max.x, zone.Min.y, zone.Min.z)
+                zone.Max = new alt.Vector3(zone.Min.x, zone.Max.y, zone.Max.z)
+            }
+
+            if (zone.Min.y > zone.Max.y) {
+                zone.Min = new alt.Vector3(zone.Min.x, zone.Max.y, zone.Min.z)
+                zone.Max = new alt.Vector3(zone.Max.x, zone.Min.y, zone.Max.z)
+            }
+
+            if (zone.Min.z > zone.Max.z) {
+                zone.Min = new alt.Vector3(zone.Min.x, zone.Min.y, zone.Max.z)
+                zone.Max = new alt.Vector3(zone.Max.x, zone.Max.y, zone.Min.z)
+            }
+
+            if (zone.Min.x <= position.x
+                && position.x <= zone.Max.x
+                && zone.Min.y <= position.y
+                && position.y <= zone.Max.y) {
+                return zone
+            }
+        }
+
+        return null
+    }
+
+    //internal record StreetNodeOption(StreetNode Node, StreetNodeConnected ConnectedNode);
+    GetRandomStreetNodeInRange(position, range, minRange = 0.0) {
+        position = new alt.Vector3(position.x, position.y, 0.0)
+        const cellSize = 100
+
+        const tlx = position.x - range
+        const tly = position.y - range
+
+        const brx = position.x + range
+        const bry = position.y + range
+
+        const options = []
+
+        for (let i = Math.floor(tlx / cellSize); i < Math.floor(brx / cellSize) + 1; ++i) {
+            for (let j = Math.floor(tly / cellSize); j < Math.floor(bry / cellSize) + 1; ++j) {
+                const coord = new CellCoord(i, j).toString()
+                if (this.#vehicleNodesGrid.has(coord)) {
+                    const value = this.#vehicleNodesGrid.get(coord)
+                    for (let k = 0; k < value.length; k++) {
+                        const point = value[k]
+                        const pos2d = new alt.Vector3(point.Position.X, point.Position.Y, 0);
+                        const distance = pos2d.distanceTo(position)
+
+                        if (distance < range && distance > minRange) {
+                            for (let l = 0; l < point.ConnectedNodes.length; l++) {
+                                const streetNodeConnected = point.ConnectedNodes[l]
+                                if (streetNodeConnected.LaneCountForward !== 0) options.push([point, streetNodeConnected])
                             }
                         }
                     }
-
-                    schedule.Entries[currentTimeIndex] = entry
-
-                    // Sort data for probability in future
-                    entry.VehGroupProbsSorted = [...entry.VehGroupProbs.entries()].sort((a, b) => a[1] - b[1])
-                    
-                    entry.PedGroupProbsSorted = [...entry.PedGroupProbs.entries()].sort((a, b) => a[1] - b[1])
-                    
-                    currentTimeIndex++;
-                } else if (s.startsWith("END_POP_SCHEDULE")) {
-                    this.ZoneSchedules.set(currentZone, schedule)
-                    currentTimeIndex = 0;
-                } else if (s.length > 0) {
-                    currentZone = s.trim().toLowerCase()
                 }
             }
-            
-            alt.log("Successfully loaded dump file PopCycle.", this.ZoneSchedules.size)
         }
 
-        async #LoadPopGroups() {
-            const data = await readFile('./resources/livecity-js/server/data/LiveCity/PopGroups.xml')
+        if (options.length === 0) return null
 
-            const result = await xmlJs.xml2js(data, {compact: true, nativeType: true, ignoreAttributes: true })
-    
-            const pedGroupElements = result.CPopGroupList.pedGroups.Item
-    
-            for (let i = 0; i < pedGroupElements.length; i++) {
-                const pElement = pedGroupElements[i]
-                const groupName = pElement.Name._text.toLowerCase()
-    
-                const models = new Map()
-                const modelElementsItem = pElement.models.Item
-                if (Array.isArray(modelElementsItem)) {
-                    for (let j = 0; j < modelElementsItem.length; j++) {
-                        models.set(j, modelElementsItem[j].Name._text.toLowerCase())
-                    }
-                } else {
-                    models.set(0, modelElementsItem.Name._text.toLowerCase())
-                }
-    
-                this.PedGroups.set(groupName, models)
-            }
-            
-            const vehGroupElements = result.CPopGroupList.vehGroups.Item
-    
-            for (let i = 0; i < vehGroupElements.length; i++) {
-                const vElement = vehGroupElements[i]
-                const groupName = vElement.Name._text.toLowerCase()
-    
-                const models = new Map()
-                const modelElementsItem = vElement.models.Item
-                if (Array.isArray(modelElementsItem)) {
-                    for (let j = 0; j < modelElementsItem.length; j++) {
-                        models.set(j, modelElementsItem[j].Name._text.toLowerCase())
-                    }
-                } else {
-                    models.set(0, modelElementsItem.Name._text.toLowerCase())
-                }
-                
-                //if (groupName === 'veh_transport_mp') alt.logDebug('models', models, 'modelElementsItem', modelElementsItem, 'modelElements.length', modelElementsItem.length)
-                
-                this.VehGroups.set(groupName, models)
-            }
+        return this.#randomProvider.choice(options)
+    }
 
-            alt.log("Successfully loaded dump file PopGroups.xml.", this.PedGroups.size, this.VehGroups.size)
-        }
+    IsPointInsideSector(origin, point, direction, angleDegrees, range) {
+        let angle = Math.atan2(vector3Length(point.sub(origin).cross(direction)), point.sub(origin).dot(direction))
+        angle = Math.abs(angle)
 
-        #LoadScenarioPoints() {
-            const allScenarioPoints = ScenarioPoints
-            this.#allowedScenarios = AllowedScenarios
-            
-            for (let key in PedModelGroup) {
-                if (PedModelGroup.hasOwnProperty(key)) {
-                    const value = PedModelGroup[key]
-                    this.PedModelGroups.set(key.toLowerCase(), value)
-                }
-            }
-            
-            for (let i = 0; i < allScenarioPoints.length; i++) {
-                const scenarioPoint = allScenarioPoints[i]
-                if (this.#allowedScenarios.includes(scenarioPoint.IType)) {
-                    this.ScenarioPoints.set(scenarioPoint.IType, scenarioPoint)
+        const radiusSquared = range * range
+        return angle <= toRadians(angleDegrees) && point.distanceToSquared(origin) < radiusSquared
+    }
 
-                    const cellX = Math.floor(scenarioPoint.Position.X / 100)
-                    const cellY = Math.floor(scenarioPoint.Position.Y / 100)
+    GetRandomStreetNodeInSector(position, direction, angleDegrees, range, minRange) {
+        position = new alt.Vector3(position.x, position.y, 0.0)
+        const cellSize = 100
 
-                    const key = new CellCoord(cellX, cellY).toString()
+        const tlx = position.x - range
+        const tly = position.y - range
 
-                    if (!this.#scenarioMap.has(key)) {
-                        this.#scenarioMap.set(key, [])
-                    }
-                    this.#scenarioMap.get(key).push(scenarioPoint)
-                }
-            }
+        const brx = position.x + range
+        const bry = position.y + range
 
-            alt.log("Successfully loaded dump file ScenarioPoints.json, AllowedScenarios.json and PedModelGroup.json.", allScenarioPoints.length, this.#allowedScenarios.length, this.PedModelGroups.size, this.ScenarioPoints.size, this.#scenarioMap.size)
+        const options = []
 
-            // From pedsync repo - search adjacent scenario points. Probably related to each other
-            //foreach (ScenarioPoint scenarioPoint2 in ScenarioPoints)
-            //{
-            //	int cellX = (int)Math.Ceiling(scenarioPoint2.Position.X / 10),
-            //		cellY = (int)Math.Ceiling(scenarioPoint2.Position.Y / 10);
+        for (let i = Math.floor(tlx / cellSize); i < Math.floor(brx / cellSize) + 1; ++i) {
+            for (let j = Math.floor(tly / cellSize); j < Math.floor(bry / cellSize) + 1; ++j) {
+                const coord = new CellCoord(i, j).toString()
+                if (this.#vehicleNodesGrid.has(coord)) {
+                    const value = this.#vehicleNodesGrid.get(coord)
+                    for (let k = 0; k < value.length; k++) {
+                        const point = value[k]
+                        const pos2d = new alt.Vector3(point.Position.X, point.Position.Y, 0);
+                        const distance = pos2d.distanceTo(position)
 
-            //	scenarioPoint2.NearScenarioPoints = new List<ScenarioPoint>();
-
-            //	//if (
-            //	//	!m_scenarioMap.ContainsKey((cellX, cellY)) &&
-            //	//	!m_scenarioMap.ContainsKey((cellX, cellY - 1)) &&
-            //	//	!m_scenarioMap.ContainsKey((cellX, cellY + 1)) &&
-            //	//	!m_scenarioMap.ContainsKey((cellX - 1, cellY)) &&
-            //	//	!m_scenarioMap.ContainsKey((cellX - 1, cellY - 1)) &&
-            //	//	!m_scenarioMap.ContainsKey((cellX - 1, cellY + 1)) &&
-            //	//	!m_scenarioMap.ContainsKey((cellX + 1, cellY)) &&
-            //	//	!m_scenarioMap.ContainsKey((cellX + 1, cellY - 1)) &&
-            //	//	!m_scenarioMap.ContainsKey((cellX + 1, cellY + 1))
-            //	//) continue;
-
-            //	//for (int i = -1; i < 2; i++)
-            //	//{
-            //	//	for (int j = -1; j < 2; j++)
-            //	//	{
-            //	//		//Check if zone exists
-            //	//		if (m_scenarioMap.ContainsKey((cellX + i, cellY + j)))
-            //	//		{
-            //	//			foreach (ScenarioPoint scenarioPoint3 in m_scenarioMap[(cellX + i, cellY + j)])
-            //	//			{
-            //	//				double distance = Vector3.Distance(
-            //	//					new Vector3(scenarioPoint2.Position.X, scenarioPoint2.Position.Y,
-            //	//						scenarioPoint2.Position.Z),
-            //	//					new Vector3(scenarioPoint3.Position.X, scenarioPoint3.Position.Y,
-            //	//						scenarioPoint3.Position.Z));
-
-            //	//				if (distance is < 3 and > 1 && scenarioPoint2.TimeStart == scenarioPoint3.TimeStart)
-            //	//				{
-            //	//					scenarioPoint2.NearScenarioPoints.Add(scenarioPoint3);
-            //	//				}
-            //	//			}
-            //	//		}
-            //	//	}
-            //	//}
-            //}
-        }
-
-        #LoadCarData() {
-            this.#carModels = CarModels
-            const colorlessCars = ColorlessCars            
-            for (let i = 0; i < colorlessCars.length; i++) {
-                const car = colorlessCars[i]
-                this.#colorlessCars.push(alt.hash(car));
-            }
-            this.#carColorsNum = CarColorsNum
-            
-            alt.log("Successfully loaded dump file CarModels.json, ColorlessCars.json and CarColorsNum.json.", this.#carModels.length, this.#colorlessCars.length, this.#carColorsNum.length)
-        }
-
-        GetZoneByPosition(position) {
-            for (let [key, zone] of this.#zones) {
-                if (zone.Min.x > zone.Max.x) {
-                    zone.Min = new alt.Vector3(zone.Max.x, zone.Min.y, zone.Min.z)
-                    zone.Max = new alt.Vector3(zone.Min.x, zone.Max.y, zone.Max.z)
-                }
-
-                if (zone.Min.y > zone.Max.y) {
-                    zone.Min = new alt.Vector3(zone.Min.x, zone.Max.y, zone.Min.z)
-                    zone.Max = new alt.Vector3(zone.Max.x, zone.Min.y, zone.Max.z)
-                }
-
-                if (zone.Min.z > zone.Max.z) {
-                    zone.Min = new alt.Vector3(zone.Min.x, zone.Min.y, zone.Max.z)
-                    zone.Max = new alt.Vector3(zone.Max.x, zone.Max.y, zone.Min.z)
-                }
-
-                if (zone.Min.x <= position.x
-					&& position.x <= zone.Max.x
-					&& zone.Min.y <= position.y
-					&& position.y <= zone.Max.y) {
-                    return zone
-                }
-            }
-
-            return null
-        }
-
-        //internal record StreetNodeOption(StreetNode Node, StreetNodeConnected ConnectedNode);
-        GetRandomStreetNodeInRange(position, range, minRange = 0.0) {
-            position = new alt.Vector3(position.x, position.y, 0.0)
-            const cellSize = 100
-
-            const tlx = position.x - range
-            const tly = position.y - range
-
-            const brx = position.x + range
-            const bry = position.y + range
-
-            const options = []
-
-            for (let i = Math.floor(tlx / cellSize); i < Math.floor(brx / cellSize) + 1; ++i) {
-                for (let j = Math.floor(tly / cellSize); j < Math.floor(bry / cellSize) + 1; ++j) {
-                    const coord = new CellCoord(i, j).toString()
-                    if (this.#vehicleNodesGrid.has(coord)) {
-                        const value = this.#vehicleNodesGrid.get(coord)
-                        for (let k = 0; k < value.length; k++) {
-                            const point = value[k]
-                            const pos2d = new alt.Vector3(point.Position.X, point.Position.Y, 0);
-                            const distance = pos2d.distanceTo(position)
-
-                            if (distance < range && distance > minRange) {
+                        if (this.IsPointInsideSector(position, pos2d, direction, angleDegrees, range)) {
+                            if (distance > minRange) {
                                 for (let l = 0; l < point.ConnectedNodes.length; l++) {
                                     const streetNodeConnected = point.ConnectedNodes[l]
                                     if (streetNodeConnected.LaneCountForward !== 0) options.push([point, streetNodeConnected])
@@ -1007,416 +1053,368 @@ export class LiveCityDataService {
                     }
                 }
             }
-
-            if (options.length === 0) return null
-
-            return this.#randomProvider.choice(options)
         }
 
-        IsPointInsideSector(origin, point, direction, angleDegrees, range) {
-            let angle = Math.atan2(vector3Length(point.sub(origin).cross(direction)), point.sub(origin).dot(direction))
-            angle = Math.abs(angle)
+        if (options.length === 0) return null
 
-            const radiusSquared = range * range
-            return angle <= toRadians(angleDegrees) && point.distanceToSquared(origin) < radiusSquared
+        return this.#randomProvider.choice(options)
+    }
+
+    GetRandomScenarioPointInRange(position, range, minRange = 0.0) {
+        position = new alt.Vector3(position.x, position.y, 0.0)
+        const cellSize = 100
+
+        const tlx = position.x - range
+        const tly = position.y - range
+
+        const brx = position.x + range
+        const bry = position.y + range
+
+        const options = []
+
+        for (let i = Math.floor(tlx / cellSize); i < Math.floor(brx / cellSize) + 1; ++i) {
+            for (let j = Math.floor(tly / cellSize); j < Math.floor(bry / cellSize) + 1; ++j) {
+                const coord = new CellCoord(i, j).toString()
+                if (this.#scenarioMap.has(coord)) {
+                    const value = this.#scenarioMap.get(coord)
+                    for (let k = 0; k < value.length; k++) {
+                        const point = value[k]
+                        const pos2d = new alt.Vector3(point.Position.X, point.Position.Y, 0);
+                        const distance = pos2d.distanceTo(position)
+
+                        if (distance < range && distance > minRange) {
+                            options.push(point)
+                        }
+                    }
+                }
+            }
         }
 
-        GetRandomStreetNodeInSector(position, direction, angleDegrees, range, minRange) {
-            position = new alt.Vector3(position.x, position.y, 0.0)
-            const cellSize = 100
+        if (options.length === 0) return null
 
-            const tlx = position.x - range
-            const tly = position.y - range
+        return this.#randomProvider.choice(options)
+    }
 
-            const brx = position.x + range
-            const bry = position.y + range
+    GetRandomScenarioPointInSector(position, direction, angleDegrees, range, minRange = 0.0) {
+        position = new alt.Vector3(position.x, position.y, 0.0)
+        const cellSize = 100
 
-            const options = []
+        const tlx = position.x - range
+        const tly = position.y - range
 
-            for (let i = Math.floor(tlx / cellSize); i < Math.floor(brx / cellSize) + 1; ++i) {
-                for (let j = Math.floor(tly / cellSize); j < Math.floor(bry / cellSize) + 1; ++j) {
-                    const coord = new CellCoord(i, j).toString()
-                    if (this.#vehicleNodesGrid.has(coord)) {
-                        const value = this.#vehicleNodesGrid.get(coord)
-                        for (let k = 0; k < value.length; k++) {
-                            const point = value[k]
-                            const pos2d = new alt.Vector3(point.Position.X, point.Position.Y, 0);
-                            const distance = pos2d.distanceTo(position)
-                            
-                            if (this.IsPointInsideSector(position, pos2d, direction, angleDegrees, range)) {
-                                if (distance > minRange) {
-                                    for (let l = 0; l < point.ConnectedNodes.length; l++) {
-                                        const streetNodeConnected = point.ConnectedNodes[l]
-                                        if (streetNodeConnected.LaneCountForward !== 0) options.push([point, streetNodeConnected])
-                                    }
-                                }
+        const brx = position.x + range
+        const bry = position.y + range
+
+        const options = []
+
+        for (let i = Math.floor(tlx / cellSize); i < Math.floor(brx / cellSize) + 1; ++i) {
+            for (let j = Math.floor(tly / cellSize); j < Math.floor(bry / cellSize) + 1; ++j) {
+                const coord = new CellCoord(i, j).toString()
+                if (this.#scenarioMap.has(coord)) {
+                    const value = this.#scenarioMap.get(coord)
+                    for (let k = 0; k < value.length; k++) {
+                        const point = value[k]
+                        const pos2d = new alt.Vector3(point.Position.X, point.Position.Y, 0);
+                        const distance = pos2d.distanceTo(position)
+
+                        if (this.IsPointInsideSector(position, pos2d, direction, angleDegrees, range)) {
+                            if (distance > minRange) {
+                                options.push(point)
                             }
                         }
                     }
                 }
             }
-
-            if (options.length === 0) return null
-
-            return this.#randomProvider.choice(options)
         }
 
-        GetRandomScenarioPointInRange(position, range, minRange = 0.0) {
-            position = new alt.Vector3(position.x, position.y, 0.0)
-            const cellSize = 100
+        if (options.length === 0) return null
 
-            const tlx = position.x - range
-            const tly = position.y - range
+        return this.#randomProvider.choice(options)
+    }
 
-            const brx = position.x + range
-            const bry = position.y + range
-
-            const options = []
-
-            for (let i = Math.floor(tlx / cellSize); i < Math.floor(brx / cellSize) + 1; ++i) {
-                for (let j = Math.floor(tly / cellSize); j < Math.floor(bry / cellSize) + 1; ++j) {
-                    const coord = new CellCoord(i, j).toString()
-                    if (this.#scenarioMap.has(coord)) {
-                        const value = this.#scenarioMap.get(coord)
-                        for (let k = 0; k < value.length; k++) {
-                            const point = value[k]
-                            const pos2d = new alt.Vector3(point.Position.X, point.Position.Y, 0);
-                            const distance = pos2d.distanceTo(position)
-
-                            if (distance < range && distance > minRange) {
-                                    options.push(point)
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (options.length === 0) return null
-
-            return this.#randomProvider.choice(options)
+    GetRandomPedModelByPosition(position, playerId) {
+        const zone = this.GetZoneByPosition(position)
+        if (zone === null) {
+            // Fallback for positions which are not inside any zone. like 1368.424 -881.748 13.843
+            return alt.hash('A_M_Y_Downtown_01')
         }
 
-        GetRandomScenarioPointInSector(position, direction, angleDegrees, range, minRange = 0.0) {
-                position = new alt.Vector3(position.x, position.y, 0.0)
-                const cellSize = 100
-        
-                const tlx = position.x - range
-                const tly = position.y - range
-        
-                const brx = position.x + range
-                const bry = position.y + range
-        
-                const options = []
-        
-                for (let i = Math.floor(tlx / cellSize); i < Math.floor(brx / cellSize) + 1; ++i) {
-                    for (let j = Math.floor(tly / cellSize); j < Math.floor(bry / cellSize) + 1; ++j) {
-                        const coord = new CellCoord(i, j).toString()
-                        if (this.#scenarioMap.has(coord)) {
-                            const value = this.#scenarioMap.get(coord)
-                            for (let k = 0; k < value.length; k++) {
-                                const point = value[k]
-                                const pos2d = new alt.Vector3(point.Position.X, point.Position.Y, 0);
-                                const distance = pos2d.distanceTo(position)
-                                
-                                if (this.IsPointInsideSector(position, pos2d, direction, angleDegrees, range)) {
-                                    if (distance > minRange) {
-                                        options.push(point)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-        
-                if (options.length === 0) return null
-        
-                return this.#randomProvider.choice(options)
+        const schedule = this.ZoneSchedules.get(zone.MpName)
+        let entryIndex = 7
+        if (this.ClockHoursByPlayer.has(playerId)) {
+            entryIndex = this.ClockHoursByPlayer.get(playerId) === 0 ? 0 : Math.floor(this.ClockHoursByPlayer.get(playerId) / 2)
+        }
+        // TODO: choose based on time manager. Taking 12-14 for now
+        const chosenScheduleEntry = schedule.Entries[entryIndex]
+
+        const prob = this.#randomProvider.getFloat()
+        let accumulatedProb = 0.0;
+
+        let chosenGroup = chosenScheduleEntry.PedGroupProbsSorted[0][0]
+        for (let i = 0; i < chosenScheduleEntry.PedGroupProbsSorted.length; ++i) {
+            accumulatedProb += chosenScheduleEntry.PedGroupProbsSorted[i][1]
+
+            if (prob < accumulatedProb) {
+                chosenGroup = chosenScheduleEntry.PedGroupProbsSorted[i][0];
+                break
             }
-        
-        GetRandomPedModelByPosition(position, playerId) {
-            const zone = this.GetZoneByPosition(position)
-            if (zone === null) {
-                // Fallback for positions which are not inside any zone. like 1368.424 -881.748 13.843
-                return alt.hash('A_M_Y_Downtown_01')
-            }
-    
-            const schedule = this.ZoneSchedules.get(zone.MpName)
-            let entryIndex = 7
-            if (this.ClockHoursByPlayer.has(playerId)) {
-                entryIndex = this.ClockHoursByPlayer.get(playerId) === 0 ? 0 : Math.floor(this.ClockHoursByPlayer.get(playerId) / 2)
-            }
-            // TODO: choose based on time manager. Taking 12-14 for now
-            const chosenScheduleEntry = schedule.Entries[entryIndex]
-            
-            const prob = this.#randomProvider.getFloat()
-            let accumulatedProb = 0.0;
-        
-            let chosenGroup = chosenScheduleEntry.PedGroupProbsSorted[0][0]
-            for (let i = 0; i < chosenScheduleEntry.PedGroupProbsSorted.length; ++i) {
-                accumulatedProb += chosenScheduleEntry.PedGroupProbsSorted[i][1]
-                
-                if (prob < accumulatedProb) {
-                    chosenGroup = chosenScheduleEntry.PedGroupProbsSorted[i][0];
-                    break
-                }
-            }
-            
-            const chosenModel = this.#randomProvider.getRandomItem(this.PedGroups.get(chosenGroup))
-            
-            if (chosenModel === undefined) alt.logDebug('chosenGroup', chosenGroup, 'this.PedGroups.get(chosenGroup)', this.PedGroups.get(chosenGroup), 'this.PedGroups.has(chosenGroup)', this.PedGroups.has(chosenGroup), this.PedGroups.get(chosenGroup).get(0), this.PedGroups.get(chosenGroup).has(0))
-            
-            return alt.hash(chosenModel)
         }
 
-        GetRandomVehicleModelByPosition(position, excludeProhibitedAmbient, excludeProhibitedCarGen, playerId) {
-            const zone = this.GetZoneByPosition(position)
-            if (zone === null) {
-                // Fallback for positions which are not inside any zone. like 1368.424 -881.748 13.843
+        const chosenModel = this.#randomProvider.getRandomItem(this.PedGroups.get(chosenGroup))
+
+        if (chosenModel === undefined) alt.logDebug('chosenGroup', chosenGroup, 'this.PedGroups.get(chosenGroup)', this.PedGroups.get(chosenGroup), 'this.PedGroups.has(chosenGroup)', this.PedGroups.has(chosenGroup), this.PedGroups.get(chosenGroup).get(0), this.PedGroups.get(chosenGroup).has(0))
+
+        return alt.hash(chosenModel)
+    }
+
+    GetRandomVehicleModelByPosition(position, excludeProhibitedAmbient, excludeProhibitedCarGen, playerId) {
+        const zone = this.GetZoneByPosition(position)
+        if (zone === null) {
+            // Fallback for positions which are not inside any zone. like 1368.424 -881.748 13.843
+            return alt.hash('asea')
+        }
+
+        const schedule = this.ZoneSchedules.get(zone.MpName)
+        let entryIndex = 7
+        if (this.ClockHoursByPlayer.has(playerId)) {
+            entryIndex = this.ClockHoursByPlayer.get(playerId) === 0 ? 0 : Math.floor(this.ClockHoursByPlayer.get(playerId) / 2)
+        }
+        // TODO: choose based on time manager. Taking 12-14 for now
+        const chosenScheduleEntry = schedule.Entries[entryIndex]
+
+        const prob = this.#randomProvider.getFloat()
+        let accumulatedProb = 0.0;
+
+        let chosenGroup = chosenScheduleEntry.VehGroupProbsSorted[0][0]
+        for (let i = 0; i < chosenScheduleEntry.VehGroupProbsSorted.length; ++i) {
+            accumulatedProb += chosenScheduleEntry.VehGroupProbsSorted[i][1]
+
+            if (prob < accumulatedProb) {
+                chosenGroup = chosenScheduleEntry.VehGroupProbsSorted[i][0]
+                break
+            }
+        }
+
+        let chosenModel = this.#randomProvider.getRandomItem(this.VehGroups.get(chosenGroup))
+
+        if (chosenModel === undefined) alt.logDebug('chosenGroup', chosenGroup, 'this.VehGroups.get(chosenGroup)', this.VehGroups.get(chosenGroup), 'this.VehGroups.has(chosenGroup)', this.VehGroups.has(chosenGroup), this.VehGroups.get(chosenGroup).get(0), this.VehGroups.get(chosenGroup).has(0))
+
+        if (chosenModel === 'asea') return alt.hash('asea')
+
+        if (excludeProhibitedCarGen) {
+            if ([...this.#carGenProhibitedModels.values()].includes(chosenModel)) {
                 return alt.hash('asea')
             }
-            
-            const schedule = this.ZoneSchedules.get(zone.MpName)
-            let entryIndex = 7
-            if (this.ClockHoursByPlayer.has(playerId)) {
-                entryIndex = this.ClockHoursByPlayer.get(playerId) === 0 ? 0 : Math.floor(this.ClockHoursByPlayer.get(playerId) / 2)
-            }
-            // TODO: choose based on time manager. Taking 12-14 for now
-            const chosenScheduleEntry = schedule.Entries[entryIndex]
+        }
 
-            const prob = this.#randomProvider.getFloat()
-            let accumulatedProb = 0.0;
-
-            let chosenGroup = chosenScheduleEntry.VehGroupProbsSorted[0][0]
-            for (let i = 0; i < chosenScheduleEntry.VehGroupProbsSorted.length; ++i) {
-                accumulatedProb += chosenScheduleEntry.VehGroupProbsSorted[i][1]
-                
-                if (prob < accumulatedProb) {
-                    chosenGroup = chosenScheduleEntry.VehGroupProbsSorted[i][0]
-                    break
-                }
-            }
-
-            let chosenModel = this.#randomProvider.getRandomItem(this.VehGroups.get(chosenGroup))
-            
-            if (chosenModel === undefined) alt.logDebug('chosenGroup', chosenGroup, 'this.VehGroups.get(chosenGroup)', this.VehGroups.get(chosenGroup), 'this.VehGroups.has(chosenGroup)', this.VehGroups.has(chosenGroup), this.VehGroups.get(chosenGroup).get(0), this.VehGroups.get(chosenGroup).has(0))
-            
-            if (chosenModel === 'asea') return alt.hash('asea')
-            
-            if (excludeProhibitedCarGen) {
-                if ([...this.#carGenProhibitedModels.values()].includes(chosenModel)) {
-                    return alt.hash('asea')
-                }
-            }
-
-            if (excludeProhibitedAmbient) {
-                if ([...this.#ambientCarProhibitedModels.values()].includes(chosenModel))
-                {
-                    return alt.hash('asea')
-                }
-            }
-            
-            // Quick fix for boats
-            // TODO: Proper searching for spawn nodes for boats
-            const info = alt.getVehicleModelInfoByHash(alt.hash(chosenModel))
-            if (info.type === 14) {
+        if (excludeProhibitedAmbient) {
+            if ([...this.#ambientCarProhibitedModels.values()].includes(chosenModel)) {
                 return alt.hash('asea')
             }
-            
-            return alt.hash(chosenModel)
         }
 
-        GetRandomCarColor(vehicleModelHash) {
-            if (!this.#colorlessCars.includes(vehicleModelHash)) {
-                if (this.#carColorsNum.length !== 0) {
-                    const color1 = this.#randomProvider.choice(this.#carColorsNum)
-                    const color2 = this.#randomProvider.choice(this.#carColorsNum)
-                    return [color1, color2]
+        // Quick fix for boats
+        // TODO: Proper searching for spawn nodes for boats
+        const info = alt.getVehicleModelInfoByHash(alt.hash(chosenModel))
+        if (info.type === 14) {
+            return alt.hash('asea')
+        }
+
+        return alt.hash(chosenModel)
+    }
+
+    GetRandomCarColor(vehicleModelHash) {
+        if (!this.#colorlessCars.includes(vehicleModelHash)) {
+            if (this.#carColorsNum.length !== 0) {
+                const color1 = this.#randomProvider.choice(this.#carColorsNum)
+                const color2 = this.#randomProvider.choice(this.#carColorsNum)
+                return [color1, color2]
+            }
+        }
+
+        return [0, 0]
+    }
+
+    GetRandomCarGenInRange(position, range, minRange = 0.0) {
+        position = new alt.Vector3(position.x, position.y, 0.0)
+        const cellSize = 100
+
+        const tlx = position.x - range
+        const tly = position.y - range
+
+        const brx = position.x + range
+        const bry = position.y + range
+
+        const options = []
+
+        for (let i = Math.floor(tlx / cellSize); i < Math.floor(brx / cellSize) + 1; ++i) {
+            for (let j = Math.floor(tly / cellSize); j < Math.floor(bry / cellSize) + 1; ++j) {
+                const coord = new CellCoord(i, j).toString()
+                if (this.#carGeneratorsGrid.has(coord)) {
+                    const value = this.#carGeneratorsGrid.get(coord)
+                    for (let k = 0; k < value.length; k++) {
+                        const point = value[k]
+                        const pos2d = new alt.Vector3(point.Position.x, point.Position.y, 0);
+                        const distance = pos2d.distanceTo(position)
+
+                        if (distance < range && distance > minRange) {
+                            options.push(point)
+                        }
+                    }
                 }
             }
-
-            return [0, 0]
         }
 
-        GetRandomCarGenInRange(position, range, minRange = 0.0) {
-            position = new alt.Vector3(position.x, position.y, 0.0)
-            const cellSize = 100
+        if (options.length === 0) return null
 
-            const tlx = position.x - range
-            const tly = position.y - range
+        return this.#randomProvider.choice(options)
+    }
 
-            const brx = position.x + range
-            const bry = position.y + range
+    GetRandomCarGenInSector(position, direction, angleDegrees, range, minRange) {
+        position = new alt.Vector3(position.x, position.y, 0.0)
+        const cellSize = 100
 
-            const options = []
+        const tlx = position.x - range
+        const tly = position.y - range
 
-            for (let i = Math.floor(tlx / cellSize); i < Math.floor(brx / cellSize) + 1; ++i) {
-                for (let j = Math.floor(tly / cellSize); j < Math.floor(bry / cellSize) + 1; ++j) {
-                    const coord = new CellCoord(i, j).toString()
-                    if (this.#carGeneratorsGrid.has(coord)) {
-                        const value = this.#carGeneratorsGrid.get(coord)
-                        for (let k = 0; k < value.length; k++) {
-                            const point = value[k]
-                            const pos2d = new alt.Vector3(point.Position.x, point.Position.y, 0);
-                            const distance = pos2d.distanceTo(position)
+        const brx = position.x + range
+        const bry = position.y + range
 
-                            if (distance < range && distance > minRange) {
-                                    options.push(point)
+        const options = []
+
+        for (let i = Math.floor(tlx / cellSize); i < Math.floor(brx / cellSize) + 1; ++i) {
+            for (let j = Math.floor(tly / cellSize); j < Math.floor(bry / cellSize) + 1; ++j) {
+                const coord = new CellCoord(i, j).toString()
+                if (this.#carGeneratorsGrid.has(coord)) {
+                    const value = this.#carGeneratorsGrid.get(coord)
+                    for (let k = 0; k < value.length; k++) {
+                        const point = value[k]
+                        const pos2d = new alt.Vector3(point.Position.x, point.Position.y, 0);
+                        const distance = pos2d.distanceTo(position)
+
+                        if (this.IsPointInsideSector(position, pos2d, direction, angleDegrees, range)) {
+                            if (distance > minRange) {
+                                options.push(point)
                             }
                         }
                     }
                 }
             }
-
-            if (options.length === 0) return null
-
-            return this.#randomProvider.choice(options)
         }
 
-        GetRandomCarGenInSector(position, direction, angleDegrees, range, minRange) {
-            position = new alt.Vector3(position.x, position.y, 0.0)
-            const cellSize = 100
-    
-            const tlx = position.x - range
-            const tly = position.y - range
-    
-            const brx = position.x + range
-            const bry = position.y + range
-    
-            const options = []
-    
-            for (let i = Math.floor(tlx / cellSize); i < Math.floor(brx / cellSize) + 1; ++i) {
-                for (let j = Math.floor(tly / cellSize); j < Math.floor(bry / cellSize) + 1; ++j) {
-                    const coord = new CellCoord(i, j).toString()
-                    if (this.#carGeneratorsGrid.has(coord)) {
-                        const value = this.#carGeneratorsGrid.get(coord)
-                        for (let k = 0; k < value.length; k++) {
-                            const point = value[k]
-                            const pos2d = new alt.Vector3(point.Position.x, point.Position.y, 0);
-                            const distance = pos2d.distanceTo(position)
-    
-                            if (this.IsPointInsideSector(position, pos2d, direction, angleDegrees, range)) {
-                                if (distance > minRange) {
-                                    options.push(point)
-                                }
-                            }
-                        }
+        if (options.length === 0) return null
+
+        return this.#randomProvider.choice(options)
+    }
+
+    GetRandomFootpathPointInRange(position, range, minRange = 0.0) {
+        position = new alt.Vector3(position.x, position.y, 0.0)
+        const cellSize = 100
+
+        const tlx = position.x - range
+        const tly = position.y - range
+
+        const brx = position.x + range
+        const bry = position.y + range
+
+        const options = []
+
+        for (let i = Math.floor(tlx / cellSize); i < Math.floor(brx / cellSize) + 1; ++i) {
+            for (let j = Math.floor(tly / cellSize); j < Math.floor(bry / cellSize) + 1; ++j) {
+                const coord = new CellCoord(i, j).toString()
+                if (this.#navigationMeshProvider.FootpathPolygons.has(coord)) {
+                    const value = this.#navigationMeshProvider.FootpathPolygons.get(coord)
+                    for (let k = 0; k < value.length; k++) {
+                        const polyFootpath = value[k]
+                        options.push(polyFootpath)
                     }
                 }
             }
-    
-            if (options.length === 0) return null
-    
-            return this.#randomProvider.choice(options)
         }
 
-        GetRandomFootpathPointInRange(position, range, minRange = 0.0) {
-            position = new alt.Vector3(position.x, position.y, 0.0)
-            const cellSize = 100
+        if (options.length === 0) return null
 
-            const tlx = position.x - range
-            const tly = position.y - range
+        let selectedPolygon = this.#randomProvider.choice(options)
 
-            const brx = position.x + range
-            const bry = position.y + range
-
-            const options = []
-
-            for (let i = Math.floor(tlx / cellSize); i < Math.floor(brx / cellSize) + 1; ++i) {
-                for (let j = Math.floor(tly / cellSize); j < Math.floor(bry / cellSize) + 1; ++j) {
-                    const coord = new CellCoord(i, j).toString()
-                    if (this.#navigationMeshProvider.FootpathPolygons.has(coord)) {
-                        const value = this.#navigationMeshProvider.FootpathPolygons.get(coord)
-                        for (let k = 0; k < value.length; k++) {
-                            const polyFootpath = value[k]
-                            options.push(polyFootpath)
-                        }
-                    }
-                }
-            }
-
-            if (options.length === 0) return null
-
-            let selectedPolygon = this.#randomProvider.choice(options)
-            
-            while (selectedPolygon.Vertices.length <= 2){
-                selectedPolygon = this.#randomProvider.choice(options);
-            }
-
-            // TODO: select random triangle, not only 0-2 vertices
-            const outPosition = this.#navigationMeshProvider.GetRandomPositionInsideTriangle(
-                new alt.Vector3(selectedPolygon.Vertices[0]),
-                new alt.Vector3(selectedPolygon.Vertices[1]),
-                new alt.Vector3(selectedPolygon.Vertices[2]))
-
-            const distSq = outPosition.distanceToSquared(position)
-            if (distSq > range * range || distSq < minRange * minRange) return null
-
-            return outPosition
+        while (selectedPolygon.Vertices.length <= 2) {
+            selectedPolygon = this.#randomProvider.choice(options);
         }
+
+        // TODO: select random triangle, not only 0-2 vertices
+        const outPosition = this.#navigationMeshProvider.GetRandomPositionInsideTriangle(
+            new alt.Vector3(selectedPolygon.Vertices[0]),
+            new alt.Vector3(selectedPolygon.Vertices[1]),
+            new alt.Vector3(selectedPolygon.Vertices[2]))
+
+        const distSq = outPosition.distanceToSquared(position)
+        if (distSq > range * range || distSq < minRange * minRange) return null
+
+        return outPosition
+    }
 
     GetRandomFootpathPointInSector(position, direction, angleDegrees, range, minRange = 0.0) {
-            const n = Date.now()
-            position = new alt.Vector3(position.x, position.y, 0.0)
-            const cellSize = 100
+        const n = Date.now()
+        position = new alt.Vector3(position.x, position.y, 0.0)
+        const cellSize = 100
 
-            const tlx = position.x - range
-            const tly = position.y - range
+        const tlx = position.x - range
+        const tly = position.y - range
 
-            const brx = position.x + range
-            const bry = position.y + range
+        const brx = position.x + range
+        const bry = position.y + range
 
-            const options = new Map()
-            
-            outer:
-            for (let i = Math.floor(tlx / cellSize); i < Math.floor(brx / cellSize) + 1; ++i) {
-                for (let j = Math.floor(tly / cellSize); j < Math.floor(bry / cellSize) + 1; ++j) {
-                    const coord = new CellCoord(i, j).toString()
-                    if (this.#navigationMeshProvider.FootpathPolygons.has(coord)) {
-                        const value = this.#navigationMeshProvider.FootpathPolygons.get(coord)
-                        for (let k = 0; k < value.length; k++) {
-                            const polyFootpath = value[k]
-                            try {
-                                if (polyFootpath.Vertices[0] && polyFootpath.Vertices[1] && polyFootpath.Vertices[2]) {
-                                    const center = this.#navigationMeshProvider.GetCenterPositionOfTriangle(new alt.Vector3(polyFootpath.Vertices[0]), new alt.Vector3(polyFootpath.Vertices[1]), new alt.Vector3(polyFootpath.Vertices[2]))
+        const options = new Map()
 
-                                    const pos2d = new alt.Vector3(center.x, center.y, 0)
-                                    if (this.IsPointInsideSector(position, pos2d, direction, angleDegrees, range)){
-                                        options.set(polyFootpath, polyFootpath)
-                                    }
-                                    if (Date.now() - n >= 48) break outer
-                                } else break outer
-                            } catch (e) {
-                                alt.logError(e)
-                                alt.log(polyFootpath.Vertices[0], polyFootpath.Vertices[1], polyFootpath.Vertices[2])
-                            }
+        outer:
+        for (let i = Math.floor(tlx / cellSize); i < Math.floor(brx / cellSize) + 1; ++i) {
+            for (let j = Math.floor(tly / cellSize); j < Math.floor(bry / cellSize) + 1; ++j) {
+                const coord = new CellCoord(i, j).toString()
+                if (this.#navigationMeshProvider.FootpathPolygons.has(coord)) {
+                    const value = this.#navigationMeshProvider.FootpathPolygons.get(coord)
+                    for (let k = 0; k < value.length; k++) {
+                        const polyFootpath = value[k]
+                        try {
+                            if (polyFootpath.Vertices[0] && polyFootpath.Vertices[1] && polyFootpath.Vertices[2]) {
+                                const center = this.#navigationMeshProvider.GetCenterPositionOfTriangle(new alt.Vector3(polyFootpath.Vertices[0]), new alt.Vector3(polyFootpath.Vertices[1]), new alt.Vector3(polyFootpath.Vertices[2]))
+
+                                const pos2d = new alt.Vector3(center.x, center.y, 0)
+                                if (this.IsPointInsideSector(position, pos2d, direction, angleDegrees, range)) {
+                                    options.set(polyFootpath, polyFootpath)
+                                }
+                                if (Date.now() - n >= 48) break outer
+                            } else break outer
+                        } catch (e) {
+                            alt.logError(e)
+                            alt.log(polyFootpath.Vertices[0], polyFootpath.Vertices[1], polyFootpath.Vertices[2])
                         }
                     }
                 }
             }
-            
-            if (globalConfig.DebugStats) {
-                this.statsTest.push(Date.now() - n)
-    
-                this.statsTest2.push(options.size)
-            }
-
-            if (options.size === 0) return null
-
-            let selectedPolygon = this.#randomProvider.getRandomItem(options)
-
-            while (selectedPolygon.Vertices.length <= 2){
-                selectedPolygon = this.#randomProvider.getRandomItem(options)
-            }
-
-            // TODO: select random triangle, not only 0-2 vertices
-            const outPosition = this.#navigationMeshProvider.GetRandomPositionInsideTriangle(
-                new alt.Vector3(selectedPolygon.Vertices[0]),
-                new alt.Vector3(selectedPolygon.Vertices[1]),
-                new alt.Vector3(selectedPolygon.Vertices[2]))
-
-            const distSq = outPosition.distanceToSquared(position)
-            if (distSq > range * range || distSq < minRange * minRange) return null
-
-            return outPosition
         }
+
+        if (globalConfig.DebugStats) {
+            this.statsTest.push(Date.now() - n)
+
+            this.statsTest2.push(options.size)
+        }
+
+        if (options.size === 0) return null
+
+        let selectedPolygon = this.#randomProvider.getRandomItem(options)
+
+        while (selectedPolygon.Vertices.length <= 2) {
+            selectedPolygon = this.#randomProvider.getRandomItem(options)
+        }
+
+        // TODO: select random triangle, not only 0-2 vertices
+        const outPosition = this.#navigationMeshProvider.GetRandomPositionInsideTriangle(
+            new alt.Vector3(selectedPolygon.Vertices[0]),
+            new alt.Vector3(selectedPolygon.Vertices[1]),
+            new alt.Vector3(selectedPolygon.Vertices[2]))
+
+        const distSq = outPosition.distanceToSquared(position)
+        if (distSq > range * range || distSq < minRange * minRange) return null
+
+        return outPosition
+    }
 }

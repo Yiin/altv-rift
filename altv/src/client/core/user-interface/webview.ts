@@ -7,7 +7,7 @@ import { serialize } from "@shared/utility/serializer";
 import { WindowType } from "@shared/store/client.store";
 import { ServerEvents } from "@shared/events/server";
 import { clientState } from "../store/client.store";
-import { GameControlReason, disableGameControls, enableGameControls, onKeyDown } from "./event-helpers";
+import { GameControlReason, disableGameControls, enableGameControls, isTyping, onKeyDown } from "./event-helpers";
 import { Control, ControlType } from "../constants/controls";
 import { hideRml, showRml } from "../rmlui/renderer/element-renderer";
 import { disableControlActionsUntilKeyup } from "../utility/control-actions";
@@ -170,6 +170,9 @@ export function isWindowOpen(windowType?: WindowType) {
 }
 
 alt.Events.onKeyDown(({ key }) => {
+  if (isTyping()) {
+    return;
+  }
   if (key === alt.Enums.KeyCode.ESCAPE) {
     const closed = closeWindow();
 

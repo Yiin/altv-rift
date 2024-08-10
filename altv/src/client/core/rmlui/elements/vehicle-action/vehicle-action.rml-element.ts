@@ -9,6 +9,7 @@ import { br, div } from "../../renderer/rml-tags";
 import { AnchorType } from "../../renderer/anchors";
 import { registerElement } from "../../renderer/element-registry";
 import { Icon } from "../../components/icon";
+import { isTyping } from "@/core/user-interface/event-helpers";
 
 const PARTS = [
   VehicleBones.BONNET,
@@ -133,6 +134,10 @@ alt.Timers.everyTick(() => {
 });
 
 alt.Events.onKeyDown(({ key }) => {
+  if (isTyping()) {
+    return;
+  }
+
   const { part, vehicle: closestVehicle } = prevClosest.value;
 
   if (key === alt.Enums.KeyCode.E && part && closestVehicle) {

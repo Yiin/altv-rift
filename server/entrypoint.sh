@@ -19,26 +19,19 @@ case "$1" in
     bun run dev
     ;;
   server)
-    # MODULES_DIR="modules"
-    # BACKUP_DIR="/tmp/modules"
-
-    # mkdir -p "$MODULES_DIR"
-    # mkdir -p "$BACKUP_DIR"
-
-    # if [ -d "$MODULE_DIR" ] && [ "$(ls -A $MODULE_DIR)" ]; then
-    #   echo "Saving"
-    #   rsync -av --delete "$MODULE_DIR/" "$BACKUP_DIR/"
-    # fi
-
     bunx altv-pkg $ALTV_BRANCH
 
-    # if [ -d "$BACKUP_DIR" ] && [ "$(ls -A $BACKUP_DIR)" ]; then
-    #   echo "Loading"
-    #   rsync -av --delete "$BACKUP_DIR/" "$MODULE_DIR/"
-    # fi
+    if [ "$USE_CUSTOM_MODULE" = "true" ]; then
+      rsync -a /source/custom-modules/ /altv/modules/
+    fi
 
-    echo "ALTV_RESOURCES:"
-    echo $ALTV_RESOURCES
+    echo "===== Environment variables ====="
+    echo "ALTV_DEBUG: $ALTV_DEBUG"
+    echo "ALTV_MODULES: $ALTV_MODULES"
+    echo "ALTV_RESOURCES: $ALTV_RESOURCES"
+    echo "SERVER_ENV: $SERVER_ENV"
+    echo "USE_CUSTOM_MODULE: $USE_CUSTOM_MODULE"
+    echo "================================"
 
     chmod +x altv-server altv-crash-handler
     bun run /root/setup/server.js

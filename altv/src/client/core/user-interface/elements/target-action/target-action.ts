@@ -6,7 +6,7 @@ import { UIElement } from "@shared/enums/ui";
 import { clientState } from "@/core/store/client.store";
 import Raycast from "@/core/utility/raycast";
 import { VehicleBones } from "@/core/constants/vehicle-bones";
-import { everyTickWhile } from "@/core/user-interface/event-helpers";
+import { everyTickWhile, isTyping } from "@/core/user-interface/event-helpers";
 import { getScreenResolution } from "@/core/utility/screen-resolution";
 import { toggleElement } from "../../webview";
 
@@ -40,6 +40,10 @@ watchEffect(() => {
 });
 
 alt.Events.onKeyDown(({ key }) => {
+  if (isTyping()) {
+    return;
+  }
+
   if (key === alt.Enums.KeyCode.E) {
     if (!currentAction) {
       return;

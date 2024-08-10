@@ -3,6 +3,7 @@ import * as natives from "@altv/natives";
 import Utils from "./utils";
 import MouseController from "./mouse";
 import { screenToWorld } from "./screen-to-world";
+import { isTyping } from "@/core/user-interface/event-helpers";
 
 type Vertexes = [
   alt.IVector3,
@@ -38,6 +39,10 @@ export default class ModelInspectorController {
   private _currentObject?: ObjectInfo;
 
   onKeyDown = ({ key }: alt.Events.KeyUpDownEventParameters) => {
+    if (isTyping()) {
+      return;
+    }
+
     if (key === 114) {
       this._state = !this._state;
     } else if (this._state && key === 69) {

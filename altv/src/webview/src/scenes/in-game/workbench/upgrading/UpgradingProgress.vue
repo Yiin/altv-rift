@@ -47,6 +47,7 @@ const upgradingProgress = computed(() => {
           <div
             class="absolute-center h-66.5 w-135 bg-contain bg-center bg-no-repeat"
             :class="{
+              // Icons look way too big for ammo and throwables, so scale them down
               '-mt-4 scale-50':
                 isItemKeyAmmo(upgradeRecipe.item.key) ||
                 isItemKeyThrowableWeapon(upgradeRecipe.item.key),

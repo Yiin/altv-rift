@@ -2,6 +2,7 @@ import alt from "@altv/client";
 import * as natives from "@altv/natives";
 import ControlsController from "./controls";
 import Utils from "./utils";
+import { isTyping } from "@/core/user-interface/event-helpers";
 
 declare module "@altv/client" {
   interface ICustomPlayerMeta {
@@ -30,6 +31,10 @@ export default class FlyController {
   };
 
   onKeyDown = ({ key }: alt.Events.KeyUpDownEventParameters) => {
+    if (isTyping()) {
+      return;
+    }
+
     if (key !== 115) return;
     if (this._state) this.stop();
     else this.start(alt.getKeyState(16).isDown);
