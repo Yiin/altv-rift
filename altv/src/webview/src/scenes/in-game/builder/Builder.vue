@@ -9,6 +9,7 @@ import {
 import Card from "@/components/ui/card/Card.vue";
 import { cn } from "@/lib/utils";
 import WorldEventsView from "./WorldEvents/WorldEventsView.vue";
+import { useEventListener } from "@/composables/use-event-listener";
 
 enum View {
   WorldEvents = "WorldEvents",
@@ -37,6 +38,20 @@ const VIEWS = [
 ];
 
 const currentView = ref<View>();
+
+// left click
+useEventListener('click', (event) => {
+  if (event.button === 0) {
+    console.log('left click')
+  }
+});
+
+// right click
+useEventListener('contextmenu', (event) => {
+  if (event.button === 2) {
+    console.log('right click')
+  }
+});
 </script>
 
 <template>
