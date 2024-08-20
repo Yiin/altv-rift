@@ -2,8 +2,8 @@ import alt from "@altv/server";
 import { minutesToMilliseconds } from "date-fns";
 import { ServerCall } from "@shared/calls/server";
 import { getLevel } from "@shared/modules/experience/experience-table";
-import { createItem } from "@shared/modules/items";
-import { getTreeLogXp, getTreeLogs } from "@shared/modules/woodcutting";
+import { BasicMaterial, createItem } from "@shared/modules/items";
+import { getTreeGrade, getTreeLogXp } from "@shared/modules/woodcutting";
 import { EquipmentSlot } from "@shared/interfaces";
 import { MessageType } from "@shared/modules/chat";
 import { sendChatMessage } from "@/modules/chat";
@@ -111,7 +111,7 @@ rpc.registerClient(ServerCall.FromClient.TREE_HIT, (player, virtualTreeId) => {
         MessageType.Success,
       );
     }
-    player.addItem(createItem(getTreeLogs(treeType), { amount: logs }));
+    player.addItem(createItem(BasicMaterial.TREE_LOG, { amount: logs, grade: getTreeGrade(treeType) }));
   }
 
   return logs;

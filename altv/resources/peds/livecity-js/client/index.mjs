@@ -6,10 +6,10 @@ import { RandomProvider } from "../shared/randomProvider.mjs";
 
 alt.on('resourceStart', () => {
     alt.log("LiveCity-js Started!")
-    
+
     alt.on('connectionComplete', () => {
         alt.loadDefaultIpls()
-        
+
         alt.setInterval(() => {
             const wanderVehs = alt.Vehicle.all.filter((vehicle) => vehicle.valid &&
                 vehicle.scriptID !== 0 &&
@@ -18,29 +18,29 @@ alt.on('resourceStart', () => {
                 vehicle.hasStreamSyncedMeta("LiveCity:Driver") &&
                 vehicle.getStreamSyncedMeta("LiveCity:Driver").valid &&
                 !native.isPedInVehicle(vehicle.getStreamSyncedMeta("LiveCity:Driver"), vehicle, false))
-            
+
             //if (wanderVehs.length) alt.log('wanderVeh', wanderVehs.length)
-            
+
             wanderVehs.forEach(async (vehicle) => {
                 try {
                     const ped = vehicle.getStreamSyncedMeta("LiveCity:Driver")
 
                     //await SetPedDrivingWander(veh.getStreamSyncedMeta("LiveCity:Driver"), vehicle)
 
-                    await alt.Utils.waitFor(() => {
-                        if(!ped.valid || !vehicle.valid) return false
-                        if (!native.isPedInVehicle(ped, vehicle, false)){
-                            native.setPedIntoVehicle(ped, vehicle, -1)
-                        }
-                        return native.isPedInVehicle(ped, vehicle, false)
-                    }, 10000)
+                    // await alt.Utils.waitFor(() => {
+                    //     if (!ped.valid || !vehicle.valid) return false
+                    //     if (!native.isPedInVehicle(ped, vehicle, false)) {
+                    //         native.setPedIntoVehicle(ped, vehicle, -1)
+                    //     }
+                    //     return native.isPedInVehicle(ped, vehicle, false)
+                    // }, 10000)
 
-                    if (!ped.valid || !vehicle.valid) return
+                    if (!ped.valid || !vehicle.valid || !native.isPedInVehicle(ped, vehicle, false)) return
 
                     setPedValue(ped)
-                    
+
                     native.taskVehicleDriveWander(ped, vehicle, 13.0, 807339)
-                } catch(err) {
+                } catch (err) {
                     // alt.logError(err)
                 }
             })
@@ -56,7 +56,7 @@ alt.on('resourceStart', () => {
 
             wanderPeds.forEach((ped) => {
                 setPedValue(ped)
-                
+
                 native.taskWanderStandard(ped, 40000.0, 0)
             })
 
@@ -72,15 +72,15 @@ alt.on('resourceStart', () => {
 
             scenerioPeds.forEach((ped) => {
                 setPedValue(ped)
-                
+
                 const scenario = ped.getStreamSyncedMeta("LiveCity:ScenarioPed")
                 // alt.log('scenario', scenario)
                 native.taskStartScenarioInPlace(ped, scenario, 0, false)
                 ped.setMeta("LiveCity:ScenarioPed:CheckScenrio", true)
             })
-                        
+
         }, 500)
-        
+
         alt.setInterval(() => {
             const scenerioPeds = alt.Ped.all.filter((ped) => ped.valid &&
                 ped.scriptID !== 0 &&
@@ -101,9 +101,9 @@ alt.on('resourceStart', () => {
                 native.setEntityCoords(ped, pos.x, pos.y, pos.z, rot.x, rot.y, rot.z, true)
                 ped.setMeta("LiveCity:ScenarioPed:CheckRePos", true)
             })
-                        
+
         }, 500)
-        
+
         alt.setInterval(() => {
             let density = 0
 
@@ -123,17 +123,17 @@ alt.on('resourceStart', () => {
             alt.emitServer(EventNames.LiveCity.s_clientSendClockHours, native.getClockHours(), density)
         }, 1000)
     })
-    
+
     alt.on('spawned', () => {
         alt.emitServer(EventNames.LiveCity.s_playerSpawned)
     })
-    
-    
 
-    alt.on('netOwnerChange', async (target, newOwner,  oldOwner) => {
+
+
+    alt.on('netOwnerChange', async (target, newOwner, oldOwner) => {
         try {
-            if (!(target instanceof alt.Entity) || !target.valid)  return
-            
+            if (!(target instanceof alt.Entity) || !target.valid) return
+
             // Not a LiveCity
             if (!target.hasStreamSyncedMeta("LiveCity")) {
                 return
@@ -155,7 +155,7 @@ alt.on('resourceStart', () => {
             } else if (target instanceof alt.Ped) {
                 await HandlePed(target)
             }
-        } catch(err) {
+        } catch (err) {
             alt.logError(err)
         }
     })
@@ -169,17 +169,17 @@ async function SetPedDrivingWander(ped, vehicle) {
     native.setVehicleOnGroundProperly(vehicle, 5.0)
     try {
         await alt.Utils.waitFor(() => {
-            if (!native.isPedInVehicle(ped, vehicle, false)){
+            if (!native.isPedInVehicle(ped, vehicle, false)) {
                 native.setPedIntoVehicle(ped, vehicle, -1)
             }
             return native.isPedInVehicle(ped, vehicle, false)
         }, 3000)
-    } catch(err) {
+    } catch (err) {
         alt.logError('!ped inside veh', vehicle.valid)
         if (vehicle.valid) alt.emitServer(EventNames.LiveCity.s_clientRequestsDestroy, vehicle.remoteID, true)
         return
     }
-    
+
     // https://forge.plebmasters.de/vehicleflags?category=DrivingStyleFlags&value=802987
     if (vehicle.valid && ped.valid) native.taskVehicleDriveWander(ped, vehicle, 13.0, 807339)
 }
@@ -187,19 +187,19 @@ async function SetPedDrivingWander(ped, vehicle) {
 async function HandleVehicle(vehicle) {
     try {
         await alt.Utils.waitFor(() => vehicle.scriptID !== 0 && native.hasModelLoaded(vehicle.model), 10000)
-    } catch(err) {
+    } catch (err) {
         if (vehicle.valid) alt.emitServer(EventNames.LiveCity.s_clientRequestsDestroy, vehicle.remoteID, true)
         return
     }
-    
-    if(!vehicle.valid) return
-    
+
+    if (!vehicle.valid) return
+
     if (vehicle.hasStreamSyncedMeta("LiveCity:Driver")) {
         const driver = vehicle.getStreamSyncedMeta("LiveCity:Driver")
 
         try {
             await alt.Utils.waitFor(() => driver.scriptID !== 0 && native.hasModelLoaded(driver.model) && driver.isSpawned, 3000)
-        } catch(err) {
+        } catch (err) {
             if (vehicle.valid) alt.emitServer(EventNames.LiveCity.s_clientRequestsDestroy, vehicle.remoteID, true)
             if (driver.valid) alt.emitServer(EventNames.LiveCity.s_clientRequestsDestroy, driver.remoteID, false)
             return
@@ -221,25 +221,25 @@ async function HandleVehicle(vehicle) {
 async function HandlePed(ped) {
     try {
         await alt.Utils.waitFor(() => ped.scriptID !== 0 && native.hasModelLoaded(ped.model), 10000)
-    } catch(err) {
+    } catch (err) {
         if (ped && ped.valid) alt.emitServer(EventNames.LiveCity.s_clientRequestsDestroy, ped.remoteID, false)
         return
     }
 
     if (!ped.valid) return
-    
+
     let assignedVehicle
     if (ped.hasStreamSyncedMeta("LiveCity:Vehicle")) {
         assignedVehicle = ped.getStreamSyncedMeta("LiveCity:Vehicle")
         try {
             await alt.Utils.waitFor(() => assignedVehicle.scriptID !== 0 && native.hasModelLoaded(assignedVehicle.model) && assignedVehicle.isSpawned, 3000)
-        } catch(err) {
+        } catch (err) {
             if (assignedVehicle && assignedVehicle.valid) alt.emitServer(EventNames.LiveCity.s_clientRequestsDestroy, assignedVehicle.remoteID, true)
             if (ped && ped.valid) alt.emitServer(EventNames.LiveCity.s_clientRequestsDestroy, ped.remoteID, false)
             return
         }
     }
-    
+
     if (!ped.valid) {
         if (assignedVehicle && assignedVehicle.valid) alt.emitServer(EventNames.LiveCity.s_clientRequestsDestroy, assignedVehicle.remoteID, true)
         return
@@ -263,7 +263,7 @@ async function HandlePed(ped) {
     setPedValue(ped)
 
     if (ped.hasStreamSyncedMeta("LiveCity:ScenarioPed")) {
-        if(ped.hasStreamSyncedMeta("LiveCity:ScenarioPed:Pos") && ped.hasStreamSyncedMeta("LiveCity:ScenarioPed:Rot") && ped.pos.distanceTo(ped.getStreamSyncedMeta("LiveCity:ScenarioPed:Pos")) > 3.0) {
+        if (ped.hasStreamSyncedMeta("LiveCity:ScenarioPed:Pos") && ped.hasStreamSyncedMeta("LiveCity:ScenarioPed:Rot") && ped.pos.distanceTo(ped.getStreamSyncedMeta("LiveCity:ScenarioPed:Pos")) > 3.0) {
             const pos = ped.getStreamSyncedMeta("LiveCity:ScenarioPed:Pos")
             const rot = ped.getStreamSyncedMeta("LiveCity:ScenarioPed:Rot")
             native.setEntityCoords(ped, pos.x, pos.y, pos.z + 2.0, rot.x, rot.y, rot.z, true)
@@ -285,13 +285,13 @@ async function HandlePed(ped) {
     }
 }
 
-function setPedValue (ped){
+function setPedValue(ped) {
     if (!ped.valid) return
 
     const randomProvider = new RandomProvider()
 
-    native.setEntityCanBeDamaged(ped, false)
-    native.setPedCanBeTargetted(ped, false)
+    // native.setEntityCanBeDamaged(ped, false)
+    // native.setPedCanBeTargetted(ped, false)
     native.setDriverAbility(ped, randomProvider.getFloat())
     native.setDriverAggressiveness(ped, randomProvider.getFloat())
     //native.setPedConfigFlag(ped, 251, true)
@@ -302,8 +302,8 @@ function setPedValue (ped){
     native.setPedConfigFlag(ped, 229, true)
     native.setPedConfigFlag(ped, 350, true)
     native.setPedConfigFlag(ped, 398, true)
-    native.setPedStayInVehicleWhenJacked(ped, true)
-    native.setPedCanBeDraggedOut(ped, false)
+    // native.setPedStayInVehicleWhenJacked(ped, true)
+    // native.setPedCanBeDraggedOut(ped, false)
     native.setEntityShouldFreezeWaitingOnCollision(ped, false)
-    native.setBlockingOfNonTemporaryEvents(ped, true)
+    // native.setBlockingOfNonTemporaryEvents(ped, true)
 }

@@ -1,7 +1,7 @@
 import alt from "@altv/server";
 import * as trees from "@shared/modules/woodcutting/trees";
 import { getLevel } from "@shared/modules/experience/experience-table";
-import { getTreeLevel } from "@shared/modules/woodcutting/functions";
+import { getTreeLevel } from "@shared/modules/woodcutting/lib";
 import { VirtualEntityType } from "@shared/interfaces";
 import { InGamePlayer } from "@/core/utility/assertions";
 

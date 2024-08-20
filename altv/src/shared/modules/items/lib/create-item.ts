@@ -10,7 +10,7 @@ import {
 import { MeleeWeaponItem, isItemKeyMeleeWeapon } from "../registry/weapons/melee-weapon.items";
 import { ClothingItem, isItemKeyClothing } from "../registry/clothing/clothing.items";
 import { AmmoItem, isItemKeyAmmo } from "../registry/ammo/ammo.items";
-import { MetalItem, WoodItem, isItemKeyMetal, isItemKeyWood } from "../registry";
+import { BasicMaterialItem, isItemKeyBasicMaterial } from "../registry";
 import { ItemGrade } from "../enums";
 import { isItemKeyStackable } from "./get-item-flags";
 
@@ -61,11 +61,11 @@ export function getItemDefaultData(key: ItemKey): Partial<Item> {
     return {
       customName: null,
     } satisfies Partial<ClothingItem>;
-  } else if (isItemKeyMetal(key) || isItemKeyWood(key)) {
+  } else if (isItemKeyBasicMaterial(key)) {
     return {
       amount: 1,
       grade: ItemGrade.COMMON,
-    } satisfies Partial<MetalItem | WoodItem>;
+    } satisfies Partial<BasicMaterialItem>;
   } else if (isItemKeyStackable(key)) {
     return {
       amount: 1,

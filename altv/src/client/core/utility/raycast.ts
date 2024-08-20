@@ -3,6 +3,32 @@ import game from "@altv/natives";
 import { getDirectionFromRotation, rotationToDirection } from "./math";
 
 const Raycast = {
+  screenPosToWorldPos(screenPos: alt.IVector2): alt.IVector3 | null {
+    const worldPos = alt.screenToWorld(screenPos);
+    const vec = worldPos.sub(alt.Cam.pos);
+    const castEnd = alt.Cam.pos.add(vec.mul(1000));
+
+    const raycast = game.startExpensiveSynchronousShapeTestLosProbe(
+      worldPos.x,
+      worldPos.y,
+      worldPos.z,
+      castEnd.x,
+      castEnd.y,
+      castEnd.z,
+      -1,
+      alt.Player.local,
+      0,
+    );
+
+    const [status, didHit, position, surfaceNormal, materialHash, entityHit] =
+      game.getShapeTestResultIncludingMaterial(raycast);
+
+    if (didHit) {
+      return position;
+    }
+
+    return null;
+  },
   performRaycast(
     start: alt.IVector3,
     end: alt.IVector3,

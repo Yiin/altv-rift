@@ -64,6 +64,11 @@ alt.Events.onWeaponDamage(
         Math.min(target.streamSyncedMeta.maxHealth, target.streamSyncedMeta.health - totalDamage),
       );
 
+      if (Number.isNaN(newHealth)) {
+        // we don't control this ped, ignore custom damage
+        return;
+      }
+
       target.health = newHealth + PED_HEALTH_ZERO_DEFAULT;
       target.streamSyncedMeta.health = newHealth;
     } else {

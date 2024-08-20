@@ -83,6 +83,6 @@ watch(
     <Notifications />
   </Screen>
   <Screen v-else>
-    <h1 class="font-extrabold text-white">Character store is not initialized</h1>
+    <h1 class="font-extrabold text-white">Character store is not initialized, try to reconnect?</h1>
   </Screen>
 </template>

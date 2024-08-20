@@ -1,6 +1,5 @@
-import { Inventory, ItemSourceOrigin, PlayerItemSource, StorageSource } from "@shared/interfaces";
-import { createInventory } from "@shared/modules/inventory";
-import { FishingBait, FishingBaitItemKey, FishingRod, ItemGrade, createItem } from "@shared/modules/items";
+import { Inventory, PlayerItemSource, StorageSource } from "@shared/interfaces";
+import { FishingBaitItemKey } from "@shared/modules/items";
 import { BlueprintRecipe } from "@shared/modules/production";
 
 export enum PlayerFlags {

@@ -14,7 +14,7 @@ import {
   isMaleClothing,
   isUnisexClothing,
 } from "@shared/modules/items";
-import { addItemToInventory } from "@shared/modules/inventory";
+import { addItemToInventory, isMatchingItem, ItemMatchFlags } from "@shared/modules/inventory";
 import { isItemFishingBait } from "@shared/modules/items/registry/fish-bait.items";
 import { InGamePlayer } from "@/core/utility/assertions";
 import { findItem, findInventoryByItemSource, removeItem } from "@/modules/items-manager";
@@ -120,7 +120,7 @@ alt.Player.prototype.equipItem = function (source, equipmentSlot) {
 
     const unequippedItem = this.character.equipment[equipmentSlot];
 
-    const isSameAmmo = isItemAmmo(item) && unequippedItem?.key === item.key;
+    const isSameAmmo = unequippedItem && isMatchingItem(unequippedItem, item, ItemMatchFlags.IGNORE_AMOUNT);
 
     if (isSameAmmo) {
       // @ts-expect-error

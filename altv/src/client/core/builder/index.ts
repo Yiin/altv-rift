@@ -6,6 +6,7 @@ import { reactive, watch } from "vue";
 import { ClientEvents } from "@shared/events/client";
 import { loadSceneAtCoords } from "../utility/scene";
 import { isTyping } from "../user-interface/event-helpers";
+import Raycast from "../utility/raycast";
 
 let cam: number | null = null;
 
@@ -176,6 +177,36 @@ useWebview((webview) => {
       return;
     }
     pos.z -= deltaY * 0.12;
+  });
+
+  webview.on(ClientEvents.FromWebview.LEFT_CLICK, (pos) => {
+    if (!isBuilderEnabled()) {
+      alt.log('builder not enabled');
+      return;
+    }
+
+    const worldPos = Raycast.screenPosToWorldPos(pos);
+    if (!worldPos) {
+      alt.log('no world pos', pos);
+      return;
+    }
+
+    alt.log('left click', worldPos);
+    alt.Drawing.drawText3d('left click', worldPos);
+  });
+
+  webview.on(ClientEvents.FromWebview.RIGHT_CLICK, (pos) => {
+    if (!isBuilderEnabled()) {
+      return;
+    }
+
+    const worldPos = Raycast.screenPosToWorldPos(pos);
+    if (!worldPos) {
+      return;
+    }
+
+    alt.log('right click', worldPos);
+    alt.Drawing.drawText3d('right click', worldPos);
   });
 });
 

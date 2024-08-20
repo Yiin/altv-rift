@@ -11,6 +11,8 @@ export const FromWebview = {
   CLOSE_WINDOW: "CLOSE_WINDOW",
   WHEEL_UP: "WHEEL_UP",
   WHEEL_DOWN: "WHEEL_DOWN",
+  LEFT_CLICK: "LEFT_CLICK",
+  RIGHT_CLICK: "RIGHT_CLICK",
 } as const;
 
 declare module "@altv/shared" {
@@ -30,6 +32,8 @@ declare module "@altv/shared" {
       [FromWebview.CLOSE_WINDOW]: () => void;
       [FromWebview.WHEEL_UP]: (delta: number) => void;
       [FromWebview.WHEEL_DOWN]: (delta: number) => void;
+      [FromWebview.LEFT_CLICK]: (pos: { x: number; y: number }) => void;
+      [FromWebview.RIGHT_CLICK]: (pos: { x: number; y: number }) => void;
     }
   }
 }

@@ -10,6 +10,7 @@ import Card from "@/components/ui/card/Card.vue";
 import { cn } from "@/lib/utils";
 import WorldEventsView from "./WorldEvents/WorldEventsView.vue";
 import { useEventListener } from "@/composables/use-event-listener";
+import { ClientEvents } from "@shared/events/client";
 
 enum View {
   WorldEvents = "WorldEvents",
@@ -42,14 +43,26 @@ const currentView = ref<View>();
 // left click
 useEventListener('click', (event) => {
   if (event.button === 0) {
-    console.log('left click')
+    console.log('left click');
+    const cursorPosition = {
+      x: event.clientX,
+      y: event.clientY,
+    };
+    console.log(cursorPosition);
+    alt.emitRaw(ClientEvents.FromWebview.LEFT_CLICK, cursorPosition);
   }
 });
 
 // right click
 useEventListener('contextmenu', (event) => {
   if (event.button === 2) {
-    console.log('right click')
+    console.log('right click');
+    const cursorPosition = {
+      x: event.clientX,
+      y: event.clientY,
+    };
+    console.log(cursorPosition);
+    alt.emitRaw(ClientEvents.FromWebview.RIGHT_CLICK, cursorPosition);
   }
 });
 </script>

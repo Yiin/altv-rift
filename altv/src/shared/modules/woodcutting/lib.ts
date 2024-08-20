@@ -1,13 +1,29 @@
-import { type TreeLogItemKey } from "../items";
+import { ItemGrade } from "../items";
 import { type TreeType } from "./interfaces";
-import { TreeLevels, TreeXPPerLog } from "./tree-levels";
+import { TreeGrades, TreeXPPerLog } from "./tree-levels";
 import { TreeTypes } from "./tree-types";
+
+const GRADE_TO_LEVEL = {
+  [ItemGrade.COMMON]: 1,
+  [ItemGrade.UNCOMMON]: 20,
+  [ItemGrade.RARE]: 40,
+  [ItemGrade.EPIC]: 60,
+  [ItemGrade.LEGENDARY]: 80,
+} as const;
+
+export function getTreeGrade(type?: TreeType): ItemGrade {
+  if (!type || type in TreeTypes === false) {
+    return ItemGrade.COMMON;
+  }
+  return TreeGrades[type];
+}
 
 export function getTreeLevel(type?: TreeType): number {
   if (!type || type in TreeTypes === false) {
     return 1;
   }
-  return TreeLevels[type];
+  const grade = TreeGrades[type];
+  return GRADE_TO_LEVEL[grade];
 }
 
 export function getTreeName(type?: TreeType): string {
@@ -15,13 +31,6 @@ export function getTreeName(type?: TreeType): string {
     return "Unknown tree";
   }
   return TreeTypes[type].name;
-}
-
-export function getTreeLogs(type?: TreeType): TreeLogItemKey {
-  if (!type || type in TreeTypes === false) {
-    throw new Error("Invalid tree type.");
-  }
-  return TreeTypes[type].logs;
 }
 
 export function getTreeLogXp(type?: TreeType): number {

@@ -21,11 +21,11 @@ alt.Events.onWindowResolutionChange(({ newResolution }) => {
 });
 
 export function isValidAnchor(entity: alt.BaseObject): entity is AnchorEntity {
-  return getAnchorType(entity) !== null;
+  return entity && getAnchorType(entity) !== null;
 }
 
 export function getAnchorType(entity: alt.BaseObject): AnchorType | null {
-  if (entity.valid) {
+  if (entity && entity.valid) {
     if (entity.type === alt.Enums.BaseObjectType.PED) {
       return AnchorType.Ped;
     }
