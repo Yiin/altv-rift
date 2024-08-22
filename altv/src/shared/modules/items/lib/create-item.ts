@@ -10,7 +10,7 @@ import {
 import { MeleeWeaponItem, isItemKeyMeleeWeapon } from "../registry/weapons/melee-weapon.items";
 import { ClothingItem, isItemKeyClothing } from "../registry/clothing/clothing.items";
 import { AmmoItem, isItemKeyAmmo } from "../registry/ammo/ammo.items";
-import { BasicMaterialItem, isItemKeyBasicMaterial } from "../registry";
+import { ItemComponents, ItemComponentsItem, MaterialItem, isItemKeyItemComponents, isItemKeyMaterial } from "../registry";
 import { ItemGrade } from "../enums";
 import { isItemKeyStackable } from "./get-item-flags";
 
@@ -26,6 +26,15 @@ export function createItem<T extends ItemKey, D = ItemByKey<T>>(
   return {
     ...getItemDefaultData(key),
     ...(data ?? {}),
+    ...(isItemKeyItemComponents(key) ? {
+      grade: {
+        [ItemComponents.COMMON_ITEM_COMPONENTS]: ItemGrade.COMMON,
+        [ItemComponents.UNCOMMON_ITEM_COMPONENTS]: ItemGrade.UNCOMMON,
+        [ItemComponents.RARE_ITEM_COMPONENTS]: ItemGrade.RARE,
+        [ItemComponents.EPIC_ITEM_COMPONENTS]: ItemGrade.EPIC,
+        [ItemComponents.LEGENDARY_ITEM_COMPONENTS]: ItemGrade.LEGENDARY,
+      }[key]
+    } : {}),
     key,
   } as any;
 }
@@ -61,11 +70,15 @@ export function getItemDefaultData(key: ItemKey): Partial<Item> {
     return {
       customName: null,
     } satisfies Partial<ClothingItem>;
-  } else if (isItemKeyBasicMaterial(key)) {
+  } else if (isItemKeyMaterial(key)) {
     return {
       amount: 1,
       grade: ItemGrade.COMMON,
-    } satisfies Partial<BasicMaterialItem>;
+    } satisfies Partial<MaterialItem>;
+  } else if (isItemKeyItemComponents(key)) {
+    return {
+      amount: 1,
+    } satisfies Partial<ItemComponentsItem>;
   } else if (isItemKeyStackable(key)) {
     return {
       amount: 1,

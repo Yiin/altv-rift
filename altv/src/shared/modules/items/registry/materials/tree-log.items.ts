@@ -1,6 +1,7 @@
 import { registerItems } from "../../items-registry";
 import { makeKeys } from "../../../../utility/make-keys";
-import { Item, ItemKey } from "../../types";
+import { Item } from "../../types";
+import { ItemGrade } from "../../enums";
 
 export const TreeLogs = makeKeys<TreeLogItemKey>()({
   HAWTHORN_LOGS: "hawthorn_logs",
@@ -29,6 +30,7 @@ export type TreeLogItemKey = Brand<string, "TreeLogItemKey">;
 export type TreeLogItem = {
   key: TreeLogItemKey;
   amount: number;
+  grade: ItemGrade;
 };
 
 export type TreeLogItemInfo = {

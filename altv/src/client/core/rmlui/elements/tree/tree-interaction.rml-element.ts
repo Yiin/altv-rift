@@ -1,14 +1,14 @@
 import alt from "@altv/client";
-import game from "@altv/natives";
 import { getLevel } from "@shared/modules/experience/experience-table";
-import { getTreeLevel, getTreeName } from "@shared/modules/woodcutting";
+import { getTreeGrade, getTreeLevel, getTreeName } from "@shared/modules/woodcutting";
 import { useCharacter } from "@/core/store/character.store";
-import { br, div } from "../../renderer/rml-tags";
+import { br, div, span } from "../../renderer/rml-tags";
 import { AnchorType } from "../../renderer/anchors";
 import { registerElement } from "../../renderer/element-registry";
 import { everyFrame } from "../../renderer/hooks/every-frame";
 import { rem } from "../../renderer/pixel";
 import { Icon } from "../../components/icon";
+import { ItemGrade } from "@shared/modules/items";
 
 registerElement({
   key: "treename",
@@ -18,6 +18,7 @@ registerElement({
     const character = useCharacter();
     const type = tree.streamSyncedMeta.treeType;
     const name = getTreeName(type);
+    const grade = getTreeGrade(type);
     const level = getTreeLevel(type);
     const isUnavailable = getLevel(character.skills.woodcutting) < level;
     const isOnCooldown = (tree.streamSyncedMeta.cooldownUntil ?? 0) > Date.now();
@@ -50,7 +51,19 @@ registerElement({
                 isUnavailable ? "Level too low" : isOnCooldown ? "On cooldown" : "Ready to cut",
               ]),
               br([]),
-              div([name]),
+              div([name, span({
+                style: {
+                  "font-weight": "bold", color: ({
+                    [ItemGrade.COMMON]: `rgb(255, 255, 255)`,
+                    [ItemGrade.UNCOMMON]: `rgb(185, 240, 69)`,
+                    [ItemGrade.RARE]: `rgb(32, 135, 255)`,
+                    [ItemGrade.EPIC]: `rgb(187, 44, 255)`,
+                    [ItemGrade.LEGENDARY]: `rgb(255, 218, 87)`,
+                    [ItemGrade.CONTRABAND]: `rgb(255, 218, 87)`,
+                    [ItemGrade.LIMITED]: `rgb(0, 255, 234)`,
+                  })[grade]
+                }
+              }, [` (${grade})`])]),
               br([]),
               div({ style: { "font-size": rem(12) } }, [`Level ${level}`]),
             ]),

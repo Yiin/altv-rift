@@ -40,12 +40,14 @@ export function isEquipmentSlotQuickSlot(
   | EquipmentSlot.QuickSlot1
   | EquipmentSlot.QuickSlot2
   | EquipmentSlot.QuickSlot3
-  | EquipmentSlot.QuickSlot4 {
+  | EquipmentSlot.QuickSlot4
+  | EquipmentSlot.QuickSlot5 {
   const isQuickSlot = [
     EquipmentSlot.QuickSlot1,
     EquipmentSlot.QuickSlot2,
     EquipmentSlot.QuickSlot3,
     EquipmentSlot.QuickSlot4,
+    EquipmentSlot.QuickSlot5,
   ].includes(slot);
 
   return isQuickSlot;

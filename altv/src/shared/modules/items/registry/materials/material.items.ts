@@ -13,6 +13,7 @@ import { OreItem, OreItemInfo, OreItemKey, isItemKeyOre } from "./ore.items";
 import { ScrapItem, ScrapItemInfo, ScrapItemKey, isItemKeyScrap } from "./scrap.items";
 import { LeatherItem, LeatherItemInfo, LeatherItemKey, isItemKeyLeather } from "./leather.items";
 import { HideItem, HideItemInfo, HideItemKey, isItemKeyHide } from "./hide.items";
+import { ItemComponentsItem, ItemComponentsItemInfo, ItemComponentsItemKey } from "./item-components.items";
 
 export type MaterialItemKey =
   | FoodIngredientItemKey
@@ -23,7 +24,8 @@ export type MaterialItemKey =
   | SandItemKey
   | OreItemKey
   | HideItemKey
-  | ScrapItemKey;
+  | ScrapItemKey
+  | ItemComponentsItemKey;
 
 export type MaterialItemInfo =
   | FoodIngredientItemInfo
@@ -34,7 +36,8 @@ export type MaterialItemInfo =
   | SandItemInfo
   | OreItemInfo
   | HideItemInfo
-  | ScrapItemInfo;
+  | ScrapItemInfo
+  | ItemComponentsItemInfo;
 
 export type MaterialItem =
   | FoodIngredientItem
@@ -45,7 +48,8 @@ export type MaterialItem =
   | SandItem
   | OreItem
   | HideItem
-  | ScrapItem;
+  | ScrapItem
+  | ItemComponentsItem;
 
 export function isItemKeyMaterial(key: string): key is MaterialItemKey {
   return (

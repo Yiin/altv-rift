@@ -260,6 +260,9 @@ rpc.registerWebview(ServerCall.FromWebview.MOVE_ITEM, (player, from, to, amount 
     return swapInventoryItems(from as InventoryItemSource, to as InventoryItemSource, amount);
   }
 
+  /**
+   * Between equipment slots
+   */
   if (
     from.origin === ItemSourceOrigin.PlayerEquipment &&
     to.origin === ItemSourceOrigin.PlayerEquipment

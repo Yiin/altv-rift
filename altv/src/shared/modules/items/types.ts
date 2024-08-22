@@ -90,6 +90,9 @@ import {
   WoodItemInfo,
   WoodItemKey,
   ToolItemInfo,
+  ItemComponentsItem,
+  ItemComponentsItemInfo,
+  ItemComponentsItemKey,
 } from "./registry";
 import { LeatherItem, LeatherItemInfo, LeatherItemKey } from "./registry/materials/leather.items";
 import { HideItemKey, HideItem, HideItemInfo } from "./registry/materials/hide.items";
@@ -171,6 +174,8 @@ type ItemMapping<T> = T extends FirearmWeaponItemKey
   ? [NoteItem, NoteItemInfo]
   : T extends UnlearnedBlueprintItemKey
   ? [BlueprintItem, BlueprintItemInfo]
+  : T extends ItemComponentsItemKey
+  ? [ItemComponentsItem, ItemComponentsItemInfo]
   : never;
 
 type MappedItemKeys = { [K in ItemKey]: ItemMapping<K> extends never ? K : never };

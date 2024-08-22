@@ -30,6 +30,7 @@ export * from "./consumables/consumable.items";
 export * from "./fish-bait.items";
 export * from "./materials/food-ingredient.items";
 export * from "./materials/hide.items";
+export * from "./materials/item-components.items";
 export * from "./materials/leather.items";
 export * from "./materials/material.items";
 export * from "./materials/metal.items";

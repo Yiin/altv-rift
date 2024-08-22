@@ -7,9 +7,7 @@ import { clientState } from "@/core/store/client.store";
 // Update the nearby items periodically, so the ordering by distance is updated
 alt.Timers.setInterval(updateNearbyItems, 2000);
 
-alt.Events.onResourceStart(() => {
-  alt.Font.register("client/core/rmlui/fonts/jost/Jost-Regular.ttf");
-});
+alt.Font.register("client/core/rmlui/fonts/jost/Jost-Regular.ttf");
 
 const labels = new Map<alt.VirtualEntity, alt.TextLabel>();
 
@@ -30,14 +28,14 @@ alt.Events.onWorldObjectStreamIn(({ object }) => {
     color:
       "grade" in item
         ? {
-            [ItemGrade.COMMON]: new alt.RGBA(255, 255, 255, 255),
-            [ItemGrade.UNCOMMON]: new alt.RGBA(185, 240, 69, 255),
-            [ItemGrade.RARE]: new alt.RGBA(32, 135, 255, 255),
-            [ItemGrade.EPIC]: new alt.RGBA(187, 44, 255, 255),
-            [ItemGrade.LEGENDARY]: new alt.RGBA(255, 218, 87, 255),
-            [ItemGrade.CONTRABAND]: new alt.RGBA(255, 218, 87, 255),
-            [ItemGrade.LIMITED]: new alt.RGBA(0, 255, 234, 255),
-          }[item.grade]
+          [ItemGrade.COMMON]: new alt.RGBA(255, 255, 255, 255),
+          [ItemGrade.UNCOMMON]: new alt.RGBA(185, 240, 69, 255),
+          [ItemGrade.RARE]: new alt.RGBA(32, 135, 255, 255),
+          [ItemGrade.EPIC]: new alt.RGBA(187, 44, 255, 255),
+          [ItemGrade.LEGENDARY]: new alt.RGBA(255, 218, 87, 255),
+          [ItemGrade.CONTRABAND]: new alt.RGBA(255, 218, 87, 255),
+          [ItemGrade.LIMITED]: new alt.RGBA(0, 255, 234, 255),
+        }[item.grade]
         : new alt.RGBA(255, 255, 255, 255),
     pos: object.pos,
     fontSize: 32,
