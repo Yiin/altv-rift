@@ -2,7 +2,7 @@
 
 cd /source
 
-stow --target=/altv .
+stow --target=/altv --adopt .
 
 cd /altv
 

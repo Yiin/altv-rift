@@ -252,3 +252,5 @@ export const TreeTypes = {
     name: "Olive Tree",
   },
 } as const;
+
+export type TreeType = keyof typeof TreeTypes;

@@ -1,5 +1,5 @@
 import { EquipmentSlot, Inventory, InventoryItem } from "@shared/interfaces";
-import { Item, ItemByKey, ItemKey } from "../../items";
+import { Item, ItemByKey, ItemKey, PartialItem } from "../../items";
 
 export enum ItemMatchFlags {
   NONE = 0,
@@ -19,7 +19,7 @@ export function getInventoryItem<T extends Item>(
   flags = ItemMatchFlags.NONE
 ): InventoryItem<T> | undefined {
   return inventory.items.find((inventoryItem): inventoryItem is InventoryItem<T> =>
-    isMatchingItem(item, inventoryItem.item, flags),
+    isMatchingItem(item as PartialItem, inventoryItem.item, flags),
   );
 }
 
@@ -42,24 +42,22 @@ export function isEquipmentSlotQuickSlot(
   | EquipmentSlot.QuickSlot3
   | EquipmentSlot.QuickSlot4
   | EquipmentSlot.QuickSlot5 {
-  const isQuickSlot = [
+  return [
     EquipmentSlot.QuickSlot1,
     EquipmentSlot.QuickSlot2,
     EquipmentSlot.QuickSlot3,
     EquipmentSlot.QuickSlot4,
     EquipmentSlot.QuickSlot5,
   ].includes(slot);
-
-  return isQuickSlot;
 }
 
 /**
  * Returns true if part matches itemToMatch properties and it's amount is same or lower than the items.
  * In other words, part is the item we're looking for and itemToMatch is item we're comparing against.
- * If we're looking for grade RARE and amount 100, it itemToMatch has
+ * If we're looking for grade RARE and amount 100, and itemToMatch has
  * grade COMMON or amount < 100, we return false.
  */
-export function isMatchingItem(itemToMatch: Partial<Item>, item: Item, flags = ItemMatchFlags.NONE): boolean {
+export function isMatchingItem(itemToMatch: PartialItem, item: Item, flags = ItemMatchFlags.NONE): boolean {
   if (itemToMatch.key !== item.key) {
     return false;
   }

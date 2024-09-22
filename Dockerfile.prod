@@ -23,7 +23,7 @@ RUN apt-get update -y && \
   rm -rf /var/lib/apt/lists/*
 
 USER root
-ARG BRANCH=dev
+ARG BRANCH=release
 ARG DATABASE_URL
 ARG DISCORD_CLIENT_ID
 ARG DISCORD_CLIENT_SECRET

@@ -1,6 +1,6 @@
 import alt from "@altv/server";
 import { ServerEvents } from "@shared/events/server";
-import { angleToFaceTarget } from "@/core/utility/vector";
+import { getAngleToFaceTarget } from "@/core/utility/vector";
 
 declare module "@altv/server" {
   interface Ped {
@@ -10,7 +10,7 @@ declare module "@altv/server" {
 }
 
 alt.Ped.prototype.taskTurnPedToFaceCoord = function (pos) {
-  this.rot = new alt.Vector3(0, 0, angleToFaceTarget(this.pos, pos));
+  this.rot = new alt.Vector3(0, 0, getAngleToFaceTarget(this.pos, pos));
 };
 
 alt.Ped.prototype.playAnimation = function (dict, name, speed, duration) {

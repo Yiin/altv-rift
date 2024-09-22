@@ -144,11 +144,6 @@ alt.Player.prototype.equipItem = function (source, equipmentSlot) {
       if (isFromQuickSlot) {
         // @ts-expect-error
         this.character.equipment[source.equipmentSlot] = unequippedItem;
-
-        alt.log(`[equipItem] Moved item from quick slot to equipment slot`, {
-          from: source.equipmentSlot,
-          to: equipmentSlot,
-        });
       }
     }
 

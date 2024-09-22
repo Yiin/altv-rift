@@ -1,16 +1,8 @@
 import { registerItems } from "@shared/modules/items";
-import {
-  AmmoBlueprint,
-  ClothingBlueprint,
-  FirearmWeaponBlueprint,
-  MeleeWeaponBlueprint,
-  ThrowableWeaponBlueprint,
-  ToolBlueprint,
-  WeaponComponentBlueprint,
-  getBlueprints,
-} from "@shared/modules/production";
 import { makeKeys } from "@shared/utility/make-keys";
-import { Item } from "../types";
+import { Item } from "../items/types";
+import { AmmoBlueprint, ClothingBlueprint, FirearmWeaponBlueprint, ThrowableWeaponBlueprint, MeleeWeaponBlueprint, ToolBlueprint, WeaponComponentBlueprint } from "./blueprints";
+import { getBlueprints } from "./blueprints.registry";
 
 export const UnlearnedBlueprint = makeKeys<UnlearnedBlueprintItemKey>()({
   ...blueprintKeysToBlueprintItemKeys(AmmoBlueprint),

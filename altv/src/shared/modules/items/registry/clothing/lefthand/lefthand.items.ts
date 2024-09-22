@@ -6,7 +6,6 @@ export type LeftHandItem = {
   key: LeftHandItemKey;
 
   customName?: string | null;
-  grade: ItemGrade;
 };
 
 export type LeftHandItemInfo = {

@@ -1,7 +1,7 @@
 import { Shop } from "@shared/interfaces";
 import { StorageType } from "@shared/store/game-state.store";
 import { createStorage } from "@/modules/items-manager";
-import { getShopsRegistry } from "../registry";
+import { getShopsRegistry } from "../shops.registry";
 import { createStaticPed } from "@/modules/peds/registry";
 import { PedFlags } from "@shared/modules/ped";
 

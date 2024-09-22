@@ -50,17 +50,14 @@ export function isBetweenVectors(
   return validX && validY ? true : false;
 }
 
-export function angleToFaceTarget(subject: alt.IVector2, target: alt.IVector2): number {
-  // Calculate the vector from subject to target
-  const vectorToTarget = new alt.Vector2(target).sub(subject);
+export function getAngleToFaceTarget(subject: alt.IVector2, target: alt.IVector2): number {
+  let angle = -90 + Math.atan2(target.y - subject.y, target.x - subject.x) * 180 / Math.PI;
+  if (angle < 0) {
+    angle += 360;
+  }
 
-  // Calculate the angle in radians relative to the positive x-axis and adjust by -π/2
-  // Normalize the angle using modulo to ensure it stays within -π to π
-  const adjustedAngleRad =
-    ((Math.atan2(vectorToTarget.y, vectorToTarget.x) - Math.PI / 2 + Math.PI) % (2 * Math.PI)) -
-    Math.PI;
-
-  return adjustedAngleRad;
+  const angleAsRadians = angle * (Math.PI / 180);
+  return angleAsRadians;
 }
 
 /**

@@ -1,5 +1,3 @@
-import { getItemInfoByKey } from "../../items-registry";
-import { getItemKeyEquipmentSlot } from "../../lib";
 import { Item } from "../../types";
 import {
   AccessoryItem,
@@ -114,23 +112,21 @@ export function isItemClothing(item: Item): item is ClothingItem {
 }
 
 export function isFemaleClothing(key: ClothingItemKey): boolean {
-  const info = getItemInfoByKey(key);
+  return key.includes("_F_");
+  // const info = getItemInfoByKey(key);
 
-  return info.ped === "mp_f_freemode_01";
+  // return info.ped === "mp_f_freemode_01";
 }
 
 export function isMaleClothing(key: ClothingItemKey): boolean {
-  const info = getItemInfoByKey(key);
+  return key.includes("_M_");
+  // const info = getItemInfoByKey(key);
 
-  return info.ped === "mp_m_freemode_01";
+  // return info.ped === "mp_m_freemode_01";
 }
 
 export function isUnisexClothing(key: ClothingItemKey): boolean {
-  const info = getItemInfoByKey(key);
-
-  const slot = getItemKeyEquipmentSlot(key);
-
-  return !!slot && isComponentVariation(slot) && [1, 5].includes(info.componentId);
+  return isItemKeyMask(key) /* || isItemKeyBackpack(key) */;
 }
 
 export function isComponentVariation(equipmentSlot: string): boolean {

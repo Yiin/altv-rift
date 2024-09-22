@@ -315,10 +315,10 @@ rpc.registerWebview(ServerCall.FromWebview.MOVE_ITEM, (player, from, to, amount 
       ];
 
       if (isEquipmentSlotQuickSlot(fromSlot)) {
-        emit(ServerEvents.FromServer.ITEM_UNEQUIP, player, toSlot, player.character.equipment[fromSlot]);
+        emit(ServerEvents.FromServer.ITEM_UNEQUIP, player, toSlot, player.character.equipment[fromSlot]!);
         emit(ServerEvents.FromServer.ITEM_EQUIP, player, fromItem);
       } else {
-        emit(ServerEvents.FromServer.ITEM_UNEQUIP, player, fromSlot, player.character.equipment[toSlot]);
+        emit(ServerEvents.FromServer.ITEM_UNEQUIP, player, fromSlot, player.character.equipment[toSlot]!);
         emit(ServerEvents.FromServer.ITEM_EQUIP, player, toItem);
       }
       return true;
@@ -411,20 +411,7 @@ rpc.registerWebview(ServerCall.FromWebview.TAKE_ALL_ITEMS, (player, storageSourc
 rpc.registerClient(ServerCall.FromClient.USE_QUICK_SLOT, (player, slot): boolean => {
   needsToBeInGame(player);
 
-  console.log(
-    "ServerCall.FromClient.USE_QUICK_SLOT",
-    slot,
-    JSON.stringify(player.character.equipment),
-  );
-
-  const isQuickSlot = [
-    EquipmentSlot.QuickSlot1,
-    EquipmentSlot.QuickSlot2,
-    EquipmentSlot.QuickSlot3,
-    EquipmentSlot.QuickSlot4,
-  ].includes(slot);
-
-  if (!isQuickSlot) {
+  if (!isEquipmentSlotQuickSlot(slot)) {
     return false;
   }
 

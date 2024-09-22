@@ -13,7 +13,7 @@ RUN npm i -g bun && bun install && bun add -g altv-pkg@latest
 
 FROM base as downloaded
 USER root
-ARG BRANCH=dev
+ARG BRANCH=rc
 ENV ALTV_BRANCH=$BRANCH
 WORKDIR /altv
 EXPOSE 7788/udp 7788/tcp 7799/udp 5000/tcp 3000/tcp

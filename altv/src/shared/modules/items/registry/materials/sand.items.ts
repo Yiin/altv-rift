@@ -1,6 +1,6 @@
 import { registerItems } from "../../items-registry";
 import { makeKeys } from "../../../../utility/make-keys";
-import { Item, ItemKey } from "../../types";
+import { Item } from "../../types";
 
 export const Sand = makeKeys<SandItemKey>()({
   SAND: "sand",

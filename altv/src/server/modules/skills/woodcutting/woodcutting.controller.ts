@@ -3,7 +3,7 @@ import { minutesToMilliseconds } from "date-fns";
 import { ServerCall } from "@shared/calls/server";
 import { getLevel } from "@shared/modules/experience/experience-table";
 import { createItem, TreeLogs } from "@shared/modules/items";
-import { getTreeGrade, getTreeLogXp } from "@shared/modules/woodcutting";
+import { getTreeGrade, getTreeLog, getTreeLogXp } from "@shared/modules/woodcutting";
 import { EquipmentSlot } from "@shared/interfaces";
 import { MessageType } from "@shared/modules/chat";
 import { sendChatMessage } from "@/modules/chat";
@@ -111,7 +111,7 @@ rpc.registerClient(ServerCall.FromClient.TREE_HIT, (player, virtualTreeId) => {
         MessageType.Success,
       );
     }
-    player.addItem(createItem(TreeLogs.PALM_LOGS, { amount: logs, grade: getTreeGrade(treeType) }));
+    player.addItem(createItem(getTreeLog(treeType), { amount: logs }));
   }
 
   return logs;

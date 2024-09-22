@@ -18,7 +18,7 @@
   },
   "type": "module",
   "dependencies": {
-    "@prisma/client": "^5.3.1",
+    "@prisma/client": "^5.19.1",
     "@sentry/node": "^7.30.0",
     "@sentry/tracing": "^7.30.0",
     "@vue/reactivity": "^3.4.21",
@@ -98,7 +98,7 @@
     "fkill": "^8.1.1",
     "node-ipc": "^11.1.0",
     "prettier": "^3.2.5",
-    "prisma": "^5.3.1",
+    "prisma": "^5.19.1",
     "ts-node": "^10.9.1",
     "watcher": "^2.3.0",
     "xml-js": "^1.6.11"

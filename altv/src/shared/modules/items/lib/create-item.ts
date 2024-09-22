@@ -1,4 +1,4 @@
-import { Item, ItemByKey, ItemKey } from "../types";
+import { Item, ItemByKey, ItemKey, PartialItem } from "../types";
 import {
   FirearmWeaponItem,
   isItemKeyFirearmWeapon,
@@ -10,7 +10,7 @@ import {
 import { MeleeWeaponItem, isItemKeyMeleeWeapon } from "../registry/weapons/melee-weapon.items";
 import { ClothingItem, isItemKeyClothing } from "../registry/clothing/clothing.items";
 import { AmmoItem, isItemKeyAmmo } from "../registry/ammo/ammo.items";
-import { ItemComponents, ItemComponentsItem, MaterialItem, isItemKeyItemComponents, isItemKeyMaterial } from "../registry";
+import { ItemComponentsItem, MaterialItem, isItemKeyItemComponents, isItemKeyMaterial } from "../registry";
 import { ItemGrade } from "../enums";
 import { isItemKeyStackable } from "./get-item-flags";
 
@@ -23,23 +23,22 @@ export function createItem<T extends ItemKey, D = ItemByKey<T>>(
     delete data.amount;
   }
 
+  const grade = key.startsWith("common_") ? ItemGrade.COMMON :
+    key.startsWith("uncommon_") ? ItemGrade.UNCOMMON :
+      key.startsWith("rare_") ? ItemGrade.RARE :
+        key.startsWith("epic_") ? ItemGrade.EPIC :
+          key.startsWith("legendary_") ? ItemGrade.LEGENDARY :
+            null;
+
   return {
     ...getItemDefaultData(key),
     ...(data ?? {}),
-    ...(isItemKeyItemComponents(key) ? {
-      grade: {
-        [ItemComponents.COMMON_ITEM_COMPONENTS]: ItemGrade.COMMON,
-        [ItemComponents.UNCOMMON_ITEM_COMPONENTS]: ItemGrade.UNCOMMON,
-        [ItemComponents.RARE_ITEM_COMPONENTS]: ItemGrade.RARE,
-        [ItemComponents.EPIC_ITEM_COMPONENTS]: ItemGrade.EPIC,
-        [ItemComponents.LEGENDARY_ITEM_COMPONENTS]: ItemGrade.LEGENDARY,
-      }[key]
-    } : {}),
+    ...(grade ? { grade } : {}),
     key,
   } as any;
 }
 
-export function getItemDefaultData(key: ItemKey): Partial<Item> {
+export function getItemDefaultData(key: ItemKey): PartialItem {
   if (isItemKeyFirearmWeapon(key)) {
     return {
       durability: 100,

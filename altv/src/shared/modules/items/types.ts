@@ -13,9 +13,6 @@ import {
   ArmorItem,
   ArmorItemInfo,
   ArmorItemKey,
-  BlueprintItem,
-  BlueprintItemInfo,
-  UnlearnedBlueprintItemKey,
   EarringsItem,
   EarringsItemInfo,
   EarringsItemKey,
@@ -65,9 +62,6 @@ import {
   SandItem,
   SandItemInfo,
   SandItemKey,
-  ScrapItem,
-  ScrapItemInfo,
-  ScrapItemKey,
   ShoesItem,
   ShoesItemInfo,
   ShoesItemKey,
@@ -96,6 +90,7 @@ import {
 } from "./registry";
 import { LeatherItem, LeatherItemInfo, LeatherItemKey } from "./registry/materials/leather.items";
 import { HideItemKey, HideItem, HideItemInfo } from "./registry/materials/hide.items";
+import { UnlearnedBlueprintItemKey, BlueprintItem, BlueprintItemInfo } from "../production";
 
 export type StackableItem = Extract<Item, { amount: number }>;
 
@@ -164,8 +159,6 @@ type ItemMapping<T> = T extends FirearmWeaponItemKey
   ? [LeatherItem, LeatherItemInfo]
   : T extends SandItemKey
   ? [SandItem, SandItemInfo]
-  : T extends ScrapItemKey
-  ? [ScrapItem, ScrapItemInfo]
   : T extends FishingBaitItemKey
   ? [FishingBaitItem, FishingBaitItemInfo]
   : T extends ToolItemKey
@@ -188,6 +181,7 @@ type ItemMappingValidation = MissingKeys extends never ? null : ExtractMissingKe
 const MISSING_ITEM_KEYS: ItemMappingValidation = null;
 
 export type Item = ItemMapping<ItemKey>[0];
+export type PartialItem = Partial<Item>;
 export type ItemInfo = ItemMapping<ItemKey>[1];
 
 export type ItemByKey<Key extends ItemKey> = ItemMapping<Key>[0];

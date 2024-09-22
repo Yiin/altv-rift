@@ -132,7 +132,7 @@ processQuestFact.hook((player, questFact) => {
       if (
         player.isNearPed(PedKey.WOODCUTTING_TUTOR) &&
         player.removeInventoryItemByKey(
-          TreeLogs.PALM_LOGS,
+          TreeLogs.COMMON_TREE_LOGS,
           Quests.Introduction.Constants.PALM_LOGS_NEEDED,
         )
       ) {
@@ -198,8 +198,7 @@ processQuestFact.hook((player, questFact) => {
       if (
         player.isNearPed(PedKey.MINING_TUTOR) &&
         player.hasItem({
-          key: Metal.METAL,
-          grade: ItemGrade.COMMON,
+          key: Metal.COMMON_METAL,
           amount: Quests.Introduction.Constants.IRON_ORE_NEEDED,
         })
       ) {

@@ -133,8 +133,8 @@ body {
 }
 
 ::-webkit-scrollbar {
-  height: var(--scrollbar-width, 4.5rem);
-  width: var(--scrollbar-width, 3.5rem);
+  height: var(--scrollbar-width, auto);
+  width: var(--scrollbar-width, auto);
 }
 
 ::-webkit-scrollbar-thumb {

@@ -19,11 +19,10 @@ export function registerItem(info: ItemInfo): void {
  */
 export function registerItems<T extends ItemInfo>(items: T[]): Map<T["key"], T> {
   const map = new Map<T["key"], T>();
-  items.map((item) => {
+  for (const item of items) {
     registerItem(item);
     map.set(item.key, item);
-    return item;
-  });
+  }
   return map;
 }
 

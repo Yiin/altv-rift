@@ -1,17 +1,18 @@
-import { ItemGrade } from "../items";
-import { type TreeType } from "./interfaces";
-import { TreeGrades, TreeXPPerLog } from "./tree-levels";
-import { TreeTypes } from "./tree-types";
+import { ItemGrade, TreeLogs } from "../items";
+import { TreeGrades } from "./tree-grades";
+import { TreeTypes, type TreeType } from "./tree-types";
 
-const GRADE_TO_LEVEL = {
+type ValidTreeGrades = typeof TreeGrades[keyof typeof TreeGrades];
+
+const GRADE_TO_LEVEL: Record<ValidTreeGrades, number> = {
   [ItemGrade.COMMON]: 1,
   [ItemGrade.UNCOMMON]: 20,
   [ItemGrade.RARE]: 40,
   [ItemGrade.EPIC]: 60,
   [ItemGrade.LEGENDARY]: 80,
-} as const;
+};
 
-export function getTreeGrade(type?: TreeType): ItemGrade {
+export function getTreeGrade(type?: TreeType): ValidTreeGrades {
   if (!type || type in TreeTypes === false) {
     return ItemGrade.COMMON;
   }
@@ -37,15 +38,27 @@ export function getTreeLogXp(type?: TreeType): number {
   if (!type || type in TreeTypes === false) {
     throw new Error("Invalid tree type.");
   }
-  const treeLevel = getTreeLevel(type);
-  const treeXpPerLog = Object.entries(TreeXPPerLog);
+  const treeGrade = getTreeGrade(type);
 
-  for (let i = 0; i < treeXpPerLog.length - 1; i++) {
-    const [level, xp] = treeXpPerLog[i];
-    const nextLevel = +treeXpPerLog[i + 1][0];
-    if (treeLevel >= +level && treeLevel <= nextLevel) {
-      return xp;
-    }
+  return ({
+    [ItemGrade.COMMON]: 11,
+    [ItemGrade.UNCOMMON]: 33,
+    [ItemGrade.RARE]: 63,
+    [ItemGrade.EPIC]: 97,
+    [ItemGrade.LEGENDARY]: 136,
+  })[treeGrade] ?? 0;
+}
+
+export function getTreeLog(treeType?: keyof typeof TreeTypes) {
+  if (!treeType) {
+    return TreeLogs.COMMON_TREE_LOGS;
   }
-  return 0;
+
+  return {
+    [ItemGrade.COMMON]: TreeLogs.COMMON_TREE_LOGS,
+    [ItemGrade.UNCOMMON]: TreeLogs.UNCOMMON_TREE_LOGS,
+    [ItemGrade.RARE]: TreeLogs.RARE_TREE_LOGS,
+    [ItemGrade.EPIC]: TreeLogs.EPIC_TREE_LOGS,
+    [ItemGrade.LEGENDARY]: TreeLogs.LEGENDARY_TREE_LOGS,
+  }[TreeGrades[treeType]];
 }

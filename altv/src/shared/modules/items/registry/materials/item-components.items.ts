@@ -55,3 +55,20 @@ export const ItemComponentss = registerItems<ItemComponentsItemInfo>([
 export function isItemKeyItemComponents(key: string): key is ItemComponentsItemKey {
   return ItemComponentss.has(key as ItemComponentsItemKey);
 }
+
+export function getItemComponentsByGrade(grade: ItemGrade): ItemComponentsItemKey {
+  switch (grade) {
+    case ItemGrade.COMMON:
+      return ItemComponents.COMMON_ITEM_COMPONENTS;
+    case ItemGrade.UNCOMMON:
+      return ItemComponents.UNCOMMON_ITEM_COMPONENTS;
+    case ItemGrade.RARE:
+      return ItemComponents.RARE_ITEM_COMPONENTS;
+    case ItemGrade.EPIC:
+      return ItemComponents.EPIC_ITEM_COMPONENTS;
+    case ItemGrade.LEGENDARY:
+      return ItemComponents.LEGENDARY_ITEM_COMPONENTS;
+  }
+
+  throw new Error(`Invalid item components grade: ${grade}`);
+}

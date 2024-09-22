@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
+import { getItemName } from "@shared/modules/items";
 import {
   FirearmWeaponBlueprint,
   MeleeWeaponBlueprint,
@@ -11,7 +12,6 @@ import {
   canCraftRecipe,
   type BlueprintRecipe,
 } from "@shared/modules/production";
-import { getItemName } from "@shared/modules/items";
 import { useCharacter } from "@/store/synced/character.store";
 import { px } from "@/composables/use-pixel";
 import { asset } from "@/lib/utils";

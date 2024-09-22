@@ -425,10 +425,7 @@ registerPedInteractions(PedKey.MINING_TUTOR, (ped) => {
     questFacts.includes(Quests.Introduction.Facts.COMPLETED_MINING_STARTED_SMITHING) &&
     !questFacts.includes(Quests.Introduction.Facts.COMPLETED_MINING_AND_SMITHING)
   ) {
-    const metal = getInventoryItem<MetalItem>(useCharacter().inventory, {
-      key: Metal.METAL,
-      grade: ItemGrade.COMMON,
-    });
+    const metal = getInventoryItemByKey(useCharacter().inventory, Metal.COMMON_METAL);
 
     if (metal && metal.item.amount >= Quests.Introduction.Constants.IRON_ORE_NEEDED) {
       interactions.push({
@@ -499,7 +496,7 @@ registerPedInteractions(PedKey.WOODCUTTING_TUTOR, (ped) => {
     questFacts.includes(Quests.Introduction.Facts.STARTED_WOODCUTTING) &&
     !questFacts.includes(Quests.Introduction.Facts.COMPLETED_WOODCUTTING)
   ) {
-    const palmLogs = getInventoryItemByKey(useCharacter().inventory, TreeLogs.PALM_LOGS);
+    const palmLogs = getInventoryItemByKey(useCharacter().inventory, TreeLogs.COMMON_TREE_LOGS);
 
     if (palmLogs && palmLogs.item.amount >= Quests.Introduction.Constants.PALM_LOGS_NEEDED) {
       interactions.push({

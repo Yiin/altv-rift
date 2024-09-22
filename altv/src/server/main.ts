@@ -32,9 +32,7 @@ import "./scenes";
 import fs from "node:fs";
 import path from "node:path";
 import alt from "@altv/server";
-import { getBlueprint } from "@shared/modules/production";
 import { registerCmd } from "./modules/chat";
-import { needsToBeInGame } from "./core/utility/assertions";
 
 registerCmd("v", (player) => {
   alt.Vehicle.create({

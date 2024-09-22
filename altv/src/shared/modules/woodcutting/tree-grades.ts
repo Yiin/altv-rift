@@ -1,5 +1,4 @@
 import { ItemGrade } from "../items";
-import { TreeTypes } from "./tree-types";
 
 export const TreeGrades = {
   h4_prop_tree_palm_fan_bea_03b: ItemGrade.COMMON,
@@ -65,24 +64,4 @@ export const TreeGrades = {
   prop_joshua_tree_02c: ItemGrade.LEGENDARY,
   prop_joshua_tree_02d: ItemGrade.LEGENDARY,
   prop_joshua_tree_02e: ItemGrade.LEGENDARY,
-} as const satisfies Record<keyof typeof TreeTypes, ItemGrade>;
-
-export const TreeXPPerLog = {
-  1: 11,
-  5: 33,
-  10: 63,
-  15: 97,
-  20: 136,
-  25: 184,
-  30: 248,
-  35: 433,
-  40: 560,
-  45: 753,
-  50: 1054,
-  55: 1532,
-  60: 2300,
-  65: 3543,
-  70: 5568,
-  75: 8873,
-  80: 14280,
 } as const;

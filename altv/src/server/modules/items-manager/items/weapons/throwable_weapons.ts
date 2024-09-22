@@ -1,6 +1,6 @@
 import alt from "@altv/server";
 import { ServerEvents } from "@shared/events/server";
-import { getWeaponHash } from "@shared/modules/items";
+import { getWeaponHash, isItemKeyWeapon } from "@shared/modules/items";
 import { isItemThrowableWeapon } from "@shared/modules/items/registry/weapons/throwable-weapon.items";
 import { EquipmentSlot } from "@shared/interfaces";
 import { isInGame } from "@/core/utility/assertions";
@@ -37,12 +37,12 @@ alt.Events.onProjectileStart(({ player, weaponHash, cancel }) => {
     return;
   }
 
-  if (getWeaponHash(equipedWeapon.key) !== weaponHash) {
+  if (!isItemThrowableWeapon(equipedWeapon)) {
     cancel();
     return;
   }
 
-  if (!isItemThrowableWeapon(equipedWeapon)) {
+  if (getWeaponHash(equipedWeapon.key) !== weaponHash) {
     cancel();
     return;
   }

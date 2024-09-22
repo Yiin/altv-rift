@@ -1,11 +1,4 @@
 import { computed, ref } from "vue";
-import {
-  type BlueprintRecipe,
-  getBlueprint,
-  canCraftRecipe,
-  getUpgradeRecipe,
-  type Blueprint,
-} from "@shared/modules/production";
 import { ServerCall } from "@shared/calls/server";
 import {
   EquipmentSlot,
@@ -15,6 +8,13 @@ import {
   type PlayerItemSource,
 } from "@shared/interfaces";
 import { getInventoryItemInSlot } from "@shared/modules/inventory";
+import {
+  type BlueprintRecipe,
+  getBlueprint,
+  canCraftRecipe,
+  getUpgradeRecipe,
+  type Blueprint,
+} from "@shared/modules/production";
 import { useCharacter } from "@/store/synced/character.store";
 import { useGameState } from "@/store/synced/game-state.store";
 import { rpc } from "@/rpc";

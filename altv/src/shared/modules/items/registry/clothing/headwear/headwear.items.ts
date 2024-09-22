@@ -6,7 +6,6 @@ export type HeadwearItem = {
   key: HeadwearItemKey;
 
   customName?: string | null;
-  grade: ItemGrade;
 };
 
 export type HeadwearItemInfo = {

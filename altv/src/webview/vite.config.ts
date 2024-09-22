@@ -19,6 +19,13 @@ export default defineConfig(({ mode }) => ({
     fs: {
       strict: false,
     },
+    hmr: false,
+  },
+  rollupOptions: {
+    output: {
+      // Enable verbose output from Rollup
+      sourcemap: true
+    }
   },
   resolve: {
     alias: [

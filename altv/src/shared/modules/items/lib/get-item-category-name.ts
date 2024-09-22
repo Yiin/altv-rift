@@ -1,8 +1,8 @@
+import { isItemKeyBlueprint } from "@shared/modules/production";
 import {
   isItemKeyAccessory,
   isItemKeyAmmo,
   isItemKeyArmor,
-  isItemKeyBlueprint,
   isItemKeyConsumable,
   isItemKeyEarrings,
   isItemKeyFirearmWeapon,

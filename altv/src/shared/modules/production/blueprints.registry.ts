@@ -4,6 +4,11 @@ import { Blueprint, BlueprintRecipe } from "./types";
 
 const blueprints = new Map<string, Blueprint>();
 
+export async function initializeBlueprints(fn: () => void) {
+  await new Promise(resolve => setTimeout(resolve, 1000));
+  fn();
+}
+
 export function registerBlueprint(blueprint: Blueprint): void {
   blueprints.set(blueprint.key, blueprint);
 }

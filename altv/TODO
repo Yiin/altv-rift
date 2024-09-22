@@ -52,6 +52,13 @@ Loot by area:
   area specific recipes/workstations/materials
   area specific boses?
 
+Builder:
+  ☐ Shop
+  ☐ AirDrop
+  ☐ WorldLoot
+  ☐ WorldEvent
+    ☐ EnemyPeds
+
 Introduction:
   ✔ Spawn at airport @done
   ✔ Talk with cal, he will give you meds, some cash and directions. @done(24-06-08 20:55)

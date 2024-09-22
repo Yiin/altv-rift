@@ -5,7 +5,6 @@ export type GlovesItem = {
   key: GlovesItemKey;
 
   customName?: string | null;
-  grade: ItemGrade;
 };
 
 export type GlovesItemInfo = {

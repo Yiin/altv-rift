@@ -1,6 +1,5 @@
 // @index(['./*.items.ts', './**/*.(items|keys).ts'], f => `export * from "${f.path}";`)
 export * from "./ammo/ammo.items";
-export * from "./blueprint.items";
 export * from "./clothing/accessory/accessory.items";
 export * from "./clothing/accessory/accessory.keys";
 export * from "./clothing/armor/armor.items";
@@ -36,7 +35,6 @@ export * from "./materials/material.items";
 export * from "./materials/metal.items";
 export * from "./materials/ore.items";
 export * from "./materials/sand.items";
-export * from "./materials/scrap.items";
 export * from "./materials/tree-log.items";
 export * from "./materials/wood.items";
 export * from "./note.items";

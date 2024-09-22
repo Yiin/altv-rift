@@ -1,102 +1,27 @@
 <script setup lang="ts">
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
-import Card from "@/components/ui/card/Card.vue";
-import { cn } from "@/lib/utils";
 import WorldEventsView from "./WorldEvents/WorldEventsView.vue";
-import { useEventListener } from "@/composables/use-event-listener";
-import { ClientEvents } from "@shared/events/client";
+import ShopsView from "./Shops/ShopsView.vue";
+import { useAlt } from "@/composables/use-alt";
+import { WebviewEvents } from "@shared/events/webview";
+import { useClient } from "@/store/synced/client.store";
+import ShopForm from "./Shops/ShopForm.vue";
 
-enum View {
-  WorldEvents = "WorldEvents",
-  Shops = "Shops",
-  RandomLoot = "RandomLoot",
-  AirDrops = "AirDrops",
-}
+const screenRef = ref<HTMLDivElement>();
 
-const VIEWS = [
-  {
-    key: View.WorldEvents,
-    label: "World Events",
-  },
-  {
-    key: View.Shops,
-    label: "Shops",
-  },
-  {
-    key: View.RandomLoot,
-    label: "Random Loot",
-  },
-  {
-    key: View.AirDrops,
-    label: "Air Drops",
-  },
-];
+const alt = useAlt();
 
-const currentView = ref<View>();
+const client = useClient();
 
-// left click
-useEventListener('click', (event) => {
-  if (event.button === 0) {
-    console.log('left click');
-    const cursorPosition = {
-      x: event.clientX,
-      y: event.clientY,
-    };
-    console.log(cursorPosition);
-    alt.emitRaw(ClientEvents.FromWebview.LEFT_CLICK, cursorPosition);
-  }
-});
-
-// right click
-useEventListener('contextmenu', (event) => {
-  if (event.button === 2) {
-    console.log('right click');
-    const cursorPosition = {
-      x: event.clientX,
-      y: event.clientY,
-    };
-    console.log(cursorPosition);
-    alt.emitRaw(ClientEvents.FromWebview.RIGHT_CLICK, cursorPosition);
-  }
-});
+const builder = computed(() => client.builder);
 </script>
 
 <template>
-  <div class="flex h-full w-full flex-col items-end justify-end p-10">
+  <div v-if="builder" ref="screenRef" class="flex h-full w-full flex-col items-end justify-end p-10" @contextmenu.prevent>
     <div class="mb-2">
-      <WorldEventsView v-if="currentView === View.WorldEvents" />
+      <!-- <WorldEventsView v-if="currentView === View.WorldEvents" /> -->
+      <ShopForm v-if="builder.view === BuilderView.CreateShop" />
+      <ShopForm v-if="builder.view === BuilderView.EditShop" :shop="builder.shop" />
+      <ShopsList v-if="builder.view === BuilderView.ListShops" />
     </div>
-    <Card>
-      <NavigationMenu>
-        <NavigationMenuList>
-          <NavigationMenuItem
-            v-for="view in VIEWS"
-            :key="view.key"
-          >
-            <NavigationMenuLink
-              @select="
-                () => {
-                  if (currentView === view.key) {
-                    currentView = undefined;
-                  } else {
-                    currentView = view.key;
-                  }
-                }
-              "
-              :active="currentView === view.key"
-              :class="cn(navigationMenuTriggerStyle(), { 'font-bold': currentView === view.key })"
-            >
-              {{ view.label }}
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-        </NavigationMenuList>
-      </NavigationMenu>
-    </Card>
   </div>
 </template>

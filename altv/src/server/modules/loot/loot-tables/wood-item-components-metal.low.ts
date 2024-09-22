@@ -1,45 +1,52 @@
 import _ from "lodash";
 import {
   ItemKey,
-  ScrapItemKey,
+  WoodItemKey,
+  ItemComponentsItemKey,
   MetalItemKey,
-  AmmoItemKey,
-  isItemKeyScrap,
+  isItemKeyWood,
+  isItemKeyItemComponents,
   isItemKeyMetal,
-  isItemKeyAmmo,
-  ItemTier,
-  getItemTier,
   createItem,
   ItemGrade,
 } from "@shared/modules/items";
 import { rollOption } from "@shared/utility/random";
 import { LootTable } from "../types";
 
-export const SCRAP_METAL_AMMO_LOW: LootTable = {
-  key: "scrap-metal-ammo-low",
+export const WOOD_ITEM_COMPONENTS_METAL_LOW: LootTable = {
+  key: "wood-item-components-metal-low",
   score: 1,
   getItemsAmount() {
-    return _.random(2, 3);
+    return _.random(2, 4);
   },
   filterItemKey(
     itemKey: ItemKey,
     seed: number,
-  ): itemKey is ScrapItemKey | MetalItemKey | AmmoItemKey {
-    const matchesScrap = isItemKeyScrap(itemKey);
+  ): itemKey is WoodItemKey | ItemComponentsItemKey | MetalItemKey {
+    const matchesWood = isItemKeyWood(itemKey);
+    const matchesItemComponents = isItemKeyItemComponents(itemKey);
     const matchesMetal = isItemKeyMetal(itemKey);
-    const matchesAmmo =
-      isItemKeyAmmo(itemKey) && [ItemTier.E, ItemTier.D, ItemTier.C].includes(getItemTier(itemKey));
 
-    return matchesScrap || matchesMetal || matchesAmmo;
+    return matchesWood || matchesItemComponents || matchesMetal;
   },
   createItem(itemKey: ItemKey) {
-    if (isItemKeyScrap(itemKey)) {
+    if (isItemKeyWood(itemKey)) {
       return createItem(itemKey, {
         amount: ~~(Math.random() * 10) * 50 + 100,
         grade: rollOption([
           [50, ItemGrade.COMMON],
           [30, ItemGrade.UNCOMMON],
-          [20, ItemGrade.RARE],
+          [1, ItemGrade.RARE],
+        ]),
+      });
+    }
+    if (isItemKeyItemComponents(itemKey)) {
+      return createItem(itemKey, {
+        amount: ~~(Math.random() * 8) * 50 + 50,
+        grade: rollOption([
+          [50, ItemGrade.COMMON],
+          [30, ItemGrade.UNCOMMON],
+          [1, ItemGrade.RARE],
         ]),
       });
     }
@@ -49,13 +56,8 @@ export const SCRAP_METAL_AMMO_LOW: LootTable = {
         grade: rollOption([
           [50, ItemGrade.COMMON],
           [30, ItemGrade.UNCOMMON],
-          [10, ItemGrade.RARE],
+          [20, ItemGrade.RARE],
         ]),
-      });
-    }
-    if (isItemKeyAmmo(itemKey)) {
-      return createItem(itemKey, {
-        amount: ~~(Math.random() * 8) * 100 + 200,
       });
     }
     throw new Error(`Invalid item key ${itemKey}`);

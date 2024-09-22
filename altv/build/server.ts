@@ -16,6 +16,15 @@ const options: BuildOptions = {
     filelocPlugin({
       rootDir: "src",
     }),
+    // eslint plugin to log current file that is being processed and added to the bundle
+    {
+      name: "bundled-file-logger",
+      setup({ onEnd }) {
+        onEnd((result) => {
+          console.log('[@]', result.outputFiles?.[0]?.path);
+        });
+      },
+    },
     {
       name: "auto-reconnect",
       setup({ onEnd }) {

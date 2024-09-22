@@ -19,6 +19,7 @@ export const FromClient = {
   UPDATE_CLIENT_STATE: "UPDATE_CLIENT_STATE",
   SHOW_NOTIFICATION: "SHOW_NOTIFICATION",
   INVENTORY_ITEM_ADD: "INVENTORY_ITEM_ADD",
+  OPEN_BUILDER_MENU: "OPEN_BUILDER_MENU",
 } as const;
 
 export interface EventFromClient {
@@ -35,6 +36,14 @@ export interface EventFromClient {
   [FromClient.UPDATE_CLIENT_STATE]: (data: StoreUpdatePayload) => void;
   [FromClient.SHOW_NOTIFICATION]: (type: NotificationType, title: string, text: string) => void;
   [FromClient.INVENTORY_ITEM_ADD]: (item: Item) => void;
+  [FromClient.OPEN_BUILDER_MENU]: (
+    screenPosition: { x: number; y: number },
+    worldPosition: { x: number; y: number; z: number },
+    selectedEntity: {
+      type: "shop";
+      id: string;
+    } | null
+  ) => void;
 }
 
 declare global {

@@ -5,7 +5,7 @@
  * @ref src/webview/src/store/client.ts
  */
 import { Scene, UIElement } from "@shared/enums/ui";
-import { GroundItemSource } from "@shared/interfaces";
+import { GroundItemSource, Shop } from "@shared/interfaces";
 import { ConversationOption } from "@shared/interfaces/conversation";
 import { Item } from "@shared/modules/items";
 
@@ -83,6 +83,12 @@ export type ActionTip = {
   type: ActionTipType;
 };
 
+export enum BuilderView {
+  CreateShop = "create-shop",
+  EditShop = "edit-shop",
+  ListShops = "list-shops",
+}
+
 export interface ClientState {
   ui: {
     scene: Scene | null;
@@ -100,6 +106,15 @@ export interface ClientState {
     item: Item;
     id: GroundItemSource["originId"];
   }[];
+  builder: {
+    view: BuilderView.CreateShop,
+  } | {
+    view: BuilderView.EditShop,
+    shop: Shop
+  } | {
+    view: BuilderView.ListShops,
+    shops: Shop[]
+  } | null;
 }
 
 export const getDefaultClientStoreState = (): ClientState => ({
@@ -131,4 +146,5 @@ export const getDefaultClientStoreState = (): ClientState => ({
   targetAction: null,
   actionTip: null,
   nearbyItems: [],
+  builder: null,
 });

@@ -1,6 +1,6 @@
 import { registerItems } from "../../items-registry";
 import { makeKeys } from "../../../../utility/make-keys";
-import { Item, ItemKey } from "../../types";
+import { Item } from "../../types";
 
 export const Ore = makeKeys<OreItemKey>()({
   IRON_ORE: "ironore",

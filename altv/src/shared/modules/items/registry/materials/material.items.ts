@@ -10,10 +10,9 @@ import { SandItem, SandItemInfo, SandItemKey, isItemKeySand } from "./sand.items
 import { TreeLogItem, TreeLogItemInfo, TreeLogItemKey, isItemKeyTreeLog } from "./tree-log.items";
 import { WoodItem, WoodItemInfo, WoodItemKey, isItemKeyWood } from "./wood.items";
 import { OreItem, OreItemInfo, OreItemKey, isItemKeyOre } from "./ore.items";
-import { ScrapItem, ScrapItemInfo, ScrapItemKey, isItemKeyScrap } from "./scrap.items";
 import { LeatherItem, LeatherItemInfo, LeatherItemKey, isItemKeyLeather } from "./leather.items";
 import { HideItem, HideItemInfo, HideItemKey, isItemKeyHide } from "./hide.items";
-import { ItemComponentsItem, ItemComponentsItemInfo, ItemComponentsItemKey } from "./item-components.items";
+import { isItemKeyItemComponents, ItemComponentsItem, ItemComponentsItemInfo, ItemComponentsItemKey } from "./item-components.items";
 
 export type MaterialItemKey =
   | FoodIngredientItemKey
@@ -24,7 +23,6 @@ export type MaterialItemKey =
   | SandItemKey
   | OreItemKey
   | HideItemKey
-  | ScrapItemKey
   | ItemComponentsItemKey;
 
 export type MaterialItemInfo =
@@ -36,7 +34,6 @@ export type MaterialItemInfo =
   | SandItemInfo
   | OreItemInfo
   | HideItemInfo
-  | ScrapItemInfo
   | ItemComponentsItemInfo;
 
 export type MaterialItem =
@@ -48,7 +45,6 @@ export type MaterialItem =
   | SandItem
   | OreItem
   | HideItem
-  | ScrapItem
   | ItemComponentsItem;
 
 export function isItemKeyMaterial(key: string): key is MaterialItemKey {
@@ -61,7 +57,7 @@ export function isItemKeyMaterial(key: string): key is MaterialItemKey {
     isItemKeySand(key) ||
     isItemKeyOre(key) ||
     isItemKeyHide(key) ||
-    isItemKeyScrap(key)
+    isItemKeyItemComponents(key)
   );
 }
 

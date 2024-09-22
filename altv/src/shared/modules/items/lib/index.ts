@@ -5,6 +5,7 @@ export * from "./get-item-category-name";
 export * from "./get-item-equipment-slot";
 export * from "./get-item-flags";
 export * from "./get-item-name";
+export * from "./get-item-properties";
 export * from "./get-item-score";
 export * from "./get-item-tier";
 export * from "./is-item-previewable";
