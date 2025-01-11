@@ -133,8 +133,6 @@ whileInGame(() => {
   }
 
   function syncAmmo() {
-    alt.log(`[syncAmmo]`);
-
     const clip = currentAmmo.value?.clip ?? 0;
     const rest = currentAmmo.value?.rest ?? 0;
 

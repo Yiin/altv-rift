@@ -13,7 +13,8 @@ USER root
 
 RUN mkdir /altv
 RUN echo '{"loadVoiceServer":true}' > /altv/.altvpkgrc.json
-RUN npm i -g altv-pkg@latest
+
+RUN npm install -g bun
 
 ADD ./docker-scripts /root/setup
 RUN cd /root/setup && npm i
@@ -35,7 +36,7 @@ EXPOSE 7799/tcp
 
 ARG CACHEBUST=1
 
-RUN cd /altv && npx altv-pkg ${BRANCH}
+RUN cd /altv && bun --bun altv-pkg@latest ${BRANCH}
 RUN rm -rf altv-server data modules libnode*
 RUN chmod +x /altv/altv-voice-server
 RUN chmod +x /altv/altv-crash-handler

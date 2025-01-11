@@ -15,7 +15,7 @@ declare module "@altv/server" {
 Player.prototype.getCharacters = function () {
   return prisma.character.findMany({
     where: {
-      userId: this.user!.id,
+      userId: this.user.id,
     },
   }) as any as Promise<Character[]>;
 };

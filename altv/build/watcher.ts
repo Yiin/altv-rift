@@ -5,7 +5,7 @@ const altvProcessName = process.platform === "win32" ? "./altv-server.exe" : "./
 
 console.log(`Current path: ${process.cwd()}`, __dirname, __filename);
 
-const ws = new WebSocketServer({ port: 5000 });
+const ws = new WebSocketServer({ port: 6000 });
 
 const DEBUG_PORT = 9223;
 
@@ -13,7 +13,7 @@ let childProcess: Subprocess | null = null;
 
 function kickAllPlayers() {
   return new Promise<void>((resolve) => {
-    setTimeout(resolve, 5000);
+    setTimeout(resolve, 6000);
 
     for (const client of ws.clients) {
       client.send("kick-all");

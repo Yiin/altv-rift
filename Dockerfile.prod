@@ -166,12 +166,11 @@ COPY ./altv /altv
 
 # Install global packages, setup the environment, and build the project
 RUN npm install -g bun && \
-  bun add -g altv-pkg@latest && \
   cd /root/setup && \
   bun install && \
   cd /altv && \
   bun run /root/setup/server.js && \
-  bunx altv-pkg $ALTV_BRANCH && \
+  bunx --bun altv-pkg@latest $ALTV_BRANCH && \
   chmod +x altv-server altv-crash-handler && \
   bun install && \
   bun run prisma:generate && \

@@ -222,6 +222,7 @@ processQuestFact.hook((player, questFact) => {
     case Quests.Introduction.Facts.COMPLETED_CRAFTING: {
       if (player.isNearPed(PedKey.CRAFTING_TUTOR)) {
         player.addBlueprint(FirearmWeaponBlueprint.PISTOL);
+
         return true;
       } else {
         reportAbuse(player, questFact);

@@ -1,4 +1,7 @@
 client-files = [ 'client/*', 'shared/*' ]
 client-main = 'client/index.mjs'
 main = 'server/index.mjs'
-type = 'js'
+type = 'jsv2'
+
+[js-module-v2]
+compatibilityEnabled = true

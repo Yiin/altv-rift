@@ -39,10 +39,13 @@ registerElement({
                 );
                 const { x, y } = alt.worldToScreen({ x: ped.pos.x, y: ped.pos.y, z: headPos.z });
 
-                // 100 and 300 are values from .ped-nametag width & height
-                // x - width / 2
-                // y - height
-                return `translate(${x - px(100)}px, ${y - px(300)}px)`;
+                // from .pedNameTag class
+                const width = 200;
+                const height = 300;
+                const translateX = width / 2;
+                const translateY = height;
+
+                return `translate(${x - px(translateX)}px, ${y - px(translateY)}px)`;
               }),
             },
           },

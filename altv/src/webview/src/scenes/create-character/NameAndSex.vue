@@ -75,8 +75,20 @@ watch(
       </v-card-item>
     </v-card>
     <div class="flex gap-8">
-      <v-btn
+      <button
+        type="button"
+        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-600 hover:bg-gray-700"
         @click="createCharacter.sex = Gender.MALE"
+      >
+        <Icon
+          icon="mdi-gender-male"
+          width="2.5rem"
+          height="2.5rem"
+          color="white"
+        />
+      </button>
+
+      <v-btn
         size="5rem"
         icon
         :color="createCharacter.sex === Gender.MALE ? 'blue-grey' : 'grey-lighten-1'"

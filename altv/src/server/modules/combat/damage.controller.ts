@@ -15,13 +15,15 @@ import { isInGame } from "@/core/utility/assertions";
 
 alt.Events.onWeaponDamage(
   ({ source, target, damage, weaponHash, bodyPart, cancel, setDamageValue }) => {
+    cancel();
+
     if (
       source.type === alt.Enums.BaseObjectType.PED &&
       target.type === alt.Enums.BaseObjectType.PED
     ) {
       // ignore friendly fire between enemy peds
       alt.log("ignore friendly fire between enemy peds");
-      return cancel();
+      return;
     }
 
     if (source.type !== alt.Enums.BaseObjectType.PLAYER) {
@@ -29,13 +31,13 @@ alt.Events.onWeaponDamage(
     }
 
     if (!isInGame(source)) {
-      return cancel();
+      return 
     }
 
     const equipedWeapon = source.character.equipment.weapon;
 
     if (equipedWeapon && isItemWeapon(equipedWeapon) && getItemInfoByKey(equipedWeapon.key).hash !== weaponHash) {
-      return cancel();
+      return
     }
 
     const ammo = equipedWeapon && isItemFirearmWeapon(equipedWeapon)

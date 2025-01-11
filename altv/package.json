@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "update": "bun i && altv-pkg",
+    "update": "bun i && bunx --bun altv-pkg@latest",
     "build:server": "bun run build/server.ts",
     "build:client": "bun run build/client.ts",
     "dev": "bun run scripts/dev.ts --server --client --tsc",

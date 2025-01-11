@@ -12,7 +12,7 @@ function connect() {
   if (ws && ws.readyState !== ws.CLOSED) {
     ws.close();
   }
-  ws = new WebSocket(`ws://server:5000`);
+  ws = new WebSocket(`ws://server:6000`);
 
   ws.on("open", () => {
     wasAlive = true;

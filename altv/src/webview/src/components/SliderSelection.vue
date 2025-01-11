@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { clamp } from "lodash";
 import { computed } from "vue";
+import { Icon } from "@iconify/vue";
 
 const props = defineProps<{
   options: any[];
@@ -17,12 +18,12 @@ const selected = computed(() =>
 );
 
 function prev() {
-  const index = clamp(selected.value - 1, 0, props.options.length - 1);
+  const index = selected.value - 1 <= 0 ? props.options.length - 1 : selected.value - 1;
   emit("update:modelValue", props.useIndexAsValue ? index : props.options[index]);
 }
 
 function next() {
-  const index = clamp(selected.value + 1, 0, props.options.length - 1);
+  const index = selected.value + 1 >= props.options.length ? 0 : selected.value + 1;
   emit("update:modelValue", props.useIndexAsValue ? index : props.options[index]);
 }
 </script>
@@ -30,12 +31,17 @@ function next() {
 <template>
   <div class="mb-2">
     <div class="flex items-center justify-center gap-4">
-      <v-btn
-        icon="mdi-chevron-left"
-        variant="tonal"
-        :disabled="selected === 0"
+      <button
+        type="button"
+        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-600 hover:bg-gray-700"
         @click="prev"
-      />
+      >
+        <Icon
+          icon="mdi:chevron-left"
+          width="1.5rem"
+          height="1.5rem"
+        />
+      </button>
       <div class="v-btn flex min-w-20 flex-col items-center justify-center text-sm">
         <span
           v-for="(option, index) in options"
@@ -45,12 +51,17 @@ function next() {
           {{ option }}
         </span>
       </div>
-      <v-btn
-        icon="mdi-chevron-right"
-        variant="tonal"
-        :disabled="selected === options.length - 1"
+      <button
+        type="button"
+        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-600 hover:bg-gray-700"
         @click="next"
-      />
+      >
+        <Icon
+          icon="mdi:chevron-right"
+          width="1.5rem"
+          height="1.5rem"
+        />
+      </button>
     </div>
   </div>
 </template>

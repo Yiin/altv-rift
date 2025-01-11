@@ -1,0 +1,10 @@
+host = "0.0.0.0"
+name = "rift.lt"
+port = 7_788
+password = ""
+announce = false
+useEarlyAuth = false
+useCdn = false
+debug = true
+modules = [ "js-module-v2", "js-bytecode-module" ]
+resources = [ "ipls/*", "peds/*", "weapons/*", "resource-control", "main" ]

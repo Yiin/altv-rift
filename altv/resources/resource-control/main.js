@@ -1,44 +1,47 @@
 import alt from "@altv/server";
-import WebSocket from "ws";
 
-let ws;
-let wasAlive = false;
+console.log(alt.version);
 
-function connect() {
-  if (ws && ws.readyState !== ws.CLOSED) {
-    ws.close();
-  }
-  ws = new WebSocket(`ws://localhost:5000`);
+// import WebSocket from "ws";
 
-  ws.on("open", () => {
-    wasAlive = true;
-    console.log("[resource-control] Connected");
-  });
+// let ws;
+// let wasAlive = false;
 
-  ws.on("message", (message) => {
-    message = message.toString();
+// function connect() {
+//   if (ws && ws.readyState !== ws.CLOSED) {
+//     ws.close();
+//   }
+//   ws = new WebSocket(`ws://localhost:6000`);
 
-    alt.log('received message', message);
+//   ws.on("open", () => {
+//     wasAlive = true;
+//     console.log("[resource-control] Connected");
+//   });
 
-    if (message === "kick-all") {
-      console.log("[resource-control] Kicking all players");
-      kickAll();
-    }
-  });
+//   ws.on("message", (message) => {
+//     message = message.toString();
 
-  ws.on("close", () => {
-    if (wasAlive) {
-      wasAlive = false;
-      console.log("[resource-control] Disconnected");
-    }
-    setTimeout(connect, 1000);
-  });
-}
+//     alt.log('received message', message);
 
-connect();
+//     if (message === "kick-all") {
+//       console.log("[resource-control] Kicking all players");
+//       kickAll();
+//     }
+//   });
 
-function kickAll() {
-  alt.Player.all.forEach((player) => {
-    player.kick("Restarting Server");
-  });
-}
+//   ws.on("close", () => {
+//     if (wasAlive) {
+//       wasAlive = false;
+//       console.log("[resource-control] Disconnected");
+//     }
+//     setTimeout(connect, 1000);
+//   });
+// }
+
+// connect();
+
+// function kickAll() {
+//   alt.Player.all.forEach((player) => {
+//     player.kick("Restarting Server");
+//   });
+// }

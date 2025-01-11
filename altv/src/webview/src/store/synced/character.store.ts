@@ -15,6 +15,4 @@ export function isCharacterStoreAvailable() {
 }
 
 export const useCharacter = () =>
-  characterStore.value
-      ? characterStore.value()
-      : (null as any as ReturnType<CharacterStore>);
+  characterStore.value ? characterStore.value() : (null as any as ReturnType<CharacterStore>);

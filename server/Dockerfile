@@ -9,7 +9,7 @@ RUN apt-get update -y                                                           
   apt-get clean                                                                                                     && \
   rm -rf /var/lib/apt/lists/*
 WORKDIR /root/setup
-RUN npm i -g bun && bun install && bun add -g altv-pkg@latest
+RUN npm i -g bun && bun install
 
 FROM base as downloaded
 USER root

@@ -39,6 +39,8 @@ services:
     build:
       context: .
       dockerfile: ./server/Dockerfile
+      args:
+        BRANCH: ${ALTV_BRANCH}
     restart: unless-stopped
     volumes:
       - ./altv:/source
@@ -50,7 +52,7 @@ services:
       - '7788:7788'
       - '7788:7788/udp'
       - '7790:7790' # discord login
-      - '5000:5000' # build watcher
+      - '6000:6000' # build watcher
     depends_on:
       - mongo
       - builder

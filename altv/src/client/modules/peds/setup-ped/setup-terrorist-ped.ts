@@ -3,32 +3,32 @@ import game from "@altv/natives";
 import { RAGDOLL_BLOCKING_FLAGS } from "@shared/enums/ragdoll-blocking-flags";
 import { PedFlags } from "@shared/modules/ped";
 import { everyTickWhile } from "@/core/user-interface/event-helpers";
-import { COMBAT_ATTRIBUTE, PED_CONFIG_FLAG, PED_RESET_FLAG } from "@/core/constants/ped-flags";
+import { COMBAT_ATTRIBUTE, PED_CONFIG_FLAG, PED_RESET_FLAG, PedRelationship, PedRelationshipGroup } from "@/core/constants/ped-flags";
 
 const pedTickUpdates = new WeakMap<alt.Ped, alt.Timers.EveryTick>();
 
-game.addRelationshipGroup("Friendly", alt.hash("Friendly"));
-game.addRelationshipGroup("Enemy", alt.hash("Enemy"));
+game.addRelationshipGroup(PedRelationshipGroup.Friendly, alt.hash(PedRelationshipGroup.Friendly));
+game.addRelationshipGroup(PedRelationshipGroup.Enemy, alt.hash(PedRelationshipGroup.Enemy));
 
-game.setRelationshipBetweenGroups(0, alt.hash("Friendly"), alt.hash("Friendly"));
-game.setRelationshipBetweenGroups(5, alt.hash("Friendly"), alt.hash("Enemy"));
-game.setRelationshipBetweenGroups(5, alt.hash("Enemy"), alt.hash("Friendly"));
+game.setRelationshipBetweenGroups(PedRelationship.Companion, alt.hash(PedRelationshipGroup.Friendly), alt.hash(PedRelationshipGroup.Friendly));
+game.setRelationshipBetweenGroups(PedRelationship.Hate, alt.hash(PedRelationshipGroup.Friendly), alt.hash(PedRelationshipGroup.Enemy));
+game.setRelationshipBetweenGroups(PedRelationship.Hate, alt.hash(PedRelationshipGroup.Enemy), alt.hash(PedRelationshipGroup.Friendly));
 
 /**
  * Not sure if needed, added just in case ped behaves weirdly to newly streamed-in players
  */
 alt.Timers.setInterval(() => {
-  game.setPedRelationshipGroupHash(alt.Player.local, alt.hash("Friendly"));
+  game.setPedRelationshipGroupHash(alt.Player.local, alt.hash(PedRelationshipGroup.Friendly));
 
   for (const ped of alt.Ped.streamedIn) {
     if (
       ped.netOwner !== alt.Player.local ||
-      ped.streamSyncedMeta.flags === undefined || ped.streamSyncedMeta.flags & PedFlags.Peaceful
+      typeof ped.streamSyncedMeta.flags === "undefined" || ped.streamSyncedMeta.flags & PedFlags.Peaceful
     ) {
       continue;
     }
 
-    game.setPedRelationshipGroupHash(ped, alt.hash("Enemy"));
+    game.setPedRelationshipGroupHash(ped, alt.hash(PedRelationshipGroup.Enemy));
 
     if (!game.isPedInCombat(ped, 0) && ped.meta.wasInCombat) {
       game.taskGuardAssignedDefensiveArea(ped, ped.pos.x, ped.pos.y, ped.pos.z, 0, 50, -1);
@@ -40,7 +40,6 @@ alt.Timers.setInterval(() => {
 }, 100);
 
 export async function setupTerroristPed(ped: alt.Ped): Promise<void> {
-  console.log("Setting up terrorist ped", ped);
   await alt.Utils.waitFor(() => ped.valid && ped.scriptID !== 0);
 
   const onSpawned = alt.Events.onSpawned(() => {

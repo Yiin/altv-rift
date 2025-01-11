@@ -210,17 +210,17 @@ useWebview((webview) => {
   });
 });
 
-alt.Events.onKeyDown(({ key }) => {
-  if (isTyping()) {
-    return;
-  }
+// alt.Events.onKeyDown(({ key }) => {
+//   if (isTyping()) {
+//     return;
+//   }
 
-  if (key === alt.Enums.KeyCode["'"]) {
-    if (isBuilderEnabled()) {
-      disableBuilder();
-    } else {
-      enableBuilder();
-    }
-    return;
-  }
-});
+//   if (key === alt.Enums.KeyCode["'"]) {
+//     if (isBuilderEnabled()) {
+//       disableBuilder();
+//     } else {
+//       enableBuilder();
+//     }
+//     return;
+//   }
+// });

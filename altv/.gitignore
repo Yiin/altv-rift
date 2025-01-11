@@ -5,7 +5,9 @@ resources/main/*
 altv-crash-handler.exe
 altv-server.exe
 libnode.dll
+libnode.so
 libnodev2.dll
+libnodev2.so
 server.log
 **/*.tsbuildinfo
 *.log

@@ -1099,3 +1099,17 @@ export enum COMBAT_ATTRIBUTE { //Set a specific combat attribute
   ForceCheckAttackAngleForMountedGuns = 89, // Only allow mounted weapons to fire if within the correct attack angle (default 25-degree cone). On a flag in order to keep exiting behaviour and only fix in specific cases.
   BlockFireForVehiclePassengerMountedGuns = 90, // Blocks the firing state for passenger-controlled mounted weapons. Existing flags UseVehicleAttack and UseVehicleAttackIfVehicleHasMountedGuns only work for drivers.
 }
+
+export enum PedRelationship {
+  Companion,
+  Respect,
+  Like,
+  Neutral,
+  Dislike,
+  Hate,
+}
+
+export enum PedRelationshipGroup {
+  Friendly = 'Friendly',
+  Enemy = 'Enemy',
+}

@@ -130,7 +130,7 @@ export const getDefaultClientStoreState = (): ClientState => ({
       "altMock" in globalThis
         ? // browser context
         {
-          type: WindowType.BUILDER,
+          type: WindowType.PLAYER_INVENTORY,
         }
         : // {
         //   type: WindowType.PLAYER_INVENTORY,

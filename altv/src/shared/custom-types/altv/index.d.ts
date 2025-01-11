@@ -10,6 +10,10 @@ declare module "@altv/server" {
     capacity?: number; // tree
     databaseId?: string; // item
   }
+
+  export class Test {
+    text: string;
+  }
 }
 
 declare module "@altv/client" {
