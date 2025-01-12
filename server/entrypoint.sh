@@ -20,7 +20,7 @@ case "$1" in
     ;;
   server)
     # mkdir modules/js-module
-    # bunx --bun altv-pkg@latest $ALTV_BRANCH
+    bunx --bun altv-pkg@latest $ALTV_BRANCH
 
     if [ "$USE_CUSTOM_MODULE" = "true" ]; then
       rsync -a /source/custom-modules/ /altv/modules/

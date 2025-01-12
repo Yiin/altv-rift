@@ -1,4 +1,4 @@
-FROM node:20.11.0-bookworm-slim as base
+FROM node:20.11.0-bookworm-slim AS base
 
 USER root
 
@@ -7,7 +7,7 @@ RUN apt-get install -y libatomic1 curl libc-bin wget apt-transport-https ca-cert
 RUN apt autoremove -y
 RUN apt-get clean
 
-FROM base as ready
+FROM base AS ready
 
 USER root
 
@@ -23,7 +23,7 @@ RUN cd /root/setup && rm server.js package-lock.json
 COPY ./voice-server/entrypoint.sh /root/
 RUN chmod +x /root/entrypoint.sh
 
-FROM ready as downloaded
+FROM ready AS downloaded
 
 USER root
 ARG BRANCH=release

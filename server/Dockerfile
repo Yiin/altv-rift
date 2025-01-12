@@ -1,4 +1,4 @@
-FROM node:20.11.0-bookworm-slim as base
+FROM node:20.11.0-bookworm-slim AS base
 USER root
 COPY ./docker-scripts /root/setup
 COPY ./server/entrypoint.sh /root/
@@ -11,7 +11,7 @@ RUN apt-get update -y                                                           
 WORKDIR /root/setup
 RUN npm i -g bun && bun install
 
-FROM base as downloaded
+FROM base AS downloaded
 USER root
 ARG BRANCH=rc
 ENV ALTV_BRANCH=$BRANCH
