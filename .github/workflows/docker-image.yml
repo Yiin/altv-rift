@@ -7,14 +7,12 @@ on:
 
 env:
   IMAGE_NAME: altv-rift-server
-#
+
 jobs:
-  build:
+  build-and-deploy:
     runs-on: self-hosted
     permissions:
-      packages: write
       contents: read
-      #
     steps:
       - uses: actions/checkout@v4
 
@@ -42,43 +40,16 @@ jobs:
           S3_WEBSITE_ENDPOINT: ${{ vars.S3_WEBSITE_ENDPOINT }}
         run: COMPOSE_PROJECT_NAME=${IMAGE_NAME} docker compose -f docker-compose.prod.yaml build
 
-      - name: Log in to registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-
-      - name: Set lower case owner name
+      - name: Deploy locally
         run: |
-          echo "OWNER_LC=${OWNER,,}" >>${GITHUB_ENV}
-        env:
-          OWNER: "${{ github.repository_owner }}"
-
-      - name: Push image
-        run: |
-          echo "Image name: ${IMAGE_NAME}"
-          echo "Full image tag: ghcr.io/${OWNER_LC}/${IMAGE_NAME}:latest"
-          docker tag ${IMAGE_NAME}:latest ghcr.io/${OWNER_LC}/${IMAGE_NAME}:latest
-          docker push ghcr.io/${OWNER_LC}/${IMAGE_NAME}:latest
-
-  deploy:
-    needs: build
-    runs-on: self-hosted
-    steps:
-      - name: SSH to Server and Deploy
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.DEPLOY_HOST }}
-          username: ${{ secrets.DEPLOY_USER }}
-          key: ${{ secrets.DEPLOY_KEY }}
-          script: |
-            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-            docker pull ghcr.io/yiin/altv-rift-server:latest
-            curl http://altv.rift.lt:7790/cleanup/${{ secrets.DISCORD_CLIENT_SECRET }} > /dev/null 2>&1 &
-            sleep 1
-            docker stop altv-server || true
-            docker rm altv-server || true
-            docker run -d --name altv-server \
-              -p 7788:7788 \
-              -p 7788:7788/udp \
-              -p 7790:7790 \
-              -p 7799:7799/udp \
-              ghcr.io/yiin/altv-rift-server:latest
-            docker image prune -f
+          curl http://altv.rift.lt:7790/cleanup/${{ secrets.DISCORD_CLIENT_SECRET }} > /dev/null 2>&1 &
+          sleep 1
+          docker stop altv-server || true
+          docker rm altv-server || true
+          docker run -d --name altv-server \
+            -p 7788:7788 \
+            -p 7788:7788/udp \
+            -p 7790:7790 \
+            -p 7799:7799/udp \
+            ${IMAGE_NAME}:latest
+          docker image prune -f
