@@ -13,6 +13,8 @@ export default defineConfig(({ mode }) => ({
     emptyOutDir: true,
     target: "es2022",
     assetsInlineLimit: 0, // Ensure SVGs are processed as assets
+    minify: false, // Disable minification
+    sourcemap: true, // Ensure source maps are generated
     rollupOptions: {
       input: {
         main: fileURLToPath(new URL("index.html", import.meta.url)),

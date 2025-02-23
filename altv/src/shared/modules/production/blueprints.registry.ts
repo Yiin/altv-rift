@@ -5,7 +5,6 @@ import { Blueprint, BlueprintRecipe } from "./types";
 const blueprints = new Map<string, Blueprint>();
 
 export function registerBlueprint(blueprint: Blueprint): void {
-  console.log(`Registering blueprint: ${blueprint.key}`);
   blueprints.set(blueprint.key, blueprint);
 }
 
