@@ -23,19 +23,41 @@ function convertSvgToIcon(svgContent: string): IconifyIcon | null {
 }
 
 // Process icons from a glob result and register them with a prefix
-async function processAndRegisterIcons(prefix: string, globResult: Record<string, unknown>) {
+async function processAndRegisterIcons(prefix: string, icons: Record<string, unknown>) {
   const iconSet: Record<string, IconifyIcon> = {};
+  let processedCount = 0;
 
-  for (const path in globResult) {
-    const name = path.split("/").pop()?.replace(".svg", "");
-    if (!name) continue;
+  for (const path in icons) {
+    try {
+      // Extract name while preserving directory structure
+      const pathParts = path.split("/");
+      const name = pathParts[pathParts.length - 1].replace(".svg", "");
+      if (!name) continue;
 
-    const svgContent = globResult[path] as string;
-    const icon = convertSvgToIcon(svgContent);
-    if (icon) {
-      iconSet[name] = icon;
+      const svgContent = icons[path] as string;
+      if (!svgContent) {
+        console.warn(`Empty SVG content for ${path}`);
+        continue;
+      }
+
+      const icon = convertSvgToIcon(svgContent);
+      if (icon) {
+        iconSet[name] = icon;
+        processedCount++;
+      }
+    } catch (error) {
+      console.error(`Failed to process icon at ${path}:`, error);
     }
   }
+
+  if (processedCount === 0) {
+    console.warn(
+      `No icons were processed for prefix "${prefix}". Check if SVG files exist and are accessible.`,
+    );
+    return;
+  }
+
+  console.log(`Successfully processed ${processedCount} icons for prefix "${prefix}"`);
 
   addCollection({
     prefix,
@@ -45,26 +67,72 @@ async function processAndRegisterIcons(prefix: string, globResult: Record<string
 
 // Initialize all icon collections
 export async function initializeLocalIcons() {
-  // Register each collection
-  await processAndRegisterIcons(
-    "local",
-    import.meta.glob("../assets/icons/*.svg", {
-      query: "?raw",
-      import: "default",
-      eager: true,
-    }),
-  );
+  try {
+    const isDev = import.meta.env.DEV;
 
-  await processAndRegisterIcons(
-    "clothing-shop",
-    import.meta.glob("../assets/clothing-shop/*.svg", {
-      query: "?raw",
-      import: "default",
-      eager: true,
-    }),
-  );
+    if (isDev) {
+      // In development, use the glob imports
+      await processAndRegisterIcons(
+        "local",
+        import.meta.glob("../assets/generic/*.svg", {
+          query: "?raw",
+          import: "default",
+          eager: true,
+        }),
+      );
 
-  // Add more collections as needed:
-  // const vehicleIcons = import.meta.glob("../../public/assets/vehicles/*.svg", ...);
-  // await processAndRegisterIcons(vehicleIcons, "vehicle");
+      await processAndRegisterIcons(
+        "clothing-shop",
+        import.meta.glob("../assets/clothing-shop/*.svg", {
+          query: "?raw",
+          import: "default",
+          eager: true,
+        }),
+      );
+    } else {
+      // In production, import all SVGs directly
+      const genericIcons = import.meta.glob("../assets/generic/*.svg", {
+        query: "?url",
+        import: "default",
+        eager: true,
+      });
+
+      const clothingShopIcons = import.meta.glob("../assets/clothing-shop/*.svg", {
+        query: "?url",
+        import: "default",
+        eager: true,
+      });
+
+      // Process generic icons
+      const genericIconsContent: Record<string, unknown> = {};
+      for (const [path, url] of Object.entries(genericIcons)) {
+        try {
+          const response = await fetch(url as string);
+          const svgContent = await response.text();
+          genericIconsContent[path] = svgContent;
+        } catch (error) {
+          console.error(`Failed to fetch icon at ${path}:`, error);
+        }
+      }
+      await processAndRegisterIcons("local", genericIconsContent);
+
+      // Process clothing shop icons
+      const clothingIconsContent: Record<string, unknown> = {};
+      for (const [path, url] of Object.entries(clothingShopIcons)) {
+        try {
+          const response = await fetch(url as string);
+          const svgContent = await response.text();
+          clothingIconsContent[path] = svgContent;
+        } catch (error) {
+          console.error(`Failed to fetch icon at ${path}:`, error);
+        }
+      }
+      await processAndRegisterIcons("clothing-shop", clothingIconsContent);
+    }
+
+    console.log("All icon collections initialized successfully");
+  } catch (error) {
+    console.error("Failed to initialize icon collections:", error);
+    throw error;
+  }
 }

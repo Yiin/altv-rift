@@ -12,6 +12,29 @@ export default defineConfig(({ mode }) => ({
     // outDir: "../../resources/main/client/webview",
     emptyOutDir: true,
     target: "es2022",
+    assetsInlineLimit: 0, // Ensure SVGs are processed as assets
+    rollupOptions: {
+      input: {
+        main: fileURLToPath(new URL("index.html", import.meta.url)),
+      },
+      output: {
+        sourcemap: true,
+        assetFileNames: (assetInfo) => {
+          const fullPath = assetInfo.originalFileNames?.[0];
+
+          console.log(fullPath);
+
+          if (fullPath?.startsWith("src/assets/")) {
+            const pathWithoutSrc = fullPath.replace(/^src\//, "");
+            const finalPath = pathWithoutSrc.replace(/^assets\//, "assets/icons/");
+            console.log("finalPath", finalPath);
+            return finalPath;
+          }
+
+          return `assets/[name]-[hash][extname]`;
+        },
+      },
+    },
   },
   optimizeDeps: {
     include: ["@shared/**/*"],
@@ -28,12 +51,6 @@ export default defineConfig(({ mode }) => ({
       strict: false,
     },
     hmr: true,
-  },
-  rollupOptions: {
-    output: {
-      // Enable verbose output from Rollup
-      sourcemap: true,
-    },
   },
   resolve: {
     alias: [
@@ -52,7 +69,9 @@ export default defineConfig(({ mode }) => ({
     }),
     vue(),
     svgLoader({
+      defaultImport: "raw", // This ensures SVGs are imported as raw strings
       svgoConfig: {
+        multipass: true,
         plugins: [
           {
             name: "preset-default",

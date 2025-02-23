@@ -12,7 +12,6 @@ import "./main.css";
 
 // Initialize fonts and icons
 await Promise.all([loadFonts(), initializeLocalIcons()]);
-
 const app = createApp(App)
   .use(router)
   .use(pinia)
