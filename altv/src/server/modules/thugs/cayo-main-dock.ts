@@ -5,7 +5,7 @@ import { reactive, shallowReactive, watchEffect } from "vue";
 import { FirearmWeapon, getWeaponHash } from "@shared/modules/items";
 import { createInventory } from "@shared/modules/inventory";
 import { StorageType } from "@shared/store/game-state.store";
-import { createEnemyPed } from "../peds/peds.registry";
+import { createEnemyPed } from "../peds";
 import { createStorage } from "../items-manager";
 import { buildLootTable } from "../loot/loot-tables";
 import { CAYO_MAIN_DOCK_LOOT } from "../loot/loot-tables/cayo-main-dock-loot.low";

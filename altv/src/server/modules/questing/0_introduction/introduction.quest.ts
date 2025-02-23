@@ -16,7 +16,7 @@ import { PedKey } from "@shared/modules/ped/list";
 import { isInGame, needsToBeInGame } from "@/core/utility/assertions";
 import { processQuestFact } from "../questing.hooks";
 import { ServerEvents } from "@shared/events/server";
-import { createStaticPed } from "@/modules/peds/peds.registry";
+import { createStaticPed } from "@/modules/peds";
 import { PedFlags } from "@shared/modules/ped";
 
 // MARK: Peds

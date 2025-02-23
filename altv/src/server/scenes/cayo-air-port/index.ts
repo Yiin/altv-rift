@@ -1,4 +1,4 @@
-import { createStaticPed } from "@/modules/peds/peds.registry";
+import { createStaticPed } from "@/modules/peds";
 import alt from "@altv/server";
 import { ServerEvents } from "@shared/events/server";
 import { PedFlags } from "@shared/modules/ped";
