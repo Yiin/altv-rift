@@ -15,6 +15,8 @@ import {
 import { useCharacter } from "@/store/synced/character.store";
 import { px } from "@/composables/use-pixel";
 import { asset } from "@/lib/utils";
+import Icon from "@/components/Icon/Icon.vue";
+import Image from "@/components/Image.vue";
 import ItemIcon from "../../inventory/ItemIcon.vue";
 import WorkbenchSlot from "../components/WorkbenchSlot.vue";
 import { getBlueprintRecipes, useCrafting } from "../composables/use-crafting";
@@ -112,7 +114,7 @@ const recipesByCategory = computed(() => {
     <div class="text-3xl font-bold">Search</div>
     <input
       type="text"
-      class="mb-5 mt-2 w-75 rounded border border-solid border-white/10 px-5 py-5 text-xl focus-within:outline-neutral-500 focus-visible:outline"
+      class="mb-5 mt-2 w-75 rounded border border-solid border-white/10 bg-transparent px-5 py-5 text-xl text-white focus-within:outline-neutral-500 focus-visible:outline"
       placeholder="Type name of..."
       v-model="search"
     />
@@ -124,7 +126,7 @@ const recipesByCategory = computed(() => {
             :selected="hideUnavailable"
             class="h-11 w-11 p-2.5"
           >
-            <v-icon icon="mdi-check" />
+            <Icon name="mdi:check" />
           </WorkbenchSlot>
           <div>Show only available recipes</div>
         </div>
@@ -136,7 +138,7 @@ const recipesByCategory = computed(() => {
             :selected="category === categoryFilter"
             class="h-11 w-11 p-2"
           >
-            <img
+            <Image
               v-if="category !== 'all'"
               :src="asset(`assets/workbench/categories/${category}.svg`)"
               :class="[category === 'weapon_components' ? 'h-6 w-6' : 'h-4 w-4']"

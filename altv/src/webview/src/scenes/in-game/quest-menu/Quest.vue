@@ -2,6 +2,7 @@
 import { computed } from "vue";
 import { type QuestInfo } from "@shared/store/client.store";
 import { useClient } from "@/store/synced/client.store";
+import Icon from "@/components/Icon/Icon.vue";
 import QuestTask from "./QuestTask.vue";
 
 const props = defineProps<{
@@ -43,9 +44,9 @@ function toggleSingle(e: Event) {
             isQuestCompleted ? 'bg-green-700 text-green-100' : 'bg-orange-700 text-orange-100',
           ]"
         >
-          <v-icon
+          <Icon
             v-if="isQuestCompleted"
-            icon="mdi-check"
+            name="mdi:check"
             class="-ms-1 me-1.5 h-4 w-4"
           />
 

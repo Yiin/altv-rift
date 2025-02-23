@@ -47,13 +47,28 @@ on(ServerEvents.FromServer.ITEM_EQUIP, (player, item) => {
   const itemInfo = getItemInfoByKey(applyGenderClothing(player, item.key));
 
   if (isComponentVariation(equipmentSlot)) {
-    player.setDlcClothes(itemInfo.componentId, itemInfo.dlcDrawableId, itemInfo.textureId, 2, alt.hash(itemInfo.dlc));
+    console.log(
+      `setDlcClothes(${itemInfo.componentId}, ${itemInfo.dlcDrawableId}, ${itemInfo.textureId}, 2, alt.hash(${itemInfo.dlc}))`,
+    );
+    player.setDlcClothes(
+      itemInfo.componentId,
+      itemInfo.dlcDrawableId,
+      itemInfo.textureId,
+      2,
+      alt.hash(itemInfo.dlc),
+    );
 
     if (itemInfo.componentId === 11) {
+      console.log(`resetClothes(3)`);
       player.resetClothes(3);
     }
   } else if (isProp(equipmentSlot)) {
-    player.setDlcProp(itemInfo.componentId, itemInfo.dlcDrawableId, itemInfo.textureId, alt.hash(itemInfo.dlc));
+    player.setDlcProp(
+      itemInfo.componentId,
+      itemInfo.dlcDrawableId,
+      itemInfo.textureId,
+      alt.hash(itemInfo.dlc),
+    );
   }
 });
 

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed } from "vue";
+import { ChevronLeft, ChevronRight } from "lucide-vue-next";
 import { wrap } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 const props = defineProps<{
   options: any[];
@@ -24,13 +26,16 @@ const next = () => {
 </script>
 
 <template>
-  <div class="flex items-center justify-center">
-    <v-btn
-      icon="mdi-chevron-left"
-      size="x-small"
+  <div class="flex items-center justify-center gap-2">
+    <Button
+      variant="outline"
+      size="icon"
+      class="h-8 w-8 shrink-0"
       @click="prev"
-    />
-    <div class="v-btn flex min-w-20 flex-col items-center justify-center text-sm">
+    >
+      <ChevronLeft class="h-4 w-4" />
+    </Button>
+    <div class="flex min-w-20 flex-col items-center justify-center text-sm">
       <span
         v-for="(option, index) in options"
         :key="index"
@@ -39,10 +44,13 @@ const next = () => {
         {{ props.valueText?.(option) ?? option }}
       </span>
     </div>
-    <v-btn
-      icon="mdi-chevron-right"
-      size="x-small"
+    <Button
+      variant="outline"
+      size="icon"
+      class="h-8 w-8 shrink-0"
       @click="next"
-    />
+    >
+      <ChevronRight class="h-4 w-4" />
+    </Button>
   </div>
 </template>

@@ -1,0 +1,27 @@
+---
+description: General information about the project
+globs: *
+---
+It's alt:V multiplayer project that uses js-module-v2 api (it's almost the same to v1, but has moved functions to namespaces, e.g. alt.setInterval is now alt.Timers.setInterval).
+
+### Game loop
+
+Craft/find gear, level up abilities, conquer & defend territories, stay at the top of leaderboard.
+
+### Gameplay mechanics
+
+- Material gathering
+- Crafting
+- Gear
+- Leveling
+- Vehicles
+- Combat
+- World events
+- Territory control
+
+### Context
+
+The project heavily utilizes vue3 composable api on the server side, client side and webview, which is a rare sight, but reactability is great.
+It utilizes stores like [character.store.ts](mdc:altv/src/client/core/store/character.store.ts) to sync data top-down: server -> client -> webview, so whenever we change state of the store on the server, it gets automatically passed down to client and webview.
+
+

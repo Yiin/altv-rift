@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { ItemGrade } from "@shared/modules/items";
-import DefaultBadge from "../assets/badges/none.svg";
-import CommonBadge from "../assets/badges/common.svg";
-import UncommonBadge from "../assets/badges/uncommon.svg";
-import RareBadge from "../assets/badges/rare.svg";
-import EpicBadge from "../assets/badges/epic.svg";
-import LegendaryBadge from "../assets/badges/legendary.svg";
-import ContrabandBadge from "../assets/badges/contraband.svg";
-import LimitedBadge from "../assets/badges/limited.svg";
+import DefaultBadge from "../assets/badges/none.svg?component";
+import CommonBadge from "../assets/badges/common.svg?component";
+import UncommonBadge from "../assets/badges/uncommon.svg?component";
+import RareBadge from "../assets/badges/rare.svg?component";
+import EpicBadge from "../assets/badges/epic.svg?component";
+import LegendaryBadge from "../assets/badges/legendary.svg?component";
+import ContrabandBadge from "../assets/badges/contraband.svg?component";
+import LimitedBadge from "../assets/badges/limited.svg?component";
 
 const props = withDefaults(
   defineProps<{
@@ -46,21 +46,23 @@ const stars = computed(
         }[grade]
       "
     >
-      <img
-        :src="
-          {
-            none: DefaultBadge,
-            [ItemGrade.COMMON]: CommonBadge,
-            [ItemGrade.UNCOMMON]: UncommonBadge,
-            [ItemGrade.RARE]: RareBadge,
-            [ItemGrade.EPIC]: EpicBadge,
-            [ItemGrade.LEGENDARY]: LegendaryBadge,
-            [ItemGrade.CONTRABAND]: ContrabandBadge,
-            [ItemGrade.LIMITED]: LimitedBadge,
-          }[grade]
-        "
-        class="align-self-center h-69.5 w-48.75"
-      />
+      <div class="relative h-69.5 w-48.75">
+        <component
+          :is="
+            {
+              none: DefaultBadge,
+              [ItemGrade.COMMON]: CommonBadge,
+              [ItemGrade.UNCOMMON]: UncommonBadge,
+              [ItemGrade.RARE]: RareBadge,
+              [ItemGrade.EPIC]: EpicBadge,
+              [ItemGrade.LEGENDARY]: LegendaryBadge,
+              [ItemGrade.CONTRABAND]: ContrabandBadge,
+              [ItemGrade.LIMITED]: LimitedBadge,
+            }[grade]
+          "
+          class="h-full w-full"
+        />
+      </div>
       <div
         v-if="grade !== 'none'"
         class="absolute-center-x bottom-13.25 z-max text-center text-lg font-bold uppercase drop-shadow-glow-color"

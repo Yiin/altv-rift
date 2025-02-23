@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { clamp } from "lodash";
 import { computed } from "vue";
-import { Icon } from "@iconify/vue";
+import { ChevronLeft, ChevronRight } from "lucide-vue-next";
+import { Button } from "@/components/ui/button";
 
 const props = defineProps<{
   options: any[];
@@ -31,18 +31,15 @@ function next() {
 <template>
   <div class="mb-2">
     <div class="flex items-center justify-center gap-4">
-      <button
-        type="button"
-        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-600 hover:bg-gray-700"
+      <Button
+        variant="outline"
+        size="icon"
+        class="h-8 w-8 shrink-0"
         @click="prev"
       >
-        <Icon
-          icon="mdi:chevron-left"
-          width="1.5rem"
-          height="1.5rem"
-        />
-      </button>
-      <div class="v-btn flex min-w-20 flex-col items-center justify-center text-sm">
+        <ChevronLeft class="h-4 w-4" />
+      </Button>
+      <div class="flex min-w-20 flex-col items-center justify-center text-sm">
         <span
           v-for="(option, index) in options"
           :key="index"
@@ -51,17 +48,14 @@ function next() {
           {{ option }}
         </span>
       </div>
-      <button
-        type="button"
-        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-600 hover:bg-gray-700"
+      <Button
+        variant="outline"
+        size="icon"
+        class="h-8 w-8 shrink-0"
         @click="next"
       >
-        <Icon
-          icon="mdi:chevron-right"
-          width="1.5rem"
-          height="1.5rem"
-        />
-      </button>
+        <ChevronRight class="h-4 w-4" />
+      </Button>
     </div>
   </div>
 </template>

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Image from "@/components/Image.vue";
 import { type AvailableWeaponModuleType } from "./types";
 
 const props = defineProps({
@@ -46,7 +47,7 @@ const activeAvailableModule = props.availableModules?.find((module) => module.is
           <span class="text-sm text-primaryGreen">Stage {{ module.stage }}</span>
         </div>
         <div class="w-20">
-          <img
+          <Image
             :src="module.image"
             :alt="module.name"
             class="w-full"
@@ -56,9 +57,10 @@ const activeAvailableModule = props.availableModules?.find((module) => module.is
     </div>
     <div class="flex flex-col items-end">
       <div class="mb-4 w-52">
-        <img
-          :src="activeAvailableModule?.image"
-          :alt="activeAvailableModule?.name"
+        <Image
+          v-if="activeAvailableModule"
+          :src="activeAvailableModule.image"
+          :alt="activeAvailableModule.name"
           class="w-full"
         />
       </div>
@@ -83,7 +85,7 @@ const activeAvailableModule = props.availableModules?.find((module) => module.is
           <div
             class="relative flex h-10 w-10 items-center justify-center border border-solid border-white/5 bg-weaponCard"
           >
-            <img
+            <Image
               :src="extra.image"
               :alt="extra.name"
             />

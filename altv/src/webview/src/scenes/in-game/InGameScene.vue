@@ -21,6 +21,7 @@ import TargetAction from "./target-action/TargetAction.vue";
 import FishingGame from "./fishing-game/FishingGame.vue";
 import Workbench from "./workbench/Workbench.vue";
 import VehicleShop from "./vehicle-shop/VehicleShop.vue";
+import ClothingShop from "./shop/ClothingShop.vue";
 import QuickAccess from "./quick-access/QuickAccess.vue";
 import Hud from "./hud/Hud.vue";
 import Admin from "./admin/Admin.vue";
@@ -33,6 +34,9 @@ const windowType = computed(() => client.ui.window?.type);
 const storageType = computed(() => gameState.openedStorage?.type);
 const isShopOpen = computed(
   () => windowType.value === WindowType.SHOP && storageType.value === StorageType.Shop,
+);
+const isClothingShopOpen = computed(
+  () => windowType.value === WindowType.CLOTHING_SHOP && storageType.value === StorageType.Shop,
 );
 const isLootBoxOpen = computed(
   () =>
@@ -62,6 +66,7 @@ watch(
       <!-- <Inventory /> -->
       <Inventory v-if="[WindowType.PLAYER_INVENTORY, WindowType.STORAGE].includes(windowType)" />
       <GenericShop v-else-if="isShopOpen" />
+      <ClothingShop v-else-if="isClothingShopOpen" />
       <LootBox v-else-if="isLootBoxOpen" />
       <VehicleShop v-else-if="isVehicleShopOpen" />
       <Workbench v-else-if="isWorkbenchOpen" />

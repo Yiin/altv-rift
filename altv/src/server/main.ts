@@ -5,6 +5,7 @@ import "./core/database";
 
 // prototypes
 import "./prototypes/player";
+import "./prototypes/ped";
 
 // // events
 import "./events";
@@ -64,7 +65,6 @@ alt.Events.onPlayer(
       };
     },
   ) => {
-
     const weaponStatsJsonFilePath = path.join(
       __dirname,
       "../shared/modules/items/registry/weapons/weapon-stats.json",

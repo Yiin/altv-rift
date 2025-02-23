@@ -3,8 +3,8 @@ import { document } from "./element-renderer";
 
 let adjustedFontSize = 16;
 
-function adjustUIBaseFontSize() {
-  const { x: width, y: height } = alt.getScreenResolution();
+function adjustUIBaseFontSize(newResolution?: alt.Vector2) {
+  const { x: width, y: height } = newResolution ?? alt.getScreenResolution();
   const targetAspectRatio = 16 / 9;
   const currentAspectRatio = width / height;
   const aspectRatioDeviation = currentAspectRatio / targetAspectRatio;
@@ -19,8 +19,8 @@ function adjustUIBaseFontSize() {
 
 adjustUIBaseFontSize();
 
-alt.Events.onWindowResolutionChange(() => {
-  adjustUIBaseFontSize();
+alt.Events.onWindowResolutionChange(({ newResolution }) => {
+  adjustUIBaseFontSize(newResolution);
 });
 
 export function rem(value: number): string {

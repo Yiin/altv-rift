@@ -5,7 +5,7 @@ import { reactive, shallowReactive, watchEffect } from "vue";
 import { FirearmWeapon, getWeaponHash } from "@shared/modules/items";
 import { createInventory } from "@shared/modules/inventory";
 import { StorageType } from "@shared/store/game-state.store";
-import { createTerroristPed } from "../peds/registry";
+import { createEnemyPed } from "../peds/peds.registry";
 import { createStorage } from "../items-manager";
 import { buildLootTable } from "../loot/loot-tables";
 import { CAYO_MAIN_DOCK_LOOT } from "../loot/loot-tables/cayo-main-dock-loot.low";
@@ -100,7 +100,7 @@ function setupThugs() {
     const weaponIndex = ~~(Math.random() * weapons.length);
     const weapon = getWeaponHash(weapons[weaponIndex]);
 
-    const thug = createTerroristPed({ model, pos, heading: 0 }, { weapon, health: 300 });
+    const thug = createEnemyPed({ model, pos, heading: 0 }, { weapon, health: 300 });
     thugs.add(thug);
   }
 
@@ -136,7 +136,7 @@ watchEffect(() => {
     label: "Main Dock Loot",
     meta: {
       validUntil: addMilliseconds(Date.now(), restartAfterMs),
-    }
+    },
   });
 
   const stopWatching = watchEffect(() => {

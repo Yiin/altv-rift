@@ -57,9 +57,6 @@ export function setPedAppearance(ped: alt.LocalPed, appearance: Appearance) {
     try {
       const collection = alt.hash(appearance.hairCollection);
       const overlay = alt.hash(appearance.hairOverlay);
-      alt.log(
-        `Adding ped decoration. ${appearance.hairCollection} (${collection}), ${appearance.hairOverlay} (${overlay})`,
-      );
       game.addPedDecorationFromHashes(ped, collection, overlay);
     } catch {
       alt.log(`Error adding ped decoration. Hair: `, appearance.hair);
@@ -70,7 +67,7 @@ export function setPedAppearance(ped: alt.LocalPed, appearance: Appearance) {
   if (typeof appearance.hairDlc === "undefined" || appearance.hairDlc === 0) {
     game.setPedComponentVariation(ped, 2, appearance.hair, 0, 0);
   } else {
-    alt.setDlcClothes(ped.scriptID, appearance.hairDlc, 2, appearance.hair, 0, 0);
+    alt.setDlcClothes(0, ped.scriptID, appearance.hairDlc, 2, appearance.hair, 0);
   }
 
   game.setPedHairTint(ped, appearance.hairColor1, appearance.hairColor2);

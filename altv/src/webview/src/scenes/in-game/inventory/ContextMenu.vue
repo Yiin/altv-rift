@@ -16,6 +16,7 @@ import {
   type PlayerInventoryItemSource,
   type PlayerItemSource,
 } from "@shared/interfaces";
+import Icon from "@/components/Icon/Icon.vue";
 import {
   InventoryInteractionType,
   type ItemActionMenu,
@@ -267,10 +268,7 @@ const actions = computed(() => [
                 <div
                   class="flex cursor-pointer items-center gap-4 bg-neutral-800 px-4 py-3 text-neutral-200 hover:bg-neutral-700"
                 >
-                  <v-icon
-                    :icon="action.icon"
-                    size="sm"
-                  />
+                  <Icon :name="action.icon" />
                   <span class="-mt-0.5 text-sm font-medium">{{ action.name }}</span>
                 </div>
               </li>

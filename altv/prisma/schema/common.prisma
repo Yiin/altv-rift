@@ -1,0 +1,11 @@
+type Position {
+  x Float
+  y Float
+  z Float
+}
+
+type Ped {
+  model   String
+  pos     Position
+  heading Float
+} 

@@ -10,11 +10,11 @@ import { getItemGradeTextColor, getItemImage } from "@/lib/utils";
 import { useCharacter } from "@/store/synced/character.store";
 import { asset } from "@/lib/utils";
 import { rpc } from "@/rpc";
-import Icon from "@/components/Icon/Icon.vue";
 import { Sound, playSound } from "@/lib/utils";
 import ShopItemIcon from "./ShopItemIcon.vue";
 import ShopActionModal from "./ShopActionModal.vue";
 import { canBuy } from "./shop.utils";
+import MoneyIcon from "./assets/money.svg";
 
 const gameState = useGameState();
 const character = useCharacter();
@@ -91,8 +91,8 @@ async function buy(inventoryItem: InventoryItem, amount: number) {
               ${{ character.money }}
             </div>
           </div>
-          <div class="mr-2 text-white">
-            <Icon name="money" />
+          <div class="mr-2">
+            <MoneyIcon class="h-8 w-8 text-white" />
           </div>
           <div
             v-if="false"

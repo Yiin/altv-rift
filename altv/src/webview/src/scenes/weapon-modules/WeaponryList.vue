@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Image from "@/components/Image.vue";
 import { type WeaponModuleType } from "./types";
 
 const props = defineProps({
@@ -22,7 +23,7 @@ const props = defineProps({
         <h2 class="text-xl font-bold text-white">{{ weaponModule.name }}</h2>
         <p class="text-sm text-[#B1B1B1]">{{ weaponModule.shortDesc }}</p>
         <div>
-          <img
+          <Image
             :src="weaponModule.image"
             :alt="weaponModule.name"
             class="w-full"

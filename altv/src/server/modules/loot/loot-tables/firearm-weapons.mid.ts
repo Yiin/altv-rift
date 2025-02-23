@@ -15,7 +15,7 @@ import {
   getWeaponClipSize,
 } from "@shared/modules/items";
 import { rollOption } from "@shared/utility/random";
-import { LootTable } from "../types";
+import { LootTable } from "../loot.types";
 
 export const FIREARM_WEAPONS_MID: LootTable = {
   key: "firearm-weapons-mid",

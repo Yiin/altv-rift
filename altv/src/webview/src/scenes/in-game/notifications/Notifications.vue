@@ -1,93 +1,69 @@
 <script setup lang="ts">
-import { computed, reactive, ref, watch } from "vue";
+import { computed, ref, watch, h } from "vue";
 import { WebviewEvents } from "@shared/events/webview";
-import { type NotificationSchema } from "@shared/interfaces";
 import { type Item } from "@shared/modules/items";
+import { ToastAction } from "@/components/ui/toast";
 import { useAlt } from "@/composables/use-alt";
 import { useCharacter } from "@/store/synced/character.store";
+import { useToast } from "@/components/ui/toast";
+import { Toaster } from "@/components/ui/toast";
 import ItemReceivedNotification from "./ItemReceivedNotification.vue";
 import ExperienceGainedNotification from "./ExperienceGainedNotification.vue";
 
 const alt = useAlt();
 const character = useCharacter();
-const notifications = reactive<NotificationSchema[]>([]);
-const addedItem = ref<{
-  timeout: any;
-  item: Item;
-} | null>(null);
+const { toast } = useToast();
 
+// Experience notification state
 const experienceChanged = ref<{
   type: "fishing" | "mining" | "woodcutting";
   previousXp: number;
   currentXp: number;
 }>();
 
-const xp = computed(() => [
-  character.skills.fishing,
-  character.skills.mining,
-  character.skills.woodcutting,
-]);
+let experienceTimeout: number | null = null;
 
-let timeout: number | null;
+// Item notification state
+const addedItem = ref<{
+  item: Item;
+  timeout: number;
+} | null>(null);
 
-watch(
-  xp,
-  (
-    [currentFishing, currentMining, currentWoodcutting],
-    [previousFishing, previousMining, previousWoordcutting],
-  ) => {
-    if (currentFishing > previousFishing) {
-      experienceChanged.value = {
-        type: "fishing",
-        previousXp: previousFishing,
-        currentXp: currentFishing,
-      };
-    } else if (currentMining > previousMining) {
-      experienceChanged.value = {
-        type: "mining",
-        previousXp: previousMining,
-        currentXp: currentMining,
-      };
-    } else if (currentWoodcutting > previousWoordcutting) {
-      experienceChanged.value = {
-        type: "woodcutting",
-        previousXp: previousWoordcutting,
-        currentXp: currentWoodcutting,
-      };
+// Skills XP computed
+const skillsXp = computed(() => ({
+  fishing: character.skills.fishing,
+  mining: character.skills.mining,
+  woodcutting: character.skills.woodcutting,
+}));
+
+// Watch for XP changes
+watch(skillsXp, (current, previous) => {
+  const changedSkill = (Object.keys(current) as Array<keyof typeof current>).find(
+    (skill) => current[skill] > (previous?.[skill] ?? 0),
+  );
+
+  if (changedSkill) {
+    experienceChanged.value = {
+      type: changedSkill,
+      previousXp: previous?.[changedSkill] ?? 0,
+      currentXp: current[changedSkill],
+    };
+
+    if (experienceTimeout) {
+      clearTimeout(experienceTimeout);
     }
 
-    if (experienceChanged.value) {
-      if (timeout) {
-        clearTimeout(timeout);
-      }
-
-      timeout = setTimeout(() => {
-        experienceChanged.value = undefined;
-        timeout = null;
-      }, 5000);
-    }
-  },
-);
-
-alt.on(WebviewEvents.FromClient.SHOW_NOTIFICATION, (type, title, text) => {
-  const notification = {
-    key: Date.now().toString(),
-    type,
-    title,
-    text,
-  };
-  notifications.push(notification);
-
-  setTimeout(() => {
-    notifications.splice(notifications.indexOf(notification), 1);
-  }, 5000);
+    experienceTimeout = setTimeout(() => {
+      experienceChanged.value = undefined;
+      experienceTimeout = null;
+    }, 5000);
+  }
 });
 
 alt.on(WebviewEvents.FromClient.INVENTORY_ITEM_ADD, async (item) => {
-  if (addedItem.value) {
+  if (addedItem.value?.timeout) {
     clearTimeout(addedItem.value.timeout);
     addedItem.value = null;
-
     await new Promise((resolve) => setTimeout(resolve, 0));
   }
 
@@ -98,22 +74,26 @@ alt.on(WebviewEvents.FromClient.INVENTORY_ITEM_ADD, async (item) => {
     }, 4000),
   };
 });
+
+// Generic notifications
+alt.on(WebviewEvents.FromClient.SHOW_NOTIFICATION, (type, title, text) => {
+  const defaultTitle = {
+    error: "Uh oh! Something went wrong.",
+    success: "Success!",
+    info: "Info",
+    warning: "Warning!",
+  }[type];
+
+  toast({
+    title: title || defaultTitle,
+    description: text,
+    variant: type === "error" ? "destructive" : type,
+  });
+});
 </script>
 
 <template>
-  <!-- <transition-group
-    name="notification"
-    tag="div"
-    class="absolute right-6 top-6"
-  >
-    <GenericNotification
-      v-for="(notification, index) in notifications"
-      :key="index"
-      :type="notification.type"
-      :title="''"
-      :text="notification.text"
-    />
-  </transition-group> -->
+  <Toaster />
   <transition-group
     name="notification"
     tag="div"

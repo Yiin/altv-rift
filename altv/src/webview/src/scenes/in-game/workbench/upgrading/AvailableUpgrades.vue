@@ -20,6 +20,7 @@ import { useCharacter } from "@/store/synced/character.store";
 import { px } from "@/composables/use-pixel";
 import { isSameItemSource } from "@/store/inventory";
 import { asset } from "@/lib/utils";
+import Image from "@/components/Image.vue";
 import ItemIcon from "../../inventory/ItemIcon.vue";
 import WorkbenchSlot from "../components/WorkbenchSlot.vue";
 import { useUpgrading, getItemFromPlayerSource } from "../composables/use-upgrading";
@@ -134,7 +135,7 @@ const itemsByCategory = computed(() => {
     <div class="text-3xl font-bold">Search</div>
     <input
       type="text"
-      class="mb-5 mt-2 w-75 rounded border border-solid border-white/10 px-5 py-5 text-xl focus-within:outline-neutral-500 focus-visible:outline"
+      class="mb-5 mt-2 w-75 rounded border border-solid border-white/10 bg-transparent px-5 py-5 text-xl text-white focus-within:outline-neutral-500 focus-visible:outline"
       placeholder="Type name of..."
       v-model="search"
     />
@@ -148,7 +149,7 @@ const itemsByCategory = computed(() => {
             :selected="category === categoryFilter"
             class="h-11 w-11 p-2"
           >
-            <img
+            <Image
               v-if="category !== 'all'"
               :src="asset(`assets/workbench/categories/${category}.svg`)"
               class="h-4 w-4"

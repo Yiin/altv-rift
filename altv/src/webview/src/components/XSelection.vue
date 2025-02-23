@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import { computed, ref, watch, watchEffect } from "vue";
+import { computed, ref, watchEffect } from "vue";
 import { clamp, throttle } from "lodash-es";
 import { px } from "@/composables/use-pixel";
+import { cn } from "@/lib/utils";
+
+const model = defineModel<number>({ default: 0 });
 
 const props = withDefaults(
   defineProps<{
@@ -9,14 +12,12 @@ const props = withDefaults(
     labelRight?: string;
     size?: number;
     pointerSize?: number;
-    modelValue?: number;
     noPadding?: boolean;
     min?: number;
     max?: number;
     reverse?: boolean;
   }>(),
   {
-    modelValue: 0,
     min: -1,
     max: 1,
   },
@@ -25,28 +26,30 @@ const props = withDefaults(
 const size = computed(() => px(props.size ?? 150));
 const pointerSize = computed(() => px(props.pointerSize ?? 24));
 
-const emit = defineEmits<{
-  (e: "update:modelValue", value: number): void;
-}>();
-
 const container = ref();
-const x = ref(denormalize(props.modelValue));
+const x = ref(denormalize(model.value));
 const isDragging = ref(false);
 
 const bounds = ref({
   x: 0,
 });
 
+const updateModelValue = throttle((x) => {
+  const value = props.reverse ? props.min + props.max - normalize(x) : normalize(x);
+  model.value = value;
+}, 60);
+
 watchEffect(() => {
   updateBounds();
 });
 
-watch(
-  () => props.modelValue,
-  (value) => {
-    x.value = denormalize(value);
-  },
-);
+watch(x, () => {
+  updateModelValue(x.value);
+});
+
+watchEffect(() => {
+  x.value = denormalize(model.value);
+});
 
 function normalize(value: number) {
   const full = pointerSize.value;
@@ -68,20 +71,11 @@ function denormalize(value: number) {
   );
 }
 
-const updateModelValue = throttle((x) => {
-  const value = props.reverse ? props.min + props.max - normalize(x) : normalize(x);
-  emit("update:modelValue", value);
-}, 60);
-
-watchEffect(() => {
-  updateModelValue(x.value);
-});
-
 function updateBounds() {
-  if (!container.value?.$el) {
+  if (!container.value) {
     return;
   }
-  bounds.value = container.value.$el.getBoundingClientRect();
+  bounds.value = container.value.getBoundingClientRect();
 }
 
 function cleanup() {
@@ -96,6 +90,7 @@ function dragstart(e: PointerEvent) {
   updateBounds();
   window.addEventListener("pointerup", cleanup);
   window.addEventListener("pointermove", trackDragging);
+  trackDragging(e);
 }
 
 function trackDragging(e: PointerEvent) {
@@ -107,42 +102,49 @@ function trackDragging(e: PointerEvent) {
 
 <template>
   <div :class="['flex items-center justify-center', !noPadding && 'p-6']">
-    <v-sheet
+    <div
       ref="container"
       @pointerdown="dragstart"
-      color="grey-darken-4"
-      class="border-1-neutral-600 relative overflow-visible border-1 border-solid"
-      rounded
-      height="30"
-      :width="size"
+      class="relative overflow-visible rounded-md border border-border bg-neutral-900"
+      :style="{ width: `${size}px`, height: `${px(30)}px` }"
     >
       <!-- Vertical lines -->
       <div
-        v-for="left in ['left-1/5', 'left-2/5', 'left-3/5', 'left-4/5']"
-        :key="left"
-        :class="[left, 'absolute left-1/5 h-full border-l-1 border-solid border-l-neutral-600']"
+        v-for="(_, index) in 4"
+        :key="index"
+        :class="
+          cn(
+            'absolute h-full border-l border-border border-neutral-700',
+            index === 0 && 'left-1/5',
+            index === 1 && 'left-2/5',
+            index === 2 && 'left-3/5',
+            index === 3 && 'left-4/5',
+          )
+        "
       />
 
       <!-- Pointer -->
-      <v-icon
-        ref="pointer"
-        :class="[
-          'absolute top-1/2 z-10 -translate-y-1/2 transform',
-          !isDragging && 'transition-transform duration-100 ease-linear',
-        ]"
+      <div
+        class="absolute top-1/2 z-10 -translate-y-1/2 transform rounded-full bg-primary"
+        :class="!isDragging && 'transition-transform duration-100 ease-linear'"
         :style="{
           '--tw-translate-x': `${x}px`,
+          width: `${pointerSize}px`,
+          height: `${pointerSize}px`,
         }"
-        icon="mdi-circle"
       />
 
       <!-- Labels -->
-      <span class="absolute -left-2 top-1/2 -translate-x-full -translate-y-1/2 text-xs">
+      <span
+        class="absolute -left-2 top-1/2 -translate-x-full -translate-y-1/2 text-xs text-muted-foreground"
+      >
         {{ reverse ? labelRight : labelLeft }}
       </span>
-      <span class="absolute -right-2 top-1/2 -translate-y-1/2 translate-x-full text-xs">
+      <span
+        class="absolute -right-2 top-1/2 -translate-y-1/2 translate-x-full text-xs text-muted-foreground"
+      >
         {{ reverse ? labelLeft : labelRight }}
       </span>
-    </v-sheet>
+    </div>
   </div>
 </template>

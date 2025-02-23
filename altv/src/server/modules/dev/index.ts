@@ -1,45 +1,29 @@
 import alt from "@altv/server";
-import { createItem, ItemGrade, ITEMS_REGISTRY } from "@shared/modules/items";
-import { VirtualEntityType } from "@shared/interfaces";
-import { registerCmd } from "../chat";
+import { registerCmd, sendChatMessage } from "../chat";
 import "./v1";
+import { isInGame } from "@/core/utility/assertions";
+import {
+  BlueprintKey,
+  FirearmWeaponBlueprint,
+  isItemKeyUnlearnedBlueprint,
+} from "@shared/modules/production";
+import { MessageType } from "@shared/modules/chat";
 
 const vg = alt.VirtualEntityGroup.create({ maxEntitiesInStream: 50 });
 
-registerCmd("s", (player) => {
-  // generate random amount 1-6
-  const amount = Math.floor(Math.random() * 6) + 1;
-
-  const items = [];
-
-  for (let i = 0; i < amount; i++) {
-    // generate random item
-    const keys = [...ITEMS_REGISTRY.keys()];
-    const randomKey = keys[Math.floor(Math.random() * keys.length)];
-
-    // generate random grade
-    const grades = [
-      ItemGrade.COMMON,
-      ItemGrade.UNCOMMON,
-      ItemGrade.RARE,
-      ItemGrade.EPIC,
-      ItemGrade.LEGENDARY,
-    ];
-    const randomGrade = grades[Math.floor(Math.random() * grades.length)];
-
-    // generate random amount
-    const randomAmount = Math.floor(Math.random() * 100) + 1;
-
-    items.push(createItem(randomKey, { grade: randomGrade, amount: randomAmount }));
+registerCmd("blueprint", (player, [blueprint]) => {
+  if (!isInGame(player)) {
+    return;
   }
 
-  alt.VirtualEntity.create({
-    group: vg,
-    pos: player.pos,
-    streamingDistance: 300,
-    data: {
-      entityType: VirtualEntityType.Storage,
-      items,
-    },
-  });
+  if (!isItemKeyUnlearnedBlueprint(`blueprint_${blueprint}`)) {
+    sendChatMessage(
+      player,
+      `Invalid blueprint: ${blueprint}, needed ${FirearmWeaponBlueprint.APPISTOL}`,
+      MessageType.Error,
+    );
+    return;
+  }
+
+  player.addBlueprint(blueprint as BlueprintKey);
 });

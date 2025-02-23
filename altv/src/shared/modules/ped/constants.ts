@@ -10,4 +10,5 @@ export enum PedFlags {
   None = 0,
   Peaceful = 1 << 0,
   ShopKeeper = 1 << 1,
+  Enemy = 1 << 2,
 }

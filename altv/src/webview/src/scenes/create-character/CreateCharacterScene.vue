@@ -424,7 +424,7 @@ const MalePresets = [
                 _.merge(createCharacter.currentAppearance, preset);
               }
             "
-            class="cursor-pointer items-center justify-center bg-black/50 p-5 text-lg font-bold leading-[0] text-white"
+            class="cursor-pointer items-center justify-center rounded-xl bg-black/50 p-5 text-lg font-bold leading-[0] text-white"
           >
             {{ i + 1 }}
           </div>

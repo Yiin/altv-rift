@@ -14,6 +14,7 @@ import {
 import { useItemDetails } from "@/composables/use-item-details";
 import { getRandomDescription } from "@/lib/utils";
 import { useEventListener } from "@/composables/use-event-listener";
+import Icon from "@/components/Icon/Icon.vue";
 
 const props = defineProps<{
   item: Item;
@@ -86,7 +87,7 @@ useEventListener("mousemove", (event: MouseEvent) => {
         Custom name
        -->
       <div v-if="details.customName">
-        <v-icon icon="mdi-rename-outline" />
+        <Icon name="mdi:rename-outline" />
         <div class="font-bold">
           {{ details.name }}
         </div>
@@ -99,15 +100,15 @@ useEventListener("mousemove", (event: MouseEvent) => {
         v-if="isItemFirearmWeapon(item) && item.clip"
         class="flex items-center gap-1"
       >
-        <v-icon icon="mdi-ammunition" />
+        <Icon name="mdi:ammunition" />
         <div>
           <div class="font-bold">
             {{ getItemName(item.clip.key) }}
           </div>
           <div class="flex items-baseline gap-1">
-            <v-icon
-              icon="mdi-close"
-              size="12"
+            <Icon
+              name="mdi:close"
+              class="w-3"
             />
             <div class="font-bold text-yellow-500">
               {{ item.clip.amount }}
@@ -186,15 +187,15 @@ useEventListener("mousemove", (event: MouseEvent) => {
         v-else-if="isItemFishingRod(item) && item.bait"
         class="flex items-center gap-1"
       >
-        <v-icon icon="mdi-chart-bubble" />
+        <Icon name="mdi:chart-bubble" />
         <div>
           <div class="font-bold">
             {{ getItemName(item.bait.key) }}
           </div>
           <div class="flex items-baseline gap-1">
-            <v-icon
-              icon="mdi-close"
-              size="12"
+            <Icon
+              name="mdi:close"
+              class="w-3"
             />
             <div class="font-bold text-yellow-500">
               {{ item.bait.amount }}

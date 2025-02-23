@@ -5,4 +5,4 @@ client-main = "client.js"
 client-files = ["client/*"]
 
 [js-module-v2]
-compatibilityEnabled = true
+compatibilityEnabled = false

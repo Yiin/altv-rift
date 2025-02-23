@@ -27,10 +27,6 @@ compass.style.display = "none";
 compass.style.left = `${alt.getScreenResolution().x / 2 - px(203)}px`;
 document.body.appendChild(compass);
 
-alt.Events.onWindowResolutionChange(({ newResolution }) => {
-  compass.style.left = `${newResolution.x / 2 - px(203)}px`;
-});
-
 const compassContainer = document.createElement("div");
 compassContainer.addClass("compass__container");
 compass.appendChild(compassContainer);
@@ -68,7 +64,7 @@ nearbyPointsDiv.addClass("compass__icons");
 compassContainer.appendChild(nearbyPointsDiv);
 
 const nearbyPoints: {
-  calc(): { direction: number; distance: number; };
+  calc(): { direction: number; distance: number };
   type: string;
   node: alt.RmlElement;
 }[] = [];
@@ -283,7 +279,7 @@ whileInGame(() => {
 
       const stopWatching = watchEffect((onCleanup) => {
         if (isQuestPed(entity)) {
-          const point = addNearbyPoint(() => entity.pos, 'quest');
+          const point = addNearbyPoint(() => entity.pos, "quest");
           node = point.node;
         }
 
@@ -304,15 +300,25 @@ whileInGame(() => {
           removeNearbyPoint(node);
         }
       };
-    }
+    },
   );
 
   const width = 812;
   const middle = width / 2;
   const visibleWidthPercentage = 0.5;
-  const start = px(middle - middle * visibleWidthPercentage);
-  const end = px(middle + middle * visibleWidthPercentage);
-  const spaceBetweenTicks = px(SPACE_BETWEEN_TICKS);
+  let start = px(middle - middle * visibleWidthPercentage);
+  let end = px(middle + middle * visibleWidthPercentage);
+  let spaceBetweenTicks = px(SPACE_BETWEEN_TICKS);
+
+  const windowResizeListener = alt.Events.onWindowResolutionChange(({ newResolution }) => {
+    // px might not be updated immediately, so we wait a tick
+    alt.Timers.nextTick(() => {
+      start = px(newResolution.x / 2 - (newResolution.x / 2) * visibleWidthPercentage);
+      end = px(newResolution.x / 2 + (newResolution.x / 2) * visibleWidthPercentage);
+      spaceBetweenTicks = px(SPACE_BETWEEN_TICKS);
+      compass.style.left = `${newResolution.x / 2 - px(203)}px`;
+    });
+  });
 
   const timer = alt.Timers.everyTick(() => {
     if (!alt.isGameFocused()) {
@@ -357,6 +363,7 @@ whileInGame(() => {
   return () => {
     compass.style.display = "none";
     timer.destroy();
+    windowResizeListener.destroy();
     stopAreaOfInterestListener();
     stopEntityListener();
   };

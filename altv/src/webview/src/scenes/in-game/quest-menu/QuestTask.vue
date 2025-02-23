@@ -4,6 +4,7 @@ import { ClientEvents } from "@shared/events/client";
 import { type QuestTaskInfo } from "@shared/store/client.store";
 import { useAlt } from "@/composables/use-alt";
 import { useClient } from "@/store/synced/client.store";
+import Icon from "@/components/Icon/Icon.vue";
 
 const props = defineProps<{
   task: QuestTaskInfo;
@@ -98,9 +99,9 @@ function trackQuest(key: string) {
           {{ client.trackingQuest === task.completedFact ? "Tracking" : "Track" }}
         </span>
 
-        <v-icon
-          icon="mdi-map-marker-plus-outline"
-          size="xs"
+        <Icon
+          name="mdi:map-marker-plus-outline"
+          class="w-4"
         />
       </button>
     </div>

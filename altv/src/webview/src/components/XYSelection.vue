@@ -2,6 +2,10 @@
 import { computed, ref, watch, watchEffect } from "vue";
 import { clamp, throttle } from "lodash-es";
 import { px } from "@/composables/use-pixel";
+import { cn } from "@/lib/utils";
+
+const modelX = defineModel<number>("x", { default: 0 });
+const modelY = defineModel<number>("y", { default: 0 });
 
 const props = withDefaults(
   defineProps<{
@@ -9,16 +13,12 @@ const props = withDefaults(
     labelBottom?: string;
     labelLeft?: string;
     labelRight?: string;
-    x?: number;
-    y?: number;
     size?: number;
     pointerSize?: number;
     reverseX?: boolean;
     reverseY?: boolean;
   }>(),
   {
-    x: 0,
-    y: 0,
     size: 150,
     pointerSize: 24,
   },
@@ -27,15 +27,10 @@ const props = withDefaults(
 const size = computed(() => px(props.size ?? 150));
 const pointerSize = computed(() => px(props.pointerSize ?? 24));
 
-const emit = defineEmits<{
-  (e: "update:x", value: number): void;
-  (e: "update:y", value: number): void;
-}>();
-
 const container = ref();
 const pointer = ref();
-const x = ref(denormalize(props.reverseX ? -props.x : props.x));
-const y = ref(denormalize(props.reverseY ? -props.y : props.y));
+const x = ref(denormalize(props.reverseX ? -modelX.value : modelX.value));
+const y = ref(denormalize(props.reverseY ? -modelY.value : modelY.value));
 const isDragging = ref(false);
 
 const bounds = ref({
@@ -43,13 +38,22 @@ const bounds = ref({
   y: 0,
 });
 
+const updateModelValue = throttle((x, y) => {
+  modelX.value = props.reverseX ? -normalize(x) : normalize(x);
+  modelY.value = props.reverseY ? -normalize(y) : normalize(y);
+}, 60);
+
 watchEffect(() => {
   updateBounds();
 });
 
-watch([() => props.x, () => props.y], (xy) => {
-  x.value = denormalize(props.reverseX ? -xy[0] : xy[0]);
-  y.value = denormalize(props.reverseY ? -xy[1] : xy[1]);
+watch([x, y], ([newX, newY]) => {
+  updateModelValue(newX, newY);
+});
+
+watchEffect(() => {
+  x.value = denormalize(props.reverseX ? -modelX.value : modelX.value);
+  y.value = denormalize(props.reverseY ? -modelY.value : modelY.value);
 });
 
 function normalize(value: number) {
@@ -64,21 +68,12 @@ function denormalize(value: number) {
   return ((clamp(value, -1, 1) + 1) * (size.value - half)) / 2 - quarter;
 }
 
-const updateModelValue = throttle((x, y) => {
-  emit("update:x", props.reverseX ? -normalize(x) : normalize(x));
-  emit("update:y", props.reverseY ? -normalize(y) : normalize(y));
-}, 60);
-
-watchEffect(() => {
-  updateModelValue(x.value, y.value);
-});
-
 function updateBounds() {
-  if (!container.value?.$el || !pointer.value?.$el) {
+  if (!container.value) {
     return;
   }
 
-  bounds.value = container.value.$el.getBoundingClientRect();
+  bounds.value = container.value.getBoundingClientRect();
 }
 
 function cleanup() {
@@ -108,57 +103,83 @@ function trackDragging(e: PointerEvent) {
 
 <template>
   <div class="flex items-center justify-center p-6">
-    <v-sheet
+    <div
       ref="container"
       @pointerdown="dragstart"
-      color="grey-darken-4"
-      class="relative overflow-visible border-1 border-solid border-neutral-600"
-      rounded
-      :height="size"
-      :width="size"
+      class="relative overflow-visible rounded-md border border-border bg-neutral-900"
+      :style="{
+        // px because it's already adjusted to be responsive
+        height: `${size}px`,
+        width: `${size}px`,
+      }"
     >
       <!-- Horizontal lines -->
       <div
-        v-for="top in ['top-1/5', 'top-2/5', 'top-3/5', 'top-4/5']"
-        :key="top"
-        :class="[top, 'absolute w-full border-b-1 border-solid border-b-neutral-600']"
+        v-for="(_, index) in 4"
+        :key="'h' + index"
+        :class="
+          cn(
+            'absolute w-full border-b border-border border-neutral-700',
+            index === 0 && 'top-1/5',
+            index === 1 && 'top-2/5',
+            index === 2 && 'top-3/5',
+            index === 3 && 'top-4/5',
+          )
+        "
       />
 
       <!-- Vertical lines -->
       <div
-        v-for="left in ['left-1/5', 'left-2/5', 'left-3/5', 'left-4/5']"
-        :key="left"
-        :class="[left, 'absolute h-full border-l-1 border-solid border-l-neutral-600']"
+        v-for="(_, index) in 4"
+        :key="'v' + index"
+        :class="
+          cn(
+            'absolute h-full border-l border-border border-neutral-700',
+            index === 0 && 'left-1/5',
+            index === 1 && 'left-2/5',
+            index === 2 && 'left-3/5',
+            index === 3 && 'left-4/5',
+          )
+        "
       />
 
       <!-- Pointer -->
-      <v-icon
+      <div
         ref="pointer"
         :class="[
-          'absolute z-10 transform',
+          'absolute z-10 transform rounded-full bg-primary',
           !isDragging && 'transition-transform duration-100 ease-linear',
         ]"
-        :size="pointerSize"
         :style="{
           '--tw-translate-x': `${x}px`,
           '--tw-translate-y': `${y}px`,
+          // px because it's already adjusted to be responsive
+          width: `${pointerSize}px`,
+          height: `${pointerSize}px`,
         }"
-        icon="mdi-circle"
       />
 
       <!-- Labels -->
-      <span class="absolute -left-2 top-1/2 -translate-x-full -translate-y-1/2 text-xs">
+      <span
+        class="absolute -left-2 top-1/2 -translate-x-full -translate-y-1/2 text-xs text-muted-foreground"
+      >
         {{ reverseX ? labelRight : labelLeft }}
       </span>
-      <span class="absolute -top-2 left-1/2 -translate-x-1/2 -translate-y-full text-xs">
+      <span
+        class="absolute -top-2 left-1/2 -translate-x-1/2 -translate-y-full text-xs text-muted-foreground"
+      >
         {{ reverseY ? labelBottom : labelTop }}
       </span>
-      <span class="absolute -right-2 top-1/2 -translate-y-1/2 translate-x-full text-xs">
+      <span
+        class="absolute -right-2 top-1/2 -translate-y-1/2 translate-x-full text-xs text-muted-foreground"
+      >
         {{ reverseX ? labelLeft : labelRight }}
       </span>
-      <span class="absolute -bottom-2 left-1/2 -translate-x-1/2 translate-y-full text-xs">
+      <span
+        class="absolute -bottom-2 left-1/2 -translate-x-1/2 translate-y-full text-xs text-muted-foreground"
+      >
         {{ reverseY ? labelTop : labelBottom }}
       </span>
-    </v-sheet>
+    </div>
   </div>
 </template>

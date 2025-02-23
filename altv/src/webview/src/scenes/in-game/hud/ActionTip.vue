@@ -3,6 +3,7 @@ import { computed } from "vue";
 import { ActionTipType } from "@shared/store/client.store";
 import { useClient } from "@/store/synced/client.store";
 import { asset } from "@/lib/utils";
+import Image from "@/components/Image.vue";
 
 const client = useClient();
 
@@ -20,7 +21,7 @@ const tip = computed(() => {
       v-if="tip.type === ActionTipType.MINING"
       class="flex items-center gap-3.25"
     >
-      <img
+      <Image
         :src="asset('assets/action-tip-icons/mining.svg')"
         class="h-12 w-12"
       />
@@ -37,7 +38,7 @@ const tip = computed(() => {
       v-else-if="tip.type === ActionTipType.WOODCUTTING"
       class="flex items-center gap-3.25"
     >
-      <img
+      <Image
         :src="asset('assets/action-tip-icons/woodcutting.svg')"
         class="h-12 w-12"
       />
@@ -54,7 +55,7 @@ const tip = computed(() => {
       v-else-if="tip.type === ActionTipType.FISHING"
       class="flex items-center gap-3.25"
     >
-      <img
+      <Image
         :src="asset('assets/action-tip-icons/fishing.svg')"
         class="h-12 w-12"
       />
@@ -71,7 +72,7 @@ const tip = computed(() => {
       v-else-if="tip.type === ActionTipType.PLANT_SEED"
       class="flex items-center gap-3.25"
     >
-      <img
+      <Image
         :src="asset('assets/action-tip-icons/seed-plant.svg')"
         class="h-12 w-12"
       />
@@ -88,7 +89,7 @@ const tip = computed(() => {
       v-else-if="tip.type === ActionTipType.HARVEST"
       class="flex items-center gap-3.25"
     >
-      <img
+      <Image
         :src="asset('assets/action-tip-icons/harvest.svg')"
         class="h-12 w-12"
       />

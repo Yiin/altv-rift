@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { useVehshop } from "@/store/vehshop.store";
-import Icon from "@/components/Icon/Icon.vue";
 import Donut from "@/components/Donut.vue";
 import DarkBackground from "@/components/DarkBackground.vue";
 import BackButtons from "@/components/buttons/BackButtons.vue";
 import { asset } from "@/lib/utils";
+import Icon from "@/components/Icon/Icon.vue";
+import Image from "@/components/Image.vue";
 
 const vehshop = useVehshop();
 
@@ -21,7 +22,7 @@ const selectCar = (car: any) => {
   <div class="relative flex h-full w-full flex-col justify-between px-20 py-11">
     <DarkBackground />
     <div class="mx-auto flex w-full items-center justify-between">
-      <div class="w-40"><v-img :src="asset(`assets/vehicles/logo.webp`)" /></div>
+      <div class="w-40"><Image :src="asset(`assets/vehicles/logo.webp`)" /></div>
       <div
         class="no-scrollbar mx-20 flex gap-2.5 overflow-x-auto whitespace-nowrap text-base font-bold uppercase text-white"
       >
@@ -102,7 +103,7 @@ const selectCar = (car: any) => {
           }"
         >
           <div v-if="item.modelSub === vehshop.selectedCarInfo.modelSub">
-            <v-img
+            <Image
               :src="asset(`assets/vehicles/${item.manufacturer}.webp`)"
               class="h-20"
             />
@@ -113,10 +114,10 @@ const selectCar = (car: any) => {
               <div class="mb-4 text-base text-sunriseYellow">{{ item.modelSub }}</div>
               <div class="text-xl font-bold text-white">{{ item.price }}</div>
             </div>
+
             <Icon
               :name="item.manufacturer"
-              :width="64"
-              :height="40"
+              class="h-10 w-16"
             />
           </div>
         </div>

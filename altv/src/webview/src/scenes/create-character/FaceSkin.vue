@@ -6,6 +6,9 @@ import {
 } from "@shared/modules/character/appearance-data";
 import { px } from "@/composables/use-pixel";
 import { asset } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import Image from "@/components/Image.vue";
 import { useCreateCharacter } from "../../store/create-character.store";
 import SlideOption from "../../components/SlideOption.vue";
 import XSelection from "../../components/XSelection.vue";
@@ -20,31 +23,30 @@ const randomSkin = () => {
 </script>
 
 <template>
-  <v-card class="v-card--transparent">
-    <v-card-item>
+  <Card class="border-none bg-background/60">
+    <CardContent class="p-6">
       <div class="flex items-center justify-between pb-2 text-sm font-bold uppercase tracking-wide">
-        Skin
-        <v-btn
+        <span>Skin</span>
+        <Button
           @click="randomSkin"
-          color="grey-darken-3"
-          prepend-icon="mdi-shuffle-variant"
-          size="small"
+          variant="secondary"
+          class="h-8 gap-2"
         >
+          <i class="mdi mdi-shuffle-variant" />
           Random
-        </v-btn>
+        </Button>
       </div>
       <div class="pointer-events-none flex items-end justify-center">
-        <v-img
-          transition="parent-fade"
-          class="parent-image z-10 -mr-10 flex"
-          :height="px(150)"
+        <Image
           :src="asset(`assets/faces/${createCharacter.currentAppearance.skinMother}.webp`)"
+          class="z-10 -mr-10 flex h-37.5 object-bottom transition-all duration-100"
+          alt="Mother's skin"
         />
-        <v-img
-          class="parent-image"
-          transition="parent-fade"
-          :height="px(150)"
+
+        <Image
           :src="asset(`assets/faces/${createCharacter.currentAppearance.skinFather}.webp`)"
+          class="h-37.5 object-bottom transition-all duration-100"
+          alt="Father's skin"
         />
       </div>
       <div class="p-2 pt-0">
@@ -56,8 +58,8 @@ const randomSkin = () => {
           no-padding
           class="mb-2"
         />
-        <v-row align="center">
-          <v-col cols="6">
+        <div class="grid grid-cols-2 gap-4">
+          <div>
             <SlideOption
               v-model="createCharacter.currentAppearance.skinMother"
               :options="
@@ -67,8 +69,8 @@ const randomSkin = () => {
               "
               :value-text="(value) => parents[value]"
             />
-          </v-col>
-          <v-col cols="6">
+          </div>
+          <div>
             <SlideOption
               v-model="createCharacter.currentAppearance.skinFather"
               :options="
@@ -78,28 +80,9 @@ const randomSkin = () => {
               "
               :value-text="(value) => parents[value]"
             />
-          </v-col>
-        </v-row>
+          </div>
+        </div>
       </div>
-    </v-card-item>
-  </v-card>
+    </CardContent>
+  </Card>
 </template>
-
-<style>
-.parent-fade-enter-active,
-.parent-fade-leave-active {
-  transition: all 0.1s ease-out;
-}
-
-.parent-fade-enter-from,
-.parent-fade-leave-to {
-  all: unset;
-  height: 0;
-  opacity: 0;
-}
-
-.parent-image .v-img__img {
-  top: unset;
-  bottom: 0;
-}
-</style>

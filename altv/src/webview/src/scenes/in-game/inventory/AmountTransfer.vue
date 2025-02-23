@@ -16,6 +16,8 @@ import {
 import { useFloatingStyles } from "@/composables/use-floating-styles";
 import { useQuantity } from "@/composables/use-quantity";
 import { useGameState } from "@/store/synced/game-state.store";
+import Image from "@/components/Image.vue";
+import { asset } from "@/lib/utils";
 import ItemIcon from "./ItemIcon.vue";
 
 const props = defineProps<TransferingAmount>();
@@ -95,9 +97,9 @@ const actionAll = computed(() => {
           class="cursor-pointer"
           @click="cancelAmountTransfer"
         >
-          <img
+          <Image
             class="pointer-events-none"
-            src="/assets/inventory/modal-close-icon.svg"
+            :src="asset('assets/inventory/modal-close-icon.svg')"
           />
         </div>
       </div>
@@ -140,7 +142,7 @@ const actionAll = computed(() => {
             class="flex h-12.5 w-12.5 flex-shrink-0 cursor-pointer items-center justify-center bg-green-600 text-white hover:bg-green-400"
             @click.stop="() => confirmAmountTransfer(quantity)"
           >
-            <img src="/assets/inventory/transfer-icon.svg" />
+            <Image :src="asset('assets/inventory/transfer-icon.svg')" />
           </div>
         </div>
         <div

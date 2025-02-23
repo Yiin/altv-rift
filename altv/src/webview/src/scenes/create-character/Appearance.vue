@@ -13,11 +13,11 @@ import {
   headOverlays,
 } from "@shared/modules/character/appearance-data";
 import { wrap } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
 import { useCreateCharacter } from "../../store/create-character.store";
-import SlideOption from "../../components/SlideOption.vue";
-import SliderSelection from "../../components/SliderSelection.vue";
-import ColorSelection from "../../components/ColorSelection.vue";
-import Tabs from "../../components/Tabs/Tabs.vue";
 
 const createCharacter = useCreateCharacter();
 
@@ -92,26 +92,28 @@ const randomize = () => {
 </script>
 
 <template>
-  <v-card class="v-card--transparent">
-    <v-card-item>
+  <Card class="border-none bg-background/60">
+    <CardContent class="p-6">
       <div class="flex items-center justify-between pb-4 text-sm font-bold uppercase tracking-wide">
-        Appearance
-        <v-btn
+        <span>Appearance</span>
+        <Button
           @click="randomize"
-          color="grey-darken-3"
-          prepend-icon="mdi-shuffle-variant"
-          size="small"
+          variant="secondary"
+          class="h-8 gap-2"
         >
+          <i class="mdi mdi-shuffle-variant" />
           Random
-        </v-btn>
+        </Button>
       </div>
+
       <SliderSelection
         :options="Object.keys(aspects(createCharacter.sex))"
         v-model="selectedAspect"
       />
-      <v-divider />
 
-      <div class="m-4">
+      <Separator class="my-4" />
+
+      <div class="space-y-6">
         <div class="mb-4">
           <SlideOption
             v-if="selectedAspect === Aspect.Hair"
@@ -132,33 +134,38 @@ const randomize = () => {
             :value-text="getCurrentAspectValueLabel"
           />
         </div>
-        <div class="flex flex-col gap-6">
-          <div v-if="currentAspect && 'overlayId' in currentAspect">
-            <div class="text-xs uppercase tracking-wide">Opacity</div>
-            <v-slider
+
+        <div class="space-y-6">
+          <div
+            v-if="currentAspect && 'overlayId' in currentAspect"
+            class="space-y-2"
+          >
+            <Label class="text-xs uppercase">Opacity</Label>
+            <input
+              type="range"
               v-model="
-                createCharacter.currentAppearance.headOverlays[currentAspect.overlayId]!
-                  .opacity as number
+                createCharacter.currentAppearance.headOverlays[currentAspect.overlayId]!.opacity
               "
-              track-color="grey"
-              color="white"
+              class="slider-input"
               min="0"
               max="1"
-              :step="0.01"
-              hide-details
+              step="0.01"
             />
           </div>
 
-          <Tabs
+          <DefaultTabs
             v-if="selectedAspectTabs.length > 0"
             v-model="selectedTab"
             :options="selectedAspectTabs"
           />
 
-          <v-window v-model="selectedTab">
-            <v-window-item
+          <div class="relative">
+            <div
               v-for="(tab, index) in selectedAspectTabs"
               :key="tab"
+              v-show="selectedTab === index"
+              class="transition-opacity duration-300"
+              :class="selectedTab === index ? 'opacity-100' : 'opacity-0'"
             >
               <ColorSelection
                 key="color1"
@@ -208,12 +215,12 @@ const randomize = () => {
                 "
                 use-index-as-value
               />
-            </v-window-item>
-          </v-window>
+            </div>
+          </div>
         </div>
       </div>
-    </v-card-item>
-  </v-card>
+    </CardContent>
+  </Card>
 </template>
 
 <style>
@@ -237,5 +244,30 @@ const randomize = () => {
   height: 0;
   margin-top: calc(theme("spacing.4") * -1);
   transform: translateY(-30px);
+}
+
+/* Custom range input styling */
+.slider-input {
+  @apply h-2 w-full cursor-pointer appearance-none rounded-full bg-secondary;
+}
+
+.slider-input::-webkit-slider-thumb {
+  @apply h-4 w-4 appearance-none rounded-full bg-primary transition-all hover:bg-primary/90;
+}
+
+.slider-input::-moz-range-thumb {
+  @apply h-4 w-4 appearance-none rounded-full border-0 bg-primary transition-all hover:bg-primary/90;
+}
+
+.slider-input:focus {
+  @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+}
+
+.slider-input:focus::-webkit-slider-thumb {
+  @apply ring-2 ring-ring ring-offset-2 ring-offset-background;
+}
+
+.slider-input:focus::-moz-range-thumb {
+  @apply ring-2 ring-ring ring-offset-2 ring-offset-background;
 }
 </style>

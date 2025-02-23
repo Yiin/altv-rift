@@ -3,6 +3,7 @@ import { ServerEvents } from "@shared/events/server";
 import { EquipmentSlot } from "@shared/interfaces";
 import { InGamePlayer, isInGame } from "@/core/utility/assertions";
 import { emit } from "@/core/events/emit";
+import { getItemEquipmentSlot } from "@shared/modules/items";
 
 declare module "@altv/server" {
   export interface Player {
@@ -16,6 +17,10 @@ alt.Player.prototype.applyEquipment = function (specificEquipmentSlot) {
     const item = this.getEquipedItemInSlot(slot);
 
     if (!item) {
+      continue;
+    }
+
+    if (getItemEquipmentSlot(item) !== slot) {
       continue;
     }
 

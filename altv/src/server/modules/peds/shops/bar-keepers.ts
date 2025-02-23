@@ -1,6 +1,6 @@
 import alt from "@altv/server";
 import { PedFlags } from "@shared/modules/ped";
-import { createStaticPed } from "../registry";
+import { createStaticPed } from "../peds.registry";
 
 const positions: { pos: alt.IVector3; heading: number }[] = [
   {

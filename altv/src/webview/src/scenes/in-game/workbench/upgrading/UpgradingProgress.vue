@@ -11,6 +11,7 @@ import {
 import { getItemImage } from "@/lib/utils";
 import { useFrame } from "@/composables/use-frame";
 import { asset } from "@/lib/utils";
+import Image from "@/components/Image.vue";
 import WorkbenchSlot from "../components/WorkbenchSlot.vue";
 import ItemBadge from "../components/ItemBadge.vue";
 import { useUpgrading } from "../composables/use-upgrading";
@@ -57,7 +58,7 @@ const upgradingProgress = computed(() => {
         </div>
       </div>
       <div class="my-10 flex justify-center">
-        <img
+        <Image
           :src="asset(`assets/workbench/ornament.svg`)"
           class="align-self-center h-3 w-18.5"
         />
@@ -126,7 +127,7 @@ const upgradingProgress = computed(() => {
     </template>
     <template v-else-if="hasRecipes">
       <div class="flex flex-col items-center justify-center">
-        <img
+        <Image
           :src="asset(`assets/workbench/upgrade-emblem.svg`)"
           class="align-self-center h-29.5 w-29.5"
         />
@@ -140,7 +141,7 @@ const upgradingProgress = computed(() => {
     </template>
     <template v-else>
       <div class="flex flex-col items-center justify-center">
-        <img
+        <Image
           :src="asset(`assets/workbench/upgrade-emblem.svg`)"
           class="align-self-center h-29.5 w-29.5"
         />

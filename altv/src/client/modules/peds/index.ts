@@ -1,7 +1,7 @@
 import alt from "@altv/client";
 import { PedFlags } from "@shared/modules/ped/constants";
 import { setupPeacefulPed } from "./setup-ped/setup-peaceful-ped";
-import { setupTerroristPed } from "./setup-ped/setup-terrorist-ped";
+import { setupEnemyPed } from "./setup-ped/setup-enemy-ped";
 
 alt.Events.onGameEntityCreate(async ({ entity }) => {
   if (entity instanceof alt.Ped) {
@@ -9,11 +9,11 @@ alt.Events.onGameEntityCreate(async ({ entity }) => {
 
     const flags = entity.streamSyncedMeta.flags;
 
-    if (typeof flags !== 'undefined') {
+    if (typeof flags !== "undefined") {
       if (flags & PedFlags.Peaceful) {
         setupPeacefulPed(entity);
       } else {
-        setupTerroristPed(entity);
+        setupEnemyPed(entity);
       }
     }
   }

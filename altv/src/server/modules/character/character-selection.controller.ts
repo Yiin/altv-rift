@@ -7,7 +7,7 @@ import { isUnique } from "@/core/validator";
 import { rpc } from "@/core/rpc";
 import { LoggedInPlayer, isLoggedIn, needsToBeLoggedIn } from "@/core/utility/assertions";
 import { on } from "@/core/events/emit";
-import { getDefaultCharacterData } from "./get-default-character-data";
+import { getDefaultCharacterData } from "./lib";
 
 on(ServerEvents.FromServer.USER_LOAD, (player) => {
   if (!isLoggedIn(player)) {

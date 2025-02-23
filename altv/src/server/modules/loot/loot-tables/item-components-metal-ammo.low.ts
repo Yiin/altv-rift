@@ -13,7 +13,7 @@ import {
   ItemGrade,
 } from "@shared/modules/items";
 import { rollOption } from "@shared/utility/random";
-import { LootTable } from "../types";
+import { LootTable } from "../loot.types";
 
 export const ITEM_COMPONENTS_METAL_AMMO_LOW: LootTable = {
   key: "item-components-metal-ammo-low",

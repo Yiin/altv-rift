@@ -3,7 +3,7 @@ import { StorageType } from "../../store/game-state.store";
 
 declare module "@altv/server" {
   export interface Player {
-    objectInHand?: import("@altv/server").Object['id'];
+    objectInHand?: import("@altv/server").Object["id"];
   }
 
   export interface BaseObjectMeta {
@@ -24,7 +24,7 @@ declare module "@altv/client" {
     PLAY_SOUND: IWebviewEventHandler;
   }
 
-  export interface PedMeta { }
+  export interface PedMeta {}
 }
 
 declare module "@altv/shared" {
@@ -45,6 +45,7 @@ declare module "@altv/shared" {
     item?: import("../../modules/items").Item; // entityType: item
     storageType?: StorageType; // entityType: storage
     storageLabel?: string; // entityType: storage
+    windowType?: WindowType; // entityType: storage
     interpolate?: {
       ts: number;
       from: alt.Vector3;

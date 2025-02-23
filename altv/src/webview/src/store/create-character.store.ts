@@ -118,13 +118,40 @@ watch(
   },
 );
 
-watchEffect(() => {
-  const createCharacter = useCreateCharacter(pinia);
+watch(
+  () => useCreateCharacter(pinia).currentAppearance.hair,
+  (hair) => {
+    const createCharacter = useCreateCharacter(pinia);
 
-  createCharacter.currentAppearance.hairCollection = aspects(createCharacter.sex).Hair.options.get(
-    createCharacter.currentAppearance.hair,
-  )!.collection;
-  createCharacter.currentAppearance.hairOverlay = aspects(createCharacter.sex).Hair.options.get(
-    createCharacter.currentAppearance.hair,
-  )!.overlay;
-});
+    const aspect = aspects(createCharacter.sex).Hair.options.get(hair);
+
+    if (aspect) {
+      createCharacter.currentAppearance.hairCollection = aspect.collection;
+      createCharacter.currentAppearance.hairOverlay = aspect.overlay;
+    }
+  },
+);
+
+watch(
+  () => [
+    useCreateCharacter(pinia).currentAppearance.faceMix,
+    useCreateCharacter(pinia).otherAppearance.faceMix,
+    useCreateCharacter(pinia).sex,
+  ],
+  (current, previous) => {
+    console.log(
+      "faceMix",
+      previous[0],
+      "->",
+      current[0],
+      " | ",
+      previous[1],
+      "->",
+      current[1],
+      " | sex",
+      previous[2],
+      "->",
+      current[2],
+    );
+  },
+);

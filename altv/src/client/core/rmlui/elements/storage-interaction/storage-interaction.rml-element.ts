@@ -21,7 +21,9 @@ registerElement({
   anchorType: AnchorType.Storage,
   focusable: true,
   render({ entity: ve }) {
-    const isLootBox = [StorageType.AirDrop, StorageType.LootBox].includes(ve.streamSyncedMeta.storageType);
+    const isLootBox = [StorageType.AirDrop, StorageType.LootBox].includes(
+      ve.streamSyncedMeta.storageType,
+    );
     const isShop = ve.streamSyncedMeta.storageType === StorageType.Shop;
 
     const label = isShop ? "Shop" : "Open";
@@ -36,9 +38,13 @@ registerElement({
 
             if (isLootBox) {
               openWindow(WindowType.LOOT_BOX);
-            }
-            else if (isShop) {
-              openWindow(WindowType.SHOP);
+            } else if (isShop) {
+              console.log(ve.streamSyncedMeta.windowType, ve.streamSyncedMeta.storageType);
+              if (ve.streamSyncedMeta.windowType === WindowType.CLOTHING_SHOP) {
+                openWindow(WindowType.CLOTHING_SHOP);
+              } else {
+                openWindow(WindowType.SHOP);
+              }
             } else {
               openWindow(WindowType.STORAGE);
             }
@@ -91,7 +97,7 @@ registerElement({
                   [
                     Icon("key-E", {
                       style: {
-                        'display': currentMenuIndex === index ? 'block' : 'none',
+                        display: currentMenuIndex === index ? "block" : "none",
                       },
                       sizePx: 32,
                     }),
@@ -104,15 +110,15 @@ registerElement({
                           ],
                         },
                         [span({ class: "label" }, [interaction.text])],
-                      )
+                      ),
                     ]),
                     Icon("mouse-wheel", {
                       style: {
-                        'display': currentMenuIndex === index && arr.length > 1 ? 'block' : 'none',
+                        display: currentMenuIndex === index && arr.length > 1 ? "block" : "none",
                         width: rem(24),
                         height: rem(24 * (456 / 256)),
-                      }
-                    })
+                      },
+                    }),
                   ],
                 ),
               ]),

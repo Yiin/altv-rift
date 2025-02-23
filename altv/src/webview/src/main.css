@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -123,7 +125,8 @@ body {
 
 body {
   @apply m-0 scroll-smooth font-sans;
-  font-family: Akrobat, sans-serif;
+  font-family: Raleway, sans-serif;
+  font-optical-sizing: auto;
   /* background: #111; */
   /* background-image: url(https://news-cdn.softpedia.com/images/news2/GTA-5-Gets-New-Gorgeous-4K-Screenshots-on-PC-478043-23.jpg); */
   /* background-image: url(/assets/game-scene.webp); */

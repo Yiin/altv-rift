@@ -17,6 +17,7 @@ import { useItemDetails } from "@/composables/use-item-details";
 import { type Hovering, getSelectedItem } from "@/store/inventory";
 import { getRandomDescription } from "@/lib/utils";
 import { useFloatingStyles } from "@/composables/use-floating-styles";
+import Icon from "@/components/Icon/Icon.vue";
 
 const props = defineProps<Hovering>();
 
@@ -126,7 +127,7 @@ const { floatingStyles, floatingRef } = useFloatingStyles(props.position);
         Custom name
        -->
       <div v-if="details.customName">
-        <v-icon icon="mdi-rename-outline" />
+        <Icon name="mdi:rename-outline" />
         <div class="font-bold">
           {{ details.name }}
         </div>
@@ -139,15 +140,15 @@ const { floatingStyles, floatingRef } = useFloatingStyles(props.position);
         v-if="isItemFirearmWeapon(item) && item.clip"
         class="mt-2 flex items-center gap-2"
       >
-        <v-icon icon="mdi-ammunition" />
+        <Icon name="mdi:ammunition" />
         <div>
           <div class="font-bold">
             {{ getItemName(item.clip.key) }}
           </div>
           <div class="flex items-baseline">
-            <v-icon
-              icon="mdi-close"
-              size="12"
+            <Icon
+              name="mdi:close"
+              class="w-3"
             />
             <div class="-mt-1 font-bold text-yellow-500">
               {{ item.clip.amount }}
@@ -226,15 +227,15 @@ const { floatingStyles, floatingRef } = useFloatingStyles(props.position);
         v-else-if="isItemFishingRod(item) && item.bait"
         class="flex items-center gap-1"
       >
-        <v-icon icon="mdi-chart-bubble" />
+        <Icon name="mdi:chart-bubble" />
         <div>
           <div class="font-bold">
             {{ getItemName(item.bait.key) }}
           </div>
           <div class="flex items-baseline gap-1">
-            <v-icon
-              icon="mdi-close"
-              size="12"
+            <Icon
+              name="mdi:close"
+              class="w-3"
             />
             <div class="font-bold text-yellow-500">
               {{ item.bait.amount }}

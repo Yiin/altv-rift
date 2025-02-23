@@ -18,7 +18,7 @@ import {
 } from "@shared/modules/items";
 import { WeaponGroup, AmmoGroup } from "@shared/modules/items/registry/weapons/weapon-groups";
 import { rollOption } from "@shared/utility/random";
-import { LootTable } from "../types";
+import { LootTable } from "../loot.types";
 
 export const HANDGUN_WEAPONS_LOW: LootTable = {
   key: "handgun-weapons-low",

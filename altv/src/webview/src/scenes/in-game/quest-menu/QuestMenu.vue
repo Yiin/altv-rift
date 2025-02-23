@@ -4,6 +4,7 @@ import Window from "@/components/Window.vue";
 import { useClient } from "@/store/synced/client.store";
 import { useUser } from "@/store/synced/user.store";
 import { px } from "@/composables/use-pixel";
+import Icon from "@/components/Icon/Icon.vue";
 import Quest from "./Quest.vue";
 
 const client = useClient();
@@ -40,17 +41,17 @@ const quests = computed(() => {
 const filters = [
   {
     type: "incomplete",
-    icon: "mdi-format-list-checks",
+    icon: "mdi:format-list-checks",
     label: "In progress",
   },
   {
     type: "complete",
-    icon: "mdi-checkbox-marked-outline",
+    icon: "mdi:checkbox-marked-outline",
     label: "Completed",
   },
   {
     type: "all",
-    icon: "mdi-view-sequential",
+    icon: "mdi:view-sequential",
     label: "All",
   },
 ] as const;
@@ -76,7 +77,7 @@ const filters = [
           class="inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm text-neutral-400 hover:text-neutral-200 focus:relative"
           :class="[filter === type ? 'bg-neutral-800' : 'focus-relative hover:text-neutral-200']"
         >
-          <v-icon :icon="icon" />
+          <Icon :name="icon" />
           {{ label }}
         </button>
       </div>

@@ -19,9 +19,9 @@ import {
   getPreviewingItem,
   InventoryInteractionType,
 } from "@/store/inventory";
-import Icon from "@/components/Icon/Icon.vue";
 import DarkBackground from "../../../components/DarkBackground.vue";
 import BackButtons from "../../../components/buttons/BackButtons.vue";
+import MoneyIcon from "./assets/money.svg";
 import ContextMenu from "./ContextMenu.vue";
 import ItemInfo from "./ItemInfo.vue";
 import EquipmentSlot from "./EquipmentSlot.vue";
@@ -67,11 +67,7 @@ onUnmounted(() => {
           <div class="flex flex-col">
             <h3 class="flex items-center gap-2.25 text-xl font-bold text-white">
               {{ money }}
-              <Icon
-                name="money"
-                class="text-white"
-                :size="19"
-              />
+              <MoneyIcon class="h-4.75 w-4.75 text-white" />
             </h3>
             <span class="text-sm font-semibold text-deepGray">money</span>
           </div>

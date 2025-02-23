@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { NotificationType, type NotificationSchema } from "@shared/interfaces";
 import { asset } from "@/lib/utils";
+import Image from "./Image.vue";
 
 defineProps<{
   notification: NotificationSchema;
@@ -118,12 +119,12 @@ defineProps<{
         </div>
         <div class="text-base font-bold leading-tight">{{ notification.text }}</div>
       </div>
-      <img
+      <Image
         v-if="notification.type === NotificationType.Error"
         :src="asset('assets/notifications/error-x.svg')"
         class="absolute bottom-0.5 right-3.5 h-13.5 w-13.5"
       />
-      <img
+      <Image
         v-if="notification.type === NotificationType.Success"
         :src="asset('assets/notifications/success-check.svg')"
         class="absolute bottom-2 right-3 h-13.75 w-19.25"

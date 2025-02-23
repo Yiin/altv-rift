@@ -1,0 +1,25 @@
+model Shop {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  inventory Inventory
+  pos       Position? // we default to ped pos if not set
+  ped       Ped?
+}
+
+model DroppedItem {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  item      Json // typed in TS as Item
+  pos       Position
+  createdAt DateTime @default(now())
+}
+
+type Inventory {
+  items InventoryItem[]
+  size  Int
+}
+
+type InventoryItem {
+  slot  Int
+  item  Json // typed in TS as Item
+  price Int? // for shop inventory
+} 

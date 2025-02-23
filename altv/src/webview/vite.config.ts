@@ -3,6 +3,7 @@ import { defineConfig } from "vite";
 import externalGlobals from "rollup-plugin-external-globals";
 import vue from "@vitejs/plugin-vue";
 import AutoImport from "unplugin-auto-import/vite";
+import svgLoader from "vite-svg-loader";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -12,6 +13,13 @@ export default defineConfig(({ mode }) => ({
     emptyOutDir: true,
     target: "es2022",
   },
+  optimizeDeps: {
+    include: ["@shared/**/*"],
+    exclude: [],
+    esbuildOptions: {
+      preserveSymlinks: true,
+    },
+  },
   server: {
     host: "0.0.0.0",
     // host: true,
@@ -19,13 +27,13 @@ export default defineConfig(({ mode }) => ({
     fs: {
       strict: false,
     },
-    hmr: false,
+    hmr: true,
   },
   rollupOptions: {
     output: {
       // Enable verbose output from Rollup
-      sourcemap: true
-    }
+      sourcemap: true,
+    },
   },
   resolve: {
     alias: [
@@ -43,6 +51,20 @@ export default defineConfig(({ mode }) => ({
       "@altv/shared": "alt",
     }),
     vue(),
+    svgLoader({
+      svgoConfig: {
+        plugins: [
+          {
+            name: "preset-default",
+            params: {
+              overrides: {
+                removeViewBox: false,
+              },
+            },
+          },
+        ],
+      },
+    }),
     AutoImport({
       imports: [
         "vue",

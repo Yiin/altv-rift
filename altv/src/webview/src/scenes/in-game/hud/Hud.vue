@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
+import { Icon } from "@iconify/vue";
 import { useCharacter } from "@/store/synced/character.store";
-import Icon from "@/components/Icon/Icon.vue";
 import WeaponHud from "./WeaponHud.vue";
 import ActionTip from "./ActionTip.vue";
 
@@ -16,9 +16,8 @@ const money = computed(() => new Intl.NumberFormat("lt-LT").format(character.mon
     <div class="mb-8 flex items-center justify-end gap-2.25">
       <div class="text-2xl font-bold text-white">{{ money }}</div>
       <Icon
-        name="money"
-        class="text-white"
-        :size="19"
+        icon="custom:money"
+        class="h-4.75 w-4.75 text-white"
       />
     </div>
     <WeaponHud />

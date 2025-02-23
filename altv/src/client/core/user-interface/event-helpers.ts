@@ -83,7 +83,11 @@ export function everyTickWhile(
   return tick;
 }
 
-export function onKeyDown<T extends alt.Enums.KeyCode>(key: T, callback: (key: T) => void) {
+type OnKeyDownOptions = {
+  isWindowKeybind?: boolean;
+}
+
+export function onKeyDown<T extends alt.Enums.KeyCode>(key: T, callback: (key: T) => void, options: OnKeyDownOptions = {}) {
   if (registeredKeyDownKeys?.has(key)) {
     throw new Error(`KeyDown ${key} is already registered.`);
   }
@@ -96,9 +100,10 @@ export function onKeyDown<T extends alt.Enums.KeyCode>(key: T, callback: (key: T
     if (alt.isConsoleOpen()) {
       return;
     }
-    if (isWindowOpen()) {
+    if (!options.isWindowKeybind && isWindowOpen()) {
       return;
     }
+
     if (keyPressed === key) {
       callback(key);
     }

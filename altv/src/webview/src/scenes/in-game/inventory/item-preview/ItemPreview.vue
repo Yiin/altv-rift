@@ -2,6 +2,7 @@
 import { clearPreviewingItem } from "@/store/inventory";
 import Window from "@/components/Window.vue";
 import { asset } from "@/lib/utils";
+import Image from "@/components/Image.vue";
 
 defineProps<{
   item: {
@@ -24,7 +25,7 @@ const hh = window.innerHeight / 2 - 400;
     :is-active="false"
     :sticks="[]"
   >
-    <img
+    <Image
       :src="asset(`assets/item-previews/${item.key}.webp`)"
       class="h-full w-full"
     />

@@ -16,7 +16,7 @@ import {
   getWeaponClipSize,
 } from "@shared/modules/items";
 import { rollOption } from "@shared/utility/random";
-import { LootTable } from "../types";
+import { LootTable } from "../loot.types";
 
 /**
  * High quality firearms drop

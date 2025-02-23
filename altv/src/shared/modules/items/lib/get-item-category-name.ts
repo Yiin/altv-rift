@@ -1,4 +1,4 @@
-import { isItemKeyBlueprint } from "@shared/modules/production";
+import { isItemKeyUnlearnedBlueprint } from "@shared/modules/production";
 import {
   isItemKeyAccessory,
   isItemKeyAmmo,
@@ -38,7 +38,7 @@ export function getItemCategoryName(key: ItemKey) {
   if (isItemKeyArmor(key)) {
     return "Armor";
   }
-  if (isItemKeyBlueprint(key)) {
+  if (isItemKeyUnlearnedBlueprint(key)) {
     return "Blueprint";
   }
   if (isItemKeyEarrings(key)) {

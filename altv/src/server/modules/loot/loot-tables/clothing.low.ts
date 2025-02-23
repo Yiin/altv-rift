@@ -9,7 +9,7 @@ import {
   createItem,
 } from "@shared/modules/items";
 import { rollOption } from "@shared/utility/random";
-import { LootTable } from "../types";
+import { LootTable } from "../loot.types";
 
 export const CLOTHING_LOW: LootTable = {
   key: "clothing-low",

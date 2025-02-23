@@ -6,10 +6,12 @@ import { vClickOutside } from "./directives/click-outside";
 import { vHorizontalScroll } from "./directives/horizontal-scroll";
 import { router } from "./router";
 import { pinia } from "./store";
+import { initializeLocalIcons } from "./lib/register-local-icons";
 import App from "./App.vue";
 import "./main.css";
 
-loadFonts();
+// Initialize fonts and icons
+await Promise.all([loadFonts(), initializeLocalIcons()]);
 
 const app = createApp(App)
   .use(router)

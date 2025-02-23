@@ -13,6 +13,7 @@ import {
 import { getItemImage } from "@/lib/utils";
 import { useFrame } from "@/composables/use-frame";
 import { asset } from "@/lib/utils";
+import Image from "@/components/Image.vue";
 import ItemIcon from "../../inventory/ItemIcon.vue";
 import WorkbenchSlot from "../components/WorkbenchSlot.vue";
 import ItemBadge from "../components/ItemBadge.vue";
@@ -47,7 +48,7 @@ const currentlyCrafting = computed(() => queue.value[0]);
       >
         <div class="text-lg font-bold leading-tight">In queue</div>
         <div class="my-2 mb-3.75 flex justify-center">
-          <img
+          <Image
             :src="asset(`assets/workbench/long-separator.svg`)"
             class="align-self-center h-5.25 w-139.5"
           />
@@ -71,7 +72,7 @@ const currentlyCrafting = computed(() => queue.value[0]);
       <div class="pointer-events-none">
         <div class="flex justify-center">
           <ItemBadge :grade="'grade' in selectedRecipe.item ? selectedRecipe.item.grade : 'none'" />
-          <v-img
+          <Image
             class="absolute h-66.5 w-135"
             :class="{
               '-mt-4 scale-50':
@@ -83,7 +84,7 @@ const currentlyCrafting = computed(() => queue.value[0]);
         </div>
       </div>
       <div class="my-10 flex justify-center">
-        <img
+        <Image
           :src="asset(`assets/workbench/ornament.svg`)"
           class="align-self-center h-3 w-18.5"
         />
@@ -171,7 +172,7 @@ const currentlyCrafting = computed(() => queue.value[0]);
     </template>
     <template v-else-if="hasRecipes">
       <div class="flex flex-col items-center justify-center">
-        <img
+        <Image
           :src="asset(`assets/workbench/crafting-emblem.svg`)"
           class="align-self-center h-29.5 w-29.5"
         />
@@ -185,7 +186,7 @@ const currentlyCrafting = computed(() => queue.value[0]);
     </template>
     <template v-else>
       <div class="flex flex-col items-center justify-center">
-        <img
+        <Image
           :src="asset(`assets/workbench/crafting-emblem.svg`)"
           class="align-self-center h-29.5 w-29.5"
         />

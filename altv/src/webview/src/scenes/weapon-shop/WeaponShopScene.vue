@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import Screen from "@/components/Screen.vue";
+import Image from "@/components/Image.vue";
 import { type RifleType } from "./types";
 
 const Bg = "/assets/bg/weapon-shop-bg.webp";
@@ -156,7 +157,7 @@ const rifles = ref<RifleType[]>([
 <template>
   <Screen>
     <div class="fixed inset-0 -z-10">
-      <img
+      <Image
         :src="Bg"
         class="h-full w-full object-cover object-center"
         alt="weapon shop"
@@ -342,7 +343,7 @@ const rifles = ref<RifleType[]>([
                 <span class="text-base font-extrabold leading-4 text-white">{{ rifle.price }}</span>
               </div>
               <figure class="mb-10 mt-14 h-40 px-6">
-                <img
+                <Image
                   :src="rifle.image"
                   :alt="rifle.name"
                   class="w-full"

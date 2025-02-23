@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { Item, getAllItemKeys } from "@shared/modules/items";
-import { LootTable } from "../types";
+import { LootTable } from "../loot.types";
 import { MIX_WEAPONS_LOW } from "./mix-weapons.low";
 import { MIX_WEAPONS_HIGH } from "./mix-weapons.high";
 import { FIREARM_WEAPONS_MID } from "./firearm-weapons.mid";

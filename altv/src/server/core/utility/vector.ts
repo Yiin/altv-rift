@@ -50,14 +50,30 @@ export function isBetweenVectors(
   return validX && validY ? true : false;
 }
 
+/**
+ * Gets the angle needed to rotate a ped to face a target position.
+ * Returns angle in radians compatible with GTA5's rotation system where:
+ * - 0 points north (positive Y)
+ * - Rotation is clockwise
+ * @param {alt.IVector2} subject The position of the ped
+ * @param {alt.IVector2} target The position to face
+ * @returns {number} Angle in radians
+ */
 export function getAngleToFaceTarget(subject: alt.IVector2, target: alt.IVector2): number {
-  let angle = -90 + Math.atan2(target.y - subject.y, target.x - subject.x) * 180 / Math.PI;
-  if (angle < 0) {
-    angle += 360;
-  }
-
-  const angleAsRadians = angle * (Math.PI / 180);
-  return angleAsRadians;
+  // Get angle from atan2 (returns -π to π, where 0 is east and rotation is counterclockwise)
+  let angle = Math.atan2(target.y - subject.y, target.x - subject.x);
+  
+  // Convert to GTA5's system:
+  // 1. Convert to degrees for easier manipulation
+  angle = angle * (180 / Math.PI);
+  // 2. Subtract 90° to make 0 point north instead of east
+  angle = angle - 90;
+  // 3. Invert the angle to make rotation clockwise instead of counterclockwise
+  angle = -angle;
+  // 4. Normalize to 0-360 range
+  angle = ((angle % 360) + 360) % 360;
+  // 5. Convert back to radians
+  return angle * (Math.PI / 180);
 }
 
 /**

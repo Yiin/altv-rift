@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 import { Gender } from "@shared/modules/character/appearance-data/aspects";
 import { useEventListener } from "@/composables/use-event-listener";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import { useCreateCharacter } from "../../store/create-character.store";
 
 const createCharacter = useCreateCharacter();
@@ -33,18 +36,22 @@ watch(
     }
   },
 );
+
+const separatorClass = computed(() =>
+  createCharacter.errors.name ? "my-1 border-1 border-red-500 opacity-100" : "my-1",
+);
 </script>
 
 <template>
   <div>
-    <v-card class="v-card--transparent">
-      <v-card-item>
+    <Card class="bg-background/60">
+      <CardContent>
         <div class="flex flex-col p-4">
           <input
             ref="nameInputRef"
             type="text"
             v-model="createCharacter.name"
-            class="min-w-52 rounded-md text-4xl outline-none"
+            class="min-w-52 rounded-md bg-transparent text-4xl outline-none"
             :style="{
               width: nameInputWidth + 'px',
             }"
@@ -56,9 +63,7 @@ watch(
           >
             {{ createCharacter.name }}
           </span>
-          <v-divider
-            :class="['my-1', createCharacter.errors.name && 'border-1 border-red-500 opacity-100']"
-          />
+          <Separator :class="separatorClass" />
           <span
             v-if="createCharacter.errors.name"
             class="text-sm font-bold uppercase tracking-wider text-red-500"
@@ -72,45 +77,41 @@ watch(
             Name of your character
           </span>
         </div>
-      </v-card-item>
-    </v-card>
+      </CardContent>
+    </Card>
     <div class="flex gap-8">
       <button
         type="button"
-        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-600 hover:bg-gray-700"
+        class="flex h-16 w-16 items-center justify-center rounded-full"
+        :class="
+          createCharacter.sex === Gender.MALE
+            ? 'bg-red-700 hover:bg-red-800'
+            : 'bg-gray-600 hover:bg-gray-700'
+        "
         @click="createCharacter.sex = Gender.MALE"
       >
-        <Icon
-          icon="mdi-gender-male"
+        <i-mdi-gender-male
           width="2.5rem"
           height="2.5rem"
           color="white"
         />
       </button>
-
-      <v-btn
-        size="5rem"
-        icon
-        :color="createCharacter.sex === Gender.MALE ? 'blue-grey' : 'grey-lighten-1'"
-      >
-        <v-icon
-          icon="mdi-gender-male"
-          size="2.5rem"
-          color="white"
-        />
-      </v-btn>
-      <v-btn
+      <button
+        type="button"
+        class="flex h-16 w-16 items-center justify-center rounded-full"
+        :class="
+          createCharacter.sex === Gender.FEMALE
+            ? 'bg-pink-500 hover:bg-pink-600'
+            : 'bg-gray-600 hover:bg-gray-700'
+        "
         @click="createCharacter.sex = Gender.FEMALE"
-        size="5rem"
-        icon
-        :color="createCharacter.sex === Gender.FEMALE ? 'pink-lighten-1' : 'grey-lighten-1'"
       >
-        <v-icon
-          icon="mdi-gender-female"
-          size="2.5rem"
+        <i-mdi-gender-female
+          width="2.5rem"
+          height="2.5rem"
           color="white"
         />
-      </v-btn>
+      </button>
     </div>
   </div>
 </template>

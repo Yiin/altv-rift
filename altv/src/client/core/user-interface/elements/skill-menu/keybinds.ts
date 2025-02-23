@@ -3,7 +3,7 @@ import { UIElement } from "@shared/enums/ui";
 import { onKeyDown } from "@/core/user-interface/event-helpers";
 import { doesElementHaveCursor, toggleElement } from "../../webview";
 
-onKeyDown(alt.Enums.KeyCode.I, () => {
+onKeyDown(alt.Enums.KeyCode.U, () => {
   toggleElement(UIElement.SKILL_MENU);
 });
 

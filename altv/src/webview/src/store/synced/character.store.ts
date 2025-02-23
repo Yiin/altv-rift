@@ -4,7 +4,21 @@ import { type Character } from "@shared/interfaces";
 
 type CharacterStore = StoreDefinition<"character", Character, {}, {}>;
 
-const characterStore = ref<CharacterStore | null>(null);
+const characterStore = ref<CharacterStore | null>(
+  "altMock" in window
+    ? defineStore("character", {
+        state: () =>
+          ({
+            inventory: {
+              size: 20,
+              items: [],
+            },
+            skills: {},
+            money: 1000,
+          }) as any,
+      })
+    : null,
+);
 
 export function setCharacterStore(store: CharacterStore) {
   characterStore.value = store;

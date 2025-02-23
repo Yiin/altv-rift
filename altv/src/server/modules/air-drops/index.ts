@@ -49,9 +49,7 @@ export function spawnAirDrop(options: {
   }, options.durationInSeconds * 1000);
 }
 
-alt.Events.onBaseObjectRemove;
-
-registerCmd("x", (player) => {
+registerCmd("airdrop", (player) => {
   const lootTable = buildAirDropLootTable();
 
   spawnAirDrop({

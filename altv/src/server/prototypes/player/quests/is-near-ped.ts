@@ -1,7 +1,7 @@
 import alt from "@altv/server";
 import { PedKey } from "@shared/modules/ped/list";
 import { InGamePlayer } from "@/core/utility/assertions";
-import { getPedByKey } from "@/modules/peds/registry";
+import { getPedByKey } from "@/modules/peds/peds.registry";
 
 declare module "@altv/server" {
   export interface Player {

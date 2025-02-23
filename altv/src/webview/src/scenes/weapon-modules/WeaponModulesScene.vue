@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import Screen from "@/components/Screen.vue";
+import Image from "@/components/Image.vue";
 import AvailableModules from "./AvailableModules.vue";
 import InstalledModules from "./InstalledModules.vue";
 import WeaponryList from "./WeaponryList.vue";
@@ -123,7 +124,7 @@ const availableModules = ref<AvailableWeaponModuleType[]>([
 <template>
   <Screen>
     <div class="fixed inset-0 -z-10">
-      <img
+      <Image
         :src="Bg"
         class="h-full w-full bg-no-repeat object-cover object-center"
         alt="crafting"

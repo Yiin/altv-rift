@@ -90,7 +90,11 @@ import {
 } from "./registry";
 import { LeatherItem, LeatherItemInfo, LeatherItemKey } from "./registry/materials/leather.items";
 import { HideItemKey, HideItem, HideItemInfo } from "./registry/materials/hide.items";
-import { UnlearnedBlueprintItemKey, BlueprintItem, BlueprintItemInfo } from "../production";
+import {
+  UnlearnedBlueprintItemKey,
+  UnlearnedBlueprintItem,
+  UnlearnedBlueprintItemInfo,
+} from "../production";
 
 export type StackableItem = Extract<Item, { amount: number }>;
 
@@ -110,66 +114,72 @@ export type ItemKey =
 type ItemMapping<T> = T extends FirearmWeaponItemKey
   ? [FirearmWeaponItem, FirearmWeaponItemInfo]
   : T extends ThrowableWeaponItemKey
-  ? [ThrowableWeaponItem, ThrowableWeaponItemInfo]
-  : T extends MeleeWeaponItemKey
-  ? [MeleeWeaponItem, MeleeWeaponItemInfo]
-  : T extends AmmoItemKey
-  ? [AmmoItem, AmmoItemInfo]
-  : T extends WeaponComponentItemKey
-  ? [WeaponComponentItem, WeaponComponentItemInfo]
-  : T extends AccessoryItemKey
-  ? [AccessoryItem, AccessoryItemInfo]
-  : T extends ArmorItemKey
-  ? [ArmorItem, ArmorItemInfo]
-  : T extends EarringsItemKey
-  ? [EarringsItem, EarringsItemInfo]
-  : T extends GlassesItemKey
-  ? [GlassesItem, GlassesItemInfo]
-  : T extends GlovesItemKey
-  ? [GlovesItem, GlovesItemInfo]
-  : T extends HeadwearItemKey
-  ? [HeadwearItem, HeadwearItemInfo]
-  : T extends LeftHandItemKey
-  ? [LeftHandItem, LeftHandItemInfo]
-  : T extends MaskItemKey
-  ? [MaskItem, MaskItemInfo]
-  : T extends PantsItemKey
-  ? [PantsItem, PantsItemInfo]
-  : T extends RightHandItemKey
-  ? [RightHandItem, RightHandItemInfo]
-  : T extends ShoesItemKey
-  ? [ShoesItem, ShoesItemInfo]
-  : T extends TopItemKey
-  ? [TopItem, TopItemInfo]
-  : T extends ConsumableItemKey
-  ? [ConsumableItem, ConsumableItemInfo]
-  : T extends FoodIngredientItemKey
-  ? [FoodIngredientItem, FoodIngredientItemInfo]
-  : T extends TreeLogItemKey
-  ? [TreeLogItem, TreeLogItemInfo]
-  : T extends WoodItemKey
-  ? [WoodItem, WoodItemInfo]
-  : T extends OreItemKey
-  ? [OreItem, OreItemInfo]
-  : T extends MetalItemKey
-  ? [MetalItem, MetalItemInfo]
-  : T extends HideItemKey
-  ? [HideItem, HideItemInfo]
-  : T extends LeatherItemKey
-  ? [LeatherItem, LeatherItemInfo]
-  : T extends SandItemKey
-  ? [SandItem, SandItemInfo]
-  : T extends FishingBaitItemKey
-  ? [FishingBaitItem, FishingBaitItemInfo]
-  : T extends ToolItemKey
-  ? [ToolItem, ToolItemInfo]
-  : T extends NoteItemKey
-  ? [NoteItem, NoteItemInfo]
-  : T extends UnlearnedBlueprintItemKey
-  ? [BlueprintItem, BlueprintItemInfo]
-  : T extends ItemComponentsItemKey
-  ? [ItemComponentsItem, ItemComponentsItemInfo]
-  : never;
+    ? [ThrowableWeaponItem, ThrowableWeaponItemInfo]
+    : T extends MeleeWeaponItemKey
+      ? [MeleeWeaponItem, MeleeWeaponItemInfo]
+      : T extends AmmoItemKey
+        ? [AmmoItem, AmmoItemInfo]
+        : T extends WeaponComponentItemKey
+          ? [WeaponComponentItem, WeaponComponentItemInfo]
+          : T extends AccessoryItemKey
+            ? [AccessoryItem, AccessoryItemInfo]
+            : T extends ArmorItemKey
+              ? [ArmorItem, ArmorItemInfo]
+              : T extends EarringsItemKey
+                ? [EarringsItem, EarringsItemInfo]
+                : T extends GlassesItemKey
+                  ? [GlassesItem, GlassesItemInfo]
+                  : T extends GlovesItemKey
+                    ? [GlovesItem, GlovesItemInfo]
+                    : T extends HeadwearItemKey
+                      ? [HeadwearItem, HeadwearItemInfo]
+                      : T extends LeftHandItemKey
+                        ? [LeftHandItem, LeftHandItemInfo]
+                        : T extends MaskItemKey
+                          ? [MaskItem, MaskItemInfo]
+                          : T extends PantsItemKey
+                            ? [PantsItem, PantsItemInfo]
+                            : T extends RightHandItemKey
+                              ? [RightHandItem, RightHandItemInfo]
+                              : T extends ShoesItemKey
+                                ? [ShoesItem, ShoesItemInfo]
+                                : T extends TopItemKey
+                                  ? [TopItem, TopItemInfo]
+                                  : T extends ConsumableItemKey
+                                    ? [ConsumableItem, ConsumableItemInfo]
+                                    : T extends FoodIngredientItemKey
+                                      ? [FoodIngredientItem, FoodIngredientItemInfo]
+                                      : T extends TreeLogItemKey
+                                        ? [TreeLogItem, TreeLogItemInfo]
+                                        : T extends WoodItemKey
+                                          ? [WoodItem, WoodItemInfo]
+                                          : T extends OreItemKey
+                                            ? [OreItem, OreItemInfo]
+                                            : T extends MetalItemKey
+                                              ? [MetalItem, MetalItemInfo]
+                                              : T extends HideItemKey
+                                                ? [HideItem, HideItemInfo]
+                                                : T extends LeatherItemKey
+                                                  ? [LeatherItem, LeatherItemInfo]
+                                                  : T extends SandItemKey
+                                                    ? [SandItem, SandItemInfo]
+                                                    : T extends FishingBaitItemKey
+                                                      ? [FishingBaitItem, FishingBaitItemInfo]
+                                                      : T extends ToolItemKey
+                                                        ? [ToolItem, ToolItemInfo]
+                                                        : T extends NoteItemKey
+                                                          ? [NoteItem, NoteItemInfo]
+                                                          : T extends UnlearnedBlueprintItemKey
+                                                            ? [
+                                                                UnlearnedBlueprintItem,
+                                                                UnlearnedBlueprintItemInfo,
+                                                              ]
+                                                            : T extends ItemComponentsItemKey
+                                                              ? [
+                                                                  ItemComponentsItem,
+                                                                  ItemComponentsItemInfo,
+                                                                ]
+                                                              : never;
 
 type MappedItemKeys = { [K in ItemKey]: ItemMapping<K> extends never ? K : never };
 type MissingKeys = MappedItemKeys[MappedItemKeys[keyof MappedItemKeys]];
@@ -195,7 +205,12 @@ export type Equipment = {
   [EquipmentSlot.Top]?: TopItem | null;
   [EquipmentSlot.Armor]?: ArmorItem | null;
   [EquipmentSlot.Accessory]?: AccessoryItem | null;
-  [EquipmentSlot.Weapon]?: FirearmWeaponItem | ThrowableWeaponItem | MeleeWeaponItem | ToolItem | null;
+  [EquipmentSlot.Weapon]?:
+    | FirearmWeaponItem
+    | ThrowableWeaponItem
+    | MeleeWeaponItem
+    | ToolItem
+    | null;
   [EquipmentSlot.Gloves]?: GlovesItem | null;
   [EquipmentSlot.LeftHand]?: LeftHandItem | null;
   [EquipmentSlot.Pants]?: PantsItem | null;

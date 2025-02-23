@@ -18,7 +18,7 @@ import {
   isItemKeyMaterial,
 } from "@shared/modules/items";
 import { rollOption } from "@shared/utility/random";
-import { LootTable } from "../types";
+import { LootTable } from "../loot.types";
 
 export const CAYO_MAIN_DOCK_LOOT: LootTable = {
   key: "cayo-main-dock-loot",

@@ -11,7 +11,7 @@ import {
   ItemGrade,
 } from "@shared/modules/items";
 import { rollOption } from "@shared/utility/random";
-import { LootTable } from "../types";
+import { LootTable } from "../loot.types";
 
 export const WOOD_ITEM_COMPONENTS_METAL_LOW: LootTable = {
   key: "wood-item-components-metal-low",

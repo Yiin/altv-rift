@@ -6,6 +6,7 @@ import { StorageType } from "@shared/store/game-state.store";
 import { ServerEvents } from "@shared/events/server";
 import { AirDropType } from "@shared/modules/air-drops";
 import { InGamePlayer, isInGame } from "@/core/utility/assertions";
+import { WindowType } from "@shared/store/client.store";
 
 interface StorageData {
   label: string;
@@ -29,6 +30,7 @@ export function createStorage(options: {
   };
   airDropType?: AirDropType;
   meta?: Record<string, any>;
+  windowType?: WindowType;
 
   onOpen?(this: alt.VirtualEntity, player: InGamePlayer): void;
 }): alt.VirtualEntity {
@@ -42,6 +44,7 @@ export function createStorage(options: {
       storageLabel: options.label,
       interpolate: options.interpolate,
       airDropType: options.airDropType,
+      windowType: options.windowType,
     },
   });
 
