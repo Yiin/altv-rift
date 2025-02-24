@@ -85,7 +85,7 @@ declare module "@altv/shared" {
         entityType: number,
         entityRemoteID: number,
         damage: number,
-        type: "health" | "armor",
+        type: "health" | "armor" | "explosion",
       ) => void;
       [FromServer.INVENTORY_ITEM_ADD]: (item: Item) => void;
       [FromServer.INVOKE_NATIVE]: (nativeName: string, ...args: unknown[]) => void;

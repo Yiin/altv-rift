@@ -14,6 +14,6 @@ declare module "@altv/server" {
   }
 }
 
-alt.Player.prototype.notify = function (type, message, options) {
+alt.Player.prototype.notify = function (type, message, options = {}) {
   this.emitRaw(ClientEvents.FromServer.SHOW_NOTIFICATION, type, message, options);
 };

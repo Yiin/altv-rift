@@ -12,7 +12,7 @@ document.body.appendChild(damageContainer);
 function displayHit(
   position: alt.Vector3,
   damage: number,
-  type: "health" | "armor",
+  type: "health" | "armor" | "explosion",
   ped: alt.Ped,
 ): void {
   // Create a new div element for damage number
@@ -27,7 +27,12 @@ function displayHit(
 
   damageDiv.style.position = "absolute";
   damageDiv.style["font-weight"] = "bold";
-  damageDiv.style.color = type === "armor" ? "#ffffff" : "#ff2222";
+  damageDiv.style.color =
+    {
+      health: "#ff2222",
+      armor: "#ffffff",
+      explosion: "#ffa500",
+    }[type] ?? "#ff2222";
   damageDiv.style["font-size"] = `${Math.min(damage, 20)}pt`;
   damageDiv.style.animation = `1s exponential-out damage-fade-${Math.ceil(Math.random() * 7)}`;
 
@@ -74,7 +79,7 @@ alt.Timers.everyTick(() => {
   for (const ped of alt.Ped.streamedIn) {
     ped.previousHealth ??= ped.streamSyncedMeta.health;
 
-    if (ped.previousHealth === ped.streamSyncedMeta.health) {
+    if (ped.previousHealth <= ped.streamSyncedMeta.health) {
       continue;
     }
 
@@ -85,6 +90,22 @@ alt.Timers.everyTick(() => {
 
       ped.damagedBonePos = bonePos;
     }
+  }
+});
+
+alt.Events.onStreamSyncedMetaChange(({ entity, key, newValue }) => {
+  if (entity.type !== alt.Enums.BaseObjectType.PED) {
+    return;
+  }
+
+  if (key !== "health") {
+    return;
+  }
+
+  if ((Number(newValue) ?? 0) <= 0) {
+    alt.Timers.setTimeout(() => {
+      game.networkFadeOutEntity(entity.scriptID, true, false);
+    }, 2000);
   }
 });
 
@@ -102,14 +123,10 @@ alt.Events.onServer(
         const ped = alt.Ped.getByRemoteID(entityRemoteID);
 
         if (ped) {
-          if (ped.streamSyncedMeta.health === 0) {
-            alt.Timers.setTimeout(() => {
-              game.networkFadeOutEntity(ped.scriptID, true, false);
-            }, 2000);
-          }
-
           displayHit(ped.damagedBonePos ?? ped.pos, damage, type, ped);
           ped.damagedBonePos = undefined;
+        } else {
+          alt.log(`[damage ui]: No ped found for remoteID: ${entityRemoteID}`);
         }
         break;
       }

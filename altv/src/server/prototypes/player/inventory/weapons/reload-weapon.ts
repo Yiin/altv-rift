@@ -59,7 +59,7 @@ alt.Player.prototype.reloadWeapon = function () {
 
   if (weapon.clip && !isMatchingItem(ammo, weapon.clip, ItemMatchFlags.IGNORE_AMOUNT)) {
     // Ammo type doesn't match clip
-    this.notify(NotificationType.Error, "Weapon clip and ammo type don't match.");
+    this.notify(NotificationType.Error, "Empty the clip first, ammo type doesn't match.");
     return false;
   }
 

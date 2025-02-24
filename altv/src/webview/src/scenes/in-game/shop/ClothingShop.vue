@@ -10,7 +10,6 @@ import {
 import { EquipmentSlot } from "@shared/interfaces";
 import { ServerCall } from "@shared/calls/server";
 import BackButtons from "@/components/buttons/BackButtons.vue";
-import { asset } from "@/lib/utils";
 import Icon from "@/components/Icon/Icon.vue";
 import ItemIcon from "@/scenes/in-game/inventory/ItemIcon.vue";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -19,7 +18,7 @@ import { useCharacter } from "@/store/synced/character.store";
 import { rpc } from "@/rpc";
 import { Sound, playSound } from "@/lib/utils";
 import { useGameState } from "@/store/synced/game-state.store";
-import Image from "@/components/Image.vue";
+import ClothingLogo from "./assets/clothing-logo.svg";
 
 const character = useCharacter();
 const gameState = useGameState();
@@ -138,15 +137,9 @@ async function handleItemClick(itemKey: string): Promise<void> {
     </div>
 
     <div class="mx-auto flex w-full items-center justify-between">
-      <a
-        href="#"
-        class="flex w-[40%] max-w-[264px] items-center gap-6"
-      >
-        <Image
-          :src="asset('/assets/clothes/clothing-logo.svg')"
-          class="w-75"
-        />
-      </a>
+      <div class="flex w-[40%] max-w-[264px] items-center gap-6">
+        <ClothingLogo class="w-75" />
+      </div>
       <BackButtons />
     </div>
 

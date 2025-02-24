@@ -4,6 +4,11 @@ import { ConversationOption } from "@shared/interfaces/conversation";
 import { ServerEvents } from "@shared/events/server";
 import { Control, ControlType } from "@/core/constants/controls";
 import { clientState } from "@/core/store/client.store";
+import {
+  disableGameControls,
+  enableGameControls,
+  GameControlReason,
+} from "@/core/user-interface/event-helpers";
 
 interface ConversationInfo {
   pages: string[];
@@ -28,6 +33,7 @@ export function stopConversation(option?: ConversationOption) {
   alt.Timers.nextTick(() => {
     currentPage = 0;
     clientState.conversation = null;
+    enableGameControls(GameControlReason.CONVERSATION);
   });
   if (promise) {
     promise.resolve?.(option);
@@ -53,6 +59,8 @@ export async function startConversation(
     options: [],
     selectedOption: 0,
   };
+
+  disableGameControls(GameControlReason.CONVERSATION);
 
   updateConversation();
 

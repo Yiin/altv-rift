@@ -210,7 +210,6 @@ Tasks:
       ☐ Get a kill with specific weapon
       ☐ Get X amount of experience
     # Generate different recurring tasks for NPCs and activate them for each user based on some seed (e.g. user id + date?) 
-    Consult GPT
  
 Temporary Jobs:
   ☐ Job types
@@ -226,7 +225,7 @@ Temporary Jobs:
   ☐ Job experience tracking
   ☐ Job-related bonuses
 
-Professions:
+✘ Professions: @cancelled
   ☐ Profession types
   ☐ Mercenary
       ☐ Skill tree

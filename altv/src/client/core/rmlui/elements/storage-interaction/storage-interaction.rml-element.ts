@@ -30,6 +30,7 @@ registerElement({
 
     const menu = useMenu([{ text: label, value: "open-storage" }], {
       async onSelect(interaction) {
+        alt.log("onSelect", interaction);
         if (interaction.value === "open-storage") {
           const canOpen = await rpc.callServer(ServerCall.FromClient.OPEN_STORAGE, ve.remoteID);
 
@@ -48,6 +49,8 @@ registerElement({
             } else {
               openWindow(WindowType.STORAGE);
             }
+          } else {
+            alt.log("can't open storage");
           }
         }
       },

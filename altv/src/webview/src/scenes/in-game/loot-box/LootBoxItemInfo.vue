@@ -12,7 +12,7 @@ import {
   isFemaleClothing,
 } from "@shared/modules/items";
 import { useItemDetails } from "@/composables/use-item-details";
-import { getRandomDescription } from "@/lib/utils";
+import { getItemGradeTextColor, getRandomDescription } from "@/lib/utils";
 import { useEventListener } from "@/composables/use-event-listener";
 import Icon from "@/components/Icon/Icon.vue";
 
@@ -49,7 +49,7 @@ useEventListener("mousemove", (event: MouseEvent) => {
      -->
     <div>
       <div class="mb-2 flex justify-between text-lg font-bold">
-        <div class="flex gap-2">
+        <div class="flex gap-2 pr-4 leading-tight">
           <div v-if="isItemClothing(item)">
             <span v-if="isUnisexClothing(item.key)">
               <span class="font-bold text-gray-500">U</span>
@@ -69,16 +69,15 @@ useEventListener("mousemove", (event: MouseEvent) => {
           </div>
           {{ details.name }}
         </div>
-        <div v-if="'grade' in props.item">{{ props.item.grade }}</div>
+        <div
+          v-if="'grade' in item"
+          :class="[getItemGradeTextColor(item.grade)]"
+        >
+          {{ item.grade }}
+        </div>
       </div>
       <div class="text-sm">
         {{ details.description || getRandomDescription(details.name) }}
-      </div>
-      <div
-        v-if="props.actionText"
-        class="text-md mt-2 font-bold"
-      >
-        {{ props.actionText }}
       </div>
     </div>
 
@@ -87,7 +86,10 @@ useEventListener("mousemove", (event: MouseEvent) => {
         Custom name
        -->
       <div v-if="details.customName">
-        <Icon name="mdi:rename-outline" />
+        <Icon
+          name="mdi:rename-outline"
+          class="w-5"
+        />
         <div class="font-bold">
           {{ details.name }}
         </div>
@@ -98,19 +100,22 @@ useEventListener("mousemove", (event: MouseEvent) => {
       -->
       <div
         v-if="isItemFirearmWeapon(item) && item.clip"
-        class="flex items-center gap-1"
+        class="mt-2 flex items-center gap-2"
       >
-        <Icon name="mdi:ammunition" />
+        <Icon
+          name="mdi:ammunition"
+          class="w-5"
+        />
         <div>
           <div class="font-bold">
             {{ getItemName(item.clip.key) }}
           </div>
-          <div class="flex items-baseline gap-1">
+          <div class="flex items-baseline">
             <Icon
               name="mdi:close"
               class="w-3"
             />
-            <div class="font-bold text-yellow-500">
+            <div class="-mt-1 font-bold text-yellow-500">
               {{ item.clip.amount }}
             </div>
           </div>
@@ -187,7 +192,10 @@ useEventListener("mousemove", (event: MouseEvent) => {
         v-else-if="isItemFishingRod(item) && item.bait"
         class="flex items-center gap-1"
       >
-        <Icon name="mdi:chart-bubble" />
+        <Icon
+          name="mdi:chart-bubble"
+          class="w-5"
+        />
         <div>
           <div class="font-bold">
             {{ getItemName(item.bait.key) }}
@@ -202,6 +210,12 @@ useEventListener("mousemove", (event: MouseEvent) => {
             </div>
           </div>
         </div>
+      </div>
+      <div
+        v-if="actionText"
+        class="mt-2 text-xl font-bold text-primary"
+      >
+        {{ actionText }}
       </div>
     </div>
   </div>

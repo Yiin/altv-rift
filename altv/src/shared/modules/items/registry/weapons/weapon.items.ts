@@ -36,6 +36,7 @@ type WeaponData = {
   Components: Record<string, WeaponComponentData>;
   Tints: WeaponTintData[];
   Stats: WeaponStatsData;
+  AmmoType?: string;
 };
 
 type WeaponComponentData = {
@@ -121,6 +122,10 @@ export function getWeaponGroup(key: WeaponItemKey): WeaponGroup {
 
 export function getWeaponAmmoGroup(key: FirearmWeaponItemKey): AmmoGroup {
   return getItemInfoByKey(key).ammoGroup;
+}
+
+export function getWeaponAmmoType(key: FirearmWeaponItemKey): string | undefined {
+  return getWeaponDataByItemKey(key).AmmoType;
 }
 
 export function getWeaponDamageMultiplier(key: WeaponItemKey, grade: ItemGrade) {

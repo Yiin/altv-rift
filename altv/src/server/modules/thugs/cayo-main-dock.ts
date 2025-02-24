@@ -129,6 +129,7 @@ watchEffect(() => {
     }),
   );
 
+  alt.log("create cayo main dock loot storage");
   loot = createStorage({
     type: StorageType.LootBox,
     pos: { x: 4837.678, y: -5178.569, z: 1.223 },
@@ -141,6 +142,7 @@ watchEffect(() => {
 
   const stopWatching = watchEffect(() => {
     if (!inventory.items.length) {
+      alt.log("destroy cayo main dock loot storage");
       loot?.destroy();
       areaOfInterest?.destroy();
       areaOfInterest = null;

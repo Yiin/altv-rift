@@ -74,16 +74,19 @@ export function openStorage(player: InGamePlayer, storageId: alt.VirtualEntity["
   const ve = alt.VirtualEntity.getByID(storageId);
 
   if (!ve) {
+    alt.log("storage ve not found");
     return false;
   }
 
   if (!ve.streamSyncedMeta.storageType) {
+    alt.log("storage type not found");
     return false;
   }
 
   const storage = getStorage(storageId);
 
   if (!storage) {
+    alt.log("storage not found");
     return false;
   }
 
@@ -99,6 +102,14 @@ export function openStorage(player: InGamePlayer, storageId: alt.VirtualEntity["
     validUntil: storage.meta?.validUntil,
     inventory,
   };
+
+  alt.log("open storage", {
+    type: ve.streamSyncedMeta.storageType,
+    label,
+    origin: ItemSourceOrigin.Storage,
+    originId: storageId,
+    validUntil: storage.meta?.validUntil,
+  });
 
   if (storage.onOpen) {
     storage.onOpen.call(ve, player);

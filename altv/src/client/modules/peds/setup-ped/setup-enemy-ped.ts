@@ -71,6 +71,7 @@ export async function setupEnemyPed(ped: alt.Ped): Promise<void> {
   game.addBlipForEntity(ped);
   game.setPedHasAiBlip(ped, true);
   game.setEntityAsMissionEntity(ped, true, true);
+  game.setPlayerMaxExplosiveDamage(ped.scriptID, 69);
 
   game.setRagdollBlockingFlags(ped, RAGDOLL_BLOCKING_FLAGS.RBF_ALL);
   game.setPedConfigFlag(ped, PED_CONFIG_FLAG.NoCriticalHits, true);

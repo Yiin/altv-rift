@@ -294,7 +294,12 @@ rpc.registerWebview(ServerCall.FromWebview.MOVE_ITEM, (player, from, to, amount 
           // @ts-expect-error
           player.character.equipment[toSlot] = player.character.equipment[fromSlot];
           player.character.equipment[fromSlot] = undefined;
-          emit(ServerEvents.FromServer.ITEM_UNEQUIP, player, fromSlot, player.character.equipment[toSlot]!);
+          emit(
+            ServerEvents.FromServer.ITEM_UNEQUIP,
+            player,
+            fromSlot,
+            player.character.equipment[toSlot]!,
+          );
           emit(ServerEvents.FromServer.ITEM_EQUIP, player, fromItem);
           return true;
         }
@@ -315,10 +320,20 @@ rpc.registerWebview(ServerCall.FromWebview.MOVE_ITEM, (player, from, to, amount 
       ];
 
       if (isEquipmentSlotQuickSlot(fromSlot)) {
-        emit(ServerEvents.FromServer.ITEM_UNEQUIP, player, toSlot, player.character.equipment[fromSlot]!);
+        emit(
+          ServerEvents.FromServer.ITEM_UNEQUIP,
+          player,
+          toSlot,
+          player.character.equipment[fromSlot]!,
+        );
         emit(ServerEvents.FromServer.ITEM_EQUIP, player, fromItem);
       } else {
-        emit(ServerEvents.FromServer.ITEM_UNEQUIP, player, fromSlot, player.character.equipment[toSlot]!);
+        emit(
+          ServerEvents.FromServer.ITEM_UNEQUIP,
+          player,
+          fromSlot,
+          player.character.equipment[toSlot]!,
+        );
         emit(ServerEvents.FromServer.ITEM_EQUIP, player, toItem);
       }
       return true;
@@ -338,13 +353,16 @@ rpc.registerClient(ServerCall.FromClient.OPEN_STORAGE, (player, storageId): bool
   const ve = alt.VirtualEntity.getByID(storageId);
 
   if (!ve) {
+    alt.log("storage not found");
     return false;
   }
 
   if (ve.pos.distanceTo(player.pos) > 5) {
+    alt.log("storage too far away");
     return false;
   }
 
+  alt.log("open storage");
   return openStorage(player, storageId);
 });
 

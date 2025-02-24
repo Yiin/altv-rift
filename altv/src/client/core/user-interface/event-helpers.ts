@@ -4,15 +4,16 @@ import { ClientEvents } from "@shared/events/client";
 import { isWindowOpen, useWebview } from "./webview";
 
 export enum GameControlReason {
-  UI_WINDOW = 'UI Window',
-  CHAT = 'Chat',
-  QA = 'QA',
-  CHARACTER_CREATOR = 'Character Creator',
+  UI_WINDOW = "UI Window",
+  CHAT = "Chat",
+  QA = "QA",
+  CHARACTER_CREATOR = "Character Creator",
+  CONVERSATION = "Conversation",
 }
 
 export enum ScreenBlurReason {
-  UI_WINDOW = 'UI Window',
-  JOINED_SERVER = 'Joined server',
+  UI_WINDOW = "UI Window",
+  JOINED_SERVER = "Joined server",
 }
 
 const focusedInputs = new Set<string>();
@@ -85,9 +86,13 @@ export function everyTickWhile(
 
 type OnKeyDownOptions = {
   isWindowKeybind?: boolean;
-}
+};
 
-export function onKeyDown<T extends alt.Enums.KeyCode>(key: T, callback: (key: T) => void, options: OnKeyDownOptions = {}) {
+export function onKeyDown<T extends alt.Enums.KeyCode>(
+  key: T,
+  callback: (key: T) => void,
+  options: OnKeyDownOptions = {},
+) {
   if (registeredKeyDownKeys?.has(key)) {
     throw new Error(`KeyDown ${key} is already registered.`);
   }

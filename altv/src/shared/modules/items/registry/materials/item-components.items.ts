@@ -27,28 +27,33 @@ export type ItemComponentsItemInfo = {
 export const ItemComponentss = registerItems<ItemComponentsItemInfo>([
   {
     key: ItemComponents.COMMON_ITEM_COMPONENTS,
-    name: "Common Item Components",
-    description: "Everyday scraps and junk—cheap, easy to find, and just enough to keep your gear from falling apart.",
+    name: "Item Components",
+    description:
+      "Everyday scraps and junk—cheap, easy to find, and just enough to keep your gear from falling apart.",
   },
   {
     key: ItemComponents.UNCOMMON_ITEM_COMPONENTS,
-    name: "Uncommon Item Components",
-    description: "Not your average trash. These parts are tougher to come by and give your gear a serious edge in the streets.",
+    name: "Item Components",
+    description:
+      "Not your average trash. These parts are tougher to come by and give your gear a serious edge in the streets.",
   },
   {
     key: ItemComponents.RARE_ITEM_COMPONENTS,
-    name: "Rare Item Components",
-    description: "Hard-to-find, high-grade parts that make the difference between life and death when the heat is on.",
+    name: "Item Components",
+    description:
+      "Hard-to-find, high-grade parts that make the difference between life and death when the heat is on.",
   },
   {
     key: ItemComponents.EPIC_ITEM_COMPONENTS,
-    name: "Epic Item Components",
-    description: "Top-tier components, scavenged from the best. These are the pieces that turn ordinary gear into a force to be reckoned with.",
+    name: "Item Components",
+    description:
+      "Top-tier components, scavenged from the best. These are the pieces that turn ordinary gear into a force to be reckoned with.",
   },
   {
     key: ItemComponents.LEGENDARY_ITEM_COMPONENTS,
-    name: "Legendary Item Components",
-    description: "Virtually impossible to find, these legendary parts are whispered about in the darkest corners of the city. They turn weapons into legends.",
+    name: "Item Components",
+    description:
+      "Virtually impossible to find, these legendary parts are whispered about in the darkest corners of the city. They turn weapons into legends.",
   },
 ]);
 

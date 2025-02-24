@@ -117,6 +117,10 @@ export function loadWeaponWithAmmo(weaponSource: ItemSource, ammoSource: ItemSou
     removeItem(ammoSource);
   }
 
+  if (!success) {
+    return false;
+  }
+
   return success;
 }
 

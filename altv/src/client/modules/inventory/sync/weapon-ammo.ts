@@ -57,6 +57,8 @@ whileInGame(() => {
      * Otherwise, we treat ammo in reserves as the clip ammo (for e.g. machinegun).
      */
     return {
+      key: equippedAmmo?.key,
+      grade: equippedAmmo?.grade,
       hasAmmoReserves: hasClip && equippedAmmo && equippedAmmo.amount > 0,
       clip: (hasClip ? currentFirearm.value.clip?.amount : equippedAmmo?.amount) ?? 0,
       rest: (hasClip ? equippedAmmo?.amount : 0) ?? 0,
@@ -95,6 +97,12 @@ whileInGame(() => {
   const playerWeaponChangeListener = alt.Events.onPlayerWeaponChange(onPlayerWeaponChange);
   const keyDownListener = alt.Events.onKeyDown(handleManualReload);
   const playerWeaponShootListener = alt.Events.onPlayerWeaponShoot(onPlayerWeaponShoot);
+
+  const explosiveAmmoTick = alt.Timers.everyTick(() => {
+    if (currentAmmo.value?.key?.startsWith("explosive")) {
+      game.setExplosiveAmmoThisFrame(player);
+    }
+  });
 
   /**
    * Notify the server that the player has shot their weapon,
@@ -145,7 +153,7 @@ whileInGame(() => {
   const reloadTrackingTick = alt.Timers.everyTick(() => {
     if (player.isReloading && !wasReloading) {
       wasReloading = true;
-      rpc.callServer(ServerCall.FromClient.RELOAD_WEAPON).then(canReload => {
+      rpc.callServer(ServerCall.FromClient.RELOAD_WEAPON).then((canReload) => {
         if (!canReload) {
           game.clearPedTasksImmediately(player);
         }
@@ -160,6 +168,7 @@ whileInGame(() => {
     playerWeaponChangeListener.destroy();
     keyDownListener.destroy();
     playerWeaponShootListener.destroy();
+    explosiveAmmoTick.destroy();
     reloadTrackingTick.destroy();
     stopWatchingAmmo();
     weaponCanReload.effect.stop();

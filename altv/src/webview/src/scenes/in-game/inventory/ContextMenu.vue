@@ -178,61 +178,62 @@ function executeAction(action: string) {
 const actions = computed(() => [
   {
     name: "Buy",
-    icon: "mdi-currency-eur",
+    icon: "mdi:currency-eur",
     enabled: isBuyable.value,
     select: () => executeAction("buy"),
   },
   {
     name: "Sell",
-    icon: "mdi-currency-eur",
+    icon: "mdi:currency-eur",
     enabled: isSellable.value,
     select: () => executeAction("sell"),
   },
   {
     name: "Use",
-    icon: "mdi-cursor-default-click-outline",
+    icon: "mdi:cursor-default-click-outline",
     enabled: isUsable.value,
     select: () => executeAction("use"),
   },
   {
     name: "Equip",
-    icon: "mdi-sword-cross",
+    icon: "mdi:sword-cross",
     enabled: isEquipable.value,
     select: () => executeAction("equip"),
   },
   {
     name: "Preview",
-    icon: "mdi-cursor-default-click-outline",
+    icon: "mdi:cursor-default-click-outline",
     enabled: isPreviewable.value,
     select: () => executeAction("preview"),
   },
   {
     name: "Unequip",
-    icon: "mdi-sword-cross",
+    icon: "mdi:sword-cross",
     enabled: isUnequipable.value,
     select: () => executeAction("unequip"),
   },
   {
     name: "Load ammo",
-    icon: "mdi-ammunition",
+    icon: "mdi:ammunition",
     enabled: canLoadAmmo.value,
     select: () => executeAction("load-ammo"),
   },
   {
     name: "Unload ammo",
-    icon: "mdi-ammunition",
+    icon: "mdi:ammunition",
     enabled: hasAmmo.value,
     select: () => executeAction("unload-ammo"),
   },
   {
     name: "Remove bait",
-    icon: "mdi-chart-bubble",
+    icon: "mdi:chart-bubble",
     enabled: hasFishingBait.value,
     select: () => executeAction("remove-bait"),
   },
   {
     name: "Drop",
-    icon: "mdi-place-item",
+    icon: "system-uicons:box-remove",
+    class: "stroke-width-[1.3]",
     enabled: isDroppable.value,
     select: () => executeAction("drop"),
   },
@@ -252,7 +253,9 @@ const actions = computed(() => [
       :is-draggable="false"
       @mousedown.stop
     >
-      <ul class="flex flex-col space-y-2 overflow-hidden rounded-lg bg-neutral-800 shadow-lg">
+      <ul
+        class="flex min-w-50 flex-col space-y-2 overflow-hidden rounded-lg bg-neutral-800 shadow-lg"
+      >
         <li>
           <strong class="block px-4 py-3 text-sm font-medium uppercase text-neutral-400">
             {{ itemName }}
@@ -268,8 +271,16 @@ const actions = computed(() => [
                 <div
                   class="flex cursor-pointer items-center gap-4 bg-neutral-800 px-4 py-3 text-neutral-200 hover:bg-neutral-700"
                 >
-                  <Icon :name="action.icon" />
-                  <span class="-mt-0.5 text-sm font-medium">{{ action.name }}</span>
+                  <Icon
+                    :name="action.icon"
+                    class="w-5"
+                    :style="{
+                      'stroke-width': '1.5',
+                    }"
+                  />
+                  <span class="-mt-0.5 text-sm font-medium">
+                    {{ action.name }}
+                  </span>
                 </div>
               </li>
             </template>

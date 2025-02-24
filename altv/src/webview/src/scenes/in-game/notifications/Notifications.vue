@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { computed, ref, watch, h } from "vue";
+import { computed, ref, watch } from "vue";
 import { WebviewEvents } from "@shared/events/webview";
 import { type Item } from "@shared/modules/items";
-import { ToastAction } from "@/components/ui/toast";
 import { useAlt } from "@/composables/use-alt";
 import { useCharacter } from "@/store/synced/character.store";
 import { useToast } from "@/components/ui/toast";

@@ -15,7 +15,7 @@ import {
 } from "@shared/modules/items";
 import { useItemDetails } from "@/composables/use-item-details";
 import { type Hovering, getSelectedItem } from "@/store/inventory";
-import { getRandomDescription } from "@/lib/utils";
+import { getItemGradeTextColor, getRandomDescription } from "@/lib/utils";
 import { useFloatingStyles } from "@/composables/use-floating-styles";
 import Icon from "@/components/Icon/Icon.vue";
 
@@ -86,7 +86,7 @@ const { floatingStyles, floatingRef } = useFloatingStyles(props.position);
      -->
     <div>
       <div class="mb-2 flex justify-between text-lg font-bold">
-        <div class="flex gap-2">
+        <div class="flex gap-2 pr-4 leading-tight">
           <div v-if="isItemClothing(item)">
             <span v-if="isUnisexClothing(item.key)">
               <span class="font-bold text-gray-500">U</span>
@@ -105,6 +105,12 @@ const { floatingStyles, floatingRef } = useFloatingStyles(props.position);
             </span>
           </div>
           {{ details.customName ?? details.name }}
+        </div>
+        <div
+          v-if="'grade' in item"
+          :class="[getItemGradeTextColor(item.grade)]"
+        >
+          {{ item.grade }}
         </div>
 
         <!-- 
@@ -127,7 +133,10 @@ const { floatingStyles, floatingRef } = useFloatingStyles(props.position);
         Custom name
        -->
       <div v-if="details.customName">
-        <Icon name="mdi:rename-outline" />
+        <Icon
+          name="mdi:rename-outline"
+          class="w-5"
+        />
         <div class="font-bold">
           {{ details.name }}
         </div>
@@ -148,7 +157,7 @@ const { floatingStyles, floatingRef } = useFloatingStyles(props.position);
           <div class="font-bold">
             {{ getItemName(item.clip.key) }}
           </div>
-          <div class="flex items-baseline">
+          <div class="-mt-1 flex items-baseline">
             <Icon
               name="mdi:close"
               class="w-3"
@@ -230,7 +239,10 @@ const { floatingStyles, floatingRef } = useFloatingStyles(props.position);
         v-else-if="isItemFishingRod(item) && item.bait"
         class="flex items-center gap-1"
       >
-        <Icon name="mdi:chart-bubble" />
+        <Icon
+          name="mdi:chart-bubble"
+          class="w-5"
+        />
         <div>
           <div class="font-bold">
             {{ getItemName(item.bait.key) }}

@@ -12,7 +12,7 @@ import { updatePlayerPedPreview } from "./player-ped-preview";
 
 whileInGame(() => {
   // Register inventory toggle keybind
-  const inventoryToggleHandler = onKeyDown(alt.Enums.KeyCode.I, togglePlayerInventory, {
+  const inventoryToggleHandler = onKeyDown(alt.Enums.KeyCode.TAB, togglePlayerInventory, {
     isWindowKeybind: true,
   });
 
