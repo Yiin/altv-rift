@@ -18,6 +18,7 @@ jobs:
 
       - name: Build Docker image
         env:
+          NODE_OPTIONS: "--max-old-space-size=8192"
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           DISCORD_CLIENT_ID: ${{ secrets.DISCORD_CLIENT_ID }}
           DISCORD_CLIENT_SECRET: ${{ secrets.DISCORD_CLIENT_SECRET }}
