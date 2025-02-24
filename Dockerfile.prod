@@ -164,26 +164,45 @@ RUN echo "[default]\n\
 COPY ./docker-scripts /root/setup
 COPY ./altv /altv
 
-# Install global packages, setup the environment, and build the project
-RUN npm install -g bun && \
-  cd /root/setup && \
-  bun install && \
-  cd /altv && \
-  bun run /root/setup/server.js && \
-  bunx --bun altv-pkg@latest $ALTV_BRANCH && \
-  chmod +x altv-server altv-crash-handler && \
-  bun install && \
-  bun run prisma:generate && \
-  bun run build && \
-  cd src/webview && \
-  bun install && \
-  bun run build-only && \
-  mkdir -p /altv/resources/main/client/webview && \
-  mv dist/index.html /altv/resources/main/client/webview && \
-  echo $(ls dist/) && \
-  s3cmd sync dist/ s3://altv-rift/webview-assets/ --acl-public --delete-removed --no-mime-magic --guess-mime-type && \
-  rm -rf /root/setup /altv/src && \
-  find /altv/node_modules -mindepth 1 -maxdepth 1 ! -name '.prisma' -exec rm -rf {} +
+# Install global packages
+RUN npm install -g bun
+
+# Setup initial environment
+RUN cd /root/setup && \
+    bun install
+
+# Run server setup
+RUN cd /altv && \
+    bun run /root/setup/server.js
+
+# Install altv package
+RUN cd /altv && \
+    bunx --bun altv-pkg@latest $ALTV_BRANCH && \
+    chmod +x altv-server altv-crash-handler
+
+# Install dependencies and generate Prisma
+RUN cd /altv && \
+    bun install && \
+    bun run prisma:generate
+
+# Build main project
+RUN cd /altv && \
+    bun run build
+
+# Build webview
+RUN cd /altv/src/webview && \
+    bun install && \
+    bun run build-only
+
+# Move and sync webview assets
+RUN cd /altv/src/webview && \
+    mkdir -p /altv/resources/main/client/webview && \
+    mv dist/index.html /altv/resources/main/client/webview && \
+    s3cmd sync dist/ s3://altv-rift/webview-assets/ --acl-public --delete-removed --no-mime-magic --guess-mime-type
+
+# Cleanup
+RUN rm -rf /root/setup /altv/src && \
+    find /altv/node_modules -mindepth 1 -maxdepth 1 ! -name '.prisma' -exec rm -rf {} +
 
 FROM deps as runtime
 WORKDIR /altv
