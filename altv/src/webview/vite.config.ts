@@ -20,16 +20,12 @@ export default defineConfig(({ mode }) => ({
         main: fileURLToPath(new URL("index.html", import.meta.url)),
       },
       output: {
-        sourcemap: true,
         assetFileNames: (assetInfo) => {
           const fullPath = assetInfo.originalFileNames?.[0];
-
-          console.log(fullPath);
 
           if (fullPath?.startsWith("src/assets/")) {
             const pathWithoutSrc = fullPath.replace(/^src\//, "");
             const finalPath = pathWithoutSrc.replace(/^assets\//, "assets/icons/");
-            console.log("finalPath", finalPath);
             return finalPath;
           }
 

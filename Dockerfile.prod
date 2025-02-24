@@ -192,7 +192,7 @@ RUN cd /altv && \
 # Build webview
 RUN cd /altv/src/webview && \
     bun install && \
-    bun run build-only
+    bun --bun run build-only
 
 # Move and sync webview assets
 RUN cd /altv/src/webview && \
