@@ -2,6 +2,7 @@ import alt from "@altv/shared";
 import { StoreUpdatePayload } from "@shared/store/utils";
 import { Spinner } from "@shared/modules/game/ui/spinner/spinner";
 import { Item } from "@shared/modules/items";
+import { NotificationType } from "@shared/interfaces";
 
 export const FromServer = {
   BEGIN_NATIVE_DISCORD_AUTH: "BEGIN_NATIVE_DISCORD_AUTH",
@@ -37,6 +38,7 @@ export const FromServer = {
   DISPLAY_DAMAGE_HIT: "DISPLAY_DAMAGE_HIT",
   INVENTORY_ITEM_ADD: "INVENTORY_ITEM_ADD",
   INVOKE_NATIVE: "INVOKE_NATIVE",
+  SHOW_NOTIFICATION: "SHOW_NOTIFICATION",
 } as const;
 
 declare module "@altv/shared" {
@@ -87,6 +89,11 @@ declare module "@altv/shared" {
       ) => void;
       [FromServer.INVENTORY_ITEM_ADD]: (item: Item) => void;
       [FromServer.INVOKE_NATIVE]: (nativeName: string, ...args: unknown[]) => void;
+      [FromServer.SHOW_NOTIFICATION]: (
+        type: NotificationType,
+        text: string,
+        options?: { title?: string },
+      ) => void;
     }
   }
 }

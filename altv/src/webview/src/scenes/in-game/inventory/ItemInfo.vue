@@ -140,7 +140,10 @@ const { floatingStyles, floatingRef } = useFloatingStyles(props.position);
         v-if="isItemFirearmWeapon(item) && item.clip"
         class="mt-2 flex items-center gap-2"
       >
-        <Icon name="mdi:ammunition" />
+        <Icon
+          name="mdi:ammunition"
+          class="w-5"
+        />
         <div>
           <div class="font-bold">
             {{ getItemName(item.clip.key) }}

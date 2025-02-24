@@ -1,5 +1,5 @@
 import alt from "@altv/server";
-import { watch, watchEffect } from "vue";
+import { watchEffect } from "vue";
 import { FishingGameType, PlayerFlags } from "@shared/store/game-state.store";
 import {
   BAIT_TO_FISH_MAP,
@@ -8,12 +8,16 @@ import {
   getBaitChance,
   isItemFishingBait,
 } from "@shared/modules/items/registry/fish-bait.items";
-import { FishingRodItem, createItem, getItemName, isItemFishingRod } from "@shared/modules/items";
-import { EquipmentSlot, InventoryItem, ItemSourceOrigin } from "@shared/interfaces";
+import { FishingRodItem, createItem, isItemFishingRod } from "@shared/modules/items";
+import {
+  EquipmentSlot,
+  InventoryItem,
+  ItemSourceOrigin,
+  NotificationType,
+} from "@shared/interfaces";
 import { rollOption } from "@shared/utility/random";
 import { getLevel } from "@shared/modules/experience/experience-table";
 import { InGamePlayer, isInGame } from "@/core/utility/assertions";
-import { sendChatMessage } from "@/modules/chat";
 
 /**
  * Start fishing action for the player.
@@ -37,7 +41,7 @@ export function startFishing(player: InGamePlayer): void {
     );
 
     if (!bestFishingRod) {
-      sendChatMessage(player, `You don't have a fishing rod!`);
+      player.notify(NotificationType.Error, "You don't have a fishing rod!");
       return;
     }
 
@@ -48,7 +52,7 @@ export function startFishing(player: InGamePlayer): void {
         inventorySlot: bestFishingRod.slot,
       })
     ) {
-      sendChatMessage(player, `For some reason you couldn't equip fishing rod...`);
+      player.notify(NotificationType.Error, "For some reason you couldn't equip fishing rod...");
       return;
     }
   }
@@ -56,7 +60,7 @@ export function startFishing(player: InGamePlayer): void {
   const fishingRod = player.getEquipedItemInSlot(EquipmentSlot.Weapon);
 
   if (!fishingRod || !isItemFishingRod(fishingRod)) {
-    sendChatMessage(player, `You dont have a fishing rod!`);
+    player.notify(NotificationType.Error, "You dont have a fishing rod!");
     return;
   }
 
@@ -66,7 +70,7 @@ export function startFishing(player: InGamePlayer): void {
     );
 
     if (!firstBait) {
-      sendChatMessage(player, `You don't have any bait!`);
+      player.notify(NotificationType.Warning, "You don't have any bait!");
       return;
     }
 
@@ -77,13 +81,15 @@ export function startFishing(player: InGamePlayer): void {
         inventorySlot: firstBait.slot,
       })
     ) {
-      sendChatMessage(player, `For some reason you can't use bait...`);
+      player.notify(NotificationType.Error, "For some reason you can't use this bait...");
       return;
     }
   }
 
   player.gameState.flags.add(PlayerFlags.IsFishing);
   player.playScenario("WORLD_HUMAN_STAND_FISHING");
+
+  player.notify(NotificationType.Info, "You start fishing...");
 
   if (player.objectInHand) {
     const obj = alt.Object.getByID(player.objectInHand);
@@ -189,7 +195,7 @@ export function catchAFish(player: InGamePlayer, baitKey: FishingBaitItemKey): v
   const possibleCatch = BAIT_TO_FISH_MAP.get(baitKey);
 
   if (!possibleCatch) {
-    sendChatMessage(player, `Bad bait...`);
+    player.notify(NotificationType.Warning, "This bait seems to be useless...");
     return;
   }
 

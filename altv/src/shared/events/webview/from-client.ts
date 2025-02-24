@@ -34,7 +34,11 @@ export interface EventFromClient {
   [FromClient.UPDATE_GAME_STATE]: (data: StoreUpdatePayload) => void;
   [FromClient.SET_CLIENT_STATE]: (data: ClientState) => void;
   [FromClient.UPDATE_CLIENT_STATE]: (data: StoreUpdatePayload) => void;
-  [FromClient.SHOW_NOTIFICATION]: (type: NotificationType, title: string, text: string) => void;
+  [FromClient.SHOW_NOTIFICATION]: (
+    type: NotificationType,
+    text: string,
+    options?: { title?: string },
+  ) => void;
   [FromClient.INVENTORY_ITEM_ADD]: (item: Item) => void;
   [FromClient.OPEN_BUILDER_MENU]: (
     screenPosition: { x: number; y: number },
@@ -42,7 +46,7 @@ export interface EventFromClient {
     selectedEntity: {
       type: "shop";
       id: string;
-    } | null
+    } | null,
   ) => void;
 }
 

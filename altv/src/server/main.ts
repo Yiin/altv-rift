@@ -14,6 +14,7 @@ import "./events";
 import "./modules/chat";
 import "./modules/discord-auth";
 import "./modules/character";
+import "./modules/inventory";
 import "./modules/items-manager";
 import "./modules/combat";
 import "./modules/air-drops";

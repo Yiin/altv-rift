@@ -4,7 +4,7 @@ import { ServerCall } from "@shared/calls/server";
 import { getLevel } from "@shared/modules/experience/experience-table";
 import { createItem, TreeLogs } from "@shared/modules/items";
 import { getTreeGrade, getTreeLog, getTreeLogXp } from "@shared/modules/woodcutting";
-import { EquipmentSlot } from "@shared/interfaces";
+import { EquipmentSlot, NotificationType } from "@shared/interfaces";
 import { MessageType } from "@shared/modules/chat";
 import { sendChatMessage } from "@/modules/chat";
 import { needsToBeInGame } from "@/core/utility/assertions";
@@ -103,7 +103,8 @@ rpc.registerClient(ServerCall.FromClient.TREE_HIT, (player, virtualTreeId) => {
   const newLevel = getLevel(player.character.skills.woodcutting);
 
   if (logs) {
-    sendChatMessage(player, `You got ${logs} logs (${experience}xp).`, MessageType.Info);
+    player.notify(NotificationType.Success, `You got ${logs} logs (${experience}xp).`);
+
     if (newLevel > currentLevel) {
       sendChatMessage(
         player,

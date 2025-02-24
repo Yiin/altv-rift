@@ -70,6 +70,7 @@ watch(
       :style="{
         backgroundImage: `url(${getItemImage(item.key)})`,
         backgroundPosition: getItemIconPosition(item),
+        filter: item.key.startsWith(`cooked`) ? `hue-rotate(30deg)` : undefined,
       }"
     />
     <p

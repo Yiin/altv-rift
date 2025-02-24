@@ -1,12 +1,10 @@
 import { diff, applyChangeset } from "json-diff-ts";
 import { ServerCall } from "@shared/calls/server";
-import { MessageType } from "@shared/modules/chat";
 import { rpc } from "@/core/rpc";
 import { needsToBeInGame } from "@/core/utility/assertions";
 import { prisma } from "@/core/database";
-import { sendChatMessage } from "../chat";
 import { setupShop } from "../shops";
-import { Shop } from "@shared/interfaces";
+import { NotificationType, Shop } from "@shared/interfaces";
 
 rpc.registerWebview(ServerCall.FromWebview.ADMIN_ACTION, async (player, action, args) => {
   needsToBeInGame(player);
@@ -30,11 +28,11 @@ rpc.registerWebview(ServerCall.FromWebview.ADMIN_ACTION, async (player, action, 
             pos: player.pos,
           },
         });
-        sendChatMessage(player, "AirDrop added!", MessageType.Info);
+        player.notify(NotificationType.Success, "AirDrop added!");
         return true;
       } catch (err) {
         console.log(err);
-        sendChatMessage(player, "Failed to add AirDrop!", MessageType.Error);
+        player.notify(NotificationType.Error, "Failed to add AirDrop!");
         return false;
       }
     }
@@ -48,8 +46,7 @@ rpc.registerWebview(ServerCall.FromWebview.ADMIN_ACTION, async (player, action, 
 
         setupShop(shop as Shop);
       } catch (err) {
-        console.log(err);
-        sendChatMessage(player, "Failed to create shop!", MessageType.Error);
+        player.notify(NotificationType.Error, "Failed to create shop!");
         return false;
       }
     }

@@ -3,7 +3,7 @@ import { secondsToMilliseconds } from "date-fns";
 import { createItem, getItemName } from "@shared/modules/items";
 import { BlueprintRecipe, CraftingResult, craftRecipe } from "@shared/modules/production";
 import { InGamePlayer } from "@/core/utility/assertions";
-import { sendChatMessage } from "@/modules/chat";
+import { NotificationType } from "@shared/interfaces";
 
 // 1. [] -> start crafting, add to queue while in progress -> [a]
 // 2. [a] - craft new item, already crafting, add to queue -> [a,b]
@@ -102,11 +102,14 @@ export function notifyPlayerOfCraftingResult(
 ) {
   switch (result) {
     case CraftingResult.NOT_ENOUGH_MATERIALS:
-      sendChatMessage(player, `Not enough materials to craft ${getItemName(recipe.item.key)}.`);
+      player.notify(
+        NotificationType.Error,
+        `Not enough materials to craft ${getItemName(recipe.item.key)}.`,
+      );
       break;
     case CraftingResult.NO_SPACE_IN_INVENTORY:
-      sendChatMessage(
-        player,
+      player.notify(
+        NotificationType.Error,
         `Not enough space in the inventory to craft ${getItemName(recipe.item.key)}.`,
       );
       break;

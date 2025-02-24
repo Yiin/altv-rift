@@ -18,6 +18,7 @@ import "./inventory/remove-item";
 import "./inventory/unequip-item";
 import "./inventory/weapons/reload-weapon";
 import "./load-user";
+import "./notify";
 import "./quests/is-near-ped";
 import "./setup-pinia";
 import "./setup";

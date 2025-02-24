@@ -19,6 +19,7 @@ import {
   getPreviewingItem,
   InventoryInteractionType,
 } from "@/store/inventory";
+import Icon from "@/components/Icon/Icon.vue";
 import DarkBackground from "../../../components/DarkBackground.vue";
 import BackButtons from "../../../components/buttons/BackButtons.vue";
 import ContextMenu from "./ContextMenu.vue";
@@ -30,7 +31,6 @@ import GroundItems from "./ground/Ground.vue";
 import AmountTransfer from "./AmountTransfer.vue";
 import Ammunition from "./Ammunition.vue";
 import ItemPreview from "./item-preview/ItemPreview.vue";
-import Icon from "@/components/Icon/Icon.vue";
 
 const character = useCharacter();
 const gameState = useGameState();

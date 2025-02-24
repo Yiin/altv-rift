@@ -119,7 +119,12 @@ alt.Events.onPlayer(CALL_SERVER_FROM_CLIENT, async (player, payload) => {
     alt.logError(error);
     player.emitRaw(CALL_SERVER_FROM_CLIENT_RESPONSE, {
       id,
-      error,
+      error:
+        error instanceof z.ZodError
+          ? error.issues.map((issue) => issue.message)
+          : error instanceof Error
+            ? error.message
+            : error,
     });
   }
 });
@@ -149,7 +154,7 @@ alt.Events.onPlayer(CALL_WEBVIEW_FROM_SERVER_RESPONSE, (_, response) => {
   if (handler.name in WebviewCall.FromServerValidation) {
     const schema =
       WebviewCall.FromServerValidation[
-      handler.name as keyof typeof WebviewCall.FromServerValidation
+        handler.name as keyof typeof WebviewCall.FromServerValidation
       ];
 
     if ("returns" in schema) {
@@ -217,7 +222,12 @@ alt.Events.onPlayer(CALL_SERVER_FROM_WEBVIEW, async (player, payload) => {
     console.log(`Error in CALL_SERVER_FROM_WEBVIEW`, error);
     player.emitRaw(CALL_SERVER_FROM_WEBVIEW_RESPONSE, {
       id,
-      error: error instanceof z.ZodError ? error.issues.map((issue) => issue.message) : error,
+      error:
+        error instanceof z.ZodError
+          ? error.issues.map((issue) => issue.message)
+          : error instanceof Error
+            ? error.message
+            : error,
     });
   }
 });

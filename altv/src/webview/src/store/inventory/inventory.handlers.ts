@@ -2,6 +2,7 @@ import { watchEffect } from "vue";
 import { ClientEvents } from "@shared/events/client";
 import { ItemSourceOrigin, type PlayerItemSource } from "@shared/interfaces";
 import { isStackable, getCombineType, CombineType } from "@shared/modules/items";
+import { px } from "@/composables/use-pixel";
 import { transferAmount, dropItem, moveItem, combineItems } from "./inventory.actions";
 import {
   clearCurrentInventoryInteraction,
@@ -19,6 +20,7 @@ import {
   getItemFromSource,
   getItemNodeFromSource,
   getItemSourceFromScreenPos,
+  getItemSourceScreenPosition,
   isSameItemSource,
   isSameSourceOrigin,
 } from "./inventory.utils";
@@ -96,8 +98,8 @@ export function handleInventoryMouseMove(e: MouseEvent) {
 
       if (currentInteraction.type === InventoryInteractionType.Hovering) {
         if (isSameItemSource(currentInteraction.state.item.source, source)) {
-          currentInteraction.state.position.x = e.clientX;
-          currentInteraction.state.position.y = e.clientY;
+          // currentInteraction.state.position.x = e.clientX;
+          // currentInteraction.state.position.y = e.clientY;
           return;
         }
       }
@@ -109,11 +111,12 @@ export function handleInventoryMouseMove(e: MouseEvent) {
         return;
       }
 
+      const sourcePos = getItemSourceScreenPosition(source);
       setCurrentInventoryInteraction({
         type: InventoryInteractionType.Hovering,
         state: {
           item: itemInSlot,
-          position: { x: e.clientX, y: e.clientY },
+          position: { x: sourcePos.x + px(80), y: sourcePos.y + px(80) },
         },
       });
   }

@@ -1,4 +1,3 @@
-import alt from "@altv/server";
 import _ from "lodash";
 import { ServerCall } from "@shared/calls/server";
 import { FishingGameType, PlayerFlags } from "@shared/store/game-state.store";
@@ -49,7 +48,10 @@ rpc.registerClient(ServerCall.FromClient.REGISTER_KEY_PRESS, (player, key) => {
       if (hitTheTarget) {
         catchAFish(player, player.gameState.fishingProgress.baitKey);
       } else {
-        sendChatMessage(player, `TP: ${timePassed.toFixed(2)} | err margin: ${errorMargin.toFixed(2)} | min: ${min.toFixed(2)} | max: ${max.toFixed(2)} | adj: ${minAdjusted.toFixed(2)}, ${maxAdjusted.toFixed(2)}`);
+        sendChatMessage(
+          player,
+          `TP: ${timePassed.toFixed(2)} | err margin: ${errorMargin.toFixed(2)} | min/max: ${min.toFixed(2)} - ${max.toFixed(2)} | adj: ${minAdjusted.toFixed(2)} - ${maxAdjusted.toFixed(2)}`,
+        );
         stopFishing(player);
       }
       break;

@@ -67,7 +67,7 @@ export default defineConfig(({ mode }) => ({
     }),
     vue(),
     svgLoader({
-      defaultImport: "raw", // This ensures SVGs are imported as raw strings
+      defaultImport: "component",
       svgoConfig: {
         multipass: true,
         plugins: [

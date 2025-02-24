@@ -76,7 +76,7 @@ alt.on(WebviewEvents.FromClient.INVENTORY_ITEM_ADD, async (item) => {
 });
 
 // Generic notifications
-alt.on(WebviewEvents.FromClient.SHOW_NOTIFICATION, (type, title, text) => {
+alt.on(WebviewEvents.FromClient.SHOW_NOTIFICATION, (type, text, { title } = {}) => {
   const defaultTitle = {
     error: "Uh oh! Something went wrong.",
     success: "Success!",

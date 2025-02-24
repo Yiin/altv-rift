@@ -27,6 +27,14 @@ export const getItemImage = (key: string) => {
     return asset(`assets/items/ammo/${key}.webp`);
   }
   if (isItemKeyMaterial(key)) {
+    if (
+      ["common_", "uncommon_", "rare_", "epic_", "legendary_"].some((grade) =>
+        key.startsWith(grade),
+      )
+    ) {
+      // remove grade from key
+      key = key.replace(/^.+_/, "");
+    }
     return asset(`assets/items/materials/${key}.webp`);
   }
   if (isItemKeyTool(key)) {
@@ -36,6 +44,10 @@ export const getItemImage = (key: string) => {
     return asset(`assets/items/weapon-components/${getWeaponComponentHashKey(key)}.webp`);
   }
   if (isItemKeyConsumable(key)) {
+    if (key.startsWith("cooked")) {
+      key = key.replace(/^cooked/, "raw");
+      return asset(`assets/items/materials/${key}.webp`);
+    }
     return asset(`assets/items/consumables/${key}.webp`);
   }
   if (isItemKeyFishingBait(key)) {

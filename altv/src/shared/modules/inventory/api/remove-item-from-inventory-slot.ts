@@ -1,6 +1,7 @@
 import { Inventory } from "@shared/interfaces";
 import { getInventoryItemInSlot } from "@shared/modules/inventory";
 import { Item, isStackable, createItem } from "@shared/modules/items";
+import { emitInventoryEvent, InventoryEvents } from "../inventory.context";
 
 export function removeItemFromInventorySlot(
   inventory: Inventory,
@@ -24,10 +25,17 @@ export function removeItemFromInventorySlot(
       inventory.items.findIndex((item) => item.slot === slot),
       1,
     );
+
+    emitInventoryEvent(InventoryEvents.INVENTORY_ITEM_REMOVE, inventory, item);
     return item;
   }
 
   item.amount -= amount;
 
+  emitInventoryEvent(
+    InventoryEvents.INVENTORY_ITEM_REMOVE,
+    inventory,
+    createItem(item.key, { ...item, amount }),
+  );
   return createItem(item.key, { ...item, amount });
 }

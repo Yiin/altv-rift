@@ -51,7 +51,7 @@ alt.on(CALL_CLIENT_FROM_WEBVIEW_RESPONSE, (response) => {
       if (!result.success) {
         console.warn(
           `CALL_CLIENT_FROM_WEBVIEW_RESPONSE: Validation error in ${handler.name}:`,
-          result.error,
+          result.error.message,
         );
         handler.reject(result.error);
       }
@@ -96,7 +96,10 @@ alt.on(CALL_WEBVIEW_FROM_CLIENT, async (payload) => {
         const result = schema.args.safeParse(args);
 
         if (!result.success) {
-          console.warn(`CALL_WEBVIEW_FROM_CLIENT: Validation error in ${name}:`, result.error);
+          console.warn(
+            `CALL_WEBVIEW_FROM_CLIENT: Validation error in ${name}:`,
+            result.error.message,
+          );
           throw result.error;
         }
       }

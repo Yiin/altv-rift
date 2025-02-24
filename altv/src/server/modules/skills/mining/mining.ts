@@ -1,12 +1,12 @@
 import alt from "@altv/server";
 import { registerCmd, sendChatMessage } from "@/modules/chat";
 import { Ore, OreItemKey, createItem, isItemKeyOre } from "@shared/modules/items";
-import { VirtualEntityType } from "@shared/interfaces";
-import { MessageType } from "@shared/modules/chat";
-import { InGamePlayer, needsToBeInGame } from "@/core/utility/assertions";
+import { NotificationType, VirtualEntityType } from "@shared/interfaces";
+import { InGamePlayer, isInGame, needsToBeInGame } from "@/core/utility/assertions";
 import { getLevel } from "@shared/modules/experience/experience-table";
 import { rpc } from "@/core/rpc";
 import { ServerCall } from "@shared/calls/server";
+import { MessageType } from "@shared/modules/chat";
 
 const virtualOreGroup = alt.VirtualEntityGroup.create({
   maxEntitiesInStream: 30,
@@ -14,9 +14,13 @@ const virtualOreGroup = alt.VirtualEntityGroup.create({
 export const playerHittingOre: WeakMap<InGamePlayer, number> = new WeakMap();
 
 registerCmd("ore", (player, [type]) => {
+  if (!isInGame(player)) {
+    return;
+  }
+
   if (!isItemKeyOre(type)) {
     type = Ore.IRON_ORE;
-    sendChatMessage(player, "Invalid ore type, defaulting to iron ore.", MessageType.Warning);
+    player.notify(NotificationType.Warning, "Invalid ore type, defaulting to iron ore.");
   }
 
   const ve = alt.VirtualEntity.create({
@@ -27,10 +31,9 @@ registerCmd("ore", (player, [type]) => {
       entityType: VirtualEntityType.Ore,
       oreType: type,
       capacity: ~~(Math.random() * 8) + 8,
-    }
+    },
   });
 });
-
 
 export function isPlayerNearOre(player: InGamePlayer, virtualOre: alt.VirtualEntity): boolean {
   const dist = new alt.Vector2(player.pos).distanceTo(virtualOre.pos);
@@ -65,7 +68,6 @@ function getOreLevel(type: OreItemKey) {
   }
   return 0;
 }
-
 
 rpc.registerClient(ServerCall.FromClient.BEGIN_ORE_HIT, (player, virtualOreId) => {
   needsToBeInGame(player);
@@ -143,7 +145,7 @@ rpc.registerClient(ServerCall.FromClient.ORE_HIT, (player, virtualOreId) => {
   const newLevel = getLevel(player.character.skills.mining);
 
   if (ores) {
-    sendChatMessage(player, `You got ${ores} ores (${experience}xp).`, MessageType.Info);
+    player.notify(NotificationType.Success, `You got ${ores} ores (${experience}xp).`);
     if (newLevel > currentLevel) {
       sendChatMessage(
         player,

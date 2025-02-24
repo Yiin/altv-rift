@@ -16,7 +16,7 @@ const money = computed(() => new Intl.NumberFormat("lt-LT").format(character.mon
     <div class="mb-8 flex items-center justify-end gap-2.25">
       <div class="text-2xl font-bold text-white">{{ money }}</div>
       <Icon
-        icon="custom:money"
+        icon="local:money"
         class="h-4.75 w-4.75 text-white"
       />
     </div>

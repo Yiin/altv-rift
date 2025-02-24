@@ -37,7 +37,10 @@ alt.on(CALL_SERVER_FROM_WEBVIEW_RESPONSE, (response) => {
   serverHandlers.delete(response.id);
 
   if (response.error) {
-    console.log(`CALL_SERVER_FROM_WEBVIEW_RESPONSE: Error in ${handler.name}:`, response.error);
+    console.log(
+      `CALL_SERVER_FROM_WEBVIEW_RESPONSE: Error in ${handler.name}:`,
+      response.error.message,
+    );
     handler.reject(deserialize(response.error));
     return;
   }
@@ -54,7 +57,7 @@ alt.on(CALL_SERVER_FROM_WEBVIEW_RESPONSE, (response) => {
       if (!result.success) {
         console.warn(
           `CALL_SERVER_FROM_WEBVIEW_RESPONSE: Validation error in ${handler.name}:`,
-          result.error,
+          result.error.message,
         );
         handler.reject(result.error);
       }

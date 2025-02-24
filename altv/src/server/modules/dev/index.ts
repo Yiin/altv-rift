@@ -1,5 +1,5 @@
 import alt from "@altv/server";
-import { registerCmd, sendChatMessage } from "../chat";
+import { registerCmd } from "../chat";
 import "./v1";
 import { isInGame } from "@/core/utility/assertions";
 import {
@@ -7,7 +7,7 @@ import {
   FirearmWeaponBlueprint,
   isItemKeyUnlearnedBlueprint,
 } from "@shared/modules/production";
-import { MessageType } from "@shared/modules/chat";
+import { NotificationType } from "@shared/interfaces";
 
 const vg = alt.VirtualEntityGroup.create({ maxEntitiesInStream: 50 });
 
@@ -17,10 +17,9 @@ registerCmd("blueprint", (player, [blueprint]) => {
   }
 
   if (!isItemKeyUnlearnedBlueprint(`blueprint_${blueprint}`)) {
-    sendChatMessage(
-      player,
+    player.notify(
+      NotificationType.Error,
       `Invalid blueprint: ${blueprint}, needed ${FirearmWeaponBlueprint.APPISTOL}`,
-      MessageType.Error,
     );
     return;
   }
