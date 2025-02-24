@@ -16,6 +16,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Clean up Docker resources
+        run: |
+          # Remove unused containers
+          docker container prune -f
+          # Remove unused images
+          docker image prune -af
+          # Remove builder cache
+          docker builder prune -af
+          # Remove unused volumes
+          docker volume prune -f
+
       - name: Build Docker image
         env:
           NODE_OPTIONS: "--max-old-space-size=8192"
@@ -53,4 +64,6 @@ jobs:
             -p 7790:7790 \
             -p 7799:7799/udp \
             ${IMAGE_NAME}:latest
-          docker image prune -f
+          # Enhanced cleanup
+          docker image prune -af --filter "until=24h"
+          docker builder prune -af
