@@ -93,22 +93,6 @@ alt.Timers.everyTick(() => {
   }
 });
 
-alt.Events.onStreamSyncedMetaChange(({ entity, key, newValue }) => {
-  if (entity.type !== alt.Enums.BaseObjectType.PED) {
-    return;
-  }
-
-  if (key !== "health") {
-    return;
-  }
-
-  if ((Number(newValue) ?? 0) <= 0) {
-    alt.Timers.setTimeout(() => {
-      game.networkFadeOutEntity(entity.scriptID, true, false);
-    }, 2000);
-  }
-});
-
 alt.Events.onServer(
   ClientEvents.FromServer.DISPLAY_DAMAGE_HIT,
   (entityType, entityRemoteID, damage, type) => {

@@ -57,6 +57,31 @@ alt.Timers.setInterval(() => {
   }
 }, 100);
 
+alt.Events.onStreamSyncedMetaChange(({ entity, key, newValue }) => {
+  if (entity.type !== alt.Enums.BaseObjectType.PED) {
+    return;
+  }
+
+  if (key !== "health") {
+    return;
+  }
+
+  const ped = entity as alt.Ped;
+
+  if ((Number(newValue) ?? 0) <= 0) {
+    game.setPedHasAiBlip(ped, false);
+
+    const blip = game.getBlipFromEntity(ped);
+    if (blip) {
+      game.removeBlip(blip);
+    }
+
+    alt.Timers.setTimeout(() => {
+      game.networkFadeOutEntity(ped.scriptID, true, false);
+    }, 2000);
+  }
+});
+
 export async function setupEnemyPed(ped: alt.Ped): Promise<void> {
   console.log("setupTerroristPed", ped.scriptID);
   await alt.Utils.waitFor(() => ped.valid && ped.scriptID !== 0);
