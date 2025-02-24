@@ -39,7 +39,7 @@ jobs:
           S3_HOST_BUCKET: ${{ vars.S3_HOST_BUCKET }}
           S3_SECRET_KEY: ${{ secrets.S3_SECRET_KEY }}
           S3_WEBSITE_ENDPOINT: ${{ vars.S3_WEBSITE_ENDPOINT }}
-        run: COMPOSE_PROJECT_NAME=${IMAGE_NAME} docker compose -f docker-compose.prod.yaml build
+        run: COMPOSE_PROJECT_NAME=${IMAGE_NAME} docker compose -f docker-compose.prod.yaml build --memory=8g
 
       - name: Deploy locally
         run: |
