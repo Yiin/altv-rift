@@ -5,6 +5,7 @@ import { type InventoryItem } from "@shared/interfaces";
 import { ServerCall } from "@shared/calls/server";
 import DarkBackground from "@/components/DarkBackground.vue";
 import BackButtons from "@/components/buttons/BackButtons.vue";
+import Icon from "@/components/Icon/Icon.vue";
 import { useGameState } from "@/store/synced/game-state.store";
 import { getItemGradeTextColor, getItemImage } from "@/lib/utils";
 import { useCharacter } from "@/store/synced/character.store";
@@ -14,7 +15,6 @@ import { Sound, playSound } from "@/lib/utils";
 import ShopItemIcon from "./ShopItemIcon.vue";
 import ShopActionModal from "./ShopActionModal.vue";
 import { canBuy } from "./shop.utils";
-import MoneyIcon from "./assets/money.svg";
 
 const gameState = useGameState();
 const character = useCharacter();
@@ -92,7 +92,10 @@ async function buy(inventoryItem: InventoryItem, amount: number) {
             </div>
           </div>
           <div class="mr-2">
-            <MoneyIcon class="h-8 w-8 text-white" />
+            <Icon
+              name="local:money"
+              class="h-8 w-8 text-white"
+            />
           </div>
           <div
             v-if="false"

@@ -21,7 +21,6 @@ import {
 } from "@/store/inventory";
 import DarkBackground from "../../../components/DarkBackground.vue";
 import BackButtons from "../../../components/buttons/BackButtons.vue";
-import MoneyIcon from "./assets/money.svg";
 import ContextMenu from "./ContextMenu.vue";
 import ItemInfo from "./ItemInfo.vue";
 import EquipmentSlot from "./EquipmentSlot.vue";
@@ -31,6 +30,7 @@ import GroundItems from "./ground/Ground.vue";
 import AmountTransfer from "./AmountTransfer.vue";
 import Ammunition from "./Ammunition.vue";
 import ItemPreview from "./item-preview/ItemPreview.vue";
+import Icon from "@/components/Icon/Icon.vue";
 
 const character = useCharacter();
 const gameState = useGameState();
@@ -67,7 +67,10 @@ onUnmounted(() => {
           <div class="flex flex-col">
             <h3 class="flex items-center gap-2.25 text-xl font-bold text-white">
               {{ money }}
-              <MoneyIcon class="h-4.75 w-4.75 text-white" />
+              <Icon
+                name="local:money"
+                class="h-4.75 w-4.75 text-white"
+              />
             </h3>
             <span class="text-sm font-semibold text-deepGray">money</span>
           </div>
