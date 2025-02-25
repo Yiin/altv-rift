@@ -4,6 +4,7 @@ import { Raw, markRaw, ref, watch } from "vue";
 import { VirtualEntityType } from "@shared/interfaces";
 import { getScreenResolution } from "@/core/utility/screen-resolution";
 import { AnchorEntity } from "../types";
+import { isInConversation } from "@/modules/questing/conversation";
 
 let entityToFocus: AnchorEntity | null = null;
 let closestDistance: number = Number.MAX_SAFE_INTEGER;
@@ -14,11 +15,23 @@ watch(currentlyFocusedEntity, (entity) => {
 });
 
 export function resetFocusedEntity(): void {
+  if (
+    isInConversation() &&
+    entityToFocus &&
+    entityToFocus.pos.distanceTo(alt.Player.local.pos) < 5
+  ) {
+    return;
+  }
+
   entityToFocus = null;
   closestDistance = Number.MAX_SAFE_INTEGER;
 }
 
 export function updateFocusedEntity(entity: AnchorEntity, distanceToCenter: number): void {
+  if (isInConversation()) {
+    return;
+  }
+
   if (!isEntityFocusable(entity)) {
     return;
   }

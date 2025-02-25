@@ -39,9 +39,9 @@ registerElement({
         style: {
           transform: everyFrame(() => {
             const { x, y } = alt.worldToScreen(ped.pos);
-            return `translate(${(x - px(25))}px, ${(y - px(25))}px)`;
+            return `translate(${x - px(25)}px, ${y - px(25)}px)`;
           }),
-          opacity: menu.isActive ? 1 : 0.5
+          opacity: menu.isActive ? 1 : 0.5,
         },
       },
       [
@@ -56,33 +56,33 @@ registerElement({
           },
           menu.interactions.map((interaction, index, arr) =>
             div([
-              div(
-                { class: "interaction-item" },
-                [
-                  div([
-                    div(
-                      {
-                        class: ["interaction", currentMenuIndex === index && "interaction--selected"],
-                      },
-                      [
-                        currentMenuIndex === index
-                          ? Icon("key-E", { sizePx: 32 })
-                          : Icon(interaction.icon),
-                        span({
-                          class: "label"
-                        }, [interaction.label])
-                      ],
-                    )
-                  ]),
-                  Icon("mouse-wheel", {
-                    style: {
-                      'display': currentMenuIndex === index && arr.length > 1 ? 'block' : 'none',
-                      width: rem(24),
-                      height: rem(24 * (456 / 256)),
-                    }
-                  })
-                ],
-              ),
+              div({ class: "interaction-item" }, [
+                div([
+                  div(
+                    {
+                      class: ["interaction", currentMenuIndex === index && "interaction--selected"],
+                    },
+                    [
+                      currentMenuIndex === index
+                        ? Icon("key-E", { sizePx: 32 })
+                        : Icon(interaction.icon),
+                      span(
+                        {
+                          class: "label",
+                        },
+                        [interaction.label],
+                      ),
+                    ],
+                  ),
+                ]),
+                Icon("mouse-wheel", {
+                  style: {
+                    display: currentMenuIndex === index && arr.length > 1 ? "block" : "none",
+                    width: rem(24),
+                    height: rem(24 * (456 / 256)),
+                  },
+                }),
+              ]),
             ]),
           ),
         ),

@@ -4,7 +4,16 @@ import { Quests } from "@shared/modules/quests";
 import { ServerEvents } from "@shared/events/server";
 import { PedInteraction } from "@shared/modules/ped/interactions";
 import { getInventoryItem, getInventoryItemByKey } from "@shared/modules/inventory";
-import { Ammo, AmmoItem, FoodIngredient, ItemGrade, Metal, MetalItem, Ore, TreeLogs } from "@shared/modules/items";
+import {
+  Ammo,
+  AmmoItem,
+  FoodIngredient,
+  ItemGrade,
+  Metal,
+  MetalItem,
+  Ore,
+  TreeLogs,
+} from "@shared/modules/items";
 import { IconName } from "@/core/rmlui/components/icon";
 import { useCharacter } from "@/core/store/character.store";
 import { registerQuest } from "../../lib/register-quest";
@@ -41,7 +50,8 @@ registerQuest(Quests.Introduction.Key, {
       visibleFact: Quests.Introduction.Facts.OPEN_INVENTORY,
       completedFact: Quests.Introduction.Facts.GOT_RATBIKE,
       title: "Pick up a bike",
-      summary: "Cal mentioned that I can find a a guy in the garage that would provide me with a bike to get around the island.",
+      summary:
+        "Cal mentioned that I can find a a guy in the garage that would provide me with a bike to get around the island.",
       hints: ["Talk with John Wick in the hangar"],
     },
     {
@@ -55,7 +65,8 @@ registerQuest(Quests.Introduction.Key, {
       visibleFact: Quests.Introduction.Facts.TURN_ON_ENGINE,
       completedFact: Quests.Introduction.Facts.TALKED_WITH_DIEGO,
       title: "Find Diego Moreira",
-      summary: "Cal suggested me to find and talk to Diego Moreira, a cop in charge. He is usually at the entrance of the North Dock.",
+      summary:
+        "Cal suggested me to find and talk to Diego Moreira, a cop in charge. He is usually at the entrance of the North Dock.",
     },
     {
       visibleFact: Quests.Introduction.Facts.TALKED_WITH_DIEGO,
@@ -68,9 +79,7 @@ registerQuest(Quests.Introduction.Key, {
       completedFact: Quests.Introduction.Facts.COMPLETED_MINING_STARTED_SMITHING,
       title: "Mining",
       summary: `Mine ${Quests.Introduction.Constants.IRON_ORE_NEEDED} iron ores and bring them back to San-Lee.`,
-      hints: [
-        "You can mine ores by clicking LMB near them",
-      ]
+      hints: ["You can mine ores by clicking LMB near them"],
     },
     {
       visibleFact: Quests.Introduction.Facts.COMPLETED_MINING_STARTED_SMITHING,
@@ -92,7 +101,7 @@ registerQuest(Quests.Introduction.Key, {
       hints: [
         "Equip the fishing rod by double clicking on it.",
         "Use worms by clicking on them and then clicking on fishing rod.",
-        "You can start fishing by pressing ALT near the water to open actions menu."
+        "You can start fishing by pressing ALT near the water to open actions menu.",
       ],
     },
     {
@@ -106,9 +115,7 @@ registerQuest(Quests.Introduction.Key, {
       completedFact: Quests.Introduction.Facts.COMPLETED_WOODCUTTING,
       title: "Woodcutting",
       summary: `Chop ${Quests.Introduction.Constants.PALM_LOGS_NEEDED} palm trees and bring them back to Nathan.`,
-      hints: [
-        "You can chop trees by clicking LMB near them",
-      ],
+      hints: ["You can chop trees by clicking LMB near them"],
     },
     {
       visibleFact: Quests.Introduction.Facts.TALKED_WITH_DIEGO,
@@ -121,9 +128,7 @@ registerQuest(Quests.Introduction.Key, {
       completedFact: Quests.Introduction.Facts.COMPLETED_CRAFTING,
       title: "Crafting",
       summary: `Craft ${Quests.Introduction.Constants.HANDGUN_AMMO_NEEDED} handgun ammo and bring them back to Sara.`,
-      hints: [
-        "You can open crafting menu by pressing L.",
-      ]
+      hints: ["You can open crafting menu by pressing L."],
     },
     {
       visibleFact: Quests.Introduction.Facts.COMPLETED_ALL,
@@ -195,18 +200,18 @@ registerPedInteractions(PedKey.JOHN_WICK, (ped) => {
           topic: "Ratbikes",
           options: [
             { value: "accept", label: "Get ratbike", color: "primary" },
-            { label: "Cancel", }
-          ]
+            { label: "Cancel" },
+          ],
         }).then((option) => {
-          alt.Events.emitServerRaw(
-            ServerEvents.FromClient.REGISTER_QUEST_FACT,
-            Quests.Introduction.Facts.GOT_RATBIKE,
-          );
           if (option?.value === "accept") {
+            alt.Events.emitServerRaw(
+              ServerEvents.FromClient.REGISTER_QUEST_FACT,
+              Quests.Introduction.Facts.GOT_RATBIKE,
+            );
             alt.Events.emitServerRaw(ServerEvents.FromClient.GET_RATBIKE);
           }
         });
-      }
+      },
     });
   }
 
@@ -235,11 +240,17 @@ registerPedInteractions(PedKey.DIEGO_MOREIRA, (ped) => {
             "Cal, of course... Anyways, since you're here, we've got work to be done, no time to sit around",
             "Here are your assignments. Each job includes making a delivery at the end.",
           ],
-        }).then(() => {
-          alt.Events.emitServerRaw(
-            ServerEvents.FromClient.REGISTER_QUEST_FACT,
-            Quests.Introduction.Facts.TALKED_WITH_DIEGO,
-          );
+          options: [
+            { value: "accept", label: "Understood", color: "primary" },
+            { label: "Cancel" },
+          ],
+        }).then((option) => {
+          if (option?.value === "accept") {
+            alt.Events.emitServerRaw(
+              ServerEvents.FromClient.REGISTER_QUEST_FACT,
+              Quests.Introduction.Facts.TALKED_WITH_DIEGO,
+            );
+          }
         });
       },
     });
@@ -270,11 +281,13 @@ registerPedInteractions(PedKey.DIEGO_MOREIRA, (ped) => {
               { value: "complete", label: "Complete", color: "primary" },
               { label: "Cancel" },
             ],
-          }).then(() => {
-            alt.Events.emitServerRaw(
-              ServerEvents.FromClient.REGISTER_QUEST_FACT,
-              Quests.Introduction.Facts.COMPLETED_ALL,
-            );
+          }).then((option) => {
+            if (option?.value === "complete") {
+              alt.Events.emitServerRaw(
+                ServerEvents.FromClient.REGISTER_QUEST_FACT,
+                Quests.Introduction.Facts.COMPLETED_ALL,
+              );
+            }
           });
         },
       });
@@ -306,7 +319,7 @@ registerPedInteractions(PedKey.FISHING_TUTOR, (ped) => {
             `There you go then. ${Quests.Introduction.Constants.RAW_TROUT_NEEDED}. That's your quota. Sounds like a lot, but the sea's generous today.`,
             "Here's a tip: patience is key. And remember, every catch, no matter how small, makes a difference.",
           ],
-          options: [{ value: "accept", label: "Accept", color: "primary" }],
+          options: [{ value: "accept", label: "Accept", color: "primary" }, { label: "Cancel" }],
         }).then((option) => {
           if (option?.value === "accept") {
             alt.Events.emitServerRaw(
@@ -337,7 +350,10 @@ registerPedInteractions(PedKey.FISHING_TUTOR, (ped) => {
               "Fifty fish, just as asked. Impressive work. Here, take this. It's a blueprint for a fishing rod—one of the best you'll find. And some worms for bait, of course. You've earned it.",
               "Keep at it, and you'll be a master in no time. Remember, the sea rewards those who respect it.",
             ],
-            options: [{ value: "complete", label: "Complete", color: "primary" }],
+            options: [
+              { value: "complete", label: "Complete", color: "primary" },
+              { label: "Cancel" },
+            ],
           }).then((option) => {
             if (option?.value === "complete") {
               alt.Events.emitServerRaw(
@@ -376,7 +392,7 @@ registerPedInteractions(PedKey.MINING_TUTOR, (ped) => {
             "Here's the thing, mining isn't a walk in the park. This ain't about playing in the dirt. It's grimy, it's sweaty, and it's a hell lot of hard work. You have to work and bleed, sometimes literally, to reap any reward.",
             `But if you're up for it, grab a pickaxe and head into the caves. I need you to mine ${Quests.Introduction.Constants.IRON_ORE_NEEDED} iron ores. It's not going to be easy, but nothing worthwhile ever is. Bring them back here, and we'll see what you're really made of.`,
           ],
-          options: [{ value: "accept", label: "Accept", color: "primary" }],
+          options: [{ value: "accept", label: "Accept", color: "primary" }, { label: "Cancel" }],
         }).then((option) => {
           if (option?.value === "accept") {
             alt.Events.emitServerRaw(
@@ -405,9 +421,9 @@ registerPedInteractions(PedKey.MINING_TUTOR, (ped) => {
             topic: "Introduction",
             pages: [
               `Well done, you actually got the ${Quests.Introduction.Constants.IRON_ORE_NEEDED} iron ores.`,
-              "Now, take them to the nearby forge and process them into metal—show me you can handle the whole process."
+              "Now, take them to the nearby forge and process them into metal—show me you can handle the whole process.",
             ],
-            options: [{ value: "accept", label: "Accept", color: "primary" }],
+            options: [{ value: "accept", label: "Accept", color: "primary" }, { label: "Cancel" }],
           }).then((option) => {
             if (option?.value === "accept") {
               alt.Events.emitServerRaw(
@@ -439,7 +455,10 @@ registerPedInteractions(PedKey.MINING_TUTOR, (ped) => {
               "Impressive work, turning those ores into metal. You're proving your worth.",
               "Here, take this pickaxe blueprint as a reward. It'll serve you well in the mines. Keep it up, and you'll go far.",
             ],
-            options: [{ value: "complete", label: "Complete", color: "primary" }],
+            options: [
+              { value: "complete", label: "Complete", color: "primary" },
+              { label: "Cancel" },
+            ],
           }).then((option) => {
             if (option?.value === "complete") {
               alt.Events.emitServerRaw(
@@ -448,8 +467,8 @@ registerPedInteractions(PedKey.MINING_TUTOR, (ped) => {
               );
             }
           });
-        }
-      })
+        },
+      });
     }
   }
 
@@ -479,7 +498,7 @@ registerPedInteractions(PedKey.WOODCUTTING_TUTOR, (ped) => {
             `That's to keep the fires alive and warm, and to build shelters. New guy's job is to cut ${Quests.Introduction.Constants.PALM_LOGS_NEEDED} palm logs. No pressure,`,
             "Remember, it ain't just about being hard on the tree. You gotta be smart with your axe—the angle, a good swing, and gravity does the rest. And don't be fazed by the blisters. They go away—in time.",
           ],
-          options: [{ value: "accept", label: "Accept", color: "primary" }],
+          options: [{ value: "accept", label: "Accept", color: "primary" }, { label: "Cancel" }],
         }).then((option) => {
           if (option?.value === "accept") {
             alt.Events.emitServerRaw(
@@ -510,7 +529,10 @@ registerPedInteractions(PedKey.WOODCUTTING_TUTOR, (ped) => {
               "Didn't expect you to bring back so much, but you've clearly got it in you, a lot of people underestimate the work we do, a lot of people wouldn't last a day doing what you just did.",
               "Looks like you could use a tool of your own. Here, it's yours. Consider it a token of earned respect. It ain't no showpiece but trust me, it's more about the hands that wield it than the tool itself.",
             ],
-            options: [{ value: "complete", label: "Complete", color: "primary" }],
+            options: [
+              { value: "complete", label: "Complete", color: "primary" },
+              { label: "Cancel" },
+            ],
           }).then((option) => {
             if (option?.value === "complete") {
               alt.Events.emitServerRaw(
@@ -546,9 +568,9 @@ registerPedInteractions(PedKey.CRAFTING_TUTOR, (ped) => {
           topic: "Introduction",
           pages: [
             "Diego sent you, huh? Well, don't just stand there like a rusty nail. Look like you've got some grit about ya, maybe you won't be as useless as the last lot.",
-            `Here, take this blueprint for handgun ammo. Study it well, 'cause you're gonna need to make yourself ${Quests.Introduction.Constants.HANDGUN_AMMO_NEEDED} rounds if you plan on staying alive out here. Don't come back until you've got 'em all. The materials you'll need can be gathered in the mining site nearby.`
+            `Here, take this blueprint for handgun ammo. Study it well, 'cause you're gonna need to make yourself ${Quests.Introduction.Constants.HANDGUN_AMMO_NEEDED} rounds if you plan on staying alive out here. Don't come back until you've got 'em all. The materials you'll need can be gathered in the mining site nearby.`,
           ],
-          options: [{ value: "accept", label: "Accept", color: "primary" }],
+          options: [{ value: "accept", label: "Accept", color: "primary" }, { label: "Cancel" }],
         }).then((option) => {
           if (option?.value === "accept") {
             alt.Events.emitServerRaw(
@@ -581,7 +603,10 @@ registerPedInteractions(PedKey.CRAFTING_TUTOR, (ped) => {
             pages: [
               "Well, look at that. You actually pulled it off. Here's a blueprint for a pistol as a reward. Make good use of it, and maybe you won't end up like the others.",
             ],
-            options: [{ value: "complete", label: "Complete", color: "primary" }],
+            options: [
+              { value: "complete", label: "Complete", color: "primary" },
+              { label: "Cancel" },
+            ],
           }).then((option) => {
             if (option?.value === "complete") {
               alt.Events.emitServerRaw(
@@ -603,17 +628,24 @@ whileInGame(() => {
   /**
    * Wait for player to open their inventory for quest to continue
    */
-  const stopWatching = watch(() => clientState.ui.window, (window) => {
-    if (window?.type === WindowType.PLAYER_INVENTORY) {
-      const questFacts = useCharacter().questFacts;
-      if (questFacts.includes(Quests.Introduction.Facts.GOT_INTRODUCTION)
-        && !questFacts.includes(Quests.Introduction.Facts.OPEN_INVENTORY)
-      ) {
-        alt.Events.emitServerRaw(ServerEvents.FromClient.REGISTER_QUEST_FACT, Quests.Introduction.Facts.OPEN_INVENTORY);
-        stopWatching();
+  const stopWatching = watch(
+    () => clientState.ui.window,
+    (window) => {
+      if (window?.type === WindowType.PLAYER_INVENTORY) {
+        const questFacts = useCharacter().questFacts;
+        if (
+          questFacts.includes(Quests.Introduction.Facts.GOT_INTRODUCTION) &&
+          !questFacts.includes(Quests.Introduction.Facts.OPEN_INVENTORY)
+        ) {
+          alt.Events.emitServerRaw(
+            ServerEvents.FromClient.REGISTER_QUEST_FACT,
+            Quests.Introduction.Facts.OPEN_INVENTORY,
+          );
+          stopWatching();
+        }
       }
-    }
-  });
+    },
+  );
 
   return () => {
     stopWatching();
