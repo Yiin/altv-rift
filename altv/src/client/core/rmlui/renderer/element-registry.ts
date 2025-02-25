@@ -22,4 +22,6 @@ export const registerElement = <T extends AnchorType, X>(
     focusableElements.set(registration.anchorType, registration);
   }
   registeredElements.set(registration.key, registration);
+
+  console.log(`Registered RML element: ${registration.key}`);
 };

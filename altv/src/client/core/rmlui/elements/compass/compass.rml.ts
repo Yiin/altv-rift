@@ -179,7 +179,7 @@ function updateTicks(targetAngle: number) {
     const label = node.querySelector(".compass__tick-label")!;
     const labelText = side || missingValues[index];
 
-    if (label.childNodes.length) {
+    if (label.childNodes[0]) {
       updateTextNode(document, label.childNodes[0], labelText.toString());
     } else {
       const textNode = createTextNode(document, labelText.toString());
@@ -240,7 +240,7 @@ function updateIcons(currentDirection: number) {
     const distanceNode = node.querySelector(".compass__icon-distance")!;
     const text = distance.toString();
 
-    if (distanceNode.childNodes.length) {
+    if (distanceNode.childNodes[0]) {
       updateTextNode(document, distanceNode.childNodes[0], text);
     } else {
       const textNode = createTextNode(document, text);

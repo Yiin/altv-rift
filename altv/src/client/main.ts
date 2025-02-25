@@ -11,6 +11,7 @@ import "./core/user-interface";
 import "./core/rmlui";
 import "./core/remote-native";
 import "./core/builder";
+import "./core/store/computed-stream-synced-meta";
 import "./modules/dev";
 import "./modules/world";
 import "./modules/auth";

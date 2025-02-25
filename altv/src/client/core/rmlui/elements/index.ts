@@ -5,5 +5,6 @@ export * from "./ped-interaction/ped-interaction.rml-element";
 export * from "./ped-nametag/ped-nametag.rml-element";
 export * from "./storage-interaction/storage-interaction.rml-element";
 export * from "./tree/tree-interaction.rml-element";
+export * from "./goal-indicator/goal-indicator.rml-element";
 // export * from "./vehicle-action/vehicle-action.rml-element";
 // @endindex

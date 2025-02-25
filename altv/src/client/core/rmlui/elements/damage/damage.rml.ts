@@ -97,12 +97,6 @@ alt.Events.onServer(
   ClientEvents.FromServer.DISPLAY_DAMAGE_HIT,
   (entityType, entityRemoteID, damage, type) => {
     switch (entityType) {
-      // case alt.Enums.BaseObjectType.PLAYER: {
-      //   const player = alt.Player.getByRemoteID(entityRemoteID);
-
-      //   displayHit(player.damagedBonePos, damage, type);
-      //   break;
-      // }
       case alt.Enums.BaseObjectType.PED: {
         const ped = alt.Ped.getByRemoteID(entityRemoteID);
 

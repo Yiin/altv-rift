@@ -28,7 +28,7 @@ export interface FrameData {
 
 export interface ElementRegistration<T extends AnchorType, X> {
   key: string;
-  renderDistance: number;
+  renderDistance: number | ((distance: number) => boolean);
   anchorType: T;
   anchorPos?(entity: AnchorEntityMap[T]): alt.Vector3;
   focusable?: boolean;

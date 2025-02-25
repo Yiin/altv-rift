@@ -52,7 +52,6 @@ export function renderElement(node: alt.RmlElement): void {
 
   if (node.isFresh) {
     node.isFresh = false;
-    console.log(`Node is not fresh, re-render`, registeredElement.key);
     renderer.render(element, node);
   }
 

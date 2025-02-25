@@ -36,9 +36,9 @@ import path from "node:path";
 import alt from "@altv/server";
 import { registerCmd } from "./modules/chat";
 
-registerCmd("v", (player) => {
+registerCmd("v", (player, [vehicleName]) => {
   alt.Vehicle.create({
-    model: "ignus",
+    model: vehicleName ?? "ignus",
     pos: player.pos.add(2, 0, 0),
   });
 });

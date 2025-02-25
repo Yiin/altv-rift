@@ -9,10 +9,11 @@ import { everyFrame } from "../../renderer/hooks/every-frame";
 import { rem } from "../../renderer/pixel";
 import { Icon } from "../../components/icon";
 import { ItemGrade } from "@shared/modules/items";
+import { hasHatchetInHand } from "@/modules/skills/woodcutting/lib";
 
 registerElement({
   key: "treename",
-  renderDistance: 5,
+  renderDistance: (distance) => distance < 6 && hasHatchetInHand(),
   anchorType: AnchorType.Tree,
   render({ entity: tree }) {
     const character = useCharacter();
@@ -43,27 +44,36 @@ registerElement({
             },
           },
           [
-            div({ style: { position: "absolute", transform: `translate(${rem(-30)}, ${rem(-25)})` } }, [
-              isUnavailable || isOnCooldown ? Icon("axe-cooldown") : Icon("axe"),
-            ]),
+            div(
+              { style: { position: "absolute", transform: `translate(${rem(-30)}, ${rem(-25)})` } },
+              [isUnavailable || isOnCooldown ? Icon("axe-cooldown") : Icon("axe")],
+            ),
             div({ style: { "text-align": "left", width: rem(400) } }, [
-              div({ style: { "font-size": rem(10), "margin-top": rem(-20), "margin-left": rem(30) } }, [
-                isUnavailable ? "Level too low" : isOnCooldown ? "On cooldown" : "Ready to cut",
-              ]),
+              div(
+                { style: { "font-size": rem(10), "margin-top": rem(-20), "margin-left": rem(30) } },
+                [isUnavailable ? "Level too low" : isOnCooldown ? "On cooldown" : "Ready to cut"],
+              ),
               br([]),
-              div([name, span({
-                style: {
-                  "font-weight": "bold", color: ({
-                    [ItemGrade.COMMON]: `rgb(255, 255, 255)`,
-                    [ItemGrade.UNCOMMON]: `rgb(185, 240, 69)`,
-                    [ItemGrade.RARE]: `rgb(32, 135, 255)`,
-                    [ItemGrade.EPIC]: `rgb(187, 44, 255)`,
-                    [ItemGrade.LEGENDARY]: `rgb(255, 218, 87)`,
-                    [ItemGrade.CONTRABAND]: `rgb(255, 218, 87)`,
-                    [ItemGrade.LIMITED]: `rgb(0, 255, 234)`,
-                  })[grade]
-                }
-              }, [` (${grade})`])]),
+              div([
+                name,
+                span(
+                  {
+                    style: {
+                      "font-weight": "bold",
+                      color: {
+                        [ItemGrade.COMMON]: `rgb(255, 255, 255)`,
+                        [ItemGrade.UNCOMMON]: `rgb(185, 240, 69)`,
+                        [ItemGrade.RARE]: `rgb(32, 135, 255)`,
+                        [ItemGrade.EPIC]: `rgb(187, 44, 255)`,
+                        [ItemGrade.LEGENDARY]: `rgb(255, 218, 87)`,
+                        [ItemGrade.CONTRABAND]: `rgb(255, 218, 87)`,
+                        [ItemGrade.LIMITED]: `rgb(0, 255, 234)`,
+                      }[grade],
+                    },
+                  },
+                  [` (${grade})`],
+                ),
+              ]),
               br([]),
               div({ style: { "font-size": rem(12) } }, [`Level ${level}`]),
             ]),

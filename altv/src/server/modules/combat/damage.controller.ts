@@ -149,8 +149,6 @@ alt.Events.onWeaponDamage(
       );
 
       if (Number.isNaN(newHealth)) {
-        // we don't control this ped, ignore custom damage
-        alt.log("ignore custom damage");
         return;
       }
 

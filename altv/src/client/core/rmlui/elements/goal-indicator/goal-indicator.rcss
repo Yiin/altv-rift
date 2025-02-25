@@ -1,0 +1,50 @@
+/**
+ * Interactions
+ */
+.goal-indicator-wrapper {
+	position: absolute;
+  transform-origin: center center;
+}
+
+.goal-indicator {
+  display: flex;
+  flex-direction: column;
+  width: 11.25rem; /* 180px */
+  align-items: center;
+  justify-content: center;
+}
+
+.goal-indicator__outline {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 5rem;
+  height: 5rem;
+  transform-origin: center;
+  opacity: 0.75;
+}
+
+.goal-indicator__area-name {
+  color: #FFFFFF;
+  font-family: akrobat-extrabold;
+  font-size: 1rem; /* 16px */
+  text-transform: uppercase;
+  font-effect: glow(2px 4px 2px 3px #000000FF);
+  width: 11.25rem; /* 180px */
+  text-align: center;
+  transform: translateY(1.6875rem);
+  z-index: 10;
+}
+
+.goal-indicator__area-description {
+  color: #FFFFFF;
+  font-family: akrobat-bold;
+  font-size: 0.875rem; /* 14px */
+  text-transform: uppercase;
+  font-effect: glow(2px 4px 2px 3px #000000DD);
+  width: 11.25rem; /* 180px */
+  text-align: center;
+  transform: translateY(2.025rem);
+  z-index: 10;
+}

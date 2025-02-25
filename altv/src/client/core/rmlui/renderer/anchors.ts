@@ -6,6 +6,7 @@ export enum AnchorType {
   Vehicle,
   Tree,
   Storage,
+  AreaOfInterest,
 }
 
 export type AnchorEntityMap = {
@@ -14,4 +15,5 @@ export type AnchorEntityMap = {
   [AnchorType.Vehicle]: alt.Vehicle;
   [AnchorType.Tree]: alt.VirtualEntity;
   [AnchorType.Storage]: alt.VirtualEntity;
+  [AnchorType.AreaOfInterest]: alt.VirtualEntity;
 };

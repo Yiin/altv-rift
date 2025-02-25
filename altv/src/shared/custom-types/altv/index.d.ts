@@ -25,6 +25,14 @@ declare module "@altv/client" {
   }
 
   export interface PedMeta {}
+
+  export interface Entity {
+    reactiveStreamSyncedMeta: any;
+  }
+
+  export interface VirtualEntity {
+    reactiveStreamSyncedMeta: any;
+  }
 }
 
 declare module "@altv/shared" {
@@ -54,6 +62,7 @@ declare module "@altv/shared" {
     airDropType?: import("../../modules/items/registry/air-drop").AirDropType; // entityType: storage & storageType: AirDrop
     areaName?: string; // entityType: areaOfInterest
     areaType?: string; // entityType: areaOfInterest
+    areaDescription?: string; // entityType: areaOfInterest
     oreType?: import("../../modules/items").Ore; // entityType: ore
   }
 }

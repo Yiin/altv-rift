@@ -1,6 +1,5 @@
-import { watch } from "fs";
 import alt from "@altv/server";
-import { addMilliseconds, minutesToMilliseconds } from "date-fns";
+import { addMinutes, minutesToMilliseconds } from "date-fns";
 import { reactive, shallowReactive, watchEffect } from "vue";
 import { FirearmWeapon, getWeaponHash } from "@shared/modules/items";
 import { createInventory } from "@shared/modules/inventory";
@@ -10,6 +9,7 @@ import { createStorage } from "../items-manager";
 import { buildLootTable } from "../loot/loot-tables";
 import { CAYO_MAIN_DOCK_LOOT } from "../loot/loot-tables/cayo-main-dock-loot.low";
 import { createAreaOfInterest } from "../areas-of-interest";
+import { createEvent } from "../events";
 
 const positions = [
   { x: 4842.56591796875, y: -5174.89892578125, z: 2.2929341793060303 },
@@ -61,116 +61,125 @@ const weapons = [
   FirearmWeapon.SMG,
 ];
 
-const thugs = shallowReactive(new Set<alt.Ped>());
+createEvent({
+  name: "cayo-main-dock",
+  cooldown: minutesToMilliseconds(10),
+  setup({ finish }) {
+    const enemies = shallowReactive(new Set<alt.Ped>());
+    let loot: alt.VirtualEntity | null = null;
+    let areaOfInterest: alt.VirtualEntity | null = null;
+    let isFinishing = false;
 
-let loot: alt.VirtualEntity | null = null;
-let areaOfInterest: alt.VirtualEntity | null = null;
-
-// createEvent({
-//   name: "cayo-main-dock",
-//   timeout: minutesToMilliseconds(10),
-//   start() {
-
-//   },
-//   finish() {
-
-//   },
-//   cleanup() {
-
-//   },
-// });
-
-function setupThugs() {
-  // Cleanup
-  loot?.destroy();
-  areaOfInterest?.destroy();
-
-  for (const thug of thugs) {
-    thug.destroy();
-  }
-  thugs.clear();
-
-  const availableModels = [...models];
-
-  for (const pos of positions) {
-    const modelIndex = ~~(Math.random() * availableModels.length);
-    const model = availableModels[modelIndex];
-    availableModels.splice(modelIndex, 1);
-
-    const weaponIndex = ~~(Math.random() * weapons.length);
-    const weapon = getWeaponHash(weapons[weaponIndex]);
-
-    const thug = createEnemyPed({ model, pos, heading: 0 }, { weapon, health: 300 });
-    thugs.add(thug);
-  }
-
-  areaOfInterest = createAreaOfInterest({ x: 4837.678, y: -5178.569, z: 1.223 }, 500, {
-    areaName: "Cayo Perico Main Dock",
-    areaType: "contraband",
-  });
-
-  console.log(`Created area of interest`, areaOfInterest.id);
-}
-
-setupThugs();
-
-watchEffect(() => {
-  if (thugs.size > 0) {
-    return;
-  }
-
-  const restartAfterMs = minutesToMilliseconds(10);
-  alt.Timers.setTimeout(setupThugs, restartAfterMs);
-
-  const inventory = reactive(
-    createInventory({
-      size: 8,
-      items: buildLootTable(CAYO_MAIN_DOCK_LOOT),
-    }),
-  );
-
-  alt.log("create cayo main dock loot storage");
-  loot = createStorage({
-    type: StorageType.LootBox,
-    pos: { x: 4837.678, y: -5178.569, z: 1.223 },
-    inventory,
-    label: "Main Dock Loot",
-    meta: {
-      validUntil: addMilliseconds(Date.now(), restartAfterMs),
-    },
-  });
-
-  const stopWatching = watchEffect(() => {
-    if (!inventory.items.length) {
-      alt.log("destroy cayo main dock loot storage");
+    function setupEnemies() {
+      // Cleanup
       loot?.destroy();
       areaOfInterest?.destroy();
-      areaOfInterest = null;
-      stopWatching();
+
+      for (const thug of enemies) {
+        thug.destroy();
+      }
+      enemies.clear();
+
+      const availableModels = [...models];
+
+      for (const pos of positions) {
+        const modelIndex = ~~(Math.random() * availableModels.length);
+        const model = availableModels[modelIndex];
+        availableModels.splice(modelIndex, 1);
+
+        const weaponIndex = ~~(Math.random() * weapons.length);
+        const weapon = getWeaponHash(weapons[weaponIndex]);
+
+        const thug = createEnemyPed({ model, pos, heading: 0 }, { weapon, health: 300 });
+        enemies.add(thug);
+      }
+
+      areaOfInterest = createAreaOfInterest({ x: 4837.678, y: -5178.569, z: 1.223 }, 500, {
+        areaName: "Main Dock Loot",
+        areaType: "contraband",
+        areaDescription: `Kill all enemies to claim the loot: ${enemies.size} remaining.`,
+      });
     }
-  });
+
+    function handleEnemyDeath(ped: alt.Ped) {
+      if (!enemies.has(ped)) {
+        return;
+      }
+
+      enemies.delete(ped);
+
+      alt.Timers.setTimeout(() => {
+        if (ped.valid) {
+          ped.destroy();
+        }
+      }, 3000);
+
+      if (areaOfInterest) {
+        if (enemies.size > 0) {
+          areaOfInterest.streamSyncedMeta.areaDescription = `Kill all enemies to claim the loot: ${enemies.size} remaining.`;
+        } else {
+          areaOfInterest.streamSyncedMeta.areaDescription = `Claim the loot`;
+        }
+      }
+    }
+
+    setupEnemies();
+
+    const unwatchEffect = watchEffect((onCleanup) => {
+      if (enemies.size > 0) {
+        return;
+      }
+
+      const inventory = reactive(
+        createInventory({
+          size: 8,
+          items: buildLootTable(CAYO_MAIN_DOCK_LOOT),
+        }),
+      );
+
+      loot = createStorage({
+        type: StorageType.LootBox,
+        pos: { x: 4837.678, y: -5178.569, z: 1.223 },
+        inventory,
+        label: "Main Dock Loot",
+        meta: {
+          validUntil: addMinutes(Date.now(), 10),
+        },
+      });
+
+      const stopWatchingInventory = watchEffect(() => {
+        if (!inventory.items.length && !isFinishing) {
+          isFinishing = true;
+          finish();
+        }
+      });
+
+      onCleanup(() => {
+        stopWatchingInventory();
+      });
+    });
+
+    const onPedDeath = alt.Events.onPedDeath(({ ped }) => {
+      handleEnemyDeath(ped);
+    });
+
+    const onPedDamage = alt.Events.onPedDamage(({ ped }) => {
+      if (ped.streamSyncedMeta.health === 0) {
+        handleEnemyDeath(ped);
+      }
+    });
+
+    return () => {
+      // Cleanup function
+      unwatchEffect();
+      onPedDeath.destroy();
+      onPedDamage.destroy();
+      loot?.destroy();
+      areaOfInterest?.destroy();
+      for (const thug of enemies) {
+        thug.destroy();
+      }
+      enemies.clear();
+    };
+  },
 });
-
-alt.Events.onPedDeath(({ ped }) => {
-  handleThugDeath(ped);
-});
-
-alt.Events.onPedDamage(({ ped }) => {
-  if (ped.streamSyncedMeta.health === 0) {
-    handleThugDeath(ped);
-  }
-});
-
-function handleThugDeath(ped: alt.Ped) {
-  if (!thugs.has(ped)) {
-    return;
-  }
-
-  thugs.delete(ped);
-
-  alt.Timers.setTimeout(() => {
-    ped.destroy();
-  }, 3000);
-
-  alt.log(`Thugs remaining: ${thugs.size}`);
-}

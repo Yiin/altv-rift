@@ -41,7 +41,7 @@ alt.Timers.setInterval(() => {
   for (const ped of alt.Ped.streamedIn) {
     if (
       typeof ped.streamSyncedMeta.flags === "undefined" ||
-      ped.streamSyncedMeta.flags & PedFlags.Peaceful
+      !(ped.streamSyncedMeta.flags & PedFlags.Enemy)
     ) {
       continue;
     }
@@ -69,7 +69,7 @@ alt.Events.onStreamSyncedMetaChange(({ entity, key, newValue }) => {
   const ped = entity as alt.Ped;
 
   if ((Number(newValue) ?? 0) <= 0) {
-    game.setPedHasAiBlip(ped, false);
+    // game.setPedHasAiBlip(ped, false);
 
     const blip = game.getBlipFromEntity(ped);
     if (blip) {
@@ -82,10 +82,22 @@ alt.Events.onStreamSyncedMetaChange(({ entity, key, newValue }) => {
   }
 });
 
+alt.Events.onGameEntityDestroy(({ entity }) => {
+  if (entity.type !== alt.Enums.BaseObjectType.PED) {
+    return;
+  }
+
+  const ped = entity as alt.Ped;
+
+  // game.setPedHasAiBlip(ped, false);
+  const blip = game.getBlipFromEntity(ped);
+  if (blip) {
+    game.removeBlip(blip);
+  }
+});
+
 export async function setupEnemyPed(ped: alt.Ped): Promise<void> {
-  console.log("setupTerroristPed", ped.scriptID);
   await alt.Utils.waitFor(() => ped.valid && ped.scriptID !== 0);
-  console.log("ped valid", ped.scriptID);
 
   const onSpawned = alt.Events.onSpawned(() => {
     onSpawned.destroy();
@@ -94,7 +106,7 @@ export async function setupEnemyPed(ped: alt.Ped): Promise<void> {
 
   game.setPedAsEnemy(ped, true);
   game.addBlipForEntity(ped);
-  game.setPedHasAiBlip(ped, true);
+  // game.setPedHasAiBlip(ped, true);
   game.setEntityAsMissionEntity(ped, true, true);
   game.setPlayerMaxExplosiveDamage(ped.scriptID, 69);
 

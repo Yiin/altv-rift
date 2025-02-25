@@ -8,6 +8,7 @@ import { elements } from "./rml-renderer";
 import { AnchorEntity, FrameData } from "./types";
 import { updateFocusedEntity } from "./hooks/focused-entity";
 import { AnchorType } from "./anchors";
+import { VirtualEntityType } from "@shared/interfaces";
 
 export const frameDataMap = new Map<AnchorEntity, FrameData>();
 
@@ -36,11 +37,15 @@ export function getAnchorType(entity: alt.BaseObject): AnchorType | null {
       return AnchorType.Vehicle;
     }
     if (entity.type === alt.Enums.BaseObjectType.VIRTUAL_ENTITY) {
-      if ((entity as alt.VirtualEntity).streamSyncedMeta.entityType === "tree") {
+      const ve = entity as alt.VirtualEntity;
+      if (ve.streamSyncedMeta.entityType === VirtualEntityType.Tree) {
         return AnchorType.Tree;
       }
-      if ((entity as alt.VirtualEntity).streamSyncedMeta.entityType === "storage") {
+      if (ve.streamSyncedMeta.entityType === VirtualEntityType.Storage) {
         return AnchorType.Storage;
+      }
+      if (ve.streamSyncedMeta.entityType === VirtualEntityType.AreaOfInterest) {
+        return AnchorType.AreaOfInterest;
       }
     }
   }
@@ -65,7 +70,11 @@ export function prepareFrameForEntity(entity: AnchorEntity): void {
     const focusableElement = focusableElements.get(anchorType);
 
     if (focusableElement) {
-      if (alt.Player.local.pos.distanceTo(entity.pos) <= focusableElement.renderDistance) {
+      if (
+        typeof focusableElement.renderDistance === "number"
+          ? alt.Player.local.pos.distanceTo(entity.pos) <= focusableElement.renderDistance
+          : focusableElement.renderDistance(alt.Player.local.pos.distanceTo(entity.pos))
+      ) {
         const distanceToCenter = screenRes.distanceTo(screenPosition);
 
         updateFocusedEntity(entity, distanceToCenter);
@@ -136,7 +145,9 @@ export function prepareEntityElements(entity: AnchorEntity): void {
 
     if (
       frameData.isVisible &&
-      alt.Player.local.pos.distanceTo(pos) <= registeredElement.renderDistance
+      (typeof registeredElement.renderDistance === "number"
+        ? alt.Player.local.pos.distanceTo(pos) <= registeredElement.renderDistance
+        : registeredElement.renderDistance(alt.Player.local.pos.distanceTo(pos)))
     ) {
       visibleElementsHeap.push(node);
     }
