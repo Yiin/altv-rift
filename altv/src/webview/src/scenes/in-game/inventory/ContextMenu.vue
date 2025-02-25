@@ -135,9 +135,8 @@ function executeAction(action: string) {
       break;
     case "equip":
       if (
-        [ItemSourceOrigin.PlayerInventory, ItemSourceOrigin.Storage].includes(
-          itemSource.value.origin,
-        )
+        itemSource.value.origin === ItemSourceOrigin.PlayerEquipment ||
+        itemSource.value.origin === ItemSourceOrigin.Storage
       ) {
         return;
       }

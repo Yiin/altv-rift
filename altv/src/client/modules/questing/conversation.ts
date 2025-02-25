@@ -33,7 +33,7 @@ export function stopConversation(option?: ConversationOption) {
   alt.Timers.nextTick(() => {
     currentPage = 0;
     clientState.conversation = null;
-    enableGameControls(GameControlReason.CONVERSATION);
+    // enableGameControls(GameControlReason.CONVERSATION);
   });
   if (promise) {
     promise.resolve?.(option);
@@ -60,7 +60,7 @@ export async function startConversation(
     selectedOption: 0,
   };
 
-  disableGameControls(GameControlReason.CONVERSATION);
+  // disableGameControls(GameControlReason.CONVERSATION);
 
   updateConversation();
 
