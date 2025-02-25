@@ -33,6 +33,7 @@ alt.Player.prototype.applyEquipment = function (specificEquipmentSlot) {
       EquipmentSlot.QuickSlot2,
       EquipmentSlot.QuickSlot3,
       EquipmentSlot.QuickSlot4,
+      EquipmentSlot.QuickSlot5,
     ].includes(slot);
 
     if (isQuickSlot) {

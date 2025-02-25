@@ -53,6 +53,7 @@ alt.Player.prototype.equipItem = function (source, equipmentSlot) {
       EquipmentSlot.QuickSlot2,
       EquipmentSlot.QuickSlot3,
       EquipmentSlot.QuickSlot4,
+      EquipmentSlot.QuickSlot5,
     ].includes(source.equipmentSlot);
 
   const isToQuickSlot = [
@@ -60,6 +61,7 @@ alt.Player.prototype.equipItem = function (source, equipmentSlot) {
     EquipmentSlot.QuickSlot2,
     EquipmentSlot.QuickSlot3,
     EquipmentSlot.QuickSlot4,
+    EquipmentSlot.QuickSlot5,
   ].includes(equipmentSlot);
 
   const equipmentSlotOrFishingBait = isToQuickSlot
@@ -120,7 +122,8 @@ alt.Player.prototype.equipItem = function (source, equipmentSlot) {
 
     const unequippedItem = this.character.equipment[equipmentSlot];
 
-    const isSameAmmo = unequippedItem && isMatchingItem(unequippedItem, item, ItemMatchFlags.IGNORE_AMOUNT);
+    const isSameAmmo =
+      unequippedItem && isMatchingItem(unequippedItem, item, ItemMatchFlags.IGNORE_AMOUNT);
 
     if (isSameAmmo) {
       // @ts-expect-error
