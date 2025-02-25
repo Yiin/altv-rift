@@ -1,14 +1,21 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { ActionTipType } from "@shared/store/client.store";
+import { PlayerFlags } from "@shared/store/game-state.store";
 import { useClient } from "@/store/synced/client.store";
 import { asset } from "@/lib/utils";
 import Image from "@/components/Image.vue";
+import { useGameState } from "@/store/synced/game-state.store";
 
 const client = useClient();
+const gameState = useGameState();
 
 const tip = computed(() => {
   return client.actionTip;
+});
+
+const isFishing = computed(() => {
+  return gameState.flags.has(PlayerFlags.IsFishing);
 });
 </script>
 
@@ -61,10 +68,21 @@ const tip = computed(() => {
       />
       <div>
         <div class="text-lg font-bold uppercase text-white">Fishing</div>
-        <div class="text-sm font-bold uppercase text-zinc-400">
+        <div
+          v-if="!isFishing"
+          class="text-sm font-bold uppercase text-zinc-400"
+        >
           Press
-          <span class="text-white">LMB</span>
+          <span class="text-white">ALT</span>
           to start fishing
+        </div>
+        <div
+          v-else
+          class="text-sm font-bold uppercase text-zinc-400"
+        >
+          Press
+          <span class="text-white">Right Click or ALT</span>
+          to stop fishing
         </div>
       </div>
     </div>

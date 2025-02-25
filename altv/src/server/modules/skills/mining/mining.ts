@@ -153,7 +153,9 @@ rpc.registerClient(ServerCall.FromClient.ORE_HIT, (player, virtualOreId) => {
         MessageType.Success,
       );
     }
-    player.addItem(createItem(oreType, { amount: ores }));
+    player.addItem(createItem(oreType, { amount: ores }), {
+      dropOnFail: true,
+    });
   }
 
   return ores;

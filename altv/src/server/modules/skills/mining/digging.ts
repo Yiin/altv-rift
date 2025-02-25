@@ -25,7 +25,9 @@ function diggingTick(player: alt.Player) {
 
   player.character.skills.mining += 3 * luckFactor;
 
-  player.addItem(createItem(Sand.GRAVEL, { amount: 1 * luckFactor }));
+  player.addItem(createItem(Sand.GRAVEL, { amount: 1 * luckFactor }), {
+    dropOnFail: true,
+  });
 }
 
 function stopDigging(player: alt.Player) {

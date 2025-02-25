@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { computed, onUnmounted } from "vue";
-import { ref } from "vue";
+import { computed, onUnmounted, watch, ref } from "vue";
+import { WebviewEvents } from "@shared/events/webview";
+import { useAlt } from "@/composables/use-alt";
 
 const props = defineProps<{
   startedAt: number;
@@ -9,35 +10,59 @@ const props = defineProps<{
   targetSize: number; // 0-1
 }>();
 
-const currentTime = ref(Date.now());
-
+const alt = useAlt();
 const isMounted = ref(true);
-const isFailed = ref(false);
+const isAnimationStopped = ref(false);
+const frozenRotation = ref(0);
 
 onUnmounted(() => {
   isMounted.value = false;
 });
 
+// Calculate the current rotation angle based on elapsed time
+const calculateCurrentRotation = () => {
+  const elapsedTime = Date.now() - props.startedAt;
+  const normalizedTime = (elapsedTime % props.durationMs) / props.durationMs;
+  return normalizedTime * 360; // Convert to degrees (0-360)
+};
+
+alt.on(WebviewEvents.FromClient.REGISTER_FISHING_CLICK, () => {
+  // Capture the current rotation angle when stopping
+  frozenRotation.value = calculateCurrentRotation();
+  isAnimationStopped.value = true;
+});
+
+watch(
+  () => props.startedAt,
+  () => {
+    isAnimationStopped.value = false;
+    frozenRotation.value = 0;
+  },
+);
+
 const circumference = Math.PI * 450;
 const yellowLength = Math.PI * props.targetSize * 500;
-
-const target = computed(() => (currentTime.value - props.startedAt) / props.durationMs);
 
 const dashOffset = computed(
   () => circumference - props.targetPosition * circumference + yellowLength / 2,
 );
-const targetAngle = computed(() => target.value * 360);
 
-requestAnimationFrame(function update() {
-  currentTime.value = Math.min(Date.now(), props.startedAt + props.durationMs);
+// Computed style for the line element
+const lineStyle = computed(() => {
+  const baseStyle = {
+    "--duration-ms": `${props.durationMs}ms`,
+    "--delay-ms": `-${Date.now() - props.startedAt}ms`,
+  };
 
-  if (currentTime.value === props.startedAt + props.durationMs) {
-    isFailed.value = true;
+  // Add transform property when animation is stopped
+  if (isAnimationStopped.value) {
+    return {
+      ...baseStyle,
+      transform: `rotate(${frozenRotation.value}deg)`,
+    };
   }
 
-  if (isMounted.value) {
-    requestAnimationFrame(update);
-  }
+  return baseStyle;
 });
 </script>
 
@@ -88,10 +113,11 @@ requestAnimationFrame(function update() {
           y1="0"
           x2="250"
           y2="50"
-          :stroke="isFailed ? '#800' : '#fff'"
+          stroke="#fff"
           stroke-width="15"
           stroke-linecap="round"
-          :transform="`rotate(${targetAngle} 250 250)`"
+          :class="['target-line', { 'animate-rotation': !isAnimationStopped }]"
+          :style="lineStyle"
         />
       </svg>
       <div class="absolute left-0 top-0 flex h-full w-full flex-col justify-center">
@@ -103,3 +129,24 @@ requestAnimationFrame(function update() {
     </div>
   </div>
 </template>
+
+<style scoped>
+.target-line {
+  transform-origin: 250px 250px;
+}
+
+.animate-rotation {
+  animation: rotate var(--duration-ms) linear;
+  animation-delay: var(--delay-ms);
+  animation-iteration-count: infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>

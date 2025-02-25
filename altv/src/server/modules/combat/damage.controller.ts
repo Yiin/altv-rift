@@ -62,14 +62,6 @@ alt.Events.onPedDamage(({ attacker, ped, weapon, healthDamage, armourDamage }) =
 
 alt.Events.onWeaponDamage(
   ({ source, target, damage, weaponHash, bodyPart, cancel, setDamageValue }) => {
-    alt.log(`onWeaponDamage`, {
-      source: source.id,
-      target: target.id,
-      damage,
-      weaponHash,
-      bodyPart,
-    });
-
     if (target.type === alt.Enums.BaseObjectType.PED) {
       cancel();
     }
@@ -95,6 +87,7 @@ alt.Events.onWeaponDamage(
 
     if (!isInGame(source)) {
       alt.log("ignore non-in-game source");
+      cancel();
       return;
     }
 

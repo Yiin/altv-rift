@@ -20,6 +20,7 @@ export const FromClient = {
   SHOW_NOTIFICATION: "SHOW_NOTIFICATION",
   INVENTORY_ITEM_ADD: "INVENTORY_ITEM_ADD",
   OPEN_BUILDER_MENU: "OPEN_BUILDER_MENU",
+  REGISTER_FISHING_CLICK: "REGISTER_FISHING_CLICK",
 } as const;
 
 export interface EventFromClient {
@@ -48,6 +49,7 @@ export interface EventFromClient {
       id: string;
     } | null,
   ) => void;
+  [FromClient.REGISTER_FISHING_CLICK]: () => void;
 }
 
 declare global {

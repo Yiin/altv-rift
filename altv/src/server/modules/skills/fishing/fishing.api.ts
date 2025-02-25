@@ -145,7 +145,7 @@ export function startCatchingFish(player: InGamePlayer, baitKey: FishingBaitItem
       const DEFAULT_SIZE = 0.05;
       const targetSize = Math.min(
         1,
-        DEFAULT_SIZE * baitChance * getLevel(player.character.skills.fishing),
+        DEFAULT_SIZE * baitChance * (1 + getLevel(player.character.skills.fishing) / 10),
       );
 
       // Starting offset is to help player avoid the target being too close to the start.

@@ -18,6 +18,7 @@ import { processQuestFact } from "../questing.hooks";
 import { ServerEvents } from "@shared/events/server";
 import { createStaticPed } from "@/modules/peds";
 import { PedFlags } from "@shared/modules/ped";
+import { dropItemOnTheGround } from "@/modules/items-manager";
 
 // MARK: Peds
 (
@@ -95,6 +96,7 @@ processQuestFact.hook((player, questFact) => {
           createItem(Consumable.SIMPLE_MEDKIT, {
             amount: 3,
           }),
+          { dropOnFail: true },
         );
         player.character.money += 500;
         return true;
@@ -149,8 +151,10 @@ processQuestFact.hook((player, questFact) => {
     // MARK: Fishing start
     case Quests.Introduction.Facts.STARTED_FISHING: {
       if (player.isNearPed(PedKey.FISHING_TUTOR)) {
-        player.addItem(createItem(Tool.FISHING_ROD, { grade: ItemGrade.COMMON }));
-        player.addItem(createItem(FishingBait.WORMS, { amount: 100 }));
+        player.addItem(createItem(Tool.FISHING_ROD, { grade: ItemGrade.COMMON }), {
+          dropOnFail: true,
+        });
+        player.addItem(createItem(FishingBait.WORMS, { amount: 100 }), { dropOnFail: true });
         return true;
       } else {
         reportAbuse(player, questFact);
@@ -167,7 +171,7 @@ processQuestFact.hook((player, questFact) => {
         )
       ) {
         player.addBlueprint(ToolBlueprint.FISHING_ROD);
-        player.addItem(createItem(FishingBait.WORMS, { amount: 300 }));
+        player.addItem(createItem(FishingBait.WORMS, { amount: 300 }), { dropOnFail: true });
         player.character.skills.fishing += 1000;
         return true;
       } else {
@@ -177,7 +181,7 @@ processQuestFact.hook((player, questFact) => {
     // MARK: Mining start
     case Quests.Introduction.Facts.STARTED_MINING: {
       if (player.isNearPed(PedKey.MINING_TUTOR)) {
-        player.addItem(createItem(Tool.PICKAXE, { grade: ItemGrade.COMMON }));
+        player.addItem(createItem(Tool.PICKAXE, { grade: ItemGrade.COMMON }), { dropOnFail: true });
         return true;
       }
     }
