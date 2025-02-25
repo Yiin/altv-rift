@@ -8,6 +8,7 @@ import { registerCmd } from "../chat";
 import { createStorage } from "../items-manager/storage";
 import { createInventory } from "../../../shared/modules/inventory/api";
 import { buildLootTable, pickRandomLootTable } from "../loot/loot-tables";
+import { BlipType } from "@shared/modules/game/ui/blips";
 
 const airDropLocations: alt.Vector3[] = [];
 
@@ -27,6 +28,7 @@ export function spawnAirDrop(options: {
   pos: alt.IVector3;
   items: Item[];
   durationInSeconds: number;
+  meta?: Partial<alt.VirtualEntityStreamSyncedMeta>;
 }) {
   const lootBoxStorage = createStorage({
     type: StorageType.AirDrop,
@@ -41,6 +43,7 @@ export function spawnAirDrop(options: {
     airDropType: options.type,
     meta: {
       validUntil: addSeconds(Date.now(), options.durationInSeconds).getTime(),
+      ...options.meta,
     },
   });
 
@@ -58,5 +61,8 @@ registerCmd("airdrop", (player) => {
     type: lootTable.type!,
     items: lootTable.items,
     durationInSeconds: minutesToSeconds(5),
+    meta: {
+      blipType: BlipType.RADAR_BASE_JUMP,
+    },
   });
 });

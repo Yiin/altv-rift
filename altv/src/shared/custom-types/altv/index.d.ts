@@ -63,6 +63,8 @@ declare module "@altv/shared" {
     areaName?: string; // entityType: areaOfInterest
     areaType?: string; // entityType: areaOfInterest
     areaDescription?: string; // entityType: areaOfInterest
+    blipType?: import("../../modules/game/ui/blips").BlipType; // entityType: areaOfInterest | entityType: storage & storageType: AirDrop
+    blipColor?: import("../../modules/game/ui/blips").BlipColor; // entityType: areaOfInterest
     oreType?: import("../../modules/items").Ore; // entityType: ore
   }
 }

@@ -10,6 +10,7 @@ import { buildLootTable } from "../loot/loot-tables";
 import { CAYO_MAIN_DOCK_LOOT } from "../loot/loot-tables/cayo-main-dock-loot.low";
 import { createAreaOfInterest } from "../areas-of-interest";
 import { createEvent } from "../events";
+import { BlipType } from "@shared/modules/game/ui/blips";
 
 const positions = [
   { x: 4842.56591796875, y: -5174.89892578125, z: 2.2929341793060303 },
@@ -98,6 +99,7 @@ createEvent({
         areaName: "Main Dock Loot",
         areaType: "contraband",
         areaDescription: `Kill all enemies to claim the loot: ${enemies.size} remaining.`,
+        blipType: BlipType.RADAR_RAMPAGE,
       });
     }
 

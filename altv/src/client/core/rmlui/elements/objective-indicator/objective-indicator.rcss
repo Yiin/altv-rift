@@ -1,12 +1,12 @@
 /**
  * Interactions
  */
-.goal-indicator-wrapper {
+.objective-indicator-wrapper {
 	position: absolute;
   transform-origin: center center;
 }
 
-.goal-indicator {
+.objective-indicator {
   display: flex;
   flex-direction: column;
   width: 11.25rem; /* 180px */
@@ -14,7 +14,7 @@
   justify-content: center;
 }
 
-.goal-indicator__outline {
+.objective-indicator__outline {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -25,7 +25,7 @@
   opacity: 0.75;
 }
 
-.goal-indicator__area-name {
+.objective-indicator__area-name {
   color: #FFFFFF;
   font-family: akrobat-extrabold;
   font-size: 1rem; /* 16px */
@@ -37,7 +37,7 @@
   z-index: 10;
 }
 
-.goal-indicator__area-description {
+.objective-indicator__area-description {
   color: #FFFFFF;
   font-family: akrobat-bold;
   font-size: 0.875rem; /* 14px */

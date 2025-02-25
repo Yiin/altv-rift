@@ -6,13 +6,13 @@ import { everyFrame } from "../../renderer/hooks/every-frame";
 import { px } from "../../renderer/pixel";
 
 registerElement({
-  key: "goal-indicator",
+  key: "objective-indicator",
   renderDistance: (distance) => distance < 100 && distance > 15,
   anchorType: AnchorType.AreaOfInterest,
   render({ entity: interest }) {
     return div(
       {
-        class: "goal-indicator-wrapper",
+        class: "objective-indicator-wrapper",
         style: {
           transform: everyFrame(() => {
             const { x, y } = alt.worldToScreen(interest.pos);
@@ -23,22 +23,22 @@ registerElement({
       [
         div(
           {
-            class: "goal-indicator",
+            class: "objective-indicator",
           },
           [
             img({
-              class: "goal-indicator__outline",
-              src: `elements/goal-indicator/assets/target-outline.png`,
+              class: "objective-indicator__outline",
+              src: `elements/objective-indicator/assets/target-outline.png`,
             }),
             div(
               {
-                class: "goal-indicator__area-name",
+                class: "objective-indicator__area-name",
               },
               [interest.reactiveStreamSyncedMeta.areaName],
             ),
             div(
               {
-                class: "goal-indicator__area-description",
+                class: "objective-indicator__area-description",
               },
               [interest.reactiveStreamSyncedMeta.areaDescription],
             ),
