@@ -31,6 +31,7 @@ export const FromWebview = {
   UPGRADE_ITEM: "UPGRADE_ITEM",
   CANCEL_UPGRADING: "CANCEL_UPGRADING",
   ADMIN_ACTION: "ADMIN_ACTION",
+  FISHING_CLICK_RESULT: "FISHING_CLICK_RESULT",
 } as const;
 
 export interface CallFromWebview {
@@ -58,6 +59,7 @@ export interface CallFromWebview {
   [FromWebview.UPGRADE_ITEM]: (itemSource: PlayerItemSource) => boolean;
   [FromWebview.CANCEL_UPGRADING]: () => boolean;
   [FromWebview.ADMIN_ACTION]: (action: string, args: any) => any;
+  [FromWebview.FISHING_CLICK_RESULT]: (payload: { rotation: number; isSuccess: boolean }) => void;
 }
 
 export const FromWebviewValidation = {
@@ -142,6 +144,9 @@ export const FromWebviewValidation = {
   [FromWebview.ADMIN_ACTION]: {
     args: [z.string(), z.any()],
     returns: z.any(),
+  },
+  [FromWebview.FISHING_CLICK_RESULT]: {
+    args: [z.object({ rotation: z.number(), isSuccess: z.boolean() })],
   },
 } satisfies Record<
   keyof typeof FromWebview,

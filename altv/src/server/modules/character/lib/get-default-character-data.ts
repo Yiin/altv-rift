@@ -26,13 +26,26 @@ const defaultData = {
     backpack: null,
     shoes: null,
     phone: null,
+    quick1: null,
+    quick2: null,
+    quick3: null,
+    quick4: null,
+    quick5: null,
   },
   skills: {
-    woodcutting: 0,
-    fishing: 0,
-    mining: 0,
-    crafting: 0,
-    engineer: {
+    woodcutting: {
+      exp: 0,
+      learnedSkills: [],
+    },
+    fishing: {
+      exp: 0,
+      learnedSkills: [],
+    },
+    mining: {
+      exp: 0,
+      learnedSkills: [],
+    },
+    crafting: {
       exp: 0,
       learnedSkills: [],
     },
@@ -40,7 +53,47 @@ const defaultData = {
       exp: 0,
       learnedSkills: [],
     },
-    mercenary: {
+    engineer: {
+      exp: 0,
+      learnedSkills: [],
+    },
+    farmer: {
+      exp: 0,
+      learnedSkills: [],
+    },
+    foodDelivery: {
+      exp: 0,
+      learnedSkills: [],
+    },
+    cargoCarrier: {
+      exp: 0,
+      learnedSkills: [],
+    },
+    firefighter: {
+      exp: 0,
+      learnedSkills: [],
+    },
+    builder: {
+      exp: 0,
+      learnedSkills: [],
+    },
+    electrician: {
+      exp: 0,
+      learnedSkills: [],
+    },
+    plumber: {
+      exp: 0,
+      learnedSkills: [],
+    },
+    mechanic: {
+      exp: 0,
+      learnedSkills: [],
+    },
+    gardener: {
+      exp: 0,
+      learnedSkills: [],
+    },
+    mortician: {
       exp: 0,
       learnedSkills: [],
     },

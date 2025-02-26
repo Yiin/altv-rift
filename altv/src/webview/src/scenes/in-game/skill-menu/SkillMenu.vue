@@ -10,23 +10,83 @@ const character = useCharacter();
 const skills = computed(() => [
   {
     name: "Woodcutting",
-    xp: character.skills.woodcutting,
+    xp: character.skills.woodcutting.exp,
     color: "bg-green-600",
   },
   {
     name: "Fishing",
-    xp: character.skills.fishing,
+    xp: character.skills.fishing.exp,
     color: "bg-blue-600",
   },
   {
     name: "Mining",
-    xp: 0,
+    xp: character.skills.mining.exp,
     color: "bg-neutral-300",
   },
   {
     name: "Crafting",
-    xp: 0,
+    xp: character.skills.crafting.exp,
     color: "bg-orange-600",
+  },
+  {
+    name: "Medic",
+    xp: character.skills.medic.exp,
+    color: "bg-red-600",
+  },
+  {
+    name: "Engineer",
+    xp: character.skills.engineer.exp,
+    color: "bg-purple-600",
+  },
+  {
+    name: "Farmer",
+    xp: character.skills.farmer.exp,
+    color: "bg-yellow-600",
+  },
+  {
+    name: "Food Delivery",
+    xp: character.skills.foodDelivery.exp,
+    color: "bg-green-600",
+  },
+  {
+    name: "Cargo Carrier",
+    xp: character.skills.cargoCarrier.exp,
+    color: "bg-blue-600",
+  },
+  {
+    name: "Firefighter",
+    xp: character.skills.firefighter.exp,
+    color: "bg-red-600",
+  },
+  {
+    name: "Builder",
+    xp: character.skills.builder.exp,
+    color: "bg-orange-600",
+  },
+  {
+    name: "Electrician",
+    xp: character.skills.electrician.exp,
+    color: "bg-purple-600",
+  },
+  {
+    name: "Plumber",
+    xp: character.skills.plumber.exp,
+    color: "bg-blue-600",
+  },
+  {
+    name: "Mechanic",
+    xp: character.skills.mechanic.exp,
+    color: "bg-orange-600",
+  },
+  {
+    name: "Gardener",
+    xp: character.skills.gardener.exp,
+    color: "bg-green-600",
+  },
+  {
+    name: "Mortician",
+    xp: character.skills.mortician.exp,
+    color: "bg-red-600",
   },
 ]);
 

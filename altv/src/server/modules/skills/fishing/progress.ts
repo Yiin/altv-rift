@@ -34,9 +34,13 @@ function fishingTick(player: alt.Player) {
   }
 
   // Chance is based on the player's fishing skill
-  const level = getLevel(player.character.skills.fishing);
+  const level = getLevel(player.character.skills.fishing.exp);
   const baitChance = getBaitChance(fishingRod.bait.key);
-  const shouldUseBait = Math.random() < (level / 10) * baitChance;
+
+  // Apply diminishing returns to level bonus
+  // This creates a curve that grows more slowly as level increases
+  const levelBonus = level / (10 + level / 5);
+  const shouldUseBait = Math.random() < (baitChance / 10) * (1 + levelBonus);
 
   if (shouldUseBait) {
     const usedBait = fishingRod.bait;

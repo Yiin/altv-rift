@@ -18,18 +18,33 @@ model Character {
 }
 
 type Skills {
-  woodcutting Int             @default(0)
-  fishing     Int             @default(0)
-  mining      Int             @default(0)
-  crafting    Int             @default(0)
-  mercenary   ProfessionSkill
-  medic       ProfessionSkill
-  engineer    ProfessionSkill
+  woodcutting  ProfessionSkill
+  fishing      ProfessionSkill
+  mining       ProfessionSkill
+  crafting     ProfessionSkill
+  medic        ProfessionSkill
+  engineer     ProfessionSkill
+  farmer       ProfessionSkill
+  foodDelivery ProfessionSkill
+  cargoCarrier ProfessionSkill
+  firefighter  ProfessionSkill
+  builder      ProfessionSkill
+  electrician  ProfessionSkill
+  plumber      ProfessionSkill
+  mechanic     ProfessionSkill
+  gardener     ProfessionSkill
+  mortician    ProfessionSkill
 }
 
 type ProfessionSkill {
   exp           Int      @default(0)
   learnedSkills String[]
+}
+
+model Migration {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  name       String   @unique
+  executedAt DateTime @default(now())
 }
 
 type Appearance {
@@ -80,4 +95,4 @@ type HeadOverlay {
   opacity Float?
   color1  Int?
   color2  Int?
-} 
+}

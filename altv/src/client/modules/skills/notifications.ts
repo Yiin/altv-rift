@@ -7,7 +7,7 @@ import { addSuccessMessage } from "../chat";
 whileInGame(() => {
   const watchers = [
     watch(
-      () => useCharacter().skills.woodcutting,
+      () => useCharacter().skills.woodcutting.exp,
       (newXp, prevXp) => {
         if (isLevelUp(prevXp, newXp)) {
           addSuccessMessage(
@@ -17,7 +17,7 @@ whileInGame(() => {
       },
     ),
     watch(
-      () => useCharacter().skills.fishing,
+      () => useCharacter().skills.fishing.exp,
       (newXp, prevXp) => {
         if (isLevelUp(prevXp, newXp)) {
           addSuccessMessage(
@@ -27,7 +27,7 @@ whileInGame(() => {
       },
     ),
     watch(
-      () => useCharacter().skills.mining,
+      () => useCharacter().skills.mining.exp,
       (newXp, prevXp) => {
         if (isLevelUp(prevXp, newXp)) {
           addSuccessMessage(

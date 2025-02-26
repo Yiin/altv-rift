@@ -57,14 +57,18 @@ alt.Events.onKeyDown(({ key }) => {
     return;
   }
 
-  if (gameState.fishingProgress?.gameType === FishingGameType.TimeClick) {
-    if (key === alt.Enums.KeyCode.MOUSE_LEFT || key === alt.Enums.KeyCode.MOUSE_RIGHT) {
-      if (key === alt.Enums.KeyCode.MOUSE_LEFT) {
-        useWebview((webview) => {
-          webview.emit(WebviewEvents.FromClient.REGISTER_FISHING_CLICK);
-        });
-      }
-      rpc.callServer(ServerCall.FromClient.REGISTER_KEY_PRESS, key);
+  if (gameState.flags.has(PlayerFlags.IsFishing)) {
+    if (key === alt.Enums.KeyCode.MOUSE_RIGHT) {
+      stopFishingTask();
+      return;
+    }
+  }
+
+  if (gameState.flags.has(PlayerFlags.IsCatchingAFish)) {
+    if (key === alt.Enums.KeyCode.MOUSE_LEFT) {
+      useWebview((webview) => {
+        webview.emit(WebviewEvents.FromClient.REGISTER_FISHING_CLICK);
+      });
     }
   }
 });

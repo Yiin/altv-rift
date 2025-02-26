@@ -54,7 +54,7 @@ export function canPlayerHitTheTree(player: InGamePlayer, virtualTree: alt.Virtu
     return false;
   }
 
-  if (getLevel(player.character.skills.woodcutting) < getTreeLevel(treeType)) {
+  if (getLevel(player.character.skills.woodcutting.exp) < getTreeLevel(treeType)) {
     return false;
   }
   return true;

@@ -12,8 +12,10 @@ export enum CraftingResult {
 }
 
 export function canCraftRecipe(character: Character, recipe: BlueprintRecipe): boolean {
-  return (!recipe.levelRequired || getLevel(character.skills.crafting) >= recipe.levelRequired)
-    && craftRecipe(character, recipe, { isTestRun: true }) === CraftingResult.OK;
+  return (
+    (!recipe.levelRequired || getLevel(character.skills.crafting.exp) >= recipe.levelRequired) &&
+    craftRecipe(character, recipe, { isTestRun: true }) === CraftingResult.OK
+  );
 }
 
 export function craftRecipe(

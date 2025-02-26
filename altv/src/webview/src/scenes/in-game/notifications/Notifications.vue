@@ -15,7 +15,7 @@ const { toast } = useToast();
 
 // Experience notification state
 const experienceChanged = ref<{
-  type: "fishing" | "mining" | "woodcutting";
+  type: keyof typeof character.skills;
   previousXp: number;
   currentXp: number;
 }>();
@@ -30,9 +30,22 @@ const addedItem = ref<{
 
 // Skills XP computed
 const skillsXp = computed(() => ({
-  fishing: character.skills.fishing,
-  mining: character.skills.mining,
-  woodcutting: character.skills.woodcutting,
+  fishing: character.skills.fishing.exp,
+  mining: character.skills.mining.exp,
+  woodcutting: character.skills.woodcutting.exp,
+  crafting: character.skills.crafting.exp,
+  medic: character.skills.medic.exp,
+  engineer: character.skills.engineer.exp,
+  farmer: character.skills.farmer.exp,
+  foodDelivery: character.skills.foodDelivery.exp,
+  cargoCarrier: character.skills.cargoCarrier.exp,
+  firefighter: character.skills.firefighter.exp,
+  builder: character.skills.builder.exp,
+  electrician: character.skills.electrician.exp,
+  plumber: character.skills.plumber.exp,
+  mechanic: character.skills.mechanic.exp,
+  gardener: character.skills.gardener.exp,
+  mortician: character.skills.mortician.exp,
 }));
 
 // Watch for XP changes

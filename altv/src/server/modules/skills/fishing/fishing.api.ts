@@ -143,21 +143,19 @@ export function startCatchingFish(player: InGamePlayer, baitKey: FishingBaitItem
       // Default size is the size of the target when baitChance === fishing level / 10,
       // e.g. baitChance is 0.1 and fishing level is 10.
       const DEFAULT_SIZE = 0.05;
-      const targetSize = Math.min(
-        1,
-        DEFAULT_SIZE * baitChance * (1 + getLevel(player.character.skills.fishing) / 10),
-      );
+      const level = getLevel(player.character.skills.fishing.exp);
 
-      // Starting offset is to help player avoid the target being too close to the start.
-      // Target center should be at least 30% away from the start.
-      const startingOffset = Math.min(0.3, Math.max(0, 0.3 - targetSize / 2));
-      const targetPosition = Math.min(1, Math.random() + startingOffset);
+      // Apply the same diminishing returns formula for consistency
+      const levelBonus = level / (10 + level / 5);
+      const targetSize = Math.min(1, DEFAULT_SIZE * baitChance * (1 + levelBonus));
+
+      const targetPosition = Math.random();
 
       player.gameState.fishingProgress = {
         baitKey,
         gameType,
-        startedAt: Date.now(),
-        durationMs,
+        startedAt: Date.now() + player.ping,
+        durationMs: durationMs + player.ping,
         targetPosition,
         targetSize,
       };
@@ -209,7 +207,7 @@ export function catchAFish(player: InGamePlayer, baitKey: FishingBaitItemKey): v
 
   const xp = (1 / getBaitChance(baitKey)) * 25;
 
-  player.character.skills.fishing += xp;
+  player.character.skills.fishing.exp += xp;
 
   player.addItem(createItem(fish, { amount: 1 }));
 }

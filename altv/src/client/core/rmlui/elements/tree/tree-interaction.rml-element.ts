@@ -21,7 +21,7 @@ registerElement({
     const name = getTreeName(type);
     const grade = getTreeGrade(type);
     const level = getTreeLevel(type);
-    const isUnavailable = getLevel(character.skills.woodcutting) < level;
+    const isUnavailable = getLevel(character.skills.woodcutting.exp) < level;
     const isOnCooldown = (tree.streamSyncedMeta.cooldownUntil ?? 0) > Date.now();
 
     return div(

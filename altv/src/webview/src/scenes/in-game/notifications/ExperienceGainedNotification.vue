@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { getLevel, getLevelProgress, isLevelUp } from "@shared/modules/experience/experience-table";
+import type { Character } from "@shared/interfaces";
 import { useClient } from "@/store/synced/client.store";
 import { asset } from "@/lib/utils";
 
 const props = defineProps<{
-  type: "fishing" | "mining" | "woodcutting" | "crafting";
+  type: keyof Character["skills"];
   previousXp: number;
   currentXp: number;
 }>();

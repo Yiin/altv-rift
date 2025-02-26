@@ -47,7 +47,7 @@ export function canPlayerHitTheOre(player: InGamePlayer, virtualOre: alt.Virtual
     return false;
   }
 
-  if (getLevel(player.character.skills.mining) < getOreLevel(oreType)) {
+  if (getLevel(player.character.skills.mining.exp) < getOreLevel(oreType)) {
     return false;
   }
   return true;
@@ -74,7 +74,7 @@ rpc.registerClient(ServerCall.FromClient.BEGIN_ORE_HIT, (player, virtualOreId) =
 
   playerHittingOre.set(player, virtualOreId);
 
-  const level = getLevel(player.character.skills.woodcutting);
+  const level = getLevel(player.character.skills.mining.exp);
 
   const cooldown = 1500;
 
@@ -137,12 +137,12 @@ rpc.registerClient(ServerCall.FromClient.ORE_HIT, (player, virtualOreId) => {
     virtualOre.destroy();
   }
 
-  const currentLevel = getLevel(player.character.skills.mining);
+  const currentLevel = getLevel(player.character.skills.mining.exp);
 
   const experience = ores * (getOreLevel(oreType) + 10);
-  player.character.skills.mining += experience;
+  player.character.skills.mining.exp += experience;
 
-  const newLevel = getLevel(player.character.skills.mining);
+  const newLevel = getLevel(player.character.skills.mining.exp);
 
   if (ores) {
     player.notify(NotificationType.Success, `You got ${ores} ores (${experience}xp).`);

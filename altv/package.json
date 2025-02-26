@@ -14,7 +14,9 @@
     "upd-altv-types": "bun i @altv/shared@latest @altv/client@latest @altv/server@latest @altv/natives@latest",
     "prisma:generate": "bunx prisma generate",
     "watcher": "bun run build/watcher.ts",
-    "server": "bun run watcher"
+    "server": "bun run watcher",
+    "migration:create": "bun run migrations/create-migration.ts",
+    "migration:run": "bun run migrations/run.ts"
   },
   "type": "module",
   "dependencies": {
@@ -40,7 +42,7 @@
     "domdiff": "^2.2.2",
     "domsanitizer": "^0.2.3",
     "domtagger": "^0.7.2",
-    "dotenv": "^16.0.3",
+    "dotenv": "^16.4.7",
     "earcut": "^2.2.4",
     "elliptic": "^6.5.4",
     "esbuild": "^0.19.4",
