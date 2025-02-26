@@ -208,7 +208,7 @@ RUN set -e && \
     echo "Building webview..." && \
     cd /altv/src/webview && \
     echo "Installing webview dependencies..." && \
-    bun install --production --no-cache && \
+    bun install --no-cache && \
     echo "Cleaning bun cache..." && \
     rm -rf ~/.bun/install/cache && \
     echo "Running webview build..." && \
