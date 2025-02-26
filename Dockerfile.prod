@@ -26,6 +26,7 @@ RUN apt-get update -y && \
 # Install global packages
 RUN curl -fsSL https://bun.sh/install | bash && \
     ln -s ~/.bun/bin/bun /usr/local/bin/bun && \
+    ln -s ~/.bun/bin/bunx /usr/local/bin/bunx && \
     bun --version
 
 # Set common environment variables for all stages
@@ -85,15 +86,23 @@ FROM deps as common-setup
 COPY ./docker-scripts /root/setup
 COPY ./altv /altv
 
-# Setup initial environment 
-RUN cd /root/setup && \
+# Setup initial environment with better error handling
+RUN set -e && \
+    cd /root/setup && \
+    echo "Installing setup dependencies..." && \
     bun install --production --no-cache && \
     cd /altv && \
+    echo "Running setup script..." && \
     bun run /root/setup/server.js && \
-    bunx --bun altv-pkg@latest $ALTV_BRANCH && \
+    echo "Installing altv-pkg..." && \
+    /root/.bun/bin/bunx --bun altv-pkg@latest $ALTV_BRANCH && \
+    echo "Making files executable..." && \
     chmod +x altv-server altv-crash-handler && \
+    echo "Installing project dependencies..." && \
     bun install --production --no-cache && \
+    echo "Generating Prisma client..." && \
     bun run prisma:generate && \
+    echo "Cleaning up..." && \
     rm -rf ~/.bun/install/cache
 
 # Generate .s3cfg for CDN sync
@@ -188,17 +197,31 @@ RUN echo "[default]\n\
 
 # Stage for building main project (first in sequence)
 FROM common-setup as build-main
-RUN cd /altv && bun run build
+RUN set -e && \
+    echo "Building main project..." && \
+    cd /altv && \
+    bun run build
 
 # Stage for building webview (runs after build-main)
 FROM build-main as build-webview
-RUN cd /altv/src/webview && \
+RUN set -e && \
+    echo "Building webview..." && \
+    cd /altv/src/webview && \
+    echo "Installing webview dependencies..." && \
     bun install --production --no-cache && \
-    bun --bun run build-only
+    echo "Cleaning bun cache..." && \
+    rm -rf ~/.bun/install/cache && \
+    echo "Running webview build..." && \
+    bun --bun run build-only && \
+    echo "Cleaning node_modules cache..." && \
+    rm -rf node_modules/.cache
 
 # Stage for database migration (runs after build-webview)
 FROM build-webview as db-migration
-RUN cd /altv && bun run migration:run
+RUN set -e && \
+    echo "Running database migrations..." && \
+    cd /altv && \
+    bun run migration:run
 
 # Final stage to combine all builds
 FROM deps as runtime

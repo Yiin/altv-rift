@@ -42,7 +42,7 @@ export function jsonObj(env) {
 
 export function bool(env) {
   const val = process.env[env];
-  if (val == null) return undefined;
+  if (val == null || val === "") return undefined;
   const lower = val.toLowerCase();
   if (lower === "yes" || lower === "true" || lower === "y" || lower === "1") return true;
   if (lower === "no" || lower === "false" || lower === "n" || lower === "0") return false;
