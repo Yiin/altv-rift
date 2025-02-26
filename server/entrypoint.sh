@@ -36,6 +36,7 @@ case "$1" in
 
     chmod +x altv-server altv-crash-handler
     bun run /root/setup/server.js
+    bun run migration:run
     bun run server
     ;;
   *)
