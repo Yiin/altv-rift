@@ -18,13 +18,13 @@ jobs:
 
       - name: Clean up Docker resources
         run: |
-          # Remove unused containers
+          # Remove unused containers (doesn't affect build cache)
           docker container prune -f
-          # Remove unused images
-          docker image prune -af
-          # Remove builder cache
-          docker builder prune -af
-          # Remove unused volumes
+          # Remove only dangling images (untagged) rather than all unused images
+          docker image prune -f
+          # Don't prune builder cache completely, just remove items older than 7 days
+          docker builder prune --filter "until=168h" -f
+          # Remove unused volumes (doesn't affect build cache)
           docker volume prune -f
 
       - name: Build Docker image
@@ -66,6 +66,3 @@ jobs:
             -p 7790:7790 \
             -p 7799:7799/udp \
             ${IMAGE_NAME}:latest
-          # Enhanced cleanup
-          docker image prune -af --filter "until=24h"
-          docker builder prune -af

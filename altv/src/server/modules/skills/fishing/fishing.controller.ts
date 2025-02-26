@@ -33,15 +33,13 @@ rpc.registerWebview(
     }
 
     if (!player.gameState.fishingProgress) {
+      player.notify(NotificationType.Warning, "Not catching a fish");
       return;
     }
 
     if (!isSuccess) {
+      player.notify(NotificationType.Warning, "Failed to catch a fish");
       stopCatchingAFish(player);
-      return;
-    }
-
-    if (rotation < 0 || rotation > 360) {
       return;
     }
 
@@ -55,6 +53,7 @@ rpc.registerWebview(
     }
 
     if (rotation < 0 || rotation > 360) {
+      player.notify(NotificationType.Warning, `Invalid rotation: ${rotation}`);
       return;
     }
 
