@@ -204,17 +204,12 @@ RUN set -e && \
 
 # Stage for building webview (runs after build-main)
 FROM build-main as build-webview
-RUN set -e && \
-    echo "Building webview..." && \
+RUN echo "Installing webview dependencies..." && \
     cd /altv/src/webview && \
-    echo "Installing webview dependencies..." && \
-    bun install --no-cache && \
-    echo "Cleaning bun cache..." && \
-    rm -rf ~/.bun/install/cache && \
-    echo "Running webview build..." && \
-    bun --bun run build-only && \
-    echo "Cleaning node_modules cache..." && \
-    rm -rf node_modules/.cache
+    bun install
+RUN echo "Running webview build..." && \
+    cd /altv/src/webview && \
+    bun --bun run build-only
 
 # Stage for database migration (runs after build-webview)
 FROM build-webview as db-migration
