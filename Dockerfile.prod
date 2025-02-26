@@ -200,11 +200,8 @@ RUN cd /altv && bun run migration:run
 FROM deps as runtime
 WORKDIR /altv
 
-# Copy the base setup from common-setup - everything except node_modules
+# Copy the base setup from common-setup
 COPY --from=common-setup /altv /altv/
-# Remove node_modules but preserve .prisma
-RUN rm -rf /altv/node_modules && mkdir -p /altv/node_modules
-COPY --from=common-setup /altv/node_modules/.prisma /altv/node_modules/.prisma/
 COPY --from=common-setup /root/.s3cfg /root/.s3cfg
 
 # Copy the main build artifacts - these will overwrite any duplicates
