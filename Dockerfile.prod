@@ -12,6 +12,7 @@ RUN apt-get update -y && \
   apt-transport-https \
   ca-certificates \
   gnupg \
+  unzip \
   # utils
   procps \
   stow \
