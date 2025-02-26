@@ -202,6 +202,10 @@ RUN cd /altv/src/webview && \
     mv dist/index.html /altv/resources/main/client/webview && \
     s3cmd sync dist/ s3://altv-rift/webview-assets/ --acl-public --delete-removed --no-mime-magic --guess-mime-type
 
+# migrate database
+RUN cd /altv && \
+    bun run migration:run
+
 # Cleanup
 RUN rm -rf /root/setup /altv/src && \
     find /altv/node_modules -mindepth 1 -maxdepth 1 ! -name '.prisma' -exec rm -rf {} +
