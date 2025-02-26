@@ -7,6 +7,9 @@ process.exit(generate('server.toml', () => {
     defaultModules.push('js-bytecode-module');
   }
 
+  console.log('ALTV_ANNOUNCE', process.env.ALTV_ANNOUNCE);
+  console.log('ALTV_TOKEN', process.env.ALTV_TOKEN);
+
   return ({
     host: str('ALTV_HOST'),
     name: str('ALTV_NAME'),
