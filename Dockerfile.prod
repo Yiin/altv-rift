@@ -23,7 +23,9 @@ RUN apt-get update -y && \
   rm -rf /var/lib/apt/lists/*
 
 # Install global packages
-RUN npm install -g bun
+RUN curl -fsSL https://bun.sh/install | bash && \
+    ln -s ~/.bun/bin/bun /usr/local/bin/bun && \
+    bun --version
 
 # Set common environment variables for all stages
 ARG BRANCH=release
@@ -84,13 +86,14 @@ COPY ./altv /altv
 
 # Setup initial environment 
 RUN cd /root/setup && \
-    bun install && \
+    bun install --production --no-cache && \
     cd /altv && \
     bun run /root/setup/server.js && \
     bunx --bun altv-pkg@latest $ALTV_BRANCH && \
     chmod +x altv-server altv-crash-handler && \
-    bun install && \
-    bun run prisma:generate
+    bun install --production --no-cache && \
+    bun run prisma:generate && \
+    rm -rf ~/.bun/install/cache
 
 # Generate .s3cfg for CDN sync
 RUN echo "[default]\n\
@@ -182,18 +185,18 @@ RUN echo "[default]\n\
   website_index = index.html\n\
   " > /root/.s3cfg
 
-# Stage for building main project (runs in parallel with webview)
+# Stage for building main project (first in sequence)
 FROM common-setup as build-main
 RUN cd /altv && bun run build
 
-# Stage for building webview (runs in parallel with main)
-FROM common-setup as build-webview
+# Stage for building webview (runs after build-main)
+FROM build-main as build-webview
 RUN cd /altv/src/webview && \
-    bun install && \
+    bun install --production --no-cache && \
     bun --bun run build-only
 
-# Stage for database migration (can run in parallel with other tasks)
-FROM common-setup as db-migration
+# Stage for database migration (runs after build-webview)
+FROM build-webview as db-migration
 RUN cd /altv && bun run migration:run
 
 # Final stage to combine all builds
@@ -208,8 +211,8 @@ COPY --from=common-setup /root/.s3cfg /root/.s3cfg
 COPY --from=build-main /altv/resources /altv/resources/
 COPY --from=build-main /altv/package.json /altv/
 
-# Copy and set up webview assets
-COPY --from=build-webview /altv/src/webview/dist /altv/src/webview/dist/
+# Copy and set up webview assets - now using the db-migration stage which has everything
+COPY --from=db-migration /altv/src/webview/dist /altv/src/webview/dist/
 
 # Create webview directory and move index.html
 RUN mkdir -p /altv/resources/main/client/webview && \
