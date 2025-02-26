@@ -22,7 +22,10 @@ RUN apt-get update -y && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
 
-USER root
+# Install global packages
+RUN npm install -g bun
+
+# Set common environment variables for all stages
 ARG BRANCH=release
 ARG DATABASE_URL
 ARG DISCORD_CLIENT_ID
@@ -57,8 +60,7 @@ ENV ALTV_RESOURCES=$ALTV_RESOURCES
 ENV ALTV_TOKEN=$ALTV_TOKEN
 ENV VITE_CDN_URL=$VITE_CDN_URL
 
-FROM deps as base
-
+# S3 arguments for CDN sync
 ARG S3_ACCESS_KEY
 ARG S3_REGION
 ARG S3_HOST_BASE
@@ -72,6 +74,21 @@ ENV S3_HOST_BASE=$S3_HOST_BASE
 ENV S3_HOST_BUCKET=$S3_HOST_BUCKET
 ENV S3_SECRET_KEY=$S3_SECRET_KEY
 ENV S3_WEBSITE_ENDPOINT=$S3_WEBSITE_ENDPOINT
+
+# Common setup stage
+FROM deps as common-setup
+COPY ./docker-scripts /root/setup
+COPY ./altv /altv
+
+# Setup initial environment 
+RUN cd /root/setup && \
+    bun install && \
+    cd /altv && \
+    bun run /root/setup/server.js && \
+    bunx --bun altv-pkg@latest $ALTV_BRANCH && \
+    chmod +x altv-server altv-crash-handler && \
+    bun install && \
+    bun run prisma:generate
 
 # Generate .s3cfg for CDN sync
 RUN echo "[default]\n\
@@ -163,57 +180,53 @@ RUN echo "[default]\n\
   website_index = index.html\n\
   " > /root/.s3cfg
 
-COPY ./docker-scripts /root/setup
-COPY ./altv /altv
+# Stage for building main project (runs in parallel with webview)
+FROM common-setup as build-main
+RUN cd /altv && bun run build
 
-# Install global packages
-RUN npm install -g bun
-
-# Setup initial environment
-RUN cd /root/setup && \
-    bun install
-
-# Run server setup
-RUN cd /altv && \
-    bun run /root/setup/server.js
-
-# Install altv package
-RUN cd /altv && \
-    bunx --bun altv-pkg@latest $ALTV_BRANCH && \
-    chmod +x altv-server altv-crash-handler
-
-# Install dependencies and generate Prisma
-RUN cd /altv && \
-    bun install && \
-    bun run prisma:generate
-
-# Build main project
-RUN cd /altv && \
-    bun run build
-
-# Build webview
+# Stage for building webview (runs in parallel with main)
+FROM common-setup as build-webview
 RUN cd /altv/src/webview && \
     bun install && \
     bun --bun run build-only
 
-# Move and sync webview assets
-RUN cd /altv/src/webview && \
-    mkdir -p /altv/resources/main/client/webview && \
-    mv dist/index.html /altv/resources/main/client/webview && \
-    s3cmd sync dist/ s3://altv-rift/webview-assets/ --acl-public --delete-removed --no-mime-magic --guess-mime-type
+# Stage for database migration (can run in parallel with other tasks)
+FROM common-setup as db-migration
+RUN cd /altv && bun run migration:run
 
-# migrate database
-RUN cd /altv && \
-    bun run migration:run
-
-# Cleanup
-RUN rm -rf /root/setup /altv/src && \
-    find /altv/node_modules -mindepth 1 -maxdepth 1 ! -name '.prisma' -exec rm -rf {} +
-
+# Final stage to combine all builds
 FROM deps as runtime
 WORKDIR /altv
 
-COPY --from=base /altv /altv
+# Copy the base setup from common-setup
+COPY --from=common-setup /altv/altv-server /altv/
+COPY --from=common-setup /altv/altv-crash-handler /altv/
+COPY --from=common-setup /altv/data /altv/data/
+COPY --from=common-setup /altv/modules /altv/modules/
+COPY --from=common-setup /altv/node_modules/.prisma /altv/node_modules/.prisma/
+COPY --from=common-setup /root/.s3cfg /root/.s3cfg
+
+# Copy the main build artifacts
+COPY --from=build-main /altv/resources /altv/resources/
+COPY --from=build-main /altv/package.json /altv/
+
+# Copy the prisma directory from common-setup (for schema files) 
+COPY --from=common-setup /altv/prisma /altv/prisma/
+
+# Copy and set up webview assets
+COPY --from=build-webview /altv/src/webview/dist /altv/src/webview/dist/
+
+# Create webview directory and move index.html
+RUN mkdir -p /altv/resources/main/client/webview && \
+    mv /altv/src/webview/dist/index.html /altv/resources/main/client/webview/
+
+# Now sync webview assets to CDN after we have all the files
+RUN cd /altv/src/webview && \
+    s3cmd sync dist/ s3://altv-rift/webview-assets/ --acl-public --delete-removed --no-mime-magic --guess-mime-type
+
+# Cleanup
+RUN rm -rf /altv/src && \
+    find /altv/node_modules -mindepth 1 -maxdepth 1 ! -name '.prisma' -exec rm -rf {} +
 
 # Expose necessary ports
 EXPOSE 7788/udp 7788/tcp 7799/udp 7790/tcp
