@@ -36,6 +36,7 @@ jobs:
           REDIRECT_IP: ${{ vars.REDIRECT_IP }}
           SERVER_ENV: ${{ vars.SERVER_ENV }}
           ALTV_HOST: ${{ vars.ALTV_HOST }}
+          ALTV_USE_ENV_CONFIG: ${{ vars.ALTV_USE_ENV_CONFIG }}
           ALTV_NAME: ${{ vars.ALTV_NAME }}
           ALTV_PORT: ${{ vars.ALTV_PORT }}
           ALTV_PASSWORD: ${{ vars.ALTV_PASSWORD }}

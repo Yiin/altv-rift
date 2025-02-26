@@ -17,6 +17,7 @@ services:
         - REDIRECT_IP=${REDIRECT_IP}
         - SERVER_ENV=${SERVER_ENV}
         - ALTV_HOST=${ALTV_HOST}
+        - ALTV_USE_ENV_CONFIG=${ALTV_USE_ENV_CONFIG}
         - ALTV_NAME=${ALTV_NAME}
         - ALTV_PORT=${ALTV_PORT}
         - ALTV_PASSWORD=${ALTV_PASSWORD}
