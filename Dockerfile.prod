@@ -90,7 +90,7 @@ COPY ./altv /altv
 RUN set -e && \
     cd /root/setup && \
     echo "Installing setup dependencies..." && \
-    bun install --production --no-cache && \
+    bun install --no-cache && \
     cd /altv && \
     echo "Running setup script..." && \
     bun run /root/setup/server.js && \
@@ -99,7 +99,7 @@ RUN set -e && \
     echo "Making files executable..." && \
     chmod +x altv-server altv-crash-handler && \
     echo "Installing project dependencies..." && \
-    bun install --production --no-cache && \
+    bun install --no-cache && \
     echo "Generating Prisma client..." && \
     bun run prisma:generate && \
     echo "Cleaning up..." && \
@@ -248,7 +248,8 @@ RUN cd /altv/src/webview && \
 
 # Cleanup
 RUN rm -rf /altv/src && \
-    find /altv/node_modules -mindepth 1 -maxdepth 1 ! -name '.prisma' -exec rm -rf {} +
+    # Don't remove node_modules completely, since we need the dependencies
+    rm -rf /altv/node_modules/.cache
 
 # Expose necessary ports
 EXPOSE 7788/udp 7788/tcp 7799/udp 7790/tcp
