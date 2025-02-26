@@ -4,10 +4,16 @@ import { Migration } from "..";
 export const migration: Migration = {
   name: "2023-12-01_convert-skills-to-profession-skill",
   execute: async (prisma: PrismaClient) => {
-    const characters = await prisma.character.findMany();
+    // Use character.findRaw() instead of $runCommandRaw for fetching data
+    const result = (await prisma.character.findRaw({
+      filter: {}, // No filter - get all characters
+    })) as any;
+
+    // Access the result, which is an array of characters
+    const characters = result || [];
 
     for (const character of characters) {
-      const skills = (character.skills as any) || {}; // Add null check
+      const skills = character.skills || {}; // Add null check
 
       // Create default ProfessionSkill structure
       const defaultSkill = { exp: 0, learnedSkills: [] };
@@ -18,21 +24,30 @@ export const migration: Migration = {
         woodcutting:
           typeof skills.woodcutting === "number"
             ? { exp: skills.woodcutting, learnedSkills: [] }
-            : skills.woodcutting || defaultSkill,
+            : skills.woodcutting && typeof skills.woodcutting === "object"
+              ? skills.woodcutting
+              : defaultSkill,
         fishing:
           typeof skills.fishing === "number"
             ? { exp: skills.fishing, learnedSkills: [] }
-            : skills.fishing || defaultSkill,
+            : skills.fishing && typeof skills.fishing === "object"
+              ? skills.fishing
+              : defaultSkill,
         mining:
           typeof skills.mining === "number"
             ? { exp: skills.mining, learnedSkills: [] }
-            : skills.mining || defaultSkill,
+            : skills.mining && typeof skills.mining === "object"
+              ? skills.mining
+              : defaultSkill,
         crafting:
           typeof skills.crafting === "number"
             ? { exp: skills.crafting, learnedSkills: [] }
-            : skills.crafting || defaultSkill,
-        medic: typeof skills.medic === "object" ? skills.medic : defaultSkill,
-        engineer: typeof skills.engineer === "object" ? skills.engineer : defaultSkill,
+            : skills.crafting && typeof skills.crafting === "object"
+              ? skills.crafting
+              : defaultSkill,
+        medic: skills.medic && typeof skills.medic === "object" ? skills.medic : defaultSkill,
+        engineer:
+          skills.engineer && typeof skills.engineer === "object" ? skills.engineer : defaultSkill,
         // Add new professions with default values
         farmer: defaultSkill,
         foodDelivery: defaultSkill,
@@ -46,12 +61,18 @@ export const migration: Migration = {
         mortician: defaultSkill,
       };
 
-      await prisma.character.update({
-        where: { id: character.id },
-        data: { skills: updatedSkills },
+      // Still use $runCommandRaw for the update operation as it's not a find/aggregate command
+      await prisma.$runCommandRaw({
+        update: "Character",
+        updates: [
+          {
+            q: { _id: character._id },
+            u: { $set: { skills: updatedSkills } },
+          },
+        ],
       });
 
-      console.log(`Updated skills for character ${character.name}`);
+      console.log(`Updated skills for character ${character.name || character._id}`);
     }
   },
 };
