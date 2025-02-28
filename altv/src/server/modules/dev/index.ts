@@ -29,10 +29,12 @@ registerCmd("blueprint", (player, [blueprint]) => {
   player.addBlueprint(blueprint as BlueprintKey);
 });
 
-registerCmd("pos", (player, [description]) => {
+registerCmd("pos", (player, [...args]) => {
   if (!isInGame(player)) {
     return;
   }
+
+  const description = args.join(" ");
 
   prisma.savedPoint
     .create({
@@ -44,16 +46,16 @@ registerCmd("pos", (player, [description]) => {
     })
     .then((point) => {
       player.notify(NotificationType.Success, `Saved point: ${description}`);
-      alt.VirtualEntity.create({
+
+      const ve = alt.VirtualEntity.create({
         group: vg,
         pos: point.pos,
         streamingDistance: 50,
-        initialMeta: {
-          // @ts-expect-error
-          description,
-          entityType: "savedPoint",
-        },
       });
+
+      // @ts-expect-error
+      ve.streamSyncedMeta.entityType = "savedPoint";
+      ve.streamSyncedMeta.description = description;
     });
 });
 
