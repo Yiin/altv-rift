@@ -62,19 +62,22 @@ alt.Events.onWorldObjectStreamIn(({ object }) => {
     return;
   }
 
-  if (object.meta.entityType !== "savedPoint") {
+  // @ts-expect-error
+  if (object.streamSyncedMeta.entityType !== "savedPoint") {
     return;
   }
 
-  const description = (object.meta.description as string) ?? `Point ${object.id}`;
+  const description = (object.streamSyncedMeta.description as string) ?? `Point ${object.id}`;
 
   const label = alt.TextLabel.create({
     fontName: "Arial",
-    fontSize: 1.0,
+    fontSize: 16.0,
     pos: object.pos,
     text: description,
     color: new alt.RGBA(255, 255, 255, 255),
     streamingDistance: 50,
+    outlineWidth: 1.0,
+    outlineColor: new alt.RGBA(0, 0, 0, 255),
   });
 
   // @ts-expect-error

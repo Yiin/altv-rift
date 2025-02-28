@@ -108,8 +108,10 @@ watch(focus, async (focus) => {
     await nextTick();
     setTimeout(() => {
       inputDisabled.value = false;
-      inputRef.value?.focus();
-    }, 200);
+      setTimeout(() => {
+        inputRef.value?.focus();
+      }, 100);
+    }, 100);
   } else currentBufferIndex.value = -1;
 });
 
