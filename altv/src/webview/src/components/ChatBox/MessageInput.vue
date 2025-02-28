@@ -15,6 +15,7 @@ const { focus, message, setMessage, options } = useChatStore();
 const buffer: Ref<Array<string>> = ref([]);
 const currentBufferIndex: Ref<number> = ref(-1);
 const previousMessage: Ref<string> = ref("");
+const inputDisabled: Ref<boolean> = ref(false);
 
 // --------------------------------------------------------------
 // Refs
@@ -102,8 +103,13 @@ watch(options, (options) => {
 // When focus is false, sets the current message buffer index to -1.
 watch(focus, async (focus) => {
   if (focus) {
+    // Disable input for first 200ms
+    inputDisabled.value = true;
     await nextTick();
-    inputRef.value?.focus();
+    setTimeout(() => {
+      inputDisabled.value = false;
+      inputRef.value?.focus();
+    }, 200);
   } else currentBufferIndex.value = -1;
 });
 
@@ -129,6 +135,7 @@ onUnmounted(() => window.removeEventListener("keydown", handleKeydown));
       @input="processInputChange"
       @keydown="sendMessage"
       @blur="(event) => (event.target as HTMLInputElement).focus()"
+      :disabled="inputDisabled"
     />
     <span class="text-white text-opacity-50">
       {{ message.length }}/{{ options.maxMessageLength }}
