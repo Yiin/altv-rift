@@ -9,8 +9,6 @@ alt.Timers.setInterval(updateNearbyItems, 2000);
 
 alt.Font.register("client/core/rmlui/fonts/jost/Jost-Regular.ttf");
 
-const labels = new Map<alt.VirtualEntity, alt.TextLabel>();
-
 alt.Events.onWorldObjectStreamIn(({ object }) => {
   if (
     !(object instanceof alt.VirtualEntity) ||
@@ -18,35 +16,6 @@ alt.Events.onWorldObjectStreamIn(({ object }) => {
   ) {
     return;
   }
-
-  const item = object.streamSyncedMeta.item!;
-  const amount = isStackable(item) ? item.amount : 1;
-
-  const label = alt.TextLabel.create({
-    fontName: "Jost",
-    text: `${getItemName(item.key)} x ${amount}`,
-    color:
-      "grade" in item
-        ? {
-          [ItemGrade.COMMON]: new alt.RGBA(255, 255, 255, 255),
-          [ItemGrade.UNCOMMON]: new alt.RGBA(185, 240, 69, 255),
-          [ItemGrade.RARE]: new alt.RGBA(32, 135, 255, 255),
-          [ItemGrade.EPIC]: new alt.RGBA(187, 44, 255, 255),
-          [ItemGrade.LEGENDARY]: new alt.RGBA(255, 218, 87, 255),
-          [ItemGrade.CONTRABAND]: new alt.RGBA(255, 218, 87, 255),
-          [ItemGrade.LIMITED]: new alt.RGBA(0, 255, 234, 255),
-        }[item.grade]
-        : new alt.RGBA(255, 255, 255, 255),
-    pos: object.pos,
-    fontSize: 32,
-    fontScale: 1,
-    outlineColor: new alt.RGBA(0, 0, 0, 255),
-    outlineWidth: 1,
-  })!;
-
-  label.faceCamera = true;
-
-  labels.set(object, label);
 
   updateNearbyItems();
 });
@@ -58,8 +27,6 @@ alt.Events.onWorldObjectStreamOut(({ object }) => {
   ) {
     return;
   }
-
-  labels.get(object)?.destroy();
 
   updateNearbyItems();
 });
@@ -79,13 +46,8 @@ alt.Events.onStreamSyncedMetaChange(({ entity, key, newValue }) => {
   const item = newValue as Item | undefined;
 
   if (!item) {
-    labels.get(entity)?.destroy();
     return;
   }
-
-  const amount = isStackable(item) ? item.amount : 1;
-
-  labels.get(entity)!.text = `${getItemName(item.key)} x ${amount}`;
 
   updateNearbyItems();
 });

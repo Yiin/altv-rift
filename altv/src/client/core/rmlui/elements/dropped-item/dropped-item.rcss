@@ -1,0 +1,23 @@
+@keyframes dropped-item-pulse-animation {
+  0%, 100% {
+    transform: scale(0.37);
+    opacity: 0.1;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.interaction .dropped-item-label {
+  padding-left: 0.375rem;
+  margin-top: 0.125rem;
+  font-size: 1.2rem;
+}
+
+.indicator__glow--dropped-item {
+  width: 2.6875rem;
+  height: 2.6875rem;
+  animation: 3s ease-in-out infinite dropped-item-pulse-animation;
+  transform-origin: center;
+}

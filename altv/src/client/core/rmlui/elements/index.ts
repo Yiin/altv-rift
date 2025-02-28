@@ -6,5 +6,6 @@ export * from "./ped-nametag/ped-nametag.rml-element";
 export * from "./storage-interaction/storage-interaction.rml-element";
 export * from "./tree/tree-interaction.rml-element";
 export * from "./objective-indicator/objective-indicator.rml-element";
+export * from "./dropped-item/dropped-item.rml-element";
 // export * from "./vehicle-action/vehicle-action.rml-element";
 // @endindex

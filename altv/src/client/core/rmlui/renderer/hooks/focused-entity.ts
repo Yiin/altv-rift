@@ -5,6 +5,11 @@ import { VirtualEntityType } from "@shared/interfaces";
 import { getScreenResolution } from "@/core/utility/screen-resolution";
 import { AnchorEntity } from "../types";
 import { isInConversation } from "@/modules/questing/conversation";
+import { getAnchorType } from "../element-updater";
+import { focusableElements } from "../element-registry";
+import { AnchorType } from "../anchors";
+import { isInventoryFull } from "@shared/modules/inventory";
+import { useCharacter } from "@/core/store/character.store";
 
 let entityToFocus: AnchorEntity | null = null;
 let closestDistance: number = Number.MAX_SAFE_INTEGER;
@@ -47,25 +52,23 @@ function isEntityFocusable(entity: AnchorEntity): boolean {
     return false;
   }
 
-  if (entity.type === alt.Enums.BaseObjectType.PLAYER) {
+  const anchorType = getAnchorType(entity);
+
+  if (!anchorType) {
     return false;
   }
 
+  // Special case for peds, they need to have interactions to be focusable.
   if (entity.type === alt.Enums.BaseObjectType.PED) {
     return !!(entity as alt.Ped).interactions?.value.length;
   }
 
-  if (entity.type === alt.Enums.BaseObjectType.VEHICLE) {
-    return false;
+  // Special case for dropped items, we need to have space in inventory to interact with them.
+  if (anchorType === AnchorType.DroppedItem) {
+    return !isInventoryFull(useCharacter().inventory);
   }
 
-  if (entity.type === alt.Enums.BaseObjectType.VIRTUAL_ENTITY) {
-    if ((entity as alt.VirtualEntity).streamSyncedMeta.entityType === VirtualEntityType.Storage) {
-      return true;
-    }
-  }
-
-  return false;
+  return focusableElements.has(anchorType);
 }
 
 export function getFocusedEntity(): Raw<AnchorEntity> | null {

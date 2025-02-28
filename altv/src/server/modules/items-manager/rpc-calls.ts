@@ -455,3 +455,43 @@ rpc.registerClient(ServerCall.FromClient.USE_QUICK_SLOT, (player, slot): boolean
 
   return false;
 });
+
+rpc.registerClient(ServerCall.FromClient.PICK_UP_ITEM, (player, id): boolean => {
+  needsToBeInGame(player);
+
+  const ve = alt.VirtualEntity.getByID(id);
+
+  if (!ve) {
+    return false;
+  }
+
+  if (ve.pos.distanceTo(player.pos) > 5) {
+    return false;
+  }
+
+  const source = {
+    origin: ItemSourceOrigin.Ground,
+    originId: id,
+  } as const;
+
+  if (!canInteractWithItemSource(player, source)) {
+    return false;
+  }
+  const item = findItem(source);
+
+  if (!item) {
+    return false;
+  }
+
+  /**
+   * From ground to inventory
+   */
+  const itemToAdd = createItem(item.key, item);
+
+  if (addItemToInventory(player.character.inventory, itemToAdd)) {
+    removeItem(source);
+
+    return true;
+  }
+  return false;
+});

@@ -19,6 +19,7 @@ export const FromClient = {
   USE_QUICK_SLOT: "USE_QUICK_SLOT",
   BEGIN_ORE_HIT: "BEGIN_ORE_HIT",
   ORE_HIT: "ORE_HIT",
+  PICK_UP_ITEM: "PICK_UP_ITEM",
 } as const;
 
 export interface CallFromClient {
@@ -41,6 +42,7 @@ export interface CallFromClient {
   [FromClient.USE_QUICK_SLOT]: (slot: EquipmentSlot) => boolean;
   [FromClient.BEGIN_ORE_HIT]: (virtualOreId: number) => number;
   [FromClient.ORE_HIT]: (virtualOreId: number) => number;
+  [FromClient.PICK_UP_ITEM]: (itemId: number) => boolean;
 }
 
 export const FromClientValidation = {
@@ -87,6 +89,10 @@ export const FromClientValidation = {
   [FromClient.ORE_HIT]: {
     args: [z.number()],
     returns: z.number(),
+  },
+  [FromClient.PICK_UP_ITEM]: {
+    args: [z.number()],
+    returns: z.boolean(),
   },
 } satisfies Record<
   keyof typeof FromClient,

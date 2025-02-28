@@ -19,6 +19,16 @@ alt.Events.onDisconnect(() => {
   document.destroy();
 });
 
+let isRmlDebuggerActive = false;
+
+alt.Events.onConsoleCommand(({ command }) => {
+  if (command === "rml") {
+    isRmlDebuggerActive = !isRmlDebuggerActive;
+    alt.setRmlControlsActive(isRmlDebuggerActive);
+    alt.toggleRmlDebugger(isRmlDebuggerActive);
+  }
+});
+
 // Container we render to
 export const container = document.getElementByID("container")!;
 

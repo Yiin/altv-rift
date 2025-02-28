@@ -1,0 +1,7 @@
+model SavedPoint {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  pos         Position
+  rot         Position
+  description String
+  createdAt   DateTime @default(now())
+}
