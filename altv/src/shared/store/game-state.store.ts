@@ -10,6 +10,7 @@ export enum PlayerFlags {
   InDiggingArea = "InDiggingArea",
   IsDigging = "IsDigging",
   HasActiveDelivery = "HasActiveDelivery",
+  AcceptingDeliveries = "AcceptingDeliveries",
 }
 
 export enum StorageType {

@@ -4,10 +4,11 @@ import { getLevel } from "@shared/modules/experience/experience-table";
 import { InGamePlayer, isInGame, needsToBeInGame } from "@/core/utility/assertions";
 import { NotificationType } from "@shared/interfaces";
 import { PlayerFlags } from "@shared/store/game-state.store";
-import { registerCmd } from "@/modules/chat";
+import { registerCmd, sendChatMessage } from "@/modules/chat";
 // Add imports for RPC system
 import { FromClient } from "@shared/calls/server/from-client";
 import { rpc } from "@/core/rpc";
+import { MessageType } from "@shared/modules/chat";
 
 const PrivateHomes: Record<string, PrivateHome[]> = (
   await import("@/data/private-homes.positions.json")
@@ -123,6 +124,9 @@ const MAX_DELIVERY_DISTANCE = 800;
 // Minimum number of delivery points to select from when finding nearby locations
 const MIN_DELIVERY_POINTS_POOL = 5;
 
+// Add a new flag for delivery availability
+const DELIVERY_AVAILABILITY_FLAG = PlayerFlags.AcceptingDeliveries;
+
 // Utility function to get player's active deliveries
 function getPlayerDeliveries(player: InGamePlayer): Map<number, PlayerDelivery> {
   console.log(`[FoodDelivery-Server] Getting active deliveries for player ID: ${player.id}`);
@@ -132,6 +136,18 @@ function getPlayerDeliveries(player: InGamePlayer): Map<number, PlayerDelivery> 
     player.gameState.foodDelivery.activeDeliveries = new Map();
   }
   return player.gameState.foodDelivery.activeDeliveries;
+}
+
+// Check if a player is accepting new deliveries
+function isAcceptingDeliveries(player: InGamePlayer): boolean {
+  // If the flag isn't set yet, initialize it to false (not accepting deliveries by default)
+  if (
+    !player.gameState.flags.has(DELIVERY_AVAILABILITY_FLAG) &&
+    !player.gameState.flags.has(PlayerFlags.HasActiveDelivery)
+  ) {
+    return false;
+  }
+  return player.gameState.flags.has(DELIVERY_AVAILABILITY_FLAG);
 }
 
 // Check if a player has reached their max deliveries
@@ -253,6 +269,13 @@ export function setNextDeliveryPoint(player: alt.Player) {
   }
 
   console.log(`[FoodDelivery-Server] Setting next delivery point for player ${player.id}`);
+
+  // Check if player is accepting deliveries
+  if (!isAcceptingDeliveries(player)) {
+    console.log(`[FoodDelivery-Server] Player ${player.id} is not accepting deliveries`);
+    return;
+  }
+
   const level = getLevel(player.character.skills.foodDelivery.exp);
 
   // Check if player has reached maximum deliveries
@@ -697,9 +720,22 @@ export function listDeliveries(player: InGamePlayer): void {
 console.log("[FoodDelivery-Server] Registering chat commands");
 
 registerCmd("pizza", (player) => {
-  console.log(`[FoodDelivery-Server] Player ${player.id} used /pizza command`);
   needsToBeInGame(player);
-  setNextDeliveryPoint(player);
+  toggleDeliveryAvailability(player);
+
+  if (isAcceptingDeliveries(player)) {
+    sendChatMessage(
+      player,
+      "You're currently online and accepting deliveries. Use /pizza to toggle off.",
+      MessageType.Success,
+    );
+  } else {
+    sendChatMessage(
+      player,
+      "You're currently offline. Use /pizza to go online and accept orders.",
+      MessageType.Warning,
+    );
+  }
 });
 
 registerCmd("deliveries", (player) => {
@@ -941,8 +977,12 @@ rpc.registerClient(FromClient.FOOD_DELIVERY_COMPLETE, (player, deliveryId: numbe
       );
     }
 
-    // Add a new delivery if player delivered successfully and isn't at max
-    if (timeTaken <= delivery.timeLimit * 1.5 && !hasReachedMaxDeliveries(player)) {
+    // Add a new delivery if player delivered successfully, isn't at max, and is accepting deliveries
+    if (
+      timeTaken <= delivery.timeLimit * 1.5 &&
+      !hasReachedMaxDeliveries(player) &&
+      isAcceptingDeliveries(player)
+    ) {
       console.log(
         `[FoodDelivery-Server] Scheduling new delivery for player ${player.id} in 5 seconds`,
       );
@@ -954,3 +994,38 @@ rpc.registerClient(FromClient.FOOD_DELIVERY_COMPLETE, (player, deliveryId: numbe
 
   return { reward: 0, exp: 0 };
 });
+
+// Toggle player's availability for new deliveries
+export function toggleDeliveryAvailability(player: InGamePlayer): boolean {
+  const currentlyAccepting = isAcceptingDeliveries(player);
+
+  if (currentlyAccepting) {
+    // Turn off delivery availability
+    player.gameState.flags.delete(DELIVERY_AVAILABILITY_FLAG);
+    console.log(`[FoodDelivery-Server] Player ${player.id} stopped accepting new deliveries`);
+    player.notify(
+      NotificationType.Info,
+      "You've gone offline. You won't receive any new delivery orders.",
+      { title: "Food Delivery" },
+    );
+    return false;
+  } else {
+    // Turn on delivery availability and schedule first delivery
+    player.gameState.flags.add(DELIVERY_AVAILABILITY_FLAG);
+    console.log(`[FoodDelivery-Server] Player ${player.id} started accepting new deliveries`);
+    player.notify(NotificationType.Success, "You're now online and accepting delivery orders!", {
+      title: "Food Delivery",
+    });
+
+    // Schedule first delivery if player doesn't have max deliveries
+    if (!hasReachedMaxDeliveries(player)) {
+      const nextDeliveryTime = 5000; // 5 seconds delay for first delivery
+      console.log(
+        `[FoodDelivery-Server] Scheduling first delivery in ${nextDeliveryTime}ms for player ${player.id}`,
+      );
+      alt.Timers.setTimeout(setNextDeliveryPoint, nextDeliveryTime, player);
+    }
+
+    return true;
+  }
+}
