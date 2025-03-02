@@ -1,0 +1,7 @@
+---
+description: UI State Synchronization
+globs: *.ts
+alwaysApply: false
+---
+When designing features, remember that server-side character data is automatically synced with the client and webview.
+Update character data directly on the server (e.g., player.character.skills.foodDelivery.stats.totalDeliveries++) and it will be reflected in client and webview without manual events.

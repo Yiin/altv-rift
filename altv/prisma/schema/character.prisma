@@ -39,6 +39,7 @@ type Skills {
 type ProfessionSkill {
   exp           Int      @default(0)
   learnedSkills String[]
+  stats         Json? // For tracking profession-specific statistics
 }
 
 model Migration {

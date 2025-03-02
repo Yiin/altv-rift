@@ -179,6 +179,15 @@ function updateTicks(targetAngle: number) {
     const label = node.querySelector(".compass__tick-label")!;
     const labelText = side || missingValues[index];
 
+    if (!label) {
+      console.warn(`[Compass] No label found for tick ${missingValues[index]}`, {
+        index,
+        missingValues,
+        tickNodes,
+      });
+      return;
+    }
+
     if (label.childNodes[0]) {
       updateTextNode(document, label.childNodes[0], labelText.toString());
     } else {

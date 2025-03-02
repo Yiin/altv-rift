@@ -71,8 +71,6 @@ export const migration: Migration = {
           },
         ],
       });
-
-      console.log(`Updated skills for character ${character.name || character._id}`);
     }
   },
 };

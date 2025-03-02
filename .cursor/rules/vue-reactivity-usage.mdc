@@ -1,0 +1,11 @@
+---
+description: Vue reactivity usage
+globs: *.ts
+alwaysApply: false
+---
+The project uses Vue 3 reactivity even for server-side state:
+- Use watchEffect for reactive responses to state changes
+- Structure files with composable patterns
+- Prefer computed values over repeated calculations
+- All player state changes should be reactive to propagate correctly to client/UI
+- Never mutate reactive objects outside their defining scope (e.g. only server can mutate user, character and game-state stores, while client can only mutate client store)

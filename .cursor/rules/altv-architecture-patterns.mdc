@@ -1,0 +1,13 @@
+---
+description: alt:V architecture patterns
+globs: *.ts
+alwaysApply: false
+---
+This codebase follows standard Alt:V architecture with some specific patterns:
+- Server handles all game logic, data persistence, and validation
+- Client manages in-game functionality, real-time UI (that is updated everyframe base on in-game state, e.g. nametags, we use RML for that, look for rml related code to understand), interaction, and user input
+- Webview manages general UI (dialogs/inventory/menus/hud) that is static-ish in relation to screen position, i.e. it doesn't follow in-game elemented in real time every frame
+- Communication happens via RPC calls, reactively synced stores and events
+- Register all timed operations with alt.Timers namespace (not setTimeout)
+- On client side, use whileInGame() hook (in-game.state.ts) to setup feature environment for current in-game session.
+- Clean up all resources in return statements from hooks (destroy timers, clear watchers) when using whileInGame or similar state hooks

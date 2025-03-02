@@ -2,7 +2,7 @@
 import { computed, watch } from "vue";
 import { UIElement } from "@shared/enums/ui";
 import { WindowType } from "@shared/store/client.store";
-import { StorageType } from "@shared/store/game-state.store";
+import { StorageType, PlayerFlags } from "@shared/store/game-state.store";
 import Screen from "@/components/Screen.vue";
 import { useClient } from "@/store/synced/client.store";
 import { isCharacterStoreAvailable } from "@/store/synced/character.store";
@@ -26,6 +26,7 @@ import QuickAccess from "./quick-access/QuickAccess.vue";
 import Hud from "./hud/Hud.vue";
 import Admin from "./admin/Admin.vue";
 import Builder from "./builder/Builder.vue";
+import FoodDelivery from "./jobs/food-delivery/FoodDelivery.vue";
 
 const client = useClient();
 const gameState = useGameState();
@@ -79,6 +80,7 @@ watch(
       <QuestMenu v-if="client.ui.elements.has(UIElement.QUEST_MENU)" />
       <SkillMenu v-if="client.ui.elements.has(UIElement.SKILL_MENU)" />
       <TargetAction v-if="client.ui.elements.has(UIElement.TARGET_ACTION)" />
+      <FoodDelivery v-if="gameState.flags.has(PlayerFlags.HasActiveDelivery)" />
       <Conversation />
       <AreaIndicators />
       <Hud />

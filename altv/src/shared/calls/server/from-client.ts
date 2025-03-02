@@ -20,6 +20,8 @@ export const FromClient = {
   BEGIN_ORE_HIT: "BEGIN_ORE_HIT",
   ORE_HIT: "ORE_HIT",
   PICK_UP_ITEM: "PICK_UP_ITEM",
+  FOOD_DELIVERY_COLLECT: "FOOD_DELIVERY_COLLECT",
+  FOOD_DELIVERY_COMPLETE: "FOOD_DELIVERY_COMPLETE",
 } as const;
 
 export interface CallFromClient {
@@ -43,6 +45,8 @@ export interface CallFromClient {
   [FromClient.BEGIN_ORE_HIT]: (virtualOreId: number) => number;
   [FromClient.ORE_HIT]: (virtualOreId: number) => number;
   [FromClient.PICK_UP_ITEM]: (itemId: number) => boolean;
+  [FromClient.FOOD_DELIVERY_COLLECT]: (deliveryId: number) => boolean;
+  [FromClient.FOOD_DELIVERY_COMPLETE]: (deliveryId: number) => { reward: number; exp: number };
 }
 
 export const FromClientValidation = {
@@ -93,6 +97,17 @@ export const FromClientValidation = {
   [FromClient.PICK_UP_ITEM]: {
     args: [z.number()],
     returns: z.boolean(),
+  },
+  [FromClient.FOOD_DELIVERY_COLLECT]: {
+    args: [z.number()],
+    returns: z.boolean(),
+  },
+  [FromClient.FOOD_DELIVERY_COMPLETE]: {
+    args: [z.number()],
+    returns: z.object({
+      reward: z.number(),
+      exp: z.number(),
+    }),
   },
 } satisfies Record<
   keyof typeof FromClient,

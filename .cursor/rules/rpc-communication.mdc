@@ -1,0 +1,11 @@
+---
+description: RPCs and Events communication
+globs: *.ts
+alwaysApply: false
+---
+   Client-server communication uses an RPC system to call rpcs remotely and get a response, usually indicating if action succeeded or failed, sometimes with additional information. That's only done if we can't achieve functionality using synced-stores by default.
+
+   - Define new call constants in `altv/src/shared/calls/**/from-*.ts`
+   - Register rpc handlers with `rpc.registerClient({Server|Client|webview}Call.From{Server|Client|Webview}.CONSTANT_NAME, (player, ...args) => {})`
+   - Call rpc using `rpc.call{Server|Client|Webview}({Server|Client|Webview}Call.From{Server|Client|Webview}.CONSTANT_NAME, ...args)`
+   

@@ -29,6 +29,7 @@ import "./modules/loot";
 import "./modules/shops";
 import "./modules/dev";
 import "./modules/admin";
+import "./modules/jobs";
 import "./scenes";
 
 import fs from "node:fs";

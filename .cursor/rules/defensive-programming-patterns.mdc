@@ -1,0 +1,10 @@
+---
+description: Defensive programming patterns
+globs: *.ts
+alwaysApply: false
+---
+The codebase employs defensive programming:
+- Always validate player state before operations using isInGame/needsToBeInGame
+- Use try/catch blocks for operations that may fail due to external factors
+- Log errors with meaningful context
+- Provide user feedback for failures

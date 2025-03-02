@@ -1,0 +1,13 @@
+---
+description: Persisting data and database migrations
+globs: *.ts
+alwaysApply: false
+---
+   Database migrations follow a specific pattern:
+   - update relevant altv/prisma/schema/*.prisma files
+   - run `bun run prisma:generate` in altv/ dir
+   - run `bun run migration:create migration_description` in altv/ dir
+   - open generated `altv/migrations/yyyy-mm-dd_migration_description/index.ts` file
+   - Use prisma.*.findRaw() to get existing related to migrations data (usually character model)
+   - Use prisma.$runCommandRaw() for MongoDB updates to avoid outdated schema validation
+   

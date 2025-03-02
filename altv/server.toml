@@ -7,4 +7,4 @@ useEarlyAuth = false
 useCdn = false
 debug = true
 modules = [ "js-module-v2", "js-bytecode-module" ]
-resources = [ "ipls/*", "peds/*", "weapons/*", "resource-control", "main" ]
+resources = [ "ipls/*", "weapons/*", "resource-control", "main" ]

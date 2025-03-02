@@ -24,6 +24,7 @@ import "./modules/peds";
 import "./modules/questing";
 import "./modules/skills";
 import "./modules/production";
+import "./modules/jobs";
 import "./scenes";
 
 import alt from "@altv/client";

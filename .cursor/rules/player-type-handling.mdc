@@ -1,0 +1,12 @@
+---
+description: Player types handling
+globs: *.ts
+alwaysApply: false
+---
+Use following helper functions to narrow-down alt.Player type from altv/src/server/core/utility/assertions.ts
+`export function needsToBeInGame(player: alt.Player): asserts player is InGamePlayer`
+`export function isInGame(player: alt.Player): player is InGamePlayer`
+
+These function acts as a type guard that narrows player to InGamePlayer type, which guarantees access to character, gameState, and other properties.
+
+Do not check player.valid or !player for player-validity, usually using isInGame is the best approach.

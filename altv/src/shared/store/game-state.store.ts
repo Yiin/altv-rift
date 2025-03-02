@@ -1,6 +1,7 @@
 import { Inventory, PlayerItemSource, StorageSource } from "@shared/interfaces";
 import { FishingBaitItemKey } from "@shared/modules/items";
 import { BlueprintRecipe } from "@shared/modules/production";
+import alt from "@altv/shared";
 
 export enum PlayerFlags {
   InFishingArea = "InFishingArea",
@@ -8,6 +9,7 @@ export enum PlayerFlags {
   IsCatchingAFish = "IsCatchingAFish",
   InDiggingArea = "InDiggingArea",
   IsDigging = "IsDigging",
+  HasActiveDelivery = "HasActiveDelivery",
 }
 
 export enum StorageType {
@@ -51,6 +53,41 @@ export type ShopStorage = {
   inventory: Inventory;
 };
 
+export interface PlayerDelivery {
+  collectionPoint: alt.IVector3;
+  deliveryPoint: alt.IVector3 & { name?: string };
+  isPrivateHome: boolean;
+  timeLimit: number;
+  startTime: number;
+  bonus: number;
+  nextDeliveryTime: number;
+  isCollected: boolean;
+  status: "pending" | "collected" | "delivered" | "failed";
+}
+
+export interface FoodDeliveryData {
+  activeDeliveries: Map<number, PlayerDelivery>;
+  activeWaypoint?: {
+    deliveryId: number;
+    position: alt.IVector3;
+    label: string;
+    type: "collection" | "delivery";
+    distance: number;
+  };
+  stats?: {
+    totalDeliveries: number;
+    successfulDeliveries: number;
+    failedDeliveries: number;
+    tipsReceived: number;
+    totalEarnings: number;
+    fastestDelivery: number; // in milliseconds
+    averageDeliveryTime: number; // in milliseconds
+    privateHomeDeliveries: number;
+    regularDeliveries: number;
+    lastDeliveryDate: number;
+  };
+}
+
 export interface GameState {
   flags: Set<PlayerFlags>;
   openedStorage: GenericStorage | LootBoxStorage | AirDropStorage | ShopStorage | null;
@@ -71,6 +108,7 @@ export interface GameState {
       itemSource: PlayerItemSource;
     } | null;
   };
+  foodDelivery: FoodDeliveryData;
 }
 
 export const getDefaultGameState = (): GameState => ({
@@ -81,5 +119,8 @@ export const getDefaultGameState = (): GameState => ({
     queue: [],
     startedAt: 0,
     upgrading: null,
+  },
+  foodDelivery: {
+    activeDeliveries: new Map(),
   },
 });

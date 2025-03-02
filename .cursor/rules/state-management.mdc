@@ -1,0 +1,12 @@
+---
+description: User, character and game state management
+globs: *.ts
+alwaysApply: false
+---
+- The project uses a shared game state system. On the server, player.gameState, player.character and player.user provides a reactive objects for storing player-specific state.
+- Changes to those properties automatically sync to the client and webview. 
+- For new features, extend interfaces in relevant altv/src/shared/store/*.store.ts files
+- player.user (useUser()) is for persisted account-specific information
+- player.character (useCharacter()) is for persisted character-specific information
+- player.gameState (useGameState()) is for not-persisted currenlt game session specific information, it's reset for every new playing session
+- Instead of creating events to send data to client or webviews, you can utilize those stores for the data to be synced automatically.
