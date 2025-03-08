@@ -5,6 +5,7 @@ import vue from "@vitejs/plugin-vue";
 import AutoImport from "unplugin-auto-import/vite";
 import svgLoader from "vite-svg-loader";
 import vueDevTools from "vite-plugin-vue-devtools";
+import tailwindcss from "@tailwindcss/vite";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -70,6 +71,7 @@ export default defineConfig(({ mode }) => ({
     vueDevTools({
       launchEditor: "cursor",
     }),
+    tailwindcss(),
     svgLoader({
       defaultImport: "component",
       svgoConfig: {

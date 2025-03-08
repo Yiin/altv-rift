@@ -152,9 +152,9 @@ module.exports = {
       },
       minWidth: (utils) => utils.theme("spacing"),
       spacing: {
-        ...generateSpacings([0, 100], [0, 0.25, 0.5, 0.75]),
-        ...generateSpacings([100, 200], [0, 0.5]),
-        ...generateSpacings([200, 300], [0]),
+        // ...generateSpacings([0, 100], [0, 0.25, 0.5, 0.75]),
+        // ...generateSpacings([100, 200], [0, 0.5]),
+        // ...generateSpacings([200, 300], [0]),
         "7/100": "7%",
         "1/10": "10%",
         "1/8": "12.5%",

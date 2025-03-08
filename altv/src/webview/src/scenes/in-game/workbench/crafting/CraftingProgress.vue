@@ -153,7 +153,7 @@ const currentlyCrafting = computed(() => queue.value[0]);
           <div class="font-light">Dmg</div>
         </WorkbenchSlot>
       </div>
-      <div class="flex w-full flex-grow flex-col items-center justify-end">
+      <div class="flex w-full grow flex-col items-center justify-end">
         <template v-if="currentlyCrafting">
           <div class="h-1 w-full rounded bg-neutral-500/20">
             <div

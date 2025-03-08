@@ -164,9 +164,9 @@ const rifles = ref<RifleType[]>([
       />
       <div class="absolute inset-0 bg-subtleDarkRadialGradient opacity-95"></div>
 
-      <div class="absolute inset-0 bg-black/70 blur-sm"></div>
+      <div class="absolute inset-0 bg-black/70 blur-xs"></div>
     </div>
-    <nav class="mx-auto flex max-w-screen-2xl items-center justify-between gap-7 px-6">
+    <nav class="mx-auto flex max-w-(--breakpoint-2xl) items-center justify-between gap-7 px-6">
       <div class="flex gap-20">
         <a
           href="#"
@@ -451,7 +451,7 @@ const rifles = ref<RifleType[]>([
         </div>
       </div>
       <div
-        class="pointer-events-none absolute bottom-0 right-0 top-0 w-1/4 max-w-sm bg-gradient-to-r from-transparent to-white/20"
+        class="pointer-events-none absolute bottom-0 right-0 top-0 w-1/4 max-w-sm bg-linear-to-r from-transparent to-white/20"
       ></div>
     </main>
   </Screen>

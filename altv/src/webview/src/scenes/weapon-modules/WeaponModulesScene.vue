@@ -131,7 +131,7 @@ const availableModules = ref<AvailableWeaponModuleType[]>([
       />
     </div>
 
-    <nav class="mx-auto flex max-w-screen-2xl items-center justify-between gap-7 px-6 py-8">
+    <nav class="mx-auto flex max-w-(--breakpoint-2xl) items-center justify-between gap-7 px-6 py-8">
       <div>
         <a href="#">
           <p class="mb-1 text-4xl font-extrabold text-white">Your weaponry</p>
@@ -151,7 +151,7 @@ const availableModules = ref<AvailableWeaponModuleType[]>([
     </nav>
 
     <main
-      class="mx-auto flex h-[calc(100vh_-_98px)] max-w-screen-2xl items-start gap-12 overflow-y-auto p-6"
+      class="mx-auto flex h-[calc(100vh_-_98px)] max-w-(--breakpoint-2xl) items-start gap-12 overflow-y-auto p-6"
     >
       <WeaponryList :weaponModules="weaponModules" />
       <InstalledModules />

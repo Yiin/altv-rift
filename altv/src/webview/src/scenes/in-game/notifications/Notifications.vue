@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
+import { computed, ref, watch, h } from "vue";
 import { WebviewEvents } from "@shared/events/webview";
 import { type Item } from "@shared/modules/items";
 import { useAlt } from "@/composables/use-alt";
 import { useCharacter } from "@/store/synced/character.store";
 import { useToast } from "@/components/ui/toast";
 import { Toaster } from "@/components/ui/toast";
+import { parseColoredText } from "@/lib/utils/parse-colored-text";
 import ItemReceivedNotification from "./ItemReceivedNotification.vue";
 import ExperienceGainedNotification from "./ExperienceGainedNotification.vue";
 
@@ -98,7 +99,7 @@ alt.on(WebviewEvents.FromClient.SHOW_NOTIFICATION, (type, text, { title } = {}) 
 
   toast({
     title: title || defaultTitle,
-    description: text,
+    description: parseColoredText(text),
     variant: type === "error" ? "destructive" : type,
   });
 });

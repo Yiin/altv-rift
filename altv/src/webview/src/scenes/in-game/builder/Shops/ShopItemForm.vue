@@ -127,7 +127,7 @@ function addItem() {
               :items="ITEMS"
               v-slot="{ option }"
             >
-              <span class="overflow-hidden overflow-ellipsis whitespace-nowrap">
+              <span class="overflow-hidden text-ellipsis whitespace-nowrap">
                 <Icon
                   :icon="getItemIcon(option.value)"
                   class="mr-1 inline"

@@ -19,7 +19,7 @@ const modelValue = defineModel<number>({ default: 0 });
         v-for="tab in options"
         :key="tab"
         :value="tab"
-        class="flex-shrink-0 flex-grow"
+        class="shrink-0 grow"
         @mousedown="modelValue = options.indexOf(tab)"
       >
         {{ tab }}

@@ -88,7 +88,7 @@ function trackQuest(key: string) {
     >
       <button
         @click="trackQuest(task.completedFact)"
-        class="inline-flex items-center gap-2 rounded border px-2 py-1 uppercase text-white focus:outline-none"
+        class="inline-flex items-center gap-2 rounded border px-2 py-1 uppercase text-white focus:outline-hidden"
         :class="[
           client.trackingQuest === task.completedFact
             ? 'border-emerald-600 bg-emerald-600 hover:text-emerald-600'

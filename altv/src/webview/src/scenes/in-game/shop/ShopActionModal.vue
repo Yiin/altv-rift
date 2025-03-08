@@ -37,7 +37,7 @@ const price = computed(() => quantity.value * (props.price ?? 0));
 
 <template>
   <div
-    class="absolute left-0 top-0 z-max flex h-full w-full items-center justify-center bg-black/35 backdrop-blur-sm"
+    class="absolute left-0 top-0 z-max flex h-full w-full items-center justify-center bg-black/35 backdrop-blur-xs"
   >
     <div
       class="group relative flex w-65 flex-col bg-neutral-900 pb-6"
@@ -77,7 +77,7 @@ const price = computed(() => quantity.value * (props.price ?? 0));
               -
             </div>
             <input
-              class="leading-0 block w-full border-none bg-none text-center text-xl text-white focus-visible:outline-none"
+              class="leading-0 block w-full border-none bg-none text-center text-xl text-white focus-visible:outline-hidden"
               :value="quantity"
               @input="handleQuantityInput"
               @keydown="handleQuantityKeydown"

@@ -132,7 +132,7 @@ async function handleItemClick(itemKey: string): Promise<void> {
   <div class="relative flex h-full w-full flex-col px-20 pb-17 pt-20">
     <div class="fixed inset-0 -z-10">
       <div
-        class="absolute inset-0 bg-gradient-to-r from-black/80 from-20% to-transparent opacity-95"
+        class="absolute inset-0 bg-linear-to-r from-black/80 from-20% to-transparent opacity-95"
       ></div>
     </div>
 

@@ -51,7 +51,7 @@ const separatorClass = computed(() =>
             ref="nameInputRef"
             type="text"
             v-model="createCharacter.name"
-            class="min-w-52 rounded-md bg-transparent text-4xl outline-none"
+            class="min-w-52 rounded-md bg-transparent text-4xl outline-hidden"
             :style="{
               width: nameInputWidth + 'px',
             }"

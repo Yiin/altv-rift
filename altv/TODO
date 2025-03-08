@@ -224,6 +224,29 @@ Temporary Jobs:
     ☐ Cooking food?
   ☐ Job experience tracking
   ☐ Job-related bonuses
+  ☐ Food delivery @started
+    1. server-side collection point pickups:
+      ✔ player enters, set gameState collection point info @done(25-03-06 05:49)
+    2. webview, show collection point info:
+      ☐ quick tutorial on how it works
+    3. client-side key event listeners:
+      ☐ player presses key, check for gameState collection point info
+      ☐ if found, send RPC to server
+    3. server-side listen for rpc:
+      ✔ check if player pos is close to collection point pos @done(25-03-06 05:49)
+      ✔ if so, generate random delivery points and set them to gameState @done(25-03-06 05:49)
+    4. client-side:
+      ☐ listen for gameState delivery points changes and create pickups client-side
+    5: webview:
+      ☐ show active deliveries UI
+    6: client-side:
+      ☐ when player enters a delivery point, listen for key presses and send RPC to server
+    7: server-side:
+      ✔ check if player pos is close to delivery point pos @done(25-03-06 05:49)
+      ✔ if so, complete delivery, give rewards @done(25-03-06 05:49)
+    ADDITIONALLY:
+      ☐ handle cancellation from webview to server of individual deliveries
+      ☐ handle waypoints from webview to client
 
 ✘ Professions: @cancelled
   ☐ Profession types

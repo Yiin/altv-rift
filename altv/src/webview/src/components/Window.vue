@@ -81,7 +81,7 @@ function stop(rect: { left: number; top: number; width: number; height: number }
     @dragstop="stop"
     v-click-outside="blur"
     :z="z"
-    class="outline-none"
+    class="outline-hidden"
     v-bind="props"
     :isResizeable="isFocused"
     :sticks="isFocused ? sticks : []"

@@ -151,7 +151,7 @@ onUnmounted(() => {
         <div class="relative mb-5 flex items-center justify-center gap-2.75">
           <div class="h-px w-full border border-white opacity-10" />
           <div
-            class="h-3 w-3 flex-shrink-0 origin-center -rotate-45 border border-white opacity-30"
+            class="h-3 w-3 shrink-0 origin-center -rotate-45 border border-white opacity-30"
           />
           <div class="h-px w-full border border-white opacity-10" />
         </div>

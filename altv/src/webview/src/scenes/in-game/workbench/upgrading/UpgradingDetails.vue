@@ -62,7 +62,7 @@ const character = useCharacter();
           </div>
         </WorkbenchSlot>
       </div>
-      <div class="mb-18.75 flex w-56.25 flex-grow flex-col justify-end">
+      <div class="mb-18.75 flex w-56.25 grow flex-col justify-end">
         <div class="mb-4 text-xl font-bold">Crafting information</div>
         <div class="mb-4 flex justify-end gap-2">
           <!-- <div

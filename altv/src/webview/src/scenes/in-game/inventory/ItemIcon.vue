@@ -103,7 +103,7 @@ watch(
     </p>
     <div
       v-if="`amount` in item && !hideAmount"
-      class="crisp-shadow absolute bottom-1 right-1 font-bold shadow-sm"
+      class="crisp-shadow absolute bottom-1 right-1 font-bold shadow-xs"
     >
       {{ item.amount }}
     </div>

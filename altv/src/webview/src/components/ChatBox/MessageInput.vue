@@ -126,11 +126,11 @@ onUnmounted(() => window.removeEventListener("keydown", handleKeydown));
 
 <template>
   <div
-    class="flex w-full gap-4 bg-black bg-opacity-50 px-[16px] py-[8px] text-base text-white"
+    class="bg-opacity-50 flex w-full gap-4 bg-black px-[16px] py-[8px] text-base text-white"
     :class="{ invisible: !focus, visible: focus }"
   >
     <input
-      class="w-full bg-transparent focus:outline-none"
+      class="w-full bg-transparent focus:outline-hidden"
       :placeholder="options.placeholder"
       v-model="message"
       ref="inputRef"
@@ -139,7 +139,7 @@ onUnmounted(() => window.removeEventListener("keydown", handleKeydown));
       @blur="(event) => (event.target as HTMLInputElement).focus()"
       :disabled="inputDisabled"
     />
-    <span class="text-white text-opacity-50">
+    <span class="text-opacity-50 text-white">
       {{ message.length }}/{{ options.maxMessageLength }}
     </span>
   </div>

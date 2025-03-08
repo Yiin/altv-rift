@@ -1,16 +1,18 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { PlayerFlags } from "@shared/store/game-state.store";
+import type { PlayerDelivery } from "@shared/store/game-state.store";
+import { getLevel, getMissingExperience } from "@shared/modules/experience/experience-table";
+import { getDeliveryPointPosition } from "@shared/modules/jobs/food-delivery";
 import Window from "@/components/Window.vue";
 import Icon from "@/components/Icon/Icon.vue";
 import { useGameState } from "@/store/synced/game-state.store";
-import { useUser } from "@/store/synced/user.store";
 import { px } from "@/composables/use-pixel";
 import { useAccurateTimer } from "@/composables/use-accurate-timer";
+import { useCharacter } from "@/store/synced/character.store";
 
 // Stores
 const gameState = useGameState();
-const user = useUser();
+const character = useCharacter();
 
 // UI State
 const selectedDeliveryId = ref<number | null>(null);
@@ -32,27 +34,19 @@ const defaultPosition = computed(() => {
 // Active deliveries
 const activeDeliveries = computed(() => {
   // Convert Map to Array for easier rendering
-  const deliveries: Array<{
-    id: number;
-    collectionPoint: { x: number; y: number; z: number };
-    deliveryPoint: { x: number; y: number; z: number; name?: string };
-    isPrivateHome: boolean;
-    timeLimit: number;
-    startTime: number;
-    bonus: number;
-    nextDeliveryTime: number;
-    isCollected?: boolean;
-  }> = [];
+  const deliveries: Array<PlayerDelivery> = [];
 
-  gameState.foodDelivery.activeDeliveries.forEach((delivery, id) => {
+  gameState.foodDelivery.activeDeliveries.forEach((delivery) => {
     deliveries.push({
-      id,
-      ...delivery,
-      // We'll need to implement this in the backend to track if food is collected
-      isCollected: false,
+      id: delivery.id,
+      collectionPoint: delivery.collectionPoint,
+      deliveryPoint: delivery.deliveryPoint,
+      isPrivateHome: delivery.isPrivateHome,
+      timeLimit: delivery.timeLimit,
+      startTime: delivery.startTime,
+      bonus: delivery.bonus,
     });
   });
-
   return deliveries;
 });
 
@@ -103,8 +97,7 @@ function getDeliveryStatusClasses(delivery: (typeof activeDeliveries.value)[0]):
   const isExpired = elapsed >= delivery.timeLimit;
 
   if (isExpired) return "bg-red-800 text-red-100";
-  if (delivery.isCollected) return "bg-sky-800 text-sky-100";
-  return "bg-amber-800 text-amber-100";
+  return "bg-sky-800 text-sky-100";
 }
 
 // Get status text
@@ -113,8 +106,7 @@ function getDeliveryStatusText(delivery: (typeof activeDeliveries.value)[0]): st
   const isExpired = elapsed >= delivery.timeLimit;
 
   if (isExpired) return "Expired";
-  if (delivery.isCollected) return "Delivering";
-  return "Pick Up";
+  return "Delivering";
 }
 
 // Select a delivery
@@ -234,7 +226,11 @@ function toggleStats() {
             <div>
               <div class="mb-1 text-xs text-neutral-400">Deliver to</div>
               <div class="text-sm text-white">
-                {{ delivery.deliveryPoint.name || "Customer #" + delivery.id }}
+                {{
+                  "street" in delivery.deliveryPoint
+                    ? delivery.deliveryPoint.street
+                    : "Customer #" + delivery.id
+                }}
               </div>
             </div>
           </div>
@@ -281,14 +277,9 @@ function toggleStats() {
                 Pickup Location
               </h4>
               <span
-                class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium"
-                :class="
-                  selectedDelivery.isCollected
-                    ? 'bg-green-800 text-green-100'
-                    : 'bg-amber-800 text-amber-100'
-                "
+                class="inline-flex items-center rounded-md bg-green-800 px-2 py-1 text-xs font-medium text-green-100"
               >
-                {{ selectedDelivery.isCollected ? "Collected" : "Needs Pickup" }}
+                Collected
               </span>
             </div>
 
@@ -319,12 +310,14 @@ function toggleStats() {
             </div>
 
             <div class="text-sm text-white">
-              {{ selectedDelivery.deliveryPoint.name || "Customer #" + selectedDelivery.id }}
+              {{
+                "street" in selectedDelivery.deliveryPoint
+                  ? selectedDelivery.deliveryPoint.street
+                  : "Customer #" + selectedDelivery.id
+              }}
             </div>
             <div class="mt-1 text-xs text-neutral-400">
-              Coordinates: {{ selectedDelivery.deliveryPoint.x.toFixed(0) }},
-              {{ selectedDelivery.deliveryPoint.y.toFixed(0) }},
-              {{ selectedDelivery.deliveryPoint.z.toFixed(0) }}
+              Coordinates: {{ getDeliveryPointPosition(selectedDelivery.deliveryPoint) }}
             </div>
           </div>
 
@@ -369,7 +362,7 @@ function toggleStats() {
           <div class="p-4">
             <div class="relative">
               <!-- Progress line -->
-              <div class="absolute bottom-0 left-4 top-0 w-0.5 bg-neutral-700"></div>
+              <div class="absolute top-0 bottom-0 left-4 w-0.5 bg-neutral-700"></div>
 
               <!-- Steps -->
               <div class="relative mb-6 flex items-start">
@@ -385,28 +378,6 @@ function toggleStats() {
                   <h4 class="font-medium text-white">Delivery Accepted</h4>
                   <p class="text-xs text-neutral-400">
                     {{ new Date(selectedDelivery.startTime).toLocaleTimeString() }}
-                  </p>
-                </div>
-              </div>
-
-              <div class="relative mb-6 flex items-start">
-                <div
-                  class="z-10 flex h-8 w-8 items-center justify-center rounded-full"
-                  :class="
-                    selectedDelivery.isCollected
-                      ? 'bg-green-800 text-green-100'
-                      : 'bg-amber-800 text-amber-100'
-                  "
-                >
-                  <Icon
-                    :name="selectedDelivery.isCollected ? 'mdi:check' : 'mdi:food'"
-                    class="w-5"
-                  />
-                </div>
-                <div class="ml-4 pt-1">
-                  <h4 class="font-medium text-white">Food Pickup</h4>
-                  <p class="text-xs text-neutral-400">
-                    {{ selectedDelivery.isCollected ? "Completed" : "In Progress" }}
                   </p>
                 </div>
               </div>
@@ -437,34 +408,67 @@ function toggleStats() {
       >
         <div class="mb-6 text-center">
           <div class="mb-1 text-sm text-neutral-400">Delivery Level</div>
-          <div class="text-3xl font-bold text-white">5</div>
+          <div class="text-3xl font-bold text-white">
+            {{ getLevel(character.skills.foodDelivery.exp) }}
+          </div>
 
           <!-- XP Progress bar -->
           <div class="mt-3 h-3 overflow-hidden rounded-full bg-neutral-800">
             <div class="h-full w-3/4 bg-blue-500"></div>
           </div>
-          <div class="mt-1 text-xs text-neutral-400">750 / 1000 XP</div>
+          <div class="mt-1 text-xs text-neutral-400">
+            {{ character.skills.foodDelivery.exp }} /
+            {{
+              character.skills.foodDelivery.exp +
+              getMissingExperience(character.skills.foodDelivery.exp)
+            }}
+            XP
+          </div>
         </div>
 
         <div class="mb-6 grid grid-cols-2 gap-4">
           <div class="bg-neutral-850 rounded-lg border border-neutral-800 p-3 text-center">
             <div class="mb-1 text-sm text-neutral-400">Total Deliveries</div>
-            <div class="text-xl font-bold text-white">42</div>
+            <div class="text-xl font-bold text-white">
+              {{ character.skills.foodDelivery.stats.totalDeliveries }}
+            </div>
           </div>
 
           <div class="bg-neutral-850 rounded-lg border border-neutral-800 p-3 text-center">
             <div class="mb-1 text-sm text-neutral-400">Success Rate</div>
-            <div class="text-xl font-bold text-green-500">89%</div>
+            <div class="text-xl font-bold text-green-500">
+              {{
+                (
+                  (character.skills.foodDelivery.stats.totalDeliveries -
+                    character.skills.foodDelivery.stats.failedDeliveries) /
+                  character.skills.foodDelivery.stats.totalDeliveries
+                ).toFixed(1)
+              }}%
+            </div>
           </div>
 
           <div class="bg-neutral-850 rounded-lg border border-neutral-800 p-3 text-center">
             <div class="mb-1 text-sm text-neutral-400">Premium Rate</div>
-            <div class="text-xl font-bold text-violet-500">15%</div>
+            <div class="text-xl font-bold text-violet-500">
+              {{
+                (
+                  character.skills.foodDelivery.stats.privateHomeDeliveries /
+                  character.skills.foodDelivery.stats.totalDeliveries
+                ).toFixed(1)
+              }}%
+            </div>
           </div>
 
           <div class="bg-neutral-850 rounded-lg border border-neutral-800 p-3 text-center">
             <div class="mb-1 text-sm text-neutral-400">Avg. Tip</div>
-            <div class="text-xl font-bold text-yellow-500">$15</div>
+            <div class="text-xl font-bold text-yellow-500">
+              ${{
+                Math.round(
+                  character.skills.foodDelivery.stats.tipsReceived /
+                    character.skills.foodDelivery.stats.totalDeliveries,
+                )
+              }}
+            </div>
           </div>
         </div>
 

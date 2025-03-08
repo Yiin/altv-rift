@@ -1,7 +1,10 @@
+console.log("Node.js version:", process.version);
+
 // Setup
 // import "./core/sentry";
 import "./core/setup-globals";
 import "./core/database";
+import "./core/pickups";
 
 // prototypes
 import "./prototypes/player";

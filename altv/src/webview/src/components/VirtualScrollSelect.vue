@@ -57,7 +57,7 @@ watch(searchTerm, (f) => {
   <PopoverRoot v-model:open="open">
     <ListboxRoot v-model="model">
       <PopoverAnchor
-        class="text-grass11 hover:bg-mauve3 inline-flex w-60 items-center justify-between gap-[5px] rounded-lg bg-neutral-900 p-3 text-[13px] leading-none shadow-[0_2px_10px] shadow-black/10 outline-none focus:shadow-[0_0_0_2px] focus:shadow-black data-[placeholder]:text-white"
+        class="text-grass11 hover:bg-mauve3 inline-flex w-60 items-center justify-between gap-[5px] rounded-lg bg-neutral-900 p-3 text-[13px] leading-none shadow-[0_2px_10px] shadow-black/10 outline-hidden focus:shadow-[0_0_0_2px] focus:shadow-black data-placeholder:text-white"
       >
         <PopoverTrigger
           class="flex w-full items-center justify-between"
@@ -99,7 +99,7 @@ watch(searchTerm, (f) => {
             >
               <ListboxItem
                 :value="option.value"
-                class="relative flex w-full cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:cursor-pointer hover:bg-neutral-700 focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
+                class="relative flex w-full cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-hidden hover:cursor-pointer hover:bg-neutral-700 focus:bg-accent focus:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50"
               >
                 <span class="absolute right-2 flex h-3.5 w-3.5 items-center justify-center">
                   <ListboxItemIndicator>
@@ -112,7 +112,7 @@ watch(searchTerm, (f) => {
           </ListboxContent>
 
           <PopoverClose
-            class="text-grass11 hover:bg-green4 absolute right-1.25 top-1.25 inline-flex h-6.25 w-6.25 items-center justify-center rounded-full outline-none focus:shadow-[0_0_0_2px] focus:shadow-white"
+            class="text-grass11 hover:bg-green4 absolute right-1.25 top-1.25 inline-flex h-6.25 w-6.25 items-center justify-center rounded-full outline-hidden focus:shadow-[0_0_0_2px] focus:shadow-white"
             aria-label="Close"
           >
             <Icon icon="radix-icons:cross-2" />

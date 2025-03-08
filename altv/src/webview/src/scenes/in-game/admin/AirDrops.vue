@@ -44,7 +44,7 @@ async function addAirDrop() {
     />
     <div
       @click="addAirDrop"
-      class="group inline-block cursor-pointer rounded bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 p-[2px] hover:text-white focus:outline-none focus:ring active:text-opacity-75"
+      class="group inline-block cursor-pointer rounded bg-linear-to-r from-pink-500 via-red-500 to-yellow-500 p-[2px] hover:text-white focus:outline-hidden focus:ring-3 active:text-opacity-75"
     >
       <span
         class="block rounded-sm bg-white px-8 py-3 text-sm font-medium group-hover:bg-transparent"

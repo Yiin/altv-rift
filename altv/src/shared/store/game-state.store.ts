@@ -9,8 +9,6 @@ export enum PlayerFlags {
   IsCatchingAFish = "IsCatchingAFish",
   InDiggingArea = "InDiggingArea",
   IsDigging = "IsDigging",
-  HasActiveDelivery = "HasActiveDelivery",
-  AcceptingDeliveries = "AcceptingDeliveries",
 }
 
 export enum StorageType {
@@ -54,39 +52,26 @@ export type ShopStorage = {
   inventory: Inventory;
 };
 
+export interface HomeDeliveryPoint {
+  street: string;
+  pos: alt.IVector3;
+}
+
+export type DeliveryPoint = alt.IVector3 | HomeDeliveryPoint;
+
 export interface PlayerDelivery {
+  id: number;
   collectionPoint: alt.IVector3;
-  deliveryPoint: alt.IVector3 & { name?: string };
+  deliveryPoint: DeliveryPoint;
   isPrivateHome: boolean;
   timeLimit: number;
   startTime: number;
   bonus: number;
-  nextDeliveryTime: number;
-  isCollected: boolean;
-  status: "pending" | "collected" | "delivered" | "failed";
 }
 
 export interface FoodDeliveryData {
-  activeDeliveries: Map<number, PlayerDelivery>;
-  activeWaypoint?: {
-    deliveryId: number;
-    position: alt.IVector3;
-    label: string;
-    type: "collection" | "delivery";
-    distance: number;
-  };
-  stats?: {
-    totalDeliveries: number;
-    successfulDeliveries: number;
-    failedDeliveries: number;
-    tipsReceived: number;
-    totalEarnings: number;
-    fastestDelivery: number; // in milliseconds
-    averageDeliveryTime: number; // in milliseconds
-    privateHomeDeliveries: number;
-    regularDeliveries: number;
-    lastDeliveryDate: number;
-  };
+  activeDeliveries: PlayerDelivery[];
+  collectionPoint: alt.IVector3 | null;
 }
 
 export interface GameState {
@@ -122,6 +107,7 @@ export const getDefaultGameState = (): GameState => ({
     upgrading: null,
   },
   foodDelivery: {
-    activeDeliveries: new Map(),
+    activeDeliveries: [],
+    collectionPoint: null,
   },
 });

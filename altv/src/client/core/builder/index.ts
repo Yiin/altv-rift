@@ -51,11 +51,11 @@ alt.Timers.setInterval(() => {
     return;
   }
 
-  alt.FocusData.focusOverridePos = new alt.Vector3({
+  alt.FocusData.overrideFocus(new alt.Vector3({
     x: pos.x,
     y: pos.y,
     z: game.getApproxHeightForPoint(pos.x, pos.y)
-  });
+  }));
 }, 1000);
 
 function isBuilderEnabled() {

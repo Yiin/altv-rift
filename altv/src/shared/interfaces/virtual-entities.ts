@@ -4,4 +4,5 @@ export enum VirtualEntityType {
   Storage = "storage",
   AreaOfInterest = "areaOfInterest",
   Ore = "ore",
+  Marker = "marker",
 }

@@ -50,11 +50,13 @@ alt.Player.prototype.startGame = async function (characterId: string) {
 
       if (ammoType) {
         if (weapon.clip?.key.startsWith("explosive")) {
-          alt.log(
-            `Setting explosive ammo for ${weapon.key}, current ammo: ${alt.hash(ammoType)}, weapon: ${this.currentWeapon}`,
-          );
+          if (this.getAmmoSpecialType(alt.hash(ammoType)) !== alt.Enums.AmmoSpecialType.EXPLOSIVE) {
+            alt.log(
+              `Setting explosive ammo for ${weapon.key}, current ammo: ${alt.hash(ammoType)}, weapon: ${this.currentWeapon}`,
+            );
 
-          this.setAmmoSpecialType(alt.hash(ammoType), alt.Enums.AmmoSpecialType.EXPLOSIVE);
+            this.setAmmoSpecialType(alt.hash(ammoType), alt.Enums.AmmoSpecialType.EXPLOSIVE);
+          }
         } else {
           alt.log(`Setting none ammo for ${weapon.key}`);
           this.setAmmoSpecialType(alt.hash(ammoType), alt.Enums.AmmoSpecialType.NONE);

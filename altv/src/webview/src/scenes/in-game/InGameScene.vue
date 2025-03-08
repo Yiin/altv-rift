@@ -80,7 +80,7 @@ watch(
       <QuestMenu v-if="client.ui.elements.has(UIElement.QUEST_MENU)" />
       <SkillMenu v-if="client.ui.elements.has(UIElement.SKILL_MENU)" />
       <TargetAction v-if="client.ui.elements.has(UIElement.TARGET_ACTION)" />
-      <FoodDelivery v-if="gameState.flags.has(PlayerFlags.HasActiveDelivery)" />
+      <FoodDelivery v-if="gameState.foodDelivery.activeDeliveries.length > 0" />
       <Conversation />
       <AreaIndicators />
       <Hud />

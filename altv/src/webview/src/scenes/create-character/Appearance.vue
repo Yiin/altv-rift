@@ -224,9 +224,8 @@ const randomize = () => {
 </template>
 
 <style>
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+@config '../../../tailwind.config.js';
 
 .list-enter-active,
 .list-leave-active {
@@ -260,7 +259,7 @@ const randomize = () => {
 }
 
 .slider-input:focus {
-  @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  @apply outline-hidden ring-2 ring-ring ring-offset-2 ring-offset-background;
 }
 
 .slider-input:focus::-webkit-slider-thumb {

@@ -110,7 +110,7 @@ const actionAll = computed(() => {
           width="4.0625rem"
           hide-amount
         />
-        <div class="flex flex-grow flex-col gap-0.5">
+        <div class="flex grow flex-col gap-0.5">
           <div class="text-sm font-semibold uppercase leading-none text-zinc-500">
             {{ getItemCategoryName(item.item.key) }}
           </div>
@@ -139,7 +139,7 @@ const actionAll = computed(() => {
             @paste="handleQuantityPaste"
           />
           <div
-            class="flex h-12.5 w-12.5 flex-shrink-0 cursor-pointer items-center justify-center bg-green-600 text-white hover:bg-green-400"
+            class="flex h-12.5 w-12.5 shrink-0 cursor-pointer items-center justify-center bg-green-600 text-white hover:bg-green-400"
             @click.stop="() => confirmAmountTransfer(quantity)"
           >
             <Image :src="asset('assets/inventory/transfer-icon.svg')" />

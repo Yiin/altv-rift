@@ -1,3 +1,4 @@
+import alt from "@altv/shared";
 import { PedFlags } from "../../modules/ped";
 import { StorageType } from "../../store/game-state.store";
 
@@ -24,7 +25,7 @@ declare module "@altv/client" {
     PLAY_SOUND: IWebviewEventHandler;
   }
 
-  export interface PedMeta {}
+  export interface PedMeta { }
 
   export interface Entity {
     reactiveStreamSyncedMeta: any;
@@ -67,5 +68,9 @@ declare module "@altv/shared" {
     blipColor?: import("../../modules/game/ui/blips").BlipColor; // entityType: areaOfInterest
     oreType?: import("../../modules/items").Ore; // entityType: ore
     description?: string; // entityType: savedPoint
+    target?: alt.Player; // entityType: marker
+    type?: alt.Enums.MarkerType; // entityType: marker
+    color?: alt.RGBA; // entityType: marker
+    initialMeta?: any; // entityType: marker
   }
 }

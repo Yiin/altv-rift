@@ -1,13 +1,11 @@
 import alt from "@altv/client";
 import _ from "lodash";
-import { Item, ItemGrade, getItemName, isStackable } from "@shared/modules/items";
+import { Item } from "@shared/modules/items";
 import { VirtualEntityType } from "@shared/interfaces";
 import { clientState } from "@/core/store/client.store";
 
 // Update the nearby items periodically, so the ordering by distance is updated
 alt.Timers.setInterval(updateNearbyItems, 2000);
-
-alt.Font.register("client/core/rmlui/fonts/jost/Jost-Regular.ttf");
 
 alt.Events.onWorldObjectStreamIn(({ object }) => {
   if (

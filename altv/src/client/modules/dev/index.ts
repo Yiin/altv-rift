@@ -4,6 +4,9 @@ import "./qa";
 import "./v1";
 import { everyTickWhile } from "@/core/user-interface/event-helpers";
 
+alt.Font.register("/client/core/rmlui/fonts/jost/Jost-Regular.ttf");
+alt.Font.register("/client/core/rmlui/fonts/inter/Inter-Regular.ttf");
+
 function loadAsset(asset: string) {
   return new Promise((resolve) => {
     game.requestNamedPtfxAsset(asset);
@@ -70,15 +73,25 @@ alt.Events.onWorldObjectStreamIn(({ object }) => {
   const description = (object.streamSyncedMeta.description as string) ?? `Point ${object.id}`;
 
   const label = alt.TextLabel.create({
-    fontName: "Arial",
-    fontSize: 16.0,
+    fontName: "Inter",
+    fontSize: 32.0,
     pos: object.pos,
     text: description,
     color: new alt.RGBA(255, 255, 255, 255),
+    useStreaming: true,
     streamingDistance: 50,
     outlineWidth: 1.0,
     outlineColor: new alt.RGBA(0, 0, 0, 255),
   });
+
+  if (!label) {
+    console.log(`Failed to create label for saved point ${object.id}`);
+    return;
+  }
+
+  label.faceCamera = true;
+
+  console.log(`Saved point ${object.id} streamed in with label ${label.id}`);
 
   // @ts-expect-error
   object.label = label;

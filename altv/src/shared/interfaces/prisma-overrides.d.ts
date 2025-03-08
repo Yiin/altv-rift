@@ -22,6 +22,22 @@ export type Character = Override<
   {
     inventory: Inventory;
     equipment: Equipment;
+    skills: Prisma.Character["skills"] & {
+      foodDelivery: Override<Prisma.Character["skills"]["foodDelivery"], {
+        stats: {
+          totalDeliveries: number;
+          successfulDeliveries: number;
+          failedDeliveries: number;
+          tipsReceived: number;
+          totalEarnings: number;
+          fastestDelivery: number;
+          averageDeliveryTime: number;
+          privateHomeDeliveries: number;
+          regularDeliveries: number;
+          lastDeliveryDate: number;
+        };
+      }>;
+    };
   }
 >;
 
@@ -36,5 +52,6 @@ export type Shop = Override<
   Prisma.Shop,
   {
     inventory: Inventory;
+    ped: OptionalNullable<Prisma.ShopPed>;
   }
 >;

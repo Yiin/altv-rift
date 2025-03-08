@@ -42,7 +42,7 @@ const isCurrentlyBeingCrafted = computed(() => queue.value[0] === selectedRecipe
           </div>
         </WorkbenchSlot>
       </div>
-      <div class="mb-18.75 flex w-56.25 flex-grow flex-col justify-end">
+      <div class="mb-18.75 flex w-56.25 grow flex-col justify-end">
         <div class="mb-4 text-xl font-bold">Crafting information</div>
         <div class="mb-4 flex justify-end gap-2">
           <div class="rounded-md border border-solid border-neutral-400/10 bg-neutral-400/5 px-3.25 py-2.75">
@@ -61,7 +61,7 @@ const isCurrentlyBeingCrafted = computed(() => queue.value[0] === selectedRecipe
             :class="[quantity === 1 ? 'text-gray-500' : 'text-white']">
             -
           </div>
-          <input class="leading-0 block w-full border-none bg-none text-center text-xl focus-visible:outline-none"
+          <input class="leading-0 block w-full border-none bg-none text-center text-xl focus-visible:outline-hidden"
             :value="quantity" @input="handleQuantityInput" @keydown="handleQuantityKeydown"
             @paste="handleQuantityPaste" />
           <div @click="quantity++" class="-mt-1 cursor-pointer px-4 text-3xl leading-[0]"

@@ -6,12 +6,12 @@ import { Ammo, createItem, ItemGrade } from "@shared/modules/items";
 
 setupShop({
   id: 'mount-chiliad-north-secret-merchant',
+  pos: {
+    x: 1087.5338134765625,
+    y: 6510.056640625,
+    z: 21.061948776245117
+  },
   ped: {
-    pos: {
-      x: 1087.5338134765625,
-      y: 6510.056640625,
-      z: 21.061948776245117
-    },
     heading: -3.1202,
     model: 'g_m_m_chicold_01',
   },

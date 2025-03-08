@@ -4,13 +4,13 @@ import { FishingBait, Tool, createItem } from "@shared/modules/items";
 
 const shopkeeper = setupShop({
   id: 'galelee-shopkeeper',
+  pos: {
+    x: 1302.92236328125,
+    y: 4225.18017578125,
+    z: 33.90868377685547
+  },
   ped: {
     model: 'CSB_Undercover',
-    pos: {
-      x: 1302.92236328125,
-      y: 4225.18017578125,
-      z: 33.90868377685547
-    },
     heading: 1.2860373258590698,
   },
   inventory: createInventory({

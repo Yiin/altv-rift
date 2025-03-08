@@ -34,9 +34,10 @@ export function setupShop(shop: Shop, options: SetupShopOptions = {}): DeleteSho
 
   const shopkeeper = shop.ped
     ? createStaticPed({
-        ...shop.ped,
-        flags: PedFlags.Peaceful | PedFlags.ShopKeeper,
-      })
+      ...shop.ped,
+      pos: shop.ped.pos ?? pos,
+      flags: PedFlags.Peaceful | PedFlags.ShopKeeper,
+    })
     : null;
 
   return () => {

@@ -42,7 +42,7 @@ const selected = computed(() =>
         v-for="(color, index) in options"
         :key="index"
         type="button"
-        class="relative h-6 w-6 cursor-pointer rounded-sm ring-offset-background transition-all hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        class="relative h-6 w-6 cursor-pointer rounded-sm ring-offset-background transition-all hover:scale-110 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         :class="
           selected === index || selected === color
             ? 'z-50 ring-2 ring-ring ring-offset-2'

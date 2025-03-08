@@ -8,10 +8,23 @@ import {
   isItemKeyUnlearnedBlueprint,
 } from "@shared/modules/production";
 import { NotificationType } from "@shared/interfaces";
-import { BlipType } from "@shared/modules/game/ui/blips";
 import { prisma } from "@/core/database";
 
 const vg = alt.VirtualEntityGroup.create({ maxEntitiesInStream: 50 });
+
+registerCmd("notification", (player, [type, ...messageParts]) => {
+  if (!isInGame(player)) {
+    return;
+  }
+
+  const message = messageParts.join(" ");
+
+  if (Object.values(NotificationType).includes(type as NotificationType)) {
+    player.notify(type as NotificationType, message);
+  } else {
+    player.notify(NotificationType.Error, `Invalid notification type: ${type}`);
+  }
+});
 
 registerCmd("blueprint", (player, [blueprint]) => {
   if (!isInGame(player)) {
@@ -61,15 +74,16 @@ registerCmd("pos", (player, [...args]) => {
 
 prisma.savedPoint.findMany().then((points) => {
   points.forEach((point) => {
-    alt.VirtualEntity.create({
+    const ve = alt.VirtualEntity.create({
       group: vg,
       pos: point.pos,
       streamingDistance: 50,
-      initialMeta: {
-        // @ts-expect-error
-        description: point.description,
-        entityType: "savedPoint",
-      },
     });
+
+    // @ts-expect-error
+    ve.streamSyncedMeta.entityType = "savedPoint";
+    ve.streamSyncedMeta.description = point.description;
   });
 });
+
+console.log(`Created ${vg.entities.length} saved points`);
