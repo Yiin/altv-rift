@@ -30,9 +30,14 @@
 import alt from "@altv/client";
 import "./pickups.colshape";
 
-type CreatePickupOptions = alt.ColShapeCylinderCreateOptions<any> & {
-  onEnter?: () => (() => void) | void;
+export type OnEnterCallback = () => (() => void) | void;
+
+type CreatePickupOptions = Override<alt.ColShapeCylinderCreateOptions<any>, {
+  height?: number;
+}> & {
+  onEnter?: OnEnterCallback;
 };
+
 
 /**
  * Represents a pickup in the game world with chainable methods for adding visual elements
@@ -41,12 +46,12 @@ export class Pickup {
   public readonly colshape: alt.ColShapeCylinder;
 
   constructor(options: CreatePickupOptions) {
-    const { pos, radius, ...rest } = options;
+    const { pos, radius, height = 2, ...rest } = options;
 
     this.colshape = alt.ColShapeCylinder.create({
       pos,
       radius,
-      height: 2,
+      height,
     });
 
     for (const key in rest) {
@@ -92,7 +97,7 @@ export class Pickup {
   /**
    * Registers a callback to be executed when the player enters the pickup
    */
-  whenInside(callback: () => (() => void) | void): void {
+  whenInside(callback: OnEnterCallback): void {
     this.colshape.whenInside(callback);
   }
 

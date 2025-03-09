@@ -81,7 +81,6 @@ for (const point of pizzaCollectionPoints) {
   createPickup({
     pos: point,
     radius: INTERACTION_DISTANCE,
-    height: 2,
     onEnter({ entity: player }) {
       if (player instanceof alt.Player === false || !isInGame(player)) {
         console.log(`[FoodDelivery-Server] Player ${player.id} is not a valid player`);
@@ -188,6 +187,15 @@ rpc.registerClient(FromClient.FOOD_DELIVERY_REQUEST_ORDERS, (player: alt.Player)
 
     // Add the delivery to player's active deliveries
     player.gameState.foodDelivery.activeDeliveries.push(delivery);
+
+    alt.Timers.setTimeout(() => {
+      if (!isInGame(player)) {
+        return;
+      }
+
+      player.gameState.foodDelivery.activeDeliveries.splice(player.gameState.foodDelivery.activeDeliveries.indexOf(delivery), 1);
+      player.notify(NotificationType.Error, "Delivery was cancelled because you didn't deliver it in time.", { title: "Food Delivery" });
+    }, timeLimit * 2);
   }
 
   // Notify player of new orders

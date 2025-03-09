@@ -31,7 +31,9 @@ import alt from "@altv/server";
 import "./pickups.colshape";
 import type { OnEnterCallback } from "./pickups.colshape";
 
-type CreatePickupOptions = alt.ColShapeCylinderCreateOptions<any> & {
+type CreatePickupOptions = Override<alt.ColShapeCylinderCreateOptions<any>, {
+  height?: number;
+}> & {
   onEnter?: OnEnterCallback;
 };
 
@@ -42,12 +44,12 @@ export class Pickup {
   public readonly colShape: alt.ColShapeCylinder;
 
   constructor(options: CreatePickupOptions) {
-    const { pos, radius, ...rest } = options;
+    const { pos, radius, height = 2, ...rest } = options;
 
     this.colShape = alt.ColShapeCylinder.create({
       pos,
       radius,
-      height: 2,
+      height,
     });
     this.colShape.meta.pos = pos;
 
