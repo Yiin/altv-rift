@@ -84,6 +84,5 @@ prisma.savedPoint.findMany().then((points) => {
     ve.streamSyncedMeta.entityType = "savedPoint";
     ve.streamSyncedMeta.description = point.description;
   });
+  console.log(`Created ${points.length} saved points`);
 });
-
-console.log(`Created ${vg.entities.length} saved points`);

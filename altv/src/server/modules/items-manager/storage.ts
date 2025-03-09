@@ -1,6 +1,5 @@
 import alt from "@altv/server";
-import { isReactive, reactive, UnwrapNestedRefs, watch } from "vue";
-import { addMinutes } from "date-fns";
+import { isReactive, reactive, UnwrapNestedRefs } from "vue";
 import { Inventory, ItemSourceOrigin, VirtualEntityType } from "@shared/interfaces";
 import { StorageType } from "@shared/store/game-state.store";
 import { ServerEvents } from "@shared/events/server";
@@ -42,7 +41,10 @@ export function createStorage(options: {
       entityType: VirtualEntityType.Storage,
       storageType: options.type ?? StorageType.Storage,
       storageLabel: options.label,
-      interpolate: options.interpolate,
+      interpolate: options.interpolate && {
+        ...options.interpolate,
+        from: new alt.Vector3(options.interpolate.from),
+      },
       airDropType: options.airDropType,
       windowType: options.windowType,
     },

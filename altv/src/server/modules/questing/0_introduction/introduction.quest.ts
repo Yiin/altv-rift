@@ -141,7 +141,7 @@ processQuestFact.hook((player, questFact) => {
         )
       ) {
         player.addBlueprint(ToolBlueprint.HATCHET);
-        player.character.skills.woodcutting += 1000;
+        player.character.skills.woodcutting.exp += 1000;
         return true;
       } else {
         reportAbuse(player, questFact);
@@ -172,7 +172,7 @@ processQuestFact.hook((player, questFact) => {
       ) {
         player.addBlueprint(ToolBlueprint.FISHING_ROD);
         player.addItem(createItem(FishingBait.WORMS, { amount: 300 }), { dropOnFail: true });
-        player.character.skills.fishing += 1000;
+        player.character.skills.fishing.exp += 1000;
         return true;
       } else {
         reportAbuse(player, questFact);
@@ -209,7 +209,7 @@ processQuestFact.hook((player, questFact) => {
         })
       ) {
         player.addBlueprint(ToolBlueprint.PICKAXE);
-        player.character.skills.mining += 1000;
+        player.character.skills.mining.exp += 1000;
         return true;
       } else {
         reportAbuse(player, questFact);

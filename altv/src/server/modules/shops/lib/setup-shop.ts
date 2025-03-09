@@ -15,17 +15,11 @@ type DeleteShop = () => void;
 export function setupShop(shop: Shop, options: SetupShopOptions = {}): DeleteShop {
   getShopsRegistry().set(shop.id, shop);
 
-  const pos = shop.pos ?? shop.ped?.pos;
-
-  if (!pos) {
-    throw new Error(`Shop ${shop.name} has no position`);
-  }
-
   const shopStorage = createStorage({
     type: StorageType.Shop,
     inventory: shop.inventory,
     label: shop.name,
-    pos,
+    pos: shop.pos,
     onOpen() {
       console.log(`Shop ${shop.name} opened`);
     },
@@ -35,7 +29,7 @@ export function setupShop(shop: Shop, options: SetupShopOptions = {}): DeleteSho
   const shopkeeper = shop.ped
     ? createStaticPed({
       ...shop.ped,
-      pos: shop.ped.pos ?? pos,
+      pos: shop.pos,
       flags: PedFlags.Peaceful | PedFlags.ShopKeeper,
     })
     : null;

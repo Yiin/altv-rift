@@ -7,7 +7,7 @@ declare module "@altv/client" {
   }
 }
 
-alt.Events.onBaseObjectCreate(({ object }) => {
+alt.Events.onWorldObjectStreamIn(({ object }) => {
   if (object instanceof alt.VirtualEntity === false) {
     return;
   }
@@ -16,15 +16,23 @@ alt.Events.onBaseObjectCreate(({ object }) => {
     return;
   }
 
+  alt.log(`[Markers] Creating marker ${object.id} at ${JSON.stringify(object.pos)}`);
+
   object.marker = alt.Marker.create({
     pos: object.pos,
     type: object.streamSyncedMeta.type!,
     color: object.streamSyncedMeta.color!,
     initialMeta: object.streamSyncedMeta.initialMeta,
+    streamingDistance: 50,
+    useStreaming: true,
   });
+
+  if (object.streamSyncedMeta.scale) {
+    object.marker.scale = object.streamSyncedMeta.scale;
+  }
 });
 
-alt.Events.onBaseObjectRemove(({ object }) => {
+alt.Events.onWorldObjectStreamOut(({ object }) => {
   if (object instanceof alt.VirtualEntity === false) {
     return;
   }

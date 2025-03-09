@@ -30,7 +30,7 @@
 import alt from "@altv/client";
 import "./pickups.colshape";
 
-type CreatePickupOptions = alt.ColShapeCircleCreateOptions<any> & {
+type CreatePickupOptions = alt.ColShapeCylinderCreateOptions<any> & {
   onEnter?: () => (() => void) | void;
 };
 
@@ -38,14 +38,15 @@ type CreatePickupOptions = alt.ColShapeCircleCreateOptions<any> & {
  * Represents a pickup in the game world with chainable methods for adding visual elements
  */
 export class Pickup {
-  public readonly colshape: alt.ColShapeCircle;
+  public readonly colshape: alt.ColShapeCylinder;
 
   constructor(options: CreatePickupOptions) {
     const { pos, radius, ...rest } = options;
 
-    this.colshape = alt.ColShapeCircle.create({
+    this.colshape = alt.ColShapeCylinder.create({
       pos,
       radius,
+      height: 2,
     });
 
     for (const key in rest) {

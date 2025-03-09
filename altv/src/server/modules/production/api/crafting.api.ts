@@ -115,7 +115,7 @@ export function notifyPlayerOfCraftingResult(
       break;
     case CraftingResult.OK:
       const levelRequired = recipe.levelRequired ?? 1;
-      player.character.skills.crafting += levelRequired * 20;
+      player.character.skills.crafting.exp += levelRequired * 20;
       break;
   }
 }

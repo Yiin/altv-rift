@@ -47,6 +47,7 @@ alt.ColShape.prototype.addBlip = function ({ pos, entity, global, targets, blipT
 }
 
 alt.ColShape.prototype.addMarker = function ({ target, pos, type, color, initialMeta, ...rest }) {
+  console.log(`[Pickups] Adding marker to colshape ${this.id} at ${JSON.stringify(pos)} ?? ${JSON.stringify(this.pos)}`);
   const marker = alt.VirtualEntity.create({
     group: markerVirtualEntityGroup,
     pos: pos ?? this.pos,
@@ -59,6 +60,11 @@ alt.ColShape.prototype.addMarker = function ({ target, pos, type, color, initial
       initialMeta,
     }
   });
+
+  if ('radius' in this) {
+    const colShape = this as alt.ColShapeCylinder;
+    marker.streamSyncedMeta.scale = new alt.Vector3(colShape.radius ?? 1, colShape.radius ?? 1, colShape.height ?? 1);
+  }
 
   for (const key in rest) {
     // @ts-expect-error - Typescript is not smart enough to know that the key is a valid property

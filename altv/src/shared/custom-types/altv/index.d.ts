@@ -71,6 +71,7 @@ declare module "@altv/shared" {
     target?: alt.Player; // entityType: marker
     type?: alt.Enums.MarkerType; // entityType: marker
     color?: alt.RGBA; // entityType: marker
+    scale?: alt.Vector3; // entityType: marker
     initialMeta?: any; // entityType: marker
   }
 }

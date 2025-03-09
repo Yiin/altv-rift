@@ -50,9 +50,9 @@ for (const { pos, heading } of positions) {
   setupShop({
     id: "cayo-clothing-shop-1",
     name: "Cayo Clothing Shop",
+    pos,
     ped: {
       model: "A_F_Y_Beach_01",
-      pos,
       heading,
     },
     inventory: {

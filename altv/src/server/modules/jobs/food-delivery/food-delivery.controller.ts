@@ -7,7 +7,6 @@ import { DeliveryPoint, PlayerDelivery } from "@shared/store/game-state.store";
 import { FromClient } from "@shared/calls/server/from-client";
 import { rpc } from "@/core/rpc";
 import { createPickup } from "@/core/pickups/pickups.registry";
-import { format } from "date-fns";
 import { DeliveryRewardType } from "@shared/enums/delivery-reward-type";
 import { calculatePrivateHomeBonus, completeDelivery } from "./lib";
 import { getDeliveryPointPosition } from "@shared/modules/jobs/food-delivery";
@@ -49,6 +48,8 @@ const pizzaCollectionPoints: alt.IVector3[] =
       z: location.c[2],
     })) ?? [];
 
+console.log(`[FoodDelivery-Server] Pizza collection points: ${JSON.stringify(pizzaCollectionPoints)}`);
+
 const privateHomeDeliveryPoints = PrivateHomes;
 
 const pizzaDeliveryPoints: alt.IVector3[] =
@@ -71,14 +72,16 @@ const METERS_PER_SECOND = 3; // Minimum delivery speed in meters per second
 const MIN_CONCURRENT_DELIVERIES = 3;
 const MAX_CONCURRENT_DELIVERIES = 6; // Maximum concurrent deliveries a player can have
 // Constants for security checks
-const INTERACTION_DISTANCE = 5.0; // Maximum distance for interaction with pickup/delivery points
+const INTERACTION_DISTANCE = 2.0; // Maximum distance for interaction with pickup/delivery points
 const MIN_DELIVERY_TIME = 10000; // Minimum time (ms) a delivery should take (prevent instant completions)
 const AVG_SPEED_LIMIT = 70.0; // Maximum average speed in m/s (~250 km/h)
 
 for (const point of pizzaCollectionPoints) {
+  console.log(`[FoodDelivery-Server] Creating pickup for point ${JSON.stringify(point)}`);
   createPickup({
     pos: point,
     radius: INTERACTION_DISTANCE,
+    height: 2,
     onEnter({ entity: player }) {
       if (player instanceof alt.Player === false || !isInGame(player)) {
         console.log(`[FoodDelivery-Server] Player ${player.id} is not a valid player`);
@@ -132,7 +135,7 @@ rpc.registerClient(FromClient.FOOD_DELIVERY_REQUEST_ORDERS, (player: alt.Player)
 
   for (let i = 0; i < amountOfDeliveries; i++) {
     // Generate a unique delivery ID
-    const deliveryId = format(new Date(), "yyyyMMddHHmmss") + i.toString();
+    const deliveryId = i + 1;
 
     // Create a new delivery at the collection point
     const foodDeliveryLevel = getLevel(player.character.skills.foodDelivery.exp);
@@ -174,7 +177,7 @@ rpc.registerClient(FromClient.FOOD_DELIVERY_REQUEST_ORDERS, (player: alt.Player)
 
     // Create new delivery data
     const delivery: PlayerDelivery = {
-      id: parseInt(deliveryId),
+      id: deliveryId,
       collectionPoint,
       deliveryPoint,
       isPrivateHome,

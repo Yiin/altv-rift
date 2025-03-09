@@ -43,6 +43,11 @@ alt.ColShape.prototype.addMarker = function ({ pos, type, color, useStreaming, s
     initialMeta,
   });
 
+  if ('radius' in this) {
+    const colShape = this as alt.ColShapeCylinder;
+    marker.scale = new alt.Vector3(colShape.radius ?? 1, colShape.radius ?? 1, colShape.height ?? 1);
+  }
+
   for (const key in rest) {
     // @ts-expect-error - Typescript is not smart enough to know that the key is a valid property
     marker[key] = rest[key];

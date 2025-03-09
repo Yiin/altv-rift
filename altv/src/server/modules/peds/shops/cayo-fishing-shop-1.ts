@@ -13,9 +13,9 @@ for (const { pos, heading } of positions) {
   const shop = setupShop({
     id: "cayo-fishing-shop-1",
     name: "Cayo Fishing Shop",
+    pos,
     ped: {
       model: "U_M_O_TapHillBilly",
-      pos,
       heading,
     },
     inventory: {

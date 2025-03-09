@@ -54,7 +54,6 @@ registerCmd("update-clothing", (player) => {
       pos,
       ped: {
         model: "A_F_Y_Beach_01",
-        pos,
         heading,
       },
       inventory: {

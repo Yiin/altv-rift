@@ -4,12 +4,12 @@ import { Ammo, createItem, ItemGrade } from "@shared/modules/items";
 
 setupShop({
   id: 'grapeseed-secret-merchant',
+  pos: {
+    x: 2473.711181640625,
+    y: 4445.14111328125,
+    z: 35.41604995727539
+  },
   ped: {
-    pos: {
-      x: 2473.711181640625,
-      y: 4445.14111328125,
-      z: 35.41604995727539
-    },
     heading: -1.6890,
     model: 'g_m_m_chicold_01',
   },
