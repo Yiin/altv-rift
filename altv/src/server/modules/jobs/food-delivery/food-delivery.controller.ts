@@ -8,8 +8,9 @@ import { FromClient } from "@shared/calls/server/from-client";
 import { rpc } from "@/core/rpc";
 import { createPickup } from "@/core/pickups/pickups.registry";
 import { DeliveryRewardType } from "@shared/enums/delivery-reward-type";
-import { calculatePrivateHomeBonus, completeDelivery } from "./lib";
+import { calculatePrivateHomeBonus, completeDelivery, removeDelivery } from "./lib";
 import { getDeliveryPointPosition } from "@shared/modules/jobs/food-delivery";
+import { ServerCall } from "@shared/calls/server";
 
 const PrivateHomes: PrivateHome[] = (
   await import("@/data/private-homes.positions.json")
@@ -88,7 +89,17 @@ for (const point of pizzaCollectionPoints) {
       }
 
       console.log(`[FoodDelivery-Server] Player ${player.id} is near a collection point`);
-      player.gameState.foodDelivery.collectionPoint = point;
+
+      if (player.gameState.foodDelivery.collectionPoint?.isCollected) {
+        console.log(`[FoodDelivery-Server] Player ${player.id} already collected their deliveries`);
+        return;
+      }
+
+      player.gameState.foodDelivery.collectionPoint = {
+        pos: point,
+        isCollected: false,
+        isNearby: true,
+      };
       return () => {
         console.log(`[FoodDelivery-Server] Player ${player.id} is no longer near a collection point`);
         player.gameState.foodDelivery.collectionPoint = null;
@@ -97,6 +108,8 @@ for (const point of pizzaCollectionPoints) {
   }).addMarker({
     type: alt.Enums.MarkerType.MARKER_CYLINDER,
     color: new alt.RGBA(255, 0, 0, 128),
+    label: "Pizza Restaurant",
+    description: "Collect your deliveries here",
   }).addBlip({
     blipType: alt.Enums.BlipType.DESTINATION,
     sprite: 889, // alt.Enums.BlipSprite.PIZZA_THIS
@@ -121,7 +134,7 @@ rpc.registerClient(FromClient.FOOD_DELIVERY_REQUEST_ORDERS, (player: alt.Player)
   const collectionPoint = player.gameState.foodDelivery.collectionPoint;
 
   // Check if player is near a collection point
-  if (!collectionPoint) {
+  if (!collectionPoint?.isNearby) {
     console.log(`[FoodDelivery-Server] Player ${player.id} is not near a collection point`);
     return { success: false, reason: "You need to be at a pizza restaurant to request deliveries." };
   }
@@ -140,7 +153,7 @@ rpc.registerClient(FromClient.FOOD_DELIVERY_REQUEST_ORDERS, (player: alt.Player)
     const foodDeliveryLevel = getLevel(player.character.skills.foodDelivery.exp);
     let deliveryPoint: DeliveryPoint;
     let isPrivateHome = false;
-    let bonus = 1.0;
+    let bonus = 0.0;
 
     // Determine if this delivery should be to a private home based on level
     isPrivateHome = Math.random() < getPrivateHomeChance(foodDeliveryLevel);
@@ -153,7 +166,7 @@ rpc.registerClient(FromClient.FOOD_DELIVERY_REQUEST_ORDERS, (player: alt.Player)
       const selectedHome = unusedPrivateHomeDeliveryPoints.splice(index, 1)[0];
 
       // Calculate bonus based on distance
-      bonus = calculatePrivateHomeBonus(collectionPoint, selectedHome);
+      bonus = calculatePrivateHomeBonus(collectionPoint.pos, selectedHome);
 
       // Set delivery point
       deliveryPoint = selectedHome;
@@ -177,7 +190,7 @@ rpc.registerClient(FromClient.FOOD_DELIVERY_REQUEST_ORDERS, (player: alt.Player)
     // Create new delivery data
     const delivery: PlayerDelivery = {
       id: deliveryId,
-      collectionPoint,
+      collectionPoint: collectionPoint.pos,
       deliveryPoint,
       isPrivateHome,
       timeLimit,
@@ -195,7 +208,7 @@ rpc.registerClient(FromClient.FOOD_DELIVERY_REQUEST_ORDERS, (player: alt.Player)
 
       player.gameState.foodDelivery.activeDeliveries.splice(player.gameState.foodDelivery.activeDeliveries.indexOf(delivery), 1);
       player.notify(NotificationType.Error, "Delivery was cancelled because you didn't deliver it in time.", { title: "Food Delivery" });
-    }, timeLimit * 2);
+    }, timeLimit);
   }
 
   // Notify player of new orders
@@ -208,6 +221,20 @@ rpc.registerClient(FromClient.FOOD_DELIVERY_REQUEST_ORDERS, (player: alt.Player)
   return { success: true };
 });
 
+rpc.registerWebview(ServerCall.FromWebview.FOOD_DELIVERY_CANCEL, (player, id) => {
+  needsToBeInGame(player);
+
+  const delivery = player.gameState.foodDelivery.activeDeliveries.find((d) => d.id === id);
+
+  if (!delivery) {
+    return false;
+  }
+
+  removeDelivery(player, delivery);
+  player.notify(NotificationType.Success, "Delivery cancelled.", { title: "Food Delivery" });
+
+  return true;
+});
 
 // Update the completion handler to clear HasActiveDelivery flag when all deliveries are done
 rpc.registerClient(FromClient.FOOD_DELIVERY_COMPLETE, (player) => {

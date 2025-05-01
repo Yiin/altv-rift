@@ -4,7 +4,7 @@ import { Inventory, ItemSourceOrigin, VirtualEntityType } from "@shared/interfac
 import { StorageType } from "@shared/store/game-state.store";
 import { ServerEvents } from "@shared/events/server";
 import { AirDropType } from "@shared/modules/air-drops";
-import { InGamePlayer, isInGame } from "@/core/utility/assertions";
+import { InGamePlayer, isInGame, needsToBeInGame } from "@/core/utility/assertions";
 import { WindowType } from "@shared/store/client.store";
 
 interface StorageData {
@@ -124,7 +124,11 @@ export function closeStorage(player: InGamePlayer): void {
   player.gameState.openedStorage = null;
 }
 
-alt.Events.onPlayer(ServerEvents.FromClient.CLOSE_WINDOW, closeStorage);
+alt.Events.onPlayer(ServerEvents.FromClient.CLOSE_WINDOW, (player) => {
+  needsToBeInGame(player);
+
+  closeStorage(player);
+});
 
 alt.Events.onBaseObjectRemove(({ object }) => {
   if (object instanceof alt.VirtualEntity) {

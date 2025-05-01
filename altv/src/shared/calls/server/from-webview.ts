@@ -32,6 +32,8 @@ export const FromWebview = {
   CANCEL_UPGRADING: "CANCEL_UPGRADING",
   ADMIN_ACTION: "ADMIN_ACTION",
   FISHING_CLICK_RESULT: "FISHING_CLICK_RESULT",
+  FOOD_DELIVERY_CANCEL: "FOOD_DELIVERY_CANCEL",
+  FOOD_DELIVERY_NAVIGATE: "FOOD_DELIVERY_NAVIGATE",
 } as const;
 
 export interface CallFromWebview {
@@ -60,6 +62,8 @@ export interface CallFromWebview {
   [FromWebview.CANCEL_UPGRADING]: () => boolean;
   [FromWebview.ADMIN_ACTION]: (action: string, args: any) => any;
   [FromWebview.FISHING_CLICK_RESULT]: (payload: { rotation: number; isSuccess: boolean }) => void;
+  [FromWebview.FOOD_DELIVERY_CANCEL]: (id: number) => boolean;
+  [FromWebview.FOOD_DELIVERY_NAVIGATE]: (payload: { id: number; type: 'pickup' | 'delivery' }) => void;
 }
 
 export const FromWebviewValidation = {
@@ -147,6 +151,13 @@ export const FromWebviewValidation = {
   },
   [FromWebview.FISHING_CLICK_RESULT]: {
     args: [z.object({ rotation: z.number(), isSuccess: z.boolean() })],
+  },
+  [FromWebview.FOOD_DELIVERY_CANCEL]: {
+    args: [z.number()],
+    returns: z.boolean(),
+  },
+  [FromWebview.FOOD_DELIVERY_NAVIGATE]: {
+    args: [z.object({ id: z.number(), type: z.enum(['pickup', 'delivery']) })],
   },
 } satisfies Record<
   keyof typeof FromWebview,

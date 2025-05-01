@@ -50,6 +50,9 @@ export function getAnchorType(entity: alt.BaseObject): AnchorType | null {
       if (ve.streamSyncedMeta.entityType === VirtualEntityType.Item) {
         return AnchorType.DroppedItem;
       }
+      if (ve.streamSyncedMeta.entityType === VirtualEntityType.Marker) {
+        return AnchorType.Marker;
+      }
     }
   }
   return null;

@@ -32,7 +32,7 @@ declare module "@altv/client" {
   }
 
   export interface VirtualEntity {
-    reactiveStreamSyncedMeta: any;
+    reactiveStreamSyncedMeta: alt.VirtualEntityStreamSyncedMeta;
   }
 }
 
@@ -67,11 +67,13 @@ declare module "@altv/shared" {
     blipType?: import("../../modules/game/ui/blips").BlipType; // entityType: areaOfInterest | entityType: storage & storageType: AirDrop
     blipColor?: import("../../modules/game/ui/blips").BlipColor; // entityType: areaOfInterest
     oreType?: import("../../modules/items").Ore; // entityType: ore
-    description?: string; // entityType: savedPoint
+    description?: string; // entityType: savedPoint | entityType: marker
     target?: alt.Player; // entityType: marker
     type?: alt.Enums.MarkerType; // entityType: marker
     color?: alt.RGBA; // entityType: marker
     scale?: alt.Vector3; // entityType: marker
-    initialMeta?: any; // entityType: marker
+    icon?: string; // entityType: marker
+    label?: string; // entityType: marker
+    streamSyncedMeta?: VirtualEntityStreamSyncedMeta; // entityType: marker
   }
 }

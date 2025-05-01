@@ -13,8 +13,8 @@ export const esbuildOptions = {
 export const altvEsbuildOptions = {
   dev: dev
     ? {
-        enhancedRestartCommand: true,
-      }
+      enhancedRestartCommand: true,
+    }
     : false,
   altvEnums: true,
 };

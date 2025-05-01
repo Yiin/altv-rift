@@ -1,5 +1,4 @@
-import alt from "@altv/server";
-import { InGamePlayer } from "@/core/utility/assertions";
+import alt from "@altv/shared";
 import { DeliveryRewardType } from "@shared/enums/delivery-reward-type";
 import { getLevel } from "@shared/modules/experience/experience-table";
 import { PlayerDelivery } from "@shared/store/game-state.store";
@@ -25,8 +24,51 @@ const BASE_TIP = {
   FAST: { CHANCE: 0.15, BONUS: 0.15 }       // 15% chance, 15% bonus (1.15x)
 };
 
+/**
+ * Calculates the tip chance percentage based on delivery time and experience level
+ * @param exp Food delivery experience points
+ * @param timeRatio Delivery time divided by time limit
+ * @returns Tip chance percentage (0-100)
+ */
+export function calculateTipChance(
+  exp: number,
+  timeRatio: number,
+): {
+  chance: number;
+  bonus: number;
+  type: DeliveryRewardType | null;
+} {
+  // Get player's food delivery level and calculate level-based scaling
+  const foodDeliveryLevel = getLevel(exp);
+  const levelScaleFactor = 1.0 + (4.0 * Math.min(foodDeliveryLevel - 1, 98) / 98);
+
+  // Determine tip chance based on delivery time
+  if (timeRatio <= VERY_FAST_TIME_THRESHOLD) {
+    // Very quick delivery
+    const tipChance = Math.min(BASE_TIP.VERY_FAST.CHANCE * levelScaleFactor, 1.0);
+    const tipBonus = BASE_TIP.VERY_FAST.BONUS * levelScaleFactor;
+    return {
+      chance: Math.round(tipChance * 100),
+      bonus: Math.round(tipBonus * 100),
+      type: DeliveryRewardType.VERY_FAST
+    };
+  } else if (timeRatio <= FAST_TIME_THRESHOLD) {
+    // Fast delivery
+    const tipChance = Math.min(BASE_TIP.FAST.CHANCE * levelScaleFactor, 1.0);
+    const tipBonus = BASE_TIP.FAST.BONUS * levelScaleFactor;
+    return {
+      chance: Math.round(tipChance * 100),
+      bonus: Math.round(tipBonus * 100),
+      type: DeliveryRewardType.FAST
+    };
+  }
+
+  // No tip chance for on-time or late deliveries
+  return { chance: 0, bonus: 0, type: null };
+}
+
 export function calculateDeliveryReward(
-  player: InGamePlayer,
+  exp: number,
   delivery: PlayerDelivery,
   deliveryTime: number,
 ): {
@@ -37,7 +79,7 @@ export function calculateDeliveryReward(
   const baseReward = BASE_REWARD_MIN + Math.random() * (BASE_REWARD_MAX - BASE_REWARD_MIN);
 
   // Get player's food delivery level and calculate level-based scaling
-  const foodDeliveryLevel = getLevel(player.character.skills.foodDelivery.exp);
+  const foodDeliveryLevel = getLevel(exp);
   const levelScaleFactor = 1.0 + (4.0 * Math.min(foodDeliveryLevel - 1, 98) / 98);
 
   // Determine time bonus and delivery type
@@ -49,12 +91,14 @@ export function calculateDeliveryReward(
   // Calculate time bonus/penalty based on delivery time compared to time limit
   if (timeRatio <= VERY_FAST_TIME_THRESHOLD) {
     // Very quick delivery - level-based chance of tip
-    const tipChance = Math.min(BASE_TIP.VERY_FAST.CHANCE * levelScaleFactor, 1.0);
+    const { chance: tipChancePercent } = calculateTipChance(exp, timeRatio);
+    const tipChance = tipChancePercent / 100;
     timeBonus = Math.random() < tipChance ? 1.0 + (BASE_TIP.VERY_FAST.BONUS * levelScaleFactor) : 1.0;
     type = DeliveryRewardType.VERY_FAST;
   } else if (timeRatio <= FAST_TIME_THRESHOLD) {
     // Fast delivery - level-based chance of tip
-    const tipChance = Math.min(BASE_TIP.FAST.CHANCE * levelScaleFactor, 1.0);
+    const { chance: tipChancePercent } = calculateTipChance(exp, timeRatio);
+    const tipChance = tipChancePercent / 100;
     timeBonus = Math.random() < tipChance ? 1.0 + (BASE_TIP.FAST.BONUS * levelScaleFactor) : 1.0;
     type = DeliveryRewardType.FAST;
   } else if (timeRatio > VERY_LATE_TIME_THRESHOLD) {

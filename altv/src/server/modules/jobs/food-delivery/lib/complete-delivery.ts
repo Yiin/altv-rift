@@ -4,7 +4,7 @@ import { DeliveryRewardType } from "@shared/enums/delivery-reward-type";
 import { NotificationType } from "@shared/interfaces";
 import { PlayerDelivery } from "@shared/store/game-state.store";
 import { updateDeliveryStats } from "./update-delivery-stats";
-import { calculateDeliveryReward } from "./calculate-delivery-reward";
+import { calculateDeliveryReward } from "@shared/modules/jobs/food-delivery/lib";
 import { removeDelivery } from "./remove-delivery";
 import { getDeliveryPointPosition } from "@shared/modules/jobs/food-delivery";
 
@@ -18,7 +18,7 @@ export function completeDelivery(player: InGamePlayer, delivery: PlayerDelivery)
   const timeTaken = Date.now() - delivery.startTime;
   const distance = new alt.Vector3(delivery.collectionPoint).distanceTo(getDeliveryPointPosition(delivery));
   console.log(`[FoodDelivery-Server] Time taken for delivery: ${timeTaken}ms`);
-  const { amount: reward, tip, type: deliveryRewardType } = calculateDeliveryReward(player, delivery, timeTaken);
+  const { amount: reward, tip, type: deliveryRewardType } = calculateDeliveryReward(player.character.skills.foodDelivery.exp, delivery, timeTaken);
   const distanceExpBonus = Math.round(distance / 20);
   const rewardExpBonus = Math.round(reward / 10);
   const expGain = distanceExpBonus + rewardExpBonus;

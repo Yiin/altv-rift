@@ -1,0 +1,15 @@
+/**
+ * Nametags
+ */
+.marker-wrapper {
+  position: absolute;
+}
+
+.marker {
+  font-family: josefinsans-semibold;
+  font-effect: outline(2px black);
+  font-size: 13pt;
+  text-transform: uppercase;
+  color: #ffffffff;
+  transform-origin: center center;
+}

@@ -230,17 +230,17 @@ Temporary Jobs:
     2. webview, show collection point info:
       ☐ quick tutorial on how it works
     3. client-side key event listeners:
-      ☐ player presses key, check for gameState collection point info
-      ☐ if found, send RPC to server
+      ✔ player presses key, check for gameState collection point info @done(25-03-09 22:03)
+      ✔ if found, send RPC to server @done(25-03-09 22:03)
     3. server-side listen for rpc:
       ✔ check if player pos is close to collection point pos @done(25-03-06 05:49)
       ✔ if so, generate random delivery points and set them to gameState @done(25-03-06 05:49)
     4. client-side:
-      ☐ listen for gameState delivery points changes and create pickups client-side
+      ✔ listen for gameState delivery points changes and create pickups client-side @done(25-03-09 22:03)
     5: webview:
-      ☐ show active deliveries UI
+      ✔ show active deliveries UI @done(25-03-09 22:03)
     6: client-side:
-      ☐ when player enters a delivery point, listen for key presses and send RPC to server
+      ✔ when player enters a delivery point, listen for key presses and send RPC to server @done(25-03-09 22:03)
     7: server-side:
       ✔ check if player pos is close to delivery point pos @done(25-03-06 05:49)
       ✔ if so, complete delivery, give rewards @done(25-03-06 05:49)

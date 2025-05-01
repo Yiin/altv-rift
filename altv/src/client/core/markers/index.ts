@@ -5,6 +5,10 @@ declare module "@altv/client" {
   interface VirtualEntity {
     marker?: alt.Marker;
   }
+
+  interface MarkerMeta {
+    virtualEntity?: alt.VirtualEntity;
+  }
 }
 
 alt.Events.onWorldObjectStreamIn(({ object }) => {
@@ -18,18 +22,21 @@ alt.Events.onWorldObjectStreamIn(({ object }) => {
 
   alt.log(`[Markers] Creating marker ${object.id} at ${JSON.stringify(object.pos)}`);
 
+  const { type, color, scale } = object.streamSyncedMeta;
+
   object.marker = alt.Marker.create({
     pos: object.pos,
-    type: object.streamSyncedMeta.type!,
-    color: object.streamSyncedMeta.color!,
-    initialMeta: object.streamSyncedMeta.initialMeta,
+    type: type!,
+    color: color!,
     streamingDistance: 50,
     useStreaming: true,
   });
 
-  if (object.streamSyncedMeta.scale) {
-    object.marker.scale = object.streamSyncedMeta.scale;
+  if (scale) {
+    object.marker.scale = scale;
   }
+
+  object.marker.meta.virtualEntity = object;
 });
 
 alt.Events.onWorldObjectStreamOut(({ object }) => {

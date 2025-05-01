@@ -11,7 +11,7 @@ declare module "@altv/server" {
     blip?: alt.Blip;
     marker?: alt.VirtualEntity;
     addBlip(this: ColShape, options: Partial<WritablePropertiesOf<alt.Blip>> & Omit<(alt.PointBlipCreateOptions & alt.SharedBlipCreateOptions), 'pos'>): alt.Blip;
-    addMarker(this: ColShape, options: Partial<WritablePropertiesOf<alt.Marker>> & Omit<alt.MarkerCreateOptions, "pos">): alt.VirtualEntity;
+    addMarker(this: ColShape, options: Partial<WritablePropertiesOf<alt.Marker>> & Omit<alt.MarkerCreateOptions, "pos"> & Pick<alt.VirtualEntityStreamSyncedMeta, "label" | "description" | "icon">): alt.VirtualEntity;
     whenInside(this: ColShape, callback: OnEnterCallback): void;
   }
 }
@@ -46,7 +46,7 @@ alt.ColShape.prototype.addBlip = function ({ pos, entity, global, targets, blipT
   return blip;
 }
 
-alt.ColShape.prototype.addMarker = function ({ target, pos, type, color, initialMeta, ...rest }) {
+alt.ColShape.prototype.addMarker = function ({ target, pos, type, color, label, description, icon, ...rest }) {
   console.log(`[Pickups] Adding marker to colshape ${this.id} at ${JSON.stringify(pos)} ?? ${JSON.stringify(this.pos)}`);
   const marker = alt.VirtualEntity.create({
     group: markerVirtualEntityGroup,
@@ -57,7 +57,9 @@ alt.ColShape.prototype.addMarker = function ({ target, pos, type, color, initial
       target,
       type,
       color,
-      initialMeta,
+      label,
+      description,
+      icon,
     }
   });
 

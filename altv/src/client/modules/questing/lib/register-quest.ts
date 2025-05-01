@@ -1,5 +1,4 @@
 import { QuestInfo, QuestTaskInfo } from "@shared/store/client.store";
-import { Override } from "@shared/interfaces";
 import { clientState } from "@/core/store/client.store";
 
 type QuestTask = Override<

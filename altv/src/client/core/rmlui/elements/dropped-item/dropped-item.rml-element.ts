@@ -9,11 +9,12 @@ import { everyFrame } from "../../renderer/hooks/every-frame";
 import { Icon } from "../../components/icon";
 import { isInventoryFull } from "@shared/modules/inventory";
 import { useCharacter } from "@/core/store/character.store";
-import { getItemName, Item } from "@shared/modules/items";
+import { getItemName } from "@shared/modules/items";
 import { ItemGrade } from "@shared/modules/items";
 
-const getItemGradeColor = (item: Item) => {
-  if (!("grade" in item)) return "rgb(255, 255, 255)";
+const getItemGradeColor = (item: any) => {
+  const grade = item?.grade;
+  if (!grade || typeof grade !== "string") return "rgb(255, 255, 255)";
 
   return {
     [ItemGrade.COMMON]: "rgb(255, 255, 255)",
@@ -23,7 +24,7 @@ const getItemGradeColor = (item: Item) => {
     [ItemGrade.LEGENDARY]: "rgb(255, 218, 87)",
     [ItemGrade.CONTRABAND]: "rgb(220, 0, 0)",
     [ItemGrade.LIMITED]: "rgb(0, 255, 234)",
-  }[item.grade];
+  }[grade] ?? "rgb(255, 255, 255)";
 };
 
 function DroppedItemIndicator(grade: ItemGrade) {
@@ -85,6 +86,7 @@ registerElement({
         },
       },
       [
+        // @ts-expect-error - we don't care about type "correctness" here
         DroppedItemIndicator(ve.reactiveStreamSyncedMeta.item?.grade || ItemGrade.COMMON),
         div(
           {
@@ -127,10 +129,11 @@ registerElement({
                             {
                               class: "dropped-item-label",
                               style: {
-                                color: getItemGradeColor(ve.reactiveStreamSyncedMeta.item || {}),
+                                color: getItemGradeColor(ve.reactiveStreamSyncedMeta.item),
                               },
                             },
                             [
+                              // @ts-expect-error - we don't care about type "correctness" here
                               `${ve.reactiveStreamSyncedMeta.item?.amount ?? 1} x ${interaction.text}`,
                             ],
                           ),

@@ -2,13 +2,18 @@
 import { computed, ref } from "vue";
 import type { PlayerDelivery } from "@shared/store/game-state.store";
 import { getLevel, getMissingExperience } from "@shared/modules/experience/experience-table";
-import { getDeliveryPointPosition } from "@shared/modules/jobs/food-delivery";
+import { calculateTipChance, getDeliveryPointPosition } from "@shared/modules/jobs/food-delivery";
+import { ServerCall } from "@shared/calls/server";
 import Window from "@/components/Window.vue";
 import Icon from "@/components/Icon/Icon.vue";
 import { useGameState } from "@/store/synced/game-state.store";
 import { px } from "@/composables/use-pixel";
 import { useAccurateTimer } from "@/composables/use-accurate-timer";
 import { useCharacter } from "@/store/synced/character.store";
+import { rpc } from "@/rpc";
+import DeliveryList from "./DeliveryList.vue";
+import DeliveryDetail from "./DeliveryDetail.vue";
+import DeliveryStats from "./DeliveryStats.vue";
 
 // Stores
 const gameState = useGameState();
@@ -17,6 +22,7 @@ const character = useCharacter();
 // UI State
 const selectedDeliveryId = ref<number | null>(null);
 const showStats = ref(false);
+const showCancelConfirm = ref<number | null>(null);
 
 // Use the accurate timer composable
 const { now } = useAccurateTimer();
@@ -35,7 +41,6 @@ const defaultPosition = computed(() => {
 const activeDeliveries = computed(() => {
   // Convert Map to Array for easier rendering
   const deliveries: Array<PlayerDelivery> = [];
-
   gameState.foodDelivery.activeDeliveries.forEach((delivery) => {
     deliveries.push({
       id: delivery.id,
@@ -109,6 +114,13 @@ function getDeliveryStatusText(delivery: (typeof activeDeliveries.value)[0]): st
   return "Delivering";
 }
 
+function getTipChance(delivery: (typeof activeDeliveries.value)[0]): number {
+  return calculateTipChance(
+    character.skills.foodDelivery.exp,
+    (now.value - delivery.startTime) / delivery.timeLimit,
+  ).chance;
+}
+
 // Select a delivery
 function selectDelivery(id: number) {
   selectedDeliveryId.value = id;
@@ -122,6 +134,57 @@ function closeDetails() {
 // Toggle stats view
 function toggleStats() {
   showStats.value = !showStats.value;
+}
+
+// Show cancel confirmation
+function promptCancelDelivery(id: number, event?: Event) {
+  if (event) {
+    event.stopPropagation();
+  }
+  showCancelConfirm.value = id;
+}
+
+// Cancel the delivery
+function cancelDelivery(id: number, event?: Event) {
+  if (event) {
+    event.stopPropagation();
+  }
+  // Emit an event for the backend to handle the cancellation
+  rpc.callServer(ServerCall.FromWebview.FOOD_DELIVERY_CANCEL, id);
+
+  // Remove from local UI right away for responsive feel
+  if (selectedDeliveryId.value === id) {
+    closeDetails();
+  }
+  showCancelConfirm.value = null;
+}
+
+// Close cancel confirmation
+function closeCancelConfirm(event?: Event) {
+  if (event) {
+    event.stopPropagation();
+  }
+  showCancelConfirm.value = null;
+}
+
+// Navigate to pickup location
+function navigateToPickup() {
+  if (!selectedDelivery.value?.id) return;
+
+  rpc.callServer(ServerCall.FromWebview.FOOD_DELIVERY_NAVIGATE, {
+    id: selectedDelivery.value.id,
+    type: "pickup",
+  });
+}
+
+// Navigate to delivery location
+function navigateToDelivery() {
+  if (!selectedDelivery.value?.id) return;
+
+  rpc.callServer(ServerCall.FromWebview.FOOD_DELIVERY_NAVIGATE, {
+    id: selectedDelivery.value.id,
+    type: "delivery",
+  });
 }
 </script>
 
@@ -169,344 +232,33 @@ function toggleStats() {
         </div>
       </div>
 
-      <!-- Deliveries list view -->
-      <div
+      <!-- Render the appropriate component based on the view state -->
+      <DeliveryList
         v-if="!selectedDelivery && !showStats"
-        class="max-h-150 overflow-y-auto"
-      >
-        <div
-          v-if="activeDeliveries.length === 0"
-          class="p-8 text-center text-neutral-400"
-        >
-          <Icon
-            name="mdi:food-outline"
-            class="mx-auto mb-3 h-12 w-12 opacity-50"
-          />
-          <p>No active deliveries</p>
-          <p class="mt-2 text-sm">Check back soon for new delivery opportunities</p>
-        </div>
+        :deliveries="activeDeliveries"
+        :show-cancel-confirm="showCancelConfirm"
+        @select-delivery="selectDelivery"
+        @prompt-cancel-delivery="promptCancelDelivery"
+        @cancel-delivery="cancelDelivery"
+        @close-cancel-confirm="closeCancelConfirm"
+      />
 
-        <div
-          v-for="delivery in activeDeliveries"
-          :key="delivery.id"
-          @click="selectDelivery(delivery.id)"
-          class="cursor-pointer border-b border-neutral-800 p-4 transition-colors hover:bg-neutral-800/50"
-        >
-          <div class="mb-2 flex items-start justify-between">
-            <div>
-              <span
-                class="me-2 inline-flex items-center rounded-md px-2 py-1 text-xs font-medium"
-                :class="getDeliveryTypeClasses(delivery.isPrivateHome)"
-              >
-                {{ delivery.isPrivateHome ? "Premium" : "Standard" }}
-              </span>
-
-              <span
-                class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium"
-                :class="getDeliveryStatusClasses(delivery)"
-              >
-                {{ getDeliveryStatusText(delivery) }}
-              </span>
-            </div>
-
-            <span
-              class="font-mono text-lg font-bold"
-              :class="getTimeColorClass(delivery)"
-            >
-              {{ formatTime(delivery.timeLimit - (now - delivery.startTime)) }}
-            </span>
-          </div>
-
-          <div class="mt-3 grid grid-cols-2 gap-4">
-            <div>
-              <div class="mb-1 text-xs text-neutral-400">Pickup</div>
-              <div class="text-sm text-white">Restaurant #{{ delivery.id }}</div>
-            </div>
-
-            <div>
-              <div class="mb-1 text-xs text-neutral-400">Deliver to</div>
-              <div class="text-sm text-white">
-                {{
-                  "street" in delivery.deliveryPoint
-                    ? delivery.deliveryPoint.street
-                    : "Customer #" + delivery.id
-                }}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Delivery detail view -->
-      <div
+      <DeliveryDetail
         v-if="selectedDelivery"
-        class="p-4"
-      >
-        <!-- Timer section -->
-        <div class="mb-6 text-center">
-          <div class="mb-1 text-sm text-neutral-400">Time Remaining</div>
-          <div
-            class="font-mono text-4xl font-bold"
-            :class="getTimeColorClass(selectedDelivery)"
-          >
-            {{ formatTime(remainingTime) }}
-          </div>
+        :delivery="selectedDelivery"
+        :show-cancel-confirm="showCancelConfirm"
+        :character-exp="character.skills.foodDelivery.exp"
+        @navigate-to-pickup="navigateToPickup"
+        @navigate-to-delivery="navigateToDelivery"
+        @prompt-cancel-delivery="promptCancelDelivery"
+        @cancel-delivery="cancelDelivery"
+        @close-cancel-confirm="closeCancelConfirm"
+      />
 
-          <!-- Progress bar -->
-          <div class="mt-3 h-3 overflow-hidden rounded-full bg-neutral-800">
-            <div
-              class="h-full transition-all duration-200"
-              :class="getTimeColorClass(selectedDelivery)"
-              :style="{
-                width: `${(remainingTime / selectedDelivery.timeLimit) * 100}%`,
-              }"
-            ></div>
-          </div>
-        </div>
-
-        <!-- Delivery info cards -->
-        <div class="mb-4 grid grid-cols-1 gap-4">
-          <!-- Pickup location -->
-          <div class="bg-neutral-850 rounded-lg border border-neutral-800 p-4">
-            <div class="mb-2 flex items-center justify-between">
-              <h4 class="flex font-medium text-white">
-                <Icon
-                  name="mdi:store-outline"
-                  class="mr-1 w-5"
-                />
-                Pickup Location
-              </h4>
-              <span
-                class="inline-flex items-center rounded-md bg-green-800 px-2 py-1 text-xs font-medium text-green-100"
-              >
-                Collected
-              </span>
-            </div>
-
-            <div class="text-sm text-white">Restaurant #{{ selectedDelivery.id }}</div>
-            <div class="mt-1 text-xs text-neutral-400">
-              Coordinates: {{ selectedDelivery.collectionPoint.x.toFixed(0) }},
-              {{ selectedDelivery.collectionPoint.y.toFixed(0) }},
-              {{ selectedDelivery.collectionPoint.z.toFixed(0) }}
-            </div>
-          </div>
-
-          <!-- Delivery location -->
-          <div class="bg-neutral-850 rounded-lg border border-neutral-800 p-4">
-            <div class="mb-2 flex items-center justify-between">
-              <h4 class="flex font-medium text-white">
-                <Icon
-                  name="mdi:map-marker-outline"
-                  class="mr-1 w-5"
-                />
-                Delivery Location
-              </h4>
-              <span
-                class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium"
-                :class="getDeliveryTypeClasses(selectedDelivery.isPrivateHome)"
-              >
-                {{ selectedDelivery.isPrivateHome ? "Premium" : "Standard" }}
-              </span>
-            </div>
-
-            <div class="text-sm text-white">
-              {{
-                "street" in selectedDelivery.deliveryPoint
-                  ? selectedDelivery.deliveryPoint.street
-                  : "Customer #" + selectedDelivery.id
-              }}
-            </div>
-            <div class="mt-1 text-xs text-neutral-400">
-              Coordinates: {{ getDeliveryPointPosition(selectedDelivery.deliveryPoint) }}
-            </div>
-          </div>
-
-          <!-- Reward info -->
-          <div class="bg-neutral-850 rounded-lg border border-neutral-800 p-4">
-            <h4 class="mb-2 flex font-medium text-white">
-              <Icon
-                name="mdi:currency-usd"
-                class="mr-1 w-5"
-              />
-              Reward Details
-            </h4>
-
-            <div class="grid grid-cols-4 gap-2">
-              <div>
-                <div class="text-xs text-neutral-400">Base Reward</div>
-                <div class="text-sm text-white">$100</div>
-              </div>
-
-              <div>
-                <div class="text-xs text-neutral-400">Time Bonus</div>
-                <div class="text-sm text-white">+${{ selectedDelivery.bonus }}</div>
-              </div>
-
-              <div v-if="selectedDelivery.isPrivateHome">
-                <div class="text-xs text-neutral-400">Premium Bonus</div>
-                <div class="text-sm text-white">+20%</div>
-              </div>
-
-              <div>
-                <div class="text-xs text-neutral-400">XP</div>
-                <div class="text-sm text-white">+10 XP</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Delivery steps -->
-        <div class="overflow-hidden rounded-lg border border-neutral-800">
-          <div class="bg-neutral-800 p-3 font-medium text-white">Delivery Progress</div>
-
-          <div class="p-4">
-            <div class="relative">
-              <!-- Progress line -->
-              <div class="absolute top-0 bottom-0 left-4 w-0.5 bg-neutral-700"></div>
-
-              <!-- Steps -->
-              <div class="relative mb-6 flex items-start">
-                <div
-                  class="z-10 flex h-8 w-8 items-center justify-center rounded-full bg-green-800 text-green-100"
-                >
-                  <Icon
-                    name="mdi:check"
-                    class="w-5"
-                  />
-                </div>
-                <div class="ml-4 pt-1">
-                  <h4 class="font-medium text-white">Delivery Accepted</h4>
-                  <p class="text-xs text-neutral-400">
-                    {{ new Date(selectedDelivery.startTime).toLocaleTimeString() }}
-                  </p>
-                </div>
-              </div>
-
-              <div class="relative flex items-start">
-                <div
-                  class="z-10 flex h-8 w-8 items-center justify-center rounded-full bg-neutral-700 text-neutral-400"
-                >
-                  <Icon
-                    name="mdi:map-marker"
-                    class="w-5"
-                  />
-                </div>
-                <div class="ml-4 pt-1">
-                  <h4 class="font-medium text-white">Food Delivery</h4>
-                  <p class="text-xs text-neutral-400">Pending</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Stats view -->
-      <div
+      <DeliveryStats
         v-if="showStats && !selectedDelivery"
-        class="p-4"
-      >
-        <div class="mb-6 text-center">
-          <div class="mb-1 text-sm text-neutral-400">Delivery Level</div>
-          <div class="text-3xl font-bold text-white">
-            {{ getLevel(character.skills.foodDelivery.exp) }}
-          </div>
-
-          <!-- XP Progress bar -->
-          <div class="mt-3 h-3 overflow-hidden rounded-full bg-neutral-800">
-            <div class="h-full w-3/4 bg-blue-500"></div>
-          </div>
-          <div class="mt-1 text-xs text-neutral-400">
-            {{ character.skills.foodDelivery.exp }} /
-            {{
-              character.skills.foodDelivery.exp +
-              getMissingExperience(character.skills.foodDelivery.exp)
-            }}
-            XP
-          </div>
-        </div>
-
-        <div class="mb-6 grid grid-cols-2 gap-4">
-          <div class="bg-neutral-850 rounded-lg border border-neutral-800 p-3 text-center">
-            <div class="mb-1 text-sm text-neutral-400">Total Deliveries</div>
-            <div class="text-xl font-bold text-white">
-              {{ character.skills.foodDelivery.stats.totalDeliveries }}
-            </div>
-          </div>
-
-          <div class="bg-neutral-850 rounded-lg border border-neutral-800 p-3 text-center">
-            <div class="mb-1 text-sm text-neutral-400">Success Rate</div>
-            <div class="text-xl font-bold text-green-500">
-              {{
-                (
-                  (character.skills.foodDelivery.stats.totalDeliveries -
-                    character.skills.foodDelivery.stats.failedDeliveries) /
-                  character.skills.foodDelivery.stats.totalDeliveries
-                ).toFixed(1)
-              }}%
-            </div>
-          </div>
-
-          <div class="bg-neutral-850 rounded-lg border border-neutral-800 p-3 text-center">
-            <div class="mb-1 text-sm text-neutral-400">Premium Rate</div>
-            <div class="text-xl font-bold text-violet-500">
-              {{
-                (
-                  character.skills.foodDelivery.stats.privateHomeDeliveries /
-                  character.skills.foodDelivery.stats.totalDeliveries
-                ).toFixed(1)
-              }}%
-            </div>
-          </div>
-
-          <div class="bg-neutral-850 rounded-lg border border-neutral-800 p-3 text-center">
-            <div class="mb-1 text-sm text-neutral-400">Avg. Tip</div>
-            <div class="text-xl font-bold text-yellow-500">
-              ${{
-                Math.round(
-                  character.skills.foodDelivery.stats.tipsReceived /
-                    character.skills.foodDelivery.stats.totalDeliveries,
-                )
-              }}
-            </div>
-          </div>
-        </div>
-
-        <div class="bg-neutral-850 rounded-lg border border-neutral-800 p-4">
-          <h4 class="mb-3 font-medium text-white">Level Perks</h4>
-
-          <div class="space-y-2">
-            <div class="flex items-center">
-              <Icon
-                name="mdi:check"
-                class="mr-2 w-5 text-green-500"
-              />
-              <span class="text-sm text-white">0.5 min faster deliveries</span>
-            </div>
-            <div class="flex items-center">
-              <Icon
-                name="mdi:check"
-                class="mr-2 w-5 text-green-500"
-              />
-              <span class="text-sm text-white">15% premium delivery chance</span>
-            </div>
-            <div class="flex items-center">
-              <Icon
-                name="mdi:check"
-                class="mr-2 w-5 text-green-500"
-              />
-              <span class="text-sm text-white">Up to 3 concurrent deliveries</span>
-            </div>
-            <div class="flex items-center opacity-50">
-              <Icon
-                name="mdi:lock"
-                class="mr-2 w-5 text-yellow-500"
-              />
-              <span class="text-sm text-white">20% premium delivery chance (Level 10)</span>
-            </div>
-          </div>
-        </div>
-      </div>
+        :character-skills="character.skills"
+      />
     </div>
   </Window>
 </template>

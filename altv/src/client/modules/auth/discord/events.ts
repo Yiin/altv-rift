@@ -20,6 +20,12 @@ declare module "@altv/client" {
   }
 }
 
+alt.Events.onConsoleCommand(({ command }) => {
+  if (command === "discordauth") {
+    beginAuth().catch(console.error);
+  }
+});
+
 async function beginAuth() {
   // Check for cached token
   if (alt.LocalStorage.has("token")) {
@@ -40,7 +46,21 @@ async function beginAuth() {
   try {
     // try native discord api (requires running discord client)
     console.log("Requesting discord auth token");
-    const token = await alt.Discord.requestOAuth2Token(DISCORD_CLIENT_ID);
+    const timeout = new Promise<void>((resolve) => {
+      setTimeout(() => {
+        resolve();
+      }, 10000);
+    });
+
+    const token = await Promise.race([
+      alt.Discord.requestOAuth2Token(DISCORD_CLIENT_ID),
+      timeout,
+    ]);
+
+    if (!token) {
+      throw new Error("Failed to get discord auth token");
+    }
+
     console.log("Received discord auth token");
     alt.Events.emitServerRaw(ServerEvents.FromClient.DISCORD_AUTH_DONE, token);
     cacheAuthToken(token);

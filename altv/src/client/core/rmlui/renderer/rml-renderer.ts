@@ -187,7 +187,7 @@ function parseElement(
 
 function parseChild(child: string | ParsedElement, parsedElement: ParsedNode) {
   // if component
-  if (typeof child === "object" && !("text" in child)) {
+  if (child && typeof child === "object" && !("text" in child)) {
     child.parent = parsedElement;
     return child;
   } else {
@@ -224,11 +224,21 @@ function applyClassesAndAttrs(node: alt.RmlElement, parsedNode: ParsedNode) {
     }
   });
 
-  parsedNode.classNames.forEach((className) => {
-    if (!nodeClasses.includes(className)) {
-      node.addClass(className);
-    }
-  });
+  if (parsedNode.classNames) {
+    parsedNode.classNames.forEach((className) => {
+      if (!nodeClasses.includes(className)) {
+        node.addClass(className);
+      }
+    });
+  } else {
+    console.log(`[RMLUI] No class names for ${parsedNode.tagName}`, {
+      props: parsedNode.props,
+      tagName: node.tagName,
+      classNames: node.classList,
+      parentTagName: node.parent?.tagName,
+      parentClassNames: node.parent?.classList,
+    });
+  }
 
   for (const attr in node.attributes) {
     if (!(attr in parsedNode.props)) {

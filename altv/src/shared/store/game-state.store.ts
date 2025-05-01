@@ -69,9 +69,15 @@ export interface PlayerDelivery {
   bonus: number;
 }
 
+export interface DeliveryCollectionPoint {
+  pos: alt.IVector3;
+  isCollected: boolean;
+  isNearby: boolean;
+}
+
 export interface FoodDeliveryData {
   activeDeliveries: PlayerDelivery[];
-  collectionPoint: alt.IVector3 | null;
+  collectionPoint: DeliveryCollectionPoint | null;
 }
 
 export interface GameState {

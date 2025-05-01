@@ -18,6 +18,7 @@
     <link type="text/rcss" href="/client/core/rmlui/elements/compass/compass.rcss"/>
     <link type="text/rcss" href="/client/core/rmlui/elements/damage/damage.rcss"/>
     <link type="text/rcss" href="/client/core/rmlui/elements/dropped-item/dropped-item.rcss"/>
+    <link type="text/rcss" href="/client/core/rmlui/elements/marker/marker.rcss"/>
     <link type="text/rcss" href="/client/core/rmlui/elements/objective-indicator/objective-indicator.rcss"/>
     <link type="text/rcss" href="/client/core/rmlui/elements/ped-interaction/ped-interaction.rcss"/>
     <link type="text/rcss" href="/client/core/rmlui/elements/ped-nametag/enemy/enemy-nametag.rcss"/>
