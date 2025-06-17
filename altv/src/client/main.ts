@@ -1,6 +1,5 @@
 declare module "@altv/server" {
   interface Player {
-    pinia: undefined;
     user: undefined;
     character: undefined;
     gameState: undefined;
@@ -32,7 +31,7 @@ import alt from "@altv/client";
 import _ from "lodash";
 import { useUser } from "./core/store/user.store";
 import { useCharacter } from "./core/store/character.store";
-import { gameState } from "./core/store/game-state.store";
+import { useGameState } from "./core/store/game-state.store";
 import { clientState } from "./core/store/client.store";
 
 // game.getNumVehicleMods(alt.hash("ignus"), 0);
@@ -49,7 +48,13 @@ alt.Events.onConsoleCommand(({ command }) => {
   } else if (command === "character") {
     alt.log(JSON.stringify(useCharacter()?.$state), null, 2);
   } else if (command === "gamestate") {
-    alt.log(JSON.stringify(gameState.$state), null, 2);
+    try {
+      const gameState = useGameState();
+      // @ts-expect-error gameState is reactive-proxy-state
+      alt.log(JSON.stringify(gameState.$state), null, 2);
+    } catch (err) {
+      alt.log("Game state is not ready yet.");
+    }
   } else if (command === "client") {
     alt.log(JSON.stringify(clientState.$state), null, 2);
   } else if (command === "dump:weapon-stats") {

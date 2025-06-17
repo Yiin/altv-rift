@@ -1,6 +1,6 @@
 import alt from "@altv/client";
 import game from "@altv/natives";
-import { computed, ComputedRef, watch } from "vue";
+import { computed, ComputedRef, watch } from "@yiin/reactive-proxy-state";
 import { PedInteraction } from "@shared/modules/ped/interactions";
 import { IconName } from "@/core/rmlui/components/icon";
 import { clientState } from "@/core/store/client.store";
@@ -38,7 +38,7 @@ alt.Events.onGameEntityCreate(({ entity }) => {
       .flat(),
   );
   entity.cleanupFns.push(() => {
-    entity.interactions?.effect.stop();
+    entity.interactions?.stop();
   });
 
   /**

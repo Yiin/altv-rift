@@ -1,44 +1,31 @@
 import alt from "@altv/client";
-import { StoreDefinition, defineStore } from "pinia";
-import { ref } from "vue";
-import { updateStoreState } from "@shared/store/utils";
+import { ref } from "@yiin/reactive-proxy-state";
 import { ClientEvents } from "@shared/events/client";
 import { WebviewEvents } from "@shared/events/webview";
 import { Character } from "@shared/interfaces";
 import { useWebview } from "@/core/user-interface/webview";
-import { pinia } from ".";
+import { reactive, updateState } from "@yiin/reactive-proxy-state";
 
-type CharacterStore = StoreDefinition<"character", Character, {}, {}>;
-
-let characterStore: CharacterStore | undefined;
+let characterState: Character | null = null;
 
 export const isCharacterStoreAvailable = ref(false);
-
-export const useCharacter = () => {
-  if (!characterStore) {
-    throw new Error("Character store is not ready.");
-  }
-  return characterStore(pinia);
-};
 
 alt.Events.onServer(ClientEvents.FromServer.UPDATE_CHARACTER_STATE, (event: any) => {
   useWebview((webview) => webview.emitRaw(WebviewEvents.FromClient.UPDATE_CHARACTER_STATE, event));
 
-  const character = useCharacter();
-
-  updateStoreState(character, event);
-});
-
-alt.Events.onServer(ClientEvents.FromServer.SET_CHARACTER_STATE, (state: any) => {
-  useWebview((webview) => webview.emitRaw(WebviewEvents.FromClient.SET_CHARACTER_STATE, state));
-
-  if (characterStore) {
-    const character = useCharacter();
-    character.$state = state;
-  } else {
-    characterStore = defineStore("character", {
-      state: () => state,
-    });
+  if (!characterState) {
+    const character = {} as Character;
+    updateState(character, event);
+    characterState = reactive(character as Character);
     isCharacterStoreAvailable.value = true;
+  } else {
+    updateState(characterState, event);
   }
 });
+
+export function useCharacter() {
+  if (!characterState) {
+    throw new Error("Character store is not ready.");
+  }
+  return characterState;
+}

@@ -1,5 +1,5 @@
 import alt from "@altv/client";
-import { ref, watch } from "vue";
+import { ref, watch } from "@yiin/reactive-proxy-state";
 import { whileInGame } from "./in-game.state";
 
 export const isInVehicle = ref(false);

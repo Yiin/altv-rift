@@ -3,7 +3,7 @@ import game from "@altv/natives";
 import { isItemFishingRod } from "@shared/modules/items";
 import { whileInGame } from "@/core/game-state-hooks/in-game.state";
 import { useCharacter } from "@/core/store/character.store";
-import { watch } from "vue";
+import { watch } from "@yiin/reactive-proxy-state";
 
 let isHoldingFishingRod = false;
 

@@ -1,5 +1,5 @@
 import alt from "@altv/server";
-import { toRaw } from "vue";
+import { toRaw } from "@yiin/reactive-proxy-state";
 import { hoursToMilliseconds } from "date-fns";
 import { Item } from "@shared/modules/items";
 import { VirtualEntityType } from "@shared/interfaces";

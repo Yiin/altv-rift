@@ -1,8 +1,8 @@
 import alt from "@altv/shared";
-import { StoreUpdatePayload } from "@shared/store/utils";
 import { Spinner } from "@shared/modules/game/ui/spinner/spinner";
 import { Item } from "@shared/modules/items";
 import { NotificationType } from "@shared/interfaces";
+import { StateEvent } from "@yiin/reactive-proxy-state";
 
 export const FromServer = {
   BEGIN_NATIVE_DISCORD_AUTH: "BEGIN_NATIVE_DISCORD_AUTH",
@@ -26,13 +26,9 @@ export const FromServer = {
   IPL_UNLOAD: "IPL_UNLOAD",
   ENTITYSET_ACTIVATE: "ENTITYSET_ACTIVATE",
   ENTITYSET_DEACTIVATE: "ENTITYSET_DEACTIVATE",
-  SET_USER_STATE: "SET_USER_STATE",
   UPDATE_USER_STATE: "UPDATE_USER_STATE",
-  SET_CHARACTER_STATE: "SET_CHARACTER_STATE",
   UPDATE_CHARACTER_STATE: "UPDATE_CHARACTER_STATE",
-  SET_GAME_STATE: "SET_GAME_STATE",
   UPDATE_GAME_STATE: "UPDATE_GAME_STATE",
-  SET_SERVER_STATE: "SET_SERVER_STATE",
   UPDATE_SERVER_STATE: "UPDATE_SERVER_STATE",
   CALL_NATIVE: "CALL_NATIVE",
   DISPLAY_DAMAGE_HIT: "DISPLAY_DAMAGE_HIT",
@@ -72,14 +68,10 @@ declare module "@altv/shared" {
       [FromServer.IPL_UNLOAD]: (name: string) => void;
       [FromServer.ENTITYSET_ACTIVATE]: (interior: number, entitySetName: string) => void;
       [FromServer.ENTITYSET_DEACTIVATE]: (interior: number, entitySetName: string) => void;
-      [FromServer.SET_USER_STATE]: (state: any) => void;
-      [FromServer.UPDATE_USER_STATE]: (payload: StoreUpdatePayload) => void;
-      [FromServer.SET_CHARACTER_STATE]: (state: any) => void;
-      [FromServer.UPDATE_CHARACTER_STATE]: (payload: StoreUpdatePayload) => void;
-      [FromServer.SET_GAME_STATE]: (state: any) => void;
-      [FromServer.UPDATE_GAME_STATE]: (payload: StoreUpdatePayload) => void;
-      [FromServer.SET_SERVER_STATE]: (state: any) => void;
-      [FromServer.UPDATE_SERVER_STATE]: (payload: StoreUpdatePayload) => void;
+      [FromServer.UPDATE_USER_STATE]: (payload: StateEvent) => void;
+      [FromServer.UPDATE_CHARACTER_STATE]: (payload: StateEvent) => void;
+      [FromServer.UPDATE_GAME_STATE]: (payload: StateEvent) => void;
+      [FromServer.UPDATE_SERVER_STATE]: (payload: StateEvent) => void;
       [FromServer.CALL_NATIVE]: (name: string, ...args: unknown[]) => void;
       [FromServer.DISPLAY_DAMAGE_HIT]: (
         entityType: number,

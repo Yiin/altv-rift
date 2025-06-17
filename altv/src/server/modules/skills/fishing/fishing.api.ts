@@ -1,5 +1,5 @@
 import alt from "@altv/server";
-import { watchEffect } from "vue";
+import { watchEffect } from "@yiin/reactive-proxy-state";
 import { FishingGameType, PlayerFlags } from "@shared/store/game-state.store";
 import {
   BAIT_TO_FISH_MAP,

@@ -1,6 +1,6 @@
 import alt from "@altv/client";
 import game from "@altv/natives";
-import { markRaw, ref, toRaw } from "vue";
+import { markRaw, ref } from "@yiin/reactive-proxy-state";
 import { ServerCall } from "@shared/calls/server";
 import { VehicleBones } from "@/core/constants/vehicle-bones";
 import { rpc } from "@/core/rpc";

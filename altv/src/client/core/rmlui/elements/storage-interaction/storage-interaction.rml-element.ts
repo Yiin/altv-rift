@@ -13,7 +13,7 @@ import { everyFrame } from "../../renderer/hooks/every-frame";
 import { Indicator } from "../../components/indicator";
 import { Icon } from "../../components/icon";
 import { rem } from "../../renderer/pixel";
-import { gameState } from "@/core/store/game-state.store";
+import { useGameState } from "@/core/store/game-state.store";
 
 registerElement({
   key: "storage-interaction",
@@ -21,6 +21,7 @@ registerElement({
   anchorType: AnchorType.Storage,
   focusable: true,
   render({ entity: ve }) {
+    const gameState = useGameState();
     const isLootBox = [StorageType.AirDrop, StorageType.LootBox].includes(
       ve.streamSyncedMeta.storageType,
     );

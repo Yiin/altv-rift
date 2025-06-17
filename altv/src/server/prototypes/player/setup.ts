@@ -12,7 +12,7 @@ declare module "@altv/server" {
 }
 
 alt.Player.prototype.setup = async function () {
-  if (this.pinia) {
+  if (this.user) {
     return;
   }
 

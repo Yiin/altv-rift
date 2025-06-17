@@ -1,11 +1,11 @@
 import alt from "@altv/client";
 import game from "@altv/natives";
-import { watchEffect } from "vue";
+import { watchEffect } from "@yiin/reactive-proxy-state";
 import { ServerCall } from "@shared/calls/server";
 import { PlayerFlags } from "@shared/store/game-state.store";
 import { everyTickWhile } from "@/core/user-interface/event-helpers";
 import { rpc } from "@/core/rpc";
-import { gameState } from "@/core/store/game-state.store";
+import { useGameState } from "@/core/store/game-state.store";
 import { whileInGame } from "@/core/game-state-hooks/in-game.state";
 
 export let rodObject: alt.LocalObject["scriptID"] | null;
@@ -22,7 +22,7 @@ export function resetRodObject() {
 
 whileInGame(() => {
   const stopWatching = watchEffect(() => {
-    if (!gameState.flags.has(PlayerFlags.IsFishing) && stoppedFishingByServer) {
+    if (!useGameState().flags.has(PlayerFlags.IsFishing) && stoppedFishingByServer) {
       removeRod();
     }
   });

@@ -1,4 +1,4 @@
-import { watch } from "vue";
+import { watch } from "@yiin/reactive-proxy-state";
 import { getLevel, isLevelUp } from "@shared/modules/experience/experience-table";
 import { whileInGame } from "@/core/game-state-hooks/in-game.state";
 import { useCharacter } from "@/core/store/character.store";

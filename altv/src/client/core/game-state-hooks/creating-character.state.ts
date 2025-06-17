@@ -1,4 +1,4 @@
-import { computed, ref, watch } from "vue";
+import { computed, ref, watch } from "@yiin/reactive-proxy-state";
 import { isUserStoreAvailable, useUser } from "@/core/store/user.store";
 import { isCharacterStoreAvailable } from "@/core/store/character.store";
 

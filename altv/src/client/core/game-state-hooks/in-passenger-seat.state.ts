@@ -1,5 +1,5 @@
 import alt from "@altv/client";
-import { computed, ref, watch } from "vue";
+import { computed, ref, watch } from "@yiin/reactive-proxy-state";
 import { isInVehicle } from "./in-vehicle.state";
 
 export const isInPassengerSeat = computed(() => isInVehicle.value && alt.Player.local.seat > 1);

@@ -1,5 +1,5 @@
 import alt from "@altv/server";
-import { isReactive, reactive, UnwrapNestedRefs } from "vue";
+import { isReactive, reactive } from "@yiin/reactive-proxy-state";
 import { Inventory, ItemSourceOrigin, VirtualEntityType } from "@shared/interfaces";
 import { StorageType } from "@shared/store/game-state.store";
 import { ServerEvents } from "@shared/events/server";
@@ -9,7 +9,7 @@ import { WindowType } from "@shared/store/client.store";
 
 interface StorageData {
   label: string;
-  inventory: UnwrapNestedRefs<Inventory>;
+  inventory: Inventory;
   meta?: Record<string, any>;
   onOpen?(this: alt.VirtualEntity, player: InGamePlayer): void;
 }

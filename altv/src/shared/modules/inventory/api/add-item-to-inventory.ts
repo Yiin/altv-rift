@@ -1,4 +1,4 @@
-import { toRaw } from "vue";
+import { toRaw } from "@yiin/reactive-proxy-state";
 import { ItemMatchFlags, getInventoryItem } from "@shared/modules/inventory";
 import { Item, StackableItem, isStackable } from "@shared/modules/items";
 import { Inventory } from "@shared/interfaces";

@@ -1,7 +1,6 @@
 import alt from "@altv/client";
 import game from "@altv/natives";
-import { Raw, markRaw, ref, watch } from "vue";
-import { VirtualEntityType } from "@shared/interfaces";
+import { markRaw, ref, watch } from "@yiin/reactive-proxy-state";
 import { getScreenResolution } from "@/core/utility/screen-resolution";
 import { AnchorEntity } from "../types";
 import { isInConversation } from "@/modules/questing/conversation";
@@ -13,7 +12,7 @@ import { useCharacter } from "@/core/store/character.store";
 
 let entityToFocus: AnchorEntity | null = null;
 let closestDistance: number = Number.MAX_SAFE_INTEGER;
-const currentlyFocusedEntity = ref<Raw<AnchorEntity> | null>(null);
+const currentlyFocusedEntity = ref<AnchorEntity | null>(null);
 
 watch(currentlyFocusedEntity, (entity) => {
   game.setPedCanSwitchWeapon(alt.Player.local, entity === null);
@@ -71,7 +70,7 @@ function isEntityFocusable(entity: AnchorEntity): boolean {
   return focusableElements.has(anchorType);
 }
 
-export function getFocusedEntity(): Raw<AnchorEntity> | null {
+export function getFocusedEntity(): AnchorEntity | null {
   if (entityToFocus !== currentlyFocusedEntity.value) {
     currentlyFocusedEntity.value = entityToFocus ? markRaw(entityToFocus) : null;
   }

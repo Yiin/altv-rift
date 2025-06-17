@@ -1,5 +1,5 @@
 import alt from "@altv/client";
-import { ComputedRef } from "vue";
+import { ComputedRef } from "@yiin/reactive-proxy-state";
 import { AnchorEntityMap, AnchorType } from "./anchors";
 
 declare module "@altv/client" {

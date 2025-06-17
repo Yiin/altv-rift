@@ -1,5 +1,5 @@
 import alt from "@altv/server";
-import { toRaw } from "vue";
+import { toRaw } from "@yiin/reactive-proxy-state";
 import {
   GroundItemSource,
   InventoryItemSource,

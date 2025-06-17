@@ -12,7 +12,7 @@ import { createTextNode, updateTextNode } from "../../renderer/rml-renderer";
 import { px } from "../../renderer/pixel";
 import { whileEntityIsStreamedIn } from "@/core/game-state-hooks/entity-is-streamed-in.state";
 import { isQuestPed } from "@/modules/peds/lib/is-quest-ped";
-import { watch, watchEffect } from "vue";
+import { watchEffect } from "@yiin/reactive-proxy-state";
 
 const SPACE_BETWEEN_TICKS = 58;
 const TICK_INTERVAL = 15;

@@ -1,4 +1,4 @@
-import { computed, ref, watch } from "vue";
+import { computed, ref, watch } from "@yiin/reactive-proxy-state";
 import { isCharacterStoreAvailable } from "@/core/store/character.store";
 
 export const isInGame = computed(() => isCharacterStoreAvailable.value);

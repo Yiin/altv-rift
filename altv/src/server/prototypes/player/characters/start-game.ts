@@ -8,7 +8,7 @@ import {
   isValidItem,
 } from "@shared/modules/items";
 import { LoggedInPlayer, isInGame } from "@/core/utility/assertions";
-import { watch } from "vue";
+import { watch } from "@yiin/reactive-proxy-state";
 
 declare module "@altv/server" {
   export interface Player {

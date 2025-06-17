@@ -1,10 +1,8 @@
-import { createPinia, defineStore } from "pinia";
+import alt from "@altv/server";
+import { ClientEvents } from "@shared/events/client";
 import { getDefaultServerStoreState } from "@shared/store/server.store";
+import { reactive } from "@yiin/reactive-proxy-state";
 
-export const pinia = createPinia();
-
-const useServer = defineStore("server", {
-  state: getDefaultServerStoreState,
+export const serverState = reactive(getDefaultServerStoreState(), (event) => {
+  alt.Events.emitAllPlayersRaw(ClientEvents.FromServer.UPDATE_SERVER_STATE, event);
 });
-
-export const serverStore = useServer(pinia);

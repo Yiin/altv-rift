@@ -2,7 +2,7 @@ import alt from "@altv/client";
 import game from "@altv/natives";
 import { WindowType } from "@shared/store/client.store";
 import { closeWindow, isWindowOpen, openWindow, useWebview } from "../user-interface/webview";
-import { reactive, watch } from "vue";
+import { reactive, watch } from "@yiin/reactive-proxy-state";
 import { ClientEvents } from "@shared/events/client";
 import { loadSceneAtCoords } from "../utility/scene";
 import { isTyping } from "../user-interface/event-helpers";

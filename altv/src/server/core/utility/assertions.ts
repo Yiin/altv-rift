@@ -1,7 +1,6 @@
 import alt from "@altv/server";
 
 export type LoggedInPlayer = alt.Player & {
-  pinia: Exclude<alt.Player["pinia"], undefined>;
   user: Exclude<alt.Player["user"], undefined>;
 };
 

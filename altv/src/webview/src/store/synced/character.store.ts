@@ -2,7 +2,7 @@ import { type StoreDefinition } from "pinia";
 import { ref } from "vue";
 import { type Character } from "@shared/interfaces";
 
-type CharacterStore = StoreDefinition<"character", Character, {}, {}>;
+export type CharacterStore = StoreDefinition<"character", Character, {}, {}>;
 
 const characterStore = ref<CharacterStore | null>(
   "altMock" in window

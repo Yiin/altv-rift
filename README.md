@@ -56,11 +56,11 @@ e.g. `$ docker logs rift-server-1 -f` to see logs of the server.
 
 You might notice that vue is installed for server, client & webview. That is not an accident.
 
-Vue & pinia is being used for data-syncing between server, client and webview. The alternative is to create events for passing data back and forth and that slows down the development considerably. I searched for good reactivity library in npm, but they were either inferior to vue composable API or didn't exist.
+Vue & [@yiin/reactive-proxy-state](https://github.com/Yiin/reactive-proxy-state) is being used for data-syncing between server, client and webview. The alternative is to create events for passing data back and forth and that slows down the development considerably. I searched for good reactivity library in npm, but the existing options were either inferior to Vue's composable API or didn't exist.
 
 The sync is always following top -> down direction, meaning that server is source of truth for client & webview, and in some stores client is source of truth for webview.
 
-The sync functionality is using pinia.$subscribe to pass atomic sync events (see: `subscribeToStore` at `src/shared/store/utils.ts`).
+The sync functionality relies on `@yiin/reactive-proxy-state`'s subscription utilities to pass atomic sync events.
 
 ## Notes
 

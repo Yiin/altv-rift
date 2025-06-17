@@ -20,7 +20,7 @@ import { registerQuest } from "../../lib/register-quest";
 import { registerPedInteractions } from "../../lib/register-ped-interactions";
 import { startConversation } from "../../conversation";
 import { whileInGame } from "@/core/game-state-hooks/in-game.state";
-import { watch } from "vue";
+import { watch } from "@yiin/reactive-proxy-state";
 import { clientState } from "@/core/store/client.store";
 import { WindowType } from "@shared/store/client.store";
 

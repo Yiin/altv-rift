@@ -1,26 +1,27 @@
 import alt from "@altv/client";
-import { defineStore } from "pinia";
-import { updateStoreState } from "@shared/store/utils";
 import { ClientEvents } from "@shared/events/client";
-import { getDefaultGameState } from "@shared/store/game-state.store";
+import { GameState } from "@shared/store/game-state.store";
 import { WebviewEvents } from "@shared/events/webview";
 import { useWebview } from "@/core/user-interface/webview";
-import { pinia } from ".";
+import { reactive, updateState } from "@yiin/reactive-proxy-state";
 
-const useGameState = defineStore("game-state", {
-  state: getDefaultGameState,
-});
-
-export const gameState = useGameState(pinia);
+let gameState: GameState | null = null;
 
 alt.Events.onServer(ClientEvents.FromServer.UPDATE_GAME_STATE, (event: any) => {
   useWebview((webview) => webview.emitRaw(WebviewEvents.FromClient.UPDATE_GAME_STATE, event));
 
-  updateStoreState(gameState, event);
+  if (!gameState) {
+    const state = {} as GameState;
+    updateState(state, event);
+    gameState = reactive(state as GameState);
+  } else {
+    updateState(gameState, event);
+  }
 });
 
-alt.Events.onServer(ClientEvents.FromServer.SET_GAME_STATE, (state: any) => {
-  useWebview((webview) => webview.emitRaw(WebviewEvents.FromClient.SET_GAME_STATE, state));
-
-  gameState.$state = state;
-});
+export function useGameState() {
+  if (!gameState) {
+    throw new Error("Game state store is not ready.");
+  }
+  return gameState;
+}

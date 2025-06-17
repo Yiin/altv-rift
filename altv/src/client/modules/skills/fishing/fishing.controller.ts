@@ -2,7 +2,7 @@ import alt from "@altv/client";
 import { FishingGameType, PlayerFlags } from "@shared/store/game-state.store";
 import { ActionTipType, ActionType, ClientFlags } from "@shared/store/client.store";
 import { ServerCall } from "@shared/calls/server";
-import { gameState } from "@/core/store/game-state.store";
+import { useGameState } from "@/core/store/game-state.store";
 import { clientState } from "@/core/store/client.store";
 import { whileInGame } from "@/core/game-state-hooks/in-game.state";
 import { registerActions } from "@/core/user-interface/elements";
@@ -16,6 +16,7 @@ import { WebviewEvents } from "@shared/events/webview";
 whileInGame(trackCanFishFlag);
 
 registerActions(() => {
+  const gameState = useGameState();
   const actions = [];
 
   if (gameState.flags.has(PlayerFlags.IsFishing)) {
@@ -53,6 +54,7 @@ registerActions(() => {
 });
 
 alt.Events.onKeyDown(({ key }) => {
+  const gameState = useGameState();
   if (isTyping()) {
     return;
   }

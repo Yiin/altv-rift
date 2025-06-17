@@ -1,6 +1,6 @@
 import alt from "@altv/client";
-import game, { getNameOfScriptWithThisId } from "@altv/natives";
-import { computed, watchEffect } from "vue";
+import game from "@altv/natives";
+import { computed, watchEffect } from "@yiin/reactive-proxy-state";
 import { ServerEvents } from "@shared/events/server";
 import { ServerCall } from "@shared/calls/server";
 import { getItemInfoByKey, getWeaponAmmoEquipmentSlot } from "@shared/modules/items";
@@ -171,7 +171,7 @@ whileInGame(() => {
     explosiveAmmoTick.destroy();
     reloadTrackingTick.destroy();
     stopWatchingAmmo();
-    weaponCanReload.effect.stop();
-    currentFirearm.effect.stop();
+    weaponCanReload.stop();
+    currentFirearm.stop();
   };
 });

@@ -23,6 +23,7 @@
     "@tanstack/vue-table": "^8.19.3",
     "@vee-validate/zod": "^4.13.2",
     "@vueuse/core": "^10.11.0",
+    "@yiin/reactive-proxy-state": "^1.0.19",
     "alpha-serializer": "^0.5.6",
     "caniuse-lite": "^1.0.30001700",
     "class-variance-authority": "^0.7.1",

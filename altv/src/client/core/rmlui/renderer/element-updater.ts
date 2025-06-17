@@ -1,6 +1,6 @@
 import alt from "@altv/client";
 import game from "@altv/natives";
-import { computed } from "vue";
+import { computed } from "@yiin/reactive-proxy-state";
 import { focusableElements, registeredElements } from "./element-registry";
 import { notRenderedElements, visibleElementsHeap } from "./frame-state";
 import { container, document } from "./element-renderer";

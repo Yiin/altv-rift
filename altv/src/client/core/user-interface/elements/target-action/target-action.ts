@@ -1,6 +1,6 @@
 import alt from "@altv/client";
 import game from "@altv/natives";
-import { reactive, ref, watchEffect } from "vue";
+import { reactive, ref, watchEffect } from "@yiin/reactive-proxy-state";
 import { TargetAction } from "@shared/store/client.store";
 import { UIElement } from "@shared/enums/ui";
 import { clientState } from "@/core/store/client.store";

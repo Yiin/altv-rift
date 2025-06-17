@@ -1,6 +1,6 @@
 import { PlayerFlags } from "@shared/store/game-state.store";
 import { ActionType, ClientFlags } from "@shared/store/client.store";
-import { gameState } from "@/core/store/game-state.store";
+import { useGameState } from "@/core/store/game-state.store";
 import { clientState } from "@/core/store/client.store";
 import { whileInGame } from "@/core/game-state-hooks/in-game.state";
 import { registerActions } from "@/core/user-interface/elements";
@@ -16,6 +16,7 @@ whileInGame(() => {
 });
 
 registerActions(() => {
+  const gameState = useGameState();
   const actions = [];
 
   if (gameState.flags.has(PlayerFlags.IsDigging)) {

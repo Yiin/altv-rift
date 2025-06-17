@@ -1,5 +1,5 @@
 import { Player } from "@altv/server";
-import { toRaw } from "vue";
+import { toRaw } from "@yiin/reactive-proxy-state";
 import { Item } from "@shared/modules/items";
 import { ClientEvents } from "@shared/events/client";
 import { addItemToInventory } from "@shared/modules/inventory";

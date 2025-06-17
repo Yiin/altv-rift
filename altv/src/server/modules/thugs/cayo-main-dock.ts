@@ -1,6 +1,6 @@
 import alt from "@altv/server";
 import { addMinutes, minutesToMilliseconds } from "date-fns";
-import { reactive, shallowReactive, watchEffect } from "vue";
+import { reactive, watchEffect } from "@yiin/reactive-proxy-state";
 import { FirearmWeapon, getWeaponHash } from "@shared/modules/items";
 import { createInventory } from "@shared/modules/inventory";
 import { StorageType } from "@shared/store/game-state.store";
@@ -66,7 +66,7 @@ createEvent({
   name: "cayo-main-dock",
   cooldown: minutesToMilliseconds(10),
   setup({ finish }) {
-    const enemies = shallowReactive(new Set<alt.Ped>());
+    const enemies = reactive(new Set<alt.Ped>());
     let loot: alt.VirtualEntity | null = null;
     let areaOfInterest: alt.VirtualEntity | null = null;
     let isFinishing = false;

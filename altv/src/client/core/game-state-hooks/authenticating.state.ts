@@ -1,4 +1,4 @@
-import { computed, ref, watch } from "vue";
+import { computed, ref, watch } from "@yiin/reactive-proxy-state";
 import { isUserStoreAvailable } from "@/core/store/user.store";
 
 export const isAuthenticating = computed(() => !isUserStoreAvailable.value);

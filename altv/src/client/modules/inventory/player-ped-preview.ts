@@ -1,6 +1,6 @@
 import alt from "@altv/client";
 import game from "@altv/natives";
-import { ref, watch } from "vue";
+import { ref, watch } from "@yiin/reactive-proxy-state";
 import { ClientEvents } from "@shared/events/client";
 import { everyTickWhile } from "@/core/user-interface/event-helpers";
 import { useWebview } from "@/core/user-interface/webview";

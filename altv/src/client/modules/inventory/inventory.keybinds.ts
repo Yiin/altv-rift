@@ -1,5 +1,5 @@
 import alt from "@altv/client";
-import { watch } from "vue";
+import { watch } from "@yiin/reactive-proxy-state";
 import { WindowType } from "@shared/store/client.store";
 import { ServerCall } from "@shared/calls/server";
 import { EquipmentSlot } from "@shared/interfaces";

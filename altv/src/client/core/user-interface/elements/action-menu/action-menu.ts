@@ -1,4 +1,4 @@
-import { computed, reactive, watchEffect } from "vue";
+import { computed, reactive, watchEffect } from "@yiin/reactive-proxy-state";
 import { UIElement } from "@shared/enums/ui";
 import { clientState } from "@/core/store/client.store";
 import { doesElementHaveCursor } from "../../webview";

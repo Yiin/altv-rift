@@ -1,6 +1,6 @@
 import alt from "@altv/client";
 import game from "@altv/natives";
-import { ref } from "vue";
+import { ref } from "@yiin/reactive-proxy-state";
 import { StorageType } from "@shared/store/game-state.store";
 import { Control, ControlType } from "@/core/constants/controls";
 import { isInConversation } from "@/modules/questing/conversation";

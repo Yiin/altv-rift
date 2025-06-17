@@ -1,8 +1,4 @@
-import { createPinia, defineStore } from "pinia";
 import { getDefaultGameState } from "@shared/store/game-state.store";
+import { reactive } from "@yiin/reactive-proxy-state";
 
-export const pinia = createPinia();
-
-export const useGameState = defineStore("game-state", {
-  state: getDefaultGameState,
-});
+export const gameState = reactive(getDefaultGameState());

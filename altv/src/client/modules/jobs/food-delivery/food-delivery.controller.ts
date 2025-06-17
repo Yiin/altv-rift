@@ -1,13 +1,11 @@
 import alt from "@altv/client";
 import game from "@altv/natives";
-import { DeliveryPoint } from "@shared/store/game-state.store";
-import { gameState } from "@/core/store/game-state.store";
-import { watch } from "vue";
+import { useGameState } from "@/core/store/game-state.store";
+import { watch } from "@yiin/reactive-proxy-state";
 import { whileInGame } from "@/core/game-state-hooks/in-game.state";
 import { rpc } from "@/core/rpc";
 import { FromClient } from "@shared/calls/server/from-client";
 import { createPickup, Pickup } from "@/core/pickups/pickups.registry";
-import { Blip } from "@altv/client";
 import { getDeliveryPointPosition } from "@shared/modules/jobs/food-delivery";
 
 // Constants
@@ -29,6 +27,7 @@ const colorMap = {
 
 // Initialize the food delivery system
 whileInGame(() => {
+  const gameState = useGameState();
   console.log("[FoodDelivery] Initializing food delivery system");
 
   /**

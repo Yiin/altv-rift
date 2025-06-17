@@ -1,5 +1,5 @@
 import alt from "@altv/client";
-import { ref } from "vue";
+import { ref } from "@yiin/reactive-proxy-state";
 
 export function whileEntityIsStreamedIn<T extends alt.Entity>(
   check: (entity: alt.Entity) => entity is T,

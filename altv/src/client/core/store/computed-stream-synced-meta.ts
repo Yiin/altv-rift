@@ -1,5 +1,5 @@
 import alt from "@altv/client";
-import { reactive } from "vue";
+import { reactive } from "@yiin/reactive-proxy-state";
 
 alt.Events.onGameEntityCreate(({ entity }) => {
   entity.reactiveStreamSyncedMeta = reactive(JSON.parse(JSON.stringify(entity.streamSyncedMeta)));
